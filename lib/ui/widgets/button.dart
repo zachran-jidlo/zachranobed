@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/constants.dart';
 
 class ZachranObedButton extends StatelessWidget {
   const ZachranObedButton({
@@ -15,13 +16,11 @@ class ZachranObedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size.fromHeight(50),
+        backgroundColor: ZachranObedColors.primaryLight,
       ),
       onPressed: onPressed,
       child: Text(
         text,
-        style: TextStyle(
-          color: Colors.white,
-        ),
       ),
     );
   }
