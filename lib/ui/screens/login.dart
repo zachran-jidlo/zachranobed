@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/clickableText.dart';
 import 'package:zachranobed/ui/widgets/textField.dart';
 
 class Login extends StatefulWidget {
@@ -59,18 +60,11 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: 15),
 
-                  RichText(
-                    text: TextSpan(
-                        text: ZachranObedStrings.forgottenPassword,
-                        style: TextStyle(
-                          color: Colors.black,
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                          print('Change password');
-                        }
-                    ),
+                  ZachranObedClickableText(
+                      text: ZachranObedStrings.forgottenPassword,
+                      onTap: () {
+                        print('Change password');
+                      }
                   ),
                 ],
               ),
