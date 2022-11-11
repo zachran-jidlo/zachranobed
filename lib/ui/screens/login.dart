@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zachranobed/constants.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -21,8 +22,8 @@ class _LoginState extends State<Login> {
               children: [
                 SizedBox(height: 35),
                 SvgPicture.asset(
-                  'assets/zj-logo.svg',
-                  color: Color.fromRGBO(226, 16, 19, 1),
+                  ZachranObedStrings.zjLogoPath,
+                  color: ZachranObedColors.primary,
                 ),
                 SizedBox(height: 20),
 
@@ -31,7 +32,7 @@ class _LoginState extends State<Login> {
                     border: Border.all(width: 2)
                   ),
                   child: Image.asset(
-                    'assets/placeholder-image.png',
+                    ZachranObedStrings.placeholderImagePath,
 
                   ),
                 ),
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
 
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'E-mailová adresa',
+                    labelText: ZachranObedStrings.emailAddress,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2
@@ -54,7 +55,7 @@ class _LoginState extends State<Login> {
                 TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Heslo',
+                    labelText: ZachranObedStrings.password,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 2
@@ -71,7 +72,7 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () {},
                   child: Text(
-                    'PŘIHLÁSIT SE',
+                    ZachranObedStrings.login.toUpperCase(),
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -81,7 +82,7 @@ class _LoginState extends State<Login> {
 
                 RichText(
                   text: TextSpan(
-                      text: 'Zapomněl/a jsem heslo',
+                      text: ZachranObedStrings.forgottenPassword,
                       style: TextStyle(
                         color: Colors.black,
                         decoration: TextDecoration.underline,
