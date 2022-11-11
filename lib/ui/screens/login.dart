@@ -20,59 +20,60 @@ class _LoginState extends State<Login> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(
-              children: [
-                SizedBox(height: 35),
-                SvgPicture.asset(
-                  ZachranObedStrings.zjLogoPath,
-                  color: ZachranObedColors.primary,
-                ),
-                SizedBox(height: 20),
-
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2)
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    ZachranObedStrings.zjLogoPath,
+                    color: ZachranObedColors.primary,
                   ),
-                  child: Image.asset(
-                    ZachranObedStrings.placeholderImagePath,
+                  SizedBox(height: 20),
 
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2)
+                    ),
+                    child: Image.asset(
+                      ZachranObedStrings.placeholderImagePath,
+
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                ZachranObedTextField(
-                    text: ZachranObedStrings.emailAddress,
-                ),
-                SizedBox(height: 15),
-
-                ZachranObedTextField(
-                    text: ZachranObedStrings.password,
-                    obscureText: true,
-                ),
-                SizedBox(height: 10),
-
-                ZachranObedButton(
-                  text: ZachranObedStrings.login.toUpperCase(),
-                  onPressed: () {
-                    print('Logged in!');
-                  },
-                ),
-                SizedBox(height: 15),
-
-                RichText(
-                  text: TextSpan(
-                      text: ZachranObedStrings.forgottenPassword,
-                      style: TextStyle(
-                        color: Colors.black,
-                        decoration: TextDecoration.underline,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                        print('Change password');
-                      }
+                  ZachranObedTextField(
+                      text: ZachranObedStrings.emailAddress,
                   ),
-                ),
-              ],
+                  SizedBox(height: 15),
+
+                  ZachranObedTextField(
+                      text: ZachranObedStrings.password,
+                      obscureText: true,
+                  ),
+                  SizedBox(height: 10),
+
+                  ZachranObedButton(
+                    text: ZachranObedStrings.login.toUpperCase(),
+                    onPressed: () {
+                      print('Logged in!');
+                    },
+                  ),
+                  SizedBox(height: 15),
+
+                  RichText(
+                    text: TextSpan(
+                        text: ZachranObedStrings.forgottenPassword,
+                        style: TextStyle(
+                          color: Colors.black,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                          print('Change password');
+                        }
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
