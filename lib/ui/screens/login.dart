@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -66,17 +67,11 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 10),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    ZachranObedStrings.login.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                ZachranObedButton(
+                  text: ZachranObedStrings.login.toUpperCase(),
+                  onPressed: () {
+                    print('Logged in!');
+                  },
                 ),
                 SizedBox(height: 15),
 
