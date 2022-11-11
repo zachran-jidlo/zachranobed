@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/textField.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -39,31 +40,14 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 20),
 
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: ZachranObedStrings.emailAddress,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2
-                      ),
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
+                ZachranObedTextField(
+                    text: ZachranObedStrings.emailAddress,
                 ),
                 SizedBox(height: 15),
 
-
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: ZachranObedStrings.password,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2
-                      ),
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
+                ZachranObedTextField(
+                    text: ZachranObedStrings.password,
+                    obscureText: true,
                 ),
                 SizedBox(height: 10),
 
