@@ -1,8 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickableText.dart';
 import 'package:zachranobed/ui/widgets/textField.dart';
 
@@ -14,6 +14,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  bool _rememberUser = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class _LoginState extends State<Login> {
                     ZachranObedStrings.zjLogoPath,
                     color: ZachranObedColors.primary,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   Container(
                     decoration: BoxDecoration(
@@ -39,18 +42,27 @@ class _LoginState extends State<Login> {
 
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   ZachranObedTextField(
-                      text: ZachranObedStrings.emailAddress,
+                    text: ZachranObedStrings.emailAddress,
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   ZachranObedTextField(
-                      text: ZachranObedStrings.password,
-                      obscureText: true,
+                    text: ZachranObedStrings.password,
+                    obscureText: true,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
+
+                  ZachranObedCheckbox(
+                    text: ZachranObedStrings.rememberUser,
+                    isChecked: _rememberUser,
+                    whatIsChecked: (bool value) => setState(() {
+                      _rememberUser = value;
+                      print(_rememberUser);
+                    })
+                  ),
 
                   ZachranObedButton(
                     text: ZachranObedStrings.login.toUpperCase(),
@@ -58,13 +70,13 @@ class _LoginState extends State<Login> {
                       print('Logged in!');
                     },
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   ZachranObedClickableText(
-                      text: ZachranObedStrings.forgottenPassword,
-                      onTap: () {
-                        print('Change password');
-                      }
+                    text: ZachranObedStrings.forgottenPassword,
+                    onTap: () {
+                      print('Change password');
+                    }
                   ),
                 ],
               ),
