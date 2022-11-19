@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                         ZachranObedTextField(
                           text: ZachranObedStrings.emailAddress,
                           controller: emailController,
-                          onValidation: (val) => val!.isEmpty ? 'Vyplňte prosím toto pole' : null,
+                          onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                         ),
                         const SizedBox(height: 15),
 
@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
                           text: ZachranObedStrings.password,
                           controller: passwordController,
                           obscureText: true,
-                          onValidation: (val) => val!.isEmpty ? 'Vyplňte prosím toto pole' : null,
+                          onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                         ),
                         const SizedBox(height: 10),
 

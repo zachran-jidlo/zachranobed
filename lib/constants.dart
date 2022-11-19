@@ -11,6 +11,7 @@ class ZachranObedStrings {
   static const login = 'Přihlásit se';
   static const forgottenPassword = 'Zapomněl/a jsem heslo';
   static const rememberUser = 'Zapamatovat';
+  static const requiredFieldError = 'Vyplňte prosím toto pole';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
