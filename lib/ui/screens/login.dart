@@ -17,6 +17,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -56,33 +58,45 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 20),
 
-                  ZachranObedTextField(
-                    text: ZachranObedStrings.emailAddress, controller: emailController,
-                  ),
-                  const SizedBox(height: 15),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        ZachranObedTextField(
+                          text: ZachranObedStrings.emailAddress,
+                          controller: emailController,
+                          onValidation: (val) => val!.isEmpty ? 'Vyplňte prosím toto pole' : null,
+                        ),
+                        const SizedBox(height: 15),
 
-                  ZachranObedTextField(
-                    text: ZachranObedStrings.password, controller: passwordController,
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 10),
+                        ZachranObedTextField(
+                          text: ZachranObedStrings.password,
+                          controller: passwordController,
+                          obscureText: true,
+                          onValidation: (val) => val!.isEmpty ? 'Vyplňte prosím toto pole' : null,
+                        ),
+                        const SizedBox(height: 10),
 
-                  ZachranObedCheckbox(
-                    text: ZachranObedStrings.rememberUser,
-                    isChecked: _rememberUser,
-                    whatIsChecked: (bool value) => setState(() {
-                      _rememberUser = value;
-                      print(_rememberUser);
-                    })
-                  ),
+                        ZachranObedCheckbox(
+                          text: ZachranObedStrings.rememberUser,
+                          isChecked: _rememberUser,
+                          whatIsChecked: (bool value) => setState(() {
+                            _rememberUser = value;
+                            print(_rememberUser);
+                          })
+                        ),
 
-                  ZachranObedButton(
-                    text: ZachranObedStrings.login.toUpperCase(),
-                    onPressed: () {
-                      print('Logged in!');
-                      Provider.of<User>(context, listen: false).email = emailController.text;
-                      Navigator.of(context).pushReplacementNamed(RouteManager.home);
-                    },
+                        ZachranObedButton(
+                          text: ZachranObedStrings.login.toUpperCase(),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Provider.of<User>(context, listen: false).email = emailController.text;
+                              Navigator.of(context).pushReplacementNamed(RouteManager.home);
+                            }
+                          },
+                        ),
+                      ],
+                    )
                   ),
                   const SizedBox(height: 15),
 
