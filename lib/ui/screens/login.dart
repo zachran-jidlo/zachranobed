@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/roots.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickableText.dart';
@@ -14,8 +17,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   bool _rememberUser = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +57,12 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
 
                   ZachranObedTextField(
-                    text: ZachranObedStrings.emailAddress,
+                    text: ZachranObedStrings.emailAddress, controller: emailController,
                   ),
                   const SizedBox(height: 15),
 
                   ZachranObedTextField(
-                    text: ZachranObedStrings.password,
+                    text: ZachranObedStrings.password, controller: passwordController,
                     obscureText: true,
                   ),
                   const SizedBox(height: 10),
@@ -68,6 +80,8 @@ class _LoginState extends State<Login> {
                     text: ZachranObedStrings.login.toUpperCase(),
                     onPressed: () {
                       print('Logged in!');
+                      Provider.of<User>(context, listen: false).email = emailController.text;
+                      Navigator.of(context).pushReplacementNamed(RouteManager.home);
                     },
                   ),
                   const SizedBox(height: 15),
