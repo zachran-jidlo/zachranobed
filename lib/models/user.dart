@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 
 class User extends ChangeNotifier {
 
-  String _email = "";
-  String _password = "";
+  String email = "";
+  String password = "";
 
   /*User(this.email, this.password) {
     notifyListeners();
   }*/
 
-  String get email => _email;
-
-  set email(String email) {
-    _email = email;
+  void newUser(String email, String password) {
+    this.email = email;
+    this.password = password;
     notifyListeners();
   }
 

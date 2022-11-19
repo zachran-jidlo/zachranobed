@@ -14,6 +14,7 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              Provider.of<User>(context, listen: false).newUser('', '');
               Navigator.of(context).pushReplacementNamed(RouteManager.login);
             },
             icon: Icon(Icons.exit_to_app),
@@ -22,8 +23,8 @@ class Home extends StatelessWidget {
       ),
       body: Center(
         child: Consumer<User>(
-          builder: (context, value, child) {
-            return Text('Ahoj ${value.email}');
+          builder: (context, user, child) {
+            return Text('Ahoj ${user.email}');
           },
         ),
       ),
