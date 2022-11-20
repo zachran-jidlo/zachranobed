@@ -4,6 +4,7 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons_icons.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/ui/widgets/card.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -53,73 +54,21 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 children: [
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2,
-                        color: Colors.black,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(ZachranObedStrings.savedLunches),
-                              Text(
-                                '672',
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text(ZachranObedStrings.statistics),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ZachranObedCard(
+                    text: ZachranObedStrings.savedLunches,
+                    measuredVariableText: '672',
+                    buttonText: ZachranObedStrings.statistics,
+                    onPressed: () {
+                      print("Jdu na statistiky");
+                    },
                   ),
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2,
-                        color: Colors.black,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(ZachranObedStrings.borrowedBoxes),
-                              Text(
-                                '32/100',
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text(ZachranObedStrings.change),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ZachranObedCard(
+                      text: ZachranObedStrings.borrowedBoxes,
+                      measuredVariableText: '32/100',
+                      buttonText: ZachranObedStrings.change,
+                      onPressed: () {
+                        print("Jdu změnit počet krabiček");
+                      },
                   ),
                 ],
               ),
