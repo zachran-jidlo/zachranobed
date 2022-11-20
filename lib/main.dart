@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/models/user.dart';
-import 'package:zachranobed/roots.dart';
+import 'package:zachranobed/routes.dart';
 
 void main() {
   runApp(const MyApp());

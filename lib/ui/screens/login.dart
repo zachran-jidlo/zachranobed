@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
-import 'package:zachranobed/roots.dart';
+import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickableText.dart';
