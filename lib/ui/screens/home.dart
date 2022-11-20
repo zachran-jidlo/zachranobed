@@ -47,6 +47,84 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                children: [
+                  Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 2,
+                        color: Colors.black,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(ZachranObedStrings.savedLunches),
+                              Text(
+                                '672',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text(ZachranObedStrings.statistics),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 2,
+                        color: Colors.black,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(ZachranObedStrings.borrowedBoxes),
+                              Text(
+                                '32/100',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text(ZachranObedStrings.change),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             Consumer<User>(
               builder: (context, user, child) {
                 return Text('Ahoj ${user.email}');
@@ -64,15 +142,15 @@ class Home extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant),
-            label: 'Dary',
+            label: ZachranObedStrings.donations,
           ),
           BottomNavigationBarItem(
             icon: Icon(CustomIcons.graph),
-            label: 'Statistiky',
+            label: ZachranObedStrings.statistics,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: 'Menu',
+            label: ZachranObedStrings.menu,
           ),
         ],
       ),
