@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       create: (context) => User(),
       builder: (context, child) {
         return const MaterialApp(
-          initialRoute: RouteManager.login,
+          initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
         );
       },
