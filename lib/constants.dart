@@ -14,6 +14,7 @@ class ZachranObedStrings {
   static const requiredFieldError = 'Vyplňte prosím toto pole';
   static const overview = 'Přehled';
   static const donations = 'Dary';
+  static const donationList = 'Seznam darů';
   static const statistics = 'Statistiky';
   static const menu = 'Menu';
   static const change = 'Změnit';
