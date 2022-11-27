@@ -12,6 +12,14 @@ class ZachranObedStrings {
   static const forgottenPassword = 'Zapomněl/a jsem heslo';
   static const rememberUser = 'Zapamatovat';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
+  static const overview = 'Přehled';
+  static const donations = 'Dary';
+  static const donationList = 'Seznam darů';
+  static const statistics = 'Statistiky';
+  static const menu = 'Menu';
+  static const change = 'Změnit';
+  static const savedLunches = 'Zachráněno obědů';
+  static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';

@@ -15,7 +15,7 @@ class ZachranObedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(50),
+        minimumSize: const Size.fromHeight(50),
         backgroundColor: ZachranObedColors.primaryLight,
       ),
       onPressed: onPressed,
