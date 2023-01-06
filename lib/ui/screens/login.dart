@@ -53,7 +53,6 @@ class _LoginState extends State<Login> {
                     ),
                     child: Image.asset(
                       ZachranObedStrings.placeholderImagePath,
-
                     ),
                   ),
                   const SizedBox(height: 20),

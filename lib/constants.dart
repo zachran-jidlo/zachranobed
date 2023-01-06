@@ -12,6 +12,7 @@ class ZachranObedStrings {
   static const forgottenPassword = 'Zapomněl/a jsem heslo';
   static const rememberUser = 'Zapamatovat';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
+  static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';
   static const donations = 'Dary';
   static const donationList = 'Seznam darů';
@@ -20,6 +21,7 @@ class ZachranObedStrings {
   static const change = 'Změnit';
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
+  static const offer = 'Nabídnout';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
