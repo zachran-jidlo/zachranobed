@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
-import 'package:zachranobed/ui/widgets/textField.dart';
+import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({Key? key}) : super(key: key);
