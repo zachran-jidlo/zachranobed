@@ -86,6 +86,7 @@ class _OverviewState extends State<Overview> {
               child: Text('Naposledy darováno'),
             ),
           ),
+          // TODO - tohle je zatím natvrdo, pak v nějakém cyklu procházet x posledních darovaných pokrmů
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: ZachranObedListTile(
@@ -121,6 +122,12 @@ class _OverviewState extends State<Overview> {
             },
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouteManager.offer_food);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
