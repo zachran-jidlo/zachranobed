@@ -20,7 +20,7 @@ class ZachranObedTextField extends StatefulWidget {
 
 class _ZachranObedTextFieldState extends State<ZachranObedTextField> {
 
-  final TextFieldBorder = const OutlineInputBorder(
+  final _textFieldBorder = const OutlineInputBorder(
     borderSide: BorderSide(
       width: 2,
       color: Colors.black,
@@ -38,9 +38,8 @@ class _ZachranObedTextFieldState extends State<ZachranObedTextField> {
       decoration: InputDecoration(
         labelText: widget.text,
         labelStyle: TextStyle(color: Colors.grey[600]),
-        enabledBorder: TextFieldBorder,
-        focusedBorder: TextFieldBorder,
-        focusColor: Colors.redAccent,
+        enabledBorder: _textFieldBorder,
+        focusedBorder: _textFieldBorder,
       ),
     );
   }
