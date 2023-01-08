@@ -18,7 +18,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final TextEditingController _foodNameController = TextEditingController();
   final TextEditingController _allergensController = TextEditingController();
   final TextEditingController _servingsNumberController = TextEditingController();
-  final TextEditingController _packagingController = TextEditingController();
   final TextEditingController _consumeByController = TextEditingController();
 
   final List<String> _packagingOptions = <String>['REkrabička', 'Jednorázový obal'];
@@ -57,6 +56,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "Název pokrmu",
                       controller: _foodNameController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+                      inputType: TextInputType.text,
                     ),
                     const SizedBox(height: 15),
 
@@ -64,6 +64,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "Alergeny",
                       controller: _allergensController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+                      inputType: TextInputType.text,
                     ),
                     const SizedBox(height: 15),
 
@@ -71,6 +72,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "Počet porcí",
                       controller: _servingsNumberController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+                      inputType: TextInputType.number,
                     ),
                     const SizedBox(height: 20),
 
