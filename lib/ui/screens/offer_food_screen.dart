@@ -20,6 +20,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final TextEditingController _servingsNumberController = TextEditingController();
   final TextEditingController _consumeByController = TextEditingController();
 
+  String _selectedPackaging = "";
+
   final List<String> _packagingOptions = <String>['REkrabička', 'Jednorázový obal'];
 
   @override
@@ -88,6 +90,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       hintText: "Balení",
                       items: _packagingOptions,
                       onValidation: (val) => val == null ? ZachranObedStrings.requiredDropdownError : null,
+                      onChanged: (String value) {
+                        _selectedPackaging = value;
+                        print(_selectedPackaging);
+                      },
                     ),
                     const SizedBox(height: 15),
 

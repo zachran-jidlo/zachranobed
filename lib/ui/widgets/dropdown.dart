@@ -6,11 +6,13 @@ class ZachranObedDropdown extends StatefulWidget {
     required this.hintText,
     required this.items,
     this.onValidation,
+    required this.onChanged
   }) : super(key: key);
 
   final String hintText;
   final List<String> items;
   final String? Function(String?)? onValidation;
+  final Function(String) onChanged;
 
   @override
   State<ZachranObedDropdown> createState() => _ZachranObedDropdownState();
@@ -18,9 +20,7 @@ class ZachranObedDropdown extends StatefulWidget {
 
 class _ZachranObedDropdownState extends State<ZachranObedDropdown> {
 
-  String _dropdownValue = "";
-
-  final DropdownBorder = const OutlineInputBorder(
+  final _dropdownBorder = const OutlineInputBorder(
     borderSide: BorderSide(
       width: 2,
       color: Colors.black,
@@ -42,12 +42,12 @@ class _ZachranObedDropdownState extends State<ZachranObedDropdown> {
       }).toList(),
       onChanged: (String? value) {
         setState(() {
-          _dropdownValue = value!;
+          widget.onChanged(value!);
         });
       },
       decoration: InputDecoration(
-        enabledBorder: DropdownBorder,
-        focusedBorder: DropdownBorder,
+        enabledBorder: _dropdownBorder,
+        focusedBorder: _dropdownBorder,
       ),
     );
   }
