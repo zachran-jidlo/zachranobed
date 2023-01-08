@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -14,11 +15,11 @@ class OfferFoodScreen extends StatefulWidget {
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController foodNameController = TextEditingController();
-  TextEditingController allergensController = TextEditingController();
-  TextEditingController servingsNumberController = TextEditingController();
-  TextEditingController packagingController = TextEditingController();
-  TextEditingController consumeByController = TextEditingController();
+  final TextEditingController _foodNameController = TextEditingController();
+  final TextEditingController _allergensController = TextEditingController();
+  final TextEditingController _servingsNumberController = TextEditingController();
+  final TextEditingController _packagingController = TextEditingController();
+  final TextEditingController _consumeByController = TextEditingController();
 
   final List<String> _packagingOptions = <String>['REkrabička', 'Jednorázový obal'];
 
@@ -54,24 +55,32 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   children: [
                     ZachranObedTextField(
                       text: "Název pokrmu",
-                      controller: foodNameController,
+                      controller: _foodNameController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
 
                     ZachranObedTextField(
                       text: "Alergeny",
-                      controller: allergensController,
+                      controller: _allergensController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
 
                     ZachranObedTextField(
                       text: "Počet porcí",
-                      controller: servingsNumberController,
+                      controller: _servingsNumberController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
+
+                    ZachranObedButton(
+                      text: "PŘIDAT DALŠÍ POKRM",
+                      onPressed: () {
+                        print("Kliknuto na přidat další pokrm");
+                      },
+                    ),
+                    const SizedBox(height: 20),
 
                     ZachranObedDropdown(
                       hintText: "Balení",
@@ -80,9 +89,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     ),
                     const SizedBox(height: 15),
 
-                    ZachranObedTextField(
+                    ZachranObedDateTimePicker(
                       text: "Spotřebujte do",
-                      controller: consumeByController,
+                      controller: _consumeByController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
@@ -91,7 +100,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "NABÍDNOUT POKRM",
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          print("Odesalt nabídku");
+                          print("Nabídka odeslána");
                           Navigator.of(context).pop();
                         }
                       },
