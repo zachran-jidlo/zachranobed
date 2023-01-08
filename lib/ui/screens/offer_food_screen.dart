@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
@@ -109,6 +110,15 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           print("Nabídka odeslána");
+                          OfferedFood offeredFood = OfferedFood(
+                              date: DateTime.now(),
+                              name: _foodNameController.text,
+                              allergens: _allergensController.text,
+                              numberOfServings: int.parse(_servingsNumberController.text),
+                              packaging: _selectedPackaging,
+                              consumeBy: _consumeByController.text
+                          );
+                          print("Nabídka - datum vytvoření: ${offeredFood.date}, název pokrmu: ${offeredFood.name}, alergeny: ${offeredFood.allergens}, počet porcí: ${offeredFood.numberOfServings}, balení: ${offeredFood.packaging}, spotřebujte do: ${offeredFood.consumeBy}");
                           Navigator.of(context).pop();
                         }
                       },

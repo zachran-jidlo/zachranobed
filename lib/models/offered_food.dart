@@ -5,7 +5,7 @@ class OfferedFood {
   String allergens;
   int numberOfServings;
   String packaging;
-  DateTime consumeBy;
+  String consumeBy;
 
   OfferedFood({
     required this.date,
