@@ -23,7 +23,7 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
   Future<DateTime?> _pickDate() => showDatePicker(
     context: context,
     initialDate: _dateTime,
-    firstDate: DateTime(2023),
+    firstDate: DateTime(DateTime.now().year),
     lastDate: DateTime(2100),
   );
 
