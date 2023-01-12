@@ -4,6 +4,7 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
+import 'package:zachranobed/ui/widgets/floating_button.dart';
 import 'package:zachranobed/ui/widgets/list_tile.dart';
 
 class Overview extends StatefulWidget {
@@ -124,11 +125,10 @@ class _OverviewState extends State<Overview> {
         ],
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ZachranObedFloatingButton(
         onPressed: () {
           Navigator.of(context).pushNamed(RouteManager.offerFood);
         },
-        child: const Icon(Icons.add),
       ),
     );
   }
