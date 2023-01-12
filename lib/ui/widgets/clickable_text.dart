@@ -16,7 +16,7 @@ class ZachranObedClickableText extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             decoration: TextDecoration.underline,
           ),

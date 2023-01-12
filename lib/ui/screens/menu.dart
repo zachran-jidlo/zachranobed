@@ -8,7 +8,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ZachranObedStrings.menu),
+        title: const Text(ZachranObedStrings.menu),
       ),
     );
   }

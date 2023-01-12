@@ -13,7 +13,7 @@ class _DonationsListState extends State<DonationsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ZachranObedStrings.donationList),
+        title: const Text(ZachranObedStrings.donationList),
       ),
     );
   }

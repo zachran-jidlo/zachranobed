@@ -40,16 +40,16 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
             children: [
               const SizedBox(height: 10),
               Row(
-                children: [
+                children: const [
                   Text(
-                    "Nabídnout teplý pokrm",
+                    ZachranObedStrings.offerWarmFood,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
                   ),
                 ],
               ),
               const SizedBox(height: 10),
 
-              Text("Pokrm nabídnete darem charitativním organizacím, které jej předají lidem v nouzi."),
+              const Text(ZachranObedStrings.offerFoodDescription),
               const SizedBox(height: 20),
 
               Form(
@@ -57,21 +57,21 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 child: Column(
                   children: [
                     ZachranObedTextField(
-                      text: "Název pokrmu",
+                      text: ZachranObedStrings.foodName,
                       controller: _foodNameController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
 
                     ZachranObedTextField(
-                      text: "Alergeny",
+                      text: ZachranObedStrings.allergens,
                       controller: _allergensController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
 
                     ZachranObedTextField(
-                      text: "Počet porcí",
+                      text: ZachranObedStrings.numberOfServings,
                       controller: _servingsNumberController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                       inputType: TextInputType.number,
@@ -80,7 +80,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     const SizedBox(height: 20),
 
                     ZachranObedButton(
-                      text: "PŘIDAT DALŠÍ POKRM",
+                      text: ZachranObedStrings.addAnotherFood.toUpperCase(),
                       onPressed: () {
                         print("Kliknuto na přidat další pokrm");
                       },
@@ -88,7 +88,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     const SizedBox(height: 20),
 
                     ZachranObedDropdown(
-                      hintText: "Balení",
+                      hintText: ZachranObedStrings.packaging,
                       items: _packagingOptions,
                       onValidation: (val) => val == null ? ZachranObedStrings.requiredDropdownError : null,
                       onChanged: (String value) {
@@ -99,14 +99,14 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     const SizedBox(height: 15),
 
                     ZachranObedDateTimePicker(
-                      text: "Spotřebujte do",
+                      text: ZachranObedStrings.consumeBy,
                       controller: _consumeByController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                     ),
                     const SizedBox(height: 15),
 
                     ZachranObedButton(
-                      text: "NABÍDNOUT POKRM",
+                      text: ZachranObedStrings.offerFood.toUpperCase(),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           print("Nabídka odeslána");

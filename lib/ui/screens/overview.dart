@@ -18,20 +18,20 @@ class _OverviewState extends State<Overview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ZachranObedStrings.overview),
+        title: const Text(ZachranObedStrings.overview),
         actions: [
           IconButton(
             onPressed: () {
               print('Bell pressed');
             },
-            icon: Icon(Icons.add_alert),
+            icon: const Icon(Icons.add_alert),
           ),
           IconButton(
             onPressed: () {
               Provider.of<User>(context, listen: false).newUser('', '');
               Navigator.of(context).pushReplacementNamed(RouteManager.login);
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           ),
         ],
       ),
@@ -83,7 +83,7 @@ class _OverviewState extends State<Overview> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Container(
               alignment: Alignment.centerLeft,
-              child: Text('Naposledy darováno'),
+              child: const Text(ZachranObedStrings.lastDonated),
             ),
           ),
           // TODO - tohle je zatím natvrdo, pak v nějakém cyklu procházet x posledních darovaných pokrmů

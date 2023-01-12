@@ -19,9 +19,19 @@ class ZachranObedStrings {
   static const statistics = 'Statistiky';
   static const menu = 'Menu';
   static const change = 'Změnit';
+  static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
   static const offer = 'Nabídnout';
+  static const offerFood = 'Nabídnout pokrm';
+  static const offerWarmFood = 'Nabídnout teplý pokrm';
+  static const offerFoodDescription = 'Pokrm nabídnete darem charitativním organizacím, které jej předají lidem v nouzi.';
+  static const foodName = 'Název pokrmu';
+  static const allergens = 'Alergeny';
+  static const numberOfServings = 'Počet porcí';
+  static const packaging = 'Balení';
+  static const consumeBy = 'Spotřebujte do';
+  static const addAnotherFood = 'Přidat další pokrm';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';

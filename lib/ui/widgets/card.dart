@@ -23,12 +23,12 @@ class _ZachranObedCardState extends State<ZachranObedCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         side: BorderSide(
           width: 2,
           color: Colors.black,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,7 +40,7 @@ class _ZachranObedCardState extends State<ZachranObedCard> {
                 Text(widget.text),
                 Text(
                   widget.measuredVariableText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
