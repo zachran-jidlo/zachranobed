@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -59,7 +60,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "Název pokrmu",
                       controller: _foodNameController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-                      inputType: TextInputType.text,
                     ),
                     const SizedBox(height: 15),
 
@@ -67,7 +67,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       text: "Alergeny",
                       controller: _allergensController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-                      inputType: TextInputType.text,
                     ),
                     const SizedBox(height: 15),
 
@@ -76,6 +75,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       controller: _servingsNumberController,
                       onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                       inputType: TextInputType.number,
+                      textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                     const SizedBox(height: 20),
 
