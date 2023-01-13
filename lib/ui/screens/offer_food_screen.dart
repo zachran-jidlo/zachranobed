@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
@@ -119,7 +120,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                               consumeBy: _consumeByController.text
                           );
                           print("Nabídka - datum vytvoření: ${offeredFood.date}, název pokrmu: ${offeredFood.name}, alergeny: ${offeredFood.allergens}, počet porcí: ${offeredFood.numberOfServings}, balení: ${offeredFood.packaging}, spotřebujte do: ${offeredFood.consumeBy}");
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed(RouteManager.thankYou);
                         }
                       },
                     ),

@@ -32,6 +32,7 @@ class ZachranObedStrings {
   static const packaging = 'Balení';
   static const consumeBy = 'Spotřebujte do';
   static const addAnotherFood = 'Přidat další pokrm';
+  static const confirmation = 'Pokrm jste \n úspěšně darovali \n \u2764 Děkujeme, že \n pomáháte.';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';

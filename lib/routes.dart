@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/ui/screens/thank_you_screen.dart';
 import 'package:zachranobed/ui/screens/home.dart';
 import 'package:zachranobed/ui/screens/login.dart';
 import 'package:zachranobed/ui/screens/offer_food_screen.dart';
@@ -9,6 +10,7 @@ class RouteManager {
   static const String login = '/login';
   static const String home = '/home';
   static const String offerFood = '/offer-food';
+  static const String thankYou = '/thank-you';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -30,6 +32,11 @@ class RouteManager {
       case offerFood:
         return MaterialPageRoute(
           builder: (context) => const OfferFoodScreen(),
+        );
+
+      case thankYou:
+        return MaterialPageRoute(
+          builder: (context) => const ThankYouScreen(),
         );
 
       default:
