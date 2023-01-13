@@ -13,7 +13,7 @@ class _StatisticsState extends State<Statistics> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ZachranObedStrings.statistics),
+        title: const Text(ZachranObedStrings.statistics),
       ),
     );
   }

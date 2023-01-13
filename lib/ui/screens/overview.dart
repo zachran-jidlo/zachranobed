@@ -4,7 +4,8 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
-import 'package:zachranobed/ui/widgets/listTile.dart';
+import 'package:zachranobed/ui/widgets/floating_button.dart';
+import 'package:zachranobed/ui/widgets/list_tile.dart';
 
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -18,20 +19,20 @@ class _OverviewState extends State<Overview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ZachranObedStrings.overview),
+        title: const Text(ZachranObedStrings.overview),
         actions: [
           IconButton(
             onPressed: () {
               print('Bell pressed');
             },
-            icon: Icon(Icons.add_alert),
+            icon: const Icon(Icons.add_alert),
           ),
           IconButton(
             onPressed: () {
               Provider.of<User>(context, listen: false).newUser('', '');
               Navigator.of(context).pushReplacementNamed(RouteManager.login);
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           ),
         ],
       ),
@@ -83,9 +84,10 @@ class _OverviewState extends State<Overview> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Container(
               alignment: Alignment.centerLeft,
-              child: Text('Naposledy darováno'),
+              child: const Text(ZachranObedStrings.lastDonated),
             ),
           ),
+          // TODO - tohle je zatím natvrdo, pak v nějakém cyklu procházet x posledních darovaných pokrmů
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: ZachranObedListTile(
@@ -121,6 +123,12 @@ class _OverviewState extends State<Overview> {
             },
           ),
         ],
+      ),
+
+      floatingActionButton: ZachranObedFloatingButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouteManager.offerFood);
+        },
       ),
     );
   }

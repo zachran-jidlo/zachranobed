@@ -13,11 +13,11 @@ class ZachranObedListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide())),
+      decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
       child: ListTile(
         title: Text(text),
         onTap: onTapped,
-        trailing: Icon(Icons.arrow_forward_ios),
+        trailing: const Icon(Icons.arrow_forward_ios),
       ),
     );
   }

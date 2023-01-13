@@ -6,8 +6,8 @@ import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
-import 'package:zachranobed/ui/widgets/clickableText.dart';
-import 'package:zachranobed/ui/widgets/textField.dart';
+import 'package:zachranobed/ui/widgets/clickable_text.dart';
+import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -53,7 +53,6 @@ class _LoginState extends State<Login> {
                     ),
                     child: Image.asset(
                       ZachranObedStrings.placeholderImagePath,
-
                     ),
                   ),
                   const SizedBox(height: 20),
