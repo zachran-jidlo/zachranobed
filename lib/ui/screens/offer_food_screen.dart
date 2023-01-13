@@ -5,6 +5,7 @@ import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
+import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -33,6 +34,21 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(ZachranObedStrings.offer),
+        leading: BackButton(
+          onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => ZachranObedDialog(
+              title: ZachranObedStrings.endOffer,
+              confirmText: ZachranObedStrings.cancelTheOffer,
+              cancelText: ZachranObedStrings.continueTheOffer,
+              onConfirmPressed: () {
+                Navigator.of(context).pop('Confirm action');
+                Navigator.of(context).pop('Perform the action');
+              },
+              onCancelPressed: () => Navigator.of(context).pop('Cancel action'),
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
