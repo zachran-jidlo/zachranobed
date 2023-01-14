@@ -149,6 +149,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         }
                       },
                     ),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),

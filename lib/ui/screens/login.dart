@@ -41,6 +41,7 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: 15),
                   SvgPicture.asset(
                     ZachranObedStrings.zjLogoPath,
                     color: ZachranObedColors.primary,
@@ -106,6 +107,7 @@ class _LoginState extends State<Login> {
                       print('Change password');
                     }
                   ),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
