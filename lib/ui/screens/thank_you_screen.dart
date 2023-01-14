@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/ui/widgets/close_button.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
 class ThankYouScreen extends StatelessWidget {
@@ -10,12 +11,31 @@ class ThankYouScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: AppBar(),
-      body: const Center(
-        child: Text(
-          ZachranObedStrings.confirmation,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                ZachranObedCloseButton(),
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 60.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      ZachranObedStrings.confirmation,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
 
