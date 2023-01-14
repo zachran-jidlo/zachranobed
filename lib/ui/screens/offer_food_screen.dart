@@ -29,6 +29,15 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final List<String> _packagingOptions = <String>['REkrabička', 'Jednorázový obal'];
 
   @override
+  void dispose() {
+    _foodNameController.dispose();
+    _allergensController.dispose();
+    _servingsNumberController.dispose();
+    _consumeByController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
