@@ -82,39 +82,27 @@ class _OverviewState extends State<Overview> {
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(ZachranObedStrings.lastDonated),
+            child: Row(
+              children: const [
+                Text(
+                  ZachranObedStrings.lastDonated,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
           // TODO - tohle je zatím natvrdo, pak v nějakém cyklu procházet x posledních darovaných pokrmů
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: ZachranObedListTile(
-              text: '31.12. Název pokrmu 00 ks',
-              onTapped: () {
-                print("Kliknuto na darovaný pokrm");
-              },
+          for (int i = 0; i < 3; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: ZachranObedListTile(
+                text: '31.12. Název pokrmu',
+                numberOfServings: 5,
+                onTapped: () {
+                  print("Kliknuto na darovaný pokrm");
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: ZachranObedListTile(
-              text: '31.12. Název pokrmu 00 ks',
-              onTapped: () {
-                print("Kliknuto na darovaný pokrm");
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: ZachranObedListTile(
-              text: '31.12. Název pokrmu 00 ks',
-              onTapped: () {
-                print("Kliknuto na darovaný pokrm");
-              },
-            ),
-          ),
 
           const SizedBox(height: 50),
           Consumer<User>(
