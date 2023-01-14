@@ -19,15 +19,15 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _rememberUser = false;
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -63,14 +63,14 @@ class _LoginState extends State<Login> {
                       children: [
                         ZachranObedTextField(
                           text: ZachranObedStrings.emailAddress,
-                          controller: emailController,
+                          controller: _emailController,
                           onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                         ),
                         const SizedBox(height: 15),
 
                         ZachranObedTextField(
                           text: ZachranObedStrings.password,
-                          controller: passwordController,
+                          controller: _passwordController,
                           obscureText: true,
                           onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
                         ),
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               Provider.of<User>(context, listen: false).newUser(
-                                  emailController.text, passwordController.text);
+                                  _emailController.text, _passwordController.text);
                               Navigator.of(context).pushReplacementNamed(RouteManager.home);
                             }
                           },
