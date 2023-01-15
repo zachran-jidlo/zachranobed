@@ -101,9 +101,7 @@ class _DonationsListState extends State<DonationsList> {
       ),
 
       floatingActionButton: ZachranObedFloatingButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(RouteManager.offerFood);
-        },
+          onPressed: () => Navigator.of(context).pushNamed(RouteManager.offerFood),
       ),
     );
   }

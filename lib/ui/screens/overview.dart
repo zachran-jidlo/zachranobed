@@ -116,9 +116,7 @@ class _OverviewState extends State<Overview> {
       ),
 
       floatingActionButton: ZachranObedFloatingButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(RouteManager.offerFood);
-        },
+        onPressed: () => Navigator.of(context).pushNamed(RouteManager.offerFood),
       ),
     );
   }

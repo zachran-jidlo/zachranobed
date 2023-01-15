@@ -42,9 +42,7 @@ class ThankYouScreen extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50.0),
         child: ZachranObedFloatingButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacementNamed(RouteManager.offerFood);
-          },
+          onPressed: () => Navigator.of(context).pushReplacementNamed(RouteManager.offerFood),
         ),
       ),
     );
