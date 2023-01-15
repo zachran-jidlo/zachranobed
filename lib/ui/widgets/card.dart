@@ -34,10 +34,10 @@ class _ZachranObedCardState extends State<ZachranObedCard> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            children: [
+            children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(widget.text),
                   Text(
                     widget.measuredVariableText,
