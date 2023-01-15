@@ -36,6 +36,7 @@ class ZachranObedStrings {
   static const endOffer = 'Ukončit nabídku?';
   static const cancelTheOffer = 'Zrušit změny';
   static const continueTheOffer = 'Pokračovat v nabídce';
+  static const filter = 'Filtrovat';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
