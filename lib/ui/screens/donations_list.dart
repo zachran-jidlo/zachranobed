@@ -32,10 +32,10 @@ class _DonationsListState extends State<DonationsList> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
-            children: [
+            children: <Widget>[
               const SizedBox(height: 10),
               Row(
-                children: [
+                children: <Widget>[
                   ElevatedButton.icon(
                     icon: const Icon(CustomIcons.filter, size: 15.0,),
                     label: const Text(ZachranObedStrings.filter),
@@ -52,7 +52,7 @@ class _DonationsListState extends State<DonationsList> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: const <Widget>[
                   Text(
                     "Tento týden",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -75,7 +75,7 @@ class _DonationsListState extends State<DonationsList> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: const <Widget>[
                   Text(
                     "Minulý týden",
                     style: TextStyle(fontWeight: FontWeight.bold),

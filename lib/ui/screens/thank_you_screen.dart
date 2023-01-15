@@ -13,10 +13,10 @@ class ThankYouScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Column(
-          children: [
+          children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
+              children: const <Widget>[
                 ZachranObedCloseButton(),
               ],
             ),
@@ -25,7 +25,7 @@ class ThankYouScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: const <Widget>[
                     Text(
                       ZachranObedStrings.confirmation,
                       textAlign: TextAlign.center,

@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: SingleChildScrollView(
               child: Column(
-                children: [
+                children: <Widget>[
                   const SizedBox(height: 15),
                   SvgPicture.asset(
                     ZachranObedStrings.zjLogoPath,
@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
                   Form(
                     key: _formKey,
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         ZachranObedTextField(
                           text: ZachranObedStrings.emailAddress,
                           controller: _emailController,

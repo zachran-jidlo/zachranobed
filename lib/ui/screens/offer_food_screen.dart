@@ -63,10 +63,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: <Widget>[
                 const SizedBox(height: 10),
                 Row(
-                  children: const [
+                  children: const <Widget>[
                     Text(
                       ZachranObedStrings.offerWarmFood,
                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
@@ -81,7 +81,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       ZachranObedTextField(
                         text: ZachranObedStrings.foodName,
                         controller: _foodNameController,

@@ -38,14 +38,14 @@ class _OverviewState extends State<Overview> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: <Widget>[
             Container(
               color: Colors.black,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(
                       'Dnes můžete darovat ještě 23 h : 59 min',
                       style: TextStyle(color: Colors.white),
@@ -59,7 +59,7 @@ class _OverviewState extends State<Overview> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
-                children: [
+                children: <Widget>[
                   ZachranObedCard(
                     text: ZachranObedStrings.savedLunches,
                     measuredVariableText: '672',
@@ -84,7 +84,7 @@ class _OverviewState extends State<Overview> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
-                children: const [
+                children: const <Widget>[
                   Text(
                     ZachranObedStrings.lastDonated,
                     style: TextStyle(fontWeight: FontWeight.bold),
