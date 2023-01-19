@@ -34,6 +34,8 @@ class _HomeState extends State<Home> {
       body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        unselectedFontSize: 12.0,
+        selectedFontSize: 12.0,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
