@@ -37,17 +37,31 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     super.dispose();
   }
 
+  bool _somethingIsFilled() {
+    if(_foodNameController.text.isNotEmpty ||
+        _allergensController.text.isNotEmpty ||
+        _servingsNumberController.text.isNotEmpty ||
+        _consumeByController.text.isNotEmpty ||
+        _selectedPackaging != "") {
+      return true;
+    }
+    return false;
+  }
+
   Future<bool> _showConfirmationDialog() async {
-    return (await showDialog(
-      context: context,
-      builder: (context) => ZachranObedDialog(
-        title: ZachranObedStrings.endOffer,
-        confirmText: ZachranObedStrings.cancelTheOffer,
-        cancelText: ZachranObedStrings.continueTheOffer,
-        onConfirmPressed: () => Navigator.of(context).pop(true),
-        onCancelPressed: () => Navigator.of(context).pop(false),
-      ),
-    )) ?? false;
+    if(_somethingIsFilled()) {
+      return (await showDialog(
+        context: context,
+        builder: (context) => ZachranObedDialog(
+          title: ZachranObedStrings.endOffer,
+          confirmText: ZachranObedStrings.cancelTheOffer,
+          cancelText: ZachranObedStrings.continueTheOffer,
+          onConfirmPressed: () => Navigator.of(context).pop(true),
+          onCancelPressed: () => Navigator.of(context).pop(false),
+        ),
+      )) ?? false;
+    }
+    return true;
   }
 
   @override
