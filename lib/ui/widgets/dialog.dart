@@ -21,19 +21,28 @@ class ZachranObedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
+      title: Center(child: Text(title)),
       content: Text(content),
       actions: <Widget>[
-        TextButton(
-          onPressed: onCancelPressed,
-          child: Text(cancelText),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+              onPressed: onCancelPressed,
+              child: Text(cancelText),
+            ),
+          ],
         ),
-        TextButton(
-          onPressed: onConfirmPressed,
-          child: Text(confirmText),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+              onPressed: onConfirmPressed,
+              child: Text(confirmText),
+            ),
+          ],
         ),
       ],
-      actionsAlignment: MainAxisAlignment.center,
     );
   }
 }
