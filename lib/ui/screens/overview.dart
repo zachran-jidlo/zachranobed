@@ -92,9 +92,9 @@ class _OverviewState extends State<Overview> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: const DonatedFoodList(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: DonatedFoodList(),
             ),
 
             const SizedBox(height: 50),
