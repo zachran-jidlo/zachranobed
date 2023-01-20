@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
-import 'package:zachranobed/ui/widgets/list_tile.dart';
 
 class Donations extends StatefulWidget {
   const Donations({Key? key}) : super(key: key);
@@ -63,14 +63,7 @@ class _DonationsState extends State<Donations> {
                   ),
                 ],
               ),
-              for (int i = 0; i < 3; i++)
-                ZachranObedListTile(
-                  text: '31.12. Název pokrmu',
-                  numberOfServings: 5,
-                  onTapped: () {
-                    print("Kliknuto na darovaný pokrm");
-                  },
-                ),
+              const DonatedFoodList(),
               const SizedBox(height: 30),
 
               Row(
@@ -86,14 +79,7 @@ class _DonationsState extends State<Donations> {
                   ),
                 ],
               ),
-              for (int i = 0; i < 3; i++)
-                ZachranObedListTile(
-                  text: '31.12. Název pokrmu',
-                  numberOfServings: 5,
-                  onTapped: () {
-                    print("Kliknuto na darovaný pokrm");
-                  },
-                ),
+              const DonatedFoodList(),
               const SizedBox(height: 15),
             ],
           ),

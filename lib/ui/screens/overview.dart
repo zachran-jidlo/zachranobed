@@ -4,8 +4,8 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
+import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
-import 'package:zachranobed/ui/widgets/list_tile.dart';
 
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -92,18 +92,10 @@ class _OverviewState extends State<Overview> {
                 ],
               ),
             ),
-            // TODO - tohle je zatím natvrdo, pak v nějakém cyklu procházet x posledních darovaných pokrmů
-            for (int i = 0; i < 3; i++)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: ZachranObedListTile(
-                  text: '31.12. Název pokrmu',
-                  numberOfServings: 5,
-                  onTapped: () {
-                    print("Kliknuto na darovaný pokrm");
-                  },
-                ),
-              ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: DonatedFoodList(),
+            ),
 
             const SizedBox(height: 50),
             Consumer<User>(

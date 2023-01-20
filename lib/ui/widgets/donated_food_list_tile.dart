@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/routes.dart';
 
-class ZachranObedListTile extends StatelessWidget {
-  const ZachranObedListTile({
+class DonatedFoodListTile extends StatelessWidget {
+
+  final OfferedFood offeredFood;
+
+  const DonatedFoodListTile({
     Key? key,
-    required this.text,
-    required this.onTapped,
-    required this.numberOfServings,
+    required this.offeredFood,
   }) : super(key: key);
-
-  final String text;
-  final VoidCallback onTapped;
-  final int numberOfServings;
 
   @override
   Widget build(BuildContext context) {
+
+    final String date = "${offeredFood.date.day.toString().padLeft(2,"0")}.${offeredFood.date.month.toString().padLeft(2,"0")}.";
+
     return Container(
       decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
       child: ListTile(
-        title: Text(text),
+        title: Text("$date ${offeredFood.name}"),
         trailing: RichText(
           text: TextSpan(
             style: DefaultTextStyle.of(context).style,
             children: [
               TextSpan(
-                text: "$numberOfServings ks",
+                text: "${offeredFood.numberOfServings} ks",
               ),
               const WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
@@ -35,7 +37,7 @@ class ZachranObedListTile extends StatelessWidget {
             ],
           ),
         ),
-        onTap: onTapped,
+        onTap: () => Navigator.of(context).pushNamed(RouteManager.donatedFoodDetail, arguments: offeredFood),
       ),
     );
   }
