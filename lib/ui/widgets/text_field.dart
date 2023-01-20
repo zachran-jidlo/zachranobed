@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ZachranObedTextField extends StatefulWidget {
+class ZachranObedTextField extends StatelessWidget {
   const ZachranObedTextField({
     Key? key,
     required this.text,
@@ -19,12 +19,6 @@ class ZachranObedTextField extends StatefulWidget {
   final TextInputType? inputType;
   final List<TextInputFormatter>? textInputFormatters;
 
-  @override
-  State<ZachranObedTextField> createState() => _ZachranObedTextFieldState();
-}
-
-class _ZachranObedTextFieldState extends State<ZachranObedTextField> {
-
   final _textFieldBorder = const OutlineInputBorder(
     borderSide: BorderSide(
       width: 2,
@@ -36,14 +30,14 @@ class _ZachranObedTextFieldState extends State<ZachranObedTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
-      obscureText: widget.obscureText,
+      controller: controller,
+      obscureText: obscureText,
       cursorColor: Colors.black,
-      validator: widget.onValidation,
-      keyboardType: widget.inputType,
-      inputFormatters: widget.textInputFormatters,
+      validator: onValidation,
+      keyboardType: inputType,
+      inputFormatters: textInputFormatters,
       decoration: InputDecoration(
-        labelText: widget.text,
+        labelText: text,
         labelStyle: TextStyle(color: Colors.grey[600]),
         enabledBorder: _textFieldBorder,
         focusedBorder: _textFieldBorder,
