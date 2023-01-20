@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
-import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
@@ -29,7 +27,6 @@ class _OverviewState extends State<Overview> {
           ),
           IconButton(
             onPressed: () {
-              Provider.of<User>(context, listen: false).newUser('', '');
               Navigator.of(context).pushReplacementNamed(RouteManager.login);
             },
             icon: const Icon(Icons.exit_to_app),
@@ -95,13 +92,6 @@ class _OverviewState extends State<Overview> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: DonatedFoodList(),
-            ),
-
-            const SizedBox(height: 50),
-            Consumer<User>(
-              builder: (context, user, child) {
-                return Text('Ahoj ${user.email}');
-              },
             ),
           ],
         ),

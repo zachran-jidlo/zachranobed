@@ -9,6 +9,7 @@ class ZachranObedStrings {
   static const emailAddress = 'E-mailová adresa';
   static const password = 'Heslo';
   static const login = 'Přihlásit se';
+  static const logout = 'Odhlásit se';
   static const forgottenPassword = 'Zapomněl/a jsem heslo';
   static const rememberUser = 'Zapamatovat';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
