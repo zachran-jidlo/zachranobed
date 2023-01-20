@@ -1,11 +1,11 @@
 class OfferedFood {
 
-  DateTime date;
-  String name;
-  String allergens;
-  int numberOfServings;
-  String packaging;
-  String consumeBy;
+  final DateTime date;
+  final String name;
+  final String allergens;
+  final int numberOfServings;
+  final String packaging;
+  final String consumeBy;
 
   OfferedFood({
     required this.date,

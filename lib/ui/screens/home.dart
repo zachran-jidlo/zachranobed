@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
-import 'package:zachranobed/ui/screens/donations_list.dart';
+import 'package:zachranobed/ui/screens/donations.dart';
 import 'package:zachranobed/ui/screens/menu.dart';
 import 'package:zachranobed/ui/screens/overview.dart';
 import 'package:zachranobed/ui/screens/statistics.dart';
@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final screens = [
     const Overview(),
-    const DonationsList(),
+    const Donations(),
     const Statistics(),
     const Menu(),
   ];
@@ -34,6 +34,8 @@ class _HomeState extends State<Home> {
       body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        unselectedFontSize: 12.0,
+        selectedFontSize: 12.0,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

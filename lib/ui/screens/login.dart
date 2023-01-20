@@ -90,8 +90,8 @@ class _LoginState extends State<Login> {
                           text: ZachranObedStrings.login.toUpperCase(),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Provider.of<User>(context, listen: false).newUser(
-                                  _emailController.text, _passwordController.text);
+                              Provider.of<User>(context, listen: false)
+                                  .newUser(_emailController.text, _passwordController.text);
                               Navigator.of(context).pushReplacementNamed(RouteManager.home);
                             }
                           },
