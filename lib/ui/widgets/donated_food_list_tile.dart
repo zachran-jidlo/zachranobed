@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/routes.dart';
 
 class DonatedFoodListTile extends StatelessWidget {
 
@@ -36,9 +37,7 @@ class DonatedFoodListTile extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () {
-          print("Kliknuto na darovaný pokrm");
-        },
+        onTap: () => Navigator.of(context).pushNamed(RouteManager.donatedFoodDetail, arguments: offeredFood),
       ),
     );
   }
