@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ZachranObedListTile extends StatelessWidget {
-  const ZachranObedListTile({
+class DonatedFoodListTile extends StatelessWidget {
+  const DonatedFoodListTile({
     Key? key,
     required this.text,
     required this.onTapped,

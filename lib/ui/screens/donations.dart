@@ -3,7 +3,7 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
-import 'package:zachranobed/ui/widgets/list_tile.dart';
+import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class Donations extends StatefulWidget {
   const Donations({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class _DonationsState extends State<Donations> {
                 ],
               ),
               for (int i = 0; i < 3; i++)
-                ZachranObedListTile(
+                DonatedFoodListTile(
                   text: '31.12. Název pokrmu',
                   numberOfServings: 5,
                   onTapped: () {
@@ -87,7 +87,7 @@ class _DonationsState extends State<Donations> {
                 ],
               ),
               for (int i = 0; i < 3; i++)
-                ZachranObedListTile(
+                DonatedFoodListTile(
                   text: '31.12. Název pokrmu',
                   numberOfServings: 5,
                   onTapped: () {

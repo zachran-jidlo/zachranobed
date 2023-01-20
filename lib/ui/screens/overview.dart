@@ -5,7 +5,7 @@ import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
-import 'package:zachranobed/ui/widgets/list_tile.dart';
+import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -96,7 +96,7 @@ class _OverviewState extends State<Overview> {
             for (int i = 0; i < 3; i++)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: ZachranObedListTile(
+                child: DonatedFoodListTile(
                   text: '31.12. Název pokrmu',
                   numberOfServings: 5,
                   onTapped: () {
