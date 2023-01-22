@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/offered_food.dart';
@@ -156,7 +157,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                                 allergens: _allergensController.text,
                                 numberOfServings: int.parse(_servingsNumberController.text),
                                 packaging: _selectedPackaging,
-                                consumeBy: _consumeByController.text
+                                consumeBy: DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text)
                             );
                             print("Nabídka - datum vytvoření: ${offeredFood.date}, název pokrmu: ${offeredFood.name}, alergeny: ${offeredFood.allergens}, počet porcí: ${offeredFood.numberOfServings}, balení: ${offeredFood.packaging}, spotřebujte do: ${offeredFood.consumeBy}");
                             Navigator.of(context).pushReplacementNamed(RouteManager.thankYou);

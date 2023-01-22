@@ -5,7 +5,7 @@ class OfferedFood {
   final String allergens;
   final int numberOfServings;
   final String packaging;
-  final String consumeBy;
+  final DateTime consumeBy;
 
   OfferedFood({
     required this.date,
@@ -16,4 +16,14 @@ class OfferedFood {
     required this.consumeBy
   });
 
+  factory OfferedFood.fromJson(Map<String, dynamic> json) {
+    return OfferedFood(
+      date: DateTime.parse(json['fields']['pridanoDne']),
+      name: json['fields']['nazevPokrmu'],
+      allergens: json['fields']['alergeny'],
+      numberOfServings: json['fields']['pocetPorci'],
+      packaging: json['fields']['baleni'],
+      consumeBy: DateTime.parse(json['fields']['spotrebujteDo'])
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:zachranobed/models/offered_food.dart';
 
 class DonatedFoodDetail extends StatelessWidget {
@@ -21,7 +22,7 @@ class DonatedFoodDetail extends StatelessWidget {
             Text("Alergeny: ${offeredFood.allergens}"),
             Text("Počet porcí: ${offeredFood.numberOfServings}"),
             Text("Balení: ${offeredFood.packaging}"),
-            Text("Spotřebujte do: ${offeredFood.consumeBy}"),
+            Text("Spotřebujte do: ${DateFormat('dd.MM.y HH:mm').format(offeredFood.consumeBy)}"),
           ],
         ),
       ),
