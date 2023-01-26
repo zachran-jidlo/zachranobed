@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 
@@ -16,9 +17,16 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => User(),
       builder: (context, child) {
-        return const MaterialApp(
+        return MaterialApp(
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: ZachranObedColors.primaryLight,
+              secondary: ZachranObedColors.primaryLight,
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity
+          ),
         );
       },
     );
