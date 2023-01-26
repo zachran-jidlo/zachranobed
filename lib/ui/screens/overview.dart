@@ -73,20 +73,12 @@ class Overview extends StatelessWidget {
             ),
             const SizedBox(height: 15),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Row(
-                children: const <Widget>[
-                  Text(
-                    ZachranObedStrings.lastDonated,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
-              child: DonatedFoodList(itemsLimit: 3),
+              child: DonatedFoodList(
+                itemsLimit: 3,
+                title: ZachranObedStrings.lastDonated,
+              ),
             ),
           ],
         ),

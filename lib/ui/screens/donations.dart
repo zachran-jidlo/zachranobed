@@ -45,36 +45,18 @@ class Donations extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text(
-                    "Tento týden",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '000 ks',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              const DonatedFoodList(
+                itemsLimit: 3,
+                title: 'Tento týden',
+                showServingsSum: true,
               ),
-              const DonatedFoodList(itemsLimit: 3),
               const SizedBox(height: 30),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text(
-                    "Minulý týden",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '000 ks',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              const DonatedFoodList(
+                itemsLimit: 3,
+                title: 'Minulý týden',
+                showServingsSum: true,
               ),
-              const DonatedFoodList(itemsLimit: 3),
               const SizedBox(height: 15),
             ],
           ),
