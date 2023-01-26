@@ -58,7 +58,7 @@ class Donations extends StatelessWidget {
                   ),
                 ],
               ),
-              const DonatedFoodList(),
+              const DonatedFoodList(itemsLimit: 3),
               const SizedBox(height: 30),
 
               Row(
@@ -74,7 +74,7 @@ class Donations extends StatelessWidget {
                   ),
                 ],
               ),
-              const DonatedFoodList(),
+              const DonatedFoodList(itemsLimit: 3),
               const SizedBox(height: 15),
             ],
           ),

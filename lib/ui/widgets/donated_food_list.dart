@@ -4,7 +4,13 @@ import 'package:zachranobed/services/API_offered_food.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {
-  const DonatedFoodList({Key? key}) : super(key: key);
+
+  final int itemsLimit;
+
+  const DonatedFoodList({
+    Key? key,
+    required this.itemsLimit,
+  }) : super(key: key);
 
   @override
   State<DonatedFoodList> createState() => _DonatedFoodListState();
@@ -17,7 +23,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
   @override
   void initState() {
     super.initState();
-    futureOfferedFood = APIofferedFood().getOfferedFoodList(3);
+    futureOfferedFood = APIofferedFood().getOfferedFoodList(widget.itemsLimit);
   }
 
   @override
