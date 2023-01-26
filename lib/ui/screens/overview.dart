@@ -5,14 +5,9 @@ import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
-class Overview extends StatefulWidget {
+class Overview extends StatelessWidget {
   const Overview({Key? key}) : super(key: key);
 
-  @override
-  State<Overview> createState() => _OverviewState();
-}
-
-class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

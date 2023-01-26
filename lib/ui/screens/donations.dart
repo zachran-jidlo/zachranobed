@@ -5,14 +5,9 @@ import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
-class Donations extends StatefulWidget {
+class Donations extends StatelessWidget {
   const Donations({Key? key}) : super(key: key);
 
-  @override
-  State<Donations> createState() => _DonationsState();
-}
-
-class _DonationsState extends State<Donations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
