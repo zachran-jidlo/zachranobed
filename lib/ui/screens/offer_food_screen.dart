@@ -154,7 +154,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         text: ZachranObedStrings.offerFood.toUpperCase(),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = APIofferedFood().createOffer(
+                            _futureResponse = ApiOfferedFood().createOffer(
                                 const Uuid().v4(),
                                 DateTime.now(),
                                 _foodNameController.text,

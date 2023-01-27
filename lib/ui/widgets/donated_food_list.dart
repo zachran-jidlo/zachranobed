@@ -28,7 +28,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
   @override
   void initState() {
     super.initState();
-    futureOfferedFood = APIofferedFood().getOfferedFoodList(widget.itemsLimit);
+    futureOfferedFood = ApiOfferedFood().getOfferedFoodList(widget.itemsLimit);
   }
 
   @override
