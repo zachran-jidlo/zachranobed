@@ -3,12 +3,16 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/close_button.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
+import 'package:http/http.dart' as http;
 
 class ThankYouScreen extends StatelessWidget {
   const ThankYouScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final response = ModalRoute.of(context)!.settings.arguments as Future<http.Response>;
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
@@ -25,11 +29,26 @@ class ThankYouScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Text(
-                      ZachranObedStrings.confirmation,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                  children: <Widget>[
+                    FutureBuilder<http.Response>(
+                      future: response,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return const Text(
+                              ZachranObedStrings.confirmation,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                          );
+                        } else if (snapshot.hasError){
+                          return const Text(
+                            ZachranObedStrings.offerError,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                          );
+                        }
+
+                        return const CircularProgressIndicator();
+                      },
                     ),
                   ],
                 ),
