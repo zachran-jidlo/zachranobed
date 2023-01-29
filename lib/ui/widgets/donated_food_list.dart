@@ -63,6 +63,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
               final List<OfferedFood> offers = snapshot.data!;
               return ListView.builder(
                 scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: offers.length,
                 itemBuilder: (context, index) {

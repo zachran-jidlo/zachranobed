@@ -60,7 +60,7 @@ class Donations extends StatelessWidget {
                 title: 'Minulý týden',
                 showServingsSum: true,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 85),
             ],
           ),
         ),

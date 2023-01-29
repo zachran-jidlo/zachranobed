@@ -80,6 +80,7 @@ class Overview extends StatelessWidget {
                 title: ZachranObedStrings.lastDonated,
               ),
             ),
+            const SizedBox(height: 85),
           ],
         ),
       ),
