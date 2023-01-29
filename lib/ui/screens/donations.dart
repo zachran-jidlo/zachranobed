@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
+import 'package:zachranobed/helpers/current_week_number.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
@@ -45,15 +46,17 @@ class Donations extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              const DonatedFoodList(
+              DonatedFoodList(
                 itemsLimit: 3,
+                filter: 'cisloTydne(eq)${currentWeekNumber()}',
                 title: 'Tento týden',
                 showServingsSum: true,
               ),
               const SizedBox(height: 30),
 
-              const DonatedFoodList(
+              DonatedFoodList(
                 itemsLimit: 3,
+                filter: 'cisloTydne(eq)${currentWeekNumber() - 1}',
                 title: 'Minulý týden',
                 showServingsSum: true,
               ),
