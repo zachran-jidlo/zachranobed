@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/API_user.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -29,6 +30,10 @@ class _LoginState extends State<Login> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<User> tryLogIn() {
+    return ApiUser().logIn(email: _emailController.text);
   }
 
   @override
@@ -88,11 +93,23 @@ class _LoginState extends State<Login> {
 
                         ZachranObedButton(
                           text: ZachranObedStrings.login.toUpperCase(),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Provider.of<User>(context, listen: false)
-                                  .newUser(_emailController.text, _passwordController.text);
-                              Navigator.of(context).pushReplacementNamed(RouteManager.home);
+                              User user = await tryLogIn();
+                              if (user.id != "") {
+                                if(context.mounted) {
+                                  Provider.of<User>(context, listen: false).newUser(user.id, user.email);
+                                  Navigator.of(context).pushReplacementNamed(RouteManager.home);
+                                }
+                              } else {
+                                if(context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Center(child: Text("Špatné přihlašovací údaje!"))),
+                                  );
+                                }
+                              }
                             }
                           },
                         ),

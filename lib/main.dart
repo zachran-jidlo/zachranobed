@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => User(),
+      create: (context) => User.empty(),
       builder: (context, child) {
         return MaterialApp(
           initialRoute: RouteManager.wrapper,

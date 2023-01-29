@@ -24,13 +24,13 @@ class DonatedFoodList extends StatefulWidget {
 
 class _DonatedFoodListState extends State<DonatedFoodList> {
 
-  late Future<List<OfferedFood>> futureOfferedFood;
-  late ValueNotifier<int> servingsSum = ValueNotifier<int>(0);
+  late Future<List<OfferedFood>> _futureOfferedFood;
+  final ValueNotifier<int> _servingsSum = ValueNotifier<int>(0);
 
   @override
   void initState() {
     super.initState();
-    futureOfferedFood = ApiOfferedFood().getOfferedFoodList(limit: widget.itemsLimit, filter: widget.filter);
+    _futureOfferedFood = ApiOfferedFood().getOfferedFoodList(limit: widget.itemsLimit, filter: widget.filter);
   }
 
   @override
@@ -46,7 +46,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
             ),
             if (widget.showServingsSum)
               ValueListenableBuilder(
-                valueListenable: servingsSum,
+                valueListenable: _servingsSum,
                 builder: (context, sum, child) {
                   return Text(
                     '${sum.toInt()} ks',
@@ -57,7 +57,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
           ],
         ),
         FutureBuilder<List<OfferedFood>>(
-          future: futureOfferedFood,
+          future: _futureOfferedFood,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<OfferedFood> offers = snapshot.data!;
@@ -68,7 +68,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
                 itemCount: offers.length,
                 itemBuilder: (context, index) {
                   Future.delayed(Duration.zero, () {
-                    servingsSum.value += offers[index].numberOfServings;
+                    _servingsSum.value += offers[index].numberOfServings;
                   });
                   return DonatedFoodListTile(offeredFood: offers[index]);
                 },
@@ -78,7 +78,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
             }
 
             return const CircularProgressIndicator();
-          }
+          },
         ),
       ],
     );
