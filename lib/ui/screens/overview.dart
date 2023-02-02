@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
-import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
@@ -77,14 +76,10 @@ class Overview extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Consumer<User>(
-                builder: (context, user, child) {
-                  return DonatedFoodList(
-                    itemsLimit: 3,
-                    filter: 'darce.id(eq)${user.internalId}',
-                    title: ZachranObedStrings.lastDonated,
-                  );
-                },
+              child: DonatedFoodList(
+                itemsLimit: 3,
+                filter: 'darce.id(eq)${getCurrentUser(context).internalId}',
+                title: ZachranObedStrings.lastDonated,
               ),
             ),
             const SizedBox(height: 85),
