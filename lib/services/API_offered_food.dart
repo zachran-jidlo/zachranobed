@@ -34,7 +34,10 @@ class ApiOfferedFood {
       String allergens,
       int numberOfServings,
       String packaging,
-      DateTime consumeBy) async {
+      DateTime consumeBy,
+      String donorID) async {
+
+    print("User internal id: $donorID");
 
     var data = {
       "fields": {
@@ -45,7 +48,10 @@ class ApiOfferedFood {
         "pocetPorci": numberOfServings,
         "baleni": packaging,
         "spotrebujteDo": consumeBy.toIso8601String(),
-        "cisloTydne": currentWeekNumber()
+        "cisloTydne": currentWeekNumber(),
+        "darce": {
+          "id": donorID
+        }
       }
     };
 

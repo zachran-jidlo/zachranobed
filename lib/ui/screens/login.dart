@@ -96,9 +96,9 @@ class _LoginState extends State<Login> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               User user = await tryLogIn();
-                              if (user.id != "") {
+                              if (user.internalId != "") {
                                 if(context.mounted) {
-                                  Provider.of<User>(context, listen: false).newUser(user.id, user.email);
+                                  Provider.of<User>(context, listen: false).newUser(user.internalId, user.email);
                                   Navigator.of(context).pushReplacementNamed(RouteManager.home);
                                 }
                               } else {

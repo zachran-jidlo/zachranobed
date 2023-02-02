@@ -81,7 +81,7 @@ class Overview extends StatelessWidget {
                 builder: (context, user, child) {
                   return DonatedFoodList(
                     itemsLimit: 3,
-                    filter: 'darce.x_ID(eq)${user.id}',
+                    filter: 'darce.id(eq)${user.internalId}',
                     title: ZachranObedStrings.lastDonated,
                   );
                 },

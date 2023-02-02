@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/API_offered_food.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -150,21 +152,26 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       const SizedBox(height: 15),
 
-                      ZachranObedButton(
-                        text: ZachranObedStrings.offerFood.toUpperCase(),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _futureResponse = ApiOfferedFood().createOffer(
-                                const Uuid().v4(),
-                                DateTime.now(),
-                                _foodNameController.text,
-                                _allergensController.text,
-                                int.parse(_servingsNumberController.text),
-                                _selectedPackaging,
-                                DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text)
-                            );
-                            Navigator.of(context).pushReplacementNamed(RouteManager.thankYou, arguments: _futureResponse);
-                          }
+                      Consumer<User>(
+                        builder: (context, user, child) {
+                          return ZachranObedButton(
+                            text: ZachranObedStrings.offerFood.toUpperCase(),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _futureResponse = ApiOfferedFood().createOffer(
+                                  const Uuid().v4(),
+                                  DateTime.now(),
+                                  _foodNameController.text,
+                                  _allergensController.text,
+                                  int.parse(_servingsNumberController.text),
+                                  _selectedPackaging,
+                                  DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+                                  user.internalId
+                                );
+                                Navigator.of(context).pushReplacementNamed(RouteManager.thankYou, arguments: _futureResponse);
+                              }
+                            },
+                          );
                         },
                       ),
                       const SizedBox(height: 15),

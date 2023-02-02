@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 
 class User extends ChangeNotifier {
 
-  String id = "";
+  String internalId = "";
   String email = "";
   String password = "";
 
   User.empty();
 
-  User.newUser({required this.id, required this.email});
+  User.newUser({required this.internalId, required this.email});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User.newUser(
-      id: json['fields']['x_ID'],
+      internalId: json['id'],
       email: json['fields']['email'],
     );
   }
 
-  void newUser(String id, String email) {
-    this.id = id;
+  void newUser(String internalId, String email) {
+    this.internalId = internalId;
     this.email = email;
     notifyListeners();
   }
