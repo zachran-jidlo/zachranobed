@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
 import 'package:zachranobed/helpers/current_week_number.dart';
+import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
@@ -46,19 +48,27 @@ class Donations extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter: 'cisloTydne(eq)${currentWeekNumber()}',
-                title: 'Tento týden',
-                showServingsSum: true,
+              Consumer<User>(
+                builder: (context, user, child) {
+                  return DonatedFoodList(
+                    itemsLimit: 3,
+                    filter: 'cisloTydne(eq)${currentWeekNumber()},darce.x_ID(eq)${user.id}',
+                    title: 'Tento týden',
+                    showServingsSum: true,
+                  );
+                },
               ),
               const SizedBox(height: 30),
 
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter: 'cisloTydne(eq)${currentWeekNumber() - 1}',
-                title: 'Minulý týden',
-                showServingsSum: true,
+              Consumer<User>(
+                builder: (context, user, child) {
+                  return DonatedFoodList(
+                    itemsLimit: 3,
+                    filter: 'cisloTydne(eq)${currentWeekNumber() - 1},darce.x_ID(eq)${user.id}',
+                    title: 'Minulý týden',
+                    showServingsSum: true,
+                  );
+                },
               ),
               const SizedBox(height: 85),
             ],
