@@ -3,6 +3,7 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
+import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
@@ -38,11 +39,8 @@ class Overview extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Dnes můžete darovat ještě 23 h : 59 min',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  children: const <Widget>[
+                    DonationCountdownTimer(),
                   ],
                 ),
               ),

@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                               User user = await tryLogIn();
                               if (user.internalId != "") {
                                 if(context.mounted) {
-                                  Provider.of<User>(context, listen: false).newUser(user.internalId, user.email);
+                                  Provider.of<User>(context, listen: false).newUser(user.internalId, user.email, user.pickUpFrom);
                                   Navigator.of(context).pushReplacementNamed(RouteManager.home);
                                 }
                               } else {

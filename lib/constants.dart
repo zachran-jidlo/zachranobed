@@ -20,6 +20,8 @@ class ZachranObedStrings {
   static const statistics = 'Statistiky';
   static const menu = 'Menu';
   static const change = 'Změnit';
+  static const youCanDonate = 'Dnes můžete darovat ještě';
+  static const youCantDonateAnymore = "Dnes již nemůžete darovat";
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
