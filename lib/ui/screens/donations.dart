@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
+import 'package:zachranobed/helpers/current_user.dart';
+import 'package:zachranobed/helpers/current_week_number.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
-class Donations extends StatefulWidget {
+class Donations extends StatelessWidget {
   const Donations({Key? key}) : super(key: key);
 
-  @override
-  State<Donations> createState() => _DonationsState();
-}
-
-class _DonationsState extends State<Donations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,37 +47,21 @@ class _DonationsState extends State<Donations> {
               ),
               const SizedBox(height: 30),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text(
-                    "Tento týden",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '000 ks',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              DonatedFoodList(
+                itemsLimit: 3,
+                filter: 'cisloTydne(eq)${currentWeekNumber()},darce.id(eq)${getCurrentUser(context).internalId}',
+                title: 'Tento týden',
+                showServingsSum: true,
               ),
-              const DonatedFoodList(),
               const SizedBox(height: 30),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Text(
-                    "Minulý týden",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '000 ks',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              DonatedFoodList(
+                itemsLimit: 3,
+                filter: 'cisloTydne(eq)${currentWeekNumber() - 1},darce.id(eq)${getCurrentUser(context).internalId}',
+                title: 'Minulý týden',
+                showServingsSum: true,
               ),
-              const DonatedFoodList(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 85),
             ],
           ),
         ),

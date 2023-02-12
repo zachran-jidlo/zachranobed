@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
 import 'package:zachranobed/constants.dart';
-import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/API_offered_food.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
+import 'package:http/http.dart' as http;
 
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({Key? key}) : super(key: key);
@@ -17,6 +21,8 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
+  Future<http.Response>? _futureResponse;
+
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _foodNameController = TextEditingController();
@@ -149,17 +155,17 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         text: ZachranObedStrings.offerFood.toUpperCase(),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print("Nabídka odeslána");
-                            OfferedFood offeredFood = OfferedFood(
-                                date: DateTime.now(),
-                                name: _foodNameController.text,
-                                allergens: _allergensController.text,
-                                numberOfServings: int.parse(_servingsNumberController.text),
-                                packaging: _selectedPackaging,
-                                consumeBy: _consumeByController.text
+                            _futureResponse = ApiOfferedFood().createOffer(
+                                const Uuid().v4(),
+                                DateTime.now(),
+                                _foodNameController.text,
+                                _allergensController.text,
+                                int.parse(_servingsNumberController.text),
+                                _selectedPackaging,
+                                DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+                                getCurrentUser(context).internalId
                             );
-                            print("Nabídka - datum vytvoření: ${offeredFood.date}, název pokrmu: ${offeredFood.name}, alergeny: ${offeredFood.allergens}, počet porcí: ${offeredFood.numberOfServings}, balení: ${offeredFood.packaging}, spotřebujte do: ${offeredFood.consumeBy}");
-                            Navigator.of(context).pushReplacementNamed(RouteManager.thankYou);
+                            Navigator.of(context).pushReplacementNamed(RouteManager.thankYou, arguments: _futureResponse);
                           }
                         },
                       ),

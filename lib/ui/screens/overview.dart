@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
+import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
-class Overview extends StatefulWidget {
+class Overview extends StatelessWidget {
   const Overview({Key? key}) : super(key: key);
 
-  @override
-  State<Overview> createState() => _OverviewState();
-}
-
-class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +39,8 @@ class _OverviewState extends State<Overview> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Dnes můžete darovat ještě 23 h : 59 min',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  children: const <Widget>[
+                    DonationCountdownTimer(),
                   ],
                 ),
               ),
@@ -80,19 +74,13 @@ class _OverviewState extends State<Overview> {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Row(
-                children: const <Widget>[
-                  Text(
-                    ZachranObedStrings.lastDonated,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              child: DonatedFoodList(
+                itemsLimit: 3,
+                filter: 'darce.id(eq)${getCurrentUser(context).internalId}',
+                title: ZachranObedStrings.lastDonated,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.0),
-              child: DonatedFoodList(),
-            ),
+            const SizedBox(height: 85),
           ],
         ),
       ),

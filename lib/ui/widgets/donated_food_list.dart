@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/services/API_offered_food.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {
-  const DonatedFoodList({Key? key}) : super(key: key);
+
+  final int itemsLimit;
+  final String filter;
+  final String title;
+  final bool showServingsSum;
+
+  const DonatedFoodList({
+    Key? key,
+    required this.itemsLimit,
+    this.filter = '',
+    required this.title,
+    this.showServingsSum = false,
+  }) : super(key: key);
 
   @override
   State<DonatedFoodList> createState() => _DonatedFoodListState();
@@ -11,22 +24,63 @@ class DonatedFoodList extends StatefulWidget {
 
 class _DonatedFoodListState extends State<DonatedFoodList> {
 
-  // TODO - zatím natvrdo, pak tahat z databáze
-  final List<OfferedFood> offeredFood = [
-    OfferedFood(date: DateTime.now(), name: "Svíčková", allergens: "1, 2", numberOfServings: 7, packaging: 'Rekrabička', consumeBy: '22.01.2023 12:00'),
-    OfferedFood(date: DateTime.now(), name: "Guláš", allergens: "1, 3, 5", numberOfServings: 5, packaging: 'Jednorázový obal', consumeBy: '22.01.2023 12:00'),
-    OfferedFood(date: DateTime.now(), name: "Těstoviny", allergens: "1, 2", numberOfServings: 12, packaging: 'Jednorázový obal', consumeBy: '22.01.2023 12:00')
-  ];
+  late Future<List<OfferedFood>> _futureOfferedFood;
+  final ValueNotifier<int> _servingsSum = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _futureOfferedFood = ApiOfferedFood().getOfferedFoodList(limit: widget.itemsLimit, filter: widget.filter);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: offeredFood.length,
-      itemBuilder: (context, index) {
-        return DonatedFoodListTile(offeredFood: offeredFood[index]);
-      },
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              widget.title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            if (widget.showServingsSum)
+              ValueListenableBuilder(
+                valueListenable: _servingsSum,
+                builder: (context, sum, child) {
+                  return Text(
+                    '${sum.toInt()} ks',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  );
+                },
+              ),
+          ],
+        ),
+        FutureBuilder<List<OfferedFood>>(
+          future: _futureOfferedFood,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final List<OfferedFood> offers = snapshot.data!;
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: offers.length,
+                itemBuilder: (context, index) {
+                  Future.delayed(Duration.zero, () {
+                    _servingsSum.value += offers[index].numberOfServings;
+                  });
+                  return DonatedFoodListTile(offeredFood: offers[index]);
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            return const CircularProgressIndicator();
+          },
+        ),
+      ],
     );
   }
 }
