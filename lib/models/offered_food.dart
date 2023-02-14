@@ -7,6 +7,7 @@ class OfferedFood {
   final int numberOfServings;
   final String packaging;
   final DateTime consumeBy;
+  final String donorId;
 
   OfferedFood({
     required this.id,
@@ -15,7 +16,8 @@ class OfferedFood {
     required this.allergens,
     required this.numberOfServings,
     required this.packaging,
-    required this.consumeBy
+    required this.consumeBy,
+    required this.donorId
   });
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) {
@@ -26,7 +28,8 @@ class OfferedFood {
       allergens: json['fields']['alergeny'],
       numberOfServings: json['fields']['pocetPorci'],
       packaging: json['fields']['baleni'],
-      consumeBy: DateTime.parse(json['fields']['spotrebujteDo'])
+      consumeBy: DateTime.parse(json['fields']['spotrebujteDo']),
+      donorId: json['fields']['darce']['id']
     );
   }
 }
