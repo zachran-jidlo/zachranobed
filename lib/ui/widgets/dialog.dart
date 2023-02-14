@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedDialog extends StatelessWidget {
+
+  final String title;
+  final String content;
+  final String confirmText;
+  final String cancelText;
+  final VoidCallback onConfirmPressed;
+  final VoidCallback onCancelPressed;
+
   const ZachranObedDialog({
     Key? key,
     required this.title,
@@ -10,13 +18,6 @@ class ZachranObedDialog extends StatelessWidget {
     required this.onConfirmPressed,
     required this.onCancelPressed,
   }) : super(key: key);
-
-  final String title;
-  final String content;
-  final String confirmText;
-  final String cancelText;
-  final VoidCallback onConfirmPressed;
-  final VoidCallback onCancelPressed;
 
   @override
   Widget build(BuildContext context) {

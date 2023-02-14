@@ -37,8 +37,6 @@ class ApiOfferedFood {
       DateTime consumeBy,
       String donorID) async {
 
-    print("User internal id: $donorID");
-
     var data = {
       "fields": {
         "x_ID": id,

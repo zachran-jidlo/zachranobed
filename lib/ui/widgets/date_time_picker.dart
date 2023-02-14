@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedDateTimePicker extends StatefulWidget {
+
+  final String text;
+  final TextEditingController controller;
+  final String? Function(String?)? onValidation;
+
   const ZachranObedDateTimePicker({
     Key? key,
     required this.text,
     required this.controller,
     this.onValidation,
   }) : super(key: key);
-
-  final String text;
-  final TextEditingController controller;
-  final String? Function(String?)? onValidation;
 
   @override
   State<ZachranObedDateTimePicker> createState() => _ZachranObedDateTimePickerState();
@@ -87,7 +88,7 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
           disabledBorder: _dateTimePickerBorder,
           errorBorder: _dateTimePickerErrorBorder,
           errorStyle: TextStyle(
-            color: Theme.of(context).errorColor,
+            color: Theme.of(context).colorScheme.error,
           ),
         ),
       ),
