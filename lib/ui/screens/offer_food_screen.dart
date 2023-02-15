@@ -139,7 +139,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onValidation: (val) => val == null ? ZachranObedStrings.requiredDropdownError : null,
                         onChanged: (String value) {
                           _selectedPackaging = value;
-                          print(_selectedPackaging);
                         },
                       ),
                       const SizedBox(height: 15),

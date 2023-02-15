@@ -7,6 +7,7 @@ class OfferedFood {
   final int numberOfServings;
   final String packaging;
   final DateTime consumeBy;
+  final int weekNumber;
   final String donorId;
 
   OfferedFood({
@@ -17,6 +18,7 @@ class OfferedFood {
     required this.numberOfServings,
     required this.packaging,
     required this.consumeBy,
+    required this.weekNumber,
     required this.donorId
   });
 
@@ -29,7 +31,24 @@ class OfferedFood {
       numberOfServings: json['fields']['pocetPorci'],
       packaging: json['fields']['baleni'],
       consumeBy: DateTime.parse(json['fields']['spotrebujteDo']),
+      weekNumber: json['fields']['cisloTydne'],
       donorId: json['fields']['darce']['id']
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'fields': {
+      'x_ID': id,
+      'pridanoDne': date.toIso8601String(),
+      'nazevPokrmu': name,
+      'alergeny': allergens,
+      'pocetPorci': numberOfServings,
+      'baleni': packaging,
+      'spotrebujteDo': consumeBy.toIso8601String(),
+      'cisloTydne': weekNumber,
+      'darce': {
+        'id': donorId,
+      }
+    },
+  };
 }

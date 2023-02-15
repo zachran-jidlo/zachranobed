@@ -35,23 +35,19 @@ class ApiOfferedFood {
       int numberOfServings,
       String packaging,
       DateTime consumeBy,
-      String donorID) async {
+      String donorId) async {
 
-    var data = {
-      "fields": {
-        "x_ID": id,
-        "pridanoDne": date.toIso8601String(),
-        "nazevPokrmu": name,
-        "alergeny": allergens,
-        "pocetPorci": numberOfServings,
-        "baleni": packaging,
-        "spotrebujteDo": consumeBy.toIso8601String(),
-        "cisloTydne": currentWeekNumber(),
-        "darce": {
-          "id": donorID
-        }
-      }
-    };
+    final offeredFood = OfferedFood(
+        id: id,
+        date: date,
+        name: name,
+        allergens: allergens,
+        numberOfServings: numberOfServings,
+        packaging: packaging,
+        consumeBy: consumeBy,
+        weekNumber: currentWeekNumber(),
+        donorId: donorId
+    );
 
     final response = await http.post(
       Uri.parse('$_urlBase/zachranobed_test/tables/nabidka_2/data'),
@@ -59,7 +55,7 @@ class ApiOfferedFood {
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },
-      body: jsonEncode(data),
+      body: jsonEncode(offeredFood.toJson()),
     );
 
     if (response.statusCode == 201 || response.statusCode == 200) {
