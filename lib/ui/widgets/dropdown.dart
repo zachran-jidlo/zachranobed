@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedDropdown extends StatefulWidget {
+
+  final String hintText;
+  final List<String> items;
+  final String? Function(String?)? onValidation;
+  final Function(String) onChanged;
+
   const ZachranObedDropdown({
     Key? key,
     required this.hintText,
@@ -8,11 +14,6 @@ class ZachranObedDropdown extends StatefulWidget {
     this.onValidation,
     required this.onChanged
   }) : super(key: key);
-
-  final String hintText;
-  final List<String> items;
-  final String? Function(String?)? onValidation;
-  final Function(String) onChanged;
 
   @override
   State<ZachranObedDropdown> createState() => _ZachranObedDropdownState();

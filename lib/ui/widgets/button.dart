@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/constants.dart';
 
 class ZachranObedButton extends StatelessWidget {
+
+  final String text;
+  final VoidCallback onPressed;
+
   const ZachranObedButton({
     Key? key,
     required this.text,
     required this.onPressed,
   }) : super(key: key);
-
-  final String text;
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

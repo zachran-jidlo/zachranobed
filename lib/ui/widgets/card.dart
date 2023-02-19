@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedCard extends StatefulWidget {
+
+  final String text;
+  final String measuredVariableText;
+  final String buttonText;
+  final VoidCallback onPressed;
+
   const ZachranObedCard({
     Key? key,
     required this.text,
@@ -8,11 +14,6 @@ class ZachranObedCard extends StatefulWidget {
     required this.buttonText,
     required this.onPressed
   }) : super(key: key);
-
-  final String text;
-  final String measuredVariableText;
-  final String buttonText;
-  final VoidCallback onPressed;
 
   @override
   State<ZachranObedCard> createState() => _ZachranObedCardState();
