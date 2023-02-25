@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,12 +21,11 @@ class MyApp extends StatelessWidget {
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: ZachranObedColors.primaryLight,
-              secondary: ZachranObedColors.primaryLight,
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity
-          ),
+              colorScheme: ColorScheme.fromSwatch().copyWith(
+                primary: ZachranObedColors.primaryLight,
+                secondary: ZachranObedColors.primaryLight,
+              ),
+              visualDensity: VisualDensity.adaptivePlatformDensity),
         );
       },
     );

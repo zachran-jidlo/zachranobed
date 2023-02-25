@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class User extends ChangeNotifier {
-
-  String internalId = "";
-  String email = "";
-  String password = "";
-  String pickUpFrom = "";
+  String internalId = '';
+  String email = '';
+  String password = '';
+  String pickUpFrom = '';
 
   User.empty();
 
-  User.newUser({required this.internalId, required this.email, required this.pickUpFrom});
+  User.newUser(
+      {required this.internalId,
+      required this.email,
+      required this.pickUpFrom});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User.newUser(

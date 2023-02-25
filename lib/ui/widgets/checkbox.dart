@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedCheckbox extends StatelessWidget {
-
   final String text;
   final bool isChecked;
   final ValueChanged<bool> whatIsChecked;

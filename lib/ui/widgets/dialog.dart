@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedDialog extends StatelessWidget {
-
   final String title;
   final String content;
   final String confirmText;
@@ -12,7 +11,7 @@ class ZachranObedDialog extends StatelessWidget {
   const ZachranObedDialog({
     Key? key,
     required this.title,
-    this.content = "",
+    this.content = '',
     required this.confirmText,
     required this.cancelText,
     required this.onConfirmPressed,
@@ -28,19 +27,13 @@ class ZachranObedDialog extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextButton(
-              onPressed: onCancelPressed,
-              child: Text(cancelText),
-            ),
+            TextButton(onPressed: onCancelPressed, child: Text(cancelText)),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextButton(
-              onPressed: onConfirmPressed,
-              child: Text(confirmText),
-            ),
+            TextButton(onPressed: onConfirmPressed, child: Text(confirmText)),
           ],
         ),
       ],

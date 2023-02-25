@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/API_user.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -52,78 +52,76 @@ class _LoginState extends State<Login> {
                     color: ZachranObedColors.primary,
                   ),
                   const SizedBox(height: 20),
-
                   Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2)
-                    ),
-                    child: Image.asset(
-                      ZachranObedStrings.placeholderImagePath,
-                    ),
+                    decoration: BoxDecoration(border: Border.all(width: 2)),
+                    child: Image.asset(ZachranObedStrings.placeholderImagePath),
                   ),
                   const SizedBox(height: 20),
-
                   Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        ZachranObedTextField(
-                          text: ZachranObedStrings.emailAddress,
-                          controller: _emailController,
-                          onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-                        ),
-                        const SizedBox(height: 15),
-
-                        ZachranObedTextField(
-                          text: ZachranObedStrings.password,
-                          controller: _passwordController,
-                          obscureText: true,
-                          onValidation: (val) => val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-                        ),
-                        const SizedBox(height: 10),
-
-                        ZachranObedCheckbox(
-                          text: ZachranObedStrings.rememberUser,
-                          isChecked: _rememberUser,
-                          whatIsChecked: (bool value) => setState(() {
-                            _rememberUser = value;
-                            print(_rememberUser);
-                          })
-                        ),
-
-                        ZachranObedButton(
-                          text: ZachranObedStrings.login.toUpperCase(),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              User user = await tryLogIn();
-                              if (user.internalId != "") {
-                                if(context.mounted) {
-                                  Provider.of<User>(context, listen: false).newUser(user.internalId, user.email, user.pickUpFrom);
-                                  Navigator.of(context).pushReplacementNamed(RouteManager.home);
-                                }
-                              } else {
-                                if(context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Center(child: Text("Špatné přihlašovací údaje!"))),
-                                  );
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          ZachranObedTextField(
+                            text: ZachranObedStrings.emailAddress,
+                            controller: _emailController,
+                            onValidation: (val) => val!.isEmpty
+                                ? ZachranObedStrings.requiredFieldError
+                                : null,
+                          ),
+                          const SizedBox(height: 15),
+                          ZachranObedTextField(
+                            text: ZachranObedStrings.password,
+                            controller: _passwordController,
+                            obscureText: true,
+                            onValidation: (val) => val!.isEmpty
+                                ? ZachranObedStrings.requiredFieldError
+                                : null,
+                          ),
+                          const SizedBox(height: 10),
+                          ZachranObedCheckbox(
+                              text: ZachranObedStrings.rememberUser,
+                              isChecked: _rememberUser,
+                              whatIsChecked: (bool value) => setState(() {
+                                    _rememberUser = value;
+                                    print(_rememberUser);
+                                  })),
+                          ZachranObedButton(
+                            text: ZachranObedStrings.login.toUpperCase(),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                User user = await tryLogIn();
+                                if (user.internalId != '') {
+                                  if (context.mounted) {
+                                    Provider.of<User>(context, listen: false)
+                                        .newUser(user.internalId, user.email,
+                                            user.pickUpFrom);
+                                    Navigator.of(context).pushReplacementNamed(
+                                        RouteManager.home);
+                                  }
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Center(
+                                          child: Text(
+                                              'Špatné přihlašovací údaje!'),
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 }
                               }
-                            }
-                          },
-                        ),
-                      ],
-                    )
-                  ),
+                            },
+                          ),
+                        ],
+                      )),
                   const SizedBox(height: 15),
-
                   ZachranObedClickableText(
-                    text: ZachranObedStrings.forgottenPassword,
-                    onTap: () {
-                      print('Change password');
-                    }
-                  ),
+                      text: ZachranObedStrings.forgottenPassword,
+                      onTap: () {
+                        print('Change password');
+                      }),
                   const SizedBox(height: 15),
                 ],
               ),
