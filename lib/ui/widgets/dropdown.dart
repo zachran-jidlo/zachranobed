@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedDropdown extends StatefulWidget {
   final String hintText;
@@ -19,11 +20,6 @@ class ZachranObedDropdown extends StatefulWidget {
 }
 
 class _ZachranObedDropdownState extends State<ZachranObedDropdown> {
-  final _dropdownBorder = const OutlineInputBorder(
-    borderSide: BorderSide(width: 2, color: Colors.black),
-    borderRadius: BorderRadius.zero,
-  );
-
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
@@ -38,9 +34,9 @@ class _ZachranObedDropdownState extends State<ZachranObedDropdown> {
           widget.onChanged(value!);
         });
       },
-      decoration: InputDecoration(
-        enabledBorder: _dropdownBorder,
-        focusedBorder: _dropdownBorder,
+      decoration: const InputDecoration(
+        enabledBorder: WidgetStyle.inputBorder,
+        focusedBorder: WidgetStyle.inputBorder,
       ),
     );
   }

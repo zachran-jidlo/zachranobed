@@ -48,3 +48,10 @@ class ZachranObedStrings {
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
 }
+
+class WidgetStyle {
+  static const inputBorder = OutlineInputBorder(
+    borderSide: BorderSide(width: 2, color: Colors.black),
+    borderRadius: BorderRadius.zero,
+  );
+}

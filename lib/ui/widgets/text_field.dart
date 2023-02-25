@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedTextField extends StatelessWidget {
   final String text;
@@ -19,11 +20,6 @@ class ZachranObedTextField extends StatelessWidget {
     this.textInputFormatters,
   }) : super(key: key);
 
-  final _textFieldBorder = const OutlineInputBorder(
-    borderSide: BorderSide(width: 2, color: Colors.black),
-    borderRadius: BorderRadius.zero,
-  );
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -36,8 +32,8 @@ class ZachranObedTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: text,
         labelStyle: TextStyle(color: Colors.grey[600]),
-        enabledBorder: _textFieldBorder,
-        focusedBorder: _textFieldBorder,
+        enabledBorder: WidgetStyle.inputBorder,
+        focusedBorder: WidgetStyle.inputBorder,
       ),
     );
   }

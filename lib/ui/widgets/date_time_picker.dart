@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedDateTimePicker extends StatefulWidget {
   final String text;
@@ -60,11 +61,6 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
     });
   }
 
-  final _dateTimePickerBorder = const OutlineInputBorder(
-    borderSide: BorderSide(width: 2, color: Colors.black),
-    borderRadius: BorderRadius.zero,
-  );
-
   final _dateTimePickerErrorBorder = const UnderlineInputBorder(
     borderSide: BorderSide(color: Color(0xffd32f2f)),
   );
@@ -80,7 +76,7 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
         decoration: InputDecoration(
           labelText: widget.text,
           labelStyle: TextStyle(color: Colors.grey[600]),
-          disabledBorder: _dateTimePickerBorder,
+          disabledBorder: WidgetStyle.inputBorder,
           errorBorder: _dateTimePickerErrorBorder,
           errorStyle: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
