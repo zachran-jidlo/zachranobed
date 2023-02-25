@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/helpers/current_user.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
   const DonationCountdownTimer({Key? key}) : super(key: key);

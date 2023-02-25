@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/screens/donations.dart';
 import 'package:zachranobed/ui/screens/menu.dart';
 import 'package:zachranobed/ui/screens/overview.dart';

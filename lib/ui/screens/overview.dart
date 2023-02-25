@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';

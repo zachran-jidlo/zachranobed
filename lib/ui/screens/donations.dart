@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/custom_icons.dart';
 import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/helpers/current_week_number.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 

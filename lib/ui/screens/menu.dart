@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);

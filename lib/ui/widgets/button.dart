@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/constants.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedButton extends StatelessWidget {
   final String text;

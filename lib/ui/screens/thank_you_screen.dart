@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/close_button.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
