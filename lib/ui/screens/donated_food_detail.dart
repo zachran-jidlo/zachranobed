@@ -7,24 +7,25 @@ class DonatedFoodDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final offeredFood = ModalRoute.of(context)!.settings.arguments as OfferedFood;
+    final offeredFood =
+        ModalRoute.of(context)!.settings.arguments as OfferedFood;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Detail daru"),
+        title: const Text('Detail daru'),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text("Název pokrmu: ${offeredFood.name}"),
-            Text("Alergeny: ${offeredFood.allergens}"),
-            Text("Počet porcí: ${offeredFood.numberOfServings}"),
-            Text("Balení: ${offeredFood.packaging}"),
-            Text("Spotřebujte do: ${DateFormat('dd.MM.y HH:mm').format(offeredFood.consumeBy)}"),
-            Text("Číslo týdne: ${offeredFood.weekNumber}"),
-            Text("Id dárce: ${offeredFood.donorId}"),
+            Text('Název pokrmu: ${offeredFood.name}'),
+            Text('Alergeny: ${offeredFood.allergens}'),
+            Text('Počet porcí: ${offeredFood.numberOfServings}'),
+            Text('Balení: ${offeredFood.packaging}'),
+            Text(
+                'Spotřebujte do: ${DateFormat('dd.MM.y HH:mm').format(offeredFood.consumeBy)}'),
+            Text('Číslo týdne: ${offeredFood.weekNumber}'),
+            Text('Id dárce: ${offeredFood.donorId}'),
           ],
         ),
       ),

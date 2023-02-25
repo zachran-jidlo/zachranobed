@@ -13,7 +13,8 @@ class Menu extends StatelessWidget {
         title: Text(getCurrentUser(context).email),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pushReplacementNamed(RouteManager.login),
+            onPressed: () =>
+                Navigator.of(context).pushReplacementNamed(RouteManager.login),
             child: const Text(
               ZachranObedStrings.logout,
               style: TextStyle(color: Colors.white),
@@ -22,10 +23,7 @@ class Menu extends StatelessWidget {
         ],
       ),
       body: const Center(
-        child: Text(
-          'Menu',
-          style: TextStyle(fontSize: 32),
-        ),
+        child: Text('Menu', style: TextStyle(fontSize: 32)),
       ),
     );
   }

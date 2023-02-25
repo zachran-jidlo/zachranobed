@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedFloatingButton extends StatelessWidget {
-
   final VoidCallback onPressed;
 
   const ZachranObedFloatingButton({

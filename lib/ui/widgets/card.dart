@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedCard extends StatefulWidget {
-
   final String text;
   final String measuredVariableText;
   final String buttonText;
   final VoidCallback onPressed;
 
-  const ZachranObedCard({
-    Key? key,
-    required this.text,
-    required this.measuredVariableText,
-    required this.buttonText,
-    required this.onPressed
-  }) : super(key: key);
+  const ZachranObedCard(
+      {Key? key,
+      required this.text,
+      required this.measuredVariableText,
+      required this.buttonText,
+      required this.onPressed})
+      : super(key: key);
 
   @override
   State<ZachranObedCard> createState() => _ZachranObedCardState();
@@ -26,10 +25,7 @@ class _ZachranObedCardState extends State<ZachranObedCard> {
       child: Card(
         elevation: 0,
         shape: const RoundedRectangleBorder(
-          side: BorderSide(
-            width: 2,
-            color: Colors.black,
-          ),
+          side: BorderSide(width: 2, color: Colors.black),
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Padding(

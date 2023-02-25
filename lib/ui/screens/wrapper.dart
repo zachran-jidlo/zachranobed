@@ -11,18 +11,17 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadUserInfo();
     });
   }
 
   _loadUserInfo() {
     User user = context.read<User>();
-    if (user.email == "") {
+    if (user.email == '') {
       Navigator.of(context).pushReplacementNamed(RouteManager.login);
     } else {
       Navigator.of(context).pushReplacementNamed(RouteManager.home);
@@ -31,6 +30,10 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

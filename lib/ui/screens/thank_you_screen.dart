@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/close_button.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
-import 'package:http/http.dart' as http;
 
 class ThankYouScreen extends StatelessWidget {
   const ThankYouScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    final response = ModalRoute.of(context)!.settings.arguments as Future<http.Response>;
+    final response =
+        ModalRoute.of(context)!.settings.arguments as Future<http.Response>;
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -20,9 +20,7 @@ class ThankYouScreen extends StatelessWidget {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const <Widget>[
-                ZachranObedCloseButton(),
-              ],
+              children: const <Widget>[ZachranObedCloseButton()],
             ),
             Expanded(
               child: Padding(
@@ -35,15 +33,17 @@ class ThankYouScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return const Text(
-                              ZachranObedStrings.confirmation,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                            ZachranObedStrings.confirmation,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
                           );
-                        } else if (snapshot.hasError){
+                        } else if (snapshot.hasError) {
                           return const Text(
                             ZachranObedStrings.offerError,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
                           );
                         }
 
@@ -57,11 +57,11 @@ class ThankYouScreen extends StatelessWidget {
           ],
         ),
       ),
-
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50.0),
         child: ZachranObedFloatingButton(
-          onPressed: () => Navigator.of(context).pushReplacementNamed(RouteManager.offerFood),
+          onPressed: () => Navigator.of(context)
+              .pushReplacementNamed(RouteManager.offerFood),
         ),
       ),
     );

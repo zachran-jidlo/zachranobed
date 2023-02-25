@@ -3,7 +3,6 @@ import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes.dart';
 
 class DonatedFoodListTile extends StatelessWidget {
-
   final OfferedFood offeredFood;
 
   const DonatedFoodListTile({
@@ -13,20 +12,18 @@ class DonatedFoodListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final String date = "${offeredFood.date.day.toString().padLeft(2,"0")}.${offeredFood.date.month.toString().padLeft(2,"0")}.";
+    final String date =
+        '${offeredFood.date.day.toString().padLeft(2, '0')}.${offeredFood.date.month.toString().padLeft(2, '0')}.';
 
     return Container(
       decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
       child: ListTile(
-        title: Text("$date ${offeredFood.name}"),
+        title: Text('$date ${offeredFood.name}'),
         trailing: RichText(
           text: TextSpan(
             style: DefaultTextStyle.of(context).style,
             children: [
-              TextSpan(
-                text: "${offeredFood.numberOfServings} ks",
-              ),
+              TextSpan(text: '${offeredFood.numberOfServings} ks'),
               const WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
                 child: Padding(
@@ -37,7 +34,8 @@ class DonatedFoodListTile extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () => Navigator.of(context).pushNamed(RouteManager.donatedFoodDetail, arguments: offeredFood),
+        onTap: () => Navigator.of(context)
+            .pushNamed(RouteManager.donatedFoodDetail, arguments: offeredFood),
       ),
     );
   }

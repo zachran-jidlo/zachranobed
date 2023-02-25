@@ -3,8 +3,8 @@ import 'package:zachranobed/constants.dart';
 import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
-import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
+import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
 class Overview extends StatelessWidget {
@@ -46,7 +46,6 @@ class Overview extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -56,7 +55,7 @@ class Overview extends StatelessWidget {
                     measuredVariableText: '672',
                     buttonText: ZachranObedStrings.statistics,
                     onPressed: () {
-                      print("Jdu na statistiky");
+                      print('Jdu na statistiky');
                     },
                   ),
                   ZachranObedCard(
@@ -64,14 +63,13 @@ class Overview extends StatelessWidget {
                     measuredVariableText: '32/100',
                     buttonText: ZachranObedStrings.change,
                     onPressed: () {
-                      print("Jdu změnit počet krabiček");
+                      print('Jdu změnit počet krabiček');
                     },
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 15),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: DonatedFoodList(
@@ -84,9 +82,9 @@ class Overview extends StatelessWidget {
           ],
         ),
       ),
-
       floatingActionButton: ZachranObedFloatingButton(
-        onPressed: () => Navigator.of(context).pushNamed(RouteManager.offerFood),
+        onPressed: () =>
+            Navigator.of(context).pushNamed(RouteManager.offerFood),
       ),
     );
   }

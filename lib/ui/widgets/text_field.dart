@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ZachranObedTextField extends StatelessWidget {
-
   final String text;
   final bool obscureText;
   final TextEditingController controller;
@@ -21,10 +20,7 @@ class ZachranObedTextField extends StatelessWidget {
   }) : super(key: key);
 
   final _textFieldBorder = const OutlineInputBorder(
-    borderSide: BorderSide(
-      width: 2,
-      color: Colors.black,
-    ),
+    borderSide: BorderSide(width: 2, color: Colors.black),
     borderRadius: BorderRadius.zero,
   );
 
