@@ -13,23 +13,27 @@ class DonationCountdownTimer extends StatefulWidget {
 }
 
 class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
-  Timer? countdownTimer;
-  late Duration remainingTime;
+  Timer? _countdownTimer;
+  Duration _remainingTime = const Duration(seconds: 0);
 
   @override
   void initState() {
     super.initState();
-    remainingTime = getRemainingTimeForDonation();
-    startTimer();
+    _remainingTime = _getRemainingTimeForDonation();
+    if (_remainingTime.inSeconds > 0) {
+      _startTimer();
+    }
   }
 
   @override
   void dispose() {
-    countdownTimer!.cancel();
+    if (_countdownTimer != null) {
+      _countdownTimer!.cancel();
+    }
     super.dispose();
   }
 
-  Duration getRemainingTimeForDonation() {
+  Duration _getRemainingTimeForDonation() {
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
     String donateTo = getCurrentUser(context).pickUpFrom;
 
@@ -39,20 +43,20 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
     return endTime.difference(startTime) - const Duration(minutes: 30);
   }
 
-  void startTimer() {
-    countdownTimer =
-        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+  void _startTimer() {
+    _countdownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => _setCountDown());
   }
 
-  void setCountDown() {
+  void _setCountDown() {
     const reduceSecondsBy = 1;
     if (mounted) {
       setState(() {
-        final seconds = remainingTime.inSeconds - reduceSecondsBy;
+        final seconds = _remainingTime.inSeconds - reduceSecondsBy;
         if (seconds < 0) {
-          countdownTimer!.cancel();
+          _countdownTimer!.cancel();
         } else {
-          remainingTime = Duration(seconds: seconds);
+          _remainingTime = Duration(seconds: seconds);
         }
       });
     }
@@ -60,10 +64,13 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final hours = remainingTime.inHours.remainder(24);
-    final minutes = remainingTime.inMinutes.remainder(60);
+    final hours = _remainingTime.inHours.remainder(24);
+    final minutes = _remainingTime.inMinutes.remainder(60);
+
+    final canDonate = _countdownTimer?.isActive ?? false;
+
     return Text(
-      countdownTimer!.isActive
+      canDonate
           ? '${ZachranObedStrings.youCanDonate} $hours h : $minutes min'
           : ZachranObedStrings.youCantDonateAnymore,
       style: const TextStyle(color: Colors.white),
