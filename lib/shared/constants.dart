@@ -12,6 +12,7 @@ class ZachranObedStrings {
   static const logout = 'Odhlásit se';
   static const forgottenPassword = 'Zapomněl/a jsem heslo';
   static const rememberUser = 'Zapamatovat';
+  static const wrongCredentialsError = 'Špatné přihlašovací údaje!';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';

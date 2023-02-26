@@ -8,10 +8,11 @@ class User extends ChangeNotifier {
 
   User.empty();
 
-  User.newUser(
-      {required this.internalId,
-      required this.email,
-      required this.pickUpFrom});
+  User.newUser({
+    required this.internalId,
+    required this.email,
+    required this.pickUpFrom,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User.newUser(

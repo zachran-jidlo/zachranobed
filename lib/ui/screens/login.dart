@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  Future<User> tryLogIn() {
+  Future<User> _tryLogIn() {
     return ApiUser().logIn(email: _emailController.text);
   }
 
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                             text: ZachranObedStrings.login.toUpperCase(),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                User user = await tryLogIn();
+                                User user = await _tryLogIn();
                                 if (user.internalId != '') {
                                   if (context.mounted) {
                                     Provider.of<User>(context, listen: false)
@@ -105,7 +105,9 @@ class _LoginState extends State<Login> {
                                         backgroundColor: Colors.red,
                                         content: Center(
                                           child: Text(
-                                              'Špatné přihlašovací údaje!'),
+                                            ZachranObedStrings
+                                                .wrongCredentialsError,
+                                          ),
                                         ),
                                       ),
                                     );
