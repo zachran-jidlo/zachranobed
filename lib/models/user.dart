@@ -22,7 +22,7 @@ class User extends ChangeNotifier {
     );
   }
 
-  void newUser(String internalId, String email, String pickUpFrom) {
+  void updateUser(String internalId, String email, String pickUpFrom) {
     this.internalId = internalId;
     this.email = email;
     this.pickUpFrom = pickUpFrom;

@@ -93,7 +93,7 @@ class _LoginState extends State<Login> {
                                 if (user.internalId != '') {
                                   if (context.mounted) {
                                     Provider.of<User>(context, listen: false)
-                                        .newUser(user.internalId, user.email,
+                                        .updateUser(user.internalId, user.email,
                                             user.pickUpFrom);
                                     Navigator.of(context).pushReplacementNamed(
                                         RouteManager.home);
