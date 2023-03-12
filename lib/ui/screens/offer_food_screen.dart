@@ -123,9 +123,16 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ZachranObedTextField(
                         text: ZachranObedStrings.numberOfServings,
                         controller: _servingsNumberController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
+                        onValidation: (val) {
+                          if (val!.isEmpty) {
+                            return ZachranObedStrings.requiredFieldError;
+                          }
+                          int? validNumber = int.tryParse(val);
+                          if (validNumber == null) {
+                            return ZachranObedStrings.invalidNumberError;
+                          }
+                          return null;
+                        },
                         inputType: TextInputType.number,
                         textInputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
