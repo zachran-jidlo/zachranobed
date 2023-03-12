@@ -81,10 +81,10 @@ class _LoginState extends State<Login> {
                           ZachranObedCheckbox(
                               text: ZachranObedStrings.rememberUser,
                               isChecked: _rememberUser,
-                              whatIsChecked: (bool value) => setState(() {
-                                    _rememberUser = value;
-                                    print(_rememberUser);
-                                  })),
+                              onChange: (value) {
+                                _rememberUser = value;
+                                print(_rememberUser);
+                              }),
                           ZachranObedButton(
                             text: ZachranObedStrings.login.toUpperCase(),
                             onPressed: () async {
