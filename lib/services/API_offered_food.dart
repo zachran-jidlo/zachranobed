@@ -7,12 +7,14 @@ import 'package:zachranobed/helpers/current_week_number.dart';
 import 'package:zachranobed/models/offered_food.dart';
 
 class ApiOfferedFood {
+  final String _urlBase =
+      'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
 
-  final String _urlBase = 'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
-
-  Future<List<OfferedFood>> getOfferedFoodList({required int limit, required String filter}) async {
+  Future<List<OfferedFood>> getOfferedFoodList(
+      {required int limit, required String filter}) async {
     final response = await http.get(
-      Uri.parse('$_urlBase/zachranobed_test/tables/nabidka_2/data?limit=$limit&filter=$filter'),
+      Uri.parse(
+          '$_urlBase/zachranobed_test/tables/nabidka_2/data?limit=$limit&filter=$filter'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },
@@ -23,7 +25,8 @@ class ApiOfferedFood {
     if (response.statusCode == 200) {
       return responseData.map((food) => OfferedFood.fromJson(food)).toList();
     } else {
-      throw Exception('Failed to load offered food with error ${response.body}');
+      throw Exception(
+          'Failed to load offered food with error ${response.body}');
     }
   }
 
@@ -36,17 +39,16 @@ class ApiOfferedFood {
       String packaging,
       DateTime consumeBy,
       String donorId) async {
-
     final offeredFood = OfferedFood(
-        id: id,
-        date: date,
-        name: name,
-        allergens: allergens,
-        numberOfServings: numberOfServings,
-        packaging: packaging,
-        consumeBy: consumeBy,
-        weekNumber: currentWeekNumber(),
-        donorId: donorId
+      id: id,
+      date: date,
+      name: name,
+      allergens: allergens,
+      numberOfServings: numberOfServings,
+      packaging: packaging,
+      consumeBy: consumeBy,
+      weekNumber: currentWeekNumber(),
+      donorId: donorId,
     );
 
     final response = await http.post(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/shared/constants.dart';
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => User.empty(),
+      create: (context) => UserNotifier(),
       builder: (context, child) {
         return MaterialApp(
           initialRoute: RouteManager.wrapper,

@@ -6,12 +6,13 @@ import 'package:zachranobed/auth_token.dart';
 import 'package:zachranobed/models/user.dart';
 
 class ApiUser {
+  final String _urlBase =
+      'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
 
-  final String _urlBase = 'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
-
-  Future<User> logIn({required String email}) async {
+  Future<User?> logIn({required String email}) async {
     final response = await http.get(
-      Uri.parse('$_urlBase/zachranobed_test/tables/darci/data?filter=email(eq)$email'),
+      Uri.parse(
+          '$_urlBase/zachranobed_test/tables/darci/data?filter=email(eq)$email'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },
@@ -23,10 +24,11 @@ class ApiUser {
       if (responseData.isNotEmpty) {
         return User.fromJson(responseData[0]);
       } else {
-        return User.empty();
+        return null;
       }
     } else {
-      throw Exception('Failed to load offered food with error ${response.body}');
+      throw Exception(
+          'Failed to load offered food with error ${response.body}');
     }
   }
 }

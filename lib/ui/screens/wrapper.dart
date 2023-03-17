@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes.dart';
 
 class Wrapper extends StatefulWidget {
@@ -20,8 +20,8 @@ class _WrapperState extends State<Wrapper> {
   }
 
   _loadUserInfo() {
-    User user = context.read<User>();
-    if (user.email == '') {
+    final UserNotifier user = context.read<UserNotifier>();
+    if (!user.isLoggedIn) {
       Navigator.of(context).pushReplacementNamed(RouteManager.login);
     } else {
       Navigator.of(context).pushReplacementNamed(RouteManager.home);

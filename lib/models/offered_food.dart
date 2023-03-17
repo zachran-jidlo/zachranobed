@@ -1,5 +1,4 @@
 class OfferedFood {
-
   final String id;
   final DateTime date;
   final String name;
@@ -19,7 +18,7 @@ class OfferedFood {
     required this.packaging,
     required this.consumeBy,
     required this.weekNumber,
-    required this.donorId
+    required this.donorId,
   });
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) {
@@ -32,23 +31,23 @@ class OfferedFood {
       packaging: json['fields']['baleni'],
       consumeBy: DateTime.parse(json['fields']['spotrebujteDo']),
       weekNumber: json['fields']['cisloTydne'],
-      donorId: json['fields']['darce']['id']
+      donorId: json['fields']['darce']['id'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'fields': {
-      'x_ID': id,
-      'pridanoDne': date.toIso8601String(),
-      'nazevPokrmu': name,
-      'alergeny': allergens,
-      'pocetPorci': numberOfServings,
-      'baleni': packaging,
-      'spotrebujteDo': consumeBy.toIso8601String(),
-      'cisloTydne': weekNumber,
-      'darce': {
-        'id': donorId,
-      }
-    },
-  };
+        'fields': {
+          'x_ID': id,
+          'pridanoDne': date.toIso8601String(),
+          'nazevPokrmu': name,
+          'alergeny': allergens,
+          'pocetPorci': numberOfServings,
+          'baleni': packaging,
+          'spotrebujteDo': consumeBy.toIso8601String(),
+          'cisloTydne': weekNumber,
+          'darce': {
+            'id': donorId,
+          }
+        }
+      };
 }
