@@ -49,7 +49,7 @@ class Donations extends StatelessWidget {
               DonatedFoodList(
                 itemsLimit: 3,
                 filter:
-                    'cisloTydne(eq)${currentWeekNumber()},darce.id(eq)${getCurrentUser(context).internalId}',
+                    'cisloTydne(eq)${currentWeekNumber()},darce.id(eq)${getCurrentUser(context)!.internalId}',
                 title: 'Tento týden',
                 showServingsSum: true,
               ),
@@ -57,7 +57,7 @@ class Donations extends StatelessWidget {
               DonatedFoodList(
                 itemsLimit: 3,
                 filter:
-                    'cisloTydne(eq)${currentWeekNumber() - 1},darce.id(eq)${getCurrentUser(context).internalId}',
+                    'cisloTydne(eq)${currentWeekNumber() - 1},darce.id(eq)${getCurrentUser(context)!.internalId}',
                 title: 'Minulý týden',
                 showServingsSum: true,
               ),

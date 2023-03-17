@@ -74,7 +74,7 @@ class Overview extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: DonatedFoodList(
                 itemsLimit: 3,
-                filter: 'darce.id(eq)${getCurrentUser(context).internalId}',
+                filter: 'darce.id(eq)${getCurrentUser(context)!.internalId}',
                 title: ZachranObedStrings.lastDonated,
               ),
             ),

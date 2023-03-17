@@ -35,7 +35,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   Duration _getRemainingTimeForDonation() {
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
-    String donateTo = getCurrentUser(context).pickUpFrom;
+    String donateTo = getCurrentUser(context)!.pickUpFrom;
 
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateTo);

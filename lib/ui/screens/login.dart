@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/API_user.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  Future<User> _tryLogIn() {
+  Future<User?> _tryLogIn() {
     return ApiUser().logIn(email: _emailController.text);
   }
 
@@ -89,12 +90,17 @@ class _LoginState extends State<Login> {
                             text: ZachranObedStrings.login.toUpperCase(),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                User user = await _tryLogIn();
-                                if (user.internalId != '') {
+                                User? user = await _tryLogIn();
+                                if (user != null) {
                                   if (context.mounted) {
-                                    Provider.of<User>(context, listen: false)
-                                        .updateUser(user.internalId, user.email,
-                                            user.pickUpFrom);
+                                    final userNotifier =
+                                        Provider.of<UserNotifier>(context,
+                                            listen: false);
+                                    userNotifier.user = User.create(
+                                      user.internalId,
+                                      user.email,
+                                      user.pickUpFrom,
+                                    );
                                     Navigator.of(context).pushReplacementNamed(
                                         RouteManager.home);
                                   }

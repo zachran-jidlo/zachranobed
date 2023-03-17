@@ -178,7 +178,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                                 _selectedPackaging,
                                 DateFormat('dd.MM.y HH:mm')
                                     .parse(_consumeByController.text),
-                                getCurrentUser(context).internalId);
+                                getCurrentUser(context)!.internalId);
                             Navigator.of(context).pushReplacementNamed(
                                 RouteManager.thankYou,
                                 arguments: _futureResponse);
