@@ -31,7 +31,7 @@ class _ZachranObedCheckboxState extends State<ZachranObedCheckbox> {
     return CheckboxListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(widget.text),
-      activeColor: ZachranObedColors.primaryLight,
+      activeColor: ZachranObedColors.primary,
       value: _isChecked,
       onChanged: (value) {
         setState(() {

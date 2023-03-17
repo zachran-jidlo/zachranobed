@@ -92,7 +92,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 const SizedBox(height: 10),
                 Row(
                   children: const <Widget>[
-                    Text(ZachranObedStrings.offerWarmFood,
+                    Text(ZachranObedStrings.offerLeftoverFood,
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
                   ],
