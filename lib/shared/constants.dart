@@ -50,6 +50,9 @@ class ZachranObedStrings {
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
   static const foodImagePath = 'assets/food-image.png';
+
+  static const tabidooApiUrlBase =
+      'https://private-anon-446cafc2fe-tabidoo.apiary-proxy.com/api/v2/apps';
 }
 
 class WidgetStyle {

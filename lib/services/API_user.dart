@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:zachranobed/auth_token.dart';
 import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ApiUser {
-  final String _urlBase =
-      'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
+  final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
 
   Future<User?> logIn({required String email}) async {
     final response = await http.get(
@@ -27,8 +27,7 @@ class ApiUser {
         return null;
       }
     } else {
-      throw Exception(
-          'Failed to load offered food with error ${response.body}');
+      throw Exception('Failed to log in with error ${response.body}');
     }
   }
 }
