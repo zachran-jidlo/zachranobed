@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/offered_food.dart';
-import 'package:zachranobed/services/API_offered_food.dart';
+import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {
@@ -28,7 +28,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
   @override
   void initState() {
     super.initState();
-    _futureOfferedFood = ApiOfferedFood()
+    _futureOfferedFood = OfferedFoodApiService()
         .getOfferedFoodList(limit: widget.itemsLimit, filter: widget.filter);
   }
 

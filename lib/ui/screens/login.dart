@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/API_user.dart';
+import 'package:zachranobed/services/api/user_api_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<User?> _tryLogIn() {
-    return ApiUser().logIn(email: _emailController.text);
+    return UserApiService().logIn(email: _emailController.text);
   }
 
   @override

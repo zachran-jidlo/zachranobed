@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/API_offered_food.dart';
+import 'package:zachranobed/services/api/offered_food_api_service.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
@@ -169,16 +169,18 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         text: ZachranObedStrings.offerFood.toUpperCase(),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = ApiOfferedFood().createOffer(
-                                const Uuid().v4(),
-                                DateTime.now(),
-                                _foodNameController.text,
-                                _allergensController.text,
-                                int.parse(_servingsNumberController.text),
-                                _selectedPackaging,
-                                DateFormat('dd.MM.y HH:mm')
-                                    .parse(_consumeByController.text),
-                                getCurrentUser(context)!.internalId);
+                            _futureResponse = OfferedFoodApiService()
+                                .createOffer(
+                                    const Uuid().v4(),
+                                    DateTime.now(),
+                                    _foodNameController.text,
+                                    _allergensController.text,
+                                    int.parse(_servingsNumberController.text),
+                                    _selectedPackaging,
+                                    DateFormat('dd.MM.y HH:mm')
+                                        .parse(_consumeByController.text),
+                                    HelperService.getCurrentUser(context)!
+                                        .internalId);
                             Navigator.of(context).pushReplacementNamed(
                                 RouteManager.thankYou,
                                 arguments: _futureResponse);

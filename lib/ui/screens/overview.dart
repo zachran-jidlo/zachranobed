@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
@@ -74,7 +74,8 @@ class Overview extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: DonatedFoodList(
                 itemsLimit: 3,
-                filter: 'darce.id(eq)${getCurrentUser(context)!.internalId}',
+                filter:
+                    'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                 title: ZachranObedStrings.lastDonated,
               ),
             ),

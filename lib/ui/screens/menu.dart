@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/helpers/current_user.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class Menu extends StatelessWidget {
@@ -10,7 +10,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(getCurrentUser(context)!.email),
+        title: Text(HelperService.getCurrentUser(context)!.email),
         actions: [
           TextButton(
             onPressed: () =>
