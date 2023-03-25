@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:zachranobed/models/user.dart';
 
 class UserNotifier extends ChangeNotifier {
