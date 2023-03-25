@@ -41,99 +41,100 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(height: 15),
-                  SvgPicture.asset(
-                    ZachranObedStrings.zjLogoPath,
-                    color: ZachranObedColors.primary,
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(border: Border.all(width: 2)),
-                    child: Image.asset(ZachranObedStrings.placeholderImagePath),
-                  ),
-                  const SizedBox(height: 20),
-                  Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          ZachranObedTextField(
-                            text: ZachranObedStrings.emailAddress,
-                            controller: _emailController,
-                            onValidation: (val) => val!.isEmpty
-                                ? ZachranObedStrings.requiredFieldError
-                                : null,
-                          ),
-                          const SizedBox(height: 15),
-                          ZachranObedTextField(
-                            text: ZachranObedStrings.password,
-                            controller: _passwordController,
-                            obscureText: true,
-                            onValidation: (val) => val!.isEmpty
-                                ? ZachranObedStrings.requiredFieldError
-                                : null,
-                          ),
-                          const SizedBox(height: 10),
-                          ZachranObedCheckbox(
-                              text: ZachranObedStrings.rememberUser,
-                              isChecked: _rememberUser,
-                              onChange: (value) {
-                                _rememberUser = value;
-                                print(_rememberUser);
-                              }),
-                          ZachranObedButton(
-                            text: ZachranObedStrings.login.toUpperCase(),
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                User? user = await _tryLogIn();
-                                if (user != null) {
-                                  if (context.mounted) {
-                                    final userNotifier =
-                                        Provider.of<UserNotifier>(context,
-                                            listen: false);
-                                    userNotifier.user = User.create(
-                                      user.internalId,
-                                      user.email,
-                                      user.pickUpFrom,
-                                    );
-                                    Navigator.of(context).pushReplacementNamed(
-                                        RouteManager.home);
-                                  }
-                                } else {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Center(
-                                          child: Text(
-                                            ZachranObedStrings
-                                                .wrongCredentialsError,
-                                          ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 40),
+              SvgPicture.asset(
+                ZachranObedStrings.zjLogoPath,
+                color: ZachranObedColors.primary,
+              ),
+              const SizedBox(height: 20),
+              Image.asset(
+                width: 415,
+                ZachranObedStrings.foodImagePath,
+                fit: BoxFit.fitWidth,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        ZachranObedTextField(
+                          text: ZachranObedStrings.emailAddress,
+                          controller: _emailController,
+                          onValidation: (val) => val!.isEmpty
+                              ? ZachranObedStrings.requiredFieldError
+                              : null,
+                        ),
+                        const SizedBox(height: 15),
+                        ZachranObedTextField(
+                          text: ZachranObedStrings.password,
+                          controller: _passwordController,
+                          obscureText: true,
+                          onValidation: (val) => val!.isEmpty
+                              ? ZachranObedStrings.requiredFieldError
+                              : null,
+                        ),
+                        const SizedBox(height: 10),
+                        ZachranObedCheckbox(
+                          text: ZachranObedStrings.rememberUser,
+                          isChecked: _rememberUser,
+                          onChange: (value) {
+                            _rememberUser = value;
+                            print(_rememberUser);
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        ZachranObedButton(
+                          text: ZachranObedStrings.login,
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              User? user = await _tryLogIn();
+                              if (user != null) {
+                                if (context.mounted) {
+                                  final userNotifier =
+                                      Provider.of<UserNotifier>(context,
+                                          listen: false);
+                                  userNotifier.user = User.create(
+                                    user.internalId,
+                                    user.email,
+                                    user.pickUpFrom,
+                                  );
+                                  Navigator.of(context)
+                                      .pushReplacementNamed(RouteManager.home);
+                                }
+                              } else {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Center(
+                                        child: Text(
+                                          ZachranObedStrings
+                                              .wrongCredentialsError,
                                         ),
                                       ),
-                                    );
-                                  }
+                                    ),
+                                  );
                                 }
                               }
-                            },
-                          ),
-                        ],
-                      )),
-                  const SizedBox(height: 15),
-                  ZachranObedClickableText(
-                      text: ZachranObedStrings.forgottenPassword,
-                      onTap: () {
-                        print('Change password');
-                      }),
-                  const SizedBox(height: 15),
-                ],
+                            }
+                          },
+                        ),
+                      ],
+                    )),
               ),
-            ),
+              const SizedBox(height: 25),
+              ZachranObedClickableText(
+                  text: ZachranObedStrings.forgottenPassword,
+                  onTap: () {
+                    print('Change password');
+                  }),
+              const SizedBox(height: 30),
+            ],
           ),
         ),
       ),

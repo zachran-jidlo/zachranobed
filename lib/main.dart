@@ -21,11 +21,13 @@ class MyApp extends StatelessWidget {
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
           theme: ThemeData(
-              colorScheme: ColorScheme.fromSwatch().copyWith(
-                primary: ZachranObedColors.primaryLight,
-                secondary: ZachranObedColors.primaryLight,
-              ),
-              visualDensity: VisualDensity.adaptivePlatformDensity),
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: ZachranObedColors.primary,
+              secondary: ZachranObedColors.primaryLight,
+            ),
+            scaffoldBackgroundColor: Colors.white,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
         );
       },
     );

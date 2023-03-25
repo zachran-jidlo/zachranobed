@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:zachranobed/auth_token.dart';
 import 'package:zachranobed/helpers/current_week_number.dart';
 import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ApiOfferedFood {
-  final String _urlBase =
-      'https://private-anon-210691e42e-tabidoo.apiary-proxy.com/api/v2/apps';
+  final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
 
   Future<List<OfferedFood>> getOfferedFoodList(
       {required int limit, required String filter}) async {

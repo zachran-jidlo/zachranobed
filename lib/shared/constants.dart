@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ZachranObedColors {
-  static const primary = Color.fromRGBO(226, 16, 19, 1);
-  static const primaryLight = Color.fromRGBO(250, 71, 71, 1);
+  static const primary = Color.fromRGBO(192, 0, 22, 1);
+  static const primaryLight = Color.fromARGB(50, 192, 0, 22);
 }
 
 class ZachranObedStrings {
@@ -10,8 +10,8 @@ class ZachranObedStrings {
   static const password = 'Heslo';
   static const login = 'Přihlásit se';
   static const logout = 'Odhlásit se';
-  static const forgottenPassword = 'Zapomněl/a jsem heslo';
-  static const rememberUser = 'Zapamatovat';
+  static const forgottenPassword = 'Zapomenuté heslo';
+  static const rememberUser = 'Zapamatovat heslo';
   static const wrongCredentialsError = 'Špatné přihlašovací údaje!';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
   static const invalidNumberError = 'Zadejte prosím validní číslo';
@@ -29,9 +29,9 @@ class ZachranObedStrings {
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
   static const offer = 'Nabídnout';
   static const offerFood = 'Nabídnout pokrm';
-  static const offerWarmFood = 'Nabídnout teplý pokrm';
+  static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =
-      'Pokrm nabídnete darem charitativním organizacím, které jej předají lidem v nouzi.';
+      'Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.';
   static const foodName = 'Název pokrmu';
   static const allergens = 'Alergeny';
   static const numberOfServings = 'Počet porcí';
@@ -49,11 +49,13 @@ class ZachranObedStrings {
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
+  static const foodImagePath = 'assets/food-image.png';
+
+  static const tabidooApiUrlBase =
+      'https://private-anon-446cafc2fe-tabidoo.apiary-proxy.com/api/v2/apps';
 }
 
 class WidgetStyle {
-  static const inputBorder = OutlineInputBorder(
-    borderSide: BorderSide(width: 2, color: Colors.black),
-    borderRadius: BorderRadius.zero,
-  );
+  static const inputBorder =
+      OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
 }
