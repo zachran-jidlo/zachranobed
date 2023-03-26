@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class OfferedFood {
   final String id;
   final DateTime date;
@@ -38,7 +40,9 @@ class OfferedFood {
   Map<String, dynamic> toJson() => {
         'fields': {
           'x_ID': id,
-          'pridanoDne': date.toIso8601String(),
+          'pridanoDne': DateFormat('yyyy-MM-dd HH:mm:ss')
+              .parse(date.toString())
+              .toIso8601String(),
           'nazevPokrmu': name,
           'alergeny': allergens,
           'pocetPorci': numberOfServings,
