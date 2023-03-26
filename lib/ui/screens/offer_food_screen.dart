@@ -25,12 +25,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _foodNameController = TextEditingController();
-  final TextEditingController _allergensController = TextEditingController();
-  final TextEditingController _servingsNumberController =
-      TextEditingController();
   final TextEditingController _consumeByController = TextEditingController();
-
   String _selectedPackaging = '';
 
   final List<String> _packagingOptions = <String>[
@@ -43,22 +38,18 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   @override
   void dispose() {
-    _foodNameController.dispose();
-    _allergensController.dispose();
-    _servingsNumberController.dispose();
     _consumeByController.dispose();
     super.dispose();
   }
 
   bool _somethingIsFilled() {
-    if (_foodNameController.text.isNotEmpty ||
-        _allergensController.text.isNotEmpty ||
-        _servingsNumberController.text.isNotEmpty ||
-        _consumeByController.text.isNotEmpty ||
-        _selectedPackaging != '') {
+    if (_consumeByController.text.isNotEmpty || _selectedPackaging != '') {
       return true;
     }
-    return false;
+    return _values.any((value) =>
+        value['food']['name']?.isNotEmpty == true ||
+        value['food']['allergens']?.isNotEmpty == true ||
+        value['food']['servings'] != null);
   }
 
   Future<bool> _showConfirmationDialog() async {
@@ -118,9 +109,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood.toUpperCase(),
                         onPressed: () {
-                          setState(() {
-                            _count.add('');
-                          });
+                          setState(() => _count.add(''));
                         },
                       ),
                       const SizedBox(height: 30),
@@ -130,9 +119,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onValidation: (val) => val == null
                             ? ZachranObedStrings.requiredDropdownError
                             : null,
-                        onChanged: (String value) {
-                          _selectedPackaging = value;
-                        },
+                        onChanged: (String value) => _selectedPackaging = value,
                       ),
                       const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
@@ -173,18 +160,14 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           text: ZachranObedStrings.foodName,
           onValidation: (val) =>
               val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) {
-            _onUpdate(key: index, name: val);
-          },
+          onChanged: (val) => _onUpdate(key: index, name: val),
         ),
         const SizedBox(height: 30),
         ZachranObedTextField(
           text: ZachranObedStrings.allergens,
           onValidation: (val) =>
               val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) {
-            _onUpdate(key: index, allergens: val);
-          },
+          onChanged: (val) => _onUpdate(key: index, allergens: val),
         ),
         const SizedBox(height: 30),
         ZachranObedTextField(
@@ -201,9 +184,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           },
           inputType: TextInputType.number,
           textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (val) {
-            _onUpdate(key: index, servings: int.parse(val));
-          },
+          onChanged: (val) =>
+              _onUpdate(key: index, servings: int.tryParse(val) ?? -1),
         ),
       ],
     );
@@ -266,6 +248,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       }
       if (servings != null) {
         mapToUpdate['food']['servings'] = servings;
+      }
+      if (servings == -1) {
+        mapToUpdate['food']['servings'] = null;
       }
     } else {
       Map<String, dynamic> json = {
