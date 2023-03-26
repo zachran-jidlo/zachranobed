@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/routes.dart';
@@ -21,7 +21,7 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  Future<http.Response>? _futureResponse;
+  Future<Response>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -169,18 +169,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         text: ZachranObedStrings.offerFood.toUpperCase(),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = OfferedFoodApiService()
-                                .createOffer(
-                                    const Uuid().v4(),
-                                    DateTime.now(),
-                                    _foodNameController.text,
-                                    _allergensController.text,
-                                    int.parse(_servingsNumberController.text),
-                                    _selectedPackaging,
-                                    DateFormat('dd.MM.y HH:mm')
-                                        .parse(_consumeByController.text),
-                                    HelperService.getCurrentUser(context)!
-                                        .internalId);
+                            _futureResponse = _offerFood();
                             Navigator.of(context).pushReplacementNamed(
                                 RouteManager.thankYou,
                                 arguments: _futureResponse);
@@ -197,5 +186,17 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         ),
       ),
     );
+  }
+
+  Future<Response> _offerFood() {
+    return OfferedFoodApiService().createOffer(
+        const Uuid().v4(),
+        DateTime.now(),
+        _foodNameController.text,
+        _allergensController.text,
+        int.parse(_servingsNumberController.text),
+        _selectedPackaging,
+        DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+        HelperService.getCurrentUser(context)!.internalId);
   }
 }
