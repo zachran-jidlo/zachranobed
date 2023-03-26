@@ -38,6 +38,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     'Jednorázový obal'
   ];
 
+  final List<String> _count = [''];
+  final List<Map<String, dynamic>> _values = [];
+
   @override
   void dispose() {
     _foodNameController.dispose();
@@ -104,48 +107,23 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.foodName,
-                        controller: _foodNameController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
-                      ),
-                      const SizedBox(height: 15),
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.allergens,
-                        controller: _allergensController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
-                      ),
-                      const SizedBox(height: 15),
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.numberOfServings,
-                        controller: _servingsNumberController,
-                        onValidation: (val) {
-                          if (val!.isEmpty) {
-                            return ZachranObedStrings.requiredFieldError;
-                          }
-                          int? validNumber = int.tryParse(val);
-                          if (validNumber == null) {
-                            return ZachranObedStrings.invalidNumberError;
-                          }
-                          return null;
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _count.length,
+                        itemBuilder: (context, index) {
+                          return _buildSection(index);
                         },
-                        inputType: TextInputType.number,
-                        textInputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
                       ),
-                      const SizedBox(height: 20),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood.toUpperCase(),
                         onPressed: () {
-                          print('Kliknuto na přidat další pokrm');
+                          setState(() {
+                            _count.add('');
+                          });
                         },
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       ZachranObedDropdown(
                         hintText: ZachranObedStrings.packaging,
                         items: _packagingOptions,
@@ -156,7 +134,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           _selectedPackaging = value;
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
                         controller: _consumeByController,
@@ -164,7 +142,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                             ? ZachranObedStrings.requiredFieldError
                             : null,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 30),
                       ZachranObedButton(
                         text: ZachranObedStrings.offerFood.toUpperCase(),
                         onPressed: () {
@@ -188,15 +166,136 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
+  Widget _buildPortionSection(int index) {
+    return Column(
+      children: [
+        ZachranObedTextField(
+          text: ZachranObedStrings.foodName,
+          onValidation: (val) =>
+              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+          onChanged: (val) {
+            _onUpdate(key: index, name: val);
+          },
+        ),
+        const SizedBox(height: 30),
+        ZachranObedTextField(
+          text: ZachranObedStrings.allergens,
+          onValidation: (val) =>
+              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+          onChanged: (val) {
+            _onUpdate(key: index, allergens: val);
+          },
+        ),
+        const SizedBox(height: 30),
+        ZachranObedTextField(
+          text: ZachranObedStrings.numberOfServings,
+          onValidation: (val) {
+            if (val!.isEmpty) {
+              return ZachranObedStrings.requiredFieldError;
+            }
+            int? validNumber = int.tryParse(val);
+            if (validNumber == null) {
+              return ZachranObedStrings.invalidNumberError;
+            }
+            return null;
+          },
+          inputType: TextInputType.number,
+          textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          onChanged: (val) {
+            _onUpdate(key: index, servings: int.parse(val));
+          },
+        ),
+      ],
+    );
+  }
+
   Future<Response> _offerFood() {
-    return OfferedFoodApiService().createOffer(
-        const Uuid().v4(),
-        DateTime.now(),
-        _foodNameController.text,
-        _allergensController.text,
-        int.parse(_servingsNumberController.text),
-        _selectedPackaging,
-        DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
-        HelperService.getCurrentUser(context)!.internalId);
+    var response = null;
+    for (var value in _values) {
+      response = OfferedFoodApiService().createOffer(
+          const Uuid().v4(),
+          DateTime.now(),
+          value['food']['name'],
+          value['food']['allergens'],
+          value['food']['servings'],
+          _selectedPackaging,
+          DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          HelperService.getCurrentUser(context)!.internalId);
+    }
+    return response;
+  }
+
+  Widget _buildSection(int key) {
+    return Column(
+      children: [
+        Text(
+          'Pokrm ${key + 1}',
+          style: const TextStyle(fontSize: 18),
+        ),
+        if (key != 0) _removeButton(key),
+        const SizedBox(height: 30),
+        _buildPortionSection(key),
+        const SizedBox(height: 30),
+      ],
+    );
+  }
+
+  _onUpdate({
+    required int key,
+    String? name,
+    String? allergens,
+    int? servings,
+  }) {
+    int foundKey = -1;
+    for (var map in _values) {
+      if (map.containsKey("id")) {
+        if (map["id"] == key) {
+          foundKey = key;
+          break;
+        }
+      }
+    }
+    if (-1 != foundKey) {
+      Map<String, dynamic> mapToUpdate =
+          _values.firstWhere((map) => map["id"] == foundKey);
+      if (name != null) {
+        mapToUpdate['food']['name'] = name;
+      }
+      if (allergens != null) {
+        mapToUpdate['food']['allergens'] = allergens;
+      }
+      if (servings != null) {
+        mapToUpdate['food']['servings'] = servings;
+      }
+    } else {
+      Map<String, dynamic> json = {
+        'id': key,
+        'food': {'name': name, 'allergens': allergens, 'servings': servings},
+      };
+      _values.add(json);
+    }
+  }
+
+  // TODO - vždy se maže ta poslední sekce, ať kliknu na jakoukoliv
+  Widget _removeButton(int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _count.removeAt(index);
+        });
+      },
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Icon(
+          Icons.remove,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }
