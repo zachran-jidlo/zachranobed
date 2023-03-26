@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:zachranobed/helpers/current_user.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
@@ -35,7 +35,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   Duration _getRemainingTimeForDonation() {
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
-    String donateTo = getCurrentUser(context)!.pickUpFrom;
+    String donateTo = HelperService.getCurrentUser(context)!.pickUpFrom;
 
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateTo);
