@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -12,7 +11,7 @@ import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
-import 'package:zachranobed/ui/widgets/text_field.dart';
+import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({Key? key}) : super(key: key);
@@ -34,7 +33,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     'Jednorázový obal'
   ];
 
-  final List<FoodInfo> _formSections = [FoodInfo()];
+  final List<FoodInfo> _foodSections = [FoodInfo()];
 
   @override
   void dispose() {
@@ -46,7 +45,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     if (_consumeByController.text.isNotEmpty || _selectedPackaging != '') {
       return true;
     }
-    return _formSections.any((foodInfo) =>
+    return _foodSections.any((foodInfo) =>
         foodInfo.name.isNotEmpty == true ||
         foodInfo.allergens.isNotEmpty == true ||
         foodInfo.numberOfServings != null);
@@ -102,18 +101,13 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _formSections.length,
-                        itemBuilder: (context, index) {
-                          return _buildFoodSection(_formSections[index], index);
-                        },
+                      FoodSectionTextFields(
+                        foodSections: _foodSections,
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood.toUpperCase(),
                         onPressed: () {
-                          setState(() => _formSections.add(FoodInfo()));
+                          setState(() => _foodSections.add(FoodInfo()));
                         },
                       ),
                       const SizedBox(height: 30),
@@ -157,63 +151,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
-  Widget _buildFoodSection(FoodInfo foodInfo, int index) {
-    return Column(
-      key: ValueKey(foodInfo),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Pokrm ${index + 1}',
-              style: const TextStyle(fontSize: 18),
-            ),
-            if (index != 0) _removeButton(foodInfo),
-          ],
-        ),
-        const SizedBox(height: 30),
-        ZachranObedTextField(
-          text: ZachranObedStrings.foodName,
-          onValidation: (val) =>
-              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) => foodInfo.name = val,
-          value: foodInfo.name,
-        ),
-        const SizedBox(height: 30),
-        ZachranObedTextField(
-          text: ZachranObedStrings.allergens,
-          onValidation: (val) =>
-              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) => foodInfo.allergens = val,
-          value: foodInfo.allergens,
-        ),
-        const SizedBox(height: 30),
-        ZachranObedTextField(
-          text: ZachranObedStrings.numberOfServings,
-          onValidation: (val) {
-            if (val!.isEmpty) {
-              return ZachranObedStrings.requiredFieldError;
-            }
-            int? validNumber = int.tryParse(val);
-            if (validNumber == null) {
-              return ZachranObedStrings.invalidNumberError;
-            }
-            return null;
-          },
-          inputType: TextInputType.number,
-          textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (val) =>
-              foodInfo.numberOfServings = val.isEmpty ? null : int.parse(val),
-          value: foodInfo.numberOfServings?.toString(),
-        ),
-        const SizedBox(height: 30),
-      ],
-    );
-  }
-
   Future<Response> _offerFood() {
     var response = null;
-    for (var foodInfo in _formSections) {
+    for (var foodInfo in _foodSections) {
       response = OfferedFoodApiService().createOffer(
           const Uuid().v4(),
           DateTime.now(),
@@ -227,27 +167,5 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           HelperService.getCurrentUser(context)!.internalId);
     }
     return response;
-  }
-
-  Widget _removeButton(FoodInfo foodInfo) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _formSections.remove(foodInfo);
-        });
-      },
-      child: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Icon(
-          Icons.remove,
-          color: Colors.white,
-        ),
-      ),
-    );
   }
 }
