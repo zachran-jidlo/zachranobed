@@ -35,7 +35,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           children: [
             Text(
               '${ZachranObedStrings.food} ${index + 1}',
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 22),
             ),
             if (index != 0) _removeButton(foodInfo),
           ],

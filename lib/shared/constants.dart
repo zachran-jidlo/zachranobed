@@ -28,7 +28,7 @@ class ZachranObedStrings {
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
   static const offer = 'Nabídnout';
-  static const offerFood = 'Nabídnout pokrm';
+  static const offerFood = 'Darovat pokrmy';
   static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =
       'Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.';
@@ -37,8 +37,9 @@ class ZachranObedStrings {
   static const numberOfServings = 'Počet porcí';
   static const packaging = 'Balení';
   static const consumeBy = 'Spotřebujte do';
-  static const addAnotherFood = 'Přidat další pokrm';
+  static const addAnotherFood = 'Přidat další';
   static const food = 'Pokrm';
+  static const summaryInfo = 'Souhrnné informace';
   static const confirmation =
       'Pokrm jste \n úspěšně darovali \n \u2764 Děkujeme, že \n pomáháte.';
   static const offerError =

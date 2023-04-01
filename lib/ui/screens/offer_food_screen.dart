@@ -82,20 +82,15 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Row(
                   children: const <Widget>[
                     Text(
                       ZachranObedStrings.offerLeftoverFood,
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                const Text(ZachranObedStrings.offerFoodDescription),
                 const SizedBox(height: 20),
                 Form(
                   key: _formKey,
@@ -105,10 +100,19 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         foodSections: _foodSections,
                       ),
                       ZachranObedButton(
-                        text: ZachranObedStrings.addAnotherFood.toUpperCase(),
+                        text: ZachranObedStrings.addAnotherFood,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: const [
+                          Text(
+                            ZachranObedStrings.summaryInfo,
+                            style: TextStyle(fontSize: 22),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 30),
                       ZachranObedDropdown(
@@ -129,7 +133,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       const SizedBox(height: 30),
                       ZachranObedButton(
-                        text: ZachranObedStrings.offerFood.toUpperCase(),
+                        text: ZachranObedStrings.offerFood,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = _offerFood();
