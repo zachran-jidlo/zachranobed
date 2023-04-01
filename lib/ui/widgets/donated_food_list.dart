@@ -67,7 +67,8 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
                 itemCount: offers.length,
                 itemBuilder: (context, index) {
                   Future.delayed(Duration.zero, () {
-                    _servingsSum.value += offers[index].numberOfServings;
+                    _servingsSum.value +=
+                        offers[index].foodInfo.numberOfServings!;
                   });
                   return DonatedFoodListTile(offeredFood: offers[index]);
                 },

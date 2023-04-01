@@ -10,6 +10,7 @@ class ZachranObedTextField extends StatelessWidget {
   final TextInputType? inputType;
   final List<TextInputFormatter>? textInputFormatters;
   final Function(String)? onChanged;
+  final String? value;
 
   const ZachranObedTextField({
     Key? key,
@@ -20,6 +21,7 @@ class ZachranObedTextField extends StatelessWidget {
     this.inputType,
     this.textInputFormatters,
     this.onChanged,
+    this.value,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class ZachranObedTextField extends StatelessWidget {
         enabledBorder: WidgetStyle.inputBorder,
         focusedBorder: WidgetStyle.inputBorder,
       ),
+      initialValue: value,
     );
   }
 }

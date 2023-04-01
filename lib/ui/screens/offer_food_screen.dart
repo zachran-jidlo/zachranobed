@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -33,8 +34,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     'Jednorázový obal'
   ];
 
-  final List<String> _count = [''];
-  final List<Map<String, dynamic>> _values = [];
+  final List<FoodInfo> _formSections = [FoodInfo()];
 
   @override
   void dispose() {
@@ -46,10 +46,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     if (_consumeByController.text.isNotEmpty || _selectedPackaging != '') {
       return true;
     }
-    return _values.any((value) =>
-        value['food']['name']?.isNotEmpty == true ||
-        value['food']['allergens']?.isNotEmpty == true ||
-        value['food']['servings'] != null);
+    return _formSections.any((foodInfo) =>
+        foodInfo.name.isNotEmpty == true ||
+        foodInfo.allergens.isNotEmpty == true ||
+        foodInfo.numberOfServings != null);
   }
 
   Future<bool> _showConfirmationDialog() async {
@@ -105,15 +105,15 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: _count.length,
+                        itemCount: _formSections.length,
                         itemBuilder: (context, index) {
-                          return _buildSection(index);
+                          return _buildFoodSection(_formSections[index], index);
                         },
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood.toUpperCase(),
                         onPressed: () {
-                          setState(() => _count.add(''));
+                          setState(() => _formSections.add(FoodInfo()));
                         },
                       ),
                       const SizedBox(height: 30),
@@ -157,21 +157,35 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
-  Widget _buildFoodSection(int index) {
+  Widget _buildFoodSection(FoodInfo foodInfo, int index) {
     return Column(
+      key: ValueKey(foodInfo),
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Pokrm ${index + 1}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            if (index != 0) _removeButton(foodInfo),
+          ],
+        ),
+        const SizedBox(height: 30),
         ZachranObedTextField(
           text: ZachranObedStrings.foodName,
           onValidation: (val) =>
               val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) => _onUpdate(key: index, name: val),
+          onChanged: (val) => foodInfo.name = val,
+          value: foodInfo.name,
         ),
         const SizedBox(height: 30),
         ZachranObedTextField(
           text: ZachranObedStrings.allergens,
           onValidation: (val) =>
               val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) => _onUpdate(key: index, allergens: val),
+          onChanged: (val) => foodInfo.allergens = val,
+          value: foodInfo.allergens,
         ),
         const SizedBox(height: 30),
         ZachranObedTextField(
@@ -189,21 +203,25 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           inputType: TextInputType.number,
           textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (val) =>
-              _onUpdate(key: index, servings: int.tryParse(val) ?? -1),
+              foodInfo.numberOfServings = val.isEmpty ? null : int.parse(val),
+          value: foodInfo.numberOfServings?.toString(),
         ),
+        const SizedBox(height: 30),
       ],
     );
   }
 
   Future<Response> _offerFood() {
     var response = null;
-    for (var value in _values) {
+    for (var foodInfo in _formSections) {
       response = OfferedFoodApiService().createOffer(
           const Uuid().v4(),
           DateTime.now(),
-          value['food']['name'],
-          value['food']['allergens'],
-          value['food']['servings'],
+          FoodInfo(
+            name: foodInfo.name,
+            allergens: foodInfo.allergens,
+            numberOfServings: foodInfo.numberOfServings,
+          ),
           _selectedPackaging,
           DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
           HelperService.getCurrentUser(context)!.internalId);
@@ -211,72 +229,11 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return response;
   }
 
-  Widget _buildSection(int key) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Pokrm ${key + 1}',
-              style: const TextStyle(fontSize: 18),
-            ),
-            if (key != 0) _removeButton(key),
-          ],
-        ),
-        const SizedBox(height: 30),
-        _buildFoodSection(key),
-        const SizedBox(height: 30),
-      ],
-    );
-  }
-
-  _onUpdate({
-    required int key,
-    String? name,
-    String? allergens,
-    int? servings,
-  }) {
-    int foundKey = -1;
-    for (var map in _values) {
-      if (map.containsKey("id")) {
-        if (map["id"] == key) {
-          foundKey = key;
-          break;
-        }
-      }
-    }
-    if (-1 != foundKey) {
-      Map<String, dynamic> mapToUpdate =
-          _values.firstWhere((map) => map["id"] == foundKey);
-      if (name != null) {
-        mapToUpdate['food']['name'] = name;
-      }
-      if (allergens != null) {
-        mapToUpdate['food']['allergens'] = allergens;
-      }
-      if (servings != null) {
-        mapToUpdate['food']['servings'] = servings;
-      }
-      if (servings == -1) {
-        mapToUpdate['food']['servings'] = null;
-      }
-    } else {
-      Map<String, dynamic> json = {
-        'id': key,
-        'food': {'name': name, 'allergens': allergens, 'servings': servings},
-      };
-      _values.add(json);
-    }
-  }
-
-  // TODO - vždy se maže ta poslední sekce, ať kliknu na jakoukoliv
-  Widget _removeButton(int index) {
+  Widget _removeButton(FoodInfo foodInfo) {
     return InkWell(
       onTap: () {
         setState(() {
-          _count.removeAt(index);
-          _values.removeAt(index);
+          _formSections.remove(foodInfo);
         });
       },
       child: Container(

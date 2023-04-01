@@ -18,9 +18,9 @@ class DonatedFoodDetail extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            Text('Název pokrmu: ${offeredFood.name}'),
-            Text('Alergeny: ${offeredFood.allergens}'),
-            Text('Počet porcí: ${offeredFood.numberOfServings}'),
+            Text('Název pokrmu: ${offeredFood.foodInfo.name}'),
+            Text('Alergeny: ${offeredFood.foodInfo.allergens}'),
+            Text('Počet porcí: ${offeredFood.foodInfo.numberOfServings}'),
             Text('Balení: ${offeredFood.packaging}'),
             Text(
                 'Spotřebujte do: ${DateFormat('dd.MM.y HH:mm').format(offeredFood.consumeBy)}'),
