@@ -86,9 +86,13 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 const SizedBox(height: 10),
                 Row(
                   children: const <Widget>[
-                    Text(ZachranObedStrings.offerLeftoverFood,
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
+                    Text(
+                      ZachranObedStrings.offerLeftoverFood,
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -153,7 +157,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
-  Widget _buildPortionSection(int index) {
+  Widget _buildFoodSection(int index) {
     return Column(
       children: [
         ZachranObedTextField(
@@ -210,13 +214,18 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   Widget _buildSection(int key) {
     return Column(
       children: [
-        Text(
-          'Pokrm ${key + 1}',
-          style: const TextStyle(fontSize: 18),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Pokrm ${key + 1}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            if (key != 0) _removeButton(key),
+          ],
         ),
-        if (key != 0) _removeButton(key),
         const SizedBox(height: 30),
-        _buildPortionSection(key),
+        _buildFoodSection(key),
         const SizedBox(height: 30),
       ],
     );
@@ -267,6 +276,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       onTap: () {
         setState(() {
           _count.removeAt(index);
+          _values.removeAt(index);
         });
       },
       child: Container(
