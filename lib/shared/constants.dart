@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class ZachranObedColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
+  static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
   final secondary = Color.lerp(
     const Color.fromRGBO(192, 0, 22, 0.08),
     const Color(0xFFFFFBFF),
     0.9,
   );
-  static const onSecondary = Color.fromRGBO(32, 26, 25, 1);
+  static const onSecondary = Color.fromRGBO(83, 67, 65, 1);
 }
 
 class ZachranObedStrings {

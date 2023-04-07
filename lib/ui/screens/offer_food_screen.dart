@@ -101,6 +101,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood,
+                        isSecondary: true,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
