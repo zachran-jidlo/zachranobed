@@ -90,6 +90,7 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 20),
                         ZachranObedButton(
                           text: ZachranObedStrings.login,
+                          icon: Icons.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               User? user = await _tryLogIn();

@@ -101,6 +101,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood,
+                        icon: Icons.add,
                         isSecondary: true,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
@@ -136,6 +137,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedButton(
                         text: ZachranObedStrings.offerFood,
+                        icon: Icons.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = _offerFood();
