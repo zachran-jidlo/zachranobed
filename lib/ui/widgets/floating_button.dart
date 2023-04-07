@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedFloatingButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -12,7 +13,10 @@ class ZachranObedFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: onPressed,
-      child: const Icon(Icons.add),
+      child: const Icon(
+        Icons.add,
+        color: ZachranObedColors.primary,
+      ),
     );
   }
 }
