@@ -32,31 +32,36 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        unselectedFontSize: 12.0,
-        selectedFontSize: 12.0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: ZachranObedStrings.overview,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant),
-            label: ZachranObedStrings.donations,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CustomIcons.graph),
-            label: ZachranObedStrings.statistics,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: ZachranObedStrings.menu,
-          ),
-        ],
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        backgroundColor: ZachranObedColors().primaryLight,
+      bottomNavigationBar: SizedBox(
+        height: 80.0,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          unselectedFontSize: 12.0,
+          selectedFontSize: 12.0,
+          selectedItemColor: ZachranObedColors.primary,
+          unselectedItemColor: ZachranObedColors.onPrimaryLight,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: ZachranObedStrings.overview,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.restaurant),
+              label: ZachranObedStrings.donations,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CustomIcons.graph),
+              label: ZachranObedStrings.statistics,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu),
+              label: ZachranObedStrings.menu,
+            ),
+          ],
+          currentIndex: _currentIndex,
+          onTap: _onItemTapped,
+          backgroundColor: ZachranObedColors().primaryLight,
+        ),
       ),
     );
   }

@@ -25,7 +25,7 @@ class ZachranObedStrings {
   static const invalidNumberError = 'Zadejte prosím validní číslo';
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';
-  static const donations = 'Dary';
+  static const donations = 'Darované';
   static const donationList = 'Seznam darů';
   static const statistics = 'Statistiky';
   static const menu = 'Menu';
