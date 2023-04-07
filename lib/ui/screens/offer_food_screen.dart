@@ -127,6 +127,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
+                        icon: const Icon(Icons.calendar_today_outlined),
                         controller: _consumeByController,
                         onValidation: (val) => val!.isEmpty
                             ? ZachranObedStrings.requiredFieldError
