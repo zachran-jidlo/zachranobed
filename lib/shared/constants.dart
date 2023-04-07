@@ -11,6 +11,7 @@ class ZachranObedColors {
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
+  static const borderColor = Color.fromRGBO(216, 194, 191, 1);
 }
 
 class ZachranObedStrings {

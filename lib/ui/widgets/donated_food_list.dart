@@ -55,6 +55,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
               ),
           ],
         ),
+        const SizedBox(height: 20.0),
         FutureBuilder<List<OfferedFood>>(
           future: _futureOfferedFood,
           builder: (context, snapshot) {
