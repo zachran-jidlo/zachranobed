@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
         ],
         currentIndex: _currentIndex,
         onTap: _onItemTapped,
-        backgroundColor: ZachranObedColors().secondary,
+        backgroundColor: ZachranObedColors().primaryLight,
       ),
     );
   }

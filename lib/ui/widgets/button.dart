@@ -18,7 +18,7 @@ class ZachranObedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final backgroundColor =
-        isSecondary ? ZachranObedColors().secondary : ZachranObedColors.primary;
+        isSecondary ? ZachranObedColors.secondary : ZachranObedColors.primary;
     final foregroundColor = isSecondary
         ? ZachranObedColors.onSecondary
         : ZachranObedColors.onPrimary;

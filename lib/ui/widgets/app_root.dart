@@ -19,8 +19,8 @@ class AppRoot extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: ZachranObedColors.primary,
               onPrimary: ZachranObedColors.onPrimary,
-              secondary: ZachranObedColors().secondary,
-              onSecondary: ZachranObedColors.onSecondary,
+              secondary: ZachranObedColors().primaryLight,
+              onSecondary: ZachranObedColors.onPrimaryLight,
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
