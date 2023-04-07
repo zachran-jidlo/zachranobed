@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 class ZachranObedColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
-  static const primaryLight = Color.fromARGB(50, 192, 0, 22);
+  static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
+  final secondary = Color.lerp(
+    const Color.fromRGBO(192, 0, 22, 0.08),
+    const Color(0xFFFFFBFF),
+    0.9,
+  );
+  static const onSecondary = Color.fromRGBO(83, 67, 65, 1);
 }
 
 class ZachranObedStrings {
@@ -28,7 +34,7 @@ class ZachranObedStrings {
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
   static const offer = 'Nabídnout';
-  static const offerFood = 'Nabídnout pokrm';
+  static const offerFood = 'Darovat pokrmy';
   static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =
       'Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.';
@@ -37,7 +43,9 @@ class ZachranObedStrings {
   static const numberOfServings = 'Počet porcí';
   static const packaging = 'Balení';
   static const consumeBy = 'Spotřebujte do';
-  static const addAnotherFood = 'Přidat další pokrm';
+  static const addAnotherFood = 'Přidat další';
+  static const food = 'Pokrm';
+  static const summaryInfo = 'Souhrnné informace';
   static const confirmation =
       'Pokrm jste \n úspěšně darovali \n \u2764 Děkujeme, že \n pomáháte.';
   static const offerError =

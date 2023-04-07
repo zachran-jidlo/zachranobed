@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:zachranobed/auth_token.dart';
+import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -31,20 +32,17 @@ class OfferedFoodApiService {
   }
 
   Future<http.Response> createOffer(
-      String id,
-      DateTime date,
-      String name,
-      String allergens,
-      int numberOfServings,
-      String packaging,
-      DateTime consumeBy,
-      String donorId) async {
+    String id,
+    DateTime date,
+    FoodInfo foodInfo,
+    String packaging,
+    DateTime consumeBy,
+    String donorId,
+  ) async {
     final offeredFood = OfferedFood(
       id: id,
       date: date,
-      name: name,
-      allergens: allergens,
-      numberOfServings: numberOfServings,
+      foodInfo: foodInfo,
       packaging: packaging,
       consumeBy: consumeBy,
       weekNumber: HelperService.getCurrentWeekNumber,

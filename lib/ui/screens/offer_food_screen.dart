@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -11,7 +11,7 @@ import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
-import 'package:zachranobed/ui/widgets/text_field.dart';
+import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({Key? key}) : super(key: key);
@@ -21,16 +21,11 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  Future<http.Response>? _futureResponse;
+  Future<Response>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _foodNameController = TextEditingController();
-  final TextEditingController _allergensController = TextEditingController();
-  final TextEditingController _servingsNumberController =
-      TextEditingController();
   final TextEditingController _consumeByController = TextEditingController();
-
   String _selectedPackaging = '';
 
   final List<String> _packagingOptions = <String>[
@@ -38,24 +33,22 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     'Jednorázový obal'
   ];
 
+  final List<FoodInfo> _foodSections = [FoodInfo()];
+
   @override
   void dispose() {
-    _foodNameController.dispose();
-    _allergensController.dispose();
-    _servingsNumberController.dispose();
     _consumeByController.dispose();
     super.dispose();
   }
 
   bool _somethingIsFilled() {
-    if (_foodNameController.text.isNotEmpty ||
-        _allergensController.text.isNotEmpty ||
-        _servingsNumberController.text.isNotEmpty ||
-        _consumeByController.text.isNotEmpty ||
-        _selectedPackaging != '') {
+    if (_consumeByController.text.isNotEmpty || _selectedPackaging != '') {
       return true;
     }
-    return false;
+    return _foodSections.any((foodInfo) =>
+        foodInfo.name.isNotEmpty == true ||
+        foodInfo.allergens.isNotEmpty == true ||
+        foodInfo.numberOfServings != null);
   }
 
   Future<bool> _showConfirmationDialog() async {
@@ -89,98 +82,63 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Row(
                   children: const <Widget>[
-                    Text(ZachranObedStrings.offerLeftoverFood,
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
+                    Text(
+                      ZachranObedStrings.offerLeftoverFood,
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                const Text(ZachranObedStrings.offerFoodDescription),
                 const SizedBox(height: 20),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.foodName,
-                        controller: _foodNameController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
+                      FoodSectionTextFields(
+                        foodSections: _foodSections,
                       ),
-                      const SizedBox(height: 15),
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.allergens,
-                        controller: _allergensController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
-                      ),
-                      const SizedBox(height: 15),
-                      ZachranObedTextField(
-                        text: ZachranObedStrings.numberOfServings,
-                        controller: _servingsNumberController,
-                        onValidation: (val) {
-                          if (val!.isEmpty) {
-                            return ZachranObedStrings.requiredFieldError;
-                          }
-                          int? validNumber = int.tryParse(val);
-                          if (validNumber == null) {
-                            return ZachranObedStrings.invalidNumberError;
-                          }
-                          return null;
+                      ZachranObedButton(
+                        text: ZachranObedStrings.addAnotherFood,
+                        isSecondary: true,
+                        onPressed: () {
+                          setState(() => _foodSections.add(FoodInfo()));
                         },
-                        inputType: TextInputType.number,
-                        textInputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: const [
+                          Text(
+                            ZachranObedStrings.summaryInfo,
+                            style: TextStyle(fontSize: 22),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      ZachranObedButton(
-                        text: ZachranObedStrings.addAnotherFood.toUpperCase(),
-                        onPressed: () {
-                          print('Kliknuto na přidat další pokrm');
-                        },
-                      ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       ZachranObedDropdown(
                         hintText: ZachranObedStrings.packaging,
                         items: _packagingOptions,
                         onValidation: (val) => val == null
                             ? ZachranObedStrings.requiredDropdownError
                             : null,
-                        onChanged: (String value) {
-                          _selectedPackaging = value;
-                        },
+                        onChanged: (String value) => _selectedPackaging = value,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
+                        icon: const Icon(Icons.calendar_today_outlined),
                         controller: _consumeByController,
                         onValidation: (val) => val!.isEmpty
                             ? ZachranObedStrings.requiredFieldError
                             : null,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 30),
                       ZachranObedButton(
-                        text: ZachranObedStrings.offerFood.toUpperCase(),
+                        text: ZachranObedStrings.offerFood,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = OfferedFoodApiService()
-                                .createOffer(
-                                    const Uuid().v4(),
-                                    DateTime.now(),
-                                    _foodNameController.text,
-                                    _allergensController.text,
-                                    int.parse(_servingsNumberController.text),
-                                    _selectedPackaging,
-                                    DateFormat('dd.MM.y HH:mm')
-                                        .parse(_consumeByController.text),
-                                    HelperService.getCurrentUser(context)!
-                                        .internalId);
+                            _futureResponse = _offerFood();
                             Navigator.of(context).pushReplacementNamed(
                                 RouteManager.thankYou,
                                 arguments: _futureResponse);
@@ -197,5 +155,23 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         ),
       ),
     );
+  }
+
+  Future<Response> _offerFood() {
+    var response = null;
+    for (var foodInfo in _foodSections) {
+      response = OfferedFoodApiService().createOffer(
+          const Uuid().v4(),
+          DateTime.now(),
+          FoodInfo(
+            name: foodInfo.name,
+            allergens: foodInfo.allergens,
+            numberOfServings: foodInfo.numberOfServings,
+          ),
+          _selectedPackaging,
+          DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          HelperService.getCurrentUser(context)!.internalId);
+    }
+    return response;
   }
 }

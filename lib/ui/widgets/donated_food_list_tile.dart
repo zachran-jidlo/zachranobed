@@ -18,12 +18,12 @@ class DonatedFoodListTile extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
       child: ListTile(
-        title: Text('$date ${offeredFood.name}'),
+        title: Text('$date ${offeredFood.foodInfo.name}'),
         trailing: RichText(
           text: TextSpan(
             style: DefaultTextStyle.of(context).style,
             children: [
-              TextSpan(text: '${offeredFood.numberOfServings} ks'),
+              TextSpan(text: '${offeredFood.foodInfo.numberOfServings} ks'),
               const WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
                 child: Padding(
