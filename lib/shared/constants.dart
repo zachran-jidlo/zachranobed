@@ -50,7 +50,7 @@ class ZachranObedStrings {
   static const food = 'Pokrm';
   static const summaryInfo = 'Souhrnné informace';
   static const confirmation =
-      'Pokrm jste \n úspěšně darovali \n \u2764 Děkujeme, že \n pomáháte.';
+      'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
       'Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.';
   static const endOffer = 'Ukončit nabídku?';
