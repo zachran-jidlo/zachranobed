@@ -2,14 +2,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ZachranObedClickableText extends StatelessWidget {
-
   final String text;
+  final Color color;
+  final bool underline;
   final VoidCallback onTap;
 
   const ZachranObedClickableText({
     Key? key,
     required this.text,
-    required this.onTap
+    this.color = Colors.black,
+    this.underline = true,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -17,13 +20,11 @@ class ZachranObedClickableText extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: text,
-          style: const TextStyle(
-            color: Colors.black,
-            decoration: TextDecoration.underline,
+          style: TextStyle(
+            color: color,
+            decoration: underline ? TextDecoration.underline : null,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = onTap
-      ),
+          recognizer: TapGestureRecognizer()..onTap = onTap),
     );
   }
 }

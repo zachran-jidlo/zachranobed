@@ -10,6 +10,7 @@ import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
+import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class Login extends StatefulWidget {
@@ -71,15 +72,14 @@ class _LoginState extends State<Login> {
                               : null,
                         ),
                         const SizedBox(height: 15),
-                        ZachranObedTextField(
+                        ZachranObedPasswordTextField(
                           text: ZachranObedStrings.password,
                           controller: _passwordController,
-                          obscureText: true,
                           onValidation: (val) => val!.isEmpty
                               ? ZachranObedStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         ZachranObedCheckbox(
                           text: ZachranObedStrings.rememberUser,
                           isChecked: _rememberUser,
@@ -104,6 +104,8 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 25),
               ZachranObedClickableText(
                   text: ZachranObedStrings.forgottenPassword,
+                  color: ZachranObedColors.onPrimaryLight,
+                  underline: false,
                   onTap: () {
                     print('Change password');
                   }),
