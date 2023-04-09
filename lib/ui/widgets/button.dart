@@ -6,6 +6,7 @@ class ZachranObedButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
   final bool isSecondary;
+  final double height;
 
   const ZachranObedButton({
     Key? key,
@@ -13,6 +14,7 @@ class ZachranObedButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.isSecondary = false,
+    this.height = 56.0,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class ZachranObedButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
-        minimumSize: const Size.fromHeight(50),
+        minimumSize: Size.fromHeight(height),
         shape: const StadiumBorder(),
       ),
       onPressed: onPressed,

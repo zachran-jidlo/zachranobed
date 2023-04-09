@@ -89,8 +89,8 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         });
       },
       child: Container(
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         decoration: BoxDecoration(
           color: ZachranObedColors.secondary,
           borderRadius: BorderRadius.circular(20),
@@ -98,6 +98,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         child: const Icon(
           MaterialSymbols.delete,
           color: ZachranObedColors.onSecondary,
+          size: 20.0,
         ),
       ),
     );

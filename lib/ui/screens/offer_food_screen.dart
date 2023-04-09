@@ -104,6 +104,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         text: ZachranObedStrings.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
+                        height: 40.0,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
