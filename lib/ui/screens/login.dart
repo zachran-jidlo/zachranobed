@@ -94,35 +94,7 @@ class _LoginState extends State<Login> {
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              User? user = await _tryLogIn();
-                              if (user != null) {
-                                if (context.mounted) {
-                                  final userNotifier =
-                                      Provider.of<UserNotifier>(context,
-                                          listen: false);
-                                  userNotifier.user = User.create(
-                                    user.internalId,
-                                    user.email,
-                                    user.pickUpFrom,
-                                  );
-                                  Navigator.of(context)
-                                      .pushReplacementNamed(RouteManager.home);
-                                }
-                              } else {
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Center(
-                                        child: Text(
-                                          ZachranObedStrings
-                                              .wrongCredentialsError,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
+                              await _logIn(context);
                             }
                           },
                         ),
@@ -141,5 +113,33 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  Future<void> _logIn(BuildContext context) async {
+    User? user = await _tryLogIn();
+    if (user != null) {
+      if (context.mounted) {
+        final userNotifier = Provider.of<UserNotifier>(context, listen: false);
+        userNotifier.user = User.create(
+          user.internalId,
+          user.email,
+          user.pickUpFrom,
+        );
+        Navigator.of(context).pushReplacementNamed(RouteManager.home);
+      }
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Center(
+              child: Text(
+                ZachranObedStrings.wrongCredentialsError,
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 }
