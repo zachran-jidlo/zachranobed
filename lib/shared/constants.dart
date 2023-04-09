@@ -63,7 +63,7 @@ class ZachranObedStrings {
   static const foodImagePath = 'assets/food-image.png';
 
   static const tabidooApiUrlBase =
-      'https://private-anon-446cafc2fe-tabidoo.apiary-proxy.com/api/v2/apps';
+      'https://private-anon-065ffb8fa7-tabidoo.apiary-proxy.com/api/v2/apps';
 }
 
 class WidgetStyle {

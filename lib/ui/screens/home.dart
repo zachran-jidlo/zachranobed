@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/shared/custom_icons.dart';
 import 'package:zachranobed/ui/screens/donations.dart';
-import 'package:zachranobed/ui/screens/menu.dart';
 import 'package:zachranobed/ui/screens/overview.dart';
-import 'package:zachranobed/ui/screens/statistics.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,8 +16,6 @@ class _HomeState extends State<Home> {
   final screens = [
     const Overview(),
     const Donations(),
-    const Statistics(),
-    const Menu(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,27 +31,18 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: SizedBox(
         height: 80.0,
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
           unselectedFontSize: 12.0,
           selectedFontSize: 12.0,
           selectedItemColor: ZachranObedColors.primary,
           unselectedItemColor: ZachranObedColors.onPrimaryLight,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(MaterialSymbols.home),
               label: ZachranObedStrings.overview,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.restaurant),
+              icon: Icon(MaterialSymbols.fastfood),
               label: ZachranObedStrings.donations,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CustomIcons.graph),
-              label: ZachranObedStrings.statistics,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: ZachranObedStrings.menu,
             ),
           ],
           currentIndex: _currentIndex,

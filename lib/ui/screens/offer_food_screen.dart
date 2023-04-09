@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -101,7 +102,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood,
-                        icon: Icons.add,
+                        icon: MaterialSymbols.add,
                         isSecondary: true,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
@@ -128,7 +129,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
-                        icon: const Icon(Icons.calendar_today_outlined),
+                        icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
                         onValidation: (val) => val!.isEmpty
                             ? ZachranObedStrings.requiredFieldError
@@ -137,7 +138,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedButton(
                         text: ZachranObedStrings.offerFood,
-                        icon: Icons.check,
+                        icon: MaterialSymbols.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = _offerFood();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -20,7 +21,7 @@ class Overview extends StatelessWidget {
             onPressed: () {
               print('Bell pressed');
             },
-            icon: const Icon(Icons.add_alert),
+            icon: const Icon(MaterialSymbols.mail),
           ),
           IconButton(
             onPressed: () {

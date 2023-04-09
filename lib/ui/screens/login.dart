@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/models/user.dart';
@@ -90,7 +91,7 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 20),
                         ZachranObedButton(
                           text: ZachranObedStrings.login,
-                          icon: Icons.login,
+                          icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               User? user = await _tryLogIn();

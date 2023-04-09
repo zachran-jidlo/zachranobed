@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/shared/custom_icons.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
@@ -29,22 +28,7 @@ class Donations extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  ElevatedButton.icon(
-                    icon: const Icon(CustomIcons.filter, size: 15.0),
-                    label: const Text(ZachranObedStrings.filter),
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                    ),
-                    onPressed: () {
-                      print('Kliknuto na filtrovat');
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               DonatedFoodList(
                 itemsLimit: 3,
                 filter:
