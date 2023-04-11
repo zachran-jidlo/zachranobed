@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -12,7 +13,6 @@ class Donations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text(ZachranObedStrings.donationList),
         actions: [
           IconButton(
@@ -23,31 +23,32 @@ class Donations extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 20),
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter:
-                    'cisloTydne(eq)${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                title: 'Tento týden',
-                showServingsSum: true,
-              ),
-              const SizedBox(height: 30),
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter:
-                    'cisloTydne(eq)${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                title: 'Minulý týden',
-                showServingsSum: true,
-              ),
-              const SizedBox(height: 85),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: MultiSliver(
+              children: [
+                DonatedFoodList(
+                  itemsLimit: 1000,
+                  filter:
+                      'cisloTydne(eq)${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+                  title: 'Tento týden',
+                  showServingsSum: true,
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                DonatedFoodList(
+                  itemsLimit: 1000,
+                  filter:
+                      'cisloTydne(eq)${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+                  title: 'Minulý týden',
+                  showServingsSum: true,
+                ),
+              ],
+            ),
           ),
-        ),
+          const SliverToBoxAdapter(child: SizedBox(height: 30)),
+        ],
       ),
       floatingActionButton: ZachranObedFloatingButton(
         onPressed: () =>

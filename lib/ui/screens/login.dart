@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         ZachranObedTextField(
                           text: ZachranObedStrings.emailAddress,
+                          inputType: TextInputType.emailAddress,
                           controller: _emailController,
                           onValidation: (val) => val!.isEmpty
                               ? ZachranObedStrings.requiredFieldError
