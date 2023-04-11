@@ -21,9 +21,13 @@ class AppRoot extends StatelessWidget {
               onPrimary: ZachranObedColors.onPrimary,
               secondary: ZachranObedColors().primaryLight,
               onSecondary: ZachranObedColors.onPrimaryLight,
+              background: Colors.white,
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            appBarTheme: const AppBarTheme(
+              scrolledUnderElevation: 0,
+            ),
           ),
         );
       },
