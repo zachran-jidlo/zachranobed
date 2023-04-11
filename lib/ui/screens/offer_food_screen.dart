@@ -9,6 +9,7 @@ import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
@@ -74,10 +75,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return WillPopScope(
       onWillPop: _showConfirmationDialog,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(ZachranObedStrings.offer),
-        ),
+        appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: SingleChildScrollView(
@@ -149,7 +147,14 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
+                      ZachranObedClickableText(
+                        clickableText: ZachranObedStrings.manualName,
+                        prefixText: ZachranObedStrings.consent,
+                        underline: true,
+                        onTap: () => print('Kliknuto na příručku'),
+                      ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 ),

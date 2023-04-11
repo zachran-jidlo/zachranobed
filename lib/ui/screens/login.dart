@@ -104,7 +104,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 25),
               ZachranObedClickableText(
-                  text: ZachranObedStrings.forgottenPassword,
+                  clickableText: ZachranObedStrings.forgottenPassword,
                   color: ZachranObedColors.onPrimaryLight,
                   underline: false,
                   onTap: () {

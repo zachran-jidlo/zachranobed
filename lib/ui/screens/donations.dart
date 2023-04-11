@@ -13,7 +13,7 @@ class Donations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZachranObedStrings.donationList),
+        title: const Text(ZachranObedStrings.donations),
         actions: [
           IconButton(
             onPressed: () {

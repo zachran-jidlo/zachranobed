@@ -27,7 +27,6 @@ class ZachranObedStrings {
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';
   static const donations = 'Darované';
-  static const donationList = 'Seznam darů';
   static const statistics = 'Statistiky';
   static const menu = 'Menu';
   static const change = 'Změnit';
@@ -36,7 +35,6 @@ class ZachranObedStrings {
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
-  static const offer = 'Nabídnout';
   static const offerFood = 'Darovat pokrmy';
   static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =
@@ -49,6 +47,9 @@ class ZachranObedStrings {
   static const addAnotherFood = 'Přidat další';
   static const food = 'Pokrm';
   static const summaryInfo = 'Souhrnné informace';
+  static const consent =
+      'Kliknutím na tlačítko “Darovat pokrmy” potvrzuji, že pokrmy jsou darované po zavírací době podniku a splňují všechny požadavky stanovené správnou hygienickou praxí. Přehled podmínek je uvedený v příručce ';
+  static const manualName = 'Jak darovat hotové pokrmy.';
   static const confirmation =
       'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
