@@ -12,6 +12,8 @@ class ZachranObedColors {
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
   static const borderColor = Color.fromRGBO(216, 194, 191, 1);
+  static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
+  static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
 }
 
 class ZachranObedStrings {
@@ -27,14 +29,13 @@ class ZachranObedStrings {
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';
   static const donations = 'Darované';
-  static const statistics = 'Statistiky';
   static const menu = 'Menu';
-  static const change = 'Změnit';
   static const youCanDonate = 'Dnes můžete darovat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
-  static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
+  static const total = 'Celkem';
+  static const lastThirtyDays = 'Za posledních 30 dní';
   static const offerFood = 'Darovat pokrmy';
   static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =

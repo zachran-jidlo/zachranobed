@@ -1,57 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedCard extends StatefulWidget {
-  final String text;
+double _CARD_SIDE = 154.0;
+
+class ZachranObedCard extends StatelessWidget {
+  final String metricsText;
   final String measuredVariableText;
-  final String buttonText;
-  final VoidCallback onPressed;
+  final String periodText;
 
-  const ZachranObedCard(
-      {Key? key,
-      required this.text,
-      required this.measuredVariableText,
-      required this.buttonText,
-      required this.onPressed})
-      : super(key: key);
+  const ZachranObedCard({
+    Key? key,
+    required this.metricsText,
+    required this.measuredVariableText,
+    required this.periodText,
+  }) : super(key: key);
 
-  @override
-  State<ZachranObedCard> createState() => _ZachranObedCardState();
-}
-
-class _ZachranObedCardState extends State<ZachranObedCard> {
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Card(
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(width: 2, color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+    return Container(
+      width: _CARD_SIDE,
+      height: _CARD_SIDE,
+      decoration: BoxDecoration(
+        color: ZachranObedColors.cardBackground,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          width: 1,
+          color: ZachranObedColors.borderColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(widget.text),
-                  Text(
-                    widget.measuredVariableText,
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              ElevatedButton(
-                onPressed: widget.onPressed,
-                child: Text(widget.buttonText),
-              ),
-            ],
-          ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTextWidget(metricsText, 12.0),
+            _buildTextWidget(
+              measuredVariableText,
+              36.0,
+              fontWeight: FontWeight.bold,
+            ),
+            _buildTextWidget(periodText, 12.0),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextWidget(
+    String text,
+    double fontSize, {
+    FontWeight fontWeight = FontWeight.normal,
+  }) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: ZachranObedColors.onCardBackground,
       ),
     );
   }
