@@ -16,6 +16,7 @@ class AppRoot extends StatelessWidget {
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
           theme: ThemeData(
+            useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: ZachranObedColors.primary,
               onPrimary: ZachranObedColors.onPrimary,
