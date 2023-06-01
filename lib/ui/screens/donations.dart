@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/shared/custom_icons.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
@@ -13,8 +13,7 @@ class Donations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(ZachranObedStrings.donationList),
+        title: const Text(ZachranObedStrings.donations),
         actions: [
           IconButton(
             onPressed: () {
@@ -24,46 +23,32 @@ class Donations extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  ElevatedButton.icon(
-                    icon: const Icon(CustomIcons.filter, size: 15.0),
-                    label: const Text(ZachranObedStrings.filter),
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                    ),
-                    onPressed: () {
-                      print('Kliknuto na filtrovat');
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter:
-                    'cisloTydne(eq)${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                title: 'Tento týden',
-                showServingsSum: true,
-              ),
-              const SizedBox(height: 30),
-              DonatedFoodList(
-                itemsLimit: 3,
-                filter:
-                    'cisloTydne(eq)${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                title: 'Minulý týden',
-                showServingsSum: true,
-              ),
-              const SizedBox(height: 85),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: MultiSliver(
+              children: [
+                DonatedFoodList(
+                  itemsLimit: 1000,
+                  filter:
+                      'cisloTydne(eq)${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+                  title: 'Tento týden',
+                  showServingsSum: true,
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                DonatedFoodList(
+                  itemsLimit: 1000,
+                  filter:
+                      'cisloTydne(eq)${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+                  title: 'Minulý týden',
+                  showServingsSum: true,
+                ),
+              ],
+            ),
           ),
-        ),
+          const SliverToBoxAdapter(child: SizedBox(height: 30)),
+        ],
       ),
       floatingActionButton: ZachranObedFloatingButton(
         onPressed: () =>

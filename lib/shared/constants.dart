@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 class ZachranObedColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
-  final secondary = Color.lerp(
+  final primaryLight = Color.lerp(
     const Color.fromRGBO(192, 0, 22, 0.08),
     const Color(0xFFFFFBFF),
     0.9,
   );
-  static const onSecondary = Color.fromRGBO(83, 67, 65, 1);
+  static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
+  static const secondary = Color.fromRGBO(255, 218, 214, 1);
+  static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
+  static const borderColor = Color.fromRGBO(216, 194, 191, 1);
+  static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
+  static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
 }
 
 class ZachranObedStrings {
@@ -23,17 +28,14 @@ class ZachranObedStrings {
   static const invalidNumberError = 'Zadejte prosím validní číslo';
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
   static const overview = 'Přehled';
-  static const donations = 'Dary';
-  static const donationList = 'Seznam darů';
-  static const statistics = 'Statistiky';
+  static const donations = 'Darované';
   static const menu = 'Menu';
-  static const change = 'Změnit';
   static const youCanDonate = 'Dnes můžete darovat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
-  static const borrowedBoxes = 'Zapůjčeno ReKrabiček';
-  static const offer = 'Nabídnout';
+  static const total = 'Celkem';
+  static const lastThirtyDays = 'Za posledních 30 dní';
   static const offerFood = 'Darovat pokrmy';
   static const offerLeftoverFood = 'Nabídka zbylých pokrmů';
   static const offerFoodDescription =
@@ -46,8 +48,11 @@ class ZachranObedStrings {
   static const addAnotherFood = 'Přidat další';
   static const food = 'Pokrm';
   static const summaryInfo = 'Souhrnné informace';
+  static const consent =
+      'Kliknutím na tlačítko “Darovat pokrmy” potvrzuji, že pokrmy jsou darované po zavírací době podniku a splňují všechny požadavky stanovené správnou hygienickou praxí. Přehled podmínek je uvedený v příručce ';
+  static const manualName = 'Jak darovat hotové pokrmy.';
   static const confirmation =
-      'Pokrm jste \n úspěšně darovali \n \u2764 Děkujeme, že \n pomáháte.';
+      'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
       'Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.';
   static const endOffer = 'Ukončit nabídku?';
@@ -60,7 +65,7 @@ class ZachranObedStrings {
   static const foodImagePath = 'assets/food-image.png';
 
   static const tabidooApiUrlBase =
-      'https://private-anon-446cafc2fe-tabidoo.apiary-proxy.com/api/v2/apps';
+      'https://private-anon-065ffb8fa7-tabidoo.apiary-proxy.com/api/v2/apps';
 }
 
 class WidgetStyle {

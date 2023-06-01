@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
+
+double _TITLE_ROW_HEIGHT = 40.0;
 
 class DonatedFoodList extends StatefulWidget {
   final int itemsLimit;
@@ -34,50 +37,56 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return MultiSliver(
+      pushPinnedChildren: true,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              widget.title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+        SliverPinnedHeader(
+          child: Container(
+            height: _TITLE_ROW_HEIGHT,
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  widget.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                if (widget.showServingsSum)
+                  ValueListenableBuilder(
+                    valueListenable: _servingsSum,
+                    builder: (context, sum, child) {
+                      return Text(
+                        '${sum.toInt()} ks',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      );
+                    },
+                  ),
+              ],
             ),
-            if (widget.showServingsSum)
-              ValueListenableBuilder(
-                valueListenable: _servingsSum,
-                builder: (context, sum, child) {
-                  return Text(
-                    '${sum.toInt()} ks',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  );
-                },
-              ),
-          ],
+          ),
         ),
         FutureBuilder<List<OfferedFood>>(
           future: _futureOfferedFood,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<OfferedFood> offers = snapshot.data!;
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: offers.length,
-                itemBuilder: (context, index) {
-                  Future.delayed(Duration.zero, () {
-                    _servingsSum.value +=
-                        offers[index].foodInfo.numberOfServings!;
-                  });
-                  return DonatedFoodListTile(offeredFood: offers[index]);
-                },
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: offers.length,
+                  (context, index) {
+                    Future.delayed(Duration.zero, () {
+                      _servingsSum.value +=
+                          offers[index].foodInfo.numberOfServings!;
+                    });
+                    return DonatedFoodListTile(offeredFood: offers[index]);
+                  },
+                ),
               );
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Center(child: Text('${snapshot.error}'));
             }
 
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ],

@@ -2,28 +2,39 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ZachranObedClickableText extends StatelessWidget {
-
-  final String text;
+  final String clickableText;
+  final String? prefixText;
+  final Color color;
+  final bool underline;
   final VoidCallback onTap;
 
   const ZachranObedClickableText({
     Key? key,
-    required this.text,
-    required this.onTap
+    required this.clickableText,
+    this.prefixText,
+    this.color = Colors.black,
+    this.underline = true,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: TextSpan(
-          text: text,
-          style: const TextStyle(
-            color: Colors.black,
-            decoration: TextDecoration.underline,
+      text: TextSpan(children: [
+        TextSpan(
+          text: prefixText,
+          style: const TextStyle(color: Colors.black),
+        ),
+        TextSpan(
+          text: clickableText,
+          style: TextStyle(
+            color: color,
+            decoration: underline ? TextDecoration.underline : null,
+            decorationColor: color,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = onTap
-      ),
+          recognizer: TapGestureRecognizer()..onTap = onTap,
+        ),
+      ]),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -88,15 +89,16 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         });
       },
       child: Container(
-        width: 30,
-        height: 30,
+        width: 35,
+        height: 35,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: ZachranObedColors.secondary,
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Icon(
-          Icons.remove,
-          color: Colors.white,
+          MaterialSymbols.delete,
+          color: ZachranObedColors.onSecondary,
+          size: 20.0,
         ),
       ),
     );

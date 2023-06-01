@@ -5,7 +5,7 @@ class ZachranObedDateTimePicker extends StatefulWidget {
   final String text;
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
-  final Icon icon;
+  final IconData icon;
 
   const ZachranObedDateTimePicker({
     Key? key,
@@ -81,7 +81,7 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
           disabledBorder: WidgetStyle.inputBorder,
           errorBorder: _dateTimePickerErrorBorder,
           errorStyle: TextStyle(color: Theme.of(context).colorScheme.error),
-          suffixIcon: widget.icon,
+          suffixIcon: Icon(widget.icon),
           suffixIconColor: Colors.black,
         ),
       ),

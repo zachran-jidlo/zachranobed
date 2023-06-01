@@ -16,14 +16,19 @@ class AppRoot extends StatelessWidget {
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
           theme: ThemeData(
+            useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: ZachranObedColors.primary,
               onPrimary: ZachranObedColors.onPrimary,
-              secondary: ZachranObedColors().secondary,
-              onSecondary: ZachranObedColors.onSecondary,
+              secondary: ZachranObedColors().primaryLight,
+              onSecondary: ZachranObedColors.onPrimaryLight,
+              background: Colors.white,
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            appBarTheme: const AppBarTheme(
+              scrolledUnderElevation: 0,
+            ),
           ),
         );
       },

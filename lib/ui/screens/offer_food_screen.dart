@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -8,6 +9,7 @@ import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
@@ -73,10 +75,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return WillPopScope(
       onWillPop: _showConfirmationDialog,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(ZachranObedStrings.offer),
-        ),
+        appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: SingleChildScrollView(
@@ -101,7 +100,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       ZachranObedButton(
                         text: ZachranObedStrings.addAnotherFood,
+                        icon: MaterialSymbols.add,
                         isSecondary: true,
+                        height: 40.0,
                         onPressed: () {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
@@ -127,7 +128,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
-                        icon: const Icon(Icons.calendar_today_outlined),
+                        icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
                         onValidation: (val) => val!.isEmpty
                             ? ZachranObedStrings.requiredFieldError
@@ -136,6 +137,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedButton(
                         text: ZachranObedStrings.offerFood,
+                        icon: MaterialSymbols.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = _offerFood();
@@ -145,7 +147,14 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
+                      ZachranObedClickableText(
+                        clickableText: ZachranObedStrings.manualName,
+                        prefixText: ZachranObedStrings.consent,
+                        underline: true,
+                        onTap: () => print('Kliknuto na příručku'),
+                      ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 ),
