@@ -8,7 +8,6 @@ import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/user_api_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -25,8 +24,6 @@ class _LoginState extends State<Login> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  bool _rememberUser = false;
 
   @override
   void dispose() {
@@ -80,15 +77,6 @@ class _LoginState extends State<Login> {
                               ? ZachranObedStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 15),
-                        ZachranObedCheckbox(
-                          text: ZachranObedStrings.rememberUser,
-                          isChecked: _rememberUser,
-                          onChange: (value) {
-                            _rememberUser = value;
-                            print(_rememberUser);
-                          },
-                        ),
                         const SizedBox(height: 20),
                         ZachranObedButton(
                           text: ZachranObedStrings.login,
@@ -108,7 +96,7 @@ class _LoginState extends State<Login> {
                   color: ZachranObedColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
-                    print('Change password');
+                    print('Forgotten password');
                   }),
               const SizedBox(height: 30),
             ],
