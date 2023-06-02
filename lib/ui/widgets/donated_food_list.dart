@@ -25,15 +25,7 @@ class DonatedFoodList extends StatefulWidget {
 }
 
 class _DonatedFoodListState extends State<DonatedFoodList> {
-  late Future<List<OfferedFood>> _futureOfferedFood;
   final ValueNotifier<int> _servingsSum = ValueNotifier<int>(0);
-
-  @override
-  void initState() {
-    super.initState();
-    _futureOfferedFood = OfferedFoodApiService()
-        .getOfferedFoodList(limit: widget.itemsLimit, filter: widget.filter);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +49,9 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
                     builder: (context, sum, child) {
                       return Text(
                         '${sum.toInt()} ks',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       );
                     },
                   ),
@@ -66,7 +60,10 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
           ),
         ),
         FutureBuilder<List<OfferedFood>>(
-          future: _futureOfferedFood,
+          future: OfferedFoodApiService().getOfferedFoodList(
+            limit: widget.itemsLimit,
+            filter: widget.filter,
+          ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<OfferedFood> offers = snapshot.data!;
