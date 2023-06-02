@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zachranobed/auth_token.dart';
 import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -22,7 +23,11 @@ class UserApiService {
 
     if (response.statusCode == 200) {
       if (responseData.isNotEmpty) {
-        return User.fromJson(responseData[0]);
+        final user = User.fromJson(responseData[0]);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('userEmail', user.email);
+
+        return user;
       } else {
         return null;
       }

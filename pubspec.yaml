@@ -43,6 +43,7 @@ dependencies:
   uuid: ^3.0.7
   flutter_material_symbols: ^0.0.4
   sliver_tools: ^0.2.9
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

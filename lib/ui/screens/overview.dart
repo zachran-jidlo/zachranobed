@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -25,8 +26,13 @@ class Overview extends StatelessWidget {
             icon: const Icon(MaterialSymbols.mail),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(RouteManager.login);
+            onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+
+              if (context.mounted) {
+                Navigator.of(context).pushReplacementNamed(RouteManager.login);
+              }
             },
             icon: const Icon(Icons.exit_to_app),
           ),
