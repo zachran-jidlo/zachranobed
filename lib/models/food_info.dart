@@ -1,7 +1,7 @@
 class FoodInfo {
   String name;
-  String allergens;
+  List<String>? allergens;
   int? numberOfServings;
 
-  FoodInfo({this.name = '', this.allergens = '', this.numberOfServings});
+  FoodInfo({this.name = '', this.allergens, this.numberOfServings});
 }

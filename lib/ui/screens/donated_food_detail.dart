@@ -25,7 +25,7 @@ class DonatedFoodDetail extends StatelessWidget {
             Text(
                 'Spotřebujte do: ${DateFormat('dd.MM.y HH:mm').format(offeredFood.consumeBy)}'),
             Text('Číslo týdne: ${offeredFood.weekNumber}'),
-            Text('Id dárce: ${offeredFood.donorId}'),
+            Text('Dárce: ${offeredFood.donor}'),
           ],
         ),
       ),

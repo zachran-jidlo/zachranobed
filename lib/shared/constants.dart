@@ -22,11 +22,15 @@ class ZachranObedStrings {
   static const login = 'Přihlásit se';
   static const logout = 'Odhlásit se';
   static const forgottenPassword = 'Zapomenuté heslo';
-  static const rememberUser = 'Zapamatovat heslo';
   static const wrongCredentialsError = 'Špatné přihlašovací údaje!';
   static const requiredFieldError = 'Vyplňte prosím toto pole';
   static const invalidNumberError = 'Zadejte prosím validní číslo';
+  static const invalidAllergensFormatError =
+      'Zadejte prosím alergeny ve správném formátu';
   static const requiredDropdownError = 'Vyberte prosím nějakou možnost';
+  static const packagingRekrabicka = 'REkrabička';
+  static const packagingIkeaBox = 'IKEA krabička';
+  static const packagingDisposable = 'jednorázový obal';
   static const overview = 'Přehled';
   static const donations = 'Darované';
   static const menu = 'Menu';

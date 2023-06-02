@@ -115,6 +115,7 @@ class _LoginState extends State<Login> {
           user.internalId,
           user.email,
           user.pickUpFrom,
+          user.establishmentName,
         );
         Navigator.of(context).pushReplacementNamed(RouteManager.home);
       }

@@ -15,7 +15,7 @@ class OfferedFoodApiService {
       {required int limit, required String filter}) async {
     final response = await http.get(
       Uri.parse(
-          '$_urlBase/zachranobed_test/tables/nabidka_2/data?limit=$limit&filter=$filter'),
+          '$_urlBase/zachranobed/tables/nabidka/data?limit=$limit&filter=$filter'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },
@@ -37,7 +37,7 @@ class OfferedFoodApiService {
     FoodInfo foodInfo,
     String packaging,
     DateTime consumeBy,
-    String donorId,
+    String donor,
   ) async {
     final offeredFood = OfferedFood(
       id: id,
@@ -45,12 +45,13 @@ class OfferedFoodApiService {
       foodInfo: foodInfo,
       packaging: packaging,
       consumeBy: consumeBy,
-      weekNumber: HelperService.getCurrentWeekNumber,
-      donorId: donorId,
+      weekNumber:
+          '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
+      donor: donor,
     );
 
     final response = await http.post(
-      Uri.parse('$_urlBase/zachranobed_test/tables/nabidka_2/data'),
+      Uri.parse('$_urlBase/zachranobed/tables/nabidka/data'),
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
