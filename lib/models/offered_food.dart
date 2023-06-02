@@ -7,8 +7,8 @@ class OfferedFood {
   final FoodInfo foodInfo;
   final String packaging;
   final DateTime consumeBy;
-  final int weekNumber;
-  final String donorId;
+  final String weekNumber;
+  final String donor;
 
   OfferedFood({
     required this.id,
@@ -17,39 +17,41 @@ class OfferedFood {
     required this.packaging,
     required this.consumeBy,
     required this.weekNumber,
-    required this.donorId,
+    required this.donor,
   });
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) {
     return OfferedFood(
       id: json['fields']['x_ID'],
-      date: DateTime.parse(json['fields']['pridanoDne']),
+      date: DateTime.parse(json['fields']['polozka2']),
       foodInfo: FoodInfo(
-        name: json['fields']['nazevPokrmu'],
-        allergens: json['fields']['alergeny'],
+        name: json['fields']['polozka3'],
+        allergens: (json['fields']['alergeny'] as List)
+            .map((e) => e as String)
+            .toList(),
         numberOfServings: json['fields']['pocetPorci'],
       ),
       packaging: json['fields']['baleni'],
       consumeBy: DateTime.parse(json['fields']['spotrebujteDo']),
       weekNumber: json['fields']['cisloTydne'],
-      donorId: json['fields']['darce']['id'],
+      donor: json['fields']['darce']['fields']['nazevProvozovny'],
     );
   }
 
   Map<String, dynamic> toJson() => {
         'fields': {
           'x_ID': id,
-          'pridanoDne': DateFormat('yyyy-MM-dd HH:mm:ss')
+          'polozka2': DateFormat('yyyy-MM-dd HH:mm:ss')
               .parse(date.toString())
               .toIso8601String(),
-          'nazevPokrmu': foodInfo.name,
+          'polozka3': foodInfo.name,
           'alergeny': foodInfo.allergens,
           'pocetPorci': foodInfo.numberOfServings,
           'baleni': packaging,
           'spotrebujteDo': consumeBy.toIso8601String(),
           'cisloTydne': weekNumber,
           'darce': {
-            'id': donorId,
+            'id': donor,
           }
         }
       };

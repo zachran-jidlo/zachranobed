@@ -3,6 +3,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
@@ -30,11 +31,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final TextEditingController _consumeByController = TextEditingController();
   String _selectedPackaging = '';
 
-  final List<String> _packagingOptions = <String>[
-    'REkrabička',
-    'Jednorázový obal'
-  ];
-
   final List<FoodInfo> _foodSections = [FoodInfo()];
 
   @override
@@ -49,7 +45,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     }
     return _foodSections.any((foodInfo) =>
         foodInfo.name.isNotEmpty == true ||
-        foodInfo.allergens.isNotEmpty == true ||
+        foodInfo.allergens != null ||
         foodInfo.numberOfServings != null);
   }
 
@@ -119,11 +115,13 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const SizedBox(height: 30),
                       ZachranObedDropdown(
                         hintText: ZachranObedStrings.packaging,
-                        items: _packagingOptions,
+                        items: Packaging.values
+                            .map((e) => e.packagingName)
+                            .toList(),
                         onValidation: (val) => val == null
                             ? ZachranObedStrings.requiredDropdownError
                             : null,
-                        onChanged: (String value) => _selectedPackaging = value,
+                        onChanged: (value) => _selectedPackaging = value,
                       ),
                       const SizedBox(height: 30),
                       ZachranObedDateTimePicker(

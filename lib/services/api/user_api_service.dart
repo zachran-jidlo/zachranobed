@@ -12,7 +12,7 @@ class UserApiService {
   Future<User?> logIn({required String email}) async {
     final response = await http.get(
       Uri.parse(
-          '$_urlBase/zachranobed_test/tables/darci/data?filter=email(eq)$email'),
+          '$_urlBase/zachranobed/tables/darci/data?filter=polozka3(eq)$email'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },

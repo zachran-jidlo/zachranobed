@@ -52,10 +52,19 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         const SizedBox(height: 30),
         ZachranObedTextField(
           text: ZachranObedStrings.allergens,
-          onValidation: (val) =>
-              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
-          onChanged: (val) => foodInfo.allergens = val,
-          value: foodInfo.allergens,
+          onValidation: (val) {
+            RegExp allergensRegex =
+                RegExp(r'^(1[0-4]|[1-9])(,(1[0-4]|[1-9]))*$');
+            if (val!.isEmpty) {
+              return ZachranObedStrings.requiredFieldError;
+            }
+            if (!allergensRegex.hasMatch(val)) {
+              return ZachranObedStrings.invalidAllergensFormatError;
+            }
+            return null;
+          },
+          onChanged: (val) => foodInfo.allergens = val.split(','),
+          value: foodInfo.allergens?.toString(),
         ),
         const SizedBox(height: 30),
         ZachranObedTextField(
