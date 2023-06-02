@@ -10,6 +10,4 @@ class UserNotifier extends ChangeNotifier {
     _user = value;
     notifyListeners();
   }
-
-  bool get isLoggedIn => _user != null;
 }
