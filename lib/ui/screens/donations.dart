@@ -34,7 +34,6 @@ class Donations extends StatelessWidget {
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: 'Tento týden',
-                  showServingsSum: true,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 DonatedFoodList(
@@ -42,7 +41,6 @@ class Donations extends StatelessWidget {
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: 'Minulý týden',
-                  showServingsSum: true,
                 ),
               ],
             ),

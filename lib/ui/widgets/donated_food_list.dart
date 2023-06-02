@@ -10,14 +10,12 @@ class DonatedFoodList extends StatefulWidget {
   final int itemsLimit;
   final String filter;
   final String title;
-  final bool showServingsSum;
 
   const DonatedFoodList({
     Key? key,
     required this.itemsLimit,
     this.filter = '',
     required this.title,
-    this.showServingsSum = false,
   }) : super(key: key);
 
   @override
@@ -25,8 +23,6 @@ class DonatedFoodList extends StatefulWidget {
 }
 
 class _DonatedFoodListState extends State<DonatedFoodList> {
-  final ValueNotifier<int> _servingsSum = ValueNotifier<int>(0);
-
   @override
   Widget build(BuildContext context) {
     return MultiSliver(
@@ -43,18 +39,6 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
                   widget.title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                if (widget.showServingsSum)
-                  ValueListenableBuilder(
-                    valueListenable: _servingsSum,
-                    builder: (context, sum, child) {
-                      return Text(
-                        '${sum.toInt()} ks',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    },
-                  ),
               ],
             ),
           ),
@@ -71,10 +55,6 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
                 delegate: SliverChildBuilderDelegate(
                   childCount: offers.length,
                   (context, index) {
-                    Future.delayed(Duration.zero, () {
-                      _servingsSum.value +=
-                          offers[index].foodInfo.numberOfServings!;
-                    });
                     return DonatedFoodListTile(offeredFood: offers[index]);
                   },
                 ),
