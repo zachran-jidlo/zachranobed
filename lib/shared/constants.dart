@@ -27,6 +27,7 @@ class ZachranObedStrings {
   static const packagingRekrabicka = 'REkrabička';
   static const packagingIkeaBox = 'IKEA krabička';
   static const packagingDisposable = 'jednorázový obal';
+  static const newOffer = 'Nová nabídka';
   static const overview = 'Přehled';
   static const donations = 'Darované';
   static const menu = 'Menu';

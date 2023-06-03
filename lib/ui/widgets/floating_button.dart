@@ -12,11 +12,15 @@ class ZachranObedFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       onPressed: onPressed,
       shape: const StadiumBorder(),
       backgroundColor: ZachranObedColors.primaryLight,
-      child: const Icon(
+      label: const Text(
+        ZachranObedStrings.newOffer,
+        style: TextStyle(color: ZachranObedColors.primary),
+      ),
+      icon: const Icon(
         MaterialSymbols.add,
         color: ZachranObedColors.primary,
       ),
