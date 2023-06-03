@@ -4,14 +4,14 @@ import 'package:zachranobed/shared/constants.dart';
 double _CARD_SIDE = 154.0;
 
 class ZachranObedCard extends StatelessWidget {
+  final Future measuredValue;
   final String metricsText;
-  final String measuredVariableText;
   final String periodText;
 
   const ZachranObedCard({
     Key? key,
+    required this.measuredValue,
     required this.metricsText,
-    required this.measuredVariableText,
     required this.periodText,
   }) : super(key: key);
 
@@ -35,10 +35,21 @@ class ZachranObedCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTextWidget(metricsText, 12.0),
-            _buildTextWidget(
-              measuredVariableText,
-              36.0,
-              fontWeight: FontWeight.bold,
+            FutureBuilder(
+              future: measuredValue,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final measuredVariable = snapshot.data;
+                  return _buildTextWidget(
+                    measuredVariable.toString(),
+                    36.0,
+                    fontWeight: FontWeight.bold,
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('${snapshot.error}'));
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
             ),
             _buildTextWidget(periodText, 12.0),
           ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:zachranobed/auth_token.dart';
 import 'package:zachranobed/models/food_info.dart';
@@ -27,8 +28,32 @@ class OfferedFoodApiService {
       return responseData.map((food) => OfferedFood.fromJson(food)).toList();
     } else {
       throw Exception(
-          'Failed to load offered food with error ${response.body}');
+        'Failed to load offered food with error ${response.body}',
+      );
     }
+  }
+
+  Future<int> getSavedMealsCount(
+      {required BuildContext context, int? timePeriod}) async {
+    var mealsCount = 0;
+    var donations = await getOfferedFoodList(
+      limit: 1000,
+      filter:
+          'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+    );
+
+    if (timePeriod != null) {
+      final date = DateTime.now().subtract(Duration(days: timePeriod));
+
+      donations =
+          donations.where((donation) => donation.date.isAfter(date)).toList();
+    }
+
+    for (var donation in donations) {
+      mealsCount += donation.foodInfo.numberOfServings!;
+    }
+
+    return mealsCount;
   }
 
   Future<http.Response> createOffer(

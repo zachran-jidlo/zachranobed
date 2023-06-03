@@ -3,6 +3,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
@@ -46,7 +47,7 @@ class Overview extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             sliver: MultiSliver(
               children: [
-                _buildCards(),
+                _buildCards(context),
                 _buildDonatedFoodList(context),
               ],
             ),
@@ -77,28 +78,33 @@ class Overview extends StatelessWidget {
     );
   }
 
-  Widget _buildCards() {
+  Widget _buildCards(BuildContext context) {
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 154,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          children: const <Widget>[
+          children: <Widget>[
             ZachranObedCard(
+              measuredValue:
+                  OfferedFoodApiService().getSavedMealsCount(context: context),
               metricsText: ZachranObedStrings.savedLunches,
-              measuredVariableText: '1 223',
               periodText: ZachranObedStrings.total,
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             ZachranObedCard(
+              measuredValue: OfferedFoodApiService().getSavedMealsCount(
+                context: context,
+                timePeriod: 30,
+              ),
               metricsText: ZachranObedStrings.savedLunches,
-              measuredVariableText: '270',
               periodText: ZachranObedStrings.lastThirtyDays,
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             ZachranObedCard(
+              measuredValue:
+                  OfferedFoodApiService().getSavedMealsCount(context: context),
               metricsText: ZachranObedStrings.savedLunches,
-              measuredVariableText: '270',
               periodText: ZachranObedStrings.lastThirtyDays,
             ),
           ],
