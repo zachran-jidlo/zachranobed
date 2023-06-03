@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
           unselectedItemColor: ZachranObedColors.onPrimaryLight,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(MaterialSymbols.home),
+              icon: Icon(Icons.home_outlined),
               label: ZachranObedStrings.overview,
             ),
             BottomNavigationBarItem(
@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
           ],
           currentIndex: _currentIndex,
           onTap: _onItemTapped,
-          backgroundColor: ZachranObedColors().primaryLight,
+          backgroundColor: ZachranObedColors.primaryLight,
         ),
       ),
     );

@@ -20,7 +20,7 @@ class AppRoot extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: ZachranObedColors.primary,
               onPrimary: ZachranObedColors.onPrimary,
-              secondary: ZachranObedColors().primaryLight,
+              secondary: ZachranObedColors.primaryLight,
               onSecondary: ZachranObedColors.onPrimaryLight,
               background: Colors.white,
             ),
