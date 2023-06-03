@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -105,7 +104,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Icon(
-          MaterialSymbols.delete,
+          Icons.delete_outline,
           color: ZachranObedColors.onSecondary,
           size: 20.0,
         ),

@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 class ZachranObedColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
-  final primaryLight = Color.lerp(
-    const Color.fromRGBO(192, 0, 22, 0.08),
-    const Color(0xFFFFFBFF),
-    0.9,
-  );
+  static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
@@ -59,9 +55,11 @@ class ZachranObedStrings {
       'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
       'Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.';
-  static const endOffer = 'Ukončit nabídku?';
-  static const cancelTheOffer = 'Zrušit změny';
-  static const continueTheOffer = 'Pokračovat v nabídce';
+  static const endOffer = 'Zahodit nabídku?';
+  static const cancelTheOffer = 'Zahodit';
+  static const continueTheOffer = 'Pokračovat';
+  static const cancelOfferDialogContent =
+      'Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?';
   static const filter = 'Filtrovat';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
@@ -69,7 +67,7 @@ class ZachranObedStrings {
   static const foodImagePath = 'assets/food-image.png';
 
   static const tabidooApiUrlBase =
-      'https://private-anon-065ffb8fa7-tabidoo.apiary-proxy.com/api/v2/apps';
+      'https://private-anon-3321195636-tabidoo.apiary-proxy.com/api/v2/apps';
 }
 
 class WidgetStyle {

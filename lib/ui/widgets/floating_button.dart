@@ -15,7 +15,7 @@ class ZachranObedFloatingButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: onPressed,
       shape: const StadiumBorder(),
-      backgroundColor: ZachranObedColors().primaryLight,
+      backgroundColor: ZachranObedColors.primaryLight,
       child: const Icon(
         MaterialSymbols.add,
         color: ZachranObedColors.primary,

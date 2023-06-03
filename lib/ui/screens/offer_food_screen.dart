@@ -55,8 +55,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
             context: context,
             builder: (context) => ZachranObedDialog(
               title: ZachranObedStrings.endOffer,
+              content: ZachranObedStrings.cancelOfferDialogContent,
               confirmText: ZachranObedStrings.cancelTheOffer,
               cancelText: ZachranObedStrings.continueTheOffer,
+              icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
             ),
