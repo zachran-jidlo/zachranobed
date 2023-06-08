@@ -38,16 +38,10 @@ class OfferedFoodApiService {
     var mealsCount = 0;
     var donations = await getOfferedFoodList(
       limit: 1000,
-      filter:
-          'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+      filter: timePeriod != null
+          ? 'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId},pridanoDne(gt)${DateTime.now().subtract(Duration(days: timePeriod))}'
+          : 'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
     );
-
-    if (timePeriod != null) {
-      final date = DateTime.now().subtract(Duration(days: timePeriod));
-
-      donations =
-          donations.where((donation) => donation.date.isAfter(date)).toList();
-    }
 
     for (var donation in donations) {
       mealsCount += donation.foodInfo.numberOfServings!;
