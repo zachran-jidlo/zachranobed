@@ -7,15 +7,17 @@ class ZachranObedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isSecondary;
   final double height;
+  final bool fullWidth;
 
   const ZachranObedButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
     this.isSecondary = false,
     this.height = 56.0,
-  }) : super(key: key);
+    this.fullWidth = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class ZachranObedButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
-        minimumSize: Size.fromHeight(height),
+        minimumSize: fullWidth ? Size.fromHeight(height) : null,
         shape: const StadiumBorder(),
       ),
       onPressed: onPressed,

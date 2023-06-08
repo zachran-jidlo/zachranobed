@@ -10,9 +10,10 @@ import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
+import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class Overview extends StatelessWidget {
-  const Overview({Key? key}) : super(key: key);
+  const Overview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class Overview extends StatelessWidget {
               children: [
                 _buildCards(context),
                 _buildDonatedFoodList(context),
+                const SizedBox(height: 15.0),
               ],
             ),
           ),
@@ -62,18 +64,12 @@ class Overview extends StatelessWidget {
   }
 
   Widget _buildDonationCountdownTimer() {
-    return SliverToBoxAdapter(
-      child: Container(
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              DonationCountdownTimer(),
-            ],
-          ),
-        ),
+    return const SliverToBoxAdapter(
+      child: InfoBanner(
+        infoText: ZachranObedStrings.youCanDonate,
+        infoValue: DonationCountdownTimer(),
+        buttonText: ZachranObedStrings.callACourier,
+        buttonIcon: Icons.directions_car_filled_outlined,
       ),
     );
   }

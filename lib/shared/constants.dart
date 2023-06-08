@@ -31,8 +31,9 @@ class ZachranObedStrings {
   static const overview = 'Přehled';
   static const donations = 'Darované';
   static const menu = 'Menu';
-  static const youCanDonate = 'Dnes můžete darovat ještě';
+  static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
+  static const callACourier = 'Přivolat kurýra';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const total = 'Celkem';

@@ -6,7 +6,7 @@ import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
-  const DonationCountdownTimer({Key? key}) : super(key: key);
+  const DonationCountdownTimer({super.key});
 
   @override
   State<DonationCountdownTimer> createState() => _DonationCountdownTimerState();
@@ -64,16 +64,24 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final hours = _remainingTime.inHours.remainder(24);
-    final minutes = _remainingTime.inMinutes.remainder(60);
+    final hours =
+        _remainingTime.inHours.remainder(24).toString().padLeft(2, '0');
+    final minutes =
+        _remainingTime.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds =
+        _remainingTime.inSeconds.remainder(60).toString().padLeft(2, '0');
 
     final canDonate = _countdownTimer?.isActive ?? false;
 
     return Text(
       canDonate
-          ? '${ZachranObedStrings.youCanDonate} $hours h : $minutes min'
+          ? '$hours:$minutes:$seconds'
           : ZachranObedStrings.youCantDonateAnymore,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(
+        color: ZachranObedColors.onPrimaryLight,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
