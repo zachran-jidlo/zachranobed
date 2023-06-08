@@ -18,7 +18,7 @@ class User extends ChangeNotifier {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       internalId: json['id'],
-      email: json['fields']['polozka3'],
+      email: json['fields']['email'],
       pickUpFrom: json['fields']['vyzvednoutOd'],
       establishmentName: json['fields']['nazevProvozovny'],
     );

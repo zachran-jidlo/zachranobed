@@ -23,9 +23,9 @@ class OfferedFood {
   factory OfferedFood.fromJson(Map<String, dynamic> json) {
     return OfferedFood(
       id: json['fields']['x_ID'],
-      date: DateTime.parse(json['fields']['polozka2']),
+      date: DateTime.parse(json['fields']['pridanoDne']),
       foodInfo: FoodInfo(
-        name: json['fields']['polozka3'],
+        name: json['fields']['nazevPokrmu'],
         allergens: (json['fields']['alergeny'] as List)
             .map((e) => e as String)
             .toList(),
@@ -41,10 +41,10 @@ class OfferedFood {
   Map<String, dynamic> toJson() => {
         'fields': {
           'x_ID': id,
-          'polozka2': DateFormat('yyyy-MM-dd HH:mm:ss')
+          'pridanoDne': DateFormat('yyyy-MM-dd HH:mm:ss')
               .parse(date.toString())
               .toIso8601String(),
-          'polozka3': foodInfo.name,
+          'nazevPokrmu': foodInfo.name,
           'alergeny': foodInfo.allergens,
           'pocetPorci': foodInfo.numberOfServings,
           'baleni': packaging,

@@ -7,13 +7,13 @@ import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 double _TITLE_ROW_HEIGHT = 40.0;
 
 class DonatedFoodList extends StatefulWidget {
-  final int itemsLimit;
+  final int? itemsLimit;
   final String filter;
   final String title;
 
   const DonatedFoodList({
     Key? key,
-    required this.itemsLimit,
+    this.itemsLimit,
     this.filter = '',
     required this.title,
   }) : super(key: key);

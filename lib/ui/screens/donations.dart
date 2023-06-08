@@ -30,14 +30,12 @@ class Donations extends StatelessWidget {
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(
-                  itemsLimit: 1000,
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: 'Tento týden',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 DonatedFoodList(
-                  itemsLimit: 1000,
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: 'Minulý týden',
