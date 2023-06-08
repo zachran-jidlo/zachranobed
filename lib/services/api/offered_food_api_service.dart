@@ -13,10 +13,11 @@ class OfferedFoodApiService {
   final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
 
   Future<List<OfferedFood>> getOfferedFoodList(
-      {required int limit, required String filter}) async {
+      {int? limit, required String filter}) async {
     final response = await http.get(
-      Uri.parse(
-          '$_urlBase/zachranobed/tables/nabidka/data?limit=$limit&filter=$filter'),
+      Uri.parse(limit != null
+          ? '$_urlBase/zachranobed/tables/nabidka/data?limit=$limit&filter=$filter'
+          : '$_urlBase/zachranobed/tables/nabidka/data?filter=$filter'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $tabidooAuthToken',
       },
@@ -37,7 +38,6 @@ class OfferedFoodApiService {
       {required BuildContext context, int? timePeriod}) async {
     var mealsCount = 0;
     var donations = await getOfferedFoodList(
-      limit: 1000,
       filter: timePeriod != null
           ? 'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId},pridanoDne(gt)${DateTime.now().subtract(Duration(days: timePeriod))}'
           : 'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
