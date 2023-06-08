@@ -13,7 +13,7 @@ class ZachranObedPasswordTextField extends StatefulWidget {
   final String? value;
 
   const ZachranObedPasswordTextField({
-    Key? key,
+    super.key,
     required this.text,
     this.controller,
     this.onValidation,
@@ -21,7 +21,7 @@ class ZachranObedPasswordTextField extends StatefulWidget {
     this.textInputFormatters,
     this.onChanged,
     this.value,
-  }) : super(key: key);
+  });
 
   @override
   State<ZachranObedPasswordTextField> createState() =>

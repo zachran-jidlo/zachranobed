@@ -7,9 +7,9 @@ class DonatedFoodListTile extends StatelessWidget {
   final OfferedFood offeredFood;
 
   const DonatedFoodListTile({
-    Key? key,
+    super.key,
     required this.offeredFood,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

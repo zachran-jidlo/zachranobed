@@ -17,7 +17,7 @@ import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
 class OfferFoodScreen extends StatefulWidget {
-  const OfferFoodScreen({Key? key}) : super(key: key);
+  const OfferFoodScreen({super.key});
 
   @override
   State<OfferFoodScreen> createState() => _OfferFoodScreenState();

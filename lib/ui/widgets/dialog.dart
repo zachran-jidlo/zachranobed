@@ -11,7 +11,7 @@ class ZachranObedDialog extends StatelessWidget {
   final VoidCallback onCancelPressed;
 
   const ZachranObedDialog({
-    Key? key,
+    super.key,
     required this.title,
     this.content = '',
     required this.confirmText,
@@ -19,7 +19,7 @@ class ZachranObedDialog extends StatelessWidget {
     required this.icon,
     required this.onConfirmPressed,
     required this.onCancelPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

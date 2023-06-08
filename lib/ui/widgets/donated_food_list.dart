@@ -12,11 +12,11 @@ class DonatedFoodList extends StatefulWidget {
   final String title;
 
   const DonatedFoodList({
-    Key? key,
+    super.key,
     this.itemsLimit,
     this.filter = '',
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   State<DonatedFoodList> createState() => _DonatedFoodListState();

@@ -7,7 +7,7 @@ import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/floating_button.dart';
 
 class Donations extends StatelessWidget {
-  const Donations({Key? key}) : super(key: key);
+  const Donations({super.key});
 
   @override
   Widget build(BuildContext context) {

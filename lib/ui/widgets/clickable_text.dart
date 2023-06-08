@@ -9,13 +9,13 @@ class ZachranObedClickableText extends StatelessWidget {
   final VoidCallback onTap;
 
   const ZachranObedClickableText({
-    Key? key,
+    super.key,
     required this.clickableText,
     this.prefixText,
     this.color = Colors.black,
     this.underline = true,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

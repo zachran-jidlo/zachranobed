@@ -7,13 +7,13 @@ class ZachranObedDropdown extends StatefulWidget {
   final String? Function(String?)? onValidation;
   final Function(String) onChanged;
 
-  const ZachranObedDropdown(
-      {Key? key,
-      required this.hintText,
-      required this.items,
-      this.onValidation,
-      required this.onChanged})
-      : super(key: key);
+  const ZachranObedDropdown({
+    super.key,
+    required this.hintText,
+    required this.items,
+    this.onValidation,
+    required this.onChanged,
+  });
 
   @override
   State<ZachranObedDropdown> createState() => _ZachranObedDropdownState();

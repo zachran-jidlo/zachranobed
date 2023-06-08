@@ -7,7 +7,7 @@ import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/user_api_service.dart';
 
 class Wrapper extends StatefulWidget {
-  const Wrapper({Key? key}) : super(key: key);
+  const Wrapper({super.key});
 
   @override
   State<Wrapper> createState() => _WrapperState();
