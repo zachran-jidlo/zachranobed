@@ -44,7 +44,7 @@ class Overview extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          _buildDonationCountdownTimer(context),
+          _buildInfoBanner(context),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -61,18 +61,39 @@ class Overview extends StatelessWidget {
     );
   }
 
-  Widget _buildDonationCountdownTimer(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: InfoBanner(
-        infoText: ZachranObedStrings.youCanDonate,
-        infoValue: const DonationCountdownTimer(),
-        buttonText: ZachranObedStrings.callACourier,
-        buttonIcon: Icons.directions_car_filled_outlined,
-        onButtonPressed: () async {
-          await _callACourier(context);
-        },
-      ),
-    );
+  Widget _buildInfoBanner(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+
+    return context.watch<DeliveryNotifier>().deliveryConfirmed()
+        ? SliverToBoxAdapter(
+            child: InfoBanner(
+              infoText: ZachranObedStrings.courierWillCome,
+              infoValue: Text(
+                '${user!.pickUpFrom} a ${user.pickUpWithin}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  color: ZachranObedColors.onPrimaryLight,
+                ),
+              ),
+              buttonText: ZachranObedStrings.contactCarrier,
+              buttonIcon: Icons.phone_outlined,
+              onButtonPressed: () async {
+                print('Kontaktovat dopravce');
+              },
+            ),
+          )
+        : SliverToBoxAdapter(
+            child: InfoBanner(
+              infoText: ZachranObedStrings.youCanDonate,
+              infoValue: const DonationCountdownTimer(),
+              buttonText: ZachranObedStrings.callACourier,
+              buttonIcon: Icons.directions_car_filled_outlined,
+              onButtonPressed: () async {
+                await _callACourier(context);
+              },
+            ),
+          );
   }
 
   Future<void> _callACourier(BuildContext context) async {

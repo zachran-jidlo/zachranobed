@@ -34,6 +34,8 @@ class ZachranObedStrings {
   static const menu = 'Menu';
   static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
+  static const courierWillCome = 'Kurýr přijede přibližně mezi';
+  static const contactCarrier = 'Kontaktovat dopravce';
   static const callACourier = 'Přivolat kurýra';
   static const deliveryConfirmedState = 'Potvrzeno';
   static const lastDonated = 'Naposledy darováno';

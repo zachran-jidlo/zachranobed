@@ -37,6 +37,7 @@ class _WrapperState extends State<Wrapper> {
           user!.internalId,
           user.email,
           user.pickUpFrom,
+          user.pickUpWithin,
           user.establishmentName,
         );
 
