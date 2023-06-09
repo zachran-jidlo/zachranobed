@@ -12,7 +12,6 @@ import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
-import 'package:zachranobed/ui/widgets/floating_button.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class Overview extends StatelessWidget {
@@ -59,11 +58,6 @@ class Overview extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: ZachranObedFloatingButton(
-        enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
-        onPressed: () =>
-            Navigator.of(context).pushNamed(RouteManager.offerFood),
-      ),
     );
   }
 
@@ -75,19 +69,22 @@ class Overview extends StatelessWidget {
         buttonText: ZachranObedStrings.callACourier,
         buttonIcon: Icons.directions_car_filled_outlined,
         onButtonPressed: () async {
-          final deliveryService = DeliveryApiService();
-          await deliveryService.updateDeliveryStatus(
-            context.read<DeliveryNotifier>().delivery!.internalId,
-            ZachranObedStrings.deliveryConfirmedState,
-          );
-          if (context.mounted) {
-            context
-                .read<DeliveryNotifier>()
-                .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
-          }
+          await _callACourier(context);
         },
       ),
     );
+  }
+
+  Future<void> _callACourier(BuildContext context) async {
+    await DeliveryApiService().updateDeliveryStatus(
+      context.read<DeliveryNotifier>().delivery!.internalId,
+      ZachranObedStrings.deliveryConfirmedState,
+    );
+    if (context.mounted) {
+      context
+          .read<DeliveryNotifier>()
+          .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
+    }
   }
 
   Widget _buildCards(BuildContext context) {

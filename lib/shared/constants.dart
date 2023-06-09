@@ -62,8 +62,11 @@ class ZachranObedStrings {
   static const endOffer = 'Zahodit nabídku?';
   static const cancelTheOffer = 'Zahodit';
   static const continueTheOffer = 'Pokračovat';
+  static const cancel = 'Zrušit';
   static const cancelOfferDialogContent =
       'Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?';
+  static const newOfferDialogContent =
+      'Abyste mohli zadat novou nabídku, musíte nejdříve přivolat kurýra.';
   static const filter = 'Filtrovat';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
