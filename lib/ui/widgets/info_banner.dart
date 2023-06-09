@@ -7,6 +7,7 @@ class InfoBanner extends StatelessWidget {
   final Widget infoValue;
   final String buttonText;
   final IconData buttonIcon;
+  final VoidCallback onButtonPressed;
 
   const InfoBanner({
     super.key,
@@ -14,6 +15,7 @@ class InfoBanner extends StatelessWidget {
     required this.infoValue,
     required this.buttonText,
     required this.buttonIcon,
+    required this.onButtonPressed,
   });
 
   @override
@@ -43,7 +45,7 @@ class InfoBanner extends StatelessWidget {
               text: buttonText,
               icon: buttonIcon,
               fullWidth: false,
-              onPressed: () {},
+              onPressed: onButtonPressed,
             ),
           ],
         ),
