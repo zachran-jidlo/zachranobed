@@ -10,6 +10,7 @@ class ZachranObedColors {
   static const borderColor = Color.fromRGBO(216, 194, 191, 1);
   static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
   static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
+  static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
 }
 
 class ZachranObedStrings {
@@ -34,6 +35,7 @@ class ZachranObedStrings {
   static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
   static const callACourier = 'Přivolat kurýra';
+  static const deliveryConfirmedState = 'Potvrzeno';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const total = 'Celkem';

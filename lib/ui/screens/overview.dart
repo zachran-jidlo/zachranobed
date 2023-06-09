@@ -60,6 +60,7 @@ class Overview extends StatelessWidget {
         ],
       ),
       floatingActionButton: ZachranObedFloatingButton(
+        enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
         onPressed: () =>
             Navigator.of(context).pushNamed(RouteManager.offerFood),
       ),
@@ -77,8 +78,13 @@ class Overview extends StatelessWidget {
           final deliveryService = DeliveryApiService();
           await deliveryService.updateDeliveryStatus(
             context.read<DeliveryNotifier>().delivery!.internalId,
-            'Potvrzeno',
+            ZachranObedStrings.deliveryConfirmedState,
           );
+          if (context.mounted) {
+            context
+                .read<DeliveryNotifier>()
+                .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
+          }
         },
       ),
     );

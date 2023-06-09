@@ -20,4 +20,16 @@ class Delivery {
   Map<String, dynamic> toJson() => {
         'fields': {'stav': state}
       };
+
+  Delivery copyWith({
+    String? internalId,
+    String? donor,
+    String? state,
+  }) {
+    return Delivery(
+      internalId: internalId ?? this.internalId,
+      donor: donor ?? this.donor,
+      state: state ?? this.state,
+    );
+  }
 }
