@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/api/delivery_api_service.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 
@@ -33,20 +34,31 @@ class NewOfferFloatingButton extends StatelessWidget {
         : FloatingActionButton(
             onPressed: () => showDialog(
               context: context,
-              builder: (context) => ZachranObedDialog(
-                title: '${ZachranObedStrings.newOffer}?',
-                content: ZachranObedStrings.newOfferDialogContent,
-                confirmText: ZachranObedStrings.callACourier,
-                cancelText: ZachranObedStrings.cancel,
-                icon: Icons.directions_car_filled_outlined,
-                onConfirmPressed: () async {
-                  await _callACourier(context);
-                  if (context.mounted) {
-                    Navigator.of(context).pop(true);
-                  }
-                },
-                onCancelPressed: () => Navigator.of(context).pop(false),
-              ),
+              builder: (context) {
+                if (HelperService.canDonate(context)) {
+                  return ZachranObedDialog(
+                    title: '${ZachranObedStrings.newOffer}?',
+                    content: ZachranObedStrings.newOfferDialogContent,
+                    confirmText: ZachranObedStrings.callACourier,
+                    cancelText: ZachranObedStrings.cancel,
+                    icon: Icons.directions_car_filled_outlined,
+                    onConfirmPressed: () async {
+                      await _callACourier(context);
+                      if (context.mounted) {
+                        Navigator.of(context).pop(true);
+                      }
+                    },
+                    onCancelPressed: () => Navigator.of(context).pop(false),
+                  );
+                }
+                return ZachranObedDialog(
+                  title: '${ZachranObedStrings.newOffer}?',
+                  content: ZachranObedStrings.cantOfferAnymoreDialogContent,
+                  cancelText: ZachranObedStrings.cancel,
+                  icon: Icons.edit_calendar_outlined,
+                  onCancelPressed: () => Navigator.of(context).pop(false),
+                );
+              },
             ),
             elevation: 0,
             shape: const StadiumBorder(),

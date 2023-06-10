@@ -63,8 +63,14 @@ class Overview extends StatelessWidget {
 
   Widget _buildInfoBanner(BuildContext context) {
     final user = HelperService.getCurrentUser(context);
+    final deliveryConfirmed =
+        context.watch<DeliveryNotifier>().deliveryConfirmed();
 
-    return context.watch<DeliveryNotifier>().deliveryConfirmed()
+    if (!HelperService.canDonate(context)) {
+      return const SliverToBoxAdapter(child: SizedBox());
+    }
+
+    return deliveryConfirmed
         ? SliverToBoxAdapter(
             child: InfoBanner(
               infoText: ZachranObedStrings.courierWillCome,

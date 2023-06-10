@@ -4,20 +4,20 @@ import 'package:zachranobed/shared/constants.dart';
 class ZachranObedDialog extends StatelessWidget {
   final String title;
   final String content;
-  final String confirmText;
+  final String? confirmText;
   final String cancelText;
   final IconData icon;
-  final VoidCallback onConfirmPressed;
+  final VoidCallback? onConfirmPressed;
   final VoidCallback onCancelPressed;
 
   const ZachranObedDialog({
     super.key,
     required this.title,
     this.content = '',
-    required this.confirmText,
+    this.confirmText,
     required this.cancelText,
     required this.icon,
-    required this.onConfirmPressed,
+    this.onConfirmPressed,
     required this.onCancelPressed,
   });
 
@@ -39,24 +39,26 @@ class ZachranObedDialog extends StatelessWidget {
       content: Text(content),
       actions: <Widget>[
         TextButton(onPressed: onCancelPressed, child: Text(cancelText)),
-        TextButton.icon(
-          onPressed: onConfirmPressed,
-          style: TextButton.styleFrom(
-            backgroundColor: ZachranObedColors.secondary,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-          ),
-          icon: Icon(
-            icon,
-            color: ZachranObedColors.onSecondary,
-            size: 18,
-          ),
-          label: Text(
-            confirmText,
-            style: const TextStyle(
-              color: ZachranObedColors.onSecondary,
-            ),
-          ),
-        ),
+        confirmText != null
+            ? TextButton.icon(
+                onPressed: onConfirmPressed,
+                style: TextButton.styleFrom(
+                  backgroundColor: ZachranObedColors.secondary,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                ),
+                icon: Icon(
+                  icon,
+                  color: ZachranObedColors.onSecondary,
+                  size: 18,
+                ),
+                label: Text(
+                  confirmText!,
+                  style: const TextStyle(
+                    color: ZachranObedColors.onSecondary,
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
@@ -35,12 +38,12 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   Duration _getRemainingTimeForDonation() {
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
-    String donateTo = HelperService.getCurrentUser(context)!.pickUpFrom;
+    String donateWithin = HelperService.getCurrentUser(context)!.pickUpFrom;
 
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
-    DateTime endTime = DateFormat('HH:mm').parse(donateTo);
+    DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
 
-    return endTime.difference(startTime) - const Duration(minutes: 30);
+    return endTime.difference(startTime) - const Duration(minutes: 35);
   }
 
   void _startTimer() {
@@ -73,10 +76,16 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
     final canDonate = _countdownTimer?.isActive ?? false;
 
+    if (!canDonate) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context
+            .read<DeliveryNotifier>()
+            .updateDeliveryState(ZachranObedStrings.deliveryCancelledState);
+      });
+    }
+
     return Text(
-      canDonate
-          ? '$hours:$minutes:$seconds'
-          : ZachranObedStrings.youCantDonateAnymore,
+      '$hours:$minutes:$seconds',
       style: const TextStyle(
         color: ZachranObedColors.onPrimaryLight,
         fontSize: 16.0,

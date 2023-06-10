@@ -38,6 +38,7 @@ class ZachranObedStrings {
   static const contactCarrier = 'Kontaktovat dopravce';
   static const callACourier = 'Přivolat kurýra';
   static const deliveryConfirmedState = 'Potvrzeno';
+  static const deliveryCancelledState = 'Storno';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const total = 'Celkem';
@@ -69,6 +70,8 @@ class ZachranObedStrings {
       'Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?';
   static const newOfferDialogContent =
       'Abyste mohli zadat novou nabídku, musíte nejdříve přivolat kurýra.';
+  static const cantOfferAnymoreDialogContent =
+      'Právě teď není možné nabídnout zbylé pokrmy. Pokud se vám to stává často, upravte si rozvrh tak, aby lépe odpovídal vašim potřebám pro darování.';
   static const filter = 'Filtrovat';
 
   static const zjLogoPath = 'assets/zj-logo.svg';

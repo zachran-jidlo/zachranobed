@@ -22,4 +22,10 @@ class DeliveryNotifier extends ChangeNotifier {
         ? true
         : false;
   }
+
+  bool deliveryCancelled() {
+    return _delivery!.state == ZachranObedStrings.deliveryCancelledState
+        ? true
+        : false;
+  }
 }
