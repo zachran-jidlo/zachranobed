@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zachranobed/models/user.dart';
@@ -23,6 +24,7 @@ class _WrapperState extends State<Wrapper> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _loadUserInfo();
     });
+    initializeDateFormatting();
   }
 
   _loadUserInfo() async {

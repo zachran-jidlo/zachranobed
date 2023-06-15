@@ -2,10 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 
-class Donations extends StatelessWidget {
+int _LAST_WEEK_OF_YEAR = 52;
+
+class Donations extends StatefulWidget {
   const Donations({super.key});
+
+  @override
+  State<Donations> createState() => _DonationsState();
+}
+
+class _DonationsState extends State<Donations> {
+  final List<Widget> _donationsLists = [];
+
+  var year = DateTime.now().year.toInt();
+  final currentWeekNumber = HelperService.getCurrentWeekNumber;
+  var desiredWeekNumber = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    desiredWeekNumber = currentWeekNumber - _donationsLists.length - 2;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +50,54 @@ class Donations extends StatelessWidget {
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: 'Tento týden',
+                  title: ZachranObedStrings.thisWeek,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: 'Minulý týden',
+                  title: ZachranObedStrings.lastWeek,
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                MultiSliver(
+                  children: _donationsLists,
+                ),
+                SliverToBoxAdapter(
+                  child: ZachranObedButton(
+                    text: ZachranObedStrings.loadMoreDonations,
+                    icon: Icons.expand_more,
+                    height: 40,
+                    isSecondary: true,
+                    onPressed: () {
+                      _buildDonationsList(context);
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 30)),
+          const SliverToBoxAdapter(child: SizedBox(height: 50)),
         ],
       ),
     );
+  }
+
+  void _buildDonationsList(BuildContext context) {
+    if (desiredWeekNumber <= 0) {
+      desiredWeekNumber = _LAST_WEEK_OF_YEAR;
+      year--;
+    }
+
+    setState(() {
+      _donationsLists.add(
+        DonatedFoodList(
+          filter:
+              'cisloTydne(eq)$year-$desiredWeekNumber,darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
+          title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
+        ),
+      );
+    });
+
+    desiredWeekNumber--;
   }
 }
