@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 
 class Donations extends StatelessWidget {
@@ -37,6 +38,16 @@ class Donations extends StatelessWidget {
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: 'Minulý týden',
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                SliverToBoxAdapter(
+                  child: ZachranObedButton(
+                    text: ZachranObedStrings.loadMoreDonations,
+                    icon: Icons.expand_more,
+                    height: 40,
+                    isSecondary: true,
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),
