@@ -16,6 +16,17 @@ class HelperService {
     return (to.difference(from).inDays / 7).ceil();
   }
 
+  static String getScopeOfTheWeek(int weekNumber, int year) {
+    final firstDayOfYear = DateTime(year);
+    final daysOffset = 1 - firstDayOfYear.weekday;
+    final firstMonday = firstDayOfYear.add(Duration(days: daysOffset));
+    final weekStart = firstMonday.add(Duration(days: weekNumber * 7));
+    final weekEnd = weekStart.add(const Duration(days: 6));
+    final formatter = DateFormat('d. MMMM', 'cs');
+
+    return '${formatter.format(weekStart)} - ${formatter.format(weekEnd)} $year';
+  }
+
   static String getDateTimeOfCurrentDelivery(String time) {
     return DateFormat('dd.MM.y HH:mm')
         .parse(

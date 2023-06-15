@@ -32,6 +32,8 @@ class ZachranObedStrings {
   static const overview = 'Přehled';
   static const donations = 'Darované';
   static const loadMoreDonations = 'Načíst další';
+  static const thisWeek = 'Tento týden';
+  static const lastWeek = 'Minulý týden';
   static const menu = 'Menu';
   static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
