@@ -10,6 +10,7 @@ class ZachranObedColors {
   static const borderColor = Color.fromRGBO(216, 194, 191, 1);
   static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
   static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
+  static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
 }
 
 class ZachranObedStrings {
@@ -31,8 +32,13 @@ class ZachranObedStrings {
   static const overview = 'Přehled';
   static const donations = 'Darované';
   static const menu = 'Menu';
-  static const youCanDonate = 'Dnes můžete darovat ještě';
+  static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
+  static const courierWillCome = 'Kurýr přijede přibližně mezi';
+  static const contactCarrier = 'Kontaktovat dopravce';
+  static const callACourier = 'Přivolat kurýra';
+  static const deliveryConfirmedState = 'Potvrzeno';
+  static const deliveryCancelledState = 'Storno';
   static const lastDonated = 'Naposledy darováno';
   static const savedLunches = 'Zachráněno obědů';
   static const total = 'Celkem';
@@ -59,8 +65,13 @@ class ZachranObedStrings {
   static const endOffer = 'Zahodit nabídku?';
   static const cancelTheOffer = 'Zahodit';
   static const continueTheOffer = 'Pokračovat';
+  static const cancel = 'Zrušit';
   static const cancelOfferDialogContent =
       'Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?';
+  static const newOfferDialogContent =
+      'Abyste mohli zadat novou nabídku, musíte nejdříve přivolat kurýra.';
+  static const cantOfferAnymoreDialogContent =
+      'Právě teď není možné nabídnout zbylé pokrmy. Pokud se vám to stává často, upravte si rozvrh tak, aby lépe odpovídal vašim potřebám pro darování.';
   static const filter = 'Filtrovat';
 
   static const zjLogoPath = 'assets/zj-logo.svg';

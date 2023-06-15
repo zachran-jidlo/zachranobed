@@ -9,11 +9,11 @@ class ZachranObedCard extends StatelessWidget {
   final String periodText;
 
   const ZachranObedCard({
-    Key? key,
+    super.key,
     required this.measuredValue,
     required this.metricsText,
     required this.periodText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

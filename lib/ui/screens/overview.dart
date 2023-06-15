@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/api/delivery_api_service.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
-import 'package:zachranobed/ui/widgets/floating_button.dart';
+import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class Overview extends StatelessWidget {
-  const Overview({Key? key}) : super(key: key);
+  const Overview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class Overview extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          _buildDonationCountdownTimer(),
+          _buildInfoBanner(context),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -49,33 +52,66 @@ class Overview extends StatelessWidget {
               children: [
                 _buildCards(context),
                 _buildDonatedFoodList(context),
+                const SizedBox(height: 15.0),
               ],
             ),
           ),
         ],
       ),
-      floatingActionButton: ZachranObedFloatingButton(
-        onPressed: () =>
-            Navigator.of(context).pushNamed(RouteManager.offerFood),
-      ),
     );
   }
 
-  Widget _buildDonationCountdownTimer() {
-    return SliverToBoxAdapter(
-      child: Container(
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              DonationCountdownTimer(),
-            ],
-          ),
-        ),
-      ),
+  Widget _buildInfoBanner(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+    final deliveryConfirmed =
+        context.watch<DeliveryNotifier>().deliveryConfirmed();
+
+    if (!HelperService.canDonate(context)) {
+      return const SliverToBoxAdapter(child: SizedBox());
+    }
+
+    return deliveryConfirmed
+        ? SliverToBoxAdapter(
+            child: InfoBanner(
+              infoText: ZachranObedStrings.courierWillCome,
+              infoValue: Text(
+                '${user!.pickUpFrom} a ${user.pickUpWithin}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  color: ZachranObedColors.onPrimaryLight,
+                ),
+              ),
+              buttonText: ZachranObedStrings.contactCarrier,
+              buttonIcon: Icons.phone_outlined,
+              onButtonPressed: () async {
+                print('Kontaktovat dopravce');
+              },
+            ),
+          )
+        : SliverToBoxAdapter(
+            child: InfoBanner(
+              infoText: ZachranObedStrings.youCanDonate,
+              infoValue: const DonationCountdownTimer(),
+              buttonText: ZachranObedStrings.callACourier,
+              buttonIcon: Icons.directions_car_filled_outlined,
+              onButtonPressed: () async {
+                await _callACourier(context);
+              },
+            ),
+          );
+  }
+
+  Future<void> _callACourier(BuildContext context) async {
+    await DeliveryApiService().updateDeliveryStatus(
+      context.read<DeliveryNotifier>().delivery!.internalId,
+      ZachranObedStrings.deliveryConfirmedState,
     );
+    if (context.mounted) {
+      context
+          .read<DeliveryNotifier>()
+          .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
+    }
   }
 
   Widget _buildCards(BuildContext context) {

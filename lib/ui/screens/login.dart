@@ -13,7 +13,7 @@ import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -115,6 +115,7 @@ class _LoginState extends State<Login> {
           user.internalId,
           user.email,
           user.pickUpFrom,
+          user.pickUpWithin,
           user.establishmentName,
         );
         Navigator.of(context).pushReplacementNamed(RouteManager.home);

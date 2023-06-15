@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
-  const DonationCountdownTimer({Key? key}) : super(key: key);
+  const DonationCountdownTimer({super.key});
 
   @override
   State<DonationCountdownTimer> createState() => _DonationCountdownTimerState();
@@ -35,12 +38,12 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   Duration _getRemainingTimeForDonation() {
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
-    String donateTo = HelperService.getCurrentUser(context)!.pickUpFrom;
+    String donateWithin = HelperService.getCurrentUser(context)!.pickUpFrom;
 
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
-    DateTime endTime = DateFormat('HH:mm').parse(donateTo);
+    DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
 
-    return endTime.difference(startTime) - const Duration(minutes: 30);
+    return endTime.difference(startTime) - const Duration(minutes: 35);
   }
 
   void _startTimer() {
@@ -64,16 +67,30 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final hours = _remainingTime.inHours.remainder(24);
-    final minutes = _remainingTime.inMinutes.remainder(60);
+    final hours =
+        _remainingTime.inHours.remainder(24).toString().padLeft(2, '0');
+    final minutes =
+        _remainingTime.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds =
+        _remainingTime.inSeconds.remainder(60).toString().padLeft(2, '0');
 
     final canDonate = _countdownTimer?.isActive ?? false;
 
+    if (!canDonate) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        context
+            .read<DeliveryNotifier>()
+            .updateDeliveryState(ZachranObedStrings.deliveryCancelledState);
+      });
+    }
+
     return Text(
-      canDonate
-          ? '${ZachranObedStrings.youCanDonate} $hours h : $minutes min'
-          : ZachranObedStrings.youCantDonateAnymore,
-      style: const TextStyle(color: Colors.white),
+      '$hours:$minutes:$seconds',
+      style: const TextStyle(
+        color: ZachranObedColors.onPrimaryLight,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

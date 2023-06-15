@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:provider/provider.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/screens/donations.dart';
 import 'package:zachranobed/ui/screens/overview.dart';
+import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -49,6 +52,9 @@ class _HomeState extends State<Home> {
           onTap: _onItemTapped,
           backgroundColor: ZachranObedColors.primaryLight,
         ),
+      ),
+      floatingActionButton: NewOfferFloatingButton(
+        enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
       ),
     );
   }

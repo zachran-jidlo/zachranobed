@@ -6,12 +6,14 @@ class User extends ChangeNotifier {
   // TODO password is not checked yet, change to final and add it to the functions below in the future
   String password = '';
   final String pickUpFrom;
+  final String pickUpWithin;
   final String establishmentName;
 
   User({
     required this.internalId,
     required this.email,
     required this.pickUpFrom,
+    required this.pickUpWithin,
     required this.establishmentName,
   });
 
@@ -20,6 +22,7 @@ class User extends ChangeNotifier {
       internalId: json['id'],
       email: json['fields']['email'],
       pickUpFrom: json['fields']['vyzvednoutOd'],
+      pickUpWithin: json['fields']['vyzvednoutDo'],
       establishmentName: json['fields']['nazevProvozovny'],
     );
   }
@@ -28,12 +31,14 @@ class User extends ChangeNotifier {
     String internalId,
     String email,
     String pickUpFrom,
+    String pickUpWithin,
     String establishmentName,
   ) {
     return User(
       internalId: internalId,
       email: email,
       pickUpFrom: pickUpFrom,
+      pickUpWithin: pickUpWithin,
       establishmentName: establishmentName,
     );
   }

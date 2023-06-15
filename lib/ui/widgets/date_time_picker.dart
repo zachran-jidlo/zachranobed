@@ -8,12 +8,12 @@ class ZachranObedDateTimePicker extends StatefulWidget {
   final IconData icon;
 
   const ZachranObedDateTimePicker({
-    Key? key,
+    super.key,
     required this.text,
     required this.controller,
     this.onValidation,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<ZachranObedDateTimePicker> createState() =>

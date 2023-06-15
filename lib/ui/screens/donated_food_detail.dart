@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:zachranobed/models/offered_food.dart';
 
 class DonatedFoodDetail extends StatelessWidget {
-  const DonatedFoodDetail({Key? key}) : super(key: key);
+  const DonatedFoodDetail({super.key});
 
   @override
   Widget build(BuildContext context) {

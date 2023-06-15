@@ -12,7 +12,7 @@ class ZachranObedTextField extends StatelessWidget {
   final String? value;
 
   const ZachranObedTextField({
-    Key? key,
+    super.key,
     required this.text,
     this.controller,
     this.onValidation,
@@ -20,7 +20,7 @@ class ZachranObedTextField extends StatelessWidget {
     this.textInputFormatters,
     this.onChanged,
     this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

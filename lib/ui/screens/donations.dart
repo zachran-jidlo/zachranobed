@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
-import 'package:zachranobed/ui/widgets/floating_button.dart';
 
 class Donations extends StatelessWidget {
-  const Donations({Key? key}) : super(key: key);
+  const Donations({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +43,6 @@ class Donations extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
-      ),
-      floatingActionButton: ZachranObedFloatingButton(
-        onPressed: () =>
-            Navigator.of(context).pushNamed(RouteManager.offerFood),
       ),
     );
   }
