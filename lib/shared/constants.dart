@@ -34,7 +34,6 @@ class ZachranObedStrings {
   static const loadMoreDonations = 'Načíst další';
   static const thisWeek = 'Tento týden';
   static const lastWeek = 'Minulý týden';
-  static const menu = 'Menu';
   static const youCanDonate = 'Kurýra můžete přivolat ještě';
   static const youCantDonateAnymore = 'Dnes již nemůžete darovat';
   static const courierWillCome = 'Kurýr přijede přibližně mezi';
@@ -76,6 +75,7 @@ class ZachranObedStrings {
   static const cantOfferAnymoreDialogContent =
       'Právě teď není možné nabídnout zbylé pokrmy. Pokud se vám to stává často, upravte si rozvrh tak, aby lépe odpovídal vašim potřebám pro darování.';
   static const filter = 'Filtrovat';
+  static const organization = 'Prganizace';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
