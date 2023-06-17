@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -27,7 +26,7 @@ class Overview extends StatelessWidget {
             onPressed: () {
               print('Bell pressed');
             },
-            icon: const Icon(MaterialSymbols.mail),
+            icon: const Icon(Icons.mark_email_unread_outlined),
           ),
           IconButton(
             onPressed: () async {
@@ -39,6 +38,12 @@ class Overview extends StatelessWidget {
               }
             },
             icon: const Icon(Icons.exit_to_app),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.menu);
+            },
+            icon: const Icon(Icons.menu),
           ),
         ],
       ),
