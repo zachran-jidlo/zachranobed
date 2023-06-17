@@ -7,6 +7,8 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = HelperService.getCurrentUser(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(HelperService.getCurrentUser(context)!.email),
@@ -22,7 +24,8 @@ class Menu extends StatelessWidget {
             ),
             MenuItem(
               leadingIcon: Icons.business,
-              text: 'asd',
+              text: user.organization,
+              isClickable: false,
             ),
           ],
         ),
