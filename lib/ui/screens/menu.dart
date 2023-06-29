@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -59,14 +60,20 @@ class Menu extends StatelessWidget {
                     text: ZachranObedStrings.feedback,
                   ),
                   const SizedBox(height: 8.0),
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.language,
                     text: ZachranObedStrings.about,
+                    onPressed: () async {
+                      await _openUrlInBrowser('https://zachranobed.cz');
+                    },
                   ),
                   const SizedBox(height: 8.0),
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.volunteer_activism_outlined,
                     text: ZachranObedStrings.sponsors,
+                    onPressed: () async {
+                      await _openUrlInBrowser('https://zachranobed.cz');
+                    },
                   ),
                 ],
               ),
@@ -78,14 +85,20 @@ class Menu extends StatelessWidget {
                     text: ZachranObedStrings.rate,
                   ),
                   const SizedBox(height: 8.0),
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.security,
                     text: ZachranObedStrings.privacyProtection,
+                    onPressed: () async {
+                      await _openUrlInBrowser('https://zachranobed.cz');
+                    },
                   ),
                   const SizedBox(height: 8.0),
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
                     text: ZachranObedStrings.termsOfUse,
+                    onPressed: () async {
+                      await _openUrlInBrowser('https://zachranobed.cz');
+                    },
                   ),
                 ],
               ),
@@ -118,5 +131,12 @@ class Menu extends StatelessWidget {
         const SizedBox(height: 24.0),
       ],
     );
+  }
+
+  Future<void> _openUrlInBrowser(String siteUrl) async {
+    final Uri url = Uri.parse(siteUrl);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
