@@ -8,6 +8,7 @@ class ZachranObedColors {
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
   static const borderColor = Color.fromRGBO(216, 194, 191, 1);
+  static const lightBorderColor = Color.fromRGBO(251, 238, 236, 1);
   static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
   static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
@@ -75,7 +76,17 @@ class ZachranObedStrings {
   static const cantOfferAnymoreDialogContent =
       'Právě teď není možné nabídnout zbylé pokrmy. Pokud se vám to stává často, upravte si rozvrh tak, aby lépe odpovídal vašim potřebám pro darování.';
   static const filter = 'Filtrovat';
-  static const organization = 'Prganizace';
+  static const organization = 'Organizace';
+  static const donor = 'Dárce';
+  static const recipient = 'Příjemce';
+  static const saveLunch = 'Zachraň oběd';
+  static const feedback = 'Zpětná vazba';
+  static const about = 'Více o projektu';
+  static const sponsors = 'Sponzoři';
+  static const more = 'Další';
+  static const rate = 'Ohodnotit aplikaci';
+  static const privacyProtection = 'Ochrana soukromí';
+  static const termsOfUse = 'Podmínky používání';
 
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';

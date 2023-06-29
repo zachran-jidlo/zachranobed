@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes.dart';
@@ -27,17 +26,6 @@ class Overview extends StatelessWidget {
               print('Bell pressed');
             },
             icon: const Icon(Icons.mark_email_unread_outlined),
-          ),
-          IconButton(
-            onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              prefs.clear();
-
-              if (context.mounted) {
-                Navigator.of(context).pushReplacementNamed(RouteManager.login);
-              }
-            },
-            icon: const Icon(Icons.exit_to_app),
           ),
           IconButton(
             onPressed: () {

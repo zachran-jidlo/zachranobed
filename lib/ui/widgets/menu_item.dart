@@ -18,18 +18,18 @@ class MenuItem extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        color: ZachranObedColors.cardBackground,
         height: 56,
+        decoration: BoxDecoration(
+          color: ZachranObedColors.cardBackground,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             children: [
               Icon(leadingIcon),
-              const SizedBox(width: 15.0),
-              Text(
-                text,
-                style: const TextStyle(fontSize: 16.0),
-              ),
+              const SizedBox(width: 16.0),
+              Text(text, style: const TextStyle(fontSize: 16.0)),
               const Spacer(),
               onPressed != null
                   ? const Icon(
