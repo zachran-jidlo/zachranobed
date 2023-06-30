@@ -4,8 +4,6 @@ import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
-double _TITLE_ROW_HEIGHT = 40.0;
-
 class DonatedFoodList extends StatefulWidget {
   final int? itemsLimit;
   final String filter;
@@ -30,10 +28,8 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
       children: <Widget>[
         SliverPinnedHeader(
           child: Container(
-            height: _TITLE_ROW_HEIGHT,
             color: Colors.white,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
                   widget.title,
@@ -43,6 +39,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
             ),
           ),
         ),
+        const SizedBox(height: 16.0),
         FutureBuilder<List<OfferedFood>>(
           future: OfferedFoodApiService().getOfferedFoodList(
             limit: widget.itemsLimit,

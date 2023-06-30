@@ -46,6 +46,7 @@ class Overview extends StatelessWidget {
             sliver: MultiSliver(
               children: [
                 _buildCards(context),
+                const SizedBox(height: 24.0),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: 15.0),
               ],
@@ -121,7 +122,7 @@ class Overview extends StatelessWidget {
               metricsText: ZachranObedStrings.savedLunches,
               periodText: ZachranObedStrings.total,
             ),
-            const SizedBox(width: 15),
+            const SizedBox(width: 14.0),
             ZachranObedCard(
               measuredValue: OfferedFoodApiService().getSavedMealsCount(
                 context: context,
@@ -130,7 +131,7 @@ class Overview extends StatelessWidget {
               metricsText: ZachranObedStrings.savedLunches,
               periodText: ZachranObedStrings.lastThirtyDays,
             ),
-            const SizedBox(width: 15),
+            const SizedBox(width: 14.0),
             ZachranObedCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),
