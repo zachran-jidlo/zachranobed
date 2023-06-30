@@ -64,8 +64,9 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           },
           onChanged: (val) => foodInfo.allergens = val.split(','),
           value: foodInfo.allergens?.toString(),
+          supportingText: ZachranObedStrings.allergensSupportingText,
         ),
-        _buildGap(),
+        const SizedBox(height: 28),
         ZachranObedTextField(
           text: ZachranObedStrings.numberOfServings,
           onValidation: (val) {
