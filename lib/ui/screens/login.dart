@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
                 ZachranObedStrings.foodImagePath,
                 fit: BoxFit.fitWidth,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 32.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Form(
@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
                               ? ZachranObedStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 24.0),
                         ZachranObedPasswordTextField(
                           text: ZachranObedStrings.password,
                           controller: _passwordController,
@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
                               ? ZachranObedStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 32.0),
                         ZachranObedButton(
                           text: ZachranObedStrings.login,
                           icon: MaterialSymbols.login,
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
                       ],
                     )),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 24.0),
               ZachranObedClickableText(
                   clickableText: ZachranObedStrings.forgottenPassword,
                   color: ZachranObedColors.onPrimaryLight,
