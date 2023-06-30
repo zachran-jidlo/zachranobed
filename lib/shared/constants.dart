@@ -52,6 +52,8 @@ class ZachranObedStrings {
       'Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.';
   static const foodName = 'Název pokrmu';
   static const allergens = 'Alergeny';
+  static const allergensSupportingText =
+      'Zapisujete jako čísla oddělená čárkami.';
   static const numberOfServings = 'Počet porcí';
   static const packaging = 'Balení';
   static const consumeBy = 'Spotřebujte do';
@@ -101,4 +103,6 @@ class ZachranObedStrings {
 class WidgetStyle {
   static const inputBorder =
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
+
+  static const horizontalPadding = 16.0;
 }
