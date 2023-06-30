@@ -53,7 +53,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           text: ZachranObedStrings.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
-                RegExp(r'^(1[0-4]|[1-9])(,(1[0-4]|[1-9]))*$');
+                RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
             if (val!.isEmpty) {
               return ZachranObedStrings.requiredFieldError;
             }
