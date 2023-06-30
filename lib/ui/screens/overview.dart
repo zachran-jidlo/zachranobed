@@ -77,9 +77,8 @@ class Overview extends StatelessWidget {
               ),
               buttonText: ZachranObedStrings.contactCarrier,
               buttonIcon: Icons.phone_outlined,
-              onButtonPressed: () async {
-                print('Kontaktovat dopravce');
-              },
+              onButtonPressed: () async =>
+                  await HelperService.makePhoneCall('123456789'),
             ),
           )
         : SliverToBoxAdapter(

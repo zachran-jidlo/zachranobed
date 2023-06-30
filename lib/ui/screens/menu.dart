@@ -46,9 +46,11 @@ class Menu extends StatelessWidget {
                     text: user.recipient,
                   ),
                   const SizedBox(height: 8.0),
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.phone_outlined,
                     text: ZachranObedStrings.contactCarrier,
+                    onPressed: () async =>
+                        await HelperService.makePhoneCall('123456789'),
                   )
                 ],
               ),
@@ -64,7 +66,7 @@ class Menu extends StatelessWidget {
                     leadingIcon: Icons.language,
                     text: ZachranObedStrings.about,
                     onPressed: () async {
-                      await _openUrlInBrowser('https://zachranobed.cz');
+                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
                     },
                   ),
                   const SizedBox(height: 8.0),
@@ -72,7 +74,7 @@ class Menu extends StatelessWidget {
                     leadingIcon: Icons.volunteer_activism_outlined,
                     text: ZachranObedStrings.sponsors,
                     onPressed: () async {
-                      await _openUrlInBrowser('https://zachranobed.cz');
+                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
                     },
                   ),
                 ],
@@ -89,7 +91,7 @@ class Menu extends StatelessWidget {
                     leadingIcon: Icons.security,
                     text: ZachranObedStrings.privacyProtection,
                     onPressed: () async {
-                      await _openUrlInBrowser('https://zachranobed.cz');
+                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
                     },
                   ),
                   const SizedBox(height: 8.0),
@@ -97,7 +99,7 @@ class Menu extends StatelessWidget {
                     leadingIcon: Icons.text_snippet_outlined,
                     text: ZachranObedStrings.termsOfUse,
                     onPressed: () async {
-                      await _openUrlInBrowser('https://zachranobed.cz');
+                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
                     },
                   ),
                 ],

@@ -88,6 +88,8 @@ class ZachranObedStrings {
   static const privacyProtection = 'Ochrana soukromí';
   static const termsOfUse = 'Podmínky používání';
 
+  static const zjUrl = 'https://zachranobed.cz';
+
   static const zjLogoPath = 'assets/zj-logo.svg';
   static const placeholderImagePath = 'assets/placeholder-image.png';
   static const foodImagePath = 'assets/food-image.png';
