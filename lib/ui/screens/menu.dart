@@ -20,7 +20,9 @@ class Menu extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.horizontalPadding,
+          ),
           child: Column(
             children: [
               _buildMenuSection(

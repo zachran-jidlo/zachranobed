@@ -24,7 +24,9 @@ class MenuItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.horizontalPadding,
+          ),
           child: Row(
             children: [
               Icon(leadingIcon),

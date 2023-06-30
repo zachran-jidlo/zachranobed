@@ -75,7 +75,9 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       child: Scaffold(
         appBar: AppBar(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.horizontalPadding,
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[

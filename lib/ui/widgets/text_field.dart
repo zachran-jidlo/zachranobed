@@ -51,7 +51,9 @@ class ZachranObedTextField extends StatelessWidget {
             ? Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: WidgetStyle.horizontalPadding,
+                    ),
                     child: Text(
                       supportingText!,
                       style: TextStyle(fontSize: 12, color: Colors.grey[600]),

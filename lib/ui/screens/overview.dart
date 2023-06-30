@@ -40,7 +40,9 @@ class Overview extends StatelessWidget {
           _buildInfoBanner(context),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: WidgetStyle.horizontalPadding,
+            ),
             sliver: MultiSliver(
               children: [
                 _buildCards(context),

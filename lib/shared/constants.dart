@@ -103,4 +103,6 @@ class ZachranObedStrings {
 class WidgetStyle {
   static const inputBorder =
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
+
+  static const horizontalPadding = 16.0;
 }

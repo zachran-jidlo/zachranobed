@@ -44,7 +44,9 @@ class _DonationsState extends State<Donations> {
       body: CustomScrollView(
         slivers: [
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: WidgetStyle.horizontalPadding,
+            ),
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(

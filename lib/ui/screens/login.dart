@@ -56,7 +56,9 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 32.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: WidgetStyle.horizontalPadding,
+                ),
                 child: Form(
                     key: _formKey,
                     child: Column(
