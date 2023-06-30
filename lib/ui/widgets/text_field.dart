@@ -24,6 +24,8 @@ class ZachranObedTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var focus = FocusNode();
+
     return TextFormField(
       controller: controller,
       cursorColor: Colors.black,
@@ -38,6 +40,8 @@ class ZachranObedTextField extends StatelessWidget {
         focusedBorder: WidgetStyle.inputBorder,
       ),
       initialValue: value,
+      focusNode: focus,
+      onTapOutside: (event) => focus.unfocus(),
     );
   }
 }

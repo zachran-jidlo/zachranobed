@@ -31,6 +31,7 @@ class ZachranObedPasswordTextField extends StatefulWidget {
 class _ZachranObedPasswordTextFieldState
     extends State<ZachranObedPasswordTextField> {
   bool obscureText = true;
+  var focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,8 @@ class _ZachranObedPasswordTextFieldState
         ),
       ),
       initialValue: widget.value,
+      focusNode: focus,
+      onTapOutside: (event) => focus.unfocus(),
     );
   }
 }
