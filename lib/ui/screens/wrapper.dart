@@ -41,6 +41,8 @@ class _WrapperState extends State<Wrapper> {
           user.pickUpFrom,
           user.pickUpWithin,
           user.establishmentName,
+          user.organization,
+          user.recipient,
         );
 
         final date =

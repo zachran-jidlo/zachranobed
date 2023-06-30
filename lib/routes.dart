@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/ui/screens/donated_food_detail.dart';
-import 'package:zachranobed/ui/screens/thank_you_screen.dart';
 import 'package:zachranobed/ui/screens/home.dart';
 import 'package:zachranobed/ui/screens/login.dart';
+import 'package:zachranobed/ui/screens/menu.dart';
 import 'package:zachranobed/ui/screens/offer_food_screen.dart';
+import 'package:zachranobed/ui/screens/thank_you_screen.dart';
 import 'package:zachranobed/ui/screens/wrapper.dart';
 
 class RouteManager {
@@ -11,6 +12,7 @@ class RouteManager {
   static const String login = '/login';
   static const String home = '/home';
   static const String offerFood = '/offer-food';
+  static const String menu = '/menu';
   static const String thankYou = '/thank-you';
   static const String donatedFoodDetail = '/donated-food-detail';
 
@@ -29,6 +31,11 @@ class RouteManager {
       case home:
         return MaterialPageRoute(
           builder: (context) => const Home(),
+        );
+
+      case menu:
+        return MaterialPageRoute(
+          builder: (context) => const Menu(),
         );
 
       case offerFood:
