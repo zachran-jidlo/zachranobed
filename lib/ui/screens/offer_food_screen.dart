@@ -80,8 +80,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 15),
-                Row(
-                  children: const <Widget>[
+                const Row(
+                  children: <Widget>[
                     Text(
                       ZachranObedStrings.offerLeftoverFood,
                       style: TextStyle(fontSize: 24),
@@ -105,16 +105,16 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
                       ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: const [
+                      _buildGap(),
+                      const Row(
+                        children: [
                           Text(
                             ZachranObedStrings.summaryInfo,
                             style: TextStyle(fontSize: 22),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
+                      _buildGap(),
                       ZachranObedDropdown(
                         hintText: ZachranObedStrings.packaging,
                         items: Packaging.values
@@ -125,7 +125,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                             : null,
                         onChanged: (value) => _selectedPackaging = value,
                       ),
-                      const SizedBox(height: 30),
+                      _buildGap(),
                       ZachranObedDateTimePicker(
                         text: ZachranObedStrings.consumeBy,
                         icon: MaterialSymbols.calendar_today,
@@ -134,7 +134,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                             ? ZachranObedStrings.requiredFieldError
                             : null,
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 48.0),
                       ZachranObedButton(
                         text: ZachranObedStrings.offerFood,
                         icon: MaterialSymbols.check,
@@ -147,7 +147,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24.0),
                       ZachranObedClickableText(
                         clickableText: ZachranObedStrings.manualName,
                         prefixText: ZachranObedStrings.consent,
@@ -164,6 +164,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildGap() {
+    return const SizedBox(height: 40.0);
   }
 
   Future<Response> _offerFood() {

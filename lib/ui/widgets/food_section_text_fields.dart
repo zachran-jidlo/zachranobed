@@ -40,7 +40,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
             if (index != 0) _removeButton(foodInfo),
           ],
         ),
-        const SizedBox(height: 30),
+        _buildGap(),
         ZachranObedTextField(
           text: ZachranObedStrings.foodName,
           onValidation: (val) =>
@@ -48,7 +48,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           onChanged: (val) => foodInfo.name = val,
           value: foodInfo.name,
         ),
-        const SizedBox(height: 30),
+        _buildGap(),
         ZachranObedTextField(
           text: ZachranObedStrings.allergens,
           onValidation: (val) {
@@ -65,7 +65,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           onChanged: (val) => foodInfo.allergens = val.split(','),
           value: foodInfo.allergens?.toString(),
         ),
-        const SizedBox(height: 30),
+        _buildGap(),
         ZachranObedTextField(
           text: ZachranObedStrings.numberOfServings,
           onValidation: (val) {
@@ -84,9 +84,13 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
               foodInfo.numberOfServings = val.isEmpty ? null : int.parse(val),
           value: foodInfo.numberOfServings?.toString(),
         ),
-        const SizedBox(height: 30),
+        _buildGap(),
       ],
     );
+  }
+
+  Widget _buildGap() {
+    return const SizedBox(height: 40.0);
   }
 
   Widget _removeButton(FoodInfo foodInfo) {
