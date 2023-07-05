@@ -64,6 +64,7 @@ class _DonationsState extends State<Donations> {
                 MultiSliver(
                   children: _donationsLists,
                 ),
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 SliverToBoxAdapter(
                   child: ZachranObedButton(
                     text: ZOStrings.loadMoreDonations,
