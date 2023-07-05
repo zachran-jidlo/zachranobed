@@ -36,7 +36,7 @@ class NewOfferFloatingButton extends StatelessWidget {
               context: context,
               builder: (context) {
                 if (HelperService.canDonate(context)) {
-                  return ZachranObedDialog(
+                  return ZODialog(
                     title: '${ZOStrings.newOffer}?',
                     content: ZOStrings.newOfferDialogContent,
                     confirmText: ZOStrings.callACourier,
@@ -51,7 +51,7 @@ class NewOfferFloatingButton extends StatelessWidget {
                     onCancelPressed: () => Navigator.of(context).pop(false),
                   );
                 }
-                return ZachranObedDialog(
+                return ZODialog(
                   title: '${ZOStrings.newOffer}?',
                   content: ZOStrings.cantOfferAnymoreDialogContent,
                   cancelText: ZOStrings.cancel,

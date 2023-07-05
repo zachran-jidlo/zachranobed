@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedTextField extends StatelessWidget {
+class ZOTextField extends StatelessWidget {
   final String label;
   final TextEditingController? controller;
   final String? Function(String?)? onValidation;
@@ -13,7 +13,7 @@ class ZachranObedTextField extends StatelessWidget {
   final String? supportingText;
   final bool readOnly;
 
-  const ZachranObedTextField({
+  const ZOTextField({
     super.key,
     required this.label,
     this.controller,

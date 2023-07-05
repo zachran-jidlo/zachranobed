@@ -1,14 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class ZachranObedClickableText extends StatelessWidget {
+class ZOClickableText extends StatelessWidget {
   final String clickableText;
   final String? prefixText;
   final Color color;
   final bool underline;
   final VoidCallback onTap;
 
-  const ZachranObedClickableText({
+  const ZOClickableText({
     super.key,
     required this.clickableText,
     this.prefixText,

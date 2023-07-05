@@ -53,7 +53,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     if (_somethingIsFilled()) {
       return (await showDialog(
             context: context,
-            builder: (context) => ZachranObedDialog(
+            builder: (context) => ZODialog(
               title: ZOStrings.endOffer,
               content: ZOStrings.cancelOfferDialogContent,
               confirmText: ZOStrings.cancelTheOffer,
@@ -97,7 +97,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       FoodSectionTextFields(
                         foodSections: _foodSections,
                       ),
-                      ZachranObedButton(
+                      ZOButton(
                         text: ZOStrings.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
@@ -116,7 +116,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         ],
                       ),
                       _buildGap(),
-                      ZachranObedDropdown(
+                      ZODropdown(
                         hintText: ZOStrings.packaging,
                         items: Packaging.values
                             .map((e) => e.packagingName)
@@ -127,7 +127,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onChanged: (value) => _selectedPackaging = value,
                       ),
                       _buildGap(),
-                      ZachranObedDateTimePicker(
+                      ZODateTimePicker(
                         text: ZOStrings.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
@@ -135,7 +135,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                             val!.isEmpty ? ZOStrings.requiredFieldError : null,
                       ),
                       const SizedBox(height: 48.0),
-                      ZachranObedButton(
+                      ZOButton(
                         text: ZOStrings.offerFood,
                         icon: MaterialSymbols.check,
                         onPressed: () {
@@ -148,7 +148,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         },
                       ),
                       const SizedBox(height: 24.0),
-                      ZachranObedClickableText(
+                      ZOClickableText(
                         clickableText: ZOStrings.manualName,
                         prefixText: ZOStrings.consent,
                         underline: true,

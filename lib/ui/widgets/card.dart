@@ -3,12 +3,12 @@ import 'package:zachranobed/shared/constants.dart';
 
 double _CARD_SIDE = 154.0;
 
-class ZachranObedCard extends StatelessWidget {
+class ZOCard extends StatelessWidget {
   final Future measuredValue;
   final String metricsText;
   final String periodText;
 
-  const ZachranObedCard({
+  const ZOCard({
     super.key,
     required this.measuredValue,
     required this.metricsText,

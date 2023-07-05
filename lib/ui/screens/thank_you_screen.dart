@@ -56,13 +56,13 @@ class ThankYouScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 50.0),
-                    ZachranObedButton(
+                    ZOButton(
                       text: 'Zpět na přehled',
                       icon: MaterialSymbols.home_outlined,
                       onPressed: () => Navigator.pop(context),
                     ),
                     const SizedBox(height: 20.0),
-                    ZachranObedButton(
+                    ZOButton(
                       text: 'Nová nabídka',
                       icon: MaterialSymbols.add,
                       isSecondary: true,

@@ -41,7 +41,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           ],
         ),
         _buildGap(),
-        ZachranObedTextField(
+        ZOTextField(
           label: ZOStrings.foodName,
           onValidation: (val) =>
               val!.isEmpty ? ZOStrings.requiredFieldError : null,
@@ -49,7 +49,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           value: foodInfo.name,
         ),
         _buildGap(),
-        ZachranObedTextField(
+        ZOTextField(
           label: ZOStrings.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
@@ -67,7 +67,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           supportingText: ZOStrings.allergensSupportingText,
         ),
         const SizedBox(height: 28),
-        ZachranObedTextField(
+        ZOTextField(
           label: ZOStrings.numberOfServings,
           onValidation: (val) {
             if (val!.isEmpty) {

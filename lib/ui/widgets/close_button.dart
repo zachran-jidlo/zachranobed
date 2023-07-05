@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ZachranObedCloseButton extends StatelessWidget {
+class ZOCloseButton extends StatelessWidget {
   final Color? color;
   final VoidCallback? onPressed;
 
-  const ZachranObedCloseButton({
+  const ZOCloseButton({
     super.key,
     this.color,
     this.onPressed,

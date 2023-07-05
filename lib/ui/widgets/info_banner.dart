@@ -41,7 +41,7 @@ class InfoBanner extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            ZachranObedButton(
+            ZOButton(
               text: buttonText,
               icon: buttonIcon,
               fullWidth: false,

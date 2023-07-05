@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedDateTimePicker extends StatefulWidget {
+class ZODateTimePicker extends StatefulWidget {
   final String text;
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
   final IconData icon;
 
-  const ZachranObedDateTimePicker({
+  const ZODateTimePicker({
     super.key,
     required this.text,
     required this.controller,
@@ -16,11 +16,10 @@ class ZachranObedDateTimePicker extends StatefulWidget {
   });
 
   @override
-  State<ZachranObedDateTimePicker> createState() =>
-      _ZachranObedDateTimePickerState();
+  State<ZODateTimePicker> createState() => _ZODateTimePickerState();
 }
 
-class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
+class _ZODateTimePickerState extends State<ZODateTimePicker> {
   DateTime _dateTime = DateTime.now();
 
   Future<DateTime?> _pickDate() => showDatePicker(

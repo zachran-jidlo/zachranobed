@@ -30,31 +30,31 @@ class DonatedFoodDetail extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              ZachranObedTextField(
+              ZOTextField(
                 label: ZOStrings.foodName,
                 value: offeredFood.foodInfo.name,
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
+              ZOTextField(
                 label: ZOStrings.allergens,
                 value: offeredFood.foodInfo.allergens?.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
+              ZOTextField(
                 label: ZOStrings.numberOfServings,
                 value: offeredFood.foodInfo.numberOfServings.toString(),
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
+              ZOTextField(
                 label: ZOStrings.packaging,
                 value: offeredFood.packaging,
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
+              ZOTextField(
                 label: ZOStrings.consumeBy,
                 value: DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy),
                 readOnly: true,

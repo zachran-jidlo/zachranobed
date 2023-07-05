@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedDialog extends StatelessWidget {
+class ZODialog extends StatelessWidget {
   final String title;
   final String content;
   final String? confirmText;
@@ -10,7 +10,7 @@ class ZachranObedDialog extends StatelessWidget {
   final VoidCallback? onConfirmPressed;
   final VoidCallback onCancelPressed;
 
-  const ZachranObedDialog({
+  const ZODialog({
     super.key,
     required this.title,
     this.content = '',

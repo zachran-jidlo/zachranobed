@@ -116,14 +116,14 @@ class Overview extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
-            ZachranObedCard(
+            ZOCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),
               metricsText: ZOStrings.savedLunches,
               periodText: ZOStrings.total,
             ),
             const SizedBox(width: 14.0),
-            ZachranObedCard(
+            ZOCard(
               measuredValue: OfferedFoodApiService().getSavedMealsCount(
                 context: context,
                 timePeriod: 30,
@@ -132,7 +132,7 @@ class Overview extends StatelessWidget {
               periodText: ZOStrings.lastThirtyDays,
             ),
             const SizedBox(width: 14.0),
-            ZachranObedCard(
+            ZOCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),
               metricsText: ZOStrings.savedLunches,

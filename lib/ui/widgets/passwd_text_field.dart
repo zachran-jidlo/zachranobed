@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedPasswordTextField extends StatefulWidget {
+class ZOPasswordTextField extends StatefulWidget {
   final String text;
   final TextEditingController? controller;
   final String? Function(String?)? onValidation;
@@ -12,7 +12,7 @@ class ZachranObedPasswordTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final String? value;
 
-  const ZachranObedPasswordTextField({
+  const ZOPasswordTextField({
     super.key,
     required this.text,
     this.controller,
@@ -24,12 +24,10 @@ class ZachranObedPasswordTextField extends StatefulWidget {
   });
 
   @override
-  State<ZachranObedPasswordTextField> createState() =>
-      _ZachranObedPasswordTextFieldState();
+  State<ZOPasswordTextField> createState() => _ZOPasswordTextFieldState();
 }
 
-class _ZachranObedPasswordTextFieldState
-    extends State<ZachranObedPasswordTextField> {
+class _ZOPasswordTextFieldState extends State<ZOPasswordTextField> {
   bool obscureText = true;
   var focus = FocusNode();
 

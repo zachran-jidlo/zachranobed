@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedButton extends StatelessWidget {
+class ZOButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final VoidCallback onPressed;
@@ -9,7 +9,7 @@ class ZachranObedButton extends StatelessWidget {
   final double height;
   final bool fullWidth;
 
-  const ZachranObedButton({
+  const ZOButton({
     super.key,
     required this.text,
     required this.icon,

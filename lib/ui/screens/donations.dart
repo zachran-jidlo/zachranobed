@@ -66,7 +66,7 @@ class _DonationsState extends State<Donations> {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 SliverToBoxAdapter(
-                  child: ZachranObedButton(
+                  child: ZOButton(
                     text: ZOStrings.loadMoreDonations,
                     icon: Icons.expand_more,
                     height: 40,
