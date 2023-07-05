@@ -27,6 +27,8 @@ class AppRoot extends StatelessWidget {
               secondary: ZachranObedColors.primaryLight,
               onSecondary: ZachranObedColors.onPrimaryLight,
               background: Colors.white,
+              surfaceTint: Colors.white,
+              primaryContainer: ZachranObedColors.secondary,
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
