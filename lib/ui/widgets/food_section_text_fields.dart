@@ -42,7 +42,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         _buildGap(),
         ZachranObedTextField(
-          text: ZachranObedStrings.foodName,
+          label: ZachranObedStrings.foodName,
           onValidation: (val) =>
               val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
           onChanged: (val) => foodInfo.name = val,
@@ -50,7 +50,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         _buildGap(),
         ZachranObedTextField(
-          text: ZachranObedStrings.allergens,
+          label: ZachranObedStrings.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
                 RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
@@ -68,7 +68,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         const SizedBox(height: 28),
         ZachranObedTextField(
-          text: ZachranObedStrings.numberOfServings,
+          label: ZachranObedStrings.numberOfServings,
           onValidation: (val) {
             if (val!.isEmpty) {
               return ZachranObedStrings.requiredFieldError;
