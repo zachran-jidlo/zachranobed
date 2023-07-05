@@ -32,7 +32,7 @@ class ZODialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [Icon(icon)],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 16.0),
           Row(children: [Text(title)]),
         ],
       ),

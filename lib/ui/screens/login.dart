@@ -43,9 +43,9 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 40),
+              const SizedBox(height: 40.0),
               SvgPicture.asset(ZOStrings.zjLogoPath, color: ZOColors.primary),
-              const SizedBox(height: 20),
+              const SizedBox(height: 32.0),
               Image.asset(
                 width: 415,
                 ZOStrings.foodImagePath,
