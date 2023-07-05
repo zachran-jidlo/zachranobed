@@ -104,5 +104,13 @@ class WidgetStyle {
   static const inputBorder =
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
 
-  static const horizontalPadding = 16.0;
+  static const padding = 16.0;
+}
+
+class GapSize {
+  static const xl = 48.0;
+  static const l = 40.0;
+  static const m = 32.0;
+  static const s = 24.0;
+  static const xs = 16.0;
 }

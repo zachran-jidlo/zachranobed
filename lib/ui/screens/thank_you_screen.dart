@@ -74,7 +74,7 @@ class ThankYouScreen extends StatelessWidget {
                       ZOStrings.zjLogoPath,
                       color: ZOColors.primary,
                     ),
-                    const SizedBox(height: 40.0),
+                    const SizedBox(height: GapSize.l),
                   ],
                 ),
               ),

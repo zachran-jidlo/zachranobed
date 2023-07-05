@@ -25,12 +25,12 @@ class MenuItem extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.horizontalPadding,
+            horizontal: WidgetStyle.padding,
           ),
           child: Row(
             children: [
               Icon(leadingIcon),
-              const SizedBox(width: 16.0),
+              const SizedBox(width: GapSize.xs),
               Text(text, style: const TextStyle(fontSize: 16.0)),
               const Spacer(),
               onPressed != null

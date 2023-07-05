@@ -16,7 +16,7 @@ class DonatedFoodDetail extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: WidgetStyle.horizontalPadding,
+          horizontal: WidgetStyle.padding,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -47,7 +47,7 @@ class DonatedFoodDetail extends StatelessWidget {
                 value: offeredFood.foodInfo.numberOfServings.toString(),
                 readOnly: true,
               ),
-              const SizedBox(height: 48.0),
+              const SizedBox(height: GapSize.xl),
               const Row(
                 children: [
                   Text(
@@ -76,6 +76,6 @@ class DonatedFoodDetail extends StatelessWidget {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: 40.0);
+    return const SizedBox(height: GapSize.l);
   }
 }

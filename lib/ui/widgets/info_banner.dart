@@ -40,7 +40,7 @@ class InfoBanner extends StatelessWidget {
                 infoValue,
               ],
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: GapSize.xs),
             ZOButton(
               text: buttonText,
               icon: buttonIcon,

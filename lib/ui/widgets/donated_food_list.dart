@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/services/api/offered_food_api_service.dart';
+import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {
@@ -39,7 +40,7 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
             ),
           ),
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: GapSize.xs),
         FutureBuilder<List<OfferedFood>>(
           future: OfferedFoodApiService().getOfferedFoodList(
             limit: widget.itemsLimit,

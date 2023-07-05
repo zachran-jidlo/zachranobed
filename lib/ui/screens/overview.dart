@@ -41,14 +41,14 @@ class Overview extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.horizontalPadding,
+              horizontal: WidgetStyle.padding,
             ),
             sliver: MultiSliver(
               children: [
                 _buildCards(context),
-                const SizedBox(height: 24.0),
+                const SizedBox(height: GapSize.s),
                 _buildDonatedFoodList(context),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: GapSize.xs),
               ],
             ),
           ),

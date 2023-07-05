@@ -55,7 +55,7 @@ class ZOTextField extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: WidgetStyle.horizontalPadding,
+                      horizontal: WidgetStyle.padding,
                     ),
                     child: Text(
                       supportingText!,

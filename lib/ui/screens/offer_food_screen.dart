@@ -76,7 +76,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.horizontalPadding,
+            horizontal: WidgetStyle.padding,
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -106,7 +106,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
                       ),
-                      const SizedBox(height: 48.0),
+                      const SizedBox(height: GapSize.xl),
                       const Row(
                         children: [
                           Text(
@@ -134,7 +134,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onValidation: (val) =>
                             val!.isEmpty ? ZOStrings.requiredFieldError : null,
                       ),
-                      const SizedBox(height: 48.0),
+                      const SizedBox(height: GapSize.xl),
                       ZOButton(
                         text: ZOStrings.offerFood,
                         icon: MaterialSymbols.check,
@@ -147,7 +147,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 24.0),
+                      const SizedBox(height: GapSize.s),
                       ZOClickableText(
                         clickableText: ZOStrings.manualName,
                         prefixText: ZOStrings.consent,
@@ -167,7 +167,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: 40.0);
+    return const SizedBox(height: GapSize.l);
   }
 
   Future<Response> _offerFood() {

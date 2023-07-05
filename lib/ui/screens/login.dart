@@ -43,18 +43,18 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 40.0),
+              const SizedBox(height: GapSize.l),
               SvgPicture.asset(ZOStrings.zjLogoPath, color: ZOColors.primary),
-              const SizedBox(height: 32.0),
+              const SizedBox(height: GapSize.m),
               Image.asset(
                 width: 415,
                 ZOStrings.foodImagePath,
                 fit: BoxFit.fitWidth,
               ),
-              const SizedBox(height: 32.0),
+              const SizedBox(height: GapSize.m),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: WidgetStyle.horizontalPadding,
+                  horizontal: WidgetStyle.padding,
                 ),
                 child: Form(
                     key: _formKey,
@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
                               ? ZOStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 24.0),
+                        const SizedBox(height: GapSize.s),
                         ZOPasswordTextField(
                           text: ZOStrings.password,
                           controller: _passwordController,
@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
                               ? ZOStrings.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: 32.0),
+                        const SizedBox(height: GapSize.m),
                         ZOButton(
                           text: ZOStrings.login,
                           icon: MaterialSymbols.login,
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                       ],
                     )),
               ),
-              const SizedBox(height: 24.0),
+              const SizedBox(height: GapSize.s),
               ZOClickableText(
                   clickableText: ZOStrings.forgottenPassword,
                   color: ZOColors.onPrimaryLight,

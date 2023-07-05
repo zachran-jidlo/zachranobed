@@ -26,7 +26,7 @@ class ZOCard extends StatelessWidget {
         border: Border.all(width: 1, color: ZOColors.borderColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

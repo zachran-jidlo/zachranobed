@@ -91,7 +91,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: 40.0);
+    return const SizedBox(height: GapSize.l);
   }
 
   Widget _removeButton(FoodInfo foodInfo) {

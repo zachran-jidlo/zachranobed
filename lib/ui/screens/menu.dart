@@ -21,7 +21,7 @@ class Menu extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.horizontalPadding,
+            horizontal: WidgetStyle.padding,
           ),
           child: Column(
             children: [
@@ -117,7 +117,7 @@ class Menu extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(height: 48.0),
+              const SizedBox(height: GapSize.xl),
             ],
           ),
         ),
@@ -130,7 +130,7 @@ class Menu extends StatelessWidget {
       children: [
         Row(children: [Text(label, style: const TextStyle(fontSize: 16.0))]),
         for (var item in menuItems) item,
-        const SizedBox(height: 24.0),
+        const SizedBox(height: GapSize.s),
       ],
     );
   }
