@@ -34,7 +34,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${ZachranObedStrings.food} ${index + 1}',
+              '${ZOStrings.food} ${index + 1}',
               style: const TextStyle(fontSize: 22),
             ),
             if (index != 0) _removeButton(foodInfo),
@@ -42,40 +42,40 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         _buildGap(),
         ZachranObedTextField(
-          label: ZachranObedStrings.foodName,
+          label: ZOStrings.foodName,
           onValidation: (val) =>
-              val!.isEmpty ? ZachranObedStrings.requiredFieldError : null,
+              val!.isEmpty ? ZOStrings.requiredFieldError : null,
           onChanged: (val) => foodInfo.name = val,
           value: foodInfo.name,
         ),
         _buildGap(),
         ZachranObedTextField(
-          label: ZachranObedStrings.allergens,
+          label: ZOStrings.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
                 RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
             if (val!.isEmpty) {
-              return ZachranObedStrings.requiredFieldError;
+              return ZOStrings.requiredFieldError;
             }
             if (!allergensRegex.hasMatch(val)) {
-              return ZachranObedStrings.invalidAllergensFormatError;
+              return ZOStrings.invalidAllergensFormatError;
             }
             return null;
           },
           onChanged: (val) => foodInfo.allergens = val.split(','),
           value: foodInfo.allergens?.toString(),
-          supportingText: ZachranObedStrings.allergensSupportingText,
+          supportingText: ZOStrings.allergensSupportingText,
         ),
         const SizedBox(height: 28),
         ZachranObedTextField(
-          label: ZachranObedStrings.numberOfServings,
+          label: ZOStrings.numberOfServings,
           onValidation: (val) {
             if (val!.isEmpty) {
-              return ZachranObedStrings.requiredFieldError;
+              return ZOStrings.requiredFieldError;
             }
             int? validNumber = int.tryParse(val);
             if (validNumber == null) {
-              return ZachranObedStrings.invalidNumberError;
+              return ZOStrings.invalidNumberError;
             }
             return null;
           },
@@ -105,12 +105,12 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         width: 35,
         height: 35,
         decoration: BoxDecoration(
-          color: ZachranObedColors.secondary,
+          color: ZOColors.secondary,
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Icon(
           Icons.delete_outline,
-          color: ZachranObedColors.onSecondary,
+          color: ZOColors.onSecondary,
           size: 20.0,
         ),
       ),

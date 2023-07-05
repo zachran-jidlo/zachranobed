@@ -31,7 +31,7 @@ class _DonationsState extends State<Donations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZachranObedStrings.donations),
+        title: const Text(ZOStrings.donations),
         actions: [
           IconButton(
             onPressed: () {
@@ -52,13 +52,13 @@ class _DonationsState extends State<Donations> {
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: ZachranObedStrings.thisWeek,
+                  title: ZOStrings.thisWeek,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: ZachranObedStrings.lastWeek,
+                  title: ZOStrings.lastWeek,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
                 MultiSliver(
@@ -66,7 +66,7 @@ class _DonationsState extends State<Donations> {
                 ),
                 SliverToBoxAdapter(
                   child: ZachranObedButton(
-                    text: ZachranObedStrings.loadMoreDonations,
+                    text: ZOStrings.loadMoreDonations,
                     icon: Icons.expand_more,
                     height: 40,
                     isSecondary: true,

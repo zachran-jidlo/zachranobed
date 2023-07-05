@@ -44,14 +44,11 @@ class _LoginState extends State<Login> {
           child: Column(
             children: <Widget>[
               const SizedBox(height: 40),
-              SvgPicture.asset(
-                ZachranObedStrings.zjLogoPath,
-                color: ZachranObedColors.primary,
-              ),
+              SvgPicture.asset(ZOStrings.zjLogoPath, color: ZOColors.primary),
               const SizedBox(height: 20),
               Image.asset(
                 width: 415,
-                ZachranObedStrings.foodImagePath,
+                ZOStrings.foodImagePath,
                 fit: BoxFit.fitWidth,
               ),
               const SizedBox(height: 32.0),
@@ -64,24 +61,24 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: <Widget>[
                         ZachranObedTextField(
-                          label: ZachranObedStrings.emailAddress,
+                          label: ZOStrings.emailAddress,
                           inputType: TextInputType.emailAddress,
                           controller: _emailController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZachranObedStrings.requiredFieldError
+                              ? ZOStrings.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: 24.0),
                         ZachranObedPasswordTextField(
-                          text: ZachranObedStrings.password,
+                          text: ZOStrings.password,
                           controller: _passwordController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZachranObedStrings.requiredFieldError
+                              ? ZOStrings.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: 32.0),
                         ZachranObedButton(
-                          text: ZachranObedStrings.login,
+                          text: ZOStrings.login,
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -94,8 +91,8 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 24.0),
               ZachranObedClickableText(
-                  clickableText: ZachranObedStrings.forgottenPassword,
-                  color: ZachranObedColors.onPrimaryLight,
+                  clickableText: ZOStrings.forgottenPassword,
+                  color: ZOColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
                     print('Forgotten password');
@@ -130,9 +127,7 @@ class _LoginState extends State<Login> {
           const SnackBar(
             backgroundColor: Colors.red,
             content: Center(
-              child: Text(
-                ZachranObedStrings.wrongCredentialsError,
-              ),
+              child: Text(ZOStrings.wrongCredentialsError),
             ),
           ),
         );

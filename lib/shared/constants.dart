@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ZachranObedColors {
+class ZOColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
@@ -14,7 +14,7 @@ class ZachranObedColors {
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
 }
 
-class ZachranObedStrings {
+class ZOStrings {
   static const emailAddress = 'E-mailová adresa';
   static const password = 'Heslo';
   static const login = 'Přihlásit se';

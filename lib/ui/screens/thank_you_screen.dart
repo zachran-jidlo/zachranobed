@@ -21,7 +21,7 @@ class ThankYouScreen extends StatelessWidget {
           children: <Widget>[
             Image.asset(
               width: 415,
-              ZachranObedStrings.foodImagePath,
+              ZOStrings.foodImagePath,
               fit: BoxFit.fitWidth,
             ),
             const SizedBox(height: 80),
@@ -36,7 +36,7 @@ class ThankYouScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return const Text(
-                            ZachranObedStrings.confirmation,
+                            ZOStrings.confirmation,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 28,
@@ -44,7 +44,7 @@ class ThankYouScreen extends StatelessWidget {
                           );
                         } else if (snapshot.hasError) {
                           return const Text(
-                            ZachranObedStrings.offerError,
+                            ZOStrings.offerError,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 28,
@@ -71,8 +71,8 @@ class ThankYouScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     SvgPicture.asset(
-                      ZachranObedStrings.zjLogoPath,
-                      color: ZachranObedColors.primary,
+                      ZOStrings.zjLogoPath,
+                      color: ZOColors.primary,
                     ),
                     const SizedBox(height: 40.0),
                   ],

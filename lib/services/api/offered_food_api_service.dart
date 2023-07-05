@@ -10,7 +10,7 @@ import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class OfferedFoodApiService {
-  final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
+  final String _urlBase = ZOStrings.tabidooApiUrlBase;
 
   Future<List<OfferedFood>> getOfferedFoodList(
       {int? limit, required String filter}) async {

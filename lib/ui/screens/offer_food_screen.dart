@@ -54,10 +54,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       return (await showDialog(
             context: context,
             builder: (context) => ZachranObedDialog(
-              title: ZachranObedStrings.endOffer,
-              content: ZachranObedStrings.cancelOfferDialogContent,
-              confirmText: ZachranObedStrings.cancelTheOffer,
-              cancelText: ZachranObedStrings.continueTheOffer,
+              title: ZOStrings.endOffer,
+              content: ZOStrings.cancelOfferDialogContent,
+              confirmText: ZOStrings.cancelTheOffer,
+              cancelText: ZOStrings.continueTheOffer,
               icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
@@ -84,7 +84,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 const Row(
                   children: <Widget>[
                     Text(
-                      ZachranObedStrings.offerLeftoverFood,
+                      ZOStrings.offerLeftoverFood,
                       style: TextStyle(fontSize: 24),
                     ),
                   ],
@@ -98,7 +98,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         foodSections: _foodSections,
                       ),
                       ZachranObedButton(
-                        text: ZachranObedStrings.addAnotherFood,
+                        text: ZOStrings.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
                         height: 40.0,
@@ -110,34 +110,33 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       const Row(
                         children: [
                           Text(
-                            ZachranObedStrings.summaryInfo,
+                            ZOStrings.summaryInfo,
                             style: TextStyle(fontSize: 22),
                           ),
                         ],
                       ),
                       _buildGap(),
                       ZachranObedDropdown(
-                        hintText: ZachranObedStrings.packaging,
+                        hintText: ZOStrings.packaging,
                         items: Packaging.values
                             .map((e) => e.packagingName)
                             .toList(),
                         onValidation: (val) => val == null
-                            ? ZachranObedStrings.requiredDropdownError
+                            ? ZOStrings.requiredDropdownError
                             : null,
                         onChanged: (value) => _selectedPackaging = value,
                       ),
                       _buildGap(),
                       ZachranObedDateTimePicker(
-                        text: ZachranObedStrings.consumeBy,
+                        text: ZOStrings.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
+                        onValidation: (val) =>
+                            val!.isEmpty ? ZOStrings.requiredFieldError : null,
                       ),
                       const SizedBox(height: 48.0),
                       ZachranObedButton(
-                        text: ZachranObedStrings.offerFood,
+                        text: ZOStrings.offerFood,
                         icon: MaterialSymbols.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -150,8 +149,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       const SizedBox(height: 24.0),
                       ZachranObedClickableText(
-                        clickableText: ZachranObedStrings.manualName,
-                        prefixText: ZachranObedStrings.consent,
+                        clickableText: ZOStrings.manualName,
+                        prefixText: ZOStrings.consent,
                         underline: true,
                         onTap: () => print('Kliknuto na příručku'),
                       ),

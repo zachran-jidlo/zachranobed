@@ -21,11 +21,9 @@ class ZachranObedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor =
-        isSecondary ? ZachranObedColors.secondary : ZachranObedColors.primary;
-    final foregroundColor = isSecondary
-        ? ZachranObedColors.onSecondary
-        : ZachranObedColors.onPrimary;
+    final backgroundColor = isSecondary ? ZOColors.secondary : ZOColors.primary;
+    final foregroundColor =
+        isSecondary ? ZOColors.onSecondary : ZOColors.onPrimary;
 
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(

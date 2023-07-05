@@ -22,7 +22,7 @@ class InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: ZachranObedColors.primaryLight,
+      color: ZOColors.primaryLight,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
         child: Column(
@@ -33,7 +33,7 @@ class InfoBanner extends StatelessWidget {
                 Text(
                   '$infoText ',
                   style: const TextStyle(
-                    color: ZachranObedColors.onPrimaryLight,
+                    color: ZOColors.onPrimaryLight,
                     fontSize: 16.0,
                   ),
                 ),

@@ -21,12 +21,9 @@ class ZachranObedCard extends StatelessWidget {
       width: _CARD_SIDE,
       height: _CARD_SIDE,
       decoration: BoxDecoration(
-        color: ZachranObedColors.cardBackground,
+        color: ZOColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 1,
-          color: ZachranObedColors.borderColor,
-        ),
+        border: Border.all(width: 1, color: ZOColors.borderColor),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -68,7 +65,7 @@ class ZachranObedCard extends StatelessWidget {
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: ZachranObedColors.onCardBackground,
+        color: ZOColors.onCardBackground,
       ),
     );
   }

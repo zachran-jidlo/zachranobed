@@ -26,13 +26,13 @@ class Menu extends StatelessWidget {
           child: Column(
             children: [
               _buildMenuSection(
-                ZachranObedStrings.organization,
+                ZOStrings.organization,
                 [
                   MenuItem(leadingIcon: Icons.business, text: user.organization)
                 ],
               ),
               _buildMenuSection(
-                ZachranObedStrings.donor,
+                ZOStrings.donor,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -41,7 +41,7 @@ class Menu extends StatelessWidget {
                 ],
               ),
               _buildMenuSection(
-                ZachranObedStrings.recipient,
+                ZOStrings.recipient,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -50,64 +50,62 @@ class Menu extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.phone_outlined,
-                    text: ZachranObedStrings.contactCarrier,
+                    text: ZOStrings.contactCarrier,
                     onPressed: () async =>
                         await HelperService.makePhoneCall('123456789'),
                   )
                 ],
               ),
               _buildMenuSection(
-                ZachranObedStrings.saveLunch,
+                ZOStrings.saveLunch,
                 [
                   const MenuItem(
                     leadingIcon: Icons.textsms_outlined,
-                    text: ZachranObedStrings.feedback,
+                    text: ZOStrings.feedback,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.language,
-                    text: ZachranObedStrings.about,
+                    text: ZOStrings.about,
                     onPressed: () async {
-                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
+                      await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.volunteer_activism_outlined,
-                    text: ZachranObedStrings.sponsors,
+                    text: ZOStrings.sponsors,
                     onPressed: () async {
-                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
+                      await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
                   ),
                 ],
               ),
               _buildMenuSection(
-                ZachranObedStrings.more,
+                ZOStrings.more,
                 [
                   const MenuItem(
                     leadingIcon: Icons.star_border,
-                    text: ZachranObedStrings.rate,
+                    text: ZOStrings.rate,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.security,
-                    text: ZachranObedStrings.privacyProtection,
-                    onPressed: () async {
-                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
-                    },
+                    text: ZOStrings.privacyProtection,
+                    onPressed: () async =>
+                        await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
-                    text: ZachranObedStrings.termsOfUse,
-                    onPressed: () async {
-                      await _openUrlInBrowser(ZachranObedStrings.zjUrl);
-                    },
+                    text: ZOStrings.termsOfUse,
+                    onPressed: () async =>
+                        await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                 ],
               ),
               MenuButton(
-                text: ZachranObedStrings.logout,
+                text: ZOStrings.logout,
                 icon: Icons.logout,
                 onPressed: () async {
                   final prefs = await SharedPreferences.getInstance();

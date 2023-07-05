@@ -21,14 +21,14 @@ class NewOfferFloatingButton extends StatelessWidget {
                 Navigator.of(context).pushNamed(RouteManager.offerFood),
             elevation: 0,
             shape: const StadiumBorder(),
-            backgroundColor: ZachranObedColors.primaryLight,
+            backgroundColor: ZOColors.primaryLight,
             label: const Text(
-              ZachranObedStrings.newOffer,
-              style: TextStyle(color: ZachranObedColors.primary),
+              ZOStrings.newOffer,
+              style: TextStyle(color: ZOColors.primary),
             ),
             icon: const Icon(
               MaterialSymbols.add,
-              color: ZachranObedColors.primary,
+              color: ZOColors.primary,
             ),
           )
         : FloatingActionButton(
@@ -37,10 +37,10 @@ class NewOfferFloatingButton extends StatelessWidget {
               builder: (context) {
                 if (HelperService.canDonate(context)) {
                   return ZachranObedDialog(
-                    title: '${ZachranObedStrings.newOffer}?',
-                    content: ZachranObedStrings.newOfferDialogContent,
-                    confirmText: ZachranObedStrings.callACourier,
-                    cancelText: ZachranObedStrings.cancel,
+                    title: '${ZOStrings.newOffer}?',
+                    content: ZOStrings.newOfferDialogContent,
+                    confirmText: ZOStrings.callACourier,
+                    cancelText: ZOStrings.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
                       await _callACourier(context);
@@ -52,9 +52,9 @@ class NewOfferFloatingButton extends StatelessWidget {
                   );
                 }
                 return ZachranObedDialog(
-                  title: '${ZachranObedStrings.newOffer}?',
-                  content: ZachranObedStrings.cantOfferAnymoreDialogContent,
-                  cancelText: ZachranObedStrings.cancel,
+                  title: '${ZOStrings.newOffer}?',
+                  content: ZOStrings.cantOfferAnymoreDialogContent,
+                  cancelText: ZOStrings.cancel,
                   icon: Icons.edit_calendar_outlined,
                   onCancelPressed: () => Navigator.of(context).pop(false),
                 );
@@ -62,10 +62,10 @@ class NewOfferFloatingButton extends StatelessWidget {
             ),
             elevation: 0,
             shape: const StadiumBorder(),
-            backgroundColor: ZachranObedColors.primaryLight,
+            backgroundColor: ZOColors.primaryLight,
             child: const Icon(
               MaterialSymbols.add,
-              color: ZachranObedColors.disabledButtonChild,
+              color: ZOColors.disabledButtonChild,
             ),
           );
   }
@@ -73,12 +73,12 @@ class NewOfferFloatingButton extends StatelessWidget {
   Future<void> _callACourier(BuildContext context) async {
     await DeliveryApiService().updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.internalId,
-      ZachranObedStrings.deliveryConfirmedState,
+      ZOStrings.deliveryConfirmedState,
     );
     if (context.mounted) {
       context
           .read<DeliveryNotifier>()
-          .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
+          .updateDeliveryState(ZOStrings.deliveryConfirmedState);
     }
   }
 }
