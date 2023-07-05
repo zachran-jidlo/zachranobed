@@ -81,7 +81,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 15),
                 const Row(
                   children: <Widget>[
                     Text(
@@ -107,7 +106,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
                       ),
-                      _buildGap(),
+                      const SizedBox(height: 48.0),
                       const Row(
                         children: [
                           Text(

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class ZachranObedTextField extends StatelessWidget {
-  final String text;
+  final String label;
   final TextEditingController? controller;
   final String? Function(String?)? onValidation;
   final TextInputType? inputType;
@@ -11,10 +11,11 @@ class ZachranObedTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final String? value;
   final String? supportingText;
+  final bool readOnly;
 
   const ZachranObedTextField({
     super.key,
-    required this.text,
+    required this.label,
     this.controller,
     this.onValidation,
     this.inputType,
@@ -22,6 +23,7 @@ class ZachranObedTextField extends StatelessWidget {
     this.onChanged,
     this.value,
     this.supportingText,
+    this.readOnly = false,
   });
 
   @override
@@ -38,7 +40,7 @@ class ZachranObedTextField extends StatelessWidget {
           inputFormatters: textInputFormatters,
           onChanged: onChanged,
           decoration: InputDecoration(
-            labelText: text,
+            labelText: label,
             labelStyle: TextStyle(color: Colors.grey[600]),
             enabledBorder: WidgetStyle.inputBorder,
             focusedBorder: WidgetStyle.inputBorder,
@@ -46,6 +48,7 @@ class ZachranObedTextField extends StatelessWidget {
           initialValue: value,
           focusNode: focus,
           onTapOutside: (event) => focus.unfocus(),
+          readOnly: readOnly,
         ),
         supportingText != null
             ? Row(
