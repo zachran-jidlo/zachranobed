@@ -47,6 +47,15 @@ class DonatedFoodDetail extends StatelessWidget {
                 value: offeredFood.foodInfo.numberOfServings.toString(),
                 readOnly: true,
               ),
+              const SizedBox(height: 48.0),
+              const Row(
+                children: [
+                  Text(
+                    ZOStrings.summaryInfo,
+                    style: TextStyle(fontSize: 22),
+                  ),
+                ],
+              ),
               _buildGap(),
               ZOTextField(
                 label: ZOStrings.packaging,
