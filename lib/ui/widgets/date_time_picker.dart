@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class ZODateTimePicker extends StatefulWidget {
-  final String text;
+  final String label;
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
   final IconData icon;
 
   const ZODateTimePicker({
     super.key,
-    required this.text,
+    required this.label,
     required this.controller,
     this.onValidation,
     required this.icon,
@@ -74,8 +74,9 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
         controller: widget.controller,
         validator: widget.onValidation,
         enabled: false,
+        style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
-          labelText: widget.text,
+          labelText: widget.label,
           labelStyle: TextStyle(color: Colors.grey[600]),
           disabledBorder: WidgetStyle.inputBorder,
           errorBorder: _dateTimePickerErrorBorder,

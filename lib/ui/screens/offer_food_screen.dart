@@ -128,7 +128,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       _buildGap(),
                       ZODateTimePicker(
-                        text: ZOStrings.consumeBy,
+                        label: ZOStrings.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
                         onValidation: (val) =>
