@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
           child: Column(
             children: <Widget>[
               const SizedBox(height: GapSize.l),
-              SvgPicture.asset(ZOStrings.zjLogoPath, color: ZOColors.primary),
+              SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
               const SizedBox(height: GapSize.m),
               Image.asset(
                 width: 415,

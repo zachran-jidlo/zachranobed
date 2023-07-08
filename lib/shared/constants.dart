@@ -67,6 +67,7 @@ class ZOStrings {
       'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
       'Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.';
+  static const backToOverview = 'Zpět na přehled';
   static const endOffer = 'Zahodit nabídku?';
   static const cancelTheOffer = 'Zahodit';
   static const continueTheOffer = 'Pokračovat';
@@ -92,8 +93,7 @@ class ZOStrings {
 
   static const zjUrl = 'https://zachranobed.cz';
 
-  static const zjLogoPath = 'assets/zj-logo.svg';
-  static const placeholderImagePath = 'assets/placeholder-image.png';
+  static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';
 
   static const tabidooApiUrlBase =

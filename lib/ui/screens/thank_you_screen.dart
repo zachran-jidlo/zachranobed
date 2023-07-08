@@ -24,10 +24,10 @@ class ThankYouScreen extends StatelessWidget {
               ZOStrings.foodImagePath,
               fit: BoxFit.fitWidth,
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 80.0),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                padding: const EdgeInsets.symmetric(horizontal: 45.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -55,15 +55,15 @@ class ThankYouScreen extends StatelessWidget {
                         return const CircularProgressIndicator();
                       },
                     ),
-                    const SizedBox(height: 50.0),
+                    const SizedBox(height: GapSize.l),
                     ZOButton(
-                      text: 'Zpět na přehled',
+                      text: ZOStrings.backToOverview,
                       icon: MaterialSymbols.home_outlined,
                       onPressed: () => Navigator.pop(context),
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: GapSize.xs),
                     ZOButton(
-                      text: 'Nová nabídka',
+                      text: ZOStrings.newOffer,
                       icon: MaterialSymbols.add,
                       isSecondary: true,
                       onPressed: () => Navigator.of(context)
@@ -71,10 +71,11 @@ class ThankYouScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     SvgPicture.asset(
-                      ZOStrings.zjLogoPath,
-                      color: ZOColors.primary,
+                      ZOStrings.zoLogoPath,
+                      width: 158,
+                      height: 28,
                     ),
-                    const SizedBox(height: GapSize.l),
+                    const SizedBox(height: GapSize.xl),
                   ],
                 ),
               ),
