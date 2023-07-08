@@ -25,7 +25,7 @@ class DonatedFoodDetail extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     offeredFood.foodInfo.name,
-                    style: const TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: FontSize.l),
                   ),
                 ],
               ),
@@ -52,7 +52,7 @@ class DonatedFoodDetail extends StatelessWidget {
                 children: [
                   Text(
                     ZOStrings.summaryInfo,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: FontSize.m),
                   ),
                 ],
               ),

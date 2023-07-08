@@ -24,7 +24,7 @@ class InfoBanner extends StatelessWidget {
       alignment: Alignment.center,
       color: ZOColors.primaryLight,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           children: [
             Row(
@@ -34,7 +34,7 @@ class InfoBanner extends StatelessWidget {
                   '$infoText ',
                   style: const TextStyle(
                     color: ZOColors.onPrimaryLight,
-                    fontSize: 16.0,
+                    fontSize: FontSize.s,
                   ),
                 ),
                 infoValue,

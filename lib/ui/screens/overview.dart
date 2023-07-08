@@ -74,7 +74,7 @@ class Overview extends StatelessWidget {
                 '${user!.pickUpFrom} a ${user.pickUpWithin}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+                  fontSize: FontSize.s,
                   color: ZOColors.onPrimaryLight,
                 ),
               ),
@@ -122,7 +122,7 @@ class Overview extends StatelessWidget {
               metricsText: ZOStrings.savedLunches,
               periodText: ZOStrings.total,
             ),
-            const SizedBox(width: 14.0),
+            const SizedBox(width: GapSize.xxs),
             ZOCard(
               measuredValue: OfferedFoodApiService().getSavedMealsCount(
                 context: context,
@@ -131,7 +131,7 @@ class Overview extends StatelessWidget {
               metricsText: ZOStrings.savedLunches,
               periodText: ZOStrings.lastThirtyDays,
             ),
-            const SizedBox(width: 14.0),
+            const SizedBox(width: GapSize.xxs),
             ZOCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),

@@ -31,7 +31,7 @@ class MenuItem extends StatelessWidget {
             children: [
               Icon(leadingIcon),
               const SizedBox(width: GapSize.xs),
-              Text(text, style: const TextStyle(fontSize: 16.0)),
+              Text(text, style: const TextStyle(fontSize: FontSize.s)),
               const Spacer(),
               onPressed != null
                   ? const Icon(

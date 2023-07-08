@@ -41,7 +41,7 @@ class ZOButton extends StatelessWidget {
         text,
         style: TextStyle(
           color: foregroundColor,
-          fontSize: 14.0,
+          fontSize: FontSize.xs,
         ),
       ),
     );

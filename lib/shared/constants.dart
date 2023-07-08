@@ -113,4 +113,15 @@ class GapSize {
   static const m = 32.0;
   static const s = 24.0;
   static const xs = 16.0;
+  static const xxs = 14.0;
+}
+
+class FontSize {
+  static const xxl = 36.0;
+  static const xl = 28.0;
+  static const l = 24.0;
+  static const m = 22.0;
+  static const s = 16.0;
+  static const xs = 14.0;
+  static const xxs = 12.0;
 }

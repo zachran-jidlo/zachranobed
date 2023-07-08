@@ -39,7 +39,7 @@ class ThankYouScreen extends StatelessWidget {
                             ZOStrings.confirmation,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: FontSize.xl,
                             ),
                           );
                         } else if (snapshot.hasError) {
@@ -47,7 +47,7 @@ class ThankYouScreen extends StatelessWidget {
                             ZOStrings.offerError,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: FontSize.xl,
                             ),
                           );
                         }

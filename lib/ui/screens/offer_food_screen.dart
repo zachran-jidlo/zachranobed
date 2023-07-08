@@ -85,7 +85,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   children: <Widget>[
                     Text(
                       ZOStrings.offerLeftoverFood,
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: FontSize.l),
                     ),
                   ],
                 ),
@@ -111,7 +111,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         children: [
                           Text(
                             ZOStrings.summaryInfo,
-                            style: TextStyle(fontSize: 22),
+                            style: TextStyle(fontSize: FontSize.m),
                           ),
                         ],
                       ),

@@ -34,8 +34,8 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: SizedBox(
         height: 80.0,
         child: BottomNavigationBar(
-          unselectedFontSize: 12.0,
-          selectedFontSize: 12.0,
+          unselectedFontSize: FontSize.xxs,
+          selectedFontSize: FontSize.xxs,
           selectedItemColor: ZOColors.primary,
           unselectedItemColor: ZOColors.onPrimaryLight,
           items: const <BottomNavigationBarItem>[

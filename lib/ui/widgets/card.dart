@@ -31,7 +31,7 @@ class ZOCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextWidget(metricsText, 12.0),
+            _buildTextWidget(metricsText, FontSize.xxs),
             FutureBuilder(
               future: measuredValue,
               builder: (context, snapshot) {
@@ -39,7 +39,7 @@ class ZOCard extends StatelessWidget {
                   final measuredVariable = snapshot.data;
                   return _buildTextWidget(
                     measuredVariable.toString(),
-                    36.0,
+                    FontSize.xxl,
                     fontWeight: FontWeight.bold,
                   );
                 } else if (snapshot.hasError) {
@@ -48,7 +48,7 @@ class ZOCard extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               },
             ),
-            _buildTextWidget(periodText, 12.0),
+            _buildTextWidget(periodText, FontSize.xxs),
           ],
         ),
       ),

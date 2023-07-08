@@ -128,7 +128,9 @@ class Menu extends StatelessWidget {
   Widget _buildMenuSection(String label, List<Widget> menuItems) {
     return Column(
       children: [
-        Row(children: [Text(label, style: const TextStyle(fontSize: 16.0))]),
+        Row(
+          children: [Text(label, style: const TextStyle(fontSize: FontSize.s))],
+        ),
         for (var item in menuItems) item,
         const SizedBox(height: GapSize.s),
       ],

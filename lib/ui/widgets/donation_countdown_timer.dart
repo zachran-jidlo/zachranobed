@@ -88,7 +88,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
       '$hours:$minutes:$seconds',
       style: const TextStyle(
         color: ZOColors.onPrimaryLight,
-        fontSize: 16.0,
+        fontSize: FontSize.s,
         fontWeight: FontWeight.bold,
       ),
     );

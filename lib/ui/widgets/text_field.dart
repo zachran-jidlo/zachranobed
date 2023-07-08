@@ -59,7 +59,10 @@ class ZOTextField extends StatelessWidget {
                     ),
                     child: Text(
                       supportingText!,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: TextStyle(
+                        fontSize: FontSize.xxs,
+                        color: Colors.grey[600],
+                      ),
                     ),
                   ),
                 ],

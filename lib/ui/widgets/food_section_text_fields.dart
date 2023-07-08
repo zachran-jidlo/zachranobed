@@ -35,7 +35,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           children: [
             Text(
               '${ZOStrings.food} ${index + 1}',
-              style: const TextStyle(fontSize: 22),
+              style: const TextStyle(fontSize: FontSize.m),
             ),
             if (index != 0) _removeButton(foodInfo),
           ],
