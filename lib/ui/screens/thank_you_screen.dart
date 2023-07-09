@@ -17,58 +17,62 @@ class ThankYouScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Image.asset(
-              width: 415,
-              ZOStrings.foodImagePath,
-              fit: BoxFit.fitWidth,
-            ),
-            const SizedBox(height: 80.0),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45.0),
+        child: LayoutBuilder(builder: (context, constraint) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraint.maxHeight),
+              child: IntrinsicHeight(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    FutureBuilder<http.Response>(
-                      future: response,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return const Text(
-                            ZOStrings.confirmation,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: FontSize.xl,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Text(
-                            ZOStrings.offerError,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: FontSize.xl,
-                            ),
-                          );
-                        }
+                    Image.asset(
+                      width: 415,
+                      ZOStrings.foodImagePath,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    const SizedBox(height: 80.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                      child: Column(
+                        children: <Widget>[
+                          FutureBuilder<http.Response>(
+                            future: response,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return const Text(
+                                  ZOStrings.confirmation,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: FontSize.xl),
+                                );
+                              } else if (snapshot.hasError) {
+                                return const Text(
+                                  ZOStrings.offerError,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: FontSize.xl),
+                                );
+                              }
 
-                        return const CircularProgressIndicator();
-                      },
+                              return const CircularProgressIndicator();
+                            },
+                          ),
+                          const SizedBox(height: GapSize.l),
+                          ZOButton(
+                            text: ZOStrings.backToOverview,
+                            icon: MaterialSymbols.home_outlined,
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          const SizedBox(height: GapSize.xs),
+                          ZOButton(
+                            text: ZOStrings.newOffer,
+                            icon: MaterialSymbols.add,
+                            isSecondary: true,
+                            onPressed: () => Navigator.of(context)
+                                .pushReplacementNamed(RouteManager.offerFood),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: GapSize.l),
-                    ZOButton(
-                      text: ZOStrings.backToOverview,
-                      icon: MaterialSymbols.home_outlined,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const SizedBox(height: GapSize.xs),
-                    ZOButton(
-                      text: ZOStrings.newOffer,
-                      icon: MaterialSymbols.add,
-                      isSecondary: true,
-                      onPressed: () => Navigator.of(context)
-                          .pushReplacementNamed(RouteManager.offerFood),
-                    ),
+                    const SizedBox(height: GapSize.xl),
                     const Spacer(),
                     SvgPicture.asset(
                       ZOStrings.zoLogoPath,
@@ -80,8 +84,8 @@ class ThankYouScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          );
+        }),
       ),
     );
   }
