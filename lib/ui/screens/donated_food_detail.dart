@@ -68,6 +68,7 @@ class DonatedFoodDetail extends StatelessWidget {
                 value: DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy),
                 readOnly: true,
               ),
+              _buildGap(),
             ],
           ),
         ),

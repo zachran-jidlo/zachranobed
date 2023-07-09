@@ -30,11 +30,13 @@ class InfoBanner extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '$infoText ',
-                  style: const TextStyle(
-                    color: ZOColors.onPrimaryLight,
-                    fontSize: FontSize.s,
+                Flexible(
+                  child: Text(
+                    '$infoText ',
+                    style: const TextStyle(
+                      color: ZOColors.onPrimaryLight,
+                      fontSize: FontSize.s,
+                    ),
                   ),
                 ),
                 infoValue,
