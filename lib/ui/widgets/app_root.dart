@@ -22,13 +22,13 @@ class AppRoot extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: ZachranObedColors.primary,
-              onPrimary: ZachranObedColors.onPrimary,
-              secondary: ZachranObedColors.primaryLight,
-              onSecondary: ZachranObedColors.onPrimaryLight,
+              primary: ZOColors.primary,
+              onPrimary: ZOColors.onPrimary,
+              secondary: ZOColors.primaryLight,
+              onSecondary: ZOColors.onPrimaryLight,
               background: Colors.white,
               surfaceTint: Colors.white,
-              primaryContainer: ZachranObedColors.secondary,
+              primaryContainer: ZOColors.secondary,
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,

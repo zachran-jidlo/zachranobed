@@ -19,7 +19,7 @@ class Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZachranObedStrings.overview),
+        title: const Text(ZOStrings.overview),
         actions: [
           IconButton(
             onPressed: () {
@@ -41,14 +41,14 @@ class Overview extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.horizontalPadding,
+              horizontal: WidgetStyle.padding,
             ),
             sliver: MultiSliver(
               children: [
                 _buildCards(context),
-                const SizedBox(height: 24.0),
+                const SizedBox(height: GapSize.s),
                 _buildDonatedFoodList(context),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: GapSize.xs),
               ],
             ),
           ),
@@ -69,16 +69,16 @@ class Overview extends StatelessWidget {
     return deliveryConfirmed
         ? SliverToBoxAdapter(
             child: InfoBanner(
-              infoText: ZachranObedStrings.courierWillCome,
+              infoText: ZOStrings.courierWillCome,
               infoValue: Text(
                 '${user!.pickUpFrom} a ${user.pickUpWithin}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                  color: ZachranObedColors.onPrimaryLight,
+                  fontSize: FontSize.s,
+                  color: ZOColors.onPrimaryLight,
                 ),
               ),
-              buttonText: ZachranObedStrings.contactCarrier,
+              buttonText: ZOStrings.contactCarrier,
               buttonIcon: Icons.phone_outlined,
               onButtonPressed: () async =>
                   await HelperService.makePhoneCall('123456789'),
@@ -86,9 +86,9 @@ class Overview extends StatelessWidget {
           )
         : SliverToBoxAdapter(
             child: InfoBanner(
-              infoText: ZachranObedStrings.youCanDonate,
+              infoText: ZOStrings.youCanDonate,
               infoValue: const DonationCountdownTimer(),
-              buttonText: ZachranObedStrings.callACourier,
+              buttonText: ZOStrings.callACourier,
               buttonIcon: Icons.directions_car_filled_outlined,
               onButtonPressed: () async {
                 await _callACourier(context);
@@ -100,12 +100,12 @@ class Overview extends StatelessWidget {
   Future<void> _callACourier(BuildContext context) async {
     await DeliveryApiService().updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.internalId,
-      ZachranObedStrings.deliveryConfirmedState,
+      ZOStrings.deliveryConfirmedState,
     );
     if (context.mounted) {
       context
           .read<DeliveryNotifier>()
-          .updateDeliveryState(ZachranObedStrings.deliveryConfirmedState);
+          .updateDeliveryState(ZOStrings.deliveryConfirmedState);
     }
   }
 
@@ -116,27 +116,27 @@ class Overview extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
-            ZachranObedCard(
+            ZOCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),
-              metricsText: ZachranObedStrings.savedLunches,
-              periodText: ZachranObedStrings.total,
+              metricsText: ZOStrings.savedLunches,
+              periodText: ZOStrings.total,
             ),
-            const SizedBox(width: 14.0),
-            ZachranObedCard(
+            const SizedBox(width: GapSize.xxs),
+            ZOCard(
               measuredValue: OfferedFoodApiService().getSavedMealsCount(
                 context: context,
                 timePeriod: 30,
               ),
-              metricsText: ZachranObedStrings.savedLunches,
-              periodText: ZachranObedStrings.lastThirtyDays,
+              metricsText: ZOStrings.savedLunches,
+              periodText: ZOStrings.lastThirtyDays,
             ),
-            const SizedBox(width: 14.0),
-            ZachranObedCard(
+            const SizedBox(width: GapSize.xxs),
+            ZOCard(
               measuredValue:
                   OfferedFoodApiService().getSavedMealsCount(context: context),
-              metricsText: ZachranObedStrings.savedLunches,
-              periodText: ZachranObedStrings.lastThirtyDays,
+              metricsText: ZOStrings.savedLunches,
+              periodText: ZOStrings.lastThirtyDays,
             ),
           ],
         ),
@@ -149,7 +149,7 @@ class Overview extends StatelessWidget {
       itemsLimit: 5,
       filter:
           'darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-      title: ZachranObedStrings.lastDonated,
+      title: ZOStrings.lastDonated,
     );
   }
 }

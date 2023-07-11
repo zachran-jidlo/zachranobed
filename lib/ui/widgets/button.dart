@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedButton extends StatelessWidget {
+class ZOButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final VoidCallback onPressed;
@@ -9,7 +9,7 @@ class ZachranObedButton extends StatelessWidget {
   final double height;
   final bool fullWidth;
 
-  const ZachranObedButton({
+  const ZOButton({
     super.key,
     required this.text,
     required this.icon,
@@ -21,11 +21,9 @@ class ZachranObedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor =
-        isSecondary ? ZachranObedColors.secondary : ZachranObedColors.primary;
-    final foregroundColor = isSecondary
-        ? ZachranObedColors.onSecondary
-        : ZachranObedColors.onPrimary;
+    final backgroundColor = isSecondary ? ZOColors.secondary : ZOColors.primary;
+    final foregroundColor =
+        isSecondary ? ZOColors.onSecondary : ZOColors.onPrimary;
 
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
@@ -43,7 +41,7 @@ class ZachranObedButton extends StatelessWidget {
         text,
         style: TextStyle(
           color: foregroundColor,
-          fontSize: 14.0,
+          fontSize: FontSize.xs,
         ),
       ),
     );

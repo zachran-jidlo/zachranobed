@@ -80,15 +80,15 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context
             .read<DeliveryNotifier>()
-            .updateDeliveryState(ZachranObedStrings.deliveryCancelledState);
+            .updateDeliveryState(ZOStrings.deliveryCancelledState);
       });
     }
 
     return Text(
       '$hours:$minutes:$seconds',
       style: const TextStyle(
-        color: ZachranObedColors.onPrimaryLight,
-        fontSize: 16.0,
+        color: ZOColors.onPrimaryLight,
+        fontSize: FontSize.s,
         fontWeight: FontWeight.bold,
       ),
     );

@@ -10,11 +10,11 @@ extension PackagingExtension on Packaging {
   String get packagingName {
     switch (this) {
       case Packaging.rekrabicka:
-        return ZachranObedStrings.packagingRekrabicka;
+        return ZOStrings.packagingRekrabicka;
       case Packaging.ikeaBox:
-        return ZachranObedStrings.packagingIkeaBox;
+        return ZOStrings.packagingIkeaBox;
       case Packaging.disposablePackaging:
-        return ZachranObedStrings.packagingDisposable;
+        return ZOStrings.packagingDisposable;
       default:
         return '';
     }

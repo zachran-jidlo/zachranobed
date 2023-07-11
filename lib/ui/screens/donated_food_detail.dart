@@ -16,7 +16,7 @@ class DonatedFoodDetail extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: WidgetStyle.horizontalPadding,
+          horizontal: WidgetStyle.padding,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -25,40 +25,50 @@ class DonatedFoodDetail extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     offeredFood.foodInfo.name,
-                    style: const TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: FontSize.l),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              ZachranObedTextField(
-                label: ZachranObedStrings.foodName,
+              ZOTextField(
+                label: ZOStrings.foodName,
                 value: offeredFood.foodInfo.name,
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
-                label: ZachranObedStrings.allergens,
+              ZOTextField(
+                label: ZOStrings.allergens,
                 value: offeredFood.foodInfo.allergens?.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
-                label: ZachranObedStrings.numberOfServings,
+              ZOTextField(
+                label: ZOStrings.numberOfServings,
                 value: offeredFood.foodInfo.numberOfServings.toString(),
                 readOnly: true,
               ),
+              const SizedBox(height: GapSize.xl),
+              const Row(
+                children: [
+                  Text(
+                    ZOStrings.summaryInfo,
+                    style: TextStyle(fontSize: FontSize.m),
+                  ),
+                ],
+              ),
               _buildGap(),
-              ZachranObedTextField(
-                label: ZachranObedStrings.packaging,
+              ZOTextField(
+                label: ZOStrings.packaging,
                 value: offeredFood.packaging,
                 readOnly: true,
               ),
               _buildGap(),
-              ZachranObedTextField(
-                label: ZachranObedStrings.consumeBy,
+              ZOTextField(
+                label: ZOStrings.consumeBy,
                 value: DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy),
                 readOnly: true,
               ),
+              _buildGap(),
             ],
           ),
         ),
@@ -67,6 +77,6 @@ class DonatedFoodDetail extends StatelessWidget {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: 40.0);
+    return const SizedBox(height: GapSize.l);
   }
 }

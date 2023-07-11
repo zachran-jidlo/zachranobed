@@ -20,10 +20,7 @@ class DonatedFoodListTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10.0),
       child: ListTile(
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: ZachranObedColors.borderColor,
-          ),
+          side: const BorderSide(width: 1, color: ZOColors.borderColor),
           borderRadius: BorderRadius.circular(10),
         ),
         title: Text(offeredFood.foodInfo.name),

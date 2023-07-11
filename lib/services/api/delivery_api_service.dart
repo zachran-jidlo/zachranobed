@@ -7,7 +7,7 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class DeliveryApiService {
-  final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
+  final String _urlBase = ZOStrings.tabidooApiUrlBase;
 
   Future<Delivery> getDelivery({required String filter}) async {
     final response = await http.get(

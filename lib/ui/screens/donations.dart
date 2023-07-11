@@ -31,7 +31,7 @@ class _DonationsState extends State<Donations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZachranObedStrings.donations),
+        title: const Text(ZOStrings.donations),
         actions: [
           IconButton(
             onPressed: () {
@@ -45,30 +45,31 @@ class _DonationsState extends State<Donations> {
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.horizontalPadding,
+              horizontal: WidgetStyle.padding,
             ),
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: ZachranObedStrings.thisWeek,
+                  title: ZOStrings.thisWeek,
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
                   filter:
                       'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
-                  title: ZachranObedStrings.lastWeek,
+                  title: ZOStrings.lastWeek,
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 MultiSliver(
                   children: _donationsLists,
                 ),
+                const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 SliverToBoxAdapter(
-                  child: ZachranObedButton(
-                    text: ZachranObedStrings.loadMoreDonations,
+                  child: ZOButton(
+                    text: ZOStrings.loadMoreDonations,
                     icon: Icons.expand_more,
-                    height: 40,
+                    height: 40.0,
                     isSecondary: true,
                     onPressed: () {
                       _buildDonationsList(context);

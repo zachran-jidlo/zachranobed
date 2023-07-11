@@ -8,7 +8,7 @@ import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class UserApiService {
-  final String _urlBase = ZachranObedStrings.tabidooApiUrlBase;
+  final String _urlBase = ZOStrings.tabidooApiUrlBase;
 
   Future<User?> logIn({required String email}) async {
     final response = await http.get(

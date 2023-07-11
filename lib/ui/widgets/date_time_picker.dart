@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedDateTimePicker extends StatefulWidget {
-  final String text;
+class ZODateTimePicker extends StatefulWidget {
+  final String label;
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
   final IconData icon;
 
-  const ZachranObedDateTimePicker({
+  const ZODateTimePicker({
     super.key,
-    required this.text,
+    required this.label,
     required this.controller,
     this.onValidation,
     required this.icon,
   });
 
   @override
-  State<ZachranObedDateTimePicker> createState() =>
-      _ZachranObedDateTimePickerState();
+  State<ZODateTimePicker> createState() => _ZODateTimePickerState();
 }
 
-class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
+class _ZODateTimePickerState extends State<ZODateTimePicker> {
   DateTime _dateTime = DateTime.now();
 
   Future<DateTime?> _pickDate() => showDatePicker(
@@ -75,8 +74,9 @@ class _ZachranObedDateTimePickerState extends State<ZachranObedDateTimePicker> {
         controller: widget.controller,
         validator: widget.onValidation,
         enabled: false,
+        style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
-          labelText: widget.text,
+          labelText: widget.label,
           labelStyle: TextStyle(color: Colors.grey[600]),
           disabledBorder: WidgetStyle.inputBorder,
           errorBorder: _dateTimePickerErrorBorder,

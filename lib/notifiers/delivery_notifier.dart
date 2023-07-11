@@ -18,14 +18,10 @@ class DeliveryNotifier extends ChangeNotifier {
   }
 
   bool deliveryConfirmed() {
-    return _delivery!.state == ZachranObedStrings.deliveryConfirmedState
-        ? true
-        : false;
+    return _delivery!.state == ZOStrings.deliveryConfirmedState ? true : false;
   }
 
   bool deliveryCancelled() {
-    return _delivery!.state == ZachranObedStrings.deliveryCancelledState
-        ? true
-        : false;
+    return _delivery!.state == ZOStrings.deliveryCancelledState ? true : false;
   }
 }

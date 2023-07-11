@@ -22,26 +22,28 @@ class InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: ZachranObedColors.primaryLight,
+      color: ZOColors.primaryLight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '$infoText ',
-                  style: const TextStyle(
-                    color: ZachranObedColors.onPrimaryLight,
-                    fontSize: 16.0,
+                Flexible(
+                  child: Text(
+                    '$infoText ',
+                    style: const TextStyle(
+                      color: ZOColors.onPrimaryLight,
+                      fontSize: FontSize.s,
+                    ),
                   ),
                 ),
                 infoValue,
               ],
             ),
-            const SizedBox(height: 15),
-            ZachranObedButton(
+            const SizedBox(height: GapSize.xs),
+            ZOButton(
               text: buttonText,
               icon: buttonIcon,
               fullWidth: false,

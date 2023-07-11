@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ZachranObedColors {
+class ZOColors {
   static const primary = Color.fromRGBO(192, 0, 22, 1);
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
@@ -14,7 +14,7 @@ class ZachranObedColors {
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
 }
 
-class ZachranObedStrings {
+class ZOStrings {
   static const emailAddress = 'E-mailová adresa';
   static const password = 'Heslo';
   static const login = 'Přihlásit se';
@@ -67,6 +67,7 @@ class ZachranObedStrings {
       'Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.';
   static const offerError =
       'Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.';
+  static const backToOverview = 'Zpět na přehled';
   static const endOffer = 'Zahodit nabídku?';
   static const cancelTheOffer = 'Zahodit';
   static const continueTheOffer = 'Pokračovat';
@@ -92,8 +93,7 @@ class ZachranObedStrings {
 
   static const zjUrl = 'https://zachranobed.cz';
 
-  static const zjLogoPath = 'assets/zj-logo.svg';
-  static const placeholderImagePath = 'assets/placeholder-image.png';
+  static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';
 
   static const tabidooApiUrlBase =
@@ -104,5 +104,24 @@ class WidgetStyle {
   static const inputBorder =
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
 
-  static const horizontalPadding = 16.0;
+  static const padding = 16.0;
+}
+
+class GapSize {
+  static const xl = 48.0;
+  static const l = 40.0;
+  static const m = 32.0;
+  static const s = 24.0;
+  static const xs = 16.0;
+  static const xxs = 14.0;
+}
+
+class FontSize {
+  static const xxl = 36.0;
+  static const xl = 28.0;
+  static const l = 24.0;
+  static const m = 22.0;
+  static const s = 16.0;
+  static const xs = 14.0;
+  static const xxs = 12.0;
 }

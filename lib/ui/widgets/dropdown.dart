@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedDropdown extends StatefulWidget {
+class ZODropdown extends StatefulWidget {
   final String hintText;
   final List<String> items;
   final String? Function(String?)? onValidation;
   final Function(String) onChanged;
 
-  const ZachranObedDropdown({
+  const ZODropdown({
     super.key,
     required this.hintText,
     required this.items,
@@ -16,10 +16,10 @@ class ZachranObedDropdown extends StatefulWidget {
   });
 
   @override
-  State<ZachranObedDropdown> createState() => _ZachranObedDropdownState();
+  State<ZODropdown> createState() => _ZODropdownState();
 }
 
-class _ZachranObedDropdownState extends State<ZachranObedDropdown> {
+class _ZODropdownState extends State<ZODropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(

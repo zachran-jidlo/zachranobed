@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/shared/constants.dart';
 
-class ZachranObedDialog extends StatelessWidget {
+class ZODialog extends StatelessWidget {
   final String title;
   final String content;
   final String? confirmText;
@@ -10,7 +10,7 @@ class ZachranObedDialog extends StatelessWidget {
   final VoidCallback? onConfirmPressed;
   final VoidCallback onCancelPressed;
 
-  const ZachranObedDialog({
+  const ZODialog({
     super.key,
     required this.title,
     this.content = '',
@@ -24,7 +24,7 @@ class ZachranObedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: ZachranObedColors.primaryLight,
+      backgroundColor: ZOColors.primaryLight,
       surfaceTintColor: Colors.transparent,
       title: Column(
         children: [
@@ -32,7 +32,7 @@ class ZachranObedDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [Icon(icon)],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: GapSize.xs),
           Row(children: [Text(title)]),
         ],
       ),
@@ -43,19 +43,13 @@ class ZachranObedDialog extends StatelessWidget {
             ? TextButton.icon(
                 onPressed: onConfirmPressed,
                 style: TextButton.styleFrom(
-                  backgroundColor: ZachranObedColors.secondary,
+                  backgroundColor: ZOColors.secondary,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                 ),
-                icon: Icon(
-                  icon,
-                  color: ZachranObedColors.onSecondary,
-                  size: 18,
-                ),
+                icon: Icon(icon, color: ZOColors.onSecondary, size: 18),
                 label: Text(
                   confirmText!,
-                  style: const TextStyle(
-                    color: ZachranObedColors.onSecondary,
-                  ),
+                  style: const TextStyle(color: ZOColors.onSecondary),
                 ),
               )
             : const SizedBox(),

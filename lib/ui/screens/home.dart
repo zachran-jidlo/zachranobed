@@ -34,23 +34,23 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: SizedBox(
         height: 80.0,
         child: BottomNavigationBar(
-          unselectedFontSize: 12.0,
-          selectedFontSize: 12.0,
-          selectedItemColor: ZachranObedColors.primary,
-          unselectedItemColor: ZachranObedColors.onPrimaryLight,
+          unselectedFontSize: FontSize.xxs,
+          selectedFontSize: FontSize.xxs,
+          selectedItemColor: ZOColors.primary,
+          unselectedItemColor: ZOColors.onPrimaryLight,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
-              label: ZachranObedStrings.overview,
+              label: ZOStrings.overview,
             ),
             BottomNavigationBarItem(
               icon: Icon(MaterialSymbols.fastfood),
-              label: ZachranObedStrings.donations,
+              label: ZOStrings.donations,
             ),
           ],
           currentIndex: _currentIndex,
           onTap: _onItemTapped,
-          backgroundColor: ZachranObedColors.primaryLight,
+          backgroundColor: ZOColors.primaryLight,
         ),
       ),
       floatingActionButton: NewOfferFloatingButton(

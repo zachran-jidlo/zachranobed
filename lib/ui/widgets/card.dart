@@ -3,12 +3,12 @@ import 'package:zachranobed/shared/constants.dart';
 
 double _CARD_SIDE = 154.0;
 
-class ZachranObedCard extends StatelessWidget {
+class ZOCard extends StatelessWidget {
   final Future measuredValue;
   final String metricsText;
   final String periodText;
 
-  const ZachranObedCard({
+  const ZOCard({
     super.key,
     required this.measuredValue,
     required this.metricsText,
@@ -21,20 +21,17 @@ class ZachranObedCard extends StatelessWidget {
       width: _CARD_SIDE,
       height: _CARD_SIDE,
       decoration: BoxDecoration(
-        color: ZachranObedColors.cardBackground,
+        color: ZOColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 1,
-          color: ZachranObedColors.borderColor,
-        ),
+        border: Border.all(width: 1, color: ZOColors.borderColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextWidget(metricsText, 12.0),
+            _buildTextWidget(metricsText, FontSize.xxs),
             FutureBuilder(
               future: measuredValue,
               builder: (context, snapshot) {
@@ -42,7 +39,7 @@ class ZachranObedCard extends StatelessWidget {
                   final measuredVariable = snapshot.data;
                   return _buildTextWidget(
                     measuredVariable.toString(),
-                    36.0,
+                    FontSize.xxl,
                     fontWeight: FontWeight.bold,
                   );
                 } else if (snapshot.hasError) {
@@ -51,7 +48,7 @@ class ZachranObedCard extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               },
             ),
-            _buildTextWidget(periodText, 12.0),
+            _buildTextWidget(periodText, FontSize.xxs),
           ],
         ),
       ),
@@ -68,7 +65,7 @@ class ZachranObedCard extends StatelessWidget {
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: ZachranObedColors.onCardBackground,
+        color: ZOColors.onCardBackground,
       ),
     );
   }

@@ -53,11 +53,11 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     if (_somethingIsFilled()) {
       return (await showDialog(
             context: context,
-            builder: (context) => ZachranObedDialog(
-              title: ZachranObedStrings.endOffer,
-              content: ZachranObedStrings.cancelOfferDialogContent,
-              confirmText: ZachranObedStrings.cancelTheOffer,
-              cancelText: ZachranObedStrings.continueTheOffer,
+            builder: (context) => ZODialog(
+              title: ZOStrings.endOffer,
+              content: ZOStrings.cancelOfferDialogContent,
+              confirmText: ZOStrings.cancelTheOffer,
+              cancelText: ZOStrings.continueTheOffer,
               icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
@@ -76,7 +76,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.horizontalPadding,
+            horizontal: WidgetStyle.padding,
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -84,8 +84,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 const Row(
                   children: <Widget>[
                     Text(
-                      ZachranObedStrings.offerLeftoverFood,
-                      style: TextStyle(fontSize: 24),
+                      ZOStrings.offerLeftoverFood,
+                      style: TextStyle(fontSize: FontSize.l),
                     ),
                   ],
                 ),
@@ -97,8 +97,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       FoodSectionTextFields(
                         foodSections: _foodSections,
                       ),
-                      ZachranObedButton(
-                        text: ZachranObedStrings.addAnotherFood,
+                      ZOButton(
+                        text: ZOStrings.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
                         height: 40.0,
@@ -106,38 +106,37 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           setState(() => _foodSections.add(FoodInfo()));
                         },
                       ),
-                      const SizedBox(height: 48.0),
+                      const SizedBox(height: GapSize.xl),
                       const Row(
                         children: [
                           Text(
-                            ZachranObedStrings.summaryInfo,
-                            style: TextStyle(fontSize: 22),
+                            ZOStrings.summaryInfo,
+                            style: TextStyle(fontSize: FontSize.m),
                           ),
                         ],
                       ),
                       _buildGap(),
-                      ZachranObedDropdown(
-                        hintText: ZachranObedStrings.packaging,
+                      ZODropdown(
+                        hintText: ZOStrings.packaging,
                         items: Packaging.values
                             .map((e) => e.packagingName)
                             .toList(),
                         onValidation: (val) => val == null
-                            ? ZachranObedStrings.requiredDropdownError
+                            ? ZOStrings.requiredDropdownError
                             : null,
                         onChanged: (value) => _selectedPackaging = value,
                       ),
                       _buildGap(),
-                      ZachranObedDateTimePicker(
-                        text: ZachranObedStrings.consumeBy,
+                      ZODateTimePicker(
+                        label: ZOStrings.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
-                        onValidation: (val) => val!.isEmpty
-                            ? ZachranObedStrings.requiredFieldError
-                            : null,
+                        onValidation: (val) =>
+                            val!.isEmpty ? ZOStrings.requiredFieldError : null,
                       ),
-                      const SizedBox(height: 48.0),
-                      ZachranObedButton(
-                        text: ZachranObedStrings.offerFood,
+                      const SizedBox(height: GapSize.xl),
+                      ZOButton(
+                        text: ZOStrings.offerFood,
                         icon: MaterialSymbols.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -148,10 +147,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 24.0),
-                      ZachranObedClickableText(
-                        clickableText: ZachranObedStrings.manualName,
-                        prefixText: ZachranObedStrings.consent,
+                      const SizedBox(height: GapSize.s),
+                      ZOClickableText(
+                        clickableText: ZOStrings.manualName,
+                        prefixText: ZOStrings.consent,
                         underline: true,
                         onTap: () => print('Kliknuto na příručku'),
                       ),
@@ -168,7 +167,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: 40.0);
+    return const SizedBox(height: GapSize.l);
   }
 
   Future<Response> _offerFood() {
