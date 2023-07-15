@@ -45,6 +45,9 @@ dependencies:
   sliver_tools: ^0.2.9
   shared_preferences: ^2.1.1
   url_launcher: ^6.1.11
+  firebase_core: ^2.15.0
+  cloud_firestore: ^4.8.3
+  firebase_auth: ^4.7.0
 
 dev_dependencies:
   flutter_test:

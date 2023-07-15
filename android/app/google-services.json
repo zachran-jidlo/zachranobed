@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "925797833830",
+    "project_id": "zachran-obed",
+    "storage_bucket": "zachran-obed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925797833830:android:c2fe4064acaf46468c21a7",
+        "android_client_info": {
+          "package_name": "com.example.zachranobed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV8g0z-EBnGPEzKISr3D1UO1XJyoGvIa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
