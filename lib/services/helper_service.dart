@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 
 class HelperService {
-  static User? getCurrentUser(BuildContext context) =>
+  static UserData? getCurrentUser(BuildContext context) =>
       context.read<UserNotifier>().user;
 
   static int get getCurrentWeekNumber {
@@ -28,12 +28,9 @@ class HelperService {
     return '${formatter.format(weekStart)} - ${formatter.format(weekEnd)} $year';
   }
 
-  static String getDateTimeOfCurrentDelivery(String time) {
-    return DateFormat('dd.MM.y HH:mm')
-        .parse(
-            '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} $time')
-        .toUtc()
-        .toIso8601String();
+  static DateTime getDateTimeOfCurrentDelivery(String time) {
+    return DateFormat('dd.MM.yyyy HH:mm').parse(
+        '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} $time');
   }
 
   static bool canDonate(BuildContext context) {

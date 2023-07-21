@@ -50,15 +50,17 @@ class _DonationsState extends State<Donations> {
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(
-                  filter:
-                      'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: ZOStrings.thisWeek,
+                  additionalFilterField: 'weekNumber',
+                  additionalFilterValue:
+                      '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
-                  filter:
-                      'cisloTydne(eq)${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1},darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
                   title: ZOStrings.lastWeek,
+                  additionalFilterField: 'weekNumber',
+                  additionalFilterValue:
+                      '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 MultiSliver(
@@ -94,9 +96,9 @@ class _DonationsState extends State<Donations> {
     setState(() {
       _donationsLists.add(
         DonatedFoodList(
-          filter:
-              'cisloTydne(eq)$year-$desiredWeekNumber,darce.id(eq)${HelperService.getCurrentUser(context)!.internalId}',
           title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
+          additionalFilterField: 'weekNumber',
+          additionalFilterValue: 'cisloTydne(eq)$year-$desiredWeekNumber',
         ),
       );
     });

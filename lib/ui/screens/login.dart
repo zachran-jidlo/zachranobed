@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/models/user.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/user_api_service.dart';
+import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -21,6 +20,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  final _authService = AuthService();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,10 +30,6 @@ class _LoginState extends State<Login> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  Future<User?> _tryLogIn() {
-    return UserApiService().logIn(email: _emailController.text);
   }
 
   @override
@@ -106,23 +102,20 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _logIn(BuildContext context) async {
-    User? user = await _tryLogIn();
-    if (user != null) {
+    dynamic result = await _authService.signIn(
+      _emailController.text,
+      _passwordController.text,
+    );
+    if (result != null) {
       if (context.mounted) {
         final userNotifier = Provider.of<UserNotifier>(context, listen: false);
-        userNotifier.user = User.create(
-          user.internalId,
-          user.email,
-          user.pickUpFrom,
-          user.pickUpWithin,
-          user.establishmentName,
-          user.organization,
-          user.recipient,
-        );
-        Navigator.of(context).pushReplacementNamed(RouteManager.home);
+        userNotifier.user = await _authService.getUserData();
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed(RouteManager.home);
+        }
       }
     } else {
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.red,

@@ -3,7 +3,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/delivery_api_service.dart';
+import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
@@ -71,8 +71,8 @@ class NewOfferFloatingButton extends StatelessWidget {
   }
 
   Future<void> _callACourier(BuildContext context) async {
-    await DeliveryApiService().updateDeliveryStatus(
-      context.read<DeliveryNotifier>().delivery!.internalId,
+    await DeliveryService().updateDeliveryStatus(
+      context.read<DeliveryNotifier>().delivery!.id,
       ZOStrings.deliveryConfirmedState,
     );
     if (context.mounted) {

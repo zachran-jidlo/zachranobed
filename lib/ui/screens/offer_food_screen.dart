@@ -1,13 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/models/food_info.dart';
+import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/offered_food_api_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
+import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -24,7 +24,7 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  Future<Response>? _futureResponse;
+  Future<DocumentReference<OfferedFood>>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,7 +44,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       return true;
     }
     return _foodSections.any((foodInfo) =>
-        foodInfo.name.isNotEmpty == true ||
+        foodInfo.dishName.isNotEmpty == true ||
         foodInfo.allergens != null ||
         foodInfo.numberOfServings != null);
   }
@@ -170,20 +170,26 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return const SizedBox(height: GapSize.l);
   }
 
-  Future<Response> _offerFood() {
+  Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
     for (var foodInfo in _foodSections) {
-      response = OfferedFoodApiService().createOffer(
-          const Uuid().v4(),
-          DateTime.now(),
-          FoodInfo(
-            name: foodInfo.name,
+      response = await OfferedFoodService().createOffer(
+        OfferedFood(
+          id: "",
+          date: DateTime.now(),
+          foodInfo: FoodInfo(
+            dishName: foodInfo.dishName,
             allergens: foodInfo.allergens,
             numberOfServings: foodInfo.numberOfServings,
           ),
-          _selectedPackaging,
-          DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
-          HelperService.getCurrentUser(context)!.internalId);
+          packaging: _selectedPackaging,
+          consumeBy:
+              DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          weekNumber:
+              '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
+          donor: HelperService.getCurrentUser(context)!.establishmentName,
+        ),
+      );
     }
     return response;
   }

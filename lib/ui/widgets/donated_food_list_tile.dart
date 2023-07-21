@@ -23,7 +23,7 @@ class DonatedFoodListTile extends StatelessWidget {
           side: const BorderSide(width: 1, color: ZOColors.borderColor),
           borderRadius: BorderRadius.circular(10),
         ),
-        title: Text(offeredFood.foodInfo.name),
+        title: Text(offeredFood.foodInfo.dishName),
         subtitle: Text(date),
         trailing: Text('${offeredFood.foodInfo.numberOfServings} ks'),
         onTap: () => Navigator.of(context)

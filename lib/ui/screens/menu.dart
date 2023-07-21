@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/menu_button.dart';
@@ -13,6 +13,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = HelperService.getCurrentUser(context)!;
+    final authService = AuthService();
 
     return Scaffold(
       appBar: AppBar(
@@ -108,9 +109,7 @@ class Menu extends StatelessWidget {
                 text: ZOStrings.logout,
                 icon: Icons.logout,
                 onPressed: () async {
-                  final prefs = await SharedPreferences.getInstance();
-                  prefs.clear();
-
+                  await authService.signOut();
                   if (context.mounted) {
                     Navigator.of(context)
                         .pushReplacementNamed(RouteManager.login);

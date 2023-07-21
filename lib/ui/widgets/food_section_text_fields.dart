@@ -45,8 +45,8 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           label: ZOStrings.foodName,
           onValidation: (val) =>
               val!.isEmpty ? ZOStrings.requiredFieldError : null,
-          onChanged: (val) => foodInfo.name = val,
-          value: foodInfo.name,
+          onChanged: (val) => foodInfo.dishName = val,
+          value: foodInfo.dishName,
         ),
         _buildGap(),
         ZOTextField(

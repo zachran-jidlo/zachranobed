@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
+import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -11,8 +12,8 @@ class ThankYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final response =
-        ModalRoute.of(context)!.settings.arguments as Future<http.Response>;
+    final response = ModalRoute.of(context)!.settings.arguments
+        as Future<DocumentReference<OfferedFood>>;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -35,7 +36,7 @@ class ThankYouScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 45.0),
                       child: Column(
                         children: <Widget>[
-                          FutureBuilder<http.Response>(
+                          FutureBuilder<DocumentReference<OfferedFood>>(
                             future: response,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {

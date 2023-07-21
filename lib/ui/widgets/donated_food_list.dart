@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/models/offered_food.dart';
-import 'package:zachranobed/services/api/offered_food_api_service.dart';
+import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {
   final int? itemsLimit;
-  final String filter;
+  final String? additionalFilterField;
+  final dynamic additionalFilterValue;
   final String title;
 
   const DonatedFoodList({
     super.key,
     this.itemsLimit,
-    this.filter = '',
+    this.additionalFilterField,
+    this.additionalFilterValue,
     required this.title,
   });
 
@@ -41,14 +43,16 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
           ),
         ),
         const SizedBox(height: GapSize.xs),
-        FutureBuilder<List<OfferedFood>>(
-          future: OfferedFoodApiService().getOfferedFoodList(
+        StreamBuilder<List<OfferedFood>>(
+          stream: OfferedFoodService().loggedUserOfferedFoodStream(
+            context: context,
             limit: widget.itemsLimit,
-            filter: widget.filter,
+            additionalFilterField: widget.additionalFilterField,
+            additionalFilterValue: widget.additionalFilterValue,
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              final List<OfferedFood> offers = snapshot.data!;
+              final offers = snapshot.data!;
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: offers.length,

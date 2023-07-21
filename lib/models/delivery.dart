@@ -1,33 +1,35 @@
+import 'package:json_annotation/json_annotation.dart';
+
+/*
+ * Command to rebuild the user_data.g.dart file:
+ * flutter packages pub run build_runner build --delete-conflicting-outputs
+ */
+part 'delivery.g.dart';
+
+@JsonSerializable()
 class Delivery {
-  final String internalId;
+  final String id;
   final String donor;
   final String state;
 
   Delivery({
-    required this.internalId,
+    required this.id,
     required this.donor,
     required this.state,
   });
 
-  factory Delivery.fromJson(Map<String, dynamic> json) {
-    return Delivery(
-      internalId: json['id'],
-      donor: json['fields']['darce']['fields']['nazevProvozovny'],
-      state: json['fields']['stav'],
-    );
-  }
+  factory Delivery.fromJson(Map<String, dynamic> json) =>
+      _$DeliveryFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'fields': {'stav': state}
-      };
+  Map<String, dynamic> toJson() => _$DeliveryToJson(this);
 
   Delivery copyWith({
-    String? internalId,
+    String? id,
     String? donor,
     String? state,
   }) {
     return Delivery(
-      internalId: internalId ?? this.internalId,
+      id: id ?? this.id,
       donor: donor ?? this.donor,
       state: state ?? this.state,
     );

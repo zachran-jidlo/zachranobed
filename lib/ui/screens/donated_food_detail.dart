@@ -24,7 +24,7 @@ class DonatedFoodDetail extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    offeredFood.foodInfo.name,
+                    offeredFood.foodInfo.dishName,
                     style: const TextStyle(fontSize: FontSize.l),
                   ),
                 ],
@@ -32,7 +32,7 @@ class DonatedFoodDetail extends StatelessWidget {
               const SizedBox(height: 20),
               ZOTextField(
                 label: ZOStrings.foodName,
-                value: offeredFood.foodInfo.name,
+                value: offeredFood.foodInfo.dishName,
                 readOnly: true,
               ),
               _buildGap(),
