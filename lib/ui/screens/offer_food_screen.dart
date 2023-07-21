@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/models/food_info.dart';
@@ -24,6 +25,8 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
+  final _offeredFoodService = GetIt.I<OfferedFoodService>();
+
   Future<DocumentReference<OfferedFood>>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
@@ -173,7 +176,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
     for (var foodInfo in _foodSections) {
-      response = await OfferedFoodService().createOffer(
+      response = await _offeredFoodService.createOffer(
         OfferedFood(
           id: "",
           date: DateTime.now(),

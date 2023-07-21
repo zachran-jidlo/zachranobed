@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
@@ -13,7 +14,10 @@ import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class Overview extends StatelessWidget {
-  const Overview({super.key});
+  final _deliveryService = GetIt.I<DeliveryService>();
+  final _offeredFoodService = GetIt.I<OfferedFoodService>();
+
+  Overview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +102,7 @@ class Overview extends StatelessWidget {
   }
 
   Future<void> _callACourier(BuildContext context) async {
-    await DeliveryService().updateDeliveryStatus(
+    await _deliveryService.updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.id,
       ZOStrings.deliveryConfirmedState,
     );
@@ -118,13 +122,13 @@ class Overview extends StatelessWidget {
           children: <Widget>[
             ZOCard(
               measuredValue:
-                  OfferedFoodService().getSavedMealsCount(context: context),
+                  _offeredFoodService.getSavedMealsCount(context: context),
               metricsText: ZOStrings.savedLunches,
               periodText: ZOStrings.total,
             ),
             const SizedBox(width: GapSize.xxs),
             ZOCard(
-              measuredValue: OfferedFoodService().getSavedMealsCount(
+              measuredValue: _offeredFoodService.getSavedMealsCount(
                 context: context,
                 timePeriod: 30,
               ),
@@ -134,7 +138,7 @@ class Overview extends StatelessWidget {
             const SizedBox(width: GapSize.xxs),
             ZOCard(
               measuredValue:
-                  OfferedFoodService().getSavedMealsCount(context: context),
+                  _offeredFoodService.getSavedMealsCount(context: context),
               metricsText: ZOStrings.savedLunches,
               periodText: ZOStrings.lastThirtyDays,
             ),

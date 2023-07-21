@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -19,9 +20,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _authService = GetIt.I<AuthService>();
+  final _deliveryService = GetIt.I<DeliveryService>();
+
   int _currentIndex = 0;
   final screens = [
-    const Overview(),
+    Overview(),
     const Donations(),
   ];
 
@@ -32,7 +36,7 @@ class _HomeState extends State<Home> {
   }
 
   _loadUserInfo() async {
-    final user = await AuthService().getUserData();
+    final user = await _authService.getUserData();
     if (mounted) {
       final userNotifier = Provider.of<UserNotifier>(context, listen: false);
       userNotifier.user = user;
@@ -41,7 +45,7 @@ class _HomeState extends State<Home> {
 
       final deliveryNotifier =
           Provider.of<DeliveryNotifier>(context, listen: false);
-      deliveryNotifier.delivery = await DeliveryService().getDelivery(
+      deliveryNotifier.delivery = await _deliveryService.getDelivery(
         date,
         user.establishmentName,
       );

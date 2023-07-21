@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes.dart';
@@ -11,7 +12,9 @@ import 'package:zachranobed/ui/widgets/dialog.dart';
 class NewOfferFloatingButton extends StatelessWidget {
   final bool enabled;
 
-  const NewOfferFloatingButton({super.key, required this.enabled});
+  final _deliveryService = GetIt.I<DeliveryService>();
+
+  NewOfferFloatingButton({super.key, required this.enabled});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class NewOfferFloatingButton extends StatelessWidget {
   }
 
   Future<void> _callACourier(BuildContext context) async {
-    await DeliveryService().updateDeliveryStatus(
+    await _deliveryService.updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.id,
       ZOStrings.deliveryConfirmedState,
     );

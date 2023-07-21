@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/routes.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -13,7 +14,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = HelperService.getCurrentUser(context)!;
-    final authService = AuthService();
+    final authService = GetIt.I<AuthService>();
 
     return Scaffold(
       appBar: AppBar(

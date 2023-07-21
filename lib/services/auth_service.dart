@@ -4,7 +4,9 @@ import 'package:zachranobed/services/donor_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _donorService = DonorService();
+  final DonorService _donorService;
+
+  AuthService(this._donorService);
 
   Future<UserData?> getUserData() async {
     UserData? data =
