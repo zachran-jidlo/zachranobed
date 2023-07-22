@@ -23,18 +23,6 @@ class _HomeState extends State<Home> {
   final _authService = GetIt.I<AuthService>();
   final _deliveryService = GetIt.I<DeliveryService>();
 
-  int _currentIndex = 0;
-  final screens = [
-    Overview(),
-    const Donations(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
   _loadUserInfo() async {
     final user = await _authService.getUserData();
     if (mounted) {
@@ -62,34 +50,39 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: context.watch<DeliveryNotifier>().delivery != null
-          ? screens[_currentIndex]
-          : const Center(child: CircularProgressIndicator()),
-      bottomNavigationBar: SizedBox(
-        height: 80.0,
-        child: BottomNavigationBar(
-          unselectedFontSize: FontSize.xxs,
-          selectedFontSize: FontSize.xxs,
-          selectedItemColor: ZOColors.primary,
-          unselectedItemColor: ZOColors.onPrimaryLight,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: ZOStrings.overview,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: context.watch<DeliveryNotifier>().delivery != null
+            ? TabBarView(children: [Overview(), const Donations()])
+            : const Center(child: CircularProgressIndicator()),
+        bottomNavigationBar: SizedBox(
+          height: 90.0,
+          child: Material(
+            color: ZOColors.primaryLight,
+            child: TabBar(
+              splashFactory: NoSplash.splashFactory,
+              overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                return states.contains(MaterialState.focused)
+                    ? null
+                    : Colors.transparent;
+              }),
+              unselectedLabelColor: ZOColors.onPrimaryLight,
+              indicatorColor: Colors.transparent,
+              tabs: const [
+                Tab(icon: Icon(Icons.home_outlined), text: ZOStrings.overview),
+                Tab(
+                  icon: Icon(MaterialSymbols.fastfood),
+                  text: ZOStrings.donations,
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(MaterialSymbols.fastfood),
-              label: ZOStrings.donations,
-            ),
-          ],
-          currentIndex: _currentIndex,
-          onTap: _onItemTapped,
-          backgroundColor: ZOColors.primaryLight,
+          ),
         ),
-      ),
-      floatingActionButton: NewOfferFloatingButton(
-        enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
+        floatingActionButton: NewOfferFloatingButton(
+          enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
+        ),
       ),
     );
   }
