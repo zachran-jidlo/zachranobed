@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -70,18 +71,20 @@ class _HomeState extends State<Home> {
               }),
               unselectedLabelColor: ZOColors.onPrimaryLight,
               indicatorColor: Colors.transparent,
-              tabs: const [
-                Tab(icon: Icon(Icons.home_outlined), text: ZOStrings.overview),
+              tabs: [
                 Tab(
-                  icon: Icon(MaterialSymbols.fastfood),
-                  text: ZOStrings.donations,
+                    icon: const Icon(Icons.home_outlined),
+                    text: AppLocalizations.of(context)!.overview),
+                Tab(
+                  icon: const Icon(MaterialSymbols.fastfood),
+                  text: AppLocalizations.of(context)!.donations,
                 ),
               ],
             ),
           ),
         ),
         floatingActionButton: NewOfferFloatingButton(
-          enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(),
+          enabled: context.watch<DeliveryNotifier>().deliveryConfirmed(context),
         ),
       ),
     );

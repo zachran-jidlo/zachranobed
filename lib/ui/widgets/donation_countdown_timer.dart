@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
@@ -78,9 +79,8 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
 
     if (!canDonate) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        context
-            .read<DeliveryNotifier>()
-            .updateDeliveryState(ZOStrings.deliveryCancelledState);
+        context.read<DeliveryNotifier>().updateDeliveryState(
+            AppLocalizations.of(context)!.deliveryCancelledState);
       });
     }
 

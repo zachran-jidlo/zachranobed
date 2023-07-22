@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -31,40 +32,40 @@ class DonatedFoodDetail extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ZOTextField(
-                label: ZOStrings.foodName,
+                label: AppLocalizations.of(context)!.foodName,
                 value: offeredFood.foodInfo.dishName,
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
-                label: ZOStrings.allergens,
+                label: AppLocalizations.of(context)!.allergens,
                 value: offeredFood.foodInfo.allergens?.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
-                label: ZOStrings.numberOfServings,
+                label: AppLocalizations.of(context)!.numberOfServings,
                 value: offeredFood.foodInfo.numberOfServings.toString(),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xl),
-              const Row(
+              Row(
                 children: [
                   Text(
-                    ZOStrings.summaryInfo,
-                    style: TextStyle(fontSize: FontSize.m),
+                    AppLocalizations.of(context)!.summaryInfo,
+                    style: const TextStyle(fontSize: FontSize.m),
                   ),
                 ],
               ),
               _buildGap(),
               ZOTextField(
-                label: ZOStrings.packaging,
+                label: AppLocalizations.of(context)!.packaging,
                 value: offeredFood.packaging,
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
-                label: ZOStrings.consumeBy,
+                label: AppLocalizations.of(context)!.consumeBy,
                 value: DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy),
                 readOnly: true,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/routes.dart';
@@ -28,13 +29,13 @@ class Menu extends StatelessWidget {
           child: Column(
             children: [
               _buildMenuSection(
-                ZOStrings.organization,
+                AppLocalizations.of(context)!.organization,
                 [
                   MenuItem(leadingIcon: Icons.business, text: user.organization)
                 ],
               ),
               _buildMenuSection(
-                ZOStrings.donor,
+                AppLocalizations.of(context)!.donor,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -43,7 +44,7 @@ class Menu extends StatelessWidget {
                 ],
               ),
               _buildMenuSection(
-                ZOStrings.recipient,
+                AppLocalizations.of(context)!.recipient,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -52,23 +53,23 @@ class Menu extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.phone_outlined,
-                    text: ZOStrings.contactCarrier,
+                    text: AppLocalizations.of(context)!.contactCarrier,
                     onPressed: () async =>
                         await HelperService.makePhoneCall('123456789'),
                   )
                 ],
               ),
               _buildMenuSection(
-                ZOStrings.saveLunch,
+                AppLocalizations.of(context)!.saveLunch,
                 [
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.textsms_outlined,
-                    text: ZOStrings.feedback,
+                    text: AppLocalizations.of(context)!.feedback,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.language,
-                    text: ZOStrings.about,
+                    text: AppLocalizations.of(context)!.about,
                     onPressed: () async {
                       await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
@@ -76,7 +77,7 @@ class Menu extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.volunteer_activism_outlined,
-                    text: ZOStrings.sponsors,
+                    text: AppLocalizations.of(context)!.sponsors,
                     onPressed: () async {
                       await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
@@ -84,30 +85,30 @@ class Menu extends StatelessWidget {
                 ],
               ),
               _buildMenuSection(
-                ZOStrings.more,
+                AppLocalizations.of(context)!.more,
                 [
-                  const MenuItem(
+                  MenuItem(
                     leadingIcon: Icons.star_border,
-                    text: ZOStrings.rate,
+                    text: AppLocalizations.of(context)!.rate,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.security,
-                    text: ZOStrings.privacyProtection,
+                    text: AppLocalizations.of(context)!.privacyProtection,
                     onPressed: () async =>
                         await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
-                    text: ZOStrings.termsOfUse,
+                    text: AppLocalizations.of(context)!.termsOfUse,
                     onPressed: () async =>
                         await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                 ],
               ),
               MenuButton(
-                text: ZOStrings.logout,
+                text: AppLocalizations.of(context)!.signOut,
                 icon: Icons.logout,
                 onPressed: () async {
                   await authService.signOut();

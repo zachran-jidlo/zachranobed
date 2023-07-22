@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -31,7 +32,7 @@ class _DonationsState extends State<Donations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZOStrings.donations),
+        title: Text(AppLocalizations.of(context)!.donations),
         actions: [
           IconButton(
             onPressed: () {
@@ -50,14 +51,14 @@ class _DonationsState extends State<Donations> {
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(
-                  title: ZOStrings.thisWeek,
+                  title: AppLocalizations.of(context)!.thisWeek,
                   additionalFilterField: 'weekNumber',
                   additionalFilterValue:
                       '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
-                  title: ZOStrings.lastWeek,
+                  title: AppLocalizations.of(context)!.lastWeek,
                   additionalFilterField: 'weekNumber',
                   additionalFilterValue:
                       '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
@@ -69,7 +70,7 @@ class _DonationsState extends State<Donations> {
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 SliverToBoxAdapter(
                   child: ZOButton(
-                    text: ZOStrings.loadMoreDonations,
+                    text: AppLocalizations.of(context)!.loadMoreDonations,
                     icon: Icons.expand_more,
                     height: 40.0,
                     isSecondary: true,

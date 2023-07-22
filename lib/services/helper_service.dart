@@ -36,9 +36,9 @@ class HelperService {
   static bool canDonate(BuildContext context) {
     final user = getCurrentUser(context);
     final deliveryConfirmed =
-        context.watch<DeliveryNotifier>().deliveryConfirmed();
+        context.watch<DeliveryNotifier>().deliveryConfirmed(context);
     final deliveryCancelled =
-        context.watch<DeliveryNotifier>().deliveryCancelled();
+        context.watch<DeliveryNotifier>().deliveryCancelled(context);
     final whileCanStillDonate = DateFormat('dd.MM.y HH:mm')
         .parse(
             '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} ${user!.pickUpFrom}')

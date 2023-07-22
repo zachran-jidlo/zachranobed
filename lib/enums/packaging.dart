@@ -1,20 +1,21 @@
-import 'package:zachranobed/shared/constants.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum Packaging {
-  rekrabicka,
+  reusableBox,
   ikeaBox,
   disposablePackaging,
 }
 
-extension PackagingExtension on Packaging {
-  String get packagingName {
-    switch (this) {
-      case Packaging.rekrabicka:
-        return ZOStrings.packagingRekrabicka;
+abstract class PackagingHelper {
+  static String toValue(Packaging packaging, BuildContext context) {
+    switch (packaging) {
+      case Packaging.reusableBox:
+        return AppLocalizations.of(context)!.packagingRekrabicka;
       case Packaging.ikeaBox:
-        return ZOStrings.packagingIkeaBox;
+        return AppLocalizations.of(context)!.packagingIkeaBox;
       case Packaging.disposablePackaging:
-        return ZOStrings.packagingDisposable;
+        return AppLocalizations.of(context)!.packagingDisposable;
       default:
         return '';
     }

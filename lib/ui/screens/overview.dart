@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -23,7 +24,7 @@ class Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ZOStrings.overview),
+        title: Text(AppLocalizations.of(context)!.overview),
         actions: [
           IconButton(
             onPressed: () {
@@ -64,7 +65,7 @@ class Overview extends StatelessWidget {
   Widget _buildInfoBanner(BuildContext context) {
     final user = HelperService.getCurrentUser(context);
     final deliveryConfirmed =
-        context.watch<DeliveryNotifier>().deliveryConfirmed();
+        context.watch<DeliveryNotifier>().deliveryConfirmed(context);
 
     if (!HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
@@ -73,7 +74,7 @@ class Overview extends StatelessWidget {
     return deliveryConfirmed
         ? SliverToBoxAdapter(
             child: InfoBanner(
-              infoText: ZOStrings.courierWillCome,
+              infoText: AppLocalizations.of(context)!.courierWillCome,
               infoValue: Text(
                 '${user!.pickUpFrom} a ${user.pickUpWithin}',
                 style: const TextStyle(
@@ -82,7 +83,7 @@ class Overview extends StatelessWidget {
                   color: ZOColors.onPrimaryLight,
                 ),
               ),
-              buttonText: ZOStrings.contactCarrier,
+              buttonText: AppLocalizations.of(context)!.contactCarrier,
               buttonIcon: Icons.phone_outlined,
               onButtonPressed: () async =>
                   await HelperService.makePhoneCall('123456789'),
@@ -90,9 +91,9 @@ class Overview extends StatelessWidget {
           )
         : SliverToBoxAdapter(
             child: InfoBanner(
-              infoText: ZOStrings.youCanDonate,
+              infoText: AppLocalizations.of(context)!.youCanDonate,
               infoValue: const DonationCountdownTimer(),
-              buttonText: ZOStrings.callACourier,
+              buttonText: AppLocalizations.of(context)!.callACourier,
               buttonIcon: Icons.directions_car_filled_outlined,
               onButtonPressed: () async {
                 await _callACourier(context);
@@ -104,12 +105,11 @@ class Overview extends StatelessWidget {
   Future<void> _callACourier(BuildContext context) async {
     await _deliveryService.updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.id,
-      ZOStrings.deliveryConfirmedState,
+      AppLocalizations.of(context)!.deliveryConfirmedState,
     );
     if (context.mounted) {
-      context
-          .read<DeliveryNotifier>()
-          .updateDeliveryState(ZOStrings.deliveryConfirmedState);
+      context.read<DeliveryNotifier>().updateDeliveryState(
+          AppLocalizations.of(context)!.deliveryConfirmedState);
     }
   }
 
@@ -123,8 +123,8 @@ class Overview extends StatelessWidget {
             ZOCard(
               measuredValue:
                   _offeredFoodService.getSavedMealsCount(context: context),
-              metricsText: ZOStrings.savedLunches,
-              periodText: ZOStrings.total,
+              metricsText: AppLocalizations.of(context)!.savedLunches,
+              periodText: AppLocalizations.of(context)!.total,
             ),
             const SizedBox(width: GapSize.xxs),
             ZOCard(
@@ -132,15 +132,15 @@ class Overview extends StatelessWidget {
                 context: context,
                 timePeriod: 30,
               ),
-              metricsText: ZOStrings.savedLunches,
-              periodText: ZOStrings.lastThirtyDays,
+              metricsText: AppLocalizations.of(context)!.savedLunches,
+              periodText: AppLocalizations.of(context)!.lastThirtyDays,
             ),
             const SizedBox(width: GapSize.xxs),
             ZOCard(
               measuredValue:
                   _offeredFoodService.getSavedMealsCount(context: context),
-              metricsText: ZOStrings.savedLunches,
-              periodText: ZOStrings.lastThirtyDays,
+              metricsText: AppLocalizations.of(context)!.savedLunches,
+              periodText: AppLocalizations.of(context)!.lastThirtyDays,
             ),
           ],
         ),
@@ -149,8 +149,8 @@ class Overview extends StatelessWidget {
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {
-    return const DonatedFoodList(
-      title: ZOStrings.lastDonated,
+    return DonatedFoodList(
+      title: AppLocalizations.of(context)!.lastDonated,
       itemsLimit: 5,
     );
   }

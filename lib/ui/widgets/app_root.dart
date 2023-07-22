@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -19,6 +20,9 @@ class AppRoot extends StatelessWidget {
         return MaterialApp(
           initialRoute: RouteManager.wrapper,
           onGenerateRoute: RouteManager.generateRoute,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: const Locale('cs'),
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch().copyWith(

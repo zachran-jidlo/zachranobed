@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -34,7 +35,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${ZOStrings.food} ${index + 1}',
+              '${AppLocalizations.of(context)!.dish} ${index + 1}',
               style: const TextStyle(fontSize: FontSize.m),
             ),
             if (index != 0) _removeButton(foodInfo),
@@ -42,40 +43,41 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         _buildGap(),
         ZOTextField(
-          label: ZOStrings.foodName,
-          onValidation: (val) =>
-              val!.isEmpty ? ZOStrings.requiredFieldError : null,
+          label: AppLocalizations.of(context)!.foodName,
+          onValidation: (val) => val!.isEmpty
+              ? AppLocalizations.of(context)!.requiredFieldError
+              : null,
           onChanged: (val) => foodInfo.dishName = val,
           value: foodInfo.dishName,
         ),
         _buildGap(),
         ZOTextField(
-          label: ZOStrings.allergens,
+          label: AppLocalizations.of(context)!.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
                 RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
             if (val!.isEmpty) {
-              return ZOStrings.requiredFieldError;
+              return AppLocalizations.of(context)!.requiredFieldError;
             }
             if (!allergensRegex.hasMatch(val)) {
-              return ZOStrings.invalidAllergensFormatError;
+              return AppLocalizations.of(context)!.invalidAllergensFormatError;
             }
             return null;
           },
           onChanged: (val) => foodInfo.allergens = val.split(','),
           value: foodInfo.allergens?.toString(),
-          supportingText: ZOStrings.allergensSupportingText,
+          supportingText: AppLocalizations.of(context)!.allergensSupportingText,
         ),
         const SizedBox(height: 28),
         ZOTextField(
-          label: ZOStrings.numberOfServings,
+          label: AppLocalizations.of(context)!.numberOfServings,
           onValidation: (val) {
             if (val!.isEmpty) {
-              return ZOStrings.requiredFieldError;
+              return AppLocalizations.of(context)!.requiredFieldError;
             }
             int? validNumber = int.tryParse(val);
             if (validNumber == null) {
-              return ZOStrings.invalidNumberError;
+              return AppLocalizations.of(context)!.invalidNumberError;
             }
             return null;
           },

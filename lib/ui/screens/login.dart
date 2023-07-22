@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -59,24 +60,24 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: <Widget>[
                         ZOTextField(
-                          label: ZOStrings.emailAddress,
+                          label: AppLocalizations.of(context)!.emailAddress,
                           inputType: TextInputType.emailAddress,
                           controller: _emailController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZOStrings.requiredFieldError
+                              ? AppLocalizations.of(context)!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.s),
                         ZOPasswordTextField(
-                          text: ZOStrings.password,
+                          text: AppLocalizations.of(context)!.password,
                           controller: _passwordController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZOStrings.requiredFieldError
+                              ? AppLocalizations.of(context)!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.m),
                         ZOButton(
-                          text: ZOStrings.login,
+                          text: AppLocalizations.of(context)!.signIn,
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -89,7 +90,8 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: GapSize.s),
               ZOClickableText(
-                  clickableText: ZOStrings.forgottenPassword,
+                  clickableText:
+                      AppLocalizations.of(context)!.forgottenPassword,
                   color: ZOColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
@@ -119,10 +121,10 @@ class _LoginState extends State<Login> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             backgroundColor: Colors.red,
             content: Center(
-              child: Text(ZOStrings.wrongCredentialsError),
+              child: Text(AppLocalizations.of(context)!.wrongCredentialsError),
             ),
           ),
         );
