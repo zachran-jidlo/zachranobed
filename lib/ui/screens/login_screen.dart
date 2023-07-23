@@ -13,14 +13,14 @@ import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
 
   final _formKey = GlobalKey<FormState>();

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/ui/screens/donated_food_detail.dart';
-import 'package:zachranobed/ui/screens/home.dart';
-import 'package:zachranobed/ui/screens/login.dart';
-import 'package:zachranobed/ui/screens/menu.dart';
+import 'package:zachranobed/ui/screens/donated_food_detail_screen.dart';
+import 'package:zachranobed/ui/screens/home_screen.dart';
+import 'package:zachranobed/ui/screens/login_screen.dart';
+import 'package:zachranobed/ui/screens/menu_screen.dart';
 import 'package:zachranobed/ui/screens/offer_food_screen.dart';
 import 'package:zachranobed/ui/screens/thank_you_screen.dart';
-import 'package:zachranobed/ui/screens/wrapper.dart';
+import 'package:zachranobed/ui/screens/wrapper_screen.dart';
 
 class RouteManager {
   static const String wrapper = '/';
@@ -20,22 +20,22 @@ class RouteManager {
     switch (settings.name) {
       case wrapper:
         return MaterialPageRoute(
-          builder: (context) => const Wrapper(),
+          builder: (context) => const WrapperScreen(),
         );
 
       case login:
         return MaterialPageRoute(
-          builder: (context) => const Login(),
+          builder: (context) => const LoginScreen(),
         );
 
       case home:
         return MaterialPageRoute(
-          builder: (context) => const Home(),
+          builder: (context) => const HomeScreen(),
         );
 
       case menu:
         return MaterialPageRoute(
-          builder: (context) => const Menu(),
+          builder: (context) => const MenuScreen(),
         );
 
       case offerFood:
@@ -52,7 +52,7 @@ class RouteManager {
       case donatedFoodDetail:
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => const DonatedFoodDetail(),
+          builder: (context) => const DonatedFoodDetailScreen(),
         );
 
       default:
