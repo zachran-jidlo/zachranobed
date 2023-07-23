@@ -4,10 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -113,9 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text,
     );
     if (result != null) {
-      if (context.mounted) {
-        final userNotifier = Provider.of<UserNotifier>(context, listen: false);
-        userNotifier.user = await _authService.getUserData();
+      if (mounted) {
+        await HelperService.loadUserInfo(context);
         if (mounted) {
           context.router.replace(const HomeRoute());
         }

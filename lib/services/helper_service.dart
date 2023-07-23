@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
+import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/services/delivery_service.dart';
 
 class HelperService {
   static UserData? getCurrentUser(BuildContext context) =>
@@ -55,6 +58,26 @@ class HelperService {
     final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
     if (await canLaunchUrl(launchUri)) {
       await launchUrl(launchUri);
+    }
+  }
+
+  static Future<void> loadUserInfo(BuildContext context) async {
+    final authService = GetIt.I<AuthService>();
+    final deliveryService = GetIt.I<DeliveryService>();
+
+    final user = await authService.getUserData();
+    if (context.mounted) {
+      final userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      userNotifier.user = user;
+
+      final date = HelperService.getDateTimeOfCurrentDelivery(user!.pickUpFrom);
+
+      final deliveryNotifier =
+          Provider.of<DeliveryNotifier>(context, listen: false);
+      deliveryNotifier.delivery = await deliveryService.getDelivery(
+        date,
+        user.establishmentName,
+      );
     }
   }
 }
