@@ -1,14 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu_item.dart';
 
+@RoutePage()
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 
@@ -113,8 +115,7 @@ class MenuScreen extends StatelessWidget {
                 onPressed: () async {
                   await authService.signOut();
                   if (context.mounted) {
-                    Navigator.of(context)
-                        .pushReplacementNamed(RouteManager.login);
+                    context.router.replace(const LoginRoute());
                   }
                 },
               ),

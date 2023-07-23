@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
@@ -13,6 +14,7 @@ import 'package:zachranobed/ui/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 
+@RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

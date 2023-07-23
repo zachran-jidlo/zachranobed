@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -5,14 +6,14 @@ import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
+@RoutePage()
 class DonatedFoodDetailScreen extends StatelessWidget {
-  const DonatedFoodDetailScreen({super.key});
+  final OfferedFood offeredFood;
+
+  const DonatedFoodDetailScreen({super.key, required this.offeredFood});
 
   @override
   Widget build(BuildContext context) {
-    final offeredFood =
-        ModalRoute.of(context)!.settings.arguments as OfferedFood;
-
     return Scaffold(
       appBar: AppBar(),
       body: Padding(

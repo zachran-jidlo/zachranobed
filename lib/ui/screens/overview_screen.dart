@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
-import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
@@ -34,7 +35,7 @@ class OverviewScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(RouteManager.menu);
+              context.router.push(const MenuRoute());
             },
             icon: const Icon(Icons.menu),
           ),

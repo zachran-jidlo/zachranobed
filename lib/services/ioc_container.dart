@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/donor_service.dart';
@@ -12,5 +13,6 @@ class IoCContainer {
     GetIt.I.registerSingleton(AuthService(GetIt.I<DonorService>()));
     GetIt.I.registerSingleton(OfferedFoodService());
     GetIt.I.registerSingleton(DeliveryService());
+    GetIt.I.registerSingleton(AppRouter());
   }
 }

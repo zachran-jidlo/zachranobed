@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/offered_food.dart';
-import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class DonatedFoodListTile extends StatelessWidget {
@@ -26,8 +27,8 @@ class DonatedFoodListTile extends StatelessWidget {
         title: Text(offeredFood.foodInfo.dishName),
         subtitle: Text(date),
         trailing: Text('${offeredFood.foodInfo.numberOfServings} ks'),
-        onTap: () => Navigator.of(context)
-            .pushNamed(RouteManager.donatedFoodDetail, arguments: offeredFood),
+        onTap: () => context.router
+            .push(DonatedFoodDetailRoute(offeredFood: offeredFood)),
       ),
     );
   }

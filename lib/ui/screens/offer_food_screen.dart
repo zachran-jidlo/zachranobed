@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
-import 'package:zachranobed/routes.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -18,6 +19,7 @@ import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
+@RoutePage()
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({super.key});
 
@@ -147,9 +149,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = _offerFood();
-                            Navigator.of(context).pushReplacementNamed(
-                                RouteManager.thankYou,
-                                arguments: _futureResponse);
+                            context.router.replace(
+                                ThankYouRoute(response: _futureResponse!));
                           }
                         },
                       ),
