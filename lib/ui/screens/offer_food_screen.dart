@@ -195,6 +195,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           weekNumber:
               '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
           donor: HelperService.getCurrentUser(context)!.establishmentName,
+          recipient: HelperService.getCurrentUser(context)!.recipient,
         ),
       );
     }

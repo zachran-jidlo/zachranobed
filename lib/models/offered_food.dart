@@ -20,6 +20,7 @@ class OfferedFood {
   final DateTime consumeBy;
   final String weekNumber;
   final String donor;
+  final String recipient;
 
   OfferedFood({
     required this.id,
@@ -29,6 +30,7 @@ class OfferedFood {
     required this.consumeBy,
     required this.weekNumber,
     required this.donor,
+    required this.recipient,
   });
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) =>

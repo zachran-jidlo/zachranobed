@@ -15,6 +15,7 @@ OfferedFood _$OfferedFoodFromJson(Map<String, dynamic> json) => OfferedFood(
           const TimestampConverter().fromJson(json['consumeBy'] as Timestamp),
       weekNumber: json['weekNumber'] as String,
       donor: json['donor'] as String,
+      recipient: json['recipient'] as String,
     );
 
 Map<String, dynamic> _$OfferedFoodToJson(OfferedFood instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$OfferedFoodToJson(OfferedFood instance) =>
       'consumeBy': const TimestampConverter().toJson(instance.consumeBy),
       'weekNumber': instance.weekNumber,
       'donor': instance.donor,
+      'recipient': instance.recipient,
     };
