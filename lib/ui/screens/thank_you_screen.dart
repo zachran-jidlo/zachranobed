@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -43,13 +43,13 @@ class ThankYouScreen extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return Text(
-                                  AppLocalizations.of(context)!.confirmation,
+                                  context.l10n!.confirmation,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: FontSize.xl),
                                 );
                               } else if (snapshot.hasError) {
                                 return Text(
-                                  AppLocalizations.of(context)!.offerError,
+                                  context.l10n!.offerError,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: FontSize.xl),
                                 );
@@ -60,13 +60,13 @@ class ThankYouScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: GapSize.l),
                           ZOButton(
-                            text: AppLocalizations.of(context)!.backToOverview,
+                            text: context.l10n!.backToOverview,
                             icon: MaterialSymbols.home_outlined,
                             onPressed: () => Navigator.pop(context),
                           ),
                           const SizedBox(height: GapSize.xs),
                           ZOButton(
-                            text: AppLocalizations.of(context)!.newOffer,
+                            text: context.l10n!.newOffer,
                             icon: MaterialSymbols.add,
                             isSecondary: true,
                             onPressed: () =>

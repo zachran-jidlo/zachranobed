@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
@@ -27,7 +27,7 @@ class NewOfferFloatingButton extends StatelessWidget {
             shape: const StadiumBorder(),
             backgroundColor: ZOColors.primaryLight,
             label: Text(
-              AppLocalizations.of(context)!.newOffer,
+              context.l10n!.newOffer,
               style: const TextStyle(color: ZOColors.primary),
             ),
             icon: const Icon(
@@ -41,11 +41,10 @@ class NewOfferFloatingButton extends StatelessWidget {
               builder: (context) {
                 if (HelperService.canDonate(context)) {
                   return ZODialog(
-                    title: '${AppLocalizations.of(context)!.newOffer}?',
-                    content:
-                        AppLocalizations.of(context)!.newOfferDialogContent,
-                    confirmText: AppLocalizations.of(context)!.callACourier,
-                    cancelText: AppLocalizations.of(context)!.cancel,
+                    title: '${context.l10n!.newOffer}?',
+                    content: context.l10n!.newOfferDialogContent,
+                    confirmText: context.l10n!.callACourier,
+                    cancelText: context.l10n!.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
                       await _callACourier(context);
@@ -57,10 +56,9 @@ class NewOfferFloatingButton extends StatelessWidget {
                   );
                 }
                 return ZODialog(
-                  title: '${AppLocalizations.of(context)!.newOffer}?',
-                  content: AppLocalizations.of(context)!
-                      .cantOfferAnymoreDialogContent,
-                  cancelText: AppLocalizations.of(context)!.cancel,
+                  title: '${context.l10n!.newOffer}?',
+                  content: context.l10n!.cantOfferAnymoreDialogContent,
+                  cancelText: context.l10n!.cancel,
                   icon: Icons.edit_calendar_outlined,
                   onCancelPressed: () => Navigator.of(context).pop(false),
                 );
@@ -79,11 +77,12 @@ class NewOfferFloatingButton extends StatelessWidget {
   Future<void> _callACourier(BuildContext context) async {
     await _deliveryService.updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.id,
-      AppLocalizations.of(context)!.deliveryConfirmedState,
+      context.l10n!.deliveryConfirmedState,
     );
     if (context.mounted) {
-      context.read<DeliveryNotifier>().updateDeliveryState(
-          AppLocalizations.of(context)!.deliveryConfirmedState);
+      context
+          .read<DeliveryNotifier>()
+          .updateDeliveryState(context.l10n!.deliveryConfirmedState);
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -55,10 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
               tabs: [
                 Tab(
                     icon: const Icon(Icons.home_outlined),
-                    text: AppLocalizations.of(context)!.overview),
+                    text: context.l10n!.overview),
                 Tab(
                   icon: const Icon(MaterialSymbols.fastfood),
-                  text: AppLocalizations.of(context)!.donations,
+                  text: context.l10n!.donations,
                 ),
               ],
             ),

@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/enums/packaging.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -60,10 +60,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       return (await showDialog(
             context: context,
             builder: (context) => ZODialog(
-              title: AppLocalizations.of(context)!.cancelOffer,
-              content: AppLocalizations.of(context)!.cancelOfferDialogContent,
-              confirmText: AppLocalizations.of(context)!.confirmCancel,
-              cancelText: AppLocalizations.of(context)!.continueTheOffer,
+              title: context.l10n!.cancelOffer,
+              content: context.l10n!.cancelOfferDialogContent,
+              confirmText: context.l10n!.confirmCancel,
+              cancelText: context.l10n!.continueTheOffer,
               icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
@@ -90,7 +90,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                 Row(
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.offerLeftoverFood,
+                      context.l10n!.offerLeftoverFood,
                       style: const TextStyle(fontSize: FontSize.l),
                     ),
                   ],
@@ -104,7 +104,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         foodSections: _foodSections,
                       ),
                       ZOButton(
-                        text: AppLocalizations.of(context)!.addAnotherFood,
+                        text: context.l10n!.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
                         height: 40.0,
@@ -116,35 +116,34 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       Row(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.summaryInfo,
+                            context.l10n!.summaryInfo,
                             style: const TextStyle(fontSize: FontSize.m),
                           ),
                         ],
                       ),
                       _buildGap(),
                       ZODropdown(
-                        hintText: AppLocalizations.of(context)!.packaging,
+                        hintText: context.l10n!.packaging,
                         items: Packaging.values
                             .map((e) => PackagingHelper.toValue(e, context))
                             .toList(),
                         onValidation: (val) => val == null
-                            ? AppLocalizations.of(context)!
-                                .requiredDropdownError
+                            ? context.l10n!.requiredDropdownError
                             : null,
                         onChanged: (value) => _selectedPackaging = value,
                       ),
                       _buildGap(),
                       ZODateTimePicker(
-                        label: AppLocalizations.of(context)!.consumeBy,
+                        label: context.l10n!.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
                         onValidation: (val) => val!.isEmpty
-                            ? AppLocalizations.of(context)!.requiredFieldError
+                            ? context.l10n!.requiredFieldError
                             : null,
                       ),
                       const SizedBox(height: GapSize.xl),
                       ZOButton(
-                        text: AppLocalizations.of(context)!.offerFood,
+                        text: context.l10n!.offerFood,
                         icon: MaterialSymbols.check,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -156,8 +155,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       const SizedBox(height: GapSize.s),
                       ZOClickableText(
-                        clickableText: AppLocalizations.of(context)!.manualName,
-                        prefixText: AppLocalizations.of(context)!.consent,
+                        clickableText: context.l10n!.manualName,
+                        prefixText: context.l10n!.consent,
                         underline: true,
                         onTap: () => print('Kliknuto na příručku'),
                       ),

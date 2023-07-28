@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -32,7 +32,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.donations),
+        title: Text(context.l10n!.donations),
         actions: [
           IconButton(
             onPressed: () {
@@ -51,14 +51,14 @@ class _DonationsScreenState extends State<DonationsScreen> {
             sliver: MultiSliver(
               children: [
                 DonatedFoodList(
-                  title: AppLocalizations.of(context)!.thisWeek,
+                  title: context.l10n!.thisWeek,
                   additionalFilterField: 'weekNumber',
                   additionalFilterValue:
                       '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
-                  title: AppLocalizations.of(context)!.lastWeek,
+                  title: context.l10n!.lastWeek,
                   additionalFilterField: 'weekNumber',
                   additionalFilterValue:
                       '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
@@ -70,7 +70,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 SliverToBoxAdapter(
                   child: ZOButton(
-                    text: AppLocalizations.of(context)!.loadMoreDonations,
+                    text: context.l10n!.loadMoreDonations,
                     icon: Icons.expand_more,
                     height: 40.0,
                     isSecondary: true,

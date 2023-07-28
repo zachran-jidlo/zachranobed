@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -31,13 +31,13 @@ class MenuScreen extends StatelessWidget {
           child: Column(
             children: [
               _buildMenuSection(
-                AppLocalizations.of(context)!.organization,
+                context.l10n!.organization,
                 [
                   MenuItem(leadingIcon: Icons.business, text: user.organization)
                 ],
               ),
               _buildMenuSection(
-                AppLocalizations.of(context)!.donor,
+                context.l10n!.donor,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -46,7 +46,7 @@ class MenuScreen extends StatelessWidget {
                 ],
               ),
               _buildMenuSection(
-                AppLocalizations.of(context)!.recipient,
+                context.l10n!.recipient,
                 [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
@@ -55,23 +55,23 @@ class MenuScreen extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.phone_outlined,
-                    text: AppLocalizations.of(context)!.contactCarrier,
+                    text: context.l10n!.contactCarrier,
                     onPressed: () async =>
                         await HelperService.makePhoneCall('123456789'),
                   )
                 ],
               ),
               _buildMenuSection(
-                AppLocalizations.of(context)!.saveLunch,
+                context.l10n!.saveLunch,
                 [
                   MenuItem(
                     leadingIcon: Icons.textsms_outlined,
-                    text: AppLocalizations.of(context)!.feedback,
+                    text: context.l10n!.feedback,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.language,
-                    text: AppLocalizations.of(context)!.about,
+                    text: context.l10n!.about,
                     onPressed: () async {
                       await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
@@ -79,7 +79,7 @@ class MenuScreen extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.volunteer_activism_outlined,
-                    text: AppLocalizations.of(context)!.sponsors,
+                    text: context.l10n!.sponsors,
                     onPressed: () async {
                       await _openUrlInBrowser(ZOStrings.zjUrl);
                     },
@@ -87,30 +87,30 @@ class MenuScreen extends StatelessWidget {
                 ],
               ),
               _buildMenuSection(
-                AppLocalizations.of(context)!.more,
+                context.l10n!.more,
                 [
                   MenuItem(
                     leadingIcon: Icons.star_border,
-                    text: AppLocalizations.of(context)!.rate,
+                    text: context.l10n!.rate,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.security,
-                    text: AppLocalizations.of(context)!.privacyProtection,
+                    text: context.l10n!.privacyProtection,
                     onPressed: () async =>
                         await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
-                    text: AppLocalizations.of(context)!.termsOfUse,
+                    text: context.l10n!.termsOfUse,
                     onPressed: () async =>
                         await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                 ],
               ),
               MenuButton(
-                text: AppLocalizations.of(context)!.signOut,
+                text: context.l10n!.signOut,
                 icon: Icons.logout,
                 onPressed: () async {
                   await authService.signOut();

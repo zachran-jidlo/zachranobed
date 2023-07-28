@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
@@ -84,7 +84,7 @@ class HelperService {
           Delivery(
             id: '123',
             donor: userNotifier.user!.establishmentName,
-            state: AppLocalizations.of(context)!.deliveryCancelledState,
+            state: context.l10n!.deliveryCancelledState,
           );
     }
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
@@ -18,15 +18,13 @@ class DeliveryNotifier extends ChangeNotifier {
   }
 
   bool deliveryConfirmed(BuildContext context) {
-    return _delivery?.state ==
-            AppLocalizations.of(context)!.deliveryConfirmedState
+    return _delivery?.state == context.l10n!.deliveryConfirmedState
         ? true
         : false;
   }
 
   bool deliveryCancelled(BuildContext context) {
-    return _delivery?.state ==
-            AppLocalizations.of(context)!.deliveryCancelledState
+    return _delivery?.state == context.l10n!.deliveryCancelledState
         ? true
         : false;
   }

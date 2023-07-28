@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -61,24 +61,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: <Widget>[
                         ZOTextField(
-                          label: AppLocalizations.of(context)!.emailAddress,
+                          label: context.l10n!.emailAddress,
                           inputType: TextInputType.emailAddress,
                           controller: _emailController,
                           onValidation: (val) => val!.isEmpty
-                              ? AppLocalizations.of(context)!.requiredFieldError
+                              ? context.l10n!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.s),
                         ZOPasswordTextField(
-                          text: AppLocalizations.of(context)!.password,
+                          text: context.l10n!.password,
                           controller: _passwordController,
                           onValidation: (val) => val!.isEmpty
-                              ? AppLocalizations.of(context)!.requiredFieldError
+                              ? context.l10n!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.m),
                         ZOButton(
-                          text: AppLocalizations.of(context)!.signIn,
+                          text: context.l10n!.signIn,
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -91,8 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: GapSize.s),
               ZOClickableText(
-                  clickableText:
-                      AppLocalizations.of(context)!.forgottenPassword,
+                  clickableText: context.l10n!.forgottenPassword,
                   color: ZOColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
@@ -124,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SnackBar(
             backgroundColor: Colors.red,
             content: Center(
-              child: Text(AppLocalizations.of(context)!.wrongCredentialsError),
+              child: Text(context.l10n!.wrongCredentialsError),
             ),
           ),
         );

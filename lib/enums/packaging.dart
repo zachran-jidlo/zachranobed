@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 enum Packaging {
   reusableBox,
@@ -11,11 +11,11 @@ abstract class PackagingHelper {
   static String toValue(Packaging packaging, BuildContext context) {
     switch (packaging) {
       case Packaging.reusableBox:
-        return AppLocalizations.of(context)!.packagingRekrabicka;
+        return context.l10n!.packagingRekrabicka;
       case Packaging.ikeaBox:
-        return AppLocalizations.of(context)!.packagingIkeaBox;
+        return context.l10n!.packagingIkeaBox;
       case Packaging.disposablePackaging:
-        return AppLocalizations.of(context)!.packagingDisposable;
+        return context.l10n!.packagingDisposable;
       default:
         return '';
     }
