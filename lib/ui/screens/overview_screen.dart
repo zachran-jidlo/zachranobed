@@ -8,16 +8,14 @@ import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
-import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/ui/widgets/card.dart';
+import 'package:zachranobed/ui/widgets/card_list.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   final _deliveryService = GetIt.I<DeliveryService>();
-  final _offeredFoodService = GetIt.I<OfferedFoodService>();
 
   OverviewScreen({super.key});
 
@@ -51,7 +49,7 @@ class OverviewScreen extends StatelessWidget {
             ),
             sliver: MultiSliver(
               children: [
-                _buildCards(context),
+                const CardList(),
                 const SizedBox(height: GapSize.s),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),
@@ -113,41 +111,6 @@ class OverviewScreen extends StatelessWidget {
           .read<DeliveryNotifier>()
           .updateDeliveryState(context.l10n!.deliveryConfirmedState);
     }
-  }
-
-  Widget _buildCards(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 154,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            ZOCard(
-              measuredValue:
-                  _offeredFoodService.getSavedMealsCount(context: context),
-              metricsText: context.l10n!.savedLunches,
-              periodText: context.l10n!.total,
-            ),
-            const SizedBox(width: GapSize.xxs),
-            ZOCard(
-              measuredValue: _offeredFoodService.getSavedMealsCount(
-                context: context,
-                timePeriod: 30,
-              ),
-              metricsText: context.l10n!.savedLunches,
-              periodText: context.l10n!.lastThirtyDays,
-            ),
-            const SizedBox(width: GapSize.xxs),
-            ZOCard(
-              measuredValue:
-                  _offeredFoodService.getSavedMealsCount(context: context),
-              metricsText: context.l10n!.savedLunches,
-              periodText: context.l10n!.lastThirtyDays,
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {
