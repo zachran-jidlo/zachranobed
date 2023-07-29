@@ -23,7 +23,9 @@ class OfferedFoodService {
       int? limit,
       String? additionalFilterField,
       dynamic additionalFilterValue}) {
-    var query = _offeredFoodCollection.orderBy('date', descending: true);
+    var query = _offeredFoodCollection.orderBy('date', descending: true).where(
+        'donor',
+        isEqualTo: HelperService.getCurrentUser(context)!.establishmentName);
 
     if (limit != null) {
       query = query.limit(limit);
@@ -34,12 +36,8 @@ class OfferedFoodService {
           query.where(additionalFilterField, isEqualTo: additionalFilterValue);
     }
 
-    return query.snapshots().map((querySnapshot) => querySnapshot.docs
-        .map((docSnapshot) => docSnapshot.data())
-        .where((offeredFood) =>
-            offeredFood.donor ==
-            HelperService.getCurrentUser(context)!.establishmentName)
-        .toList());
+    return query.snapshots().map((querySnapshot) =>
+        querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
   // TODO - z tohodle by bylo fajn nějak udělat stream
