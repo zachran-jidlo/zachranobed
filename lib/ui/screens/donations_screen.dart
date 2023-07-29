@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/donated_food_list_info.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -16,7 +17,7 @@ class DonationsScreen extends StatefulWidget {
 }
 
 class _DonationsScreenState extends State<DonationsScreen> {
-  final List<Widget> _donationsLists = [];
+  final List<DonatedFoodListInfo> _donationsLists = [];
 
   var year = DateTime.now().year.toInt();
   final currentWeekNumber = HelperService.getCurrentWeekNumber;
@@ -64,9 +65,21 @@ class _DonationsScreenState extends State<DonationsScreen> {
                       '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                MultiSliver(
-                  children: _donationsLists,
-                ),
+                for (var donatedFood in _donationsLists)
+                  MultiSliver(
+                    children: [
+                      DonatedFoodList(
+                        title: donatedFood.title,
+                        additionalFilterField:
+                            donatedFood.additionalFilterField,
+                        additionalFilterValue:
+                            donatedFood.additionalFilterValue,
+                      ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(height: GapSize.xs),
+                      ),
+                    ],
+                  ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 SliverToBoxAdapter(
                   child: ZOButton(
@@ -96,10 +109,10 @@ class _DonationsScreenState extends State<DonationsScreen> {
 
     setState(() {
       _donationsLists.add(
-        DonatedFoodList(
+        DonatedFoodListInfo(
           title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
           additionalFilterField: 'weekNumber',
-          additionalFilterValue: 'cisloTydne(eq)$year-$desiredWeekNumber',
+          additionalFilterValue: '$year-$desiredWeekNumber',
         ),
       );
     });

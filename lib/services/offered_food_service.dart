@@ -18,11 +18,12 @@ class OfferedFoodService {
     },
   );
 
-  Stream<List<OfferedFood>> loggedUserOfferedFoodStream(
-      {required BuildContext context,
-      int? limit,
-      String? additionalFilterField,
-      dynamic additionalFilterValue}) {
+  Stream<List<OfferedFood>> loggedUserOfferedFoodStream({
+    required BuildContext context,
+    int? limit,
+    String? additionalFilterField,
+    dynamic additionalFilterValue,
+  }) {
     var query = _offeredFoodCollection.orderBy('date', descending: true).where(
         'donor',
         isEqualTo: HelperService.getCurrentUser(context)!.establishmentName);
