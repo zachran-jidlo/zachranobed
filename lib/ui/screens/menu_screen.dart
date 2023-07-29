@@ -7,8 +7,9 @@ import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/ui/widgets/menu_button.dart';
-import 'package:zachranobed/ui/widgets/menu_item.dart';
+import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
+import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
+import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
 
 @RoutePage()
 class MenuScreen extends StatelessWidget {
@@ -30,24 +31,24 @@ class MenuScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _buildMenuSection(
-                context.l10n!.organization,
-                [
+              MenuSection(
+                label: context.l10n!.organization,
+                menuItems: [
                   MenuItem(leadingIcon: Icons.business, text: user.organization)
                 ],
               ),
-              _buildMenuSection(
-                context.l10n!.donor,
-                [
+              MenuSection(
+                label: context.l10n!.donor,
+                menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
                     text: user.establishmentName,
                   )
                 ],
               ),
-              _buildMenuSection(
-                context.l10n!.recipient,
-                [
+              MenuSection(
+                label: context.l10n!.recipient,
+                menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
                     text: user.recipient,
@@ -61,9 +62,9 @@ class MenuScreen extends StatelessWidget {
                   )
                 ],
               ),
-              _buildMenuSection(
-                context.l10n!.saveLunch,
-                [
+              MenuSection(
+                label: context.l10n!.saveLunch,
+                menuItems: [
                   MenuItem(
                     leadingIcon: Icons.textsms_outlined,
                     text: context.l10n!.feedback,
@@ -86,9 +87,9 @@ class MenuScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              _buildMenuSection(
-                context.l10n!.more,
-                [
+              MenuSection(
+                label: context.l10n!.more,
+                menuItems: [
                   MenuItem(
                     leadingIcon: Icons.star_border,
                     text: context.l10n!.rate,
@@ -124,18 +125,6 @@ class MenuScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildMenuSection(String label, List<Widget> menuItems) {
-    return Column(
-      children: [
-        Row(
-          children: [Text(label, style: const TextStyle(fontSize: FontSize.s))],
-        ),
-        for (var item in menuItems) item,
-        const SizedBox(height: GapSize.s),
-      ],
     );
   }
 
