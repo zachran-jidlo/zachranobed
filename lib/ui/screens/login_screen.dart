@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _logIn(BuildContext context) async {
-    dynamic result = await _authService.signIn(
+    final result = await _authService.signIn(
       _emailController.text,
       _passwordController.text,
     );

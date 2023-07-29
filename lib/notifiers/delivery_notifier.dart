@@ -18,14 +18,10 @@ class DeliveryNotifier extends ChangeNotifier {
   }
 
   bool deliveryConfirmed(BuildContext context) {
-    return _delivery?.state == context.l10n!.deliveryConfirmedState
-        ? true
-        : false;
+    return _delivery?.state == context.l10n!.deliveryConfirmedState;
   }
 
   bool deliveryCancelled(BuildContext context) {
-    return _delivery?.state == context.l10n!.deliveryCancelledState
-        ? true
-        : false;
+    return _delivery?.state == context.l10n!.deliveryCancelledState;
   }
 }
