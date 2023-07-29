@@ -8,10 +8,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i10;
-
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:cloud_firestore/cloud_firestore.dart' as _i11;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i10;
 import 'package:flutter/material.dart' as _i8;
 import 'package:zachranobed/models/offered_food.dart' as _i9;
 import 'package:zachranobed/ui/screens/donated_food_detail_screen.dart' as _i1;
@@ -173,7 +171,7 @@ class OfferFoodRoute extends _i7.PageRouteInfo<void> {
 class ThankYouRoute extends _i7.PageRouteInfo<ThankYouRouteArgs> {
   ThankYouRoute({
     _i8.Key? key,
-    required _i10.Future<_i11.DocumentReference<_i9.OfferedFood>> response,
+    required _i10.DocumentReference<_i9.OfferedFood>? response,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           ThankYouRoute.name,
@@ -198,7 +196,7 @@ class ThankYouRouteArgs {
 
   final _i8.Key? key;
 
-  final _i10.Future<_i11.DocumentReference<_i9.OfferedFood>> response;
+  final _i10.DocumentReference<_i9.OfferedFood>? response;
 
   @override
   String toString() {

@@ -30,7 +30,7 @@ class OfferFoodScreen extends StatefulWidget {
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _offeredFoodService = GetIt.I<OfferedFoodService>();
 
-  Future<DocumentReference<OfferedFood>>? _futureResponse;
+  DocumentReference<OfferedFood>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -145,11 +145,13 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ZOButton(
                         text: context.l10n!.offerFood,
                         icon: MaterialSymbols.check,
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = _offerFood();
-                            context.router.replace(
-                                ThankYouRoute(response: _futureResponse!));
+                            _futureResponse = await _offerFood();
+                            if (mounted) {
+                              context.router.replace(
+                                  ThankYouRoute(response: _futureResponse));
+                            }
                           }
                         },
                       ),

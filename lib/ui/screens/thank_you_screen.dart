@@ -11,7 +11,7 @@ import 'package:zachranobed/ui/widgets/button.dart';
 
 @RoutePage()
 class ThankYouScreen extends StatelessWidget {
-  final Future<DocumentReference<OfferedFood>> response;
+  final DocumentReference<OfferedFood>? response;
 
   const ThankYouScreen({super.key, required this.response});
 
@@ -38,7 +38,18 @@ class ThankYouScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 45.0),
                       child: Column(
                         children: <Widget>[
-                          FutureBuilder<DocumentReference<OfferedFood>>(
+                          response != null
+                              ? Text(
+                                  context.l10n!.confirmation,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: FontSize.xl),
+                                )
+                              : Text(
+                                  context.l10n!.offerError,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: FontSize.xl),
+                                ),
+                          /*FutureBuilder<DocumentReference<OfferedFood>>(
                             future: response,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
@@ -57,7 +68,7 @@ class ThankYouScreen extends StatelessWidget {
 
                               return const CircularProgressIndicator();
                             },
-                          ),
+                          ),*/
                           const SizedBox(height: GapSize.l),
                           ZOButton(
                             text: context.l10n!.backToOverview,
