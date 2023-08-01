@@ -32,6 +32,7 @@ class ZOCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTextWidget(metricsText, FontSize.xxs),
+            // TODO - z tohodle udělat strem builder
             FutureBuilder(
               future: measuredValue,
               builder: (context, snapshot) {

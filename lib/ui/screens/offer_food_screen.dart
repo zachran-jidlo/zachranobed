@@ -1,13 +1,16 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:http/http.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import 'package:zachranobed/enums/packaging.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/food_info.dart';
-import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/offered_food_api_service.dart';
+import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/helper_service.dart';
+import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
@@ -16,6 +19,7 @@ import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
+@RoutePage()
 class OfferFoodScreen extends StatefulWidget {
   const OfferFoodScreen({super.key});
 
@@ -24,7 +28,9 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  Future<Response>? _futureResponse;
+  final _offeredFoodService = GetIt.I<OfferedFoodService>();
+
+  DocumentReference<OfferedFood>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,7 +50,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       return true;
     }
     return _foodSections.any((foodInfo) =>
-        foodInfo.name.isNotEmpty == true ||
+        foodInfo.dishName.isNotEmpty == true ||
         foodInfo.allergens != null ||
         foodInfo.numberOfServings != null);
   }
@@ -54,10 +60,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       return (await showDialog(
             context: context,
             builder: (context) => ZODialog(
-              title: ZOStrings.endOffer,
-              content: ZOStrings.cancelOfferDialogContent,
-              confirmText: ZOStrings.cancelTheOffer,
-              cancelText: ZOStrings.continueTheOffer,
+              title: context.l10n!.cancelOffer,
+              content: context.l10n!.cancelOfferDialogContent,
+              confirmText: context.l10n!.confirmCancel,
+              cancelText: context.l10n!.continueTheOffer,
               icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
@@ -81,11 +87,11 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const Row(
+                Row(
                   children: <Widget>[
                     Text(
-                      ZOStrings.offerLeftoverFood,
-                      style: TextStyle(fontSize: FontSize.l),
+                      context.l10n!.offerLeftoverFood,
+                      style: const TextStyle(fontSize: FontSize.l),
                     ),
                   ],
                 ),
@@ -98,7 +104,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         foodSections: _foodSections,
                       ),
                       ZOButton(
-                        text: ZOStrings.addAnotherFood,
+                        text: context.l10n!.addAnotherFood,
                         icon: MaterialSymbols.add,
                         isSecondary: true,
                         height: 40.0,
@@ -107,50 +113,52 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         },
                       ),
                       const SizedBox(height: GapSize.xl),
-                      const Row(
+                      Row(
                         children: [
                           Text(
-                            ZOStrings.summaryInfo,
-                            style: TextStyle(fontSize: FontSize.m),
+                            context.l10n!.summaryInfo,
+                            style: const TextStyle(fontSize: FontSize.m),
                           ),
                         ],
                       ),
                       _buildGap(),
                       ZODropdown(
-                        hintText: ZOStrings.packaging,
+                        hintText: context.l10n!.packaging,
                         items: Packaging.values
-                            .map((e) => e.packagingName)
+                            .map((e) => PackagingHelper.toValue(e, context))
                             .toList(),
                         onValidation: (val) => val == null
-                            ? ZOStrings.requiredDropdownError
+                            ? context.l10n!.requiredDropdownError
                             : null,
                         onChanged: (value) => _selectedPackaging = value,
                       ),
                       _buildGap(),
                       ZODateTimePicker(
-                        label: ZOStrings.consumeBy,
+                        label: context.l10n!.consumeBy,
                         icon: MaterialSymbols.calendar_today,
                         controller: _consumeByController,
-                        onValidation: (val) =>
-                            val!.isEmpty ? ZOStrings.requiredFieldError : null,
+                        onValidation: (val) => val!.isEmpty
+                            ? context.l10n!.requiredFieldError
+                            : null,
                       ),
                       const SizedBox(height: GapSize.xl),
                       ZOButton(
-                        text: ZOStrings.offerFood,
+                        text: context.l10n!.offerFood,
                         icon: MaterialSymbols.check,
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = _offerFood();
-                            Navigator.of(context).pushReplacementNamed(
-                                RouteManager.thankYou,
-                                arguments: _futureResponse);
+                            _futureResponse = await _offerFood();
+                            if (mounted) {
+                              context.router.replace(
+                                  ThankYouRoute(response: _futureResponse));
+                            }
                           }
                         },
                       ),
                       const SizedBox(height: GapSize.s),
                       ZOClickableText(
-                        clickableText: ZOStrings.manualName,
-                        prefixText: ZOStrings.consent,
+                        clickableText: context.l10n!.manualName,
+                        prefixText: context.l10n!.consent,
                         underline: true,
                         onTap: () => print('Kliknuto na příručku'),
                       ),
@@ -170,20 +178,27 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return const SizedBox(height: GapSize.l);
   }
 
-  Future<Response> _offerFood() {
+  Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
     for (var foodInfo in _foodSections) {
-      response = OfferedFoodApiService().createOffer(
-          const Uuid().v4(),
-          DateTime.now(),
-          FoodInfo(
-            name: foodInfo.name,
+      response = await _offeredFoodService.createOffer(
+        OfferedFood(
+          id: "",
+          date: DateTime.now(),
+          foodInfo: FoodInfo(
+            dishName: foodInfo.dishName,
             allergens: foodInfo.allergens,
             numberOfServings: foodInfo.numberOfServings,
           ),
-          _selectedPackaging,
-          DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
-          HelperService.getCurrentUser(context)!.internalId);
+          packaging: _selectedPackaging,
+          consumeBy:
+              DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          weekNumber:
+              '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
+          donor: HelperService.getCurrentUser(context)!.establishmentName,
+          recipient: HelperService.getCurrentUser(context)!.recipient,
+        ),
+      );
     }
     return response;
   }

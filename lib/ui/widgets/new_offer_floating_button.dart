@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
-import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/delivery_api_service.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
@@ -11,20 +14,21 @@ import 'package:zachranobed/ui/widgets/dialog.dart';
 class NewOfferFloatingButton extends StatelessWidget {
   final bool enabled;
 
-  const NewOfferFloatingButton({super.key, required this.enabled});
+  final _deliveryService = GetIt.I<DeliveryService>();
+
+  NewOfferFloatingButton({super.key, required this.enabled});
 
   @override
   Widget build(BuildContext context) {
     return enabled
         ? FloatingActionButton.extended(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(RouteManager.offerFood),
+            onPressed: () => context.router.push(const OfferFoodRoute()),
             elevation: 0,
             shape: const StadiumBorder(),
             backgroundColor: ZOColors.primaryLight,
-            label: const Text(
-              ZOStrings.newOffer,
-              style: TextStyle(color: ZOColors.primary),
+            label: Text(
+              context.l10n!.newOffer,
+              style: const TextStyle(color: ZOColors.primary),
             ),
             icon: const Icon(
               MaterialSymbols.add,
@@ -37,10 +41,10 @@ class NewOfferFloatingButton extends StatelessWidget {
               builder: (context) {
                 if (HelperService.canDonate(context)) {
                   return ZODialog(
-                    title: '${ZOStrings.newOffer}?',
-                    content: ZOStrings.newOfferDialogContent,
-                    confirmText: ZOStrings.callACourier,
-                    cancelText: ZOStrings.cancel,
+                    title: '${context.l10n!.newOffer}?',
+                    content: context.l10n!.newOfferDialogContent,
+                    confirmText: context.l10n!.callACourier,
+                    cancelText: context.l10n!.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
                       await _callACourier(context);
@@ -52,9 +56,9 @@ class NewOfferFloatingButton extends StatelessWidget {
                   );
                 }
                 return ZODialog(
-                  title: '${ZOStrings.newOffer}?',
-                  content: ZOStrings.cantOfferAnymoreDialogContent,
-                  cancelText: ZOStrings.cancel,
+                  title: '${context.l10n!.newOffer}?',
+                  content: context.l10n!.cantOfferAnymoreDialogContent,
+                  cancelText: context.l10n!.cancel,
                   icon: Icons.edit_calendar_outlined,
                   onCancelPressed: () => Navigator.of(context).pop(false),
                 );
@@ -71,14 +75,14 @@ class NewOfferFloatingButton extends StatelessWidget {
   }
 
   Future<void> _callACourier(BuildContext context) async {
-    await DeliveryApiService().updateDeliveryStatus(
-      context.read<DeliveryNotifier>().delivery!.internalId,
-      ZOStrings.deliveryConfirmedState,
+    await _deliveryService.updateDeliveryStatus(
+      context.read<DeliveryNotifier>().delivery!.id,
+      context.l10n!.deliveryConfirmedState,
     );
     if (context.mounted) {
       context
           .read<DeliveryNotifier>()
-          .updateDeliveryState(ZOStrings.deliveryConfirmedState);
+          .updateDeliveryState(context.l10n!.deliveryConfirmedState);
     }
   }
 }

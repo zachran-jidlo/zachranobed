@@ -1,25 +1,29 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:zachranobed/models/user.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
-import 'package:zachranobed/routes.dart';
-import 'package:zachranobed/services/api/user_api_service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+@RoutePage()
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
+  final _authService = GetIt.I<AuthService>();
+
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
@@ -30,10 +34,6 @@ class _LoginState extends State<Login> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  Future<User?> _tryLogIn() {
-    return UserApiService().logIn(email: _emailController.text);
   }
 
   @override
@@ -61,24 +61,24 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: <Widget>[
                         ZOTextField(
-                          label: ZOStrings.emailAddress,
+                          label: context.l10n!.emailAddress,
                           inputType: TextInputType.emailAddress,
                           controller: _emailController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZOStrings.requiredFieldError
+                              ? context.l10n!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.s),
                         ZOPasswordTextField(
-                          text: ZOStrings.password,
+                          text: context.l10n!.password,
                           controller: _passwordController,
                           onValidation: (val) => val!.isEmpty
-                              ? ZOStrings.requiredFieldError
+                              ? context.l10n!.requiredFieldError
                               : null,
                         ),
                         const SizedBox(height: GapSize.m),
                         ZOButton(
-                          text: ZOStrings.login,
+                          text: context.l10n!.signIn,
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
@@ -91,7 +91,7 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: GapSize.s),
               ZOClickableText(
-                  clickableText: ZOStrings.forgottenPassword,
+                  clickableText: context.l10n!.forgottenPassword,
                   color: ZOColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
@@ -106,28 +106,24 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _logIn(BuildContext context) async {
-    User? user = await _tryLogIn();
-    if (user != null) {
-      if (context.mounted) {
-        final userNotifier = Provider.of<UserNotifier>(context, listen: false);
-        userNotifier.user = User.create(
-          user.internalId,
-          user.email,
-          user.pickUpFrom,
-          user.pickUpWithin,
-          user.establishmentName,
-          user.organization,
-          user.recipient,
-        );
-        Navigator.of(context).pushReplacementNamed(RouteManager.home);
+    final result = await _authService.signIn(
+      _emailController.text,
+      _passwordController.text,
+    );
+    if (result != null) {
+      if (mounted) {
+        await HelperService.loadUserInfo(context);
+        if (mounted) {
+          context.router.replace(const HomeRoute());
+        }
       }
     } else {
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             backgroundColor: Colors.red,
             content: Center(
-              child: Text(ZOStrings.wrongCredentialsError),
+              child: Text(context.l10n!.wrongCredentialsError),
             ),
           ),
         );

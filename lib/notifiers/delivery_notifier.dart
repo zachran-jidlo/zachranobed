@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/shared/constants.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
   Delivery? _delivery;
@@ -17,11 +17,11 @@ class DeliveryNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool deliveryConfirmed() {
-    return _delivery!.state == ZOStrings.deliveryConfirmedState ? true : false;
+  bool deliveryConfirmed(BuildContext context) {
+    return _delivery?.state == context.l10n!.deliveryConfirmedState;
   }
 
-  bool deliveryCancelled() {
-    return _delivery!.state == ZOStrings.deliveryCancelledState ? true : false;
+  bool deliveryCancelled(BuildContext context) {
+    return _delivery?.state == context.l10n!.deliveryCancelledState;
   }
 }

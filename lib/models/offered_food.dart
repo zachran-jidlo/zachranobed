@@ -1,14 +1,26 @@
-import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/food_info.dart';
 
+/*
+ * Command to rebuild the user_data.g.dart file:
+ * flutter packages pub run build_runner build --delete-conflicting-outputs
+ */
+part 'offered_food.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class OfferedFood {
   final String id;
+  @TimestampConverter()
   final DateTime date;
   final FoodInfo foodInfo;
   final String packaging;
+  @TimestampConverter()
   final DateTime consumeBy;
   final String weekNumber;
   final String donor;
+  final String recipient;
 
   OfferedFood({
     required this.id,
@@ -18,41 +30,11 @@ class OfferedFood {
     required this.consumeBy,
     required this.weekNumber,
     required this.donor,
+    required this.recipient,
   });
 
-  factory OfferedFood.fromJson(Map<String, dynamic> json) {
-    return OfferedFood(
-      id: json['fields']['x_ID'],
-      date: DateTime.parse(json['fields']['pridanoDne']),
-      foodInfo: FoodInfo(
-        name: json['fields']['nazevPokrmu'],
-        allergens: (json['fields']['alergeny'] as List)
-            .map((e) => e as String)
-            .toList(),
-        numberOfServings: json['fields']['pocetPorci'],
-      ),
-      packaging: json['fields']['baleni'],
-      consumeBy: DateTime.parse(json['fields']['spotrebujteDo']),
-      weekNumber: json['fields']['cisloTydne'],
-      donor: json['fields']['darce']['fields']['nazevProvozovny'],
-    );
-  }
+  factory OfferedFood.fromJson(Map<String, dynamic> json) =>
+      _$OfferedFoodFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'fields': {
-          'x_ID': id,
-          'pridanoDne': DateFormat('yyyy-MM-dd HH:mm:ss')
-              .parse(date.toString())
-              .toIso8601String(),
-          'nazevPokrmu': foodInfo.name,
-          'alergeny': foodInfo.allergens,
-          'pocetPorci': foodInfo.numberOfServings,
-          'baleni': packaging,
-          'spotrebujteDo': consumeBy.toIso8601String(),
-          'cisloTydne': weekNumber,
-          'darce': {
-            'id': donor,
-          }
-        }
-      };
+  Map<String, dynamic> toJson() => _$OfferedFoodToJson(this);
 }

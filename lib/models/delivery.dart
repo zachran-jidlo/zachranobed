@@ -1,35 +1,20 @@
-class Delivery {
-  final String internalId;
-  final String donor;
-  final String state;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Delivery({
-    required this.internalId,
-    required this.donor,
-    required this.state,
-  });
+/*
+ * Command to rebuild the delivery.g.dart file:
+ * flutter pub run build_runner build --delete-conflicting-outputs
+ */
+part 'delivery.freezed.dart';
+part 'delivery.g.dart';
 
-  factory Delivery.fromJson(Map<String, dynamic> json) {
-    return Delivery(
-      internalId: json['id'],
-      donor: json['fields']['darce']['fields']['nazevProvozovny'],
-      state: json['fields']['stav'],
-    );
-  }
+@Freezed()
+class Delivery with _$Delivery {
+  const factory Delivery({
+    required String id,
+    required String donor,
+    required String state,
+  }) = _Delivery;
 
-  Map<String, dynamic> toJson() => {
-        'fields': {'stav': state}
-      };
-
-  Delivery copyWith({
-    String? internalId,
-    String? donor,
-    String? state,
-  }) {
-    return Delivery(
-      internalId: internalId ?? this.internalId,
-      donor: donor ?? this.donor,
-      state: state ?? this.state,
-    );
-  }
+  factory Delivery.fromJson(Map<String, dynamic> json) =>
+      _$DeliveryFromJson(json);
 }

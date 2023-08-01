@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/models/user.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 class UserNotifier extends ChangeNotifier {
-  User? _user;
+  UserData? _user;
 
-  User? get user => _user;
+  UserData? get user => _user;
 
-  set user(User? value) {
+  set user(UserData? value) {
     _user = value;
     notifyListeners();
   }
