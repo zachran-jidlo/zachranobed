@@ -4,7 +4,7 @@ import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/food_info.dart';
 
 /*
- * Command to rebuild the user_data.g.dart file:
+ * Command to rebuild the offered_food.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
 part 'offered_food.g.dart';

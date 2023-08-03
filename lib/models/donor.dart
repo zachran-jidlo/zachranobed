@@ -2,31 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /*
- * Command to rebuild the user_data.g.dart file:
+ * Command to rebuild the donor.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
-part 'user_data.g.dart';
+part 'donor.g.dart';
 
 @JsonSerializable()
-class UserData extends ChangeNotifier {
+class Donor extends ChangeNotifier {
   final String email;
   final String pickUpFrom;
   final String pickUpWithin;
   final String establishmentName;
+  final String establishmentId;
   final String organization;
   final String recipient;
 
-  UserData({
+  Donor({
     required this.email,
     required this.pickUpFrom,
     required this.pickUpWithin,
     required this.establishmentName,
+    required this.establishmentId,
     required this.organization,
     required this.recipient,
   });
 
-  factory UserData.fromJson(Map<String, dynamic> json) =>
-      _$UserDataFromJson(json);
+  factory Donor.fromJson(Map<String, dynamic> json) => _$DonorFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserDataToJson(this);
+  Map<String, dynamic> toJson() => _$DonorToJson(this);
 }

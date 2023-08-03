@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/models/donor.dart';
 
 class DonorService {
   final _donorCollection =
@@ -7,7 +7,7 @@ class DonorService {
     fromFirestore: (snapshot, options) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;
-      return UserData.fromJson(json);
+      return Donor.fromJson(json);
     },
     toFirestore: (value, options) {
       final json = value.toJson();
@@ -16,7 +16,7 @@ class DonorService {
     },
   );
 
-  Future<UserData?> getDonorByEmail(String email) async {
+  Future<Donor?> getDonorByEmail(String email) async {
     final donorQuerySnapshot =
         await _donorCollection.where('email', isEqualTo: email).get();
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -20,6 +21,7 @@ class MenuScreen extends StatelessWidget {
     final user = HelperService.getCurrentUser(context)!;
     final authService = GetIt.I<AuthService>();
 
+    // TODO - zobrazovatúdaje jinak v případě příjemce a v případě dárce
     return Scaffold(
       appBar: AppBar(
         title: Text(HelperService.getCurrentUser(context)!.email),
@@ -51,7 +53,8 @@ class MenuScreen extends StatelessWidget {
                 menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text: user.recipient,
+                    text:
+                        user is Donor ? user.recipient : user.donor.toString(),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(

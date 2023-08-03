@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/recipient.dart';
 
 class UserNotifier extends ChangeNotifier {
-  UserData? _user;
+  dynamic _user;
 
-  UserData? get user => _user;
+  dynamic get user => _user;
 
-  set user(UserData? value) {
-    _user = value;
-    notifyListeners();
+  set user(dynamic value) {
+    if (value is Donor || value is Recipient) {
+      _user = value;
+      notifyListeners();
+    } else {
+      throw ArgumentError.value(value);
+    }
   }
 }

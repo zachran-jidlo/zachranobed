@@ -1,25 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_data.dart';
+part of 'recipient.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
+Recipient _$RecipientFromJson(Map<String, dynamic> json) => Recipient(
       email: json['email'] as String,
-      pickUpFrom: json['pickUpFrom'] as String,
-      pickUpWithin: json['pickUpWithin'] as String,
       establishmentName: json['establishmentName'] as String,
+      establishmentId: json['establishmentId'] as String,
       organization: json['organization'] as String,
-      recipient: json['recipient'] as String,
+      donor: (json['donor'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
+Map<String, dynamic> _$RecipientToJson(Recipient instance) => <String, dynamic>{
       'email': instance.email,
-      'pickUpFrom': instance.pickUpFrom,
-      'pickUpWithin': instance.pickUpWithin,
       'establishmentName': instance.establishmentName,
+      'establishmentId': instance.establishmentId,
       'organization': instance.organization,
-      'recipient': instance.recipient,
+      'donor': instance.donor,
     };

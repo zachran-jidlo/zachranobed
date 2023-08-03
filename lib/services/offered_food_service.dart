@@ -24,9 +24,15 @@ class OfferedFoodService {
     String? additionalFilterField,
     dynamic additionalFilterValue,
   }) {
+    // TODO - todle bude potřeba sjednotit
     var query = _offeredFoodCollection.orderBy('date', descending: true).where(
-        'donor',
-        isEqualTo: HelperService.getCurrentUser(context)!.establishmentName);
+        Filter.or(
+            Filter('donor',
+                isEqualTo:
+                    HelperService.getCurrentUser(context)!.establishmentName),
+            Filter('recipient',
+                isEqualTo:
+                    HelperService.getCurrentUser(context)!.establishmentId)));
 
     if (limit != null) {
       query = query.limit(limit);
@@ -45,8 +51,14 @@ class OfferedFoodService {
   Future<int> getSavedMealsCount(
       {required BuildContext context, int? timePeriod}) async {
     var mealsCount = 0;
-    var query = _offeredFoodCollection.where('donor',
-        isEqualTo: HelperService.getCurrentUser(context)!.establishmentName);
+    // TODO - todle bude potřeba sjednotit
+    var query = _offeredFoodCollection.where(Filter.or(
+        Filter('donor',
+            isEqualTo:
+                HelperService.getCurrentUser(context)!.establishmentName),
+        Filter('recipient',
+            isEqualTo:
+                HelperService.getCurrentUser(context)!.establishmentId)));
 
     if (timePeriod != null) {
       query = query.where('date',

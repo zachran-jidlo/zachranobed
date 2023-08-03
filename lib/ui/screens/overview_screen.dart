@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/recipient.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
@@ -66,7 +67,7 @@ class OverviewScreen extends StatelessWidget {
     final deliveryConfirmed =
         context.watch<DeliveryNotifier>().deliveryConfirmed(context);
 
-    if (!HelperService.canDonate(context)) {
+    if (user is Recipient || !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 

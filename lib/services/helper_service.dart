@@ -5,15 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 
 class HelperService {
-  static UserData? getCurrentUser(BuildContext context) =>
-      context.read<UserNotifier>().user;
+  static dynamic getCurrentUser(BuildContext context) =>
+      context.watch<UserNotifier>().user;
 
   static int get getCurrentWeekNumber {
     final now = DateTime.now();
@@ -68,24 +68,28 @@ class HelperService {
     final deliveryService = GetIt.I<DeliveryService>();
 
     final user = await authService.getUserData();
+
     if (context.mounted) {
       final userNotifier = Provider.of<UserNotifier>(context, listen: false);
       userNotifier.user = user;
 
-      final date = HelperService.getDateTimeOfCurrentDelivery(user!.pickUpFrom);
+      if (user is Donor) {
+        final date =
+            HelperService.getDateTimeOfCurrentDelivery(user.pickUpFrom);
 
-      final deliveryNotifier =
-          Provider.of<DeliveryNotifier>(context, listen: false);
-      deliveryNotifier.delivery = await deliveryService.getDelivery(
-            date,
-            user.establishmentName,
-          ) ??
-          // Dummy delivery in case, the real delivery doesn't exist
-          Delivery(
-            id: '123',
-            donor: userNotifier.user!.establishmentName,
-            state: context.l10n!.deliveryCancelledState,
-          );
+        final deliveryNotifier =
+            Provider.of<DeliveryNotifier>(context, listen: false);
+        deliveryNotifier.delivery = await deliveryService.getDelivery(
+              date,
+              user.establishmentName,
+            ) ??
+            // Dummy delivery in case, the real delivery doesn't exist
+            Delivery(
+              id: '123',
+              donor: userNotifier.user!.establishmentName,
+              state: context.l10n!.deliveryCancelledState,
+            );
+      }
     }
   }
 }
