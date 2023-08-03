@@ -1,19 +1,41 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+/* eslint-disable max-len */
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+admin.initializeApp();
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+export const setDonorRole = functions.firestore.document("darci/{id}").onUpdate((donor, cont) => {
+  const uid = donor.after.data().authUid;
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+  if (!uid) {
+    return;
+  }
+
+  try {
+    admin.auth().setCustomUserClaims(uid, {
+      donor: true,
+    });
+
+    console.log(`Custom claim set for user with UID: ${uid}`);
+  } catch (error) {
+    console.error("Error setting custom claim:", error);
+  }
+});
+
+export const setRecipientRole = functions.firestore.document("prijemci/{id}").onUpdate((recipient, cont) => {
+  const uid = recipient.after.data().authUid;
+
+  if (!uid) {
+    return;
+  }
+
+  try {
+    admin.auth().setCustomUserClaims(uid, {
+      recipient: true,
+    });
+
+    console.log(`Custom claim set for user with UID: ${uid}`);
+  } catch (error) {
+    console.error("Error setting custom claim:", error);
+  }
+});

@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,17 @@ class _HomeScreenState extends State<HomeScreen> {
         await HelperService.loadUserInfo(context);
       });
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final _auth = FirebaseAuth.instance;
+      final user = _auth.currentUser;
+      final token = await user!.getIdTokenResult(false);
+      final claims = token.claims;
+      print(claims?.values);
+      claims?.keys.forEach((claim) => print(claim));
+      if (claims?["donor"] == true) {
+        print("JSEM DÁRCE!");
+      }
+    });
   }
 
   @override
