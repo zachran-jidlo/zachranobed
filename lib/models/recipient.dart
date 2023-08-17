@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
+import 'package:zachranobed/models/donor.dart';
 
 /*
  * Command to rebuild the recipient.g.dart file:
@@ -8,12 +9,12 @@ import 'package:zachranobed/notifiers/user_notifier.dart';
 part 'recipient.g.dart';
 
 @JsonSerializable()
-class Recipient extends UserNotifier {
+class Recipient extends ChangeNotifier {
   final String email;
   final String establishmentName;
   final String establishmentId;
   final String organization;
-  final List<String> donor;
+  final Donor? donor;
 
   Recipient({
     required this.email,

@@ -21,7 +21,6 @@ class MenuScreen extends StatelessWidget {
     final user = HelperService.getCurrentUser(context)!;
     final authService = GetIt.I<AuthService>();
 
-    // TODO - zobrazovatúdaje jinak v případě příjemce a v případě dárce
     return Scaffold(
       appBar: AppBar(
         title: Text(HelperService.getCurrentUser(context)!.email),
@@ -44,7 +43,9 @@ class MenuScreen extends StatelessWidget {
                 menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text: user.establishmentName,
+                    text: user is Donor
+                        ? user.establishmentName
+                        : user.donor?.establishmentName,
                   )
                 ],
               ),
@@ -53,8 +54,9 @@ class MenuScreen extends StatelessWidget {
                 menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text:
-                        user is Donor ? user.recipient : user.donor.toString(),
+                    text: user is Donor
+                        ? user.recipient?.establishmentName
+                        : user.establishmentName,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(

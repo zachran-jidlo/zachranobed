@@ -27,10 +27,10 @@ class OfferedFoodService {
     // TODO - todle bude potřeba sjednotit
     var query = _offeredFoodCollection.orderBy('date', descending: true).where(
         Filter.or(
-            Filter('donor',
+            Filter('donorId',
                 isEqualTo:
-                    HelperService.getCurrentUser(context)!.establishmentName),
-            Filter('recipient',
+                    HelperService.getCurrentUser(context)!.establishmentId),
+            Filter('recipientId',
                 isEqualTo:
                     HelperService.getCurrentUser(context)!.establishmentId)));
 
@@ -53,10 +53,9 @@ class OfferedFoodService {
     var mealsCount = 0;
     // TODO - todle bude potřeba sjednotit
     var query = _offeredFoodCollection.where(Filter.or(
-        Filter('donor',
-            isEqualTo:
-                HelperService.getCurrentUser(context)!.establishmentName),
-        Filter('recipient',
+        Filter('donorId',
+            isEqualTo: HelperService.getCurrentUser(context)!.establishmentId),
+        Filter('recipientId',
             isEqualTo:
                 HelperService.getCurrentUser(context)!.establishmentId)));
 

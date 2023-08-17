@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/models/recipient.dart';
 
 /*
  * Command to rebuild the donor.g.dart file:
@@ -10,12 +11,12 @@ part 'donor.g.dart';
 @JsonSerializable()
 class Donor extends ChangeNotifier {
   final String email;
-  final String pickUpFrom;
-  final String pickUpWithin;
+  final String? pickUpFrom;
+  final String? pickUpWithin;
   final String establishmentName;
   final String establishmentId;
   final String organization;
-  final String recipient;
+  final Recipient? recipient;
 
   Donor({
     required this.email,

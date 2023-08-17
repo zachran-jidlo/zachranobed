@@ -11,7 +11,9 @@ Recipient _$RecipientFromJson(Map<String, dynamic> json) => Recipient(
       establishmentName: json['establishmentName'] as String,
       establishmentId: json['establishmentId'] as String,
       organization: json['organization'] as String,
-      donor: (json['donor'] as List<dynamic>).map((e) => e as String).toList(),
+      donor: json['donor'] == null
+          ? null
+          : Donor.fromJson(json['donor'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RecipientToJson(Recipient instance) => <String, dynamic>{

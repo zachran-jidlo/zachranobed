@@ -13,7 +13,7 @@ import 'package:zachranobed/services/delivery_service.dart';
 
 class HelperService {
   static dynamic getCurrentUser(BuildContext context) =>
-      context.watch<UserNotifier>().user;
+      context.read<UserNotifier>().user;
 
   static int get getCurrentWeekNumber {
     final now = DateTime.now();
@@ -70,15 +70,15 @@ class HelperService {
     final user = await authService.getUserData();
 
     if (context.mounted) {
-      final userNotifier = Provider.of<UserNotifier>(context, listen: false);
+      final userNotifier = context.read<UserNotifier>();
       userNotifier.user = user;
+
+      final deliveryNotifier = context.read<DeliveryNotifier>();
 
       if (user is Donor) {
         final date =
-            HelperService.getDateTimeOfCurrentDelivery(user.pickUpFrom);
+            HelperService.getDateTimeOfCurrentDelivery(user.pickUpFrom!);
 
-        final deliveryNotifier =
-            Provider.of<DeliveryNotifier>(context, listen: false);
         deliveryNotifier.delivery = await deliveryService.getDelivery(
               date,
               user.establishmentName,
@@ -89,7 +89,14 @@ class HelperService {
               donor: userNotifier.user!.establishmentName,
               state: context.l10n!.deliveryCancelledState,
             );
+
+        return;
       }
+      deliveryNotifier.delivery = Delivery(
+        id: '123',
+        donor: userNotifier.user!.establishmentName,
+        state: context.l10n!.deliveryCancelledState,
+      );
     }
   }
 }
