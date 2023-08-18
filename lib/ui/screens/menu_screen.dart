@@ -121,7 +121,7 @@ class MenuScreen extends StatelessWidget {
                 onPressed: () async {
                   await authService.signOut();
                   if (context.mounted) {
-                    context.router.replace(const LoginRoute());
+                    context.router.replaceAll([const LoginRoute()]);
                   }
                 },
               ),
