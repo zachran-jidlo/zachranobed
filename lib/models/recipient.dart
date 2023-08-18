@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 /*
  * Command to rebuild the recipient.g.dart file:
@@ -9,19 +9,15 @@ import 'package:zachranobed/models/donor.dart';
 part 'recipient.g.dart';
 
 @JsonSerializable()
-class Recipient extends ChangeNotifier {
-  final String email;
-  final String establishmentName;
-  final String establishmentId;
-  final String organization;
+class Recipient extends UserData {
   final Donor? donor;
 
   Recipient({
-    required this.email,
-    required this.establishmentName,
-    required this.establishmentId,
-    required this.organization,
-    required this.donor,
+    required super.email,
+    required super.establishmentName,
+    required super.establishmentId,
+    required super.organization,
+    this.donor,
   });
 
   factory Recipient.fromJson(Map<String, dynamic> json) =>

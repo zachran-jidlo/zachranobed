@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/donor_service.dart';
 import 'package:zachranobed/services/recipient_service.dart';
 
@@ -9,7 +10,7 @@ class AuthService {
 
   AuthService(this._donorService, this._recipientService);
 
-  Future<dynamic> getUserData() async {
+  Future<UserData?> getUserData() async {
     final token = await _auth.currentUser!.getIdTokenResult(false);
     final claims = token.claims;
 

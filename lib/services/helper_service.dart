@@ -6,13 +6,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 
 class HelperService {
-  static dynamic getCurrentUser(BuildContext context) =>
+  static UserData? getCurrentUser(BuildContext context) =>
       context.read<UserNotifier>().user;
 
   static int get getCurrentWeekNumber {
@@ -40,20 +41,27 @@ class HelperService {
 
   static bool canDonate(BuildContext context) {
     final user = getCurrentUser(context);
-    final deliveryConfirmed =
-        context.read<DeliveryNotifier>().deliveryConfirmed(context);
-    final deliveryCancelled =
-        context.read<DeliveryNotifier>().deliveryCancelled(context);
-    final whileCanStillDonate = DateFormat('dd.MM.y HH:mm')
-        .parse(
-            '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} ${user!.pickUpFrom}')
-        .subtract(const Duration(minutes: 35));
 
-    if ((!deliveryConfirmed && DateTime.now().isAfter(whileCanStillDonate)) ||
-        deliveryCancelled) {
-      return false;
+    if (user is Donor) {
+      final deliveryNotifier = context.read<DeliveryNotifier>();
+      final deliveryConfirmed = deliveryNotifier.deliveryConfirmed(context);
+      final deliveryCancelled = deliveryNotifier.deliveryCancelled(context);
+
+      final currentTime = DateTime.now();
+      final pickupTime = DateFormat('dd.MM.y HH:mm').parse(
+        '${currentTime.day}.${currentTime.month}.${currentTime.year} ${user.pickUpFrom}',
+      );
+      final whileCanStillDonate = pickupTime.subtract(
+        const Duration(minutes: 35),
+      );
+
+      if ((!deliveryConfirmed && currentTime.isAfter(whileCanStillDonate)) ||
+          deliveryCancelled) {
+        return false;
+      }
+      return true;
     }
-    return true;
+    return false;
   }
 
   static Future<void> makePhoneCall(String phoneNumber) async {

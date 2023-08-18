@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/recipient.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -43,9 +44,9 @@ class MenuScreen extends StatelessWidget {
                 menuItems: [
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text: user is Donor
-                        ? user.establishmentName
-                        : user.donor?.establishmentName,
+                    text: user is Recipient
+                        ? user.donor!.establishmentName
+                        : user.establishmentName,
                   )
                 ],
               ),
@@ -55,7 +56,7 @@ class MenuScreen extends StatelessWidget {
                   MenuItem(
                     leadingIcon: Icons.perm_contact_calendar_outlined,
                     text: user is Donor
-                        ? user.recipient?.establishmentName
+                        ? user.recipient!.establishmentName
                         : user.establishmentName,
                   ),
                   const SizedBox(height: 8.0),

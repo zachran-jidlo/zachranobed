@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -38,8 +39,9 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
   }
 
   Duration _getRemainingTimeForDonation() {
+    final user = HelperService.getCurrentUser(context) as Donor;
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
-    String donateWithin = HelperService.getCurrentUser(context)!.pickUpFrom;
+    String donateWithin = user.pickUpFrom!;
 
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
@@ -78,6 +80,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
     final canDonate = _countdownTimer?.isActive ?? false;
 
     if (!canDonate) {
+      print("Jsem tu?");
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context
             .read<DeliveryNotifier>()

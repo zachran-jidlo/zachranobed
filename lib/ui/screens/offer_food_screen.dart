@@ -181,7 +181,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
-    Donor donor = HelperService.getCurrentUser(context);
+    final donor = HelperService.getCurrentUser(context) as Donor;
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
         OfferedFood(

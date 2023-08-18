@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:zachranobed/models/recipient.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 /*
  * Command to rebuild the donor.g.dart file:
@@ -9,23 +9,19 @@ import 'package:zachranobed/models/recipient.dart';
 part 'donor.g.dart';
 
 @JsonSerializable()
-class Donor extends ChangeNotifier {
-  final String email;
+class Donor extends UserData {
   final String? pickUpFrom;
   final String? pickUpWithin;
-  final String establishmentName;
-  final String establishmentId;
-  final String organization;
   final Recipient? recipient;
 
   Donor({
-    required this.email,
-    required this.pickUpFrom,
-    required this.pickUpWithin,
-    required this.establishmentName,
-    required this.establishmentId,
-    required this.organization,
-    required this.recipient,
+    required super.email,
+    required super.establishmentName,
+    required super.establishmentId,
+    required super.organization,
+    this.pickUpFrom,
+    this.pickUpWithin,
+    this.recipient,
   });
 
   factory Donor.fromJson(Map<String, dynamic> json) => _$DonorFromJson(json);
