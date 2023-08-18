@@ -66,14 +66,13 @@ class HelperService {
   static Future<void> loadUserInfo(BuildContext context) async {
     final authService = GetIt.I<AuthService>();
     final deliveryService = GetIt.I<DeliveryService>();
+    final userNotifier = context.read<UserNotifier>();
+    final deliveryNotifier = context.read<DeliveryNotifier>();
 
     final user = await authService.getUserData();
 
     if (context.mounted) {
-      final userNotifier = context.read<UserNotifier>();
       userNotifier.user = user;
-
-      final deliveryNotifier = context.read<DeliveryNotifier>();
 
       if (user is Donor) {
         final date =
@@ -81,22 +80,25 @@ class HelperService {
 
         deliveryNotifier.delivery = await deliveryService.getDelivery(
               date,
-              user.establishmentName,
+              user.establishmentId,
             ) ??
             // Dummy delivery in case, the real delivery doesn't exist
-            Delivery(
-              id: '123',
-              donor: userNotifier.user!.establishmentName,
-              state: context.l10n!.deliveryCancelledState,
-            );
+            _createDummyDelivery(context, userNotifier.user!.establishmentName);
 
         return;
       }
-      deliveryNotifier.delivery = Delivery(
-        id: '123',
-        donor: userNotifier.user!.establishmentName,
-        state: context.l10n!.deliveryCancelledState,
+      deliveryNotifier.delivery = _createDummyDelivery(
+        context,
+        userNotifier.user!.establishmentName,
       );
     }
+  }
+
+  static Delivery _createDummyDelivery(BuildContext context, String donor) {
+    return Delivery(
+      id: '123',
+      donorId: donor,
+      state: context.l10n!.deliveryCancelledState,
+    );
   }
 }

@@ -24,7 +24,6 @@ class OfferedFoodService {
     String? additionalFilterField,
     dynamic additionalFilterValue,
   }) {
-    // TODO - todle bude potřeba sjednotit
     var query = _offeredFoodCollection.orderBy('date', descending: true).where(
         Filter.or(
             Filter('donorId',
@@ -51,7 +50,7 @@ class OfferedFoodService {
   Future<int> getSavedMealsCount(
       {required BuildContext context, int? timePeriod}) async {
     var mealsCount = 0;
-    // TODO - todle bude potřeba sjednotit
+
     var query = _offeredFoodCollection.where(Filter.or(
         Filter('donorId',
             isEqualTo: HelperService.getCurrentUser(context)!.establishmentId),
