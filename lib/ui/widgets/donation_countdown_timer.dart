@@ -80,7 +80,6 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
     final canDonate = _countdownTimer?.isActive ?? false;
 
     if (!canDonate) {
-      print("Jsem tu?");
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context
             .read<DeliveryNotifier>()
