@@ -18,6 +18,7 @@ import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   final _deliveryService = GetIt.I<DeliveryService>();
+  //final _fCMTokenService = GetIt.I<FCMTokenService>();
 
   OverviewScreen({super.key});
 
@@ -110,6 +111,16 @@ class OverviewScreen extends StatelessWidget {
         buttonIcon: Icons.directions_car_filled_outlined,
         onButtonPressed: () async {
           await _callACourier(context);
+
+          /*if (context.mounted) {
+            final tokenData = await _fCMTokenService.getFCMToken(context);
+            final token = tokenData?.token;
+            await Notifications().notifyRecipient(
+              token: token,
+              body: 'Test notification body',
+              title: 'Test notification title',
+            );
+          }*/
         },
       ),
     );

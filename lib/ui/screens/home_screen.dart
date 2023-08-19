@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -24,11 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (context.read<UserNotifier>().user == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (context.read<UserNotifier>().user == null) {
         await HelperService.loadUserInfo(context);
-      });
-    }
+      }
+      await Notifications().getFCMToken();
+    });
   }
 
   @override
