@@ -85,7 +85,6 @@ class Notifications {
   Future<void> getFCMToken() async {
     final fCMToken = await _firebaseMessaging.getToken();
     _fCMTokenService.saveFCMToken(FCMToken(id: "", token: fCMToken!));
-    print('Token: $fCMToken');
   }
 
   /*Future<void> notifyRecipient(

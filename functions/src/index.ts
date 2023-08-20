@@ -46,7 +46,7 @@ export const notifyRecipientAboutDonation = functions.firestore
     const newValue = change.after.data();
     const previousValue = change.before.data();
 
-    if (newValue.state === "Potvrzeno" && newValue.state !== previousValue.state) {
+    if (newValue.state === "Potvrzeno" && newValue.state !== previousValue.state && isToday(newValue.pickUpFrom.toDate())) {
       const recipientId = newValue.recipientId;
 
       return admin.firestore().collection("fCMTokens").doc(recipientId).get()
@@ -76,3 +76,18 @@ export const notifyRecipientAboutDonation = functions.firestore
 
     return null;
   });
+
+
+// eslint-disable-next-line require-jsdoc
+/** Checks if the given date is today.
+ * @param {Date} date - The date to check.
+ * @return {Boolean} - True if the date is today, false otherwise.
+ */
+function isToday(date: Date): boolean {
+  const today = new Date();
+  return (
+    date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+  );
+}
