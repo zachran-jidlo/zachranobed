@@ -2,7 +2,7 @@
     package="com.example.zachranobed">
    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="zachranobed"
+        android:label="Zachraň oběd"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
