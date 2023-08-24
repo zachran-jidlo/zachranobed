@@ -3,7 +3,7 @@ import 'package:zachranobed/models/recipient.dart';
 
 class RecipientService {
   final _recipientCollection =
-      FirebaseFirestore.instance.collection('prijemci').withConverter(
+      FirebaseFirestore.instance.collection('recipients').withConverter(
     fromFirestore: (snapshot, options) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;

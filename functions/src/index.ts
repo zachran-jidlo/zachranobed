@@ -22,7 +22,7 @@ export const setDonorRole = functions.firestore.document("donors/{id}").onUpdate
   }
 });
 
-export const setRecipientRole = functions.firestore.document("prijemci/{id}").onUpdate((recipient, context) => {
+export const setRecipientRole = functions.firestore.document("recipients/{id}").onUpdate((recipient, context) => {
   const uid = recipient.after.data().authUid;
 
   if (!uid) {
