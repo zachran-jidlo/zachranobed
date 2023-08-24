@@ -3,7 +3,7 @@ import 'package:zachranobed/models/donor.dart';
 
 class DonorService {
   final _donorCollection =
-      FirebaseFirestore.instance.collection('darci').withConverter(
+      FirebaseFirestore.instance.collection('donors').withConverter(
     fromFirestore: (snapshot, options) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;

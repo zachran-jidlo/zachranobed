@@ -4,7 +4,7 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
-export const setDonorRole = functions.firestore.document("darci/{id}").onUpdate((donor, context) => {
+export const setDonorRole = functions.firestore.document("donors/{id}").onUpdate((donor, context) => {
   const uid = donor.after.data().authUid;
 
   if (!uid) {
