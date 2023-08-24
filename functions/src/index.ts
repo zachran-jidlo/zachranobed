@@ -41,7 +41,7 @@ export const setRecipientRole = functions.firestore.document("recipients/{id}").
 });
 
 export const notifyRecipientAboutDonation = functions.firestore
-  .document("rozvozy/{id}")
+  .document("deliveries/{id}")
   .onUpdate((change, context) => {
     const newValue = change.after.data();
     const previousValue = change.before.data();
