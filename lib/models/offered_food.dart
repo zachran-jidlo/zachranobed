@@ -14,10 +14,12 @@ class OfferedFood {
   final String id;
   @TimestampConverter()
   final DateTime date;
+  final int dateTimestamp;
   final FoodInfo foodInfo;
   final String packaging;
   @TimestampConverter()
   final DateTime consumeBy;
+  final int consumeByTimestamp;
   final String weekNumber;
   final String donorId;
   final String recipientId;
@@ -25,9 +27,11 @@ class OfferedFood {
   OfferedFood({
     required this.id,
     required this.date,
+    required this.dateTimestamp,
     required this.foodInfo,
     required this.packaging,
     required this.consumeBy,
+    required this.consumeByTimestamp,
     required this.weekNumber,
     required this.donorId,
     required this.recipientId,

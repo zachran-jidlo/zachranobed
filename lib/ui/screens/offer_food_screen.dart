@@ -182,19 +182,23 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
     final donor = HelperService.getCurrentUser(context) as Donor;
+    final now = DateTime.now();
+    final consumeBy =
+        DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text);
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
         OfferedFood(
           id: "",
-          date: DateTime.now(),
+          date: now,
+          dateTimestamp: now.millisecondsSinceEpoch ~/ 1000,
           foodInfo: FoodInfo(
             dishName: foodInfo.dishName,
             allergens: foodInfo.allergens,
             numberOfServings: foodInfo.numberOfServings,
           ),
           packaging: _selectedPackaging,
-          consumeBy:
-              DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          consumeBy: consumeBy,
+          consumeByTimestamp: consumeBy.millisecondsSinceEpoch ~/ 1000,
           weekNumber:
               '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
           donorId: donor.establishmentId,
