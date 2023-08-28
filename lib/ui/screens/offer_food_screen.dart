@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -180,6 +181,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
+    final donor = HelperService.getCurrentUser(context) as Donor;
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
         OfferedFood(
@@ -195,8 +197,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
               DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
           weekNumber:
               '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
-          donor: HelperService.getCurrentUser(context)!.establishmentName,
-          recipient: HelperService.getCurrentUser(context)!.recipient,
+          donorId: donor.establishmentId,
+          recipientId: donor.recipient!.establishmentId,
         ),
       );
     }

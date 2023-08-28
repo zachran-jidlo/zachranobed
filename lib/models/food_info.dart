@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 /*
- * Command to rebuild the user_data.g.dart file:
+ * Command to rebuild the food_info.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
 part 'food_info.g.dart';

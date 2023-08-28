@@ -11,10 +11,7 @@ class AppRouter extends $AppRouter {
           initial: true,
           guards: [AuthGuard()],
         ),
-        MaterialRoute(
-          page: LoginRoute.page,
-          guards: [AuthGuard()],
-        ),
+        MaterialRoute(page: LoginRoute.page),
         MaterialRoute(
           page: OfferFoodRoute.page,
           guards: [AuthGuard()],

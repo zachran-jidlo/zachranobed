@@ -4,7 +4,7 @@ import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/food_info.dart';
 
 /*
- * Command to rebuild the user_data.g.dart file:
+ * Command to rebuild the offered_food.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
 part 'offered_food.g.dart';
@@ -19,8 +19,8 @@ class OfferedFood {
   @TimestampConverter()
   final DateTime consumeBy;
   final String weekNumber;
-  final String donor;
-  final String recipient;
+  final String donorId;
+  final String recipientId;
 
   OfferedFood({
     required this.id,
@@ -29,8 +29,8 @@ class OfferedFood {
     required this.packaging,
     required this.consumeBy,
     required this.weekNumber,
-    required this.donor,
-    required this.recipient,
+    required this.donorId,
+    required this.recipientId,
   });
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) =>

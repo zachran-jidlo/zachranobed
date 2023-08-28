@@ -4,6 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/recipient.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
@@ -66,39 +68,51 @@ class OverviewScreen extends StatelessWidget {
     final deliveryConfirmed =
         context.watch<DeliveryNotifier>().deliveryConfirmed(context);
 
-    if (!HelperService.canDonate(context)) {
+    if (user is Recipient || !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    return deliveryConfirmed
-        ? SliverToBoxAdapter(
-            child: InfoBanner(
-              infoText: context.l10n!.courierWillCome,
-              infoValue: Text(
-                '${user!.pickUpFrom} a ${user.pickUpWithin}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: FontSize.s,
-                  color: ZOColors.onPrimaryLight,
-                ),
-              ),
-              buttonText: context.l10n!.contactCarrier,
-              buttonIcon: Icons.phone_outlined,
-              onButtonPressed: () async =>
-                  await HelperService.makePhoneCall('123456789'),
-            ),
-          )
-        : SliverToBoxAdapter(
-            child: InfoBanner(
-              infoText: context.l10n!.youCanDonate,
-              infoValue: const DonationCountdownTimer(),
-              buttonText: context.l10n!.callACourier,
-              buttonIcon: Icons.directions_car_filled_outlined,
-              onButtonPressed: () async {
-                await _callACourier(context);
-              },
-            ),
-          );
+    if (user is Donor) {
+      return deliveryConfirmed
+          ? _buildDeliveryConfirmedBanner(context, user)
+          : _buildDonationCountdownBanner(context);
+    }
+
+    return const SliverToBoxAdapter(child: SizedBox());
+  }
+
+  Widget _buildDeliveryConfirmedBanner(BuildContext context, Donor user) {
+    return SliverToBoxAdapter(
+      child: InfoBanner(
+        infoText: context.l10n!.courierWillCome,
+        infoValue: Text(
+          '${user.pickUpFrom} a ${user.pickUpWithin}',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: FontSize.s,
+            color: ZOColors.onPrimaryLight,
+          ),
+        ),
+        buttonText: context.l10n!.contactCarrier,
+        buttonIcon: Icons.phone_outlined,
+        onButtonPressed: () async =>
+            await HelperService.makePhoneCall('123456789'),
+      ),
+    );
+  }
+
+  Widget _buildDonationCountdownBanner(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: InfoBanner(
+        infoText: context.l10n!.youCanDonate,
+        infoValue: const DonationCountdownTimer(),
+        buttonText: context.l10n!.callACourier,
+        buttonIcon: Icons.directions_car_filled_outlined,
+        onButtonPressed: () async {
+          await _callACourier(context);
+        },
+      ),
+    );
   }
 
   Future<void> _callACourier(BuildContext context) async {

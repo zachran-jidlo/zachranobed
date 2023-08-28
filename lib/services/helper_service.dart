@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -40,20 +41,27 @@ class HelperService {
 
   static bool canDonate(BuildContext context) {
     final user = getCurrentUser(context);
-    final deliveryConfirmed =
-        context.read<DeliveryNotifier>().deliveryConfirmed(context);
-    final deliveryCancelled =
-        context.read<DeliveryNotifier>().deliveryCancelled(context);
-    final whileCanStillDonate = DateFormat('dd.MM.y HH:mm')
-        .parse(
-            '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} ${user!.pickUpFrom}')
-        .subtract(const Duration(minutes: 35));
 
-    if ((!deliveryConfirmed && DateTime.now().isAfter(whileCanStillDonate)) ||
-        deliveryCancelled) {
-      return false;
+    if (user is Donor) {
+      final deliveryNotifier = context.read<DeliveryNotifier>();
+      final deliveryConfirmed = deliveryNotifier.deliveryConfirmed(context);
+      final deliveryCancelled = deliveryNotifier.deliveryCancelled(context);
+
+      final currentTime = DateTime.now();
+      final pickupTime = DateFormat('dd.MM.y HH:mm').parse(
+        '${currentTime.day}.${currentTime.month}.${currentTime.year} ${user.pickUpFrom}',
+      );
+      final whileCanStillDonate = pickupTime.subtract(
+        const Duration(minutes: 35),
+      );
+
+      if ((!deliveryConfirmed && currentTime.isAfter(whileCanStillDonate)) ||
+          deliveryCancelled) {
+        return false;
+      }
+      return true;
     }
-    return true;
+    return false;
   }
 
   static Future<void> makePhoneCall(String phoneNumber) async {
@@ -66,26 +74,39 @@ class HelperService {
   static Future<void> loadUserInfo(BuildContext context) async {
     final authService = GetIt.I<AuthService>();
     final deliveryService = GetIt.I<DeliveryService>();
+    final userNotifier = context.read<UserNotifier>();
+    final deliveryNotifier = context.read<DeliveryNotifier>();
 
     final user = await authService.getUserData();
+
     if (context.mounted) {
-      final userNotifier = Provider.of<UserNotifier>(context, listen: false);
       userNotifier.user = user;
 
-      final date = HelperService.getDateTimeOfCurrentDelivery(user!.pickUpFrom);
+      if (user is Donor) {
+        final date =
+            HelperService.getDateTimeOfCurrentDelivery(user.pickUpFrom!);
 
-      final deliveryNotifier =
-          Provider.of<DeliveryNotifier>(context, listen: false);
-      deliveryNotifier.delivery = await deliveryService.getDelivery(
-            date,
-            user.establishmentName,
-          ) ??
-          // Dummy delivery in case, the real delivery doesn't exist
-          Delivery(
-            id: '123',
-            donor: userNotifier.user!.establishmentName,
-            state: context.l10n!.deliveryCancelledState,
-          );
+        deliveryNotifier.delivery = await deliveryService.getDelivery(
+              date,
+              user.establishmentId,
+            ) ??
+            // Dummy delivery in case, the real delivery doesn't exist
+            _createDummyDelivery(context, userNotifier.user!.establishmentName);
+
+        return;
+      }
+      deliveryNotifier.delivery = _createDummyDelivery(
+        context,
+        userNotifier.user!.establishmentName,
+      );
     }
+  }
+
+  static Delivery _createDummyDelivery(BuildContext context, String donor) {
+    return Delivery(
+      id: '123',
+      donorId: donor,
+      state: context.l10n!.deliveryCancelledState,
+    );
   }
 }

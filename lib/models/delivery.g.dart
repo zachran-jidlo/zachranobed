@@ -8,13 +8,13 @@ part of 'delivery.dart';
 
 _$_Delivery _$$_DeliveryFromJson(Map<String, dynamic> json) => _$_Delivery(
       id: json['id'] as String,
-      donor: json['donor'] as String,
+      donorId: json['donorId'] as String,
       state: json['state'] as String,
     );
 
 Map<String, dynamic> _$$_DeliveryToJson(_$_Delivery instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'donor': instance.donor,
+      'donorId': instance.donorId,
       'state': instance.state,
     };

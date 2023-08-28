@@ -16,10 +16,10 @@ class DeliveryService {
     },
   );
 
-  Future<Delivery?> getDelivery(DateTime date, String donor) async {
+  Future<Delivery?> getDelivery(DateTime date, String donorId) async {
     final deliveryQuerySnapshot = await _deliveryCollection
         .where('pickUpFrom', isEqualTo: date)
-        .where('donor', isEqualTo: donor)
+        .where('donorId', isEqualTo: donorId)
         .get();
 
     if (deliveryQuerySnapshot.docs.isNotEmpty) {

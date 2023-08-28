@@ -11,7 +11,7 @@ part 'delivery.g.dart';
 class Delivery with _$Delivery {
   const factory Delivery({
     required String id,
-    required String donor,
+    required String donorId,
     required String state,
   }) = _Delivery;
 

@@ -21,7 +21,7 @@ Delivery _$DeliveryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Delivery {
   String get id => throw _privateConstructorUsedError;
-  String get donor => throw _privateConstructorUsedError;
+  String get donorId => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $DeliveryCopyWith<$Res> {
   factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) then) =
       _$DeliveryCopyWithImpl<$Res, Delivery>;
   @useResult
-  $Res call({String id, String donor, String state});
+  $Res call({String id, String donorId, String state});
 }
 
 /// @nodoc
@@ -52,7 +52,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
   @override
   $Res call({
     Object? id = null,
-    Object? donor = null,
+    Object? donorId = null,
     Object? state = null,
   }) {
     return _then(_value.copyWith(
@@ -60,9 +60,9 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      donor: null == donor
-          ? _value.donor
-          : donor // ignore: cast_nullable_to_non_nullable
+      donorId: null == donorId
+          ? _value.donorId
+          : donorId // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -79,7 +79,7 @@ abstract class _$$_DeliveryCopyWith<$Res> implements $DeliveryCopyWith<$Res> {
       __$$_DeliveryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String donor, String state});
+  $Res call({String id, String donorId, String state});
 }
 
 /// @nodoc
@@ -94,7 +94,7 @@ class __$$_DeliveryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? donor = null,
+    Object? donorId = null,
     Object? state = null,
   }) {
     return _then(_$_Delivery(
@@ -102,9 +102,9 @@ class __$$_DeliveryCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      donor: null == donor
-          ? _value.donor
-          : donor // ignore: cast_nullable_to_non_nullable
+      donorId: null == donorId
+          ? _value.donorId
+          : donorId // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -118,7 +118,7 @@ class __$$_DeliveryCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Delivery implements _Delivery {
   const _$_Delivery(
-      {required this.id, required this.donor, required this.state});
+      {required this.id, required this.donorId, required this.state});
 
   factory _$_Delivery.fromJson(Map<String, dynamic> json) =>
       _$$_DeliveryFromJson(json);
@@ -126,13 +126,13 @@ class _$_Delivery implements _Delivery {
   @override
   final String id;
   @override
-  final String donor;
+  final String donorId;
   @override
   final String state;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donor: $donor, state: $state)';
+    return 'Delivery(id: $id, donorId: $donorId, state: $state)';
   }
 
   @override
@@ -141,13 +141,13 @@ class _$_Delivery implements _Delivery {
         (other.runtimeType == runtimeType &&
             other is _$_Delivery &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.donor, donor) || other.donor == donor) &&
+            (identical(other.donorId, donorId) || other.donorId == donorId) &&
             (identical(other.state, state) || other.state == state));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, donor, state);
+  int get hashCode => Object.hash(runtimeType, id, donorId, state);
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +166,7 @@ class _$_Delivery implements _Delivery {
 abstract class _Delivery implements Delivery {
   const factory _Delivery(
       {required final String id,
-      required final String donor,
+      required final String donorId,
       required final String state}) = _$_Delivery;
 
   factory _Delivery.fromJson(Map<String, dynamic> json) = _$_Delivery.fromJson;
@@ -174,7 +174,7 @@ abstract class _Delivery implements Delivery {
   @override
   String get id;
   @override
-  String get donor;
+  String get donorId;
   @override
   String get state;
   @override
