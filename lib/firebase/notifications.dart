@@ -86,39 +86,4 @@ class Notifications {
     final fCMToken = await _firebaseMessaging.getToken();
     _fCMTokenService.saveFCMToken(FCMToken(id: "", token: fCMToken!));
   }
-
-  /*Future<void> notifyRecipient(
-      {String? token, required String body, required String title}) async {
-    final dio = Dio();
-
-    try {
-      await dio.postUri(
-        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-        options: Options(
-          headers: {
-            'content-Type': 'application/json',
-            'authorization':
-                'key=AAAA143Z3GY:APA91bG75lcmy0KGaNX2w03lZrOUj5qxOw5u0mMEfyLJN_6EV8MIp1gIAk94AjD9wsgMjz1YJe1amIlISBmwQrrdjeF1SXW67O717Yosm6SSkV-NAjQTXG10JQJiuRC8Fcu_KQyK1MD3'
-          },
-        ),
-        data: {
-          'priority': 'high',
-          'data': {
-            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'status': 'done',
-            'body': body,
-            'title': title,
-          },
-          'notification': {
-            'title': title,
-            'body': body,
-            'android_channel_id': 'high_importance_channel',
-          },
-          'to': token,
-        },
-      );
-    } catch (e) {
-      print(e.toString());
-    }
-  }*/
 }
