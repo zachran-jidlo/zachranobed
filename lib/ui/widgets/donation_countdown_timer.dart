@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -39,7 +39,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
   }
 
   Duration _getRemainingTimeForDonation() {
-    final user = HelperService.getCurrentUser(context) as Donor;
+    final user = HelperService.getCurrentUser(context) as Canteen;
     String timeNow = DateFormat('HH:mm:ss').format(DateTime.now());
     String donateWithin = user.pickUpFrom!;
 

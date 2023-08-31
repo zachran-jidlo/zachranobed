@@ -1,11 +1,12 @@
+// Deploy functions: firebase deploy --only functions
 /* eslint-disable max-len */
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
-export const setDonorRole = functions.firestore.document("donors/{id}").onUpdate((donor, context) => {
-  const uid = donor.after.data().authUid;
+export const setCanteenRole = functions.firestore.document("canteens/{id}").onUpdate((canteen, context) => {
+  const uid = canteen.after.data().authUid;
 
   if (!uid) {
     return;
@@ -13,7 +14,7 @@ export const setDonorRole = functions.firestore.document("donors/{id}").onUpdate
 
   try {
     admin.auth().setCustomUserClaims(uid, {
-      donor: true,
+      canteen: true,
     });
 
     console.log(`Custom claim set for user with UID: ${uid}`);
@@ -22,8 +23,8 @@ export const setDonorRole = functions.firestore.document("donors/{id}").onUpdate
   }
 });
 
-export const setRecipientRole = functions.firestore.document("recipients/{id}").onUpdate((recipient, context) => {
-  const uid = recipient.after.data().authUid;
+export const setCharityRole = functions.firestore.document("charities/{id}").onUpdate((charity, context) => {
+  const uid = charity.after.data().authUid;
 
   if (!uid) {
     return;
@@ -31,7 +32,7 @@ export const setRecipientRole = functions.firestore.document("recipients/{id}").
 
   try {
     admin.auth().setCustomUserClaims(uid, {
-      recipient: true,
+      charity: true,
     });
 
     console.log(`Custom claim set for user with UID: ${uid}`);
@@ -40,7 +41,7 @@ export const setRecipientRole = functions.firestore.document("recipients/{id}").
   }
 });
 
-export const notifyRecipientAboutDonation = functions.firestore
+export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
   .onUpdate((change, context) => {
     const newValue = change.after.data();

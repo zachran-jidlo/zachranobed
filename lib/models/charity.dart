@@ -1,18 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 /*
- * Command to rebuild the recipient.g.dart file:
+ * Command to rebuild the charity.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
-part 'recipient.g.dart';
+part 'charity.g.dart';
 
 @JsonSerializable()
-class Recipient extends UserData {
-  final Donor? donor;
+class Charity extends UserData {
+  final Canteen? donor;
 
-  Recipient({
+  Charity({
     required super.email,
     required super.establishmentName,
     required super.establishmentId,
@@ -20,8 +20,8 @@ class Recipient extends UserData {
     this.donor,
   });
 
-  factory Recipient.fromJson(Map<String, dynamic> json) =>
-      _$RecipientFromJson(json);
+  factory Charity.fromJson(Map<String, dynamic> json) =>
+      _$CharityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RecipientToJson(this);
+  Map<String, dynamic> toJson() => _$CharityToJson(this);
 }
