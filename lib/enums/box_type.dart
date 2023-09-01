@@ -11,7 +11,7 @@ abstract class BoxTypeHelper {
   static String toValue(BoxType boxType, BuildContext context) {
     switch (boxType) {
       case BoxType.reusableBox:
-        return context.l10n!.boxTypeRekrabicka;
+        return context.l10n!.boxTypeReKrabicka;
       case BoxType.ikeaBox:
         return context.l10n!.boxTypeIkeaBox;
       case BoxType.disposablePackaging:
