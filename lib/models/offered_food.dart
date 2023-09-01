@@ -19,7 +19,7 @@ class OfferedFood with _$OfferedFood {
     String? foodCategory,
     List<String>? allergens,
     int? numberOfServings,
-    String? packaging,
+    String? boxType,
     @TimestampConverter() DateTime? consumeBy,
     int? consumeByTimestamp,
     String? weekNumber,

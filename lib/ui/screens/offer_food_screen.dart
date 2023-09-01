@@ -48,7 +48,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         foodInfo.dishName != null ||
         foodInfo.allergens != null ||
         foodInfo.numberOfServings != null ||
-        foodInfo.packaging != null ||
+        foodInfo.boxType != null ||
         foodInfo.foodCategory != null ||
         foodInfo.consumeBy != null);
   }
@@ -160,7 +160,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           allergens: foodInfo.allergens,
           foodCategory: foodInfo.foodCategory,
           numberOfServings: foodInfo.numberOfServings,
-          packaging: foodInfo.packaging,
+          boxType: foodInfo.boxType,
           consumeBy: foodInfo.consumeBy,
           consumeByTimestamp:
               foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,

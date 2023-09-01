@@ -60,8 +60,8 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ),
               _buildGap(),
               ZOTextField(
-                label: context.l10n!.packaging,
-                initialValue: offeredFood.packaging,
+                label: context.l10n!.boxType,
+                initialValue: offeredFood.boxType,
                 readOnly: true,
               ),
               _buildGap(),

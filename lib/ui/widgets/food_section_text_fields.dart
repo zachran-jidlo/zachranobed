@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:intl/intl.dart';
+import 'package:zachranobed/enums/boxType.dart';
 import 'package:zachranobed/enums/foodCategory.dart';
-import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -131,17 +131,17 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ),
         _buildGap(),
         ZODropdown(
-          hintText: context.l10n!.packaging,
-          items: Packaging.values
-              .map((e) => PackagingHelper.toValue(e, context))
+          hintText: context.l10n!.boxType,
+          items: BoxType.values
+              .map((e) => BoxTypeHelper.toValue(e, context))
               .toList(),
           onValidation: (val) =>
               val == null ? context.l10n!.requiredDropdownError : null,
           onChanged: (val) {
             widget.foodSections[index] =
-                widget.foodSections[index].copyWith(packaging: val);
+                widget.foodSections[index].copyWith(boxType: val);
           },
-          initialValue: offeredFood.packaging,
+          initialValue: offeredFood.boxType,
         ),
         _buildGap(),
         ZODateTimePicker(

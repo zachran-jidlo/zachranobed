@@ -28,7 +28,7 @@ mixin _$OfferedFood {
   String? get foodCategory => throw _privateConstructorUsedError;
   List<String>? get allergens => throw _privateConstructorUsedError;
   int? get numberOfServings => throw _privateConstructorUsedError;
-  String? get packaging => throw _privateConstructorUsedError;
+  String? get boxType => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get consumeBy => throw _privateConstructorUsedError;
   int? get consumeByTimestamp => throw _privateConstructorUsedError;
@@ -56,7 +56,7 @@ abstract class $OfferedFoodCopyWith<$Res> {
       String? foodCategory,
       List<String>? allergens,
       int? numberOfServings,
-      String? packaging,
+      String? boxType,
       @TimestampConverter() DateTime? consumeBy,
       int? consumeByTimestamp,
       String? weekNumber,
@@ -84,7 +84,7 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
     Object? foodCategory = freezed,
     Object? allergens = freezed,
     Object? numberOfServings = freezed,
-    Object? packaging = freezed,
+    Object? boxType = freezed,
     Object? consumeBy = freezed,
     Object? consumeByTimestamp = freezed,
     Object? weekNumber = freezed,
@@ -120,9 +120,9 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      packaging: freezed == packaging
-          ? _value.packaging
-          : packaging // ignore: cast_nullable_to_non_nullable
+      boxType: freezed == boxType
+          ? _value.boxType
+          : boxType // ignore: cast_nullable_to_non_nullable
               as String?,
       consumeBy: freezed == consumeBy
           ? _value.consumeBy
@@ -164,7 +164,7 @@ abstract class _$$_OfferedFoodCopyWith<$Res>
       String? foodCategory,
       List<String>? allergens,
       int? numberOfServings,
-      String? packaging,
+      String? boxType,
       @TimestampConverter() DateTime? consumeBy,
       int? consumeByTimestamp,
       String? weekNumber,
@@ -190,7 +190,7 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
     Object? foodCategory = freezed,
     Object? allergens = freezed,
     Object? numberOfServings = freezed,
-    Object? packaging = freezed,
+    Object? boxType = freezed,
     Object? consumeBy = freezed,
     Object? consumeByTimestamp = freezed,
     Object? weekNumber = freezed,
@@ -226,9 +226,9 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      packaging: freezed == packaging
-          ? _value.packaging
-          : packaging // ignore: cast_nullable_to_non_nullable
+      boxType: freezed == boxType
+          ? _value.boxType
+          : boxType // ignore: cast_nullable_to_non_nullable
               as String?,
       consumeBy: freezed == consumeBy
           ? _value.consumeBy
@@ -265,7 +265,7 @@ class _$_OfferedFood implements _OfferedFood {
       this.foodCategory,
       final List<String>? allergens,
       this.numberOfServings,
-      this.packaging,
+      this.boxType,
       @TimestampConverter() this.consumeBy,
       this.consumeByTimestamp,
       this.weekNumber,
@@ -300,7 +300,7 @@ class _$_OfferedFood implements _OfferedFood {
   @override
   final int? numberOfServings;
   @override
-  final String? packaging;
+  final String? boxType;
   @override
   @TimestampConverter()
   final DateTime? consumeBy;
@@ -315,7 +315,7 @@ class _$_OfferedFood implements _OfferedFood {
 
   @override
   String toString() {
-    return 'OfferedFood(id: $id, date: $date, dateTimestamp: $dateTimestamp, dishName: $dishName, foodCategory: $foodCategory, allergens: $allergens, numberOfServings: $numberOfServings, packaging: $packaging, consumeBy: $consumeBy, consumeByTimestamp: $consumeByTimestamp, weekNumber: $weekNumber, donorId: $donorId, recipientId: $recipientId)';
+    return 'OfferedFood(id: $id, date: $date, dateTimestamp: $dateTimestamp, dishName: $dishName, foodCategory: $foodCategory, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, consumeBy: $consumeBy, consumeByTimestamp: $consumeByTimestamp, weekNumber: $weekNumber, donorId: $donorId, recipientId: $recipientId)';
   }
 
   @override
@@ -335,8 +335,7 @@ class _$_OfferedFood implements _OfferedFood {
                 .equals(other._allergens, _allergens) &&
             (identical(other.numberOfServings, numberOfServings) ||
                 other.numberOfServings == numberOfServings) &&
-            (identical(other.packaging, packaging) ||
-                other.packaging == packaging) &&
+            (identical(other.boxType, boxType) || other.boxType == boxType) &&
             (identical(other.consumeBy, consumeBy) ||
                 other.consumeBy == consumeBy) &&
             (identical(other.consumeByTimestamp, consumeByTimestamp) ||
@@ -359,7 +358,7 @@ class _$_OfferedFood implements _OfferedFood {
       foodCategory,
       const DeepCollectionEquality().hash(_allergens),
       numberOfServings,
-      packaging,
+      boxType,
       consumeBy,
       consumeByTimestamp,
       weekNumber,
@@ -389,7 +388,7 @@ abstract class _OfferedFood implements OfferedFood {
       final String? foodCategory,
       final List<String>? allergens,
       final int? numberOfServings,
-      final String? packaging,
+      final String? boxType,
       @TimestampConverter() final DateTime? consumeBy,
       final int? consumeByTimestamp,
       final String? weekNumber,
@@ -415,7 +414,7 @@ abstract class _OfferedFood implements OfferedFood {
   @override
   int? get numberOfServings;
   @override
-  String? get packaging;
+  String? get boxType;
   @override
   @TimestampConverter()
   DateTime? get consumeBy;

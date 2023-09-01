@@ -7,8 +7,8 @@ enum FoodCategory {
 }
 
 abstract class FoodCategoryHelper {
-  static String toValue(FoodCategory packaging, BuildContext context) {
-    switch (packaging) {
+  static String toValue(FoodCategory foodCategory, BuildContext context) {
+    switch (foodCategory) {
       case FoodCategory.warm:
         return context.l10n!.foodCategoryWarm;
       case FoodCategory.cooled:

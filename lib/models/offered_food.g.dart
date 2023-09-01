@@ -18,7 +18,7 @@ _$_OfferedFood _$$_OfferedFoodFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       numberOfServings: json['numberOfServings'] as int?,
-      packaging: json['packaging'] as String?,
+      boxType: json['boxType'] as String?,
       consumeBy: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['consumeBy'], const TimestampConverter().fromJson),
       consumeByTimestamp: json['consumeByTimestamp'] as int?,
@@ -37,7 +37,7 @@ Map<String, dynamic> _$$_OfferedFoodToJson(_$_OfferedFood instance) =>
       'foodCategory': instance.foodCategory,
       'allergens': instance.allergens,
       'numberOfServings': instance.numberOfServings,
-      'packaging': instance.packaging,
+      'boxType': instance.boxType,
       'consumeBy': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.consumeBy, const TimestampConverter().toJson),
       'consumeByTimestamp': instance.consumeByTimestamp,
