@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/snackbar.dart';
+import 'package:zachranobed/ui/widgets/supporting_text.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
@@ -33,14 +35,14 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ZOTextField(
-                label: context.l10n!.foodName,
-                initialValue: offeredFood.dishName,
+                label: context.l10n!.allergens,
+                initialValue: offeredFood.allergens?.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
-                label: context.l10n!.allergens,
-                initialValue: offeredFood.allergens?.join(", "),
+                label: context.l10n!.foodCategory,
+                initialValue: offeredFood.foodCategory,
                 readOnly: true,
               ),
               _buildGap(),
@@ -48,15 +50,6 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 label: context.l10n!.numberOfServings,
                 initialValue: offeredFood.numberOfServings.toString(),
                 readOnly: true,
-              ),
-              const SizedBox(height: GapSize.xl),
-              Row(
-                children: [
-                  Text(
-                    context.l10n!.summaryInfo,
-                    style: const TextStyle(fontSize: FontSize.m),
-                  ),
-                ],
               ),
               _buildGap(),
               ZOTextField(
@@ -68,10 +61,18 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ZOTextField(
                 label: context.l10n!.consumeBy,
                 initialValue:
-                    DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy!),
+                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy!),
                 readOnly: true,
               ),
-              _buildGap(),
+              const SizedBox(height: GapSize.xs),
+              SupportingText(
+                text: '${context.l10n!.donatedOn}'
+                    ' ${DateFormat('d.M.y').format(offeredFood.date!)}'
+                    ' ${context.l10n!.atTime}'
+                    ' ${DateFormat('HH:mm').format(offeredFood.date!)}.',
+              ),
+              const SizedBox(height: GapSize.xs),
+              ZOSnackBar(message: context.l10n!.formCantBeEdited),
             ],
           ),
         ),

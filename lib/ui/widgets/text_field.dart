@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/supporting_text.dart';
 
 class ZOTextField extends StatelessWidget {
   final String label;
@@ -51,21 +52,11 @@ class ZOTextField extends StatelessWidget {
           readOnly: readOnly,
         ),
         supportingText != null
-            ? Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: WidgetStyle.padding,
-                    ),
-                    child: Text(
-                      supportingText!,
-                      style: TextStyle(
-                        fontSize: FontSize.xxs,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                ],
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: WidgetStyle.padding,
+                ),
+                child: SupportingText(text: supportingText!),
               )
             : const SizedBox(),
       ],
