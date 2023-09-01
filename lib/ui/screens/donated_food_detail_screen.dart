@@ -26,7 +26,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    offeredFood.foodInfo.dishName,
+                    offeredFood.dishName ?? '',
                     style: const TextStyle(fontSize: FontSize.l),
                   ),
                 ],
@@ -34,19 +34,19 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ZOTextField(
                 label: context.l10n!.foodName,
-                value: offeredFood.foodInfo.dishName,
+                initialValue: offeredFood.dishName,
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.allergens,
-                value: offeredFood.foodInfo.allergens?.join(", "),
+                initialValue: offeredFood.allergens?.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.numberOfServings,
-                value: offeredFood.foodInfo.numberOfServings.toString(),
+                initialValue: offeredFood.numberOfServings.toString(),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xl),
@@ -61,13 +61,14 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.packaging,
-                value: offeredFood.packaging,
+                initialValue: offeredFood.packaging,
                 readOnly: true,
               ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.consumeBy,
-                value: DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy),
+                initialValue:
+                    DateFormat('dd.M.y HH:mm').format(offeredFood.consumeBy!),
                 readOnly: true,
               ),
               _buildGap(),

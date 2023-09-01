@@ -9,7 +9,7 @@ class ZOTextField extends StatelessWidget {
   final TextInputType? inputType;
   final List<TextInputFormatter>? textInputFormatters;
   final Function(String)? onChanged;
-  final String? value;
+  final String? initialValue;
   final String? supportingText;
   final bool readOnly;
 
@@ -21,7 +21,7 @@ class ZOTextField extends StatelessWidget {
     this.inputType,
     this.textInputFormatters,
     this.onChanged,
-    this.value,
+    this.initialValue,
     this.supportingText,
     this.readOnly = false,
   });
@@ -45,7 +45,7 @@ class ZOTextField extends StatelessWidget {
             enabledBorder: WidgetStyle.inputBorder,
             focusedBorder: WidgetStyle.inputBorder,
           ),
-          initialValue: value,
+          initialValue: initialValue,
           focusNode: focus,
           onTapOutside: (event) => focus.unfocus(),
           readOnly: readOnly,
