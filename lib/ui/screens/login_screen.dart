@@ -10,7 +10,7 @@ import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
-import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
+import 'package:zachranobed/ui/widgets/password_text_field.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
