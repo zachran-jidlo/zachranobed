@@ -21,6 +21,10 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: ChangePasswordRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: DonatedFoodDetailRoute.page,
           guards: [AuthGuard()],
         ),

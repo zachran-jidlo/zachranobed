@@ -31,6 +31,17 @@ class MenuScreen extends StatelessWidget {
           child: Column(
             children: [
               MenuSection(
+                label: context.l10n!.settings,
+                menuItems: [
+                  MenuItem(
+                    leadingIcon: Icons.password,
+                    text: context.l10n!.changePassword,
+                    onPressed: () =>
+                        context.router.push(const ChangePasswordRoute()),
+                  )
+                ],
+              ),
+              MenuSection(
                 label: context.l10n!.recipient,
                 menuItems: [
                   MenuItem(

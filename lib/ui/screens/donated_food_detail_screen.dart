@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
-import 'package:zachranobed/ui/widgets/snackbar.dart';
+import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -72,7 +72,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                     ' ${DateFormat('HH:mm').format(offeredFood.date!)}.',
               ),
               const SizedBox(height: GapSize.xs),
-              ZOSnackBar(message: context.l10n!.formCantBeEdited),
+              ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
             ],
           ),
         ),

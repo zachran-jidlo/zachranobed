@@ -3,10 +3,10 @@ import 'package:zachranobed/shared/constants.dart';
 
 double _HEIGHT = 48.0;
 
-class ZOSnackBar extends StatelessWidget {
+class ZOPersistentSnackBar extends StatelessWidget {
   final String message;
 
-  const ZOSnackBar({super.key, required this.message});
+  const ZOPersistentSnackBar({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
