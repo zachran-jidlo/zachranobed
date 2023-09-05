@@ -18,62 +18,65 @@ class DonatedFoodDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: WidgetStyle.padding,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text(
-                    offeredFood.dishName ?? '',
-                    style: const TextStyle(fontSize: FontSize.l),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ZOTextField(
-                label: context.l10n!.allergens,
-                initialValue: offeredFood.allergens?.join(", "),
-                readOnly: true,
-              ),
-              _buildGap(),
-              ZOTextField(
-                label: context.l10n!.foodCategory,
-                initialValue: offeredFood.foodCategory,
-                readOnly: true,
-              ),
-              _buildGap(),
-              ZOTextField(
-                label: context.l10n!.numberOfServings,
-                initialValue: offeredFood.numberOfServings.toString(),
-                readOnly: true,
-              ),
-              _buildGap(),
-              ZOTextField(
-                label: context.l10n!.boxType,
-                initialValue: offeredFood.boxType,
-                readOnly: true,
-              ),
-              _buildGap(),
-              ZOTextField(
-                label: context.l10n!.consumeBy,
-                initialValue:
-                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy!),
-                readOnly: true,
-              ),
-              const SizedBox(height: GapSize.xs),
-              SupportingText(
-                text: '${context.l10n!.donatedOn}'
-                    ' ${DateFormat('d.M.y').format(offeredFood.date!)}'
-                    ' ${context.l10n!.atTime}'
-                    ' ${DateFormat('HH:mm').format(offeredFood.date!)}.',
-              ),
-              const SizedBox(height: GapSize.xs),
-              ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.padding,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      offeredFood.dishName ?? '',
+                      style: const TextStyle(fontSize: FontSize.l),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ZOTextField(
+                  label: context.l10n!.allergens,
+                  initialValue: offeredFood.allergens?.join(", "),
+                  readOnly: true,
+                ),
+                _buildGap(),
+                ZOTextField(
+                  label: context.l10n!.foodCategory,
+                  initialValue: offeredFood.foodCategory,
+                  readOnly: true,
+                ),
+                _buildGap(),
+                ZOTextField(
+                  label: context.l10n!.numberOfServings,
+                  initialValue: offeredFood.numberOfServings.toString(),
+                  readOnly: true,
+                ),
+                _buildGap(),
+                ZOTextField(
+                  label: context.l10n!.boxType,
+                  initialValue: offeredFood.boxType,
+                  readOnly: true,
+                ),
+                _buildGap(),
+                ZOTextField(
+                  label: context.l10n!.consumeBy,
+                  initialValue:
+                      DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy!),
+                  readOnly: true,
+                ),
+                const SizedBox(height: GapSize.xs),
+                SupportingText(
+                  text: '${context.l10n!.donatedOn}'
+                      ' ${DateFormat('d.M.y').format(offeredFood.date!)}'
+                      ' ${context.l10n!.atTime}'
+                      ' ${DateFormat('HH:mm').format(offeredFood.date!)}.',
+                ),
+                const SizedBox(height: GapSize.xs),
+                ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
+                const SizedBox(height: GapSize.s),
+              ],
+            ),
           ),
         ),
       ),
