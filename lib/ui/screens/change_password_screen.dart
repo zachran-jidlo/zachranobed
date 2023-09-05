@@ -42,64 +42,68 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       appBar: AppBar(
         title: Text(context.l10n!.changePassword),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.padding,
-          ),
-          child: Column(
-            children: [
-              const SizedBox(height: GapSize.xxs),
-              ZOTextField(
-                label: context.l10n!.currentPassword,
-                inputType: TextInputType.text,
-                controller: _oldPasswordController,
-                onValidation: (val) {
-                  return val!.isEmpty ? context.l10n!.requiredFieldError : null;
-                },
-              ),
-              const SizedBox(height: GapSize.l),
-              ZOTextField(
-                label: context.l10n!.newPassword,
-                inputType: TextInputType.text,
-                controller: _newPasswordController,
-                onValidation: (val) {
-                  if (val!.isEmpty) {
-                    return context.l10n!.requiredFieldError;
-                  }
-                  if (val.length < 6) {
-                    return context.l10n!.passwordLengthError;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: GapSize.l),
-              ZOTextField(
-                label: context.l10n!.repeatNewPassword,
-                inputType: TextInputType.text,
-                controller: _confirmNewPasswordController,
-                onValidation: (val) {
-                  if (val!.isEmpty) {
-                    return context.l10n!.requiredFieldError;
-                  }
-                  if (val != _newPasswordController.text) {
-                    return context.l10n!.passwordsDontMatchError;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: GapSize.l),
-              ZOButton(
-                text: context.l10n!.savePassword,
-                icon: Icons.check,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    await _changePassword();
-                  }
-                },
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: WidgetStyle.padding,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: GapSize.xxs),
+                ZOTextField(
+                  label: context.l10n!.currentPassword,
+                  inputType: TextInputType.text,
+                  controller: _oldPasswordController,
+                  onValidation: (val) {
+                    return val!.isEmpty
+                        ? context.l10n!.requiredFieldError
+                        : null;
+                  },
+                ),
+                const SizedBox(height: GapSize.l),
+                ZOTextField(
+                  label: context.l10n!.newPassword,
+                  inputType: TextInputType.text,
+                  controller: _newPasswordController,
+                  onValidation: (val) {
+                    if (val!.isEmpty) {
+                      return context.l10n!.requiredFieldError;
+                    }
+                    if (val.length < 6) {
+                      return context.l10n!.passwordLengthError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: GapSize.l),
+                ZOTextField(
+                  label: context.l10n!.repeatNewPassword,
+                  inputType: TextInputType.text,
+                  controller: _confirmNewPasswordController,
+                  onValidation: (val) {
+                    if (val!.isEmpty) {
+                      return context.l10n!.requiredFieldError;
+                    }
+                    if (val != _newPasswordController.text) {
+                      return context.l10n!.passwordsDontMatchError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: GapSize.l),
+                ZOButton(
+                  text: context.l10n!.savePassword,
+                  icon: Icons.check,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await _changePassword();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
