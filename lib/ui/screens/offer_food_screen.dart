@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/donor.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -181,20 +181,24 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
-    final donor = HelperService.getCurrentUser(context) as Donor;
+    final donor = HelperService.getCurrentUser(context) as Canteen;
+    final now = DateTime.now();
+    final consumeBy =
+        DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text);
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
         OfferedFood(
           id: "",
-          date: DateTime.now(),
+          date: now,
+          dateTimestamp: now.millisecondsSinceEpoch ~/ 1000,
           foodInfo: FoodInfo(
             dishName: foodInfo.dishName,
             allergens: foodInfo.allergens,
             numberOfServings: foodInfo.numberOfServings,
           ),
           packaging: _selectedPackaging,
-          consumeBy:
-              DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text),
+          consumeBy: consumeBy,
+          consumeByTimestamp: consumeBy.millisecondsSinceEpoch ~/ 1000,
           weekNumber:
               '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
           donorId: donor.establishmentId,

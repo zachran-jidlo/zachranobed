@@ -5,7 +5,7 @@ import 'package:zachranobed/services/helper_service.dart';
 
 class OfferedFoodService {
   final _offeredFoodCollection =
-      FirebaseFirestore.instance.collection('nabidka').withConverter(
+      FirebaseFirestore.instance.collection('offeredFood').withConverter(
     fromFirestore: (snapshot, options) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;

@@ -3,7 +3,7 @@ import 'package:zachranobed/models/delivery.dart';
 
 class DeliveryService {
   final _deliveryCollection =
-      FirebaseFirestore.instance.collection('rozvozy').withConverter(
+      FirebaseFirestore.instance.collection('deliveries').withConverter(
     fromFirestore: (snapshot, options) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;

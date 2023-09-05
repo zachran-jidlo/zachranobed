@@ -1,25 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/donor_service.dart';
-import 'package:zachranobed/services/recipient_service.dart';
+import 'package:zachranobed/services/canteen_service.dart';
+import 'package:zachranobed/services/charity_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final DonorService _donorService;
-  final RecipientService _recipientService;
+  final CanteenService _canteenService;
+  final CharityService _charityService;
 
-  AuthService(this._donorService, this._recipientService);
+  AuthService(this._canteenService, this._charityService);
 
   Future<UserData?> getUserData() async {
     final token = await _auth.currentUser!.getIdTokenResult(false);
     final claims = token.claims;
 
-    if (claims?["donor"] == true) {
-      return await _donorService.getDonorByEmail(_auth.currentUser!.email!);
+    if (claims?["canteen"] == true) {
+      return await _canteenService.getCanteenByEmail(_auth.currentUser!.email!);
     }
-    if (claims?["recipient"] == true) {
-      return await _recipientService
-          .getRecipientByEmail(_auth.currentUser!.email!);
+    if (claims?["charity"] == true) {
+      return await _charityService.getCharityByEmail(_auth.currentUser!.email!);
     }
     return null;
   }

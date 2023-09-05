@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/donor.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -42,7 +42,7 @@ class HelperService {
   static bool canDonate(BuildContext context) {
     final user = getCurrentUser(context);
 
-    if (user is Donor) {
+    if (user is Canteen) {
       final deliveryNotifier = context.read<DeliveryNotifier>();
       final deliveryConfirmed = deliveryNotifier.deliveryConfirmed(context);
       final deliveryCancelled = deliveryNotifier.deliveryCancelled(context);
@@ -82,7 +82,7 @@ class HelperService {
     if (context.mounted) {
       userNotifier.user = user;
 
-      if (user is Donor) {
+      if (user is Canteen) {
         final date =
             HelperService.getDateTimeOfCurrentDelivery(user.pickUpFrom!);
 

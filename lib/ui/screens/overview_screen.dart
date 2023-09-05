@@ -4,8 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/donor.dart';
-import 'package:zachranobed/models/recipient.dart';
+import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
@@ -18,6 +18,7 @@ import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   final _deliveryService = GetIt.I<DeliveryService>();
+  //final _fCMTokenService = GetIt.I<FCMTokenService>();
 
   OverviewScreen({super.key});
 
@@ -68,11 +69,11 @@ class OverviewScreen extends StatelessWidget {
     final deliveryConfirmed =
         context.watch<DeliveryNotifier>().deliveryConfirmed(context);
 
-    if (user is Recipient || !HelperService.canDonate(context)) {
+    if (user is Charity || !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    if (user is Donor) {
+    if (user is Canteen) {
       return deliveryConfirmed
           ? _buildDeliveryConfirmedBanner(context, user)
           : _buildDonationCountdownBanner(context);
@@ -81,7 +82,7 @@ class OverviewScreen extends StatelessWidget {
     return const SliverToBoxAdapter(child: SizedBox());
   }
 
-  Widget _buildDeliveryConfirmedBanner(BuildContext context, Donor user) {
+  Widget _buildDeliveryConfirmedBanner(BuildContext context, Canteen user) {
     return SliverToBoxAdapter(
       child: InfoBanner(
         infoText: context.l10n!.courierWillCome,
