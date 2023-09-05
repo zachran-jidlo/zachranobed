@@ -15,7 +15,7 @@ class DonatedFoodListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String date =
-        '${offeredFood.date.day.toString()}.${offeredFood.date.month.toString()}.';
+        '${offeredFood.date?.day.toString()}.${offeredFood.date?.month.toString()}.';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -24,9 +24,9 @@ class DonatedFoodListTile extends StatelessWidget {
           side: const BorderSide(width: 1, color: ZOColors.borderColor),
           borderRadius: BorderRadius.circular(10),
         ),
-        title: Text(offeredFood.foodInfo.dishName),
+        title: Text(offeredFood.dishName ?? ''),
         subtitle: Text(date),
-        trailing: Text('${offeredFood.foodInfo.numberOfServings} ks'),
+        trailing: Text('${offeredFood.numberOfServings} ks'),
         onTap: () => context.router
             .push(DonatedFoodDetailRoute(offeredFood: offeredFood)),
       ),

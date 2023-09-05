@@ -10,7 +10,8 @@ import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
-import 'package:zachranobed/ui/widgets/passwd_text_field.dart';
+import 'package:zachranobed/ui/widgets/password_text_field.dart';
+import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
@@ -120,11 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          ZOTemporarySnackBar(
             backgroundColor: Colors.red,
-            content: Center(
-              child: Text(context.l10n!.wrongCredentialsError),
-            ),
+            message: context.l10n!.wrongCredentialsError,
           ),
         );
       }

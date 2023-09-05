@@ -38,4 +38,17 @@ class AuthService {
   Future<void> signOut() async {
     await _auth.signOut();
   }
+
+  Future<void> reauthenticateUser(String password) async {
+    final credential = EmailAuthProvider.credential(
+      email: _auth.currentUser!.email!,
+      password: password,
+    );
+
+    await _auth.currentUser!.reauthenticateWithCredential(credential);
+  }
+
+  Future<void> changePassword(String password) async {
+    await _auth.currentUser!.updatePassword(password);
+  }
 }

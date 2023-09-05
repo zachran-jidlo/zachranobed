@@ -6,6 +6,7 @@ class ZODateTimePicker extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
   final IconData icon;
+  final Function(PointerDownEvent)? onTappedOutside;
 
   const ZODateTimePicker({
     super.key,
@@ -13,6 +14,7 @@ class ZODateTimePicker extends StatefulWidget {
     required this.controller,
     this.onValidation,
     required this.icon,
+    this.onTappedOutside,
   });
 
   @override
@@ -74,6 +76,7 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
         controller: widget.controller,
         validator: widget.onValidation,
         enabled: false,
+        onTapOutside: widget.onTappedOutside,
         style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
           labelText: widget.label,

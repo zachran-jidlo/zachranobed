@@ -68,7 +68,7 @@ class OfferedFoodService {
     final donations = querySnapshot.docs.map((doc) => doc.data()).toList();
 
     for (var donation in donations) {
-      mealsCount += donation.foodInfo.numberOfServings!;
+      mealsCount += donation.numberOfServings!;
     }
 
     return mealsCount;

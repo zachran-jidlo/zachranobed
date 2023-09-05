@@ -3,11 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
-import 'package:zachranobed/enums/packaging.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/food_info.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -15,9 +12,7 @@ import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
-import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
-import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
 
 @RoutePage()
@@ -35,25 +30,27 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _consumeByController = TextEditingController();
-  String _selectedPackaging = '';
-
-  final List<FoodInfo> _foodSections = [FoodInfo()];
+  final List<OfferedFood> _foodSections = [const OfferedFood()];
+  final List<TextEditingController> _consumeByControllers = [
+    TextEditingController()
+  ];
 
   @override
   void dispose() {
-    _consumeByController.dispose();
+    for (var controller in _consumeByControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   bool _somethingIsFilled() {
-    if (_consumeByController.text.isNotEmpty || _selectedPackaging != '') {
-      return true;
-    }
     return _foodSections.any((foodInfo) =>
-        foodInfo.dishName.isNotEmpty == true ||
+        foodInfo.dishName != null ||
         foodInfo.allergens != null ||
-        foodInfo.numberOfServings != null);
+        foodInfo.numberOfServings != null ||
+        foodInfo.boxType != null ||
+        foodInfo.foodCategory != null ||
+        foodInfo.consumeBy != null);
   }
 
   Future<bool> _showConfirmationDialog() async {
@@ -103,6 +100,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     children: <Widget>[
                       FoodSectionTextFields(
                         foodSections: _foodSections,
+                        controllers: _consumeByControllers,
                       ),
                       ZOButton(
                         text: context.l10n!.addAnotherFood,
@@ -110,37 +108,11 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         isSecondary: true,
                         height: 40.0,
                         onPressed: () {
-                          setState(() => _foodSections.add(FoodInfo()));
+                          setState(() {
+                            _foodSections.add(const OfferedFood());
+                            _consumeByControllers.add(TextEditingController());
+                          });
                         },
-                      ),
-                      const SizedBox(height: GapSize.xl),
-                      Row(
-                        children: [
-                          Text(
-                            context.l10n!.summaryInfo,
-                            style: const TextStyle(fontSize: FontSize.m),
-                          ),
-                        ],
-                      ),
-                      _buildGap(),
-                      ZODropdown(
-                        hintText: context.l10n!.packaging,
-                        items: Packaging.values
-                            .map((e) => PackagingHelper.toValue(e, context))
-                            .toList(),
-                        onValidation: (val) => val == null
-                            ? context.l10n!.requiredDropdownError
-                            : null,
-                        onChanged: (value) => _selectedPackaging = value,
-                      ),
-                      _buildGap(),
-                      ZODateTimePicker(
-                        label: context.l10n!.consumeBy,
-                        icon: MaterialSymbols.calendar_today,
-                        controller: _consumeByController,
-                        onValidation: (val) => val!.isEmpty
-                            ? context.l10n!.requiredFieldError
-                            : null,
                       ),
                       const SizedBox(height: GapSize.xl),
                       ZOButton(
@@ -175,32 +147,24 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
-  Widget _buildGap() {
-    return const SizedBox(height: GapSize.l);
-  }
-
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
     final donor = HelperService.getCurrentUser(context) as Canteen;
     final now = DateTime.now();
-    final consumeBy =
-        DateFormat('dd.MM.y HH:mm').parse(_consumeByController.text);
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
         OfferedFood(
-          id: "",
           date: now,
           dateTimestamp: now.millisecondsSinceEpoch ~/ 1000,
-          foodInfo: FoodInfo(
-            dishName: foodInfo.dishName,
-            allergens: foodInfo.allergens,
-            numberOfServings: foodInfo.numberOfServings,
-          ),
-          packaging: _selectedPackaging,
-          consumeBy: consumeBy,
-          consumeByTimestamp: consumeBy.millisecondsSinceEpoch ~/ 1000,
-          weekNumber:
-              '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
+          dishName: foodInfo.dishName,
+          allergens: foodInfo.allergens,
+          foodCategory: foodInfo.foodCategory,
+          numberOfServings: foodInfo.numberOfServings,
+          boxType: foodInfo.boxType,
+          consumeBy: foodInfo.consumeBy,
+          consumeByTimestamp:
+              foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,
+          weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
           donorId: donor.establishmentId,
           recipientId: donor.recipient!.establishmentId,
         ),

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
@@ -19,7 +17,6 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = HelperService.getCurrentUser(context)!;
     final authService = GetIt.I<AuthService>();
 
     return Scaffold(
@@ -34,32 +31,19 @@ class MenuScreen extends StatelessWidget {
           child: Column(
             children: [
               MenuSection(
-                label: context.l10n!.organization,
-                menuItems: [
-                  MenuItem(leadingIcon: Icons.business, text: user.organization)
-                ],
-              ),
-              MenuSection(
-                label: context.l10n!.donor,
+                label: context.l10n!.settings,
                 menuItems: [
                   MenuItem(
-                    leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text: user is Charity
-                        ? user.donor!.establishmentName
-                        : user.establishmentName,
+                    leadingIcon: Icons.password,
+                    text: context.l10n!.changePassword,
+                    onPressed: () =>
+                        context.router.push(const ChangePasswordRoute()),
                   )
                 ],
               ),
               MenuSection(
                 label: context.l10n!.recipient,
                 menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.perm_contact_calendar_outlined,
-                    text: user is Canteen
-                        ? user.recipient!.establishmentName
-                        : user.establishmentName,
-                  ),
-                  const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.phone_outlined,
                     text: context.l10n!.contactCarrier,

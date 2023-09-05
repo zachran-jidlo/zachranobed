@@ -6,6 +6,7 @@ class ZODropdown extends StatefulWidget {
   final List<String> items;
   final String? Function(String?)? onValidation;
   final Function(String) onChanged;
+  final String? initialValue;
 
   const ZODropdown({
     super.key,
@@ -13,6 +14,7 @@ class ZODropdown extends StatefulWidget {
     required this.items,
     this.onValidation,
     required this.onChanged,
+    this.initialValue,
   });
 
   @override
@@ -34,6 +36,7 @@ class _ZODropdownState extends State<ZODropdown> {
           widget.onChanged(value!);
         });
       },
+      value: widget.initialValue,
       decoration: const InputDecoration(
         enabledBorder: WidgetStyle.inputBorder,
         focusedBorder: WidgetStyle.inputBorder,
