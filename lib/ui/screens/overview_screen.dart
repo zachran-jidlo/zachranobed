@@ -6,11 +6,13 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/box_data_table.dart';
 import 'package:zachranobed/ui/widgets/card_list.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
@@ -18,17 +20,19 @@ import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   final _deliveryService = GetIt.I<DeliveryService>();
-  //final _fCMTokenService = GetIt.I<FCMTokenService>();
 
   OverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.overview),
         actions: [
           IconButton(
+            // TODO - otevřít obrazovku s notifikacema
             onPressed: () {
               print('Bell pressed');
             },
@@ -44,7 +48,7 @@ class OverviewScreen extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          _buildInfoBanner(context),
+          _buildInfoBanner(context, user!),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
@@ -53,6 +57,8 @@ class OverviewScreen extends StatelessWidget {
             sliver: MultiSliver(
               children: [
                 const CardList(),
+                const SizedBox(height: GapSize.s),
+                BoxDataTable(user: user),
                 const SizedBox(height: GapSize.s),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),
@@ -64,8 +70,7 @@ class OverviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoBanner(BuildContext context) {
-    final user = HelperService.getCurrentUser(context);
+  Widget _buildInfoBanner(BuildContext context, UserData user) {
     final deliveryConfirmed =
         context.watch<DeliveryNotifier>().deliveryConfirmed(context);
 

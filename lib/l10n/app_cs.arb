@@ -80,5 +80,7 @@
     "passwordsDontMatchError": "Hesla se neshodují.",
     "savePassword": "Uložit heslo",
     "newPasswordSuccessfullySaved": "Heslo bylo úspěšně změněno. Prosím přihlašte se novým heslem.",
-    "somethingWentWrongError": "Něco se nepovedlo."
+    "somethingWentWrongError": "Něco se nepovedlo.",
+    "atCharity": "U charity",
+    "atCanteen": "U jídelny"
 }
