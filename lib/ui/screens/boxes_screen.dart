@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/donated_food_list_info.dart';
+import 'package:zachranobed/models/box_movement_list_info.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/box_movement_list.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 
-class DonationsScreen extends StatefulWidget {
-  const DonationsScreen({super.key});
+class BoxesScreen extends StatefulWidget {
+  const BoxesScreen({super.key});
 
   @override
-  State<DonationsScreen> createState() => _DonationsScreenState();
+  State<BoxesScreen> createState() => _BoxesScreenState();
 }
 
-class _DonationsScreenState extends State<DonationsScreen> {
-  final List<DonatedFoodListInfo> _donationsLists = [];
+class _BoxesScreenState extends State<BoxesScreen> {
+  final List<BoxMovementListInfo> _boxMovementLists = [];
 
   var year = DateTime.now().year.toInt();
   final currentWeekNumber = HelperService.getCurrentWeekNumber;
@@ -24,22 +24,14 @@ class _DonationsScreenState extends State<DonationsScreen> {
   @override
   void initState() {
     super.initState();
-    desiredWeekNumber = currentWeekNumber - _donationsLists.length - 2;
+    desiredWeekNumber = currentWeekNumber - _boxMovementLists.length - 2;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n!.donations),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Kliknuto na hledat');
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        title: Text(context.l10n!.boxes),
       ),
       body: CustomScrollView(
         slivers: [
@@ -49,29 +41,25 @@ class _DonationsScreenState extends State<DonationsScreen> {
             ),
             sliver: MultiSliver(
               children: [
-                DonatedFoodList(
+                BoxMovementList(
                   title: context.l10n!.thisWeek,
-                  additionalFilterField: 'weekNumber',
-                  additionalFilterValue:
-                      '${DateTime.now().year}-$currentWeekNumber',
+                  weekNumber: '${DateTime.now().year}-$currentWeekNumber',
+                  user: HelperService.getCurrentUser(context)!,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                DonatedFoodList(
+                BoxMovementList(
                   title: context.l10n!.lastWeek,
-                  additionalFilterField: 'weekNumber',
-                  additionalFilterValue:
-                      '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
+                  weekNumber: '${DateTime.now().year}-${currentWeekNumber - 1}',
+                  user: HelperService.getCurrentUser(context)!,
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                for (var donatedFood in _donationsLists)
+                for (var boxMovement in _boxMovementLists)
                   MultiSliver(
                     children: [
-                      DonatedFoodList(
-                        title: donatedFood.title,
-                        additionalFilterField:
-                            donatedFood.additionalFilterField,
-                        additionalFilterValue:
-                            donatedFood.additionalFilterValue,
+                      BoxMovementList(
+                        title: boxMovement.title,
+                        weekNumber: boxMovement.weekNumber,
+                        user: boxMovement.user,
                       ),
                       const SliverToBoxAdapter(
                         child: SizedBox(height: GapSize.xs),
@@ -86,7 +74,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                     height: 40.0,
                     isSecondary: true,
                     onPressed: () {
-                      _buildDonationsList(context);
+                      _buildBoxMovementList(context);
                     },
                   ),
                 ),
@@ -99,18 +87,18 @@ class _DonationsScreenState extends State<DonationsScreen> {
     );
   }
 
-  void _buildDonationsList(BuildContext context) {
+  void _buildBoxMovementList(BuildContext context) {
     if (desiredWeekNumber <= 0) {
       desiredWeekNumber = Constants.lastWeekOfYear;
       year--;
     }
 
     setState(() {
-      _donationsLists.add(
-        DonatedFoodListInfo(
+      _boxMovementLists.add(
+        BoxMovementListInfo(
           title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
-          additionalFilterField: 'weekNumber',
-          additionalFilterValue: '$year-$desiredWeekNumber',
+          weekNumber: '$year-$desiredWeekNumber',
+          user: HelperService.getCurrentUser(context)!,
         ),
       );
     });

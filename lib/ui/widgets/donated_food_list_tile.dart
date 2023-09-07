@@ -7,10 +7,7 @@ import 'package:zachranobed/shared/constants.dart';
 class DonatedFoodListTile extends StatelessWidget {
   final OfferedFood offeredFood;
 
-  const DonatedFoodListTile({
-    super.key,
-    required this.offeredFood,
-  });
+  const DonatedFoodListTile({super.key, required this.offeredFood});
 
   @override
   Widget build(BuildContext context) {

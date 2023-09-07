@@ -1,9 +1,9 @@
 class DonatedFoodListInfo {
-  String title;
-  String additionalFilterField;
-  String additionalFilterValue;
+  final String title;
+  final String additionalFilterField;
+  final String additionalFilterValue;
 
-  DonatedFoodListInfo({
+  const DonatedFoodListInfo({
     required this.title,
     required this.additionalFilterField,
     required this.additionalFilterValue,
