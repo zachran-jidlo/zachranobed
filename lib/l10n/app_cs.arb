@@ -83,5 +83,7 @@
     "newPasswordSuccessfullySaved": "Heslo bylo úspěšně změněno. Prosím přihlašte se novým heslem.",
     "somethingWentWrongError": "Něco se nepovedlo.",
     "atCharity": "U charity",
-    "atCanteen": "U jídelny"
+    "atCanteen": "U jídelny",
+    "numberOfBoxes": "Počet krabiček",
+    "sentOn": "Odesláno dne"
 }
