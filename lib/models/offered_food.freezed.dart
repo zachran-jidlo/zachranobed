@@ -35,6 +35,7 @@ mixin _$OfferedFood {
   String? get weekNumber => throw _privateConstructorUsedError;
   String? get donorId => throw _privateConstructorUsedError;
   String? get recipientId => throw _privateConstructorUsedError;
+  int? get numberOfBoxes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,7 +62,8 @@ abstract class $OfferedFoodCopyWith<$Res> {
       int? consumeByTimestamp,
       String? weekNumber,
       String? donorId,
-      String? recipientId});
+      String? recipientId,
+      int? numberOfBoxes});
 }
 
 /// @nodoc
@@ -90,6 +92,7 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
     Object? weekNumber = freezed,
     Object? donorId = freezed,
     Object? recipientId = freezed,
+    Object? numberOfBoxes = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -144,6 +147,10 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String?,
+      numberOfBoxes: freezed == numberOfBoxes
+          ? _value.numberOfBoxes
+          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -169,7 +176,8 @@ abstract class _$$_OfferedFoodCopyWith<$Res>
       int? consumeByTimestamp,
       String? weekNumber,
       String? donorId,
-      String? recipientId});
+      String? recipientId,
+      int? numberOfBoxes});
 }
 
 /// @nodoc
@@ -196,6 +204,7 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
     Object? weekNumber = freezed,
     Object? donorId = freezed,
     Object? recipientId = freezed,
+    Object? numberOfBoxes = freezed,
   }) {
     return _then(_$_OfferedFood(
       id: freezed == id
@@ -250,6 +259,10 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String?,
+      numberOfBoxes: freezed == numberOfBoxes
+          ? _value.numberOfBoxes
+          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -270,7 +283,8 @@ class _$_OfferedFood implements _OfferedFood {
       this.consumeByTimestamp,
       this.weekNumber,
       this.donorId,
-      this.recipientId})
+      this.recipientId,
+      this.numberOfBoxes})
       : _allergens = allergens;
 
   factory _$_OfferedFood.fromJson(Map<String, dynamic> json) =>
@@ -312,10 +326,12 @@ class _$_OfferedFood implements _OfferedFood {
   final String? donorId;
   @override
   final String? recipientId;
+  @override
+  final int? numberOfBoxes;
 
   @override
   String toString() {
-    return 'OfferedFood(id: $id, date: $date, dateTimestamp: $dateTimestamp, dishName: $dishName, foodCategory: $foodCategory, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, consumeBy: $consumeBy, consumeByTimestamp: $consumeByTimestamp, weekNumber: $weekNumber, donorId: $donorId, recipientId: $recipientId)';
+    return 'OfferedFood(id: $id, date: $date, dateTimestamp: $dateTimestamp, dishName: $dishName, foodCategory: $foodCategory, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, consumeBy: $consumeBy, consumeByTimestamp: $consumeByTimestamp, weekNumber: $weekNumber, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes)';
   }
 
   @override
@@ -344,7 +360,9 @@ class _$_OfferedFood implements _OfferedFood {
                 other.weekNumber == weekNumber) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
             (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId));
+                other.recipientId == recipientId) &&
+            (identical(other.numberOfBoxes, numberOfBoxes) ||
+                other.numberOfBoxes == numberOfBoxes));
   }
 
   @JsonKey(ignore: true)
@@ -363,7 +381,8 @@ class _$_OfferedFood implements _OfferedFood {
       consumeByTimestamp,
       weekNumber,
       donorId,
-      recipientId);
+      recipientId,
+      numberOfBoxes);
 
   @JsonKey(ignore: true)
   @override
@@ -393,7 +412,8 @@ abstract class _OfferedFood implements OfferedFood {
       final int? consumeByTimestamp,
       final String? weekNumber,
       final String? donorId,
-      final String? recipientId}) = _$_OfferedFood;
+      final String? recipientId,
+      final int? numberOfBoxes}) = _$_OfferedFood;
 
   factory _OfferedFood.fromJson(Map<String, dynamic> json) =
       _$_OfferedFood.fromJson;
@@ -426,6 +446,8 @@ abstract class _OfferedFood implements OfferedFood {
   String? get donorId;
   @override
   String? get recipientId;
+  @override
+  int? get numberOfBoxes;
   @override
   @JsonKey(ignore: true)
   _$$_OfferedFoodCopyWith<_$_OfferedFood> get copyWith =>

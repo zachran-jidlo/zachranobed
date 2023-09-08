@@ -38,6 +38,8 @@ class AppRoot extends StatelessWidget {
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
             appBarTheme: const AppBarTheme(
               scrolledUnderElevation: 0,
             ),

@@ -34,6 +34,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final List<TextEditingController> _consumeByControllers = [
     TextEditingController()
   ];
+  final List<bool> _checkboxValues = [true];
 
   @override
   void dispose() {
@@ -48,6 +49,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         foodInfo.dishName != null ||
         foodInfo.allergens != null ||
         foodInfo.numberOfServings != null ||
+        foodInfo.numberOfBoxes != null ||
         foodInfo.boxType != null ||
         foodInfo.foodCategory != null ||
         foodInfo.consumeBy != null);
@@ -101,6 +103,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       FoodSectionTextFields(
                         foodSections: _foodSections,
                         controllers: _consumeByControllers,
+                        checkboxValues: _checkboxValues,
                       ),
                       ZOButton(
                         text: context.l10n!.addAnotherFood,
@@ -111,6 +114,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           setState(() {
                             _foodSections.add(const OfferedFood());
                             _consumeByControllers.add(TextEditingController());
+                            _checkboxValues.add(true);
                           });
                         },
                       ),
@@ -160,6 +164,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           allergens: foodInfo.allergens,
           foodCategory: foodInfo.foodCategory,
           numberOfServings: foodInfo.numberOfServings,
+          numberOfBoxes: foodInfo.numberOfBoxes ?? foodInfo.numberOfServings,
           boxType: foodInfo.boxType,
           consumeBy: foodInfo.consumeBy,
           consumeByTimestamp:

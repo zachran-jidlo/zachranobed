@@ -10,7 +10,8 @@
     "invalidAllergensFormatError": "Zadejte prosím alergeny ve správném formátu",
     "requiredDropdownError": "Vyberte prosím nějakou možnost",
     "boxTypeReKrabicka": "ReKrabička",
-    "boxTypeIkeaBox": "IKEA krabička",
+    "boxTypeIkeaBoxSmall": "IKEA malá",
+    "boxTypeIkeaBoxLarge": "IKEA velká",
     "packagingDisposable": "jednorázový obal",
     "foodCategoryWarm": "Teplý pokrm",
     "foodCategoryCooled": "Zchlazený pokrm",
@@ -85,5 +86,6 @@
     "atCharity": "U charity",
     "atCanteen": "U jídelny",
     "numberOfBoxes": "Počet krabiček",
+    "sameNumberOfServingsAsBoxes": "Počet porcí a krabiček je stejný",
     "sentOn": "Odesláno dne"
 }

@@ -25,6 +25,7 @@ class OfferedFood with _$OfferedFood {
     String? weekNumber,
     String? donorId,
     String? recipientId,
+    int? numberOfBoxes,
   }) = _OfferedFood;
 
   factory OfferedFood.fromJson(Map<String, dynamic> json) =>

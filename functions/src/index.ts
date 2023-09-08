@@ -5,6 +5,8 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
+const db = admin.firestore();
+
 export const setCanteenRole = functions.firestore.document("canteens/{id}").onUpdate((canteen, context) => {
   const uid = canteen.after.data().authUid;
 
@@ -78,6 +80,81 @@ export const notifyCharityAboutDonation = functions.firestore
     return null;
   });
 
+export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
+  const data = snapshot.data();
+  const donorId = data.donorId;
+  const recipientId = data.recipientId;
+  const boxType = data.boxType;
+  const numberOfBoxes = data.numberOfBoxes;
+  const weekNumber = data.weekNumber;
+  const date = data.date;
+
+  if (boxType == "jednorázový obal") {
+    return;
+  }
+
+  const boxMovementData = {
+    senderId: donorId,
+    recipientId: recipientId,
+    boxType: boxType,
+    numberOfBoxes: numberOfBoxes,
+    weekNumber: weekNumber,
+    date: date,
+  };
+
+  try {
+    const docRef = await db.collection("boxMovement").add(boxMovementData);
+    console.log("New box movement document added with ID:", docRef.id);
+    return null;
+  } catch (error) {
+    console.error("Error creating box movement document:", error);
+    return null;
+  }
+});
+
+export const updateBoxQuantitiesOnBoxMovement = functions.firestore
+  .document("boxMovement/{id}")
+  .onCreate(async (snapshot, context) => {
+    const data = snapshot.data();
+    const senderId = data.senderId;
+    const recipientId = data.recipientId;
+    const boxType = data.boxType;
+    const numberOfBoxes = data.numberOfBoxes;
+
+    const boxesQuery = db.collection("boxes")
+      .where("canteenId", "==", senderId)
+      .where("charityId", "==", recipientId)
+      .where("boxType", "==", boxType);
+
+    try {
+      await db.runTransaction((transaction) => {
+        return transaction.get(boxesQuery)
+          .then((querySnapshot) => {
+            if (!querySnapshot.empty) {
+              const boxDocRef = querySnapshot.docs[0].ref;
+              const boxData = querySnapshot.docs[0].data();
+
+              const updatedCanteenQuantity = boxData.quantityAtCanteen - numberOfBoxes;
+
+              const updatedCharityQuantity = boxData.quantityAtCharity + numberOfBoxes;
+
+              transaction.update(boxDocRef, {
+                quantityAtCanteen: updatedCanteenQuantity,
+                quantityAtCharity: updatedCharityQuantity,
+              });
+            } else {
+              console.error("Matching box not found for update.");
+            }
+            return null;
+          });
+      });
+      console.log("Box quantities updated successfully in the \"boxes\" collection.");
+      return null;
+    } catch (error) {
+      console.error("Error updating box quantities in \"boxes\" collection:", error);
+      return null;
+    }
+  });
 
 // eslint-disable-next-line require-jsdoc
 /** Checks if the given date is today.

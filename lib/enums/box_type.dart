@@ -3,7 +3,8 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 enum BoxType {
   reusableBox,
-  ikeaBox,
+  ikeaBoxSmall,
+  ikeaBoxLarge,
   disposablePackaging,
 }
 
@@ -12,8 +13,10 @@ abstract class BoxTypeHelper {
     switch (boxType) {
       case BoxType.reusableBox:
         return context.l10n!.boxTypeReKrabicka;
-      case BoxType.ikeaBox:
-        return context.l10n!.boxTypeIkeaBox;
+      case BoxType.ikeaBoxSmall:
+        return context.l10n!.boxTypeIkeaBoxSmall;
+      case BoxType.ikeaBoxLarge:
+        return context.l10n!.boxTypeIkeaBoxLarge;
       case BoxType.disposablePackaging:
         return context.l10n!.packagingDisposable;
       default:

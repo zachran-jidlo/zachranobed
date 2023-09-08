@@ -7,6 +7,7 @@ import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -14,11 +15,13 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 class FoodSectionTextFields extends StatefulWidget {
   final List<OfferedFood> foodSections;
   final List<TextEditingController> controllers;
+  final List<bool> checkboxValues;
 
   const FoodSectionTextFields({
     super.key,
     required this.foodSections,
     required this.controllers,
+    required this.checkboxValues,
   });
 
   @override
@@ -130,6 +133,50 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
           initialValue: offeredFood.numberOfServings?.toString(),
         ),
         _buildGap(),
+        ZOCheckbox(
+          isChecked: widget.checkboxValues[index],
+          onChanged: (bool? value) {
+            setState(() {
+              widget.checkboxValues[index] = value!;
+
+              widget.foodSections[index] =
+                  widget.foodSections[index].copyWith(numberOfBoxes: null);
+            });
+          },
+          title: context.l10n!.sameNumberOfServingsAsBoxes,
+        ),
+        _buildGap(),
+        !widget.checkboxValues[index]
+            ? Column(
+                children: [
+                  ZOTextField(
+                    label: context.l10n!.numberOfBoxes,
+                    onValidation: (val) {
+                      if (val!.isEmpty) {
+                        return context.l10n!.requiredFieldError;
+                      }
+                      int? validNumber = int.tryParse(val);
+                      if (validNumber == null) {
+                        return context.l10n!.invalidNumberError;
+                      }
+                      return null;
+                    },
+                    inputType: TextInputType.number,
+                    textInputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    onChanged: (val) {
+                      widget.foodSections[index] = widget.foodSections[index]
+                          .copyWith(
+                              numberOfBoxes:
+                                  val.isEmpty ? null : int.parse(val));
+                    },
+                    initialValue: offeredFood.numberOfBoxes?.toString(),
+                  ),
+                  _buildGap(),
+                ],
+              )
+            : const SizedBox(),
         ZODropdown(
           hintText: context.l10n!.boxType,
           items: BoxType.values
@@ -173,6 +220,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         setState(() {
           widget.foodSections.removeAt(index);
           widget.controllers.removeAt(index);
+          widget.checkboxValues.removeAt(index);
         });
       },
       child: Container(
