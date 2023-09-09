@@ -140,6 +140,7 @@ class _OrderShippingOfBoxesScreenState
           canteenId: charity.donor!.establishmentId,
           boxType: shippingInfo.boxType,
           numberOfBoxes: shippingInfo.numberOfBoxes,
+          date: DateTime.now(),
         ),
       );
     }

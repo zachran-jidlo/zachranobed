@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:zachranobed/converters/timestamp_converter.dart';
 
 /*
  * Command to rebuild the shipping_of_boxes.g.dart file:
@@ -14,6 +16,7 @@ class ShippingOfBoxes with _$ShippingOfBoxes {
     String? canteenId,
     String? boxType,
     int? numberOfBoxes,
+    @TimestampConverter() DateTime? date,
   }) = _ShippingOfBoxes;
 
   factory ShippingOfBoxes.fromJson(Map<String, dynamic> json) =>
