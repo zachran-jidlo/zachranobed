@@ -13,6 +13,7 @@ import 'package:zachranobed/ui/screens/boxes_screen.dart';
 import 'package:zachranobed/ui/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
+import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .watch<DeliveryNotifier>()
                     .deliveryConfirmed(context),
               )
-            : null,
+            : const NewShippingOfBoxesFloatingButton(),
       ),
     );
   }

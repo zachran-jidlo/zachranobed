@@ -10,14 +10,15 @@ import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
+import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-class FoodSectionTextFields extends StatefulWidget {
+class FoodSectionFields extends StatefulWidget {
   final List<OfferedFood> foodSections;
   final List<TextEditingController> controllers;
   final List<bool> checkboxValues;
 
-  const FoodSectionTextFields({
+  const FoodSectionFields({
     super.key,
     required this.foodSections,
     required this.controllers,
@@ -25,10 +26,10 @@ class FoodSectionTextFields extends StatefulWidget {
   });
 
   @override
-  State<FoodSectionTextFields> createState() => _FoodSectionTextFieldsState();
+  State<FoodSectionFields> createState() => _FoodSectionFieldsState();
 }
 
-class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
+class _FoodSectionFieldsState extends State<FoodSectionFields> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -60,7 +61,16 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
               '${context.l10n!.dish} ${index + 1}',
               style: const TextStyle(fontSize: FontSize.m),
             ),
-            if (index != 0) _removeButton(index),
+            if (index != 0)
+              RemoveSectionButton(
+                onClick: () {
+                  setState(() {
+                    widget.foodSections.removeAt(index);
+                    widget.controllers.removeAt(index);
+                    widget.checkboxValues.removeAt(index);
+                  });
+                },
+              ),
           ],
         ),
         _buildGap(),
@@ -180,7 +190,7 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
         ZODropdown(
           hintText: context.l10n!.boxType,
           items: BoxType.values
-              .map((e) => BoxTypeHelper.toValue(e, context))
+              .map((type) => BoxTypeHelper.toValue(type, context))
               .toList(),
           onValidation: (val) =>
               val == null ? context.l10n!.requiredDropdownError : null,
@@ -212,30 +222,5 @@ class _FoodSectionTextFieldsState extends State<FoodSectionTextFields> {
 
   Widget _buildGap() {
     return const SizedBox(height: GapSize.l);
-  }
-
-  Widget _removeButton(int index) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          widget.foodSections.removeAt(index);
-          widget.controllers.removeAt(index);
-          widget.checkboxValues.removeAt(index);
-        });
-      },
-      child: Container(
-        width: 35,
-        height: 35,
-        decoration: BoxDecoration(
-          color: ZOColors.secondary,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Icon(
-          Icons.delete_outline,
-          color: ZOColors.onSecondary,
-          size: 20.0,
-        ),
-      ),
-    );
   }
 }

@@ -13,7 +13,7 @@ import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
-import 'package:zachranobed/ui/widgets/food_section_text_fields.dart';
+import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 
 @RoutePage()
 class OfferFoodScreen extends StatefulWidget {
@@ -100,7 +100,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      FoodSectionTextFields(
+                      FoodSectionFields(
                         foodSections: _foodSections,
                         controllers: _consumeByControllers,
                         checkboxValues: _checkboxValues,
@@ -126,8 +126,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = await _offerFood();
                             if (mounted) {
-                              context.router.replace(
-                                  ThankYouRoute(response: _futureResponse));
+                              context.router.replace(ThankYouRoute(
+                                response: _futureResponse,
+                                message: context.l10n!.foodDonationConfirmation,
+                              ));
                             }
                           }
                         },
