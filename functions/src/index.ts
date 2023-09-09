@@ -112,6 +112,36 @@ export const moveBoxesFromCanteenToCharity = functions.firestore.document("offer
   }
 });
 
+export const moveBoxesFromCharityToCanteen = functions.firestore.document("shippingOfBoxes/{id}").onCreate(async (snapshot, context) => {
+  const now = new Date();
+
+  const data = snapshot.data();
+  const donorId = data.charityId;
+  const recipientId = data.canteenId;
+  const boxType = data.boxType;
+  const numberOfBoxes = data.numberOfBoxes;
+  const weekNumber = `${now.getFullYear()}-${getCurrentWeekNumber()}`;
+  const date = now;
+
+  const boxMovementData = {
+    senderId: donorId,
+    recipientId: recipientId,
+    boxType: boxType,
+    numberOfBoxes: numberOfBoxes,
+    weekNumber: weekNumber,
+    date: date,
+  };
+
+  try {
+    const docRef = await db.collection("boxMovement").add(boxMovementData);
+    console.log("New box movement document added with ID:", docRef.id);
+    return null;
+  } catch (error) {
+    console.error("Error creating box movement document:", error);
+    return null;
+  }
+});
+
 export const updateBoxQuantitiesOnBoxMovement = functions.firestore
   .document("boxMovement/{id}")
   .onCreate(async (snapshot, context) => {
@@ -168,4 +198,16 @@ function isToday(date: Date): boolean {
       date.getMonth() === today.getMonth() &&
       date.getDate() === today.getDate()
   );
+}
+
+// eslint-disable-next-line require-jsdoc
+/** Returns current week number.
+ * @return {number} - Current week number.
+ */
+function getCurrentWeekNumber(): number {
+  const now = new Date();
+  const from = new Date(now.getFullYear(), 0, 1);
+  const to = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  return Math.ceil((to.getTime() - from.getTime()) / (7 * 24 * 60 * 60 * 1000));
 }
