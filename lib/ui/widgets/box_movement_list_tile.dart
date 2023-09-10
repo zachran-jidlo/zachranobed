@@ -1,13 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/box_movement.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/shared/constants.dart';
 
 class BoxMovementListTile extends StatelessWidget {
   final BoxMovement boxMovement;
+  final UserData user;
 
-  const BoxMovementListTile({super.key, required this.boxMovement});
+  const BoxMovementListTile({
+    super.key,
+    required this.boxMovement,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +29,11 @@ class BoxMovementListTile extends StatelessWidget {
         ),
         title: Text(boxMovement.boxType!),
         subtitle: Text(date),
-        trailing: Text('${boxMovement.numberOfBoxes} ks'),
+        trailing: user.establishmentId == boxMovement.senderId
+            ? Text('-${boxMovement.numberOfBoxes} ks')
+            : Text('+${boxMovement.numberOfBoxes} ks'),
         onTap: () => context.router.push(
-          BoxMovementDetailRoute(boxMovement: boxMovement),
+          BoxMovementDetailRoute(boxMovement: boxMovement, user: user),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/box_movement.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
@@ -11,8 +12,13 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 @RoutePage()
 class BoxMovementDetailScreen extends StatelessWidget {
   final BoxMovement boxMovement;
+  final UserData user;
 
-  const BoxMovementDetailScreen({super.key, required this.boxMovement});
+  const BoxMovementDetailScreen({
+    super.key,
+    required this.boxMovement,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,9 @@ class BoxMovementDetailScreen extends StatelessWidget {
               const SizedBox(height: GapSize.s),
               ZOTextField(
                 label: context.l10n!.numberOfBoxes,
-                initialValue: boxMovement.numberOfBoxes.toString(),
+                initialValue: user.establishmentId == boxMovement.senderId
+                    ? '-${boxMovement.numberOfBoxes.toString()}'
+                    : '+${boxMovement.numberOfBoxes.toString()}',
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),

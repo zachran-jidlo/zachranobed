@@ -54,6 +54,7 @@ class BoxMovementList extends StatelessWidget {
                   (context, index) {
                     return BoxMovementListTile(
                       boxMovement: boxMovements[index],
+                      user: user,
                     );
                   },
                 ),
