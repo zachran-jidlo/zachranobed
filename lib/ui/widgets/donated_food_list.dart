@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
-import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list_tile.dart';
 
 class DonatedFoodList extends StatefulWidget {

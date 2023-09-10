@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/models/box_movement.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/shared/constants.dart';
 
 class BoxMovementListTile extends StatelessWidget {
   final BoxMovement boxMovement;

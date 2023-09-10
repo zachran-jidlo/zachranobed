@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/common/constants.dart';
 
 class RemoveSectionButton extends StatelessWidget {
   final Function()? onClick;

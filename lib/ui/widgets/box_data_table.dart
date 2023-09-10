@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/box.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/box_service.dart';
-import 'package:zachranobed/shared/constants.dart';
 
 class BoxDataTable extends StatelessWidget {
   final UserData user;

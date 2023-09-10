@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/box_movement.dart';
-import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';

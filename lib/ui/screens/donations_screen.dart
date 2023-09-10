@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/donated_food_list_info.dart';
 import 'package:zachranobed/services/helper_service.dart';
-import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 

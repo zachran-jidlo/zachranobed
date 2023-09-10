@@ -50,24 +50,24 @@ export const notifyCharityAboutDonation = functions.firestore
     const previousValue = change.before.data();
 
     if (newValue.state === "Potvrzeno" && newValue.state !== previousValue.state && isToday(newValue.pickUpFrom.toDate())) {
-      const recipientId = newValue.recipientId;
+      const charityId = newValue.recipientId;
 
-      return admin.firestore().collection("fCMTokens").doc(recipientId).get()
+      return admin.firestore().collection("fCMTokens").doc(charityId).get()
         .then((tokenDoc) => {
           if (tokenDoc.exists) {
             const fcmToken = tokenDoc.data()?.token;
 
             const message = {
               notification: {
-                title: "Delivery Confirmed",
-                body: "Your delivery has been confirmed!",
+                title: "Potvrzení doručování",
+                body: "Dnes vám budou doručovány darované pokrmy.",
               },
               token: fcmToken,
             };
 
             return admin.messaging().send(message);
           } else {
-            console.log("FCM token not found for recipient:", recipientId);
+            console.log("FCM token not found for recipient:", charityId);
             return null;
           }
         })
@@ -76,6 +76,40 @@ export const notifyCharityAboutDonation = functions.firestore
           return null;
         });
     }
+
+    return null;
+  });
+
+export const notifyCanteenAboutBoxShippment = functions.firestore
+  .document("shippingOfBoxes/{id}")
+  .onCreate((snapshot, context) => {
+    const data = snapshot.data();
+    const canteenId = data.canteenId;
+
+    return admin.firestore().collection("fCMTokens").doc(canteenId).get()
+      .then((tokenDoc) => {
+        if (tokenDoc.exists) {
+          const fcmToken = tokenDoc.data()?.token;
+
+          const message = {
+            notification: {
+              title: "Potvrzení svozu krabiček",
+              body: "Charita vám posílá krabičky.",
+            },
+            token: fcmToken,
+          };
+
+          return admin.messaging().send(message);
+        } else {
+          console.log("FCM token not found for recipient:", canteenId);
+          return null;
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending push notification:", error);
+        return null;
+      });
+
 
     return null;
   });
