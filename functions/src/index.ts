@@ -80,6 +80,43 @@ export const notifyCharityAboutDonation = functions.firestore
     return null;
   });
 
+export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
+  .document("boxes/{id}")
+  .onUpdate((change, context) => {
+    const data = change.after.data();
+    const numberOfBoxes = data.quantityAtCanteen;
+    const charityId = data.charityId;
+    const boxType = data.boxType;
+
+    if (numberOfBoxes < 10) {
+      return admin.firestore().collection("fCMTokens").doc(charityId).get()
+        .then((tokenDoc) => {
+          if (tokenDoc.exists) {
+            const fcmToken = tokenDoc.data()?.token;
+
+            const message = {
+              notification: {
+                title: "Jídelně docházejí krabičky",
+                body: `Objednejte prosím svoz krabiček typu "${boxType}" do jídelny`,
+              },
+              token: fcmToken,
+            };
+
+            return admin.messaging().send(message);
+          } else {
+            console.log("FCM token not found for recipient:", charityId);
+            return null;
+          }
+        })
+        .catch((error) => {
+          console.error("Error sending push notification:", error);
+          return null;
+        });
+    }
+
+    return null;
+  });
+
 export const notifyCanteenAboutBoxShippment = functions.firestore
   .document("shippingOfBoxes/{id}")
   .onCreate((snapshot, context) => {
@@ -109,9 +146,6 @@ export const notifyCanteenAboutBoxShippment = functions.firestore
         console.error("Error sending push notification:", error);
         return null;
       });
-
-
-    return null;
   });
 
 export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
