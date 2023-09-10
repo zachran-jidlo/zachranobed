@@ -31,7 +31,8 @@ class BoxMovementService {
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
-  Future<void> addBoxMovement(BoxMovement boxMovement) async {
-    await _boxMovementCollection.add(boxMovement);
+  Future<DocumentReference<BoxMovement>> addBoxMovement(
+      BoxMovement boxMovement) async {
+    return await _boxMovementCollection.add(boxMovement);
   }
 }

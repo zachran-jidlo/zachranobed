@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/box_movement.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/shipping_of_boxes.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/box_movement_srvice.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 import 'package:zachranobed/shared/constants.dart';
@@ -26,14 +28,13 @@ class OrderShippingOfBoxesScreen extends StatefulWidget {
 class _OrderShippingOfBoxesScreenState
     extends State<OrderShippingOfBoxesScreen> {
   final _shippingOfBoxesService = GetIt.I<ShippingOfBoxesService>();
+  final _boxMovementService = GetIt.I<BoxMovementService>();
 
-  DocumentReference<ShippingOfBoxes>? _futureResponse;
+  DocumentReference<BoxMovement>? _futureResponse;
 
   final _formKey = GlobalKey<FormState>();
 
-  final List<ShippingOfBoxes> _shippingOfBoxesSections = [
-    const ShippingOfBoxes()
-  ];
+  final List<BoxMovement> _shippingOfBoxesSections = [const BoxMovement()];
 
   bool _somethingIsFilled() {
     return _shippingOfBoxesSections.any((shippingInfo) =>
@@ -96,7 +97,7 @@ class _OrderShippingOfBoxesScreenState
                         onPressed: () {
                           setState(() {
                             _shippingOfBoxesSections.add(
-                              const ShippingOfBoxes(),
+                              const BoxMovement(),
                             );
                           });
                         },
@@ -109,11 +110,13 @@ class _OrderShippingOfBoxesScreenState
                           if (_formKey.currentState!.validate()) {
                             _futureResponse = await _orderShipping();
                             if (mounted) {
-                              context.router.replace(ThankYouRoute(
-                                response: _futureResponse,
-                                message:
-                                    context.l10n!.shippingOrderConfirmation,
-                              ));
+                              context.router.replace(
+                                ThankYouRoute(
+                                  response: _futureResponse,
+                                  message:
+                                      context.l10n!.shippingOrderConfirmation,
+                                ),
+                              );
                             }
                           }
                         },
@@ -130,20 +133,30 @@ class _OrderShippingOfBoxesScreenState
     );
   }
 
-  Future<DocumentReference<ShippingOfBoxes>> _orderShipping() async {
+  Future<DocumentReference<BoxMovement>> _orderShipping() async {
     var response = null;
     final charity = HelperService.getCurrentUser(context) as Charity;
+    final now = DateTime.now();
     for (var shippingInfo in _shippingOfBoxesSections) {
-      response = await _shippingOfBoxesService.createShippingOfBoxes(
-        ShippingOfBoxes(
-          charityId: charity.establishmentId,
-          canteenId: charity.donor!.establishmentId,
+      response = await _boxMovementService.addBoxMovement(
+        BoxMovement(
+          senderId: charity.establishmentId,
+          recipientId: charity.donor!.establishmentId,
           boxType: shippingInfo.boxType,
           numberOfBoxes: shippingInfo.numberOfBoxes,
-          date: DateTime.now(),
+          date: now,
+          weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
         ),
       );
     }
+    await _shippingOfBoxesService.createShippingOfBoxes(
+      ShippingOfBoxes(
+        charityId: charity.establishmentId,
+        canteenId: charity.donor!.establishmentId,
+        date: DateTime.now(),
+      ),
+    );
+
     return response;
   }
 }

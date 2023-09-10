@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/shipping_of_boxes.dart';
+import 'package:zachranobed/models/box_movement.dart';
 import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class ShippingOfBoxesSectionFields extends StatefulWidget {
-  final List<ShippingOfBoxes> shippingSections;
+  final List<BoxMovement> shippingSections;
 
   const ShippingOfBoxesSectionFields({
     super.key,
@@ -35,7 +35,7 @@ class _ShippingOfBoxesSectionFieldsState
     );
   }
 
-  Widget _buildShippingSection(ShippingOfBoxes shipping, int index) {
+  Widget _buildShippingSection(BoxMovement shipping, int index) {
     return Column(
       key: ValueKey(shipping),
       children: [

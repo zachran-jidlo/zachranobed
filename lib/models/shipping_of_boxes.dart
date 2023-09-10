@@ -14,8 +14,6 @@ class ShippingOfBoxes with _$ShippingOfBoxes {
   const factory ShippingOfBoxes({
     String? charityId,
     String? canteenId,
-    String? boxType,
-    int? numberOfBoxes,
     @TimestampConverter() DateTime? date,
   }) = _ShippingOfBoxes;
 

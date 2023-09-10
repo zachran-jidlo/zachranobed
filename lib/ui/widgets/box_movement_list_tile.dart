@@ -12,7 +12,7 @@ class BoxMovementListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String date =
-        '${boxMovement.date.day.toString()}.${boxMovement.date.month.toString()}.';
+        '${boxMovement.date?.day.toString()}.${boxMovement.date?.month.toString()}.';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -21,7 +21,7 @@ class BoxMovementListTile extends StatelessWidget {
           side: const BorderSide(width: 1, color: ZOColors.borderColor),
           borderRadius: BorderRadius.circular(10),
         ),
-        title: Text(boxMovement.boxType),
+        title: Text(boxMovement.boxType!),
         subtitle: Text(date),
         trailing: Text('${boxMovement.numberOfBoxes} ks'),
         onTap: () => context.router.push(

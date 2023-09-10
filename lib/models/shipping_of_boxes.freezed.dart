@@ -22,8 +22,6 @@ ShippingOfBoxes _$ShippingOfBoxesFromJson(Map<String, dynamic> json) {
 mixin _$ShippingOfBoxes {
   String? get charityId => throw _privateConstructorUsedError;
   String? get canteenId => throw _privateConstructorUsedError;
-  String? get boxType => throw _privateConstructorUsedError;
-  int? get numberOfBoxes => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get date => throw _privateConstructorUsedError;
 
@@ -42,8 +40,6 @@ abstract class $ShippingOfBoxesCopyWith<$Res> {
   $Res call(
       {String? charityId,
       String? canteenId,
-      String? boxType,
-      int? numberOfBoxes,
       @TimestampConverter() DateTime? date});
 }
 
@@ -62,8 +58,6 @@ class _$ShippingOfBoxesCopyWithImpl<$Res, $Val extends ShippingOfBoxes>
   $Res call({
     Object? charityId = freezed,
     Object? canteenId = freezed,
-    Object? boxType = freezed,
-    Object? numberOfBoxes = freezed,
     Object? date = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,14 +69,6 @@ class _$ShippingOfBoxesCopyWithImpl<$Res, $Val extends ShippingOfBoxes>
           ? _value.canteenId
           : canteenId // ignore: cast_nullable_to_non_nullable
               as String?,
-      boxType: freezed == boxType
-          ? _value.boxType
-          : boxType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -102,8 +88,6 @@ abstract class _$$_ShippingOfBoxesCopyWith<$Res>
   $Res call(
       {String? charityId,
       String? canteenId,
-      String? boxType,
-      int? numberOfBoxes,
       @TimestampConverter() DateTime? date});
 }
 
@@ -120,8 +104,6 @@ class __$$_ShippingOfBoxesCopyWithImpl<$Res>
   $Res call({
     Object? charityId = freezed,
     Object? canteenId = freezed,
-    Object? boxType = freezed,
-    Object? numberOfBoxes = freezed,
     Object? date = freezed,
   }) {
     return _then(_$_ShippingOfBoxes(
@@ -133,14 +115,6 @@ class __$$_ShippingOfBoxesCopyWithImpl<$Res>
           ? _value.canteenId
           : canteenId // ignore: cast_nullable_to_non_nullable
               as String?,
-      boxType: freezed == boxType
-          ? _value.boxType
-          : boxType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -153,11 +127,7 @@ class __$$_ShippingOfBoxesCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ShippingOfBoxes implements _ShippingOfBoxes {
   const _$_ShippingOfBoxes(
-      {this.charityId,
-      this.canteenId,
-      this.boxType,
-      this.numberOfBoxes,
-      @TimestampConverter() this.date});
+      {this.charityId, this.canteenId, @TimestampConverter() this.date});
 
   factory _$_ShippingOfBoxes.fromJson(Map<String, dynamic> json) =>
       _$$_ShippingOfBoxesFromJson(json);
@@ -167,16 +137,12 @@ class _$_ShippingOfBoxes implements _ShippingOfBoxes {
   @override
   final String? canteenId;
   @override
-  final String? boxType;
-  @override
-  final int? numberOfBoxes;
-  @override
   @TimestampConverter()
   final DateTime? date;
 
   @override
   String toString() {
-    return 'ShippingOfBoxes(charityId: $charityId, canteenId: $canteenId, boxType: $boxType, numberOfBoxes: $numberOfBoxes, date: $date)';
+    return 'ShippingOfBoxes(charityId: $charityId, canteenId: $canteenId, date: $date)';
   }
 
   @override
@@ -188,16 +154,12 @@ class _$_ShippingOfBoxes implements _ShippingOfBoxes {
                 other.charityId == charityId) &&
             (identical(other.canteenId, canteenId) ||
                 other.canteenId == canteenId) &&
-            (identical(other.boxType, boxType) || other.boxType == boxType) &&
-            (identical(other.numberOfBoxes, numberOfBoxes) ||
-                other.numberOfBoxes == numberOfBoxes) &&
             (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, charityId, canteenId, boxType, numberOfBoxes, date);
+  int get hashCode => Object.hash(runtimeType, charityId, canteenId, date);
 
   @JsonKey(ignore: true)
   @override
@@ -217,8 +179,6 @@ abstract class _ShippingOfBoxes implements ShippingOfBoxes {
   const factory _ShippingOfBoxes(
       {final String? charityId,
       final String? canteenId,
-      final String? boxType,
-      final int? numberOfBoxes,
       @TimestampConverter() final DateTime? date}) = _$_ShippingOfBoxes;
 
   factory _ShippingOfBoxes.fromJson(Map<String, dynamic> json) =
@@ -228,10 +188,6 @@ abstract class _ShippingOfBoxes implements ShippingOfBoxes {
   String? get charityId;
   @override
   String? get canteenId;
-  @override
-  String? get boxType;
-  @override
-  int? get numberOfBoxes;
   @override
   @TimestampConverter()
   DateTime? get date;

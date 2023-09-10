@@ -28,7 +28,7 @@ class BoxMovementDetailScreen extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    boxMovement.boxType,
+                    boxMovement.boxType ?? '',
                     style: const TextStyle(fontSize: FontSize.l),
                   ),
                 ],
@@ -42,9 +42,9 @@ class BoxMovementDetailScreen extends StatelessWidget {
               const SizedBox(height: GapSize.xs),
               SupportingText(
                 text: '${context.l10n!.sentOn}'
-                    ' ${DateFormat('d.M.y').format(boxMovement.date)}'
+                    ' ${DateFormat('d.M.y').format(boxMovement.date!)}'
                     ' ${context.l10n!.atTime}'
-                    ' ${DateFormat('HH:mm').format(boxMovement.date)}.',
+                    ' ${DateFormat('HH:mm').format(boxMovement.date!)}.',
               ),
               const SizedBox(height: GapSize.xs),
               ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),

@@ -6,21 +6,36 @@ part of 'box_movement.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BoxMovement _$BoxMovementFromJson(Map<String, dynamic> json) => BoxMovement(
-      senderId: json['senderId'] as String,
-      recipientId: json['recipientId'] as String,
-      boxType: json['boxType'] as String,
-      numberOfBoxes: json['numberOfBoxes'] as int,
-      weekNumber: json['weekNumber'] as String,
-      date: const TimestampConverter().fromJson(json['date'] as Timestamp),
+_$_BoxMovement _$$_BoxMovementFromJson(Map<String, dynamic> json) =>
+    _$_BoxMovement(
+      senderId: json['senderId'] as String?,
+      recipientId: json['recipientId'] as String?,
+      boxType: json['boxType'] as String?,
+      numberOfBoxes: json['numberOfBoxes'] as int?,
+      weekNumber: json['weekNumber'] as String?,
+      date: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['date'], const TimestampConverter().fromJson),
     );
 
-Map<String, dynamic> _$BoxMovementToJson(BoxMovement instance) =>
+Map<String, dynamic> _$$_BoxMovementToJson(_$_BoxMovement instance) =>
     <String, dynamic>{
       'senderId': instance.senderId,
       'recipientId': instance.recipientId,
       'boxType': instance.boxType,
       'numberOfBoxes': instance.numberOfBoxes,
       'weekNumber': instance.weekNumber,
-      'date': const TimestampConverter().toJson(instance.date),
+      'date': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.date, const TimestampConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

@@ -10,8 +10,6 @@ _$_ShippingOfBoxes _$$_ShippingOfBoxesFromJson(Map<String, dynamic> json) =>
     _$_ShippingOfBoxes(
       charityId: json['charityId'] as String?,
       canteenId: json['canteenId'] as String?,
-      boxType: json['boxType'] as String?,
-      numberOfBoxes: json['numberOfBoxes'] as int?,
       date: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['date'], const TimestampConverter().fromJson),
     );
@@ -20,8 +18,6 @@ Map<String, dynamic> _$$_ShippingOfBoxesToJson(_$_ShippingOfBoxes instance) =>
     <String, dynamic>{
       'charityId': instance.charityId,
       'canteenId': instance.canteenId,
-      'boxType': instance.boxType,
-      'numberOfBoxes': instance.numberOfBoxes,
       'date': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.date, const TimestampConverter().toJson),
     };
