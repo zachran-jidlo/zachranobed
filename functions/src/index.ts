@@ -112,36 +112,6 @@ export const moveBoxesFromCanteenToCharity = functions.firestore.document("offer
   }
 });
 
-export const moveBoxesFromCharityToCanteen = functions.firestore.document("shippingOfBoxes/{id}").onCreate(async (snapshot, context) => {
-  const now = new Date();
-
-  const data = snapshot.data();
-  const donorId = data.charityId;
-  const recipientId = data.canteenId;
-  const boxType = data.boxType;
-  const numberOfBoxes = data.numberOfBoxes;
-  const weekNumber = `${now.getFullYear()}-${getCurrentWeekNumber()}`;
-  const date = now;
-
-  const boxMovementData = {
-    senderId: donorId,
-    recipientId: recipientId,
-    boxType: boxType,
-    numberOfBoxes: numberOfBoxes,
-    weekNumber: weekNumber,
-    date: date,
-  };
-
-  try {
-    const docRef = await db.collection("boxMovement").add(boxMovementData);
-    console.log("New box movement document added with ID:", docRef.id);
-    return null;
-  } catch (error) {
-    console.error("Error creating box movement document:", error);
-    return null;
-  }
-});
-
 export const updateBoxQuantitiesOnBoxMovement = functions.firestore
   .document("boxMovement/{id}")
   .onCreate(async (snapshot, context) => {
@@ -151,33 +121,48 @@ export const updateBoxQuantitiesOnBoxMovement = functions.firestore
     const boxType = data.boxType;
     const numberOfBoxes = data.numberOfBoxes;
 
-    const boxesQuery = db.collection("boxes")
+    const canteenQuery = db.collection("boxes")
       .where("canteenId", "==", senderId)
       .where("charityId", "==", recipientId)
       .where("boxType", "==", boxType);
 
+    const charityQuery = db.collection("boxes")
+      .where("charityId", "==", senderId)
+      .where("canteenId", "==", recipientId)
+      .where("boxType", "==", boxType);
+
     try {
-      await db.runTransaction((transaction) => {
-        return transaction.get(boxesQuery)
-          .then((querySnapshot) => {
-            if (!querySnapshot.empty) {
-              const boxDocRef = querySnapshot.docs[0].ref;
-              const boxData = querySnapshot.docs[0].data();
+      await db.runTransaction(async (transaction) => {
+        const canteenSnapshot = await transaction.get(canteenQuery);
+        const charitySnapshot = await transaction.get(charityQuery);
 
-              const updatedCanteenQuantity = boxData.quantityAtCanteen - numberOfBoxes;
+        if (!canteenSnapshot.empty) {
+          const canteenDocRef = canteenSnapshot.docs[0].ref;
+          const canteenData = canteenSnapshot.docs[0].data();
 
-              const updatedCharityQuantity = boxData.quantityAtCharity + numberOfBoxes;
+          const updatedCanteenQuantity = canteenData.quantityAtCanteen - numberOfBoxes;
+          const updatedCharityQuantity = canteenData.quantityAtCharity + numberOfBoxes;
 
-              transaction.update(boxDocRef, {
-                quantityAtCanteen: updatedCanteenQuantity,
-                quantityAtCharity: updatedCharityQuantity,
-              });
-            } else {
-              console.error("Matching box not found for update.");
-            }
-            return null;
+          transaction.update(canteenDocRef, {
+            quantityAtCanteen: updatedCanteenQuantity,
+            quantityAtCharity: updatedCharityQuantity,
           });
+        } else if (!charitySnapshot.empty) {
+          const charityDocRef = charitySnapshot.docs[0].ref;
+          const charityData = charitySnapshot.docs[0].data();
+
+          const updatedCanteenQuantity = charityData.quantityAtCanteen + numberOfBoxes;
+          const updatedCharityQuantity = charityData.quantityAtCharity - numberOfBoxes;
+
+          transaction.update(charityDocRef, {
+            quantityAtCanteen: updatedCanteenQuantity,
+            quantityAtCharity: updatedCharityQuantity,
+          });
+        } else {
+          console.error("Matching box not found for update.");
+        }
       });
+
       console.log("Box quantities updated successfully in the \"boxes\" collection.");
       return null;
     } catch (error) {
@@ -198,16 +183,4 @@ function isToday(date: Date): boolean {
       date.getMonth() === today.getMonth() &&
       date.getDate() === today.getDate()
   );
-}
-
-// eslint-disable-next-line require-jsdoc
-/** Returns current week number.
- * @return {number} - Current week number.
- */
-function getCurrentWeekNumber(): number {
-  const now = new Date();
-  const from = new Date(now.getFullYear(), 0, 1);
-  const to = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  return Math.ceil((to.getTime() - from.getTime()) / (7 * 24 * 60 * 60 * 1000));
 }
