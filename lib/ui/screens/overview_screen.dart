@@ -1,16 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/delivery_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/ui/widgets/box_data_table.dart';
 import 'package:zachranobed/ui/widgets/card_list.dart';
@@ -19,9 +18,7 @@ import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
-  final _deliveryService = GetIt.I<DeliveryService>();
-
-  OverviewScreen({super.key});
+  const OverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,22 +112,10 @@ class OverviewScreen extends StatelessWidget {
         buttonText: context.l10n!.callACourier,
         buttonIcon: Icons.directions_car_filled_outlined,
         onButtonPressed: () async {
-          await _callACourier(context);
+          await DeliveryUtils.callACourier(context);
         },
       ),
     );
-  }
-
-  Future<void> _callACourier(BuildContext context) async {
-    await _deliveryService.updateDeliveryStatus(
-      context.read<DeliveryNotifier>().delivery!.id,
-      context.l10n!.deliveryConfirmedState,
-    );
-    if (context.mounted) {
-      context
-          .read<DeliveryNotifier>()
-          .updateDeliveryState(context.l10n!.deliveryConfirmedState);
-    }
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {
