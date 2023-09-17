@@ -18,6 +18,7 @@ class ZOColors {
 
 class ZOStrings {
   static const zjUrl = 'https://zachranobed.cz';
+  static const zjEmail = 'info@zachranjidlo.cz';
 
   static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';

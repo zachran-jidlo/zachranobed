@@ -48,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
       length: _screens.length,
       child: Scaffold(
         body: context.watch<DeliveryNotifier>().delivery != null
-            ? TabBarView(children: _screens)
+            ? TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: _screens,
+              )
             : const Center(child: CircularProgressIndicator()),
         bottomNavigationBar: SizedBox(
           height: 90.0,
@@ -70,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: context.l10n!.overview),
                 Tab(
                   icon: const Icon(MaterialSymbols.fastfood),
-                  text: context.l10n!.donations,
+                  text: context.l10n!.food,
                 ),
                 Tab(
                   icon: const Icon(Icons.takeout_dining_outlined),

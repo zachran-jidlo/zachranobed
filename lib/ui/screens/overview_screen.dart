@@ -12,6 +12,7 @@ import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/ui/widgets/box_data_table.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_list.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
@@ -28,13 +29,6 @@ class OverviewScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.l10n!.overview),
         actions: [
-          IconButton(
-            // TODO - otevřít obrazovku s notifikacema
-            onPressed: () {
-              print('Bell pressed');
-            },
-            icon: const Icon(Icons.mark_email_unread_outlined),
-          ),
           IconButton(
             onPressed: () {
               context.router.push(const MenuRoute());
@@ -96,10 +90,6 @@ class OverviewScreen extends StatelessWidget {
             color: ZOColors.onPrimaryLight,
           ),
         ),
-        buttonText: context.l10n!.contactCarrier,
-        buttonIcon: Icons.phone_outlined,
-        onButtonPressed: () async =>
-            await HelperService.makePhoneCall('123456789'),
       ),
     );
   }
@@ -109,11 +99,14 @@ class OverviewScreen extends StatelessWidget {
       child: InfoBanner(
         infoText: context.l10n!.youCanDonate,
         infoValue: const DonationCountdownTimer(),
-        buttonText: context.l10n!.callACourier,
-        buttonIcon: Icons.directions_car_filled_outlined,
-        onButtonPressed: () async {
-          await DeliveryUtils.callACourier(context);
-        },
+        button: ZOButton(
+          text: context.l10n!.callACourier,
+          icon: Icons.directions_car_filled_outlined,
+          fullWidth: false,
+          onPressed: () async {
+            await DeliveryUtils.callACourier(context);
+          },
+        ),
       ),
     );
   }

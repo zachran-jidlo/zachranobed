@@ -42,22 +42,14 @@ class MenuScreen extends StatelessWidget {
                 ],
               ),
               MenuSection(
-                label: context.l10n!.recipient,
-                menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.phone_outlined,
-                    text: context.l10n!.contactCarrier,
-                    onPressed: () async =>
-                        await HelperService.makePhoneCall('123456789'),
-                  )
-                ],
-              ),
-              MenuSection(
                 label: context.l10n!.saveLunch,
                 menuItems: [
                   MenuItem(
                     leadingIcon: Icons.textsms_outlined,
                     text: context.l10n!.feedback,
+                    onPressed: () async {
+                      await _openEmailClient(context);
+                    },
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
@@ -123,5 +115,12 @@ class MenuScreen extends StatelessWidget {
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  Future<void> _openEmailClient(BuildContext context) async {
+    final email = Uri.encodeComponent(ZOStrings.zjEmail);
+    final subject = Uri.encodeComponent(context.l10n!.feedbackSubject);
+    final mail = Uri.parse('mailto:$email?subject=$subject');
+    await launchUrl(mail);
   }
 }

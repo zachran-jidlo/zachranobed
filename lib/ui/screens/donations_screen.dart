@@ -31,15 +31,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n!.donations),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Kliknuto na hledat');
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        title: Text(context.l10n!.food),
       ),
       body: CustomScrollView(
         slivers: [
