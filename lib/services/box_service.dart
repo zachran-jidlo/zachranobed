@@ -29,6 +29,7 @@ class BoxService {
     required int numberOfBoxes,
     required String establishmentId,
     required String boxType,
+    bool isCanteen = false,
   }) async {
     final query = _boxCollection
         .where(Filter.or(Filter('charityId', isEqualTo: establishmentId),
@@ -43,6 +44,8 @@ class BoxService {
 
     final box = querySnapshot.docs.single.data();
 
-    return box.quantityAtCharity >= numberOfBoxes;
+    return isCanteen
+        ? box.quantityAtCanteen >= numberOfBoxes
+        : box.quantityAtCharity >= numberOfBoxes;
   }
 }

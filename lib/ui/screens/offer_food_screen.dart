@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
+import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
 class OfferFoodScreen extends StatefulWidget {
@@ -25,6 +28,7 @@ class OfferFoodScreen extends StatefulWidget {
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _offeredFoodService = GetIt.I<OfferedFoodService>();
+  final _boxService = GetIt.I<BoxService>();
 
   DocumentReference<OfferedFood>? _futureResponse;
 
@@ -124,12 +128,24 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         icon: MaterialSymbols.check,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = await _offerFood();
-                            if (mounted) {
-                              context.router.replace(ThankYouRoute(
-                                response: _futureResponse,
-                                message: context.l10n!.foodDonationConfirmation,
-                              ));
+                            if (await _verifyAvailableBoxCount()) {
+                              _futureResponse = await _offerFood();
+                              if (mounted) {
+                                context.router.replace(ThankYouRoute(
+                                  response: _futureResponse,
+                                  message:
+                                      context.l10n!.foodDonationConfirmation,
+                                ));
+                              }
+                            } else {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  ZOTemporarySnackBar(
+                                    backgroundColor: Colors.red,
+                                    message: context.l10n!.boxCountError,
+                                  ),
+                                );
+                              }
                             }
                           }
                         },
@@ -153,9 +169,29 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
+  Future<bool> _verifyAvailableBoxCount() async {
+    final canteen = HelperService.getCurrentUser(context) as Canteen;
+    for (var foodInfo in _foodSections) {
+      final isAvailable = await _boxService.verifyAvailableBoxCount(
+        numberOfBoxes: foodInfo.numberOfBoxes ?? foodInfo.numberOfServings!,
+        boxType: foodInfo.boxType!,
+        establishmentId: canteen.establishmentId,
+        isCanteen: true,
+      );
+      if (mounted) {
+        if (!isAvailable &&
+            foodInfo.boxType !=
+                BoxTypeHelper.toValue(BoxType.disposablePackaging, context)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   Future<DocumentReference<OfferedFood>> _offerFood() async {
     var response = null;
-    final donor = HelperService.getCurrentUser(context) as Canteen;
+    final canteen = HelperService.getCurrentUser(context) as Canteen;
     final now = DateTime.now();
     for (var foodInfo in _foodSections) {
       response = await _offeredFoodService.createOffer(
@@ -172,8 +208,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
           consumeByTimestamp:
               foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,
           weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
-          donorId: donor.establishmentId,
-          recipientId: donor.recipient!.establishmentId,
+          donorId: canteen.establishmentId,
+          recipientId: canteen.recipient!.establishmentId,
         ),
       );
     }
