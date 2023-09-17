@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: context.l10n!.overview),
                 Tab(
                   icon: const Icon(MaterialSymbols.fastfood),
-                  text: context.l10n!.donations,
+                  text: context.l10n!.food,
                 ),
                 Tab(
                   icon: const Icon(Icons.takeout_dining_outlined),

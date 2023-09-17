@@ -31,7 +31,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n!.donations),
+        title: Text(context.l10n!.food),
         actions: [
           IconButton(
             onPressed: () {
