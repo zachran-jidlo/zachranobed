@@ -48,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
       length: _screens.length,
       child: Scaffold(
         body: context.watch<DeliveryNotifier>().delivery != null
-            ? TabBarView(children: _screens)
+            ? TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: _screens,
+              )
             : const Center(child: CircularProgressIndicator()),
         bottomNavigationBar: SizedBox(
           height: 90.0,
