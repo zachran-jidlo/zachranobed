@@ -32,6 +32,9 @@ class BoxDataTable extends StatelessWidget {
             ),
             child: DataTable(
               columnSpacing: 10.0,
+              headingRowHeight: 35.0,
+              dataRowMinHeight: 10.0,
+              dataRowMaxHeight: 35.0,
               columns: [
                 DataColumn(
                     label: Text(
@@ -45,12 +48,12 @@ class BoxDataTable extends StatelessWidget {
                 )),
                 DataColumn(
                     label: Text(
-                  context.l10n!.atCharity,
+                  context.l10n!.charity,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )),
                 DataColumn(
                     label: Text(
-                  context.l10n!.atCanteen,
+                  context.l10n!.canteen,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )),
               ],
