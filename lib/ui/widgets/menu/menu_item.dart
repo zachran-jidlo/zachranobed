@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/common/constants.dart';
 
 class MenuItem extends StatelessWidget {
   final IconData leadingIcon;

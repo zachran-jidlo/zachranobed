@@ -8,70 +8,93 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:cloud_firestore/cloud_firestore.dart' as _i11;
-import 'package:flutter/material.dart' as _i9;
-import 'package:zachranobed/models/offered_food.dart' as _i10;
-import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i1;
-import 'package:zachranobed/ui/screens/donated_food_detail_screen.dart' as _i2;
-import 'package:zachranobed/ui/screens/home_screen.dart' as _i3;
-import 'package:zachranobed/ui/screens/login_screen.dart' as _i4;
-import 'package:zachranobed/ui/screens/menu_screen.dart' as _i5;
-import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i6;
-import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i10;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i15;
+import 'package:flutter/material.dart' as _i11;
+import 'package:zachranobed/models/box_movement.dart' as _i12;
+import 'package:zachranobed/models/offered_food.dart' as _i14;
+import 'package:zachranobed/models/user_data.dart' as _i13;
+import 'package:zachranobed/ui/screens/box_movement_detail_screen.dart' as _i1;
+import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i2;
+import 'package:zachranobed/ui/screens/donated_food_detail_screen.dart' as _i3;
+import 'package:zachranobed/ui/screens/home_screen.dart' as _i4;
+import 'package:zachranobed/ui/screens/login_screen.dart' as _i5;
+import 'package:zachranobed/ui/screens/menu_screen.dart' as _i6;
+import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i7;
+import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
+    as _i8;
+import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i9;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
+abstract class $AppRouter extends _i10.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
-    ChangePasswordRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+  final Map<String, _i10.PageFactory> pagesMap = {
+    BoxMovementDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<BoxMovementDetailRouteArgs>();
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.ChangePasswordScreen(),
+        child: _i1.BoxMovementDetailScreen(
+          key: args.key,
+          boxMovement: args.boxMovement,
+          user: args.user,
+        ),
+      );
+    },
+    ChangePasswordRoute.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.ChangePasswordScreen(),
       );
     },
     DonatedFoodDetailRoute.name: (routeData) {
       final args = routeData.argsAs<DonatedFoodDetailRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.DonatedFoodDetailScreen(
+        child: _i3.DonatedFoodDetailScreen(
           key: args.key,
           offeredFood: args.offeredFood,
         ),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.HomeScreen(),
+        child: const _i4.HomeScreen(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.LoginScreen(),
+        child: const _i5.LoginScreen(),
       );
     },
     MenuRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.MenuScreen(),
+        child: const _i6.MenuScreen(),
       );
     },
     OfferFoodRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.OfferFoodScreen(),
+        child: const _i7.OfferFoodScreen(),
+      );
+    },
+    OrderShippingOfBoxesRoute.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i8.OrderShippingOfBoxesScreen(),
       );
     },
     ThankYouRoute.name: (routeData) {
       final args = routeData.argsAs<ThankYouRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.ThankYouScreen(
+        child: _i9.ThankYouScreen(
           key: args.key,
           response: args.response,
+          message: args.message,
         ),
       );
     },
@@ -79,9 +102,53 @@ abstract class $AppRouter extends _i8.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.ChangePasswordScreen]
-class ChangePasswordRoute extends _i8.PageRouteInfo<void> {
-  const ChangePasswordRoute({List<_i8.PageRouteInfo>? children})
+/// [_i1.BoxMovementDetailScreen]
+class BoxMovementDetailRoute
+    extends _i10.PageRouteInfo<BoxMovementDetailRouteArgs> {
+  BoxMovementDetailRoute({
+    _i11.Key? key,
+    required _i12.BoxMovement boxMovement,
+    required _i13.UserData user,
+    List<_i10.PageRouteInfo>? children,
+  }) : super(
+          BoxMovementDetailRoute.name,
+          args: BoxMovementDetailRouteArgs(
+            key: key,
+            boxMovement: boxMovement,
+            user: user,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BoxMovementDetailRoute';
+
+  static const _i10.PageInfo<BoxMovementDetailRouteArgs> page =
+      _i10.PageInfo<BoxMovementDetailRouteArgs>(name);
+}
+
+class BoxMovementDetailRouteArgs {
+  const BoxMovementDetailRouteArgs({
+    this.key,
+    required this.boxMovement,
+    required this.user,
+  });
+
+  final _i11.Key? key;
+
+  final _i12.BoxMovement boxMovement;
+
+  final _i13.UserData user;
+
+  @override
+  String toString() {
+    return 'BoxMovementDetailRouteArgs{key: $key, boxMovement: $boxMovement, user: $user}';
+  }
+}
+
+/// generated route for
+/// [_i2.ChangePasswordScreen]
+class ChangePasswordRoute extends _i10.PageRouteInfo<void> {
+  const ChangePasswordRoute({List<_i10.PageRouteInfo>? children})
       : super(
           ChangePasswordRoute.name,
           initialChildren: children,
@@ -89,17 +156,17 @@ class ChangePasswordRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'ChangePasswordRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.DonatedFoodDetailScreen]
+/// [_i3.DonatedFoodDetailScreen]
 class DonatedFoodDetailRoute
-    extends _i8.PageRouteInfo<DonatedFoodDetailRouteArgs> {
+    extends _i10.PageRouteInfo<DonatedFoodDetailRouteArgs> {
   DonatedFoodDetailRoute({
-    _i9.Key? key,
-    required _i10.OfferedFood offeredFood,
-    List<_i8.PageRouteInfo>? children,
+    _i11.Key? key,
+    required _i14.OfferedFood offeredFood,
+    List<_i10.PageRouteInfo>? children,
   }) : super(
           DonatedFoodDetailRoute.name,
           args: DonatedFoodDetailRouteArgs(
@@ -111,8 +178,8 @@ class DonatedFoodDetailRoute
 
   static const String name = 'DonatedFoodDetailRoute';
 
-  static const _i8.PageInfo<DonatedFoodDetailRouteArgs> page =
-      _i8.PageInfo<DonatedFoodDetailRouteArgs>(name);
+  static const _i10.PageInfo<DonatedFoodDetailRouteArgs> page =
+      _i10.PageInfo<DonatedFoodDetailRouteArgs>(name);
 }
 
 class DonatedFoodDetailRouteArgs {
@@ -121,9 +188,9 @@ class DonatedFoodDetailRouteArgs {
     required this.offeredFood,
   });
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
-  final _i10.OfferedFood offeredFood;
+  final _i14.OfferedFood offeredFood;
 
   @override
   String toString() {
@@ -132,9 +199,9 @@ class DonatedFoodDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i3.HomeScreen]
-class HomeRoute extends _i8.PageRouteInfo<void> {
-  const HomeRoute({List<_i8.PageRouteInfo>? children})
+/// [_i4.HomeScreen]
+class HomeRoute extends _i10.PageRouteInfo<void> {
+  const HomeRoute({List<_i10.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -142,13 +209,13 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.LoginScreen]
-class LoginRoute extends _i8.PageRouteInfo<void> {
-  const LoginRoute({List<_i8.PageRouteInfo>? children})
+/// [_i5.LoginScreen]
+class LoginRoute extends _i10.PageRouteInfo<void> {
+  const LoginRoute({List<_i10.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -156,13 +223,13 @@ class LoginRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.MenuScreen]
-class MenuRoute extends _i8.PageRouteInfo<void> {
-  const MenuRoute({List<_i8.PageRouteInfo>? children})
+/// [_i6.MenuScreen]
+class MenuRoute extends _i10.PageRouteInfo<void> {
+  const MenuRoute({List<_i10.PageRouteInfo>? children})
       : super(
           MenuRoute.name,
           initialChildren: children,
@@ -170,13 +237,13 @@ class MenuRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'MenuRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.OfferFoodScreen]
-class OfferFoodRoute extends _i8.PageRouteInfo<void> {
-  const OfferFoodRoute({List<_i8.PageRouteInfo>? children})
+/// [_i7.OfferFoodScreen]
+class OfferFoodRoute extends _i10.PageRouteInfo<void> {
+  const OfferFoodRoute({List<_i10.PageRouteInfo>? children})
       : super(
           OfferFoodRoute.name,
           initialChildren: children,
@@ -184,43 +251,62 @@ class OfferFoodRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'OfferFoodRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.ThankYouScreen]
-class ThankYouRoute extends _i8.PageRouteInfo<ThankYouRouteArgs> {
+/// [_i8.OrderShippingOfBoxesScreen]
+class OrderShippingOfBoxesRoute extends _i10.PageRouteInfo<void> {
+  const OrderShippingOfBoxesRoute({List<_i10.PageRouteInfo>? children})
+      : super(
+          OrderShippingOfBoxesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderShippingOfBoxesRoute';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i9.ThankYouScreen]
+class ThankYouRoute extends _i10.PageRouteInfo<ThankYouRouteArgs> {
   ThankYouRoute({
-    _i9.Key? key,
-    required _i11.DocumentReference<_i10.OfferedFood>? response,
-    List<_i8.PageRouteInfo>? children,
+    _i11.Key? key,
+    required _i15.DocumentReference<Object>? response,
+    required String message,
+    List<_i10.PageRouteInfo>? children,
   }) : super(
           ThankYouRoute.name,
           args: ThankYouRouteArgs(
             key: key,
             response: response,
+            message: message,
           ),
           initialChildren: children,
         );
 
   static const String name = 'ThankYouRoute';
 
-  static const _i8.PageInfo<ThankYouRouteArgs> page =
-      _i8.PageInfo<ThankYouRouteArgs>(name);
+  static const _i10.PageInfo<ThankYouRouteArgs> page =
+      _i10.PageInfo<ThankYouRouteArgs>(name);
 }
 
 class ThankYouRouteArgs {
   const ThankYouRouteArgs({
     this.key,
     required this.response,
+    required this.message,
   });
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
-  final _i11.DocumentReference<_i10.OfferedFood>? response;
+  final _i15.DocumentReference<Object>? response;
+
+  final String message;
 
   @override
   String toString() {
-    return 'ThankYouRouteArgs{key: $key, response: $response}';
+    return 'ThankYouRouteArgs{key: $key, response: $response, message: $message}';
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.dart';
-import 'package:zachranobed/shared/constants.dart';
 
 class AppRoot extends StatelessWidget {
   final _appRouter = GetIt.I<AppRouter>();
@@ -38,6 +38,8 @@ class AppRoot extends StatelessWidget {
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
             appBarTheme: const AppBarTheme(
               scrolledUnderElevation: 0,
             ),

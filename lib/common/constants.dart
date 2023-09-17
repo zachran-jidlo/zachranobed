@@ -23,6 +23,10 @@ class ZOStrings {
   static const foodImagePath = 'assets/food-image.png';
 }
 
+class Constants {
+  static const lastWeekOfYear = 52;
+}
+
 class WidgetStyle {
   static const inputBorder =
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));

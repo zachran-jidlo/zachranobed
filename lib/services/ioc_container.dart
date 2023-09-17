@@ -1,11 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/services/box_movement_srvice.dart';
+import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/canteen_service.dart';
 import 'package:zachranobed/services/charity_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/fcm_token_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
+import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 
 class IoCContainer {
   const IoCContainer._();
@@ -21,5 +24,8 @@ class IoCContainer {
     GetIt.I.registerSingleton(DeliveryService());
     GetIt.I.registerSingleton(FCMTokenService(GetIt.I<AuthService>()));
     GetIt.I.registerSingleton(AppRouter());
+    GetIt.I.registerSingleton(BoxService());
+    GetIt.I.registerSingleton(BoxMovementService());
+    GetIt.I.registerSingleton(ShippingOfBoxesService());
   }
 }

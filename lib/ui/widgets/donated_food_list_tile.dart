@@ -1,16 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/models/offered_food.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/shared/constants.dart';
 
 class DonatedFoodListTile extends StatelessWidget {
   final OfferedFood offeredFood;
 
-  const DonatedFoodListTile({
-    super.key,
-    required this.offeredFood,
-  });
+  const DonatedFoodListTile({super.key, required this.offeredFood});
 
   @override
   Widget build(BuildContext context) {

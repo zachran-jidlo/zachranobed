@@ -1,22 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
+import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/delivery_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
-import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 
 class NewOfferFloatingButton extends StatelessWidget {
   final bool enabled;
 
-  final _deliveryService = GetIt.I<DeliveryService>();
-
-  NewOfferFloatingButton({super.key, required this.enabled});
+  const NewOfferFloatingButton({super.key, required this.enabled});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +42,7 @@ class NewOfferFloatingButton extends StatelessWidget {
                     cancelText: context.l10n!.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
-                      await _callACourier(context);
+                      await DeliveryUtils.callACourier(context);
                       if (context.mounted) {
                         Navigator.of(context).pop(true);
                       }
@@ -72,17 +67,5 @@ class NewOfferFloatingButton extends StatelessWidget {
               color: ZOColors.disabledButtonChild,
             ),
           );
-  }
-
-  Future<void> _callACourier(BuildContext context) async {
-    await _deliveryService.updateDeliveryStatus(
-      context.read<DeliveryNotifier>().delivery!.id,
-      context.l10n!.deliveryConfirmedState,
-    );
-    if (context.mounted) {
-      context
-          .read<DeliveryNotifier>()
-          .updateDeliveryState(context.l10n!.deliveryConfirmedState);
-    }
   }
 }

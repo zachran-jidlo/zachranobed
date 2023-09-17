@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/donated_food_list_info.dart';
 import 'package:zachranobed/services/helper_service.dart';
-import 'package:zachranobed/shared/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/donated_food_list.dart';
-
-int _LAST_WEEK_OF_YEAR = 52;
 
 class DonationsScreen extends StatefulWidget {
   const DonationsScreen({super.key});
@@ -55,7 +53,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                   title: context.l10n!.thisWeek,
                   additionalFilterField: 'weekNumber',
                   additionalFilterValue:
-                      '${DateTime.now().year}-${HelperService.getCurrentWeekNumber}',
+                      '${DateTime.now().year}-$currentWeekNumber',
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
@@ -83,7 +81,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 SliverToBoxAdapter(
                   child: ZOButton(
-                    text: context.l10n!.loadMoreDonations,
+                    text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
                     height: 40.0,
                     isSecondary: true,
@@ -103,7 +101,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
 
   void _buildDonationsList(BuildContext context) {
     if (desiredWeekNumber <= 0) {
-      desiredWeekNumber = _LAST_WEEK_OF_YEAR;
+      desiredWeekNumber = Constants.lastWeekOfYear;
       year--;
     }
 

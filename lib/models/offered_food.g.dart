@@ -25,6 +25,7 @@ _$_OfferedFood _$$_OfferedFoodFromJson(Map<String, dynamic> json) =>
       weekNumber: json['weekNumber'] as String?,
       donorId: json['donorId'] as String?,
       recipientId: json['recipientId'] as String?,
+      numberOfBoxes: json['numberOfBoxes'] as int?,
     );
 
 Map<String, dynamic> _$$_OfferedFoodToJson(_$_OfferedFood instance) =>
@@ -44,6 +45,7 @@ Map<String, dynamic> _$$_OfferedFoodToJson(_$_OfferedFood instance) =>
       'weekNumber': instance.weekNumber,
       'donorId': instance.donorId,
       'recipientId': instance.recipientId,
+      'numberOfBoxes': instance.numberOfBoxes,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

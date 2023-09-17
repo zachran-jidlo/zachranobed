@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/models/offered_food.dart';
-import 'package:zachranobed/services/helper_service.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 class OfferedFoodService {
   final _offeredFoodCollection =
@@ -19,19 +18,14 @@ class OfferedFoodService {
   );
 
   Stream<List<OfferedFood>> loggedUserOfferedFoodStream({
-    required BuildContext context,
+    required UserData user,
     int? limit,
     String? additionalFilterField,
     dynamic additionalFilterValue,
   }) {
     var query = _offeredFoodCollection.orderBy('date', descending: true).where(
-        Filter.or(
-            Filter('donorId',
-                isEqualTo:
-                    HelperService.getCurrentUser(context)!.establishmentId),
-            Filter('recipientId',
-                isEqualTo:
-                    HelperService.getCurrentUser(context)!.establishmentId)));
+        Filter.or(Filter('donorId', isEqualTo: user.establishmentId),
+            Filter('recipientId', isEqualTo: user.establishmentId)));
 
     if (limit != null) {
       query = query.limit(limit);
@@ -48,15 +42,12 @@ class OfferedFoodService {
 
   // TODO - z tohodle by bylo fajn nějak udělat stream
   Future<int> getSavedMealsCount(
-      {required BuildContext context, int? timePeriod}) async {
+      {required UserData user, int? timePeriod}) async {
     var mealsCount = 0;
 
     var query = _offeredFoodCollection.where(Filter.or(
-        Filter('donorId',
-            isEqualTo: HelperService.getCurrentUser(context)!.establishmentId),
-        Filter('recipientId',
-            isEqualTo:
-                HelperService.getCurrentUser(context)!.establishmentId)));
+        Filter('donorId', isEqualTo: user.establishmentId),
+        Filter('recipientId', isEqualTo: user.establishmentId)));
 
     if (timePeriod != null) {
       query = query.where('date',

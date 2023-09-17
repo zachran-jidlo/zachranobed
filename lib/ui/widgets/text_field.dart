@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
 
 class ZOTextField extends StatelessWidget {

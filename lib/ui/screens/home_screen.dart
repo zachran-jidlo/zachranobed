@@ -2,16 +2,18 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/services/helper_service.dart';
-import 'package:zachranobed/shared/constants.dart';
+import 'package:zachranobed/ui/screens/boxes_screen.dart';
 import 'package:zachranobed/ui/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
+import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -22,6 +24,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _screens = [
+    OverviewScreen(),
+    const DonationsScreen(),
+    const BoxesScreen()
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -37,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: _screens.length,
       child: Scaffold(
         body: context.watch<DeliveryNotifier>().delivery != null
-            ? TabBarView(children: [OverviewScreen(), const DonationsScreen()])
+            ? TabBarView(children: _screens)
             : const Center(child: CircularProgressIndicator()),
         bottomNavigationBar: SizedBox(
           height: 90.0,
@@ -64,6 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: const Icon(MaterialSymbols.fastfood),
                   text: context.l10n!.donations,
                 ),
+                Tab(
+                  icon: const Icon(Icons.takeout_dining_outlined),
+                  text: context.l10n!.boxes,
+                ),
               ],
             ),
           ),
@@ -74,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .watch<DeliveryNotifier>()
                     .deliveryConfirmed(context),
               )
-            : null,
+            : const NewShippingOfBoxesFloatingButton(),
       ),
     );
   }
