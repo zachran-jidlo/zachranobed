@@ -5,17 +5,13 @@ import 'package:zachranobed/ui/widgets/button.dart';
 class InfoBanner extends StatelessWidget {
   final String infoText;
   final Widget infoValue;
-  final String buttonText;
-  final IconData buttonIcon;
-  final VoidCallback onButtonPressed;
+  final ZOButton? button;
 
   const InfoBanner({
     super.key,
     required this.infoText,
     required this.infoValue,
-    required this.buttonText,
-    required this.buttonIcon,
-    required this.onButtonPressed,
+    this.button,
   });
 
   @override
@@ -42,13 +38,13 @@ class InfoBanner extends StatelessWidget {
                 infoValue,
               ],
             ),
-            const SizedBox(height: GapSize.xs),
-            ZOButton(
-              text: buttonText,
-              icon: buttonIcon,
-              fullWidth: false,
-              onPressed: onButtonPressed,
-            ),
+            if (button != null)
+              Column(
+                children: [
+                  const SizedBox(height: GapSize.xs),
+                  button!,
+                ],
+              ),
           ],
         ),
       ),

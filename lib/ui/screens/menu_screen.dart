@@ -42,17 +42,6 @@ class MenuScreen extends StatelessWidget {
                 ],
               ),
               MenuSection(
-                label: context.l10n!.recipient,
-                menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.phone_outlined,
-                    text: context.l10n!.contactCarrier,
-                    onPressed: () async =>
-                        await HelperService.makePhoneCall('123456789'),
-                  )
-                ],
-              ),
-              MenuSection(
                 label: context.l10n!.saveLunch,
                 menuItems: [
                   MenuItem(
