@@ -32,14 +32,6 @@ class _DonationsScreenState extends State<DonationsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.food),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Kliknuto na hledat');
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: CustomScrollView(
         slivers: [

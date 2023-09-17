@@ -30,13 +30,6 @@ class OverviewScreen extends StatelessWidget {
         title: Text(context.l10n!.overview),
         actions: [
           IconButton(
-            // TODO - otevřít obrazovku s notifikacema
-            onPressed: () {
-              print('Bell pressed');
-            },
-            icon: const Icon(Icons.mark_email_unread_outlined),
-          ),
-          IconButton(
             onPressed: () {
               context.router.push(const MenuRoute());
             },
