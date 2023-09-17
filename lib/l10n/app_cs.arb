@@ -53,6 +53,7 @@
     "foodDonationConfirmation": "Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.",
     "shippingOrderConfirmation": "Svoz krabiček do jídelny jste úspěšně objednali \u2764. Děkujeme, že pomáháte.",
     "offerError": "Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.",
+    "boxCountError": "Nemůžete odeslat více krabiček, než kolik máte u sebe.",
     "backToOverview": "Zpět na přehled",
     "cancelOffer": "Zahodit nabídku?",
     "cancelShippingOfBoxes": "Zahodit svoz?",

@@ -24,4 +24,25 @@ class BoxService {
     return query.snapshots().map((querySnapshot) =>
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
+
+  Future<bool> verifyAvailableBoxCount({
+    required int numberOfBoxes,
+    required String establishmentId,
+    required String boxType,
+  }) async {
+    final query = _boxCollection
+        .where(Filter.or(Filter('charityId', isEqualTo: establishmentId),
+            Filter('canteenId', isEqualTo: establishmentId)))
+        .where('boxType', isEqualTo: boxType);
+
+    final querySnapshot = await query.get();
+
+    if (querySnapshot.docs.isEmpty) {
+      return false;
+    }
+
+    final box = querySnapshot.docs.single.data();
+
+    return box.quantityAtCharity >= numberOfBoxes;
+  }
 }

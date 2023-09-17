@@ -10,11 +10,13 @@ import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/shipping_of_boxes.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/box_movement_srvice.dart';
+import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/shipping_of_boxes_section_fields.dart';
+import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
 class OrderShippingOfBoxesScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _OrderShippingOfBoxesScreenState
     extends State<OrderShippingOfBoxesScreen> {
   final _shippingOfBoxesService = GetIt.I<ShippingOfBoxesService>();
   final _boxMovementService = GetIt.I<BoxMovementService>();
+  final _boxService = GetIt.I<BoxService>();
 
   DocumentReference<BoxMovement>? _futureResponse;
 
@@ -108,15 +111,26 @@ class _OrderShippingOfBoxesScreenState
                         icon: MaterialSymbols.check,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            _futureResponse = await _orderShipping();
-                            if (mounted) {
-                              context.router.replace(
-                                ThankYouRoute(
-                                  response: _futureResponse,
-                                  message:
-                                      context.l10n!.shippingOrderConfirmation,
-                                ),
-                              );
+                            if (await _verifyAvailableBoxCount()) {
+                              _futureResponse = await _orderShipping();
+                              if (mounted) {
+                                context.router.replace(
+                                  ThankYouRoute(
+                                    response: _futureResponse,
+                                    message:
+                                        context.l10n!.shippingOrderConfirmation,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  ZOTemporarySnackBar(
+                                    backgroundColor: Colors.red,
+                                    message: context.l10n!.boxCountError,
+                                  ),
+                                );
+                              }
                             }
                           }
                         },
@@ -131,6 +145,21 @@ class _OrderShippingOfBoxesScreenState
         ),
       ),
     );
+  }
+
+  Future<bool> _verifyAvailableBoxCount() async {
+    final charity = HelperService.getCurrentUser(context) as Charity;
+    for (var shippingInfo in _shippingOfBoxesSections) {
+      final isAvailable = await _boxService.verifyAvailableBoxCount(
+        numberOfBoxes: shippingInfo.numberOfBoxes!,
+        boxType: shippingInfo.boxType!,
+        establishmentId: charity.establishmentId,
+      );
+      if (!isAvailable) {
+        return false;
+      }
+    }
+    return true;
   }
 
   Future<DocumentReference<BoxMovement>> _orderShipping() async {
