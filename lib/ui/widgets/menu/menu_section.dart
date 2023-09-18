@@ -19,7 +19,7 @@ class MenuSection extends StatelessWidget {
           children: [Text(label, style: const TextStyle(fontSize: FontSize.s))],
         ),
         for (var item in menuItems) item,
-        const SizedBox(height: GapSize.s),
+        const SizedBox(height: GapSize.m),
       ],
     );
   }

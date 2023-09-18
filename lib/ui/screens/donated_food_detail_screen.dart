@@ -33,7 +33,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: GapSize.s),
+              const SizedBox(height: GapSize.m),
               ZOTextField(
                 label: context.l10n!.allergens,
                 initialValue: offeredFood.allergens?.join(", "),
@@ -73,7 +73,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: GapSize.xs),
               ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
-              const SizedBox(height: GapSize.s),
+              const SizedBox(height: GapSize.m),
             ],
           ),
         ),
@@ -82,6 +82,6 @@ class DonatedFoodDetailScreen extends StatelessWidget {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: GapSize.l);
+    return const SizedBox(height: GapSize.m);
   }
 }

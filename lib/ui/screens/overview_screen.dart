@@ -48,9 +48,9 @@ class OverviewScreen extends StatelessWidget {
             sliver: MultiSliver(
               children: [
                 const CardList(),
-                const SizedBox(height: GapSize.s),
+                const SizedBox(height: GapSize.m),
                 BoxDataTable(user: user),
-                const SizedBox(height: GapSize.s),
+                const SizedBox(height: GapSize.m),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),
               ],

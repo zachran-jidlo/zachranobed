@@ -105,7 +105,7 @@ class _OrderShippingOfBoxesScreenState
                           });
                         },
                       ),
-                      const SizedBox(height: GapSize.xl),
+                      const SizedBox(height: GapSize.xxl),
                       ZOButton(
                         text: context.l10n!.orderShipping,
                         icon: MaterialSymbols.check,
