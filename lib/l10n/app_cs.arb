@@ -42,6 +42,7 @@
     "foodCategory": "Druh pokrmu",
     "numberOfServings": "Počet porcí",
     "boxType": "Typ krabičky",
+    "box": "Krabička",
     "consumeBy": "Spotřebujte do",
     "addAnotherFood": "Přidat další",
     "dish": "Pokrm",

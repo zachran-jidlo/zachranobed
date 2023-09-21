@@ -38,7 +38,7 @@ class BoxDataTable extends StatelessWidget {
               columns: [
                 DataColumn(
                     label: Text(
-                  context.l10n!.boxType,
+                  context.l10n!.box,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )),
                 DataColumn(
