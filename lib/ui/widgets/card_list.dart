@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
@@ -18,19 +19,24 @@ class CardList extends StatelessWidget {
         height: 154,
         child: Row(
           children: [
-            ZOCard(
-              measuredValue: offeredFoodService.getSavedMealsCount(user: user!),
-              metricsText: context.l10n!.savedLunches,
-              periodText: context.l10n!.total,
-            ),
-            const Spacer(),
-            ZOCard(
-              measuredValue: offeredFoodService.getSavedMealsCount(
-                user: user,
-                timePeriod: 30,
+            Expanded(
+              child: ZOCard(
+                measuredValue:
+                    offeredFoodService.getSavedMealsCount(user: user!),
+                metricsText: context.l10n!.savedLunches,
+                periodText: context.l10n!.total,
               ),
-              metricsText: context.l10n!.savedLunches,
-              periodText: context.l10n!.lastThirtyDays,
+            ),
+            const SizedBox(width: GapSize.xxs),
+            Expanded(
+              child: ZOCard(
+                measuredValue: offeredFoodService.getSavedMealsCount(
+                  user: user,
+                  timePeriod: 30,
+                ),
+                metricsText: context.l10n!.savedLunches,
+                periodText: context.l10n!.lastThirtyDays,
+              ),
             ),
           ],
         ),
