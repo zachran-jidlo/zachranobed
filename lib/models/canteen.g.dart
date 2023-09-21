@@ -13,9 +13,7 @@ Canteen _$CanteenFromJson(Map<String, dynamic> json) => Canteen(
       organization: json['organization'] as String,
       pickUpFrom: json['pickUpFrom'] as String?,
       pickUpWithin: json['pickUpWithin'] as String?,
-      recipient: json['recipient'] == null
-          ? null
-          : Charity.fromJson(json['recipient'] as Map<String, dynamic>),
+      recipientId: json['recipientId'] as String?,
     );
 
 Map<String, dynamic> _$CanteenToJson(Canteen instance) => <String, dynamic>{
@@ -25,5 +23,5 @@ Map<String, dynamic> _$CanteenToJson(Canteen instance) => <String, dynamic>{
       'organization': instance.organization,
       'pickUpFrom': instance.pickUpFrom,
       'pickUpWithin': instance.pickUpWithin,
-      'recipient': instance.recipient,
+      'recipientId': instance.recipientId,
     };

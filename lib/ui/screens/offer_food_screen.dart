@@ -209,7 +209,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
               foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,
           weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
           donorId: canteen.establishmentId,
-          recipientId: canteen.recipient!.establishmentId,
+          recipientId: canteen.recipientId,
         ),
       );
     }

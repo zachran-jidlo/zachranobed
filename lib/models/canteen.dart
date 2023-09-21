@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 /*
@@ -12,7 +11,7 @@ part 'canteen.g.dart';
 class Canteen extends UserData {
   final String? pickUpFrom;
   final String? pickUpWithin;
-  final Charity? recipient;
+  final String? recipientId;
 
   Canteen({
     required super.email,
@@ -21,7 +20,7 @@ class Canteen extends UserData {
     required super.organization,
     this.pickUpFrom,
     this.pickUpWithin,
-    this.recipient,
+    this.recipientId,
   });
 
   factory Canteen.fromJson(Map<String, dynamic> json) =>

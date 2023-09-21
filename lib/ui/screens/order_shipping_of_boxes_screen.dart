@@ -170,7 +170,7 @@ class _OrderShippingOfBoxesScreenState
       response = await _boxMovementService.addBoxMovement(
         BoxMovement(
           senderId: charity.establishmentId,
-          recipientId: charity.donor!.establishmentId,
+          recipientId: charity.donorId![0],
           boxType: shippingInfo.boxType,
           numberOfBoxes: shippingInfo.numberOfBoxes,
           date: now,
@@ -181,7 +181,7 @@ class _OrderShippingOfBoxesScreenState
     await _shippingOfBoxesService.createShippingOfBoxes(
       ShippingOfBoxes(
         charityId: charity.establishmentId,
-        canteenId: charity.donor!.establishmentId,
+        canteenId: charity.donorId![0],
         date: DateTime.now(),
       ),
     );
