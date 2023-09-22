@@ -221,6 +221,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: GapSize.l);
+    return const SizedBox(height: GapSize.m);
   }
 }

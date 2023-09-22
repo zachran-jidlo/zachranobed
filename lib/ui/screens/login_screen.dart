@@ -44,15 +44,15 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              const SizedBox(height: GapSize.l),
+              const SizedBox(height: GapSize.xl),
               SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
-              const SizedBox(height: GapSize.m),
+              const SizedBox(height: GapSize.l),
               Image.asset(
                 width: 415,
                 ZOStrings.foodImagePath,
                 fit: BoxFit.fitWidth,
               ),
-              const SizedBox(height: GapSize.m),
+              const SizedBox(height: GapSize.l),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: WidgetStyle.padding,
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? context.l10n!.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: GapSize.s),
+                        const SizedBox(height: GapSize.m),
                         ZOPasswordTextField(
                           text: context.l10n!.password,
                           controller: _passwordController,
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? context.l10n!.requiredFieldError
                               : null,
                         ),
-                        const SizedBox(height: GapSize.m),
+                        const SizedBox(height: GapSize.l),
                         ZOButton(
                           text: context.l10n!.signIn,
                           icon: MaterialSymbols.login,
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     )),
               ),
-              const SizedBox(height: GapSize.s),
+              const SizedBox(height: GapSize.m),
               ZOClickableText(
                   clickableText: context.l10n!.forgottenPassword,
                   color: ZOColors.onPrimaryLight,

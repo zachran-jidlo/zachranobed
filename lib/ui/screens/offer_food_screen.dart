@@ -99,7 +99,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: GapSize.s),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -122,7 +122,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           });
                         },
                       ),
-                      const SizedBox(height: GapSize.xl),
+                      const SizedBox(height: GapSize.xxl),
                       ZOButton(
                         text: context.l10n!.offerFood,
                         icon: MaterialSymbols.check,
@@ -150,7 +150,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: GapSize.s),
+                      const SizedBox(height: GapSize.m),
                       ZOClickableText(
                         clickableText: context.l10n!.manualName,
                         prefixText: context.l10n!.consent,
@@ -209,7 +209,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
               foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,
           weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
           donorId: canteen.establishmentId,
-          recipientId: canteen.recipient!.establishmentId,
+          recipientId: canteen.recipientId,
         ),
       );
     }

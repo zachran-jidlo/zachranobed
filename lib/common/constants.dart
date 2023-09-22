@@ -36,10 +36,11 @@ class WidgetStyle {
 }
 
 class GapSize {
-  static const xl = 48.0;
-  static const l = 40.0;
-  static const m = 32.0;
-  static const s = 24.0;
+  static const xxl = 48.0;
+  static const xl = 40.0;
+  static const l = 32.0;
+  static const m = 24.0;
+  static const s = 20.0;
   static const xs = 16.0;
   static const xxs = 14.0;
 }

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 /*
@@ -10,14 +9,14 @@ part 'charity.g.dart';
 
 @JsonSerializable()
 class Charity extends UserData {
-  final Canteen? donor;
+  final List<String>? donorId;
 
   Charity({
     required super.email,
     required super.establishmentName,
     required super.establishmentId,
     required super.organization,
-    this.donor,
+    this.donorId,
   });
 
   factory Charity.fromJson(Map<String, dynamic> json) =>

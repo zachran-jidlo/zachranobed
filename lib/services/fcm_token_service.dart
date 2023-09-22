@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/fcm_token.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/services/helper_service.dart';
 
 class FCMTokenService {
   final AuthService _authService;
@@ -23,13 +20,6 @@ class FCMTokenService {
   );
 
   FCMTokenService(this._authService);
-
-  Future<FCMToken?> getFCMToken(BuildContext context) async {
-    final user = HelperService.getCurrentUser(context) as Canteen;
-    final fCMToken =
-        await _fCMTokenCollection.doc(user.recipient!.establishmentId).get();
-    return fCMToken.data();
-  }
 
   Future<void> saveFCMToken(FCMToken token) async {
     final user = await _authService.getUserData();

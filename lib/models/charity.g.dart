@@ -11,9 +11,8 @@ Charity _$CharityFromJson(Map<String, dynamic> json) => Charity(
       establishmentName: json['establishmentName'] as String,
       establishmentId: json['establishmentId'] as String,
       organization: json['organization'] as String,
-      donor: json['donor'] == null
-          ? null
-          : Canteen.fromJson(json['donor'] as Map<String, dynamic>),
+      donorId:
+          (json['donorId'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$CharityToJson(Charity instance) => <String, dynamic>{
@@ -21,5 +20,5 @@ Map<String, dynamic> _$CharityToJson(Charity instance) => <String, dynamic>{
       'establishmentName': instance.establishmentName,
       'establishmentId': instance.establishmentId,
       'organization': instance.organization,
-      'donor': instance.donor,
+      'donorId': instance.donorId,
     };

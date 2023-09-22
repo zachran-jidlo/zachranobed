@@ -39,7 +39,7 @@ class BoxMovementDetailScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: GapSize.s),
+              const SizedBox(height: GapSize.m),
               ZOTextField(
                 label: context.l10n!.numberOfBoxes,
                 initialValue: user.establishmentId == boxMovement.senderId
@@ -56,7 +56,7 @@ class BoxMovementDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: GapSize.xs),
               ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
-              const SizedBox(height: GapSize.s),
+              const SizedBox(height: GapSize.m),
             ],
           ),
         ),

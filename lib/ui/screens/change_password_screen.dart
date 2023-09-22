@@ -62,7 +62,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         : null;
                   },
                 ),
-                const SizedBox(height: GapSize.l),
+                const SizedBox(height: GapSize.m),
                 ZOTextField(
                   label: context.l10n!.newPassword,
                   inputType: TextInputType.text,
@@ -77,7 +77,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: GapSize.l),
+                const SizedBox(height: GapSize.m),
                 ZOTextField(
                   label: context.l10n!.repeatNewPassword,
                   inputType: TextInputType.text,
@@ -92,7 +92,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: GapSize.l),
+                const SizedBox(height: GapSize.m),
                 ZOButton(
                   text: context.l10n!.savePassword,
                   icon: Icons.check,

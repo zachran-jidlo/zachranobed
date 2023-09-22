@@ -56,7 +56,7 @@ class _ShippingOfBoxesSectionFieldsState
               ),
           ],
         ),
-        const SizedBox(height: GapSize.l),
+        const SizedBox(height: GapSize.xl),
         ZOTextField(
           label: context.l10n!.numberOfBoxes,
           onValidation: (val) {
@@ -77,7 +77,7 @@ class _ShippingOfBoxesSectionFieldsState
           },
           initialValue: shipping.numberOfBoxes?.toString(),
         ),
-        const SizedBox(height: GapSize.l),
+        const SizedBox(height: GapSize.m),
         ZODropdown(
           hintText: context.l10n!.boxType,
           items: BoxType.values
@@ -92,7 +92,7 @@ class _ShippingOfBoxesSectionFieldsState
           },
           initialValue: shipping.boxType,
         ),
-        const SizedBox(height: GapSize.l),
+        const SizedBox(height: GapSize.xl),
       ],
     );
   }
