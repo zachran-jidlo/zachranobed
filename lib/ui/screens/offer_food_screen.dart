@@ -170,6 +170,12 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   }
 
   Future<bool> _verifyAvailableBoxCount() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
     final canteen = HelperService.getCurrentUser(context) as Canteen;
     for (var foodInfo in _foodSections) {
       final isAvailable = await _boxService.verifyAvailableBoxCount(
@@ -182,6 +188,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         if (!isAvailable &&
             foodInfo.boxType !=
                 BoxTypeHelper.toValue(BoxType.disposablePackaging, context)) {
+          context.router.pop();
           return false;
         }
       }

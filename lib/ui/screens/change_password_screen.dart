@@ -111,6 +111,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   Future<void> _changePassword() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
     try {
       await authService.reauthenticateUser(_oldPasswordController.text);
 
@@ -129,6 +135,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
+        context.router.pop();
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,

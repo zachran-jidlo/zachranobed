@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: MaterialSymbols.login,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              await _logIn(context);
+                              await _logIn();
                             }
                           },
                         ),
@@ -106,7 +106,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _logIn(BuildContext context) async {
+  Future<void> _logIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
     final result = await _authService.signIn(
       _emailController.text,
       _passwordController.text,
@@ -120,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } else {
       if (mounted) {
+        context.router.pop();
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,

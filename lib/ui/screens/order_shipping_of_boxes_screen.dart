@@ -148,6 +148,12 @@ class _OrderShippingOfBoxesScreenState
   }
 
   Future<bool> _verifyAvailableBoxCount() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
     final charity = HelperService.getCurrentUser(context) as Charity;
     for (var shippingInfo in _shippingOfBoxesSections) {
       final isAvailable = await _boxService.verifyAvailableBoxCount(
@@ -156,6 +162,9 @@ class _OrderShippingOfBoxesScreenState
         establishmentId: charity.establishmentId,
       );
       if (!isAvailable) {
+        if (mounted) {
+          context.router.pop();
+        }
         return false;
       }
     }
