@@ -3,7 +3,7 @@
     "password": "Heslo",
     "signIn": "Přihlásit se",
     "signOut": "Odhlásit se",
-    "forgottenPassword": "Zapomenuté heslo",
+    "forgotPassword": "Zapomenuté heslo",
     "wrongCredentialsError": "Špatné přihlašovací údaje.",
     "requiredFieldError": "Vyplňte prosím toto pole",
     "invalidNumberError": "Zadejte prosím validní číslo",
@@ -97,5 +97,11 @@
     "shippingOfBoxes": "Svoz krabiček",
     "shippingOfBoxesToCanteen": "Svoz krabiček do jídelny",
     "orderShipping": "Objednat svoz",
-    "addAnotherBoxType": "Přidat další typ krabičky"
+    "addAnotherBoxType": "Přidat další typ krabičky",
+    "passwordReset": "Obnova hesla",
+    "resetPassword": "Obnovit heslo",
+    "passwordResetExplanation": "Na zadanou emailovou adresu vám dojde odkaz pro obnovení hesla.",
+    "passwordResetConfirmation": "Email pro obnovu hesla byl úspěšně odeslán.",
+    "invalidEmailAddressError": "Emailová adresa je ve špatném formátu.",
+    "userNotFoundError": "Uživatel s touto emailovou adresou neexistuje."
 }
