@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ZOClickableText extends StatelessWidget {
@@ -19,22 +18,26 @@ class ZOClickableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(children: [
-        TextSpan(
-          text: prefixText,
-          style: const TextStyle(color: Colors.black),
+    return GestureDetector(
+      onTap: onTap,
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: prefixText,
+              style: const TextStyle(color: Colors.black),
+            ),
+            TextSpan(
+              text: clickableText,
+              style: TextStyle(
+                color: color,
+                decoration: underline ? TextDecoration.underline : null,
+                decorationColor: color,
+              ),
+            ),
+          ],
         ),
-        TextSpan(
-          text: clickableText,
-          style: TextStyle(
-            color: color,
-            decoration: underline ? TextDecoration.underline : null,
-            decorationColor: color,
-          ),
-          recognizer: TapGestureRecognizer()..onTap = onTap,
-        ),
-      ]),
+      ),
     );
   }
 }

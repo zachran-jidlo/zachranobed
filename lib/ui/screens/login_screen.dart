@@ -58,45 +58,46 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontal: WidgetStyle.padding,
                 ),
                 child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        ZOTextField(
-                          label: context.l10n!.emailAddress,
-                          inputType: TextInputType.emailAddress,
-                          controller: _emailController,
-                          onValidation: (val) => val!.isEmpty
-                              ? context.l10n!.requiredFieldError
-                              : null,
-                        ),
-                        const SizedBox(height: GapSize.m),
-                        ZOPasswordTextField(
-                          text: context.l10n!.password,
-                          controller: _passwordController,
-                          onValidation: (val) => val!.isEmpty
-                              ? context.l10n!.requiredFieldError
-                              : null,
-                        ),
-                        const SizedBox(height: GapSize.l),
-                        ZOButton(
-                          text: context.l10n!.signIn,
-                          icon: MaterialSymbols.login,
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              await _logIn();
-                            }
-                          },
-                        ),
-                      ],
-                    )),
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      ZOTextField(
+                        label: context.l10n!.emailAddress,
+                        inputType: TextInputType.emailAddress,
+                        controller: _emailController,
+                        onValidation: (val) => val!.isEmpty
+                            ? context.l10n!.requiredFieldError
+                            : null,
+                      ),
+                      const SizedBox(height: GapSize.m),
+                      ZOPasswordTextField(
+                        text: context.l10n!.password,
+                        controller: _passwordController,
+                        onValidation: (val) => val!.isEmpty
+                            ? context.l10n!.requiredFieldError
+                            : null,
+                      ),
+                      const SizedBox(height: GapSize.l),
+                      ZOButton(
+                        text: context.l10n!.signIn,
+                        icon: MaterialSymbols.login,
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await _logIn();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: GapSize.m),
               ZOClickableText(
-                  clickableText: context.l10n!.forgottenPassword,
+                  clickableText: context.l10n!.forgotPassword,
                   color: ZOColors.onPrimaryLight,
                   underline: false,
                   onTap: () {
-                    print('Forgotten password');
+                    context.router.push(const ForgotPasswordRoute());
                   }),
               const SizedBox(height: 30),
             ],
