@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _screens = [
-    OverviewScreen(),
+    const OverviewScreen(),
     const DonationsScreen(),
     const BoxesScreen()
   ];
