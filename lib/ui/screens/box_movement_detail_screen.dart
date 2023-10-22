@@ -33,9 +33,12 @@ class BoxMovementDetailScreen extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
-                    boxMovement.boxType ?? '',
-                    style: const TextStyle(fontSize: FontSize.l),
+                  Flexible(
+                    child: Text(
+                      boxMovement.boxType ?? '',
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(fontSize: FontSize.l),
+                    ),
                   ),
                 ],
               ),

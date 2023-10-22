@@ -27,9 +27,12 @@ class DonatedFoodDetailScreen extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
-                    offeredFood.dishName ?? '',
-                    style: const TextStyle(fontSize: FontSize.l),
+                  Flexible(
+                    child: Text(
+                      offeredFood.dishName ?? '',
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(fontSize: FontSize.l),
+                    ),
                   ),
                 ],
               ),
