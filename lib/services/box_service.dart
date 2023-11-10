@@ -16,6 +16,14 @@ class BoxService {
     },
   );
 
+  /// Sets up a Firestore stream to listen for changes in the `boxes`
+  /// collection, filtering the boxes based on the provided [establishmentId]
+  /// that belongs to the currently signed in user. The user can be associated
+  /// with the [Box] either as a `canteen` or a `charity`.
+  ///
+  /// Returns a [Stream] that emits a list of [Box] objects whenever
+  /// there is a change in the Firestore collection that matches the specified
+  /// criteria.
   Stream<List<Box>> loggedUserBoxesStream({required String establishmentId}) {
     final query = _boxCollection.where(Filter.or(
         Filter('charityId', isEqualTo: establishmentId),
@@ -25,6 +33,13 @@ class BoxService {
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
+  /// Verifies if the provided [numberOfBoxes] of a given [boxType]
+  /// is available for the user specified by [establishmentId]. Optional
+  /// [isCanteen] parameter determines if the user is from a canteen or a
+  /// charity.
+  ///
+  /// Returns a [Future] that completes with a [bool] indicating whether the
+  /// provided [numberOfBoxes] of the given [boxType] is available for the user.
   Future<bool> verifyAvailableBoxCount({
     required int numberOfBoxes,
     required String establishmentId,
