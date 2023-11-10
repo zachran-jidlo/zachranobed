@@ -16,6 +16,9 @@ class CharityService {
     },
   );
 
+  /// Returns a [Future] that completes with a [Charity] object if a charity
+  /// document with the provided [email] is found in the Firestore collection
+  /// and `null` if no charity is found.
   Future<Charity?> getCharityByEmail(String email) async {
     final charityQuerySnapshot =
         await _charityCollection.where('email', isEqualTo: email).get();

@@ -16,6 +16,9 @@ class CanteenService {
     },
   );
 
+  /// Returns a [Future] that completes with a [Canteen] object if a canteen
+  /// document with the provided [email] is found in the Firestore collection
+  /// and `null` if no canteen is found.
   Future<Canteen?> getCanteenByEmail(String email) async {
     final canteenQuerySnapshot =
         await _canteenCollection.where('email', isEqualTo: email).get();
