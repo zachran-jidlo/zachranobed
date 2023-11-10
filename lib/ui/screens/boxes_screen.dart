@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/box_movement_list_info.dart';
-import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/ui/widgets/box_movement_list.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 
