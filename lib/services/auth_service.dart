@@ -10,11 +10,13 @@ class AuthService {
 
   AuthService(this._canteenService, this._charityService);
 
-  /// Returns data about currently signed in user.
+  /// Gets the current user's token and extracts claims to determine the user's
+  /// role. Depending on the role (`canteen` or `charity`), it fetches and
+  /// returns the corresponding user data from the respective services.
   ///
-  /// Retrieves the claims of the currently signed in user and, based on
-  /// whether they contain the `canteen` or `charity` attribute, retrieves
-  /// data from the appropriate Firestore collection.
+  /// Returns a [Future] that completes with [UserData] for the authenticated
+  /// user if the role is either `canteen` or `charity` and `null` if the
+  /// user's role is not recognized.
   Future<UserData?> getUserData() async {
     final token = await _auth.currentUser!.getIdTokenResult(false);
     final claims = token.claims;
