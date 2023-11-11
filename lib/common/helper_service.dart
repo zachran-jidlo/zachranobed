@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/enums/delivery_state.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/user_data.dart';
@@ -106,7 +106,7 @@ class HelperService {
     return Delivery(
       id: '123',
       donorId: donor,
-      state: context.l10n!.deliveryCancelledState,
+      state: DeliveryStateHelper.toValue(DeliveryState.canceled, context),
     );
   }
 }

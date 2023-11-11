@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/enums/delivery_state.dart';
 import 'package:zachranobed/models/delivery.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
@@ -18,10 +18,12 @@ class DeliveryNotifier extends ChangeNotifier {
   }
 
   bool deliveryConfirmed(BuildContext context) {
-    return _delivery?.state == context.l10n!.deliveryConfirmedState;
+    return _delivery?.state ==
+        DeliveryStateHelper.toValue(DeliveryState.confirmed, context);
   }
 
   bool deliveryCancelled(BuildContext context) {
-    return _delivery?.state == context.l10n!.deliveryCancelledState;
+    return _delivery?.state ==
+        DeliveryStateHelper.toValue(DeliveryState.canceled, context);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/enums/delivery_state.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 
@@ -11,12 +11,11 @@ class DeliveryUtils {
   static Future<void> callACourier(BuildContext context) async {
     await _deliveryService.updateDeliveryStatus(
       context.read<DeliveryNotifier>().delivery!.id,
-      context.l10n!.deliveryConfirmedState,
+      DeliveryStateHelper.toValue(DeliveryState.confirmed, context),
     );
     if (context.mounted) {
-      context
-          .read<DeliveryNotifier>()
-          .updateDeliveryState(context.l10n!.deliveryConfirmedState);
+      context.read<DeliveryNotifier>().updateDeliveryState(
+          DeliveryStateHelper.toValue(DeliveryState.confirmed, context));
     }
   }
 }
