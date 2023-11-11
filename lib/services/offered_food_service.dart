@@ -17,6 +17,16 @@ class OfferedFoodService {
     },
   );
 
+  /// Sets up a Firestore stream to listen for changes in the `offeredFood`
+  /// collection, filtering the offered foods based on the establishment ID of
+  /// the provided [user] who is either the donor or recipient of the offered
+  /// food. It allows optional [limit] parameter for limiting the number of
+  /// results and it is also possible to specify an [additionalFilterField] to
+  /// filter by and an [additionalFilterValue] that the field must meet.
+  ///
+  /// Returns a [Stream] that emits a list of [OfferedFood] objects whenever
+  /// there is a change in the Firestore collection that matches the specified
+  /// criteria.
   Stream<List<OfferedFood>> loggedUserOfferedFoodStream({
     required UserData user,
     int? limit,
@@ -40,9 +50,17 @@ class OfferedFoodService {
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
-  // TODO - z tohodle by bylo fajn nějak udělat stream
-  Future<int> getSavedMealsCount(
-      {required UserData user, int? timePeriod}) async {
+  /// Queries the Firestore collection for offered foods based on the
+  /// establishment ID of the provided [user] who is either the donor or
+  /// recipient of the offered food. It allows an optional parameter for
+  /// specifying a [timePeriod] to filter the results.
+  ///
+  /// Returns a [Future] that completes with an [int] representing the total
+  /// count of saved meals for the specified [timePeriod] and [user].
+  Future<int> getSavedMealsCount({
+    required UserData user,
+    int? timePeriod,
+  }) async {
     var mealsCount = 0;
 
     var query = _offeredFoodCollection.where(Filter.or(
@@ -65,6 +83,10 @@ class OfferedFoodService {
     return mealsCount;
   }
 
+  /// Adds specified [offeredFood] object to the Firestore collection.
+  ///
+  /// Returns a [Future] that completes with a [DocumentReference] to the
+  /// newly added food offer in the Firestore collection.
   Future<DocumentReference<OfferedFood>> createOffer(
       OfferedFood offeredFood) async {
     return await _offeredFoodCollection.add(offeredFood);
