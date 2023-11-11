@@ -65,13 +65,6 @@ class HelperService {
     return false;
   }
 
-  static Future<void> makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
-    if (await canLaunchUrl(launchUri)) {
-      await launchUrl(launchUri);
-    }
-  }
-
   static Future<void> loadUserInfo(BuildContext context) async {
     final authService = GetIt.I<AuthService>();
     final deliveryService = GetIt.I<DeliveryService>();
