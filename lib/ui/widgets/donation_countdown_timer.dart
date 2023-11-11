@@ -46,7 +46,8 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
 
-    return endTime.difference(startTime) - const Duration(minutes: 35);
+    return endTime.difference(startTime) -
+        const Duration(minutes: Constants.pickupConfirmationTime);
   }
 
   void _startTimer() {

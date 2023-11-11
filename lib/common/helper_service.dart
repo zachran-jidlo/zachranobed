@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/delivery_state.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
@@ -52,7 +53,7 @@ class HelperService {
         '${currentTime.day}.${currentTime.month}.${currentTime.year} ${user.pickUpFrom}',
       );
       final whileCanStillDonate = pickupTime.subtract(
-        const Duration(minutes: 35),
+        const Duration(minutes: Constants.pickupConfirmationTime),
       );
 
       if ((!deliveryConfirmed && currentTime.isAfter(whileCanStillDonate)) ||
