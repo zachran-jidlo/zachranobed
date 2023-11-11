@@ -83,7 +83,7 @@ class OfferedFoodService {
     return mealsCount;
   }
 
-  /// Adds specified [offeredFood] object to the Firestore collection.
+  /// Stores provided [offeredFood] object to the Firestore collection.
   ///
   /// Returns a [Future] that completes with a [DocumentReference] to the
   /// newly added food offer in the Firestore collection.

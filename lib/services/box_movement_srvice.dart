@@ -39,7 +39,7 @@ class BoxMovementService {
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
-  /// Adds specified [boxMovement] object to the Firestore collection.
+  /// Stores provided [boxMovement] object to the Firestore collection.
   ///
   /// Returns a [Future] that completes with a [DocumentReference] to the
   /// newly added box movement in the Firestore collection.
