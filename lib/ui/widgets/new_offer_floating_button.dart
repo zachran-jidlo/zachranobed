@@ -42,7 +42,7 @@ class NewOfferFloatingButton extends StatelessWidget {
                     cancelText: context.l10n!.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
-                      await DeliveryUtils.callACourier(context);
+                      await DeliveryUtils.confirmDelivery(context);
                       if (context.mounted) {
                         Navigator.of(context).pop(true);
                       }

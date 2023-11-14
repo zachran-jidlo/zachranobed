@@ -104,7 +104,7 @@ class OverviewScreen extends StatelessWidget {
           icon: Icons.directions_car_filled_outlined,
           fullWidth: false,
           onPressed: () async {
-            await DeliveryUtils.callACourier(context);
+            await DeliveryUtils.confirmDelivery(context);
           },
         ),
       ),
