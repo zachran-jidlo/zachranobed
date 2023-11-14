@@ -13,6 +13,8 @@ import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 
 class HelperService {
+  /// Returns a [UserData] representing the current user's data if available,
+  /// otherwise returns `null`.
   static UserData? getCurrentUser(BuildContext context) =>
       context.read<UserNotifier>().user;
 
