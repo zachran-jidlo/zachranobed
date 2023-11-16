@@ -27,6 +27,7 @@
     "courierWillCome": "Kurýr přijede přibližně mezi",
     "contactCarrier": "Kontaktovat dopravce",
     "callACourier": "Přivolat kurýra",
+    "deliveryPendingState": "Čeká",
     "deliveryConfirmedState": "Potvrzeno",
     "deliveryCancelledState": "Storno",
     "lastDonated": "Naposledy darováno",

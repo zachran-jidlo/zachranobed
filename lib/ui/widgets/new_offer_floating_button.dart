@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/utils/delivery_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/helper_service.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 
 class NewOfferFloatingButton extends StatelessWidget {
@@ -42,7 +42,7 @@ class NewOfferFloatingButton extends StatelessWidget {
                     cancelText: context.l10n!.cancel,
                     icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
-                      await DeliveryUtils.callACourier(context);
+                      await DeliveryUtils.confirmDelivery(context);
                       if (context.mounted) {
                         Navigator.of(context).pop(true);
                       }

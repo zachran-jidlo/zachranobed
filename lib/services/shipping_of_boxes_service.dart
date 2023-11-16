@@ -16,8 +16,8 @@ class ShippingOfBoxesService {
     },
   );
 
-  Future<DocumentReference<ShippingOfBoxes>> createShippingOfBoxes(
-      ShippingOfBoxes shipping) async {
-    return await _shippingOfBoxesCollection.add(shipping);
+  /// Stores provided [shipping] object to the Firestore collection.
+  Future<void> createShippingOfBoxes(ShippingOfBoxes shipping) async {
+    await _shippingOfBoxesCollection.add(shipping);
   }
 }

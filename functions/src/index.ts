@@ -7,6 +7,13 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
+/**
+ * Sets a custom user claim for a user associated with a canteen when the corresponding canteen document is
+ * updated in Firestore.
+ *
+ * @param canteen - The updated canteen document snapshot.
+ * @param context - The context object containing metadata about the update event.
+ */
 export const setCanteenRole = functions.firestore.document("canteens/{id}").onUpdate((canteen, context) => {
   const uid = canteen.after.data().authUid;
 
@@ -25,6 +32,13 @@ export const setCanteenRole = functions.firestore.document("canteens/{id}").onUp
   }
 });
 
+/**
+ * Sets a custom user claim for a user associated with a charity when the corresponding charity document is
+ * updated in Firestore.
+ *
+ * @param charity - The updated charity document snapshot.
+ * @param context - The context object containing metadata about the update event.
+ */
 export const setCharityRole = functions.firestore.document("charities/{id}").onUpdate((charity, context) => {
   const uid = charity.after.data().authUid;
 
@@ -43,6 +57,14 @@ export const setCharityRole = functions.firestore.document("charities/{id}").onU
   }
 });
 
+/**
+ * Is triggered when a document in the "deliveries" collection is updated.
+ * Notifies the charity about a donation when the delivery is confirmed for today.
+ *
+ * @param change - The updated delivery document snapshot.
+ * @param context - The context object containing metadata about the update event.
+ * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+ */
 export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
   .onUpdate((change, context) => {
@@ -80,6 +102,14 @@ export const notifyCharityAboutDonation = functions.firestore
     return null;
   });
 
+/**
+ * Is triggereed when a document in the "boxes" collection is updated.
+ * Notifies the charity when the quantity of a certain box type at the canteen is below 10.
+ *
+ * @param change - The updated box document snapshot.
+ * @param context - The context object containing metadata about the update event.
+ * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+ */
 export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
   .document("boxes/{id}")
   .onUpdate((change, context) => {
@@ -117,6 +147,14 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
     return null;
   });
 
+/**
+ * Is triggered when a document is created in the "shippingOfBoxes" collection.
+ * Notifies the canteen about the shipment of boxes.
+ *
+ * @param snapshot - The snapshot of the created document.
+ * @param context - The context object containing metadata about the create event.
+ * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+ */
 export const notifyCanteenAboutBoxShippment = functions.firestore
   .document("shippingOfBoxes/{id}")
   .onCreate((snapshot, context) => {
@@ -148,6 +186,13 @@ export const notifyCanteenAboutBoxShippment = functions.firestore
       });
   });
 
+/**
+ * Is triggered when a document is created in the "offeredFood" collection.
+ * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
+ *
+ * @param snapshot - The snapshot of the created document.
+ * @param context - The context object containing metadata about the create event.
+ */
 export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
   const data = snapshot.data();
   const donorId = data.donorId;
@@ -180,6 +225,13 @@ export const moveBoxesFromCanteenToCharity = functions.firestore.document("offer
   }
 });
 
+/**
+ * Is triggered when a document is created in the "boxMovement" collection.
+ * Updates box quantities in the "boxes" collection based on the box movement.
+ *
+ * @param snapshot - The snapshot of the created document.
+ * @param context - The context object containing metadata about the create event.
+ */
 export const updateBoxQuantitiesOnBoxMovement = functions.firestore
   .document("boxMovement/{id}")
   .onCreate(async (snapshot, context) => {
@@ -239,7 +291,6 @@ export const updateBoxQuantitiesOnBoxMovement = functions.firestore
     }
   });
 
-// eslint-disable-next-line require-jsdoc
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.
  * @return {Boolean} - True if the date is today, false otherwise.

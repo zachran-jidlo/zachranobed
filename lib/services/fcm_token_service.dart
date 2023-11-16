@@ -21,6 +21,10 @@ class FCMTokenService {
 
   FCMTokenService(this._authService);
 
+  /// Retrieves the current user's establishment ID and uses it to store the
+  /// provided FCM [token] in the Firestore collection dedicated to FCM tokens.
+  /// It either updates the FCM token if document with this ID already exists
+  /// or creates a new one with this ID and stores the token.
   Future<void> saveFCMToken(FCMToken token) async {
     final user = await _authService.getUserData();
     await _fCMTokenCollection.doc(user!.establishmentId).set(token);

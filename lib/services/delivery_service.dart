@@ -16,6 +16,10 @@ class DeliveryService {
     },
   );
 
+  ///  Returns a [Future] that completes with a [Delivery] object if a delivery
+  ///  with the provided [date] and [donorId] is found in the Firestore
+  ///  collection and `null` if no delivery is found with the specified
+  ///  criteria.
   Future<Delivery?> getDelivery(DateTime date, String donorId) async {
     final deliveryQuerySnapshot = await _deliveryCollection
         .where('pickUpFrom', isEqualTo: date)
@@ -28,6 +32,8 @@ class DeliveryService {
     return null;
   }
 
+  /// Updates the 'state' field of a delivery document identified by the
+  /// specified [id] with the provided [state] value.
   Future<void> updateDeliveryStatus(String id, String state) async {
     await _deliveryCollection.doc(id).update({'state': state});
   }
