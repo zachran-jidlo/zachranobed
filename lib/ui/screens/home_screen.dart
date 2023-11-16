@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ? NewOfferFloatingButton(
                 enabled: context
                     .watch<DeliveryNotifier>()
-                    .deliveryConfirmed(context),
+                    .isDeliveryConfirmed(context),
               )
             : const NewShippingOfBoxesFloatingButton(),
       ),
