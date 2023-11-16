@@ -8,6 +8,8 @@ enum DeliveryState {
 }
 
 abstract class DeliveryStateHelper {
+  /// Converts a [state] enum value to its corresponding localized string
+  /// representation.
   static String toValue(DeliveryState state, BuildContext context) {
     switch (state) {
       case DeliveryState.pending:

@@ -9,6 +9,8 @@ enum BoxType {
 }
 
 abstract class BoxTypeHelper {
+  /// Converts a [boxType] enum value to its corresponding localized string
+  /// representation.
   static String toValue(BoxType boxType, BuildContext context) {
     switch (boxType) {
       case BoxType.reusableBox:
