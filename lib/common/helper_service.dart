@@ -59,8 +59,8 @@ class HelperService {
 
     if (user is Canteen) {
       final deliveryNotifier = context.read<DeliveryNotifier>();
-      final deliveryConfirmed = deliveryNotifier.deliveryConfirmed(context);
-      final deliveryCancelled = deliveryNotifier.deliveryCancelled(context);
+      final deliveryConfirmed = deliveryNotifier.isDeliveryConfirmed(context);
+      final deliveryCancelled = deliveryNotifier.isDeliveryCancelled(context);
 
       final currentTime = DateTime.now();
       final pickupTime = DateFormat('dd.MM.y HH:mm').parse(

@@ -63,7 +63,7 @@ class OverviewScreen extends StatelessWidget {
 
   Widget _buildInfoBanner(BuildContext context, UserData user) {
     final deliveryConfirmed =
-        context.watch<DeliveryNotifier>().deliveryConfirmed(context);
+        context.watch<DeliveryNotifier>().isDeliveryConfirmed(context);
 
     if (user is Charity || !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
