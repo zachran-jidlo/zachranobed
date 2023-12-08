@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/canteen_service.dart';
 import 'package:zachranobed/services/charity_service.dart';
@@ -20,6 +21,8 @@ class AuthService {
   Future<UserData?> getUserData() async {
     final token = await _auth.currentUser!.getIdTokenResult(false);
     final claims = token.claims;
+
+    FirebaseHelper.setUserIdentifier(_auth.currentUser?.uid);
 
     if (claims?["canteen"] == true) {
       return await _canteenService.getCanteenByEmail(_auth.currentUser!.email!);
@@ -49,6 +52,7 @@ class AuthService {
   /// Signs out the current user.
   Future<void> signOut() async {
     await _auth.signOut();
+    FirebaseHelper.setUserIdentifier(null);
   }
 
   /// Re-authenticates user with a given [password].

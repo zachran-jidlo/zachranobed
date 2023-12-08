@@ -6,6 +6,8 @@ import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/services/ioc_container.dart';
 import 'package:zachranobed/ui/widgets/app_root.dart';
 
+import 'common/firebase/firebase_helper.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -13,6 +15,8 @@ void main() async {
   await Notifications().initNotifications();
 
   initializeDateFormatting();
+
+  FirebaseHelper.initializeCrashlytics();
 
   runApp(AppRoot());
 }
