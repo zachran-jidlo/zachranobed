@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [1.0.1]
 ### Added
 - **ZOB-29** Setup Firebase crashlytics.
+- **ZOB-27** New ZOLogger utility for application logging to console and Firebase.
 
 ### Changed
 
