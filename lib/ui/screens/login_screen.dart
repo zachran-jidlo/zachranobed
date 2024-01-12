@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -121,6 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (result != null) {
       if (mounted) {
         await HelperService.loadUserInfo(context);
+
+        ZOLogger.logMessage(
+            "Přihlášen uživatel: ${HelperService.getCurrentUser(_formKey.currentContext!)?.debugInfo}");
+
         if (mounted) {
           context.router.replace(const HomeRoute());
         }
