@@ -12,4 +12,8 @@ abstract class UserData extends ChangeNotifier {
     required this.establishmentId,
     required this.organization,
   });
+
+  String get debugInfo {
+    return 'Email: $email, Establishment: $establishmentName, ID: $establishmentId, Organization: $organization';
+  }
 }
