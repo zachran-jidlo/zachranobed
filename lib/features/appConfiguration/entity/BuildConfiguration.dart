@@ -1,5 +1,5 @@
 enum BuildConfiguration {
   dev,
-  test,
+  stage,
   prod
 }

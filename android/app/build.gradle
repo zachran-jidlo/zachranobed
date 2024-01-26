@@ -71,8 +71,30 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            dimension "default"
+            resValue "string", "app_name", "dev flavor"
+            applicationIdSuffix ".dev"
+        }
+        stage {
+            dimension "default"
+            resValue "string", "app_name", "test flavor"
+            applicationIdSuffix ".test"
+        }
+        prod {
+            dimension "default"
+            resValue "string", "app_name", "prod flavor"
         }
     }
 }

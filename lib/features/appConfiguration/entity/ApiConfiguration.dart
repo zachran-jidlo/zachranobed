@@ -1,5 +1,5 @@
 enum ApiConfiguration {
   dev,
-  test,
+  stage,
   prod
 }
