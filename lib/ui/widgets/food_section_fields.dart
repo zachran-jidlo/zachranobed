@@ -205,6 +205,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           label: context.l10n!.consumeBy,
           icon: MaterialSymbols.calendar_today,
           controller: controller,
+          minimumDate: DateTime.now(),
           onValidation: (val) =>
               val!.isEmpty ? context.l10n!.requiredFieldError : null,
           onTappedOutside: (val) {

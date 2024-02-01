@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-27** New ZOLogger utility for application logging to console and Firebase.
 
 ### Changed
+- **ZOB-86** Minimum date on offer_food_screen is actual date now. Date_time_picker widged now support settings of minimalDate.
 
 ### Fixed
 
