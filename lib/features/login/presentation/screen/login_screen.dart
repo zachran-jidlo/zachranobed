@@ -115,12 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void showDebugScreenIfPossible() {
     bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
-
-    if (areDevtoolsEnabled) {
-      context.router.push(DebugRoute());
-    } else {
-      print("Cannot debug screen");
-    }
+    if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 
   Future<void> _logIn() async {
