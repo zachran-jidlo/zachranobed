@@ -6,13 +6,14 @@ part of 'delivery.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Delivery _$$_DeliveryFromJson(Map<String, dynamic> json) => _$_Delivery(
+_$DeliveryImpl _$$DeliveryImplFromJson(Map<String, dynamic> json) =>
+    _$DeliveryImpl(
       id: json['id'] as String,
       donorId: json['donorId'] as String,
       state: json['state'] as String,
     );
 
-Map<String, dynamic> _$$_DeliveryToJson(_$_Delivery instance) =>
+Map<String, dynamic> _$$DeliveryImplToJson(_$DeliveryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'donorId': instance.donorId,

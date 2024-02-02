@@ -78,11 +78,11 @@ class _$ShippingOfBoxesCopyWithImpl<$Res, $Val extends ShippingOfBoxes>
 }
 
 /// @nodoc
-abstract class _$$_ShippingOfBoxesCopyWith<$Res>
+abstract class _$$ShippingOfBoxesImplCopyWith<$Res>
     implements $ShippingOfBoxesCopyWith<$Res> {
-  factory _$$_ShippingOfBoxesCopyWith(
-          _$_ShippingOfBoxes value, $Res Function(_$_ShippingOfBoxes) then) =
-      __$$_ShippingOfBoxesCopyWithImpl<$Res>;
+  factory _$$ShippingOfBoxesImplCopyWith(_$ShippingOfBoxesImpl value,
+          $Res Function(_$ShippingOfBoxesImpl) then) =
+      __$$ShippingOfBoxesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -92,11 +92,11 @@ abstract class _$$_ShippingOfBoxesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ShippingOfBoxesCopyWithImpl<$Res>
-    extends _$ShippingOfBoxesCopyWithImpl<$Res, _$_ShippingOfBoxes>
-    implements _$$_ShippingOfBoxesCopyWith<$Res> {
-  __$$_ShippingOfBoxesCopyWithImpl(
-      _$_ShippingOfBoxes _value, $Res Function(_$_ShippingOfBoxes) _then)
+class __$$ShippingOfBoxesImplCopyWithImpl<$Res>
+    extends _$ShippingOfBoxesCopyWithImpl<$Res, _$ShippingOfBoxesImpl>
+    implements _$$ShippingOfBoxesImplCopyWith<$Res> {
+  __$$ShippingOfBoxesImplCopyWithImpl(
+      _$ShippingOfBoxesImpl _value, $Res Function(_$ShippingOfBoxesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_ShippingOfBoxesCopyWithImpl<$Res>
     Object? canteenId = freezed,
     Object? date = freezed,
   }) {
-    return _then(_$_ShippingOfBoxes(
+    return _then(_$ShippingOfBoxesImpl(
       charityId: freezed == charityId
           ? _value.charityId
           : charityId // ignore: cast_nullable_to_non_nullable
@@ -125,12 +125,12 @@ class __$$_ShippingOfBoxesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ShippingOfBoxes implements _ShippingOfBoxes {
-  const _$_ShippingOfBoxes(
+class _$ShippingOfBoxesImpl implements _ShippingOfBoxes {
+  const _$ShippingOfBoxesImpl(
       {this.charityId, this.canteenId, @TimestampConverter() this.date});
 
-  factory _$_ShippingOfBoxes.fromJson(Map<String, dynamic> json) =>
-      _$$_ShippingOfBoxesFromJson(json);
+  factory _$ShippingOfBoxesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ShippingOfBoxesImplFromJson(json);
 
   @override
   final String? charityId;
@@ -149,7 +149,7 @@ class _$_ShippingOfBoxes implements _ShippingOfBoxes {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ShippingOfBoxes &&
+            other is _$ShippingOfBoxesImpl &&
             (identical(other.charityId, charityId) ||
                 other.charityId == charityId) &&
             (identical(other.canteenId, canteenId) ||
@@ -164,12 +164,13 @@ class _$_ShippingOfBoxes implements _ShippingOfBoxes {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ShippingOfBoxesCopyWith<_$_ShippingOfBoxes> get copyWith =>
-      __$$_ShippingOfBoxesCopyWithImpl<_$_ShippingOfBoxes>(this, _$identity);
+  _$$ShippingOfBoxesImplCopyWith<_$ShippingOfBoxesImpl> get copyWith =>
+      __$$ShippingOfBoxesImplCopyWithImpl<_$ShippingOfBoxesImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ShippingOfBoxesToJson(
+    return _$$ShippingOfBoxesImplToJson(
       this,
     );
   }
@@ -179,10 +180,10 @@ abstract class _ShippingOfBoxes implements ShippingOfBoxes {
   const factory _ShippingOfBoxes(
       {final String? charityId,
       final String? canteenId,
-      @TimestampConverter() final DateTime? date}) = _$_ShippingOfBoxes;
+      @TimestampConverter() final DateTime? date}) = _$ShippingOfBoxesImpl;
 
   factory _ShippingOfBoxes.fromJson(Map<String, dynamic> json) =
-      _$_ShippingOfBoxes.fromJson;
+      _$ShippingOfBoxesImpl.fromJson;
 
   @override
   String? get charityId;
@@ -193,6 +194,6 @@ abstract class _ShippingOfBoxes implements ShippingOfBoxes {
   DateTime? get date;
   @override
   @JsonKey(ignore: true)
-  _$$_ShippingOfBoxesCopyWith<_$_ShippingOfBoxes> get copyWith =>
+  _$$ShippingOfBoxesImplCopyWith<_$ShippingOfBoxesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
