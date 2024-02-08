@@ -7,6 +7,7 @@ class ZODateTimePicker extends StatefulWidget {
   final String? Function(String?)? onValidation;
   final IconData icon;
   final Function(PointerDownEvent)? onTappedOutside;
+  final DateTime? minimumDate;
 
   const ZODateTimePicker({
     super.key,
@@ -15,6 +16,7 @@ class ZODateTimePicker extends StatefulWidget {
     this.onValidation,
     required this.icon,
     this.onTappedOutside,
+    this.minimumDate,
   });
 
   @override
@@ -27,7 +29,7 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
   Future<DateTime?> _pickDate() => showDatePicker(
         context: context,
         initialDate: _dateTime,
-        firstDate: DateTime(DateTime.now().year),
+        firstDate: widget.minimumDate ?? DateTime(DateTime.now().year),
         lastDate: DateTime(2100),
       );
 
