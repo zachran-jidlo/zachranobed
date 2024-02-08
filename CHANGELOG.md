@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-29** Setup Firebase crashlytics.
 - **ZOB-27** New ZOLogger utility for application logging to console and Firebase.
+- **ZOB-61** Add visibility property for menu_item widget and hide rate menu item.
 
 ### Changed
 
