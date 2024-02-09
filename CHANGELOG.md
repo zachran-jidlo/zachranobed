@@ -2,6 +2,15 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [0.2.0]
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
 ## [0.1.0]
 ### Added
 - **ZOB-29** Setup Firebase crashlytics.
@@ -10,10 +19,6 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-86** Minimum date on offer_food_screen is actual date now. Date_time_picker widged now support settings of minimalDate.
-
-### Fixed
-
-### Removed
 
 ## [1.0.0]
 ### Added
