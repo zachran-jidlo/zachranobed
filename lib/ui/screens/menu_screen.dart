@@ -83,6 +83,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   MenuItem(
                     leadingIcon: Icons.star_border,
                     text: context.l10n!.rate,
+                    isVisible: false,
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
