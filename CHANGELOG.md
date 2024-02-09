@@ -19,6 +19,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-86** Minimum date on offer_food_screen is actual date now. Date_time_picker widged now support settings of minimalDate.
+- **ZOB-82** Changed localization for courier timetable
 
 ## [1.0.0]
 ### Added
