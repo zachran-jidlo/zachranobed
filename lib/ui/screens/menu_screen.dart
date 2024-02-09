@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/login/domain/CheckIfDevtoolsAreEnabledUseCase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
@@ -12,8 +13,15 @@ import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
 
 @RoutePage()
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,14 +89,22 @@ class MenuScreen extends StatelessWidget {
                     leadingIcon: Icons.security,
                     text: context.l10n!.privacyProtection,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                    await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
                     text: context.l10n!.termsOfUse,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                    await _openUrlInBrowser(ZOStrings.zjUrl),
+                  ),
+                  const SizedBox(height: 8.0),
+                  // FIXME: - Add correct styling to this item
+                  // https://jira.etnetera.cz/browse/ZOB-90
+                  MenuItem(
+                    leadingIcon: null,
+                    text: "TODO - Verze 1.0.0",
+                    onPressed: showDebugScreenIfPossible,
                   ),
                 ],
               ),
@@ -110,6 +126,13 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _openEmailClient(BuildContext context) async {
+    final email = Uri.encodeComponent(ZOStrings.zjEmail);
+    final subject = Uri.encodeComponent(context.l10n!.feedbackSubject);
+    final mail = Uri.parse('mailto:$email?subject=$subject');
+    await launchUrl(mail);
+  }
+
   Future<void> _openUrlInBrowser(String siteUrl) async {
     final Uri url = Uri.parse(siteUrl);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
@@ -117,10 +140,9 @@ class MenuScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _openEmailClient(BuildContext context) async {
-    final email = Uri.encodeComponent(ZOStrings.zjEmail);
-    final subject = Uri.encodeComponent(context.l10n!.feedbackSubject);
-    final mail = Uri.parse('mailto:$email?subject=$subject');
-    await launchUrl(mail);
+  void showDebugScreenIfPossible() {
+    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+    if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 }
+
