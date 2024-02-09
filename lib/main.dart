@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:zachranobed/firebase/firebase_options.dart';
 import 'package:zachranobed/firebase/notifications.dart';
@@ -18,5 +19,10 @@ void main() async {
 
   FirebaseHelper.initializeCrashlytics();
 
+  // Lock system preferences to portrait orientation only
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(AppRoot());
 }
