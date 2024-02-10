@@ -33,7 +33,7 @@ class OverviewScreen extends StatelessWidget {
             onPressed: () {
               context.router.push(const MenuRoute());
             },
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.person_outline),
           ),
         ],
       ),
