@@ -99,11 +99,11 @@ class _$BoxMovementCopyWithImpl<$Res, $Val extends BoxMovement>
 }
 
 /// @nodoc
-abstract class _$$_BoxMovementCopyWith<$Res>
+abstract class _$$BoxMovementImplCopyWith<$Res>
     implements $BoxMovementCopyWith<$Res> {
-  factory _$$_BoxMovementCopyWith(
-          _$_BoxMovement value, $Res Function(_$_BoxMovement) then) =
-      __$$_BoxMovementCopyWithImpl<$Res>;
+  factory _$$BoxMovementImplCopyWith(
+          _$BoxMovementImpl value, $Res Function(_$BoxMovementImpl) then) =
+      __$$BoxMovementImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -116,11 +116,11 @@ abstract class _$$_BoxMovementCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BoxMovementCopyWithImpl<$Res>
-    extends _$BoxMovementCopyWithImpl<$Res, _$_BoxMovement>
-    implements _$$_BoxMovementCopyWith<$Res> {
-  __$$_BoxMovementCopyWithImpl(
-      _$_BoxMovement _value, $Res Function(_$_BoxMovement) _then)
+class __$$BoxMovementImplCopyWithImpl<$Res>
+    extends _$BoxMovementCopyWithImpl<$Res, _$BoxMovementImpl>
+    implements _$$BoxMovementImplCopyWith<$Res> {
+  __$$BoxMovementImplCopyWithImpl(
+      _$BoxMovementImpl _value, $Res Function(_$BoxMovementImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -133,7 +133,7 @@ class __$$_BoxMovementCopyWithImpl<$Res>
     Object? weekNumber = freezed,
     Object? date = freezed,
   }) {
-    return _then(_$_BoxMovement(
+    return _then(_$BoxMovementImpl(
       senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -164,8 +164,8 @@ class __$$_BoxMovementCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BoxMovement implements _BoxMovement {
-  const _$_BoxMovement(
+class _$BoxMovementImpl implements _BoxMovement {
+  const _$BoxMovementImpl(
       {this.senderId,
       this.recipientId,
       this.boxType,
@@ -173,8 +173,8 @@ class _$_BoxMovement implements _BoxMovement {
       this.weekNumber,
       @TimestampConverter() this.date});
 
-  factory _$_BoxMovement.fromJson(Map<String, dynamic> json) =>
-      _$$_BoxMovementFromJson(json);
+  factory _$BoxMovementImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BoxMovementImplFromJson(json);
 
   @override
   final String? senderId;
@@ -199,7 +199,7 @@ class _$_BoxMovement implements _BoxMovement {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BoxMovement &&
+            other is _$BoxMovementImpl &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.recipientId, recipientId) ||
@@ -220,12 +220,12 @@ class _$_BoxMovement implements _BoxMovement {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BoxMovementCopyWith<_$_BoxMovement> get copyWith =>
-      __$$_BoxMovementCopyWithImpl<_$_BoxMovement>(this, _$identity);
+  _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
+      __$$BoxMovementImplCopyWithImpl<_$BoxMovementImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BoxMovementToJson(
+    return _$$BoxMovementImplToJson(
       this,
     );
   }
@@ -238,10 +238,10 @@ abstract class _BoxMovement implements BoxMovement {
       final String? boxType,
       final int? numberOfBoxes,
       final String? weekNumber,
-      @TimestampConverter() final DateTime? date}) = _$_BoxMovement;
+      @TimestampConverter() final DateTime? date}) = _$BoxMovementImpl;
 
   factory _BoxMovement.fromJson(Map<String, dynamic> json) =
-      _$_BoxMovement.fromJson;
+      _$BoxMovementImpl.fromJson;
 
   @override
   String? get senderId;
@@ -258,6 +258,6 @@ abstract class _BoxMovement implements BoxMovement {
   DateTime? get date;
   @override
   @JsonKey(ignore: true)
-  _$$_BoxMovementCopyWith<_$_BoxMovement> get copyWith =>
+  _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
