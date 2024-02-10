@@ -7,6 +7,7 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/login/domain/CheckIfDevtoolsAreEnabledUseCase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -25,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
+  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -48,10 +50,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: GapSize.xl),
               SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
               const SizedBox(height: GapSize.l),
-              Image.asset(
-                width: 415,
-                ZOStrings.foodImagePath,
-                fit: BoxFit.fitWidth,
+              GestureDetector(
+                onLongPress: showDebugScreenIfPossible,
+                child: Image.asset(
+                  width: 415,
+                  ZOStrings.foodImagePath,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               const SizedBox(height: GapSize.l),
               Padding(
@@ -106,6 +111,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void showDebugScreenIfPossible() {
+    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+    if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 
   Future<void> _logIn() async {
