@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:zachranobed/features/appConfiguration/AppConfiguration.dart';
 import 'package:zachranobed/features/appConfiguration/mapper/AppConfigurationMapper.dart';
@@ -25,6 +26,12 @@ void main() async {
 
   FirebaseHelper.initializeCrashlytics();
 
+  // Lock system preferences to portrait orientation only
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  
   // App configuration setup from current runtime app flavor
   const String? appFlavor = String.fromEnvironment('FLUTTER_APP_FLAVOR') != '' ?
   String.fromEnvironment('FLUTTER_APP_FLAVOR') : null;
