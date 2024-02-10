@@ -6,8 +6,8 @@ part of 'offered_food.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_OfferedFood _$$_OfferedFoodFromJson(Map<String, dynamic> json) =>
-    _$_OfferedFood(
+_$OfferedFoodImpl _$$OfferedFoodImplFromJson(Map<String, dynamic> json) =>
+    _$OfferedFoodImpl(
       id: json['id'] as String?,
       date: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['date'], const TimestampConverter().fromJson),
@@ -28,7 +28,7 @@ _$_OfferedFood _$$_OfferedFoodFromJson(Map<String, dynamic> json) =>
       numberOfBoxes: json['numberOfBoxes'] as int?,
     );
 
-Map<String, dynamic> _$$_OfferedFoodToJson(_$_OfferedFood instance) =>
+Map<String, dynamic> _$$OfferedFoodImplToJson(_$OfferedFoodImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'date': _$JsonConverterToJson<Timestamp, DateTime>(
