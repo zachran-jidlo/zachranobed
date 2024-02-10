@@ -6,8 +6,8 @@ part of 'box_movement.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BoxMovement _$$_BoxMovementFromJson(Map<String, dynamic> json) =>
-    _$_BoxMovement(
+_$BoxMovementImpl _$$BoxMovementImplFromJson(Map<String, dynamic> json) =>
+    _$BoxMovementImpl(
       senderId: json['senderId'] as String?,
       recipientId: json['recipientId'] as String?,
       boxType: json['boxType'] as String?,
@@ -17,7 +17,7 @@ _$_BoxMovement _$$_BoxMovementFromJson(Map<String, dynamic> json) =>
           json['date'], const TimestampConverter().fromJson),
     );
 
-Map<String, dynamic> _$$_BoxMovementToJson(_$_BoxMovement instance) =>
+Map<String, dynamic> _$$BoxMovementImplToJson(_$BoxMovementImpl instance) =>
     <String, dynamic>{
       'senderId': instance.senderId,
       'recipientId': instance.recipientId,

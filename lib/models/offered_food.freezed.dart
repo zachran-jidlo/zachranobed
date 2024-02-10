@@ -156,11 +156,11 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
 }
 
 /// @nodoc
-abstract class _$$_OfferedFoodCopyWith<$Res>
+abstract class _$$OfferedFoodImplCopyWith<$Res>
     implements $OfferedFoodCopyWith<$Res> {
-  factory _$$_OfferedFoodCopyWith(
-          _$_OfferedFood value, $Res Function(_$_OfferedFood) then) =
-      __$$_OfferedFoodCopyWithImpl<$Res>;
+  factory _$$OfferedFoodImplCopyWith(
+          _$OfferedFoodImpl value, $Res Function(_$OfferedFoodImpl) then) =
+      __$$OfferedFoodImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -181,11 +181,11 @@ abstract class _$$_OfferedFoodCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_OfferedFoodCopyWithImpl<$Res>
-    extends _$OfferedFoodCopyWithImpl<$Res, _$_OfferedFood>
-    implements _$$_OfferedFoodCopyWith<$Res> {
-  __$$_OfferedFoodCopyWithImpl(
-      _$_OfferedFood _value, $Res Function(_$_OfferedFood) _then)
+class __$$OfferedFoodImplCopyWithImpl<$Res>
+    extends _$OfferedFoodCopyWithImpl<$Res, _$OfferedFoodImpl>
+    implements _$$OfferedFoodImplCopyWith<$Res> {
+  __$$OfferedFoodImplCopyWithImpl(
+      _$OfferedFoodImpl _value, $Res Function(_$OfferedFoodImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -206,7 +206,7 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
     Object? recipientId = freezed,
     Object? numberOfBoxes = freezed,
   }) {
-    return _then(_$_OfferedFood(
+    return _then(_$OfferedFoodImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -269,8 +269,8 @@ class __$$_OfferedFoodCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_OfferedFood implements _OfferedFood {
-  const _$_OfferedFood(
+class _$OfferedFoodImpl implements _OfferedFood {
+  const _$OfferedFoodImpl(
       {this.id,
       @TimestampConverter() this.date,
       this.dateTimestamp,
@@ -287,8 +287,8 @@ class _$_OfferedFood implements _OfferedFood {
       this.numberOfBoxes})
       : _allergens = allergens;
 
-  factory _$_OfferedFood.fromJson(Map<String, dynamic> json) =>
-      _$$_OfferedFoodFromJson(json);
+  factory _$OfferedFoodImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OfferedFoodImplFromJson(json);
 
   @override
   final String? id;
@@ -338,7 +338,7 @@ class _$_OfferedFood implements _OfferedFood {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OfferedFood &&
+            other is _$OfferedFoodImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.dateTimestamp, dateTimestamp) ||
@@ -387,12 +387,12 @@ class _$_OfferedFood implements _OfferedFood {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OfferedFoodCopyWith<_$_OfferedFood> get copyWith =>
-      __$$_OfferedFoodCopyWithImpl<_$_OfferedFood>(this, _$identity);
+  _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
+      __$$OfferedFoodImplCopyWithImpl<_$OfferedFoodImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OfferedFoodToJson(
+    return _$$OfferedFoodImplToJson(
       this,
     );
   }
@@ -413,10 +413,10 @@ abstract class _OfferedFood implements OfferedFood {
       final String? weekNumber,
       final String? donorId,
       final String? recipientId,
-      final int? numberOfBoxes}) = _$_OfferedFood;
+      final int? numberOfBoxes}) = _$OfferedFoodImpl;
 
   factory _OfferedFood.fromJson(Map<String, dynamic> json) =
-      _$_OfferedFood.fromJson;
+      _$OfferedFoodImpl.fromJson;
 
   @override
   String? get id;
@@ -450,6 +450,6 @@ abstract class _OfferedFood implements OfferedFood {
   int? get numberOfBoxes;
   @override
   @JsonKey(ignore: true)
-  _$$_OfferedFoodCopyWith<_$_OfferedFood> get copyWith =>
+  _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

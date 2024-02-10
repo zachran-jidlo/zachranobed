@@ -16,6 +16,8 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-29** Setup Firebase crashlytics.
 - **ZOB-27** New ZOLogger utility for application logging to console and Firebase.
 - **ZOB-61** Add visibility property for menu_item widget and hide rate menu item.
+- **ZOB-45** Debug screen with option to test logger
+- **ZOB-88** Build flavors both for Android and iOS
 
 ### Changed
 - **ZOB-86** Minimum date on offer_food_screen is actual date now. Date_time_picker widged now support settings of minimalDate.

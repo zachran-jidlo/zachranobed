@@ -6,15 +6,17 @@ part of 'shipping_of_boxes.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ShippingOfBoxes _$$_ShippingOfBoxesFromJson(Map<String, dynamic> json) =>
-    _$_ShippingOfBoxes(
+_$ShippingOfBoxesImpl _$$ShippingOfBoxesImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ShippingOfBoxesImpl(
       charityId: json['charityId'] as String?,
       canteenId: json['canteenId'] as String?,
       date: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['date'], const TimestampConverter().fromJson),
     );
 
-Map<String, dynamic> _$$_ShippingOfBoxesToJson(_$_ShippingOfBoxes instance) =>
+Map<String, dynamic> _$$ShippingOfBoxesImplToJson(
+        _$ShippingOfBoxesImpl instance) =>
     <String, dynamic>{
       'charityId': instance.charityId,
       'canteenId': instance.canteenId,
