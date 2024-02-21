@@ -2,6 +2,16 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [0.3.0]
+### Added
+- **ZOB-83** Rebuild Home screen after return to application.
+
+### Changed
+
+### Fixed
+
+### Removed
+
 ## [0.2.0]
 ### Added
 - **ZOB-45** Debug screen with option to test logger
@@ -11,10 +21,6 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-47** Locked screen orientation to portrait mode only
 - **ZOB-82** Changed localization for courier timetable
 - **ZOB-94** Changed menu icon from `menu` to `person_outline`
-
-### Fixed
-
-### Removed
 
 ## [0.1.0]
 ### Added
