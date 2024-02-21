@@ -18,56 +18,13 @@ import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
-class OverviewScreen extends StatefulWidget {
+class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
 
   @override
-  _OverviewScreenState createState() => _OverviewScreenState();
-}
-
-class _OverviewScreenState extends State<OverviewScreen>
-    with WidgetsBindingObserver {
-  late UserData user;
-  late Widget cardListWidget;
-  late Widget boxDataTableWidget;
-
-  @override
-  void initState() {
-    super.initState();
-    user = HelperService.getCurrentUser(context)!;
-    WidgetsBinding.instance.addObserver(this);
-
-    initializeWidgets();
-  }
-
-  void initializeWidgets() {
-    final cardListKey =
-        ValueKey('cardList-${DateTime.now().millisecondsSinceEpoch}');
-    final boxDataTableKey =
-        ValueKey('boxDataTable-${DateTime.now().millisecondsSinceEpoch}');
-
-    cardListWidget = CardList(key: cardListKey);
-    boxDataTableWidget = BoxDataTable(key: boxDataTableKey, user: user);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
-      setState(() {
-        initializeWidgets();
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.overview),
@@ -82,7 +39,7 @@ class _OverviewScreenState extends State<OverviewScreen>
       ),
       body: CustomScrollView(
         slivers: [
-            _buildInfoBanner(context, user),
+          _buildInfoBanner(context, user!),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
@@ -90,9 +47,9 @@ class _OverviewScreenState extends State<OverviewScreen>
             ),
             sliver: MultiSliver(
               children: [
-                cardListWidget,
+                const CardList(),
                 const SizedBox(height: GapSize.m),
-                boxDataTableWidget,
+                BoxDataTable(user: user),
                 const SizedBox(height: GapSize.m),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),

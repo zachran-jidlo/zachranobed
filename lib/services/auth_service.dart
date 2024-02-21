@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/canteen_service.dart';
 import 'package:zachranobed/services/charity_service.dart';
+import '../common/firebase/firebase_helper.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

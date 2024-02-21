@@ -15,6 +15,8 @@ import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
+import '../../common/lifecycle/LifecycleWatcher.dart';
+
 @RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +25,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
   final _screens = [
     const OverviewScreen(),
     const DonationsScreen(),
@@ -40,6 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       await Notifications().getFCMToken();
     });
+  }
+
+  @override
+  void onResume() {
+    HelperService.loadUserInfo(context);
+    super.onResume();
   }
 
   @override
