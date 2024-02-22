@@ -90,7 +90,7 @@ class OverviewScreen extends StatelessWidget {
             color: ZOColors.onPrimaryLight,
           ),
         ),
-        backgroundColor: ZOColors.successColor,
+        backgroundColor: ZOColors.lightSuccessColor,
       ),
     );
   }
@@ -107,8 +107,10 @@ class OverviewScreen extends StatelessWidget {
           onPressed: () async {
             await DeliveryUtils.confirmDelivery(context);
           },
+          backgroundColor: ZOColors.successColor,
+          foregroundColor: ZOColors.onPrimary,
         ),
-        backgroundColor: ZOColors.successColor,
+        backgroundColor: ZOColors.lightSuccessColor,
       ),
     );
   }

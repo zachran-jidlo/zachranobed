@@ -5,15 +5,24 @@ class ZOButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final VoidCallback onPressed;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final bool isSecondary;
   final double height;
   final bool fullWidth;
+
+  static const Color _defaultPrimaryColor = ZOColors.primary;
+  static const Color _defaultSecondaryColor = ZOColors.secondary;
+  static const Color _defaultOnPrimaryColor = ZOColors.onPrimary;
+  static const Color _defaultOnSecondaryColor = ZOColors.onSecondary;
 
   const ZOButton({
     super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
+    this.backgroundColor,
+    this.foregroundColor,
     this.isSecondary = false,
     this.height = 56.0,
     this.fullWidth = true,
@@ -21,13 +30,14 @@ class ZOButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = isSecondary ? ZOColors.secondary : ZOColors.primary;
-    final foregroundColor =
-        isSecondary ? ZOColors.onSecondary : ZOColors.onPrimary;
+    final Color bg = backgroundColor ??
+        (isSecondary ? _defaultSecondaryColor : _defaultPrimaryColor);
+    final Color fg = foregroundColor ??
+        (isSecondary ? _defaultOnSecondaryColor : _defaultOnPrimaryColor);
 
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor: bg,
         minimumSize: fullWidth ? Size.fromHeight(height) : null,
         shape: const StadiumBorder(),
       ),
@@ -35,12 +45,12 @@ class ZOButton extends StatelessWidget {
       icon: Icon(
         icon,
         size: 18.0,
-        color: foregroundColor,
+        color: fg,
       ),
       label: Text(
         text,
         style: TextStyle(
-          color: foregroundColor,
+          color: fg,
           fontSize: FontSize.xs,
         ),
       ),
