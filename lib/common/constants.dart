@@ -14,6 +14,7 @@ class ZOColors {
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
   static const infoSnackBarBackground = Color.fromRGBO(54, 47, 46, 1);
   static const onInfoSnackBarBackground = Color.fromRGBO(255, 251, 238, 1);
+  static const successColor = Color.fromRGBO(231, 240, 204, 1);
 }
 
 class ZOStrings {

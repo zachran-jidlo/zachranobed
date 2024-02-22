@@ -90,6 +90,7 @@ class OverviewScreen extends StatelessWidget {
             color: ZOColors.onPrimaryLight,
           ),
         ),
+        backgroundColor: ZOColors.successColor,
       ),
     );
   }
@@ -107,6 +108,7 @@ class OverviewScreen extends StatelessWidget {
             await DeliveryUtils.confirmDelivery(context);
           },
         ),
+        backgroundColor: ZOColors.successColor,
       ),
     );
   }

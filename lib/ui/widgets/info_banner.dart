@@ -5,12 +5,14 @@ import 'package:zachranobed/ui/widgets/button.dart';
 class InfoBanner extends StatelessWidget {
   final String infoText;
   final Widget infoValue;
+  final Color backgroundColor;
   final ZOButton? button;
 
   const InfoBanner({
     super.key,
     required this.infoText,
     required this.infoValue,
+    required this.backgroundColor,
     this.button,
   });
 
@@ -18,7 +20,7 @@ class InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: ZOColors.primaryLight,
+      color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(

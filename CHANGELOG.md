@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Changed
+- **ZOB-80** InfoBanner background color customisation and set to success color.
 
 ### Fixed
 
