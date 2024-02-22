@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Changed
+- **ZOB-90** Update simple menu item with app version by design.
 
 ### Fixed
 
