@@ -39,7 +39,7 @@ mixin LifecycleWatcher<T extends StatefulWidget> on State<T>
         onDetach();
         break;
       case AppLifecycleState.hidden:
-        onHidden();
+        onHide();
         break;
     }
   }
@@ -57,7 +57,7 @@ mixin LifecycleWatcher<T extends StatefulWidget> on State<T>
   void onDetach() {}
 
   /// Called when the app is hidden, but not closed.
-  void onHidden() {}
+  void onHide() {}
 
   /// Default implementation to deny pop route requests.
   @override

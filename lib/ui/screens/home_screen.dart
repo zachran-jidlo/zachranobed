@@ -4,6 +4,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/canteen.dart';
@@ -14,8 +15,6 @@ import 'package:zachranobed/ui/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
-
-import '../../common/lifecycle/LifecycleWatcher.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
