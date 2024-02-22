@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/CheckIfDevtoolsAreEnabledUseCase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -23,23 +21,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  final _checkIfDevtoolsAreEnabledUseCase =
-      GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-  String _appVersion = '-';
-
-  @override
-  void initState() {
-    super.initState();
-    _initPackageInfo();
-  }
-
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    setState(() {
-      ZOLogger.logMessage(info.toString());
-      _appVersion = "${info.version} (${info.buildNumber})";
-    });
-  }
+  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
 
   @override
   Widget build(BuildContext context) {
@@ -108,19 +90,21 @@ class _MenuScreenState extends State<MenuScreen> {
                     leadingIcon: Icons.security,
                     text: context.l10n!.privacyProtection,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                    await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
                     text: context.l10n!.termsOfUse,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                    await _openUrlInBrowser(ZOStrings.zjUrl),
                   ),
                   const SizedBox(height: 8.0),
+                  // FIXME: - Add correct styling to this item
+                  // https://jira.etnetera.cz/browse/ZOB-90
                   MenuItem(
-                    text: context.l10n!.version,
-                    secondaryText: _appVersion,
+                    leadingIcon: null,
+                    text: "TODO - Verze 1.0.0",
                     onPressed: showDebugScreenIfPossible,
                   ),
                 ],
@@ -158,8 +142,8 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void showDebugScreenIfPossible() {
-    bool areDevtoolsEnabled =
-        _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
     if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 }
+
