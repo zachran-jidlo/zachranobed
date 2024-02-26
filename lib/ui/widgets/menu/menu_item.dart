@@ -50,6 +50,6 @@ class MenuItem extends StatelessWidget {
               ),
             ),
           )
-        : SizedBox(); // Return an empty SizedBox when not visible
+        : const SizedBox(); // Return an empty SizedBox when not visible
   }
 }

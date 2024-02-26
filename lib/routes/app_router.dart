@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:zachranobed/features/debug/DebugScreen.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/routes/guards/auth_guard.dart';
 
