@@ -1,6 +1,6 @@
 import 'package:zachranobed/common/logger/zo_logger.dart';
-import 'package:zachranobed/features/appConfiguration/entity/ApiConfiguration.dart';
-import 'package:zachranobed/features/appConfiguration/entity/BuildConfiguration.dart';
+import 'package:zachranobed/features/appConfiguration/entity/api_configuration.dart';
+import 'package:zachranobed/features/appConfiguration/entity/build_configuration.dart';
 
 /// The `AppConfiguration` class manages the build and API configurations for the application.
 ///

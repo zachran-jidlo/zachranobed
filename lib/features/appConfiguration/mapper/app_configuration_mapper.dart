@@ -1,5 +1,5 @@
-import 'package:zachranobed/features/appConfiguration/entity/ApiConfiguration.dart';
-import 'package:zachranobed/features/appConfiguration/entity/BuildConfiguration.dart';
+import 'package:zachranobed/features/appConfiguration/entity/api_configuration.dart';
+import 'package:zachranobed/features/appConfiguration/entity/build_configuration.dart';
 
 class AppConfigurationMapper {
     static BuildConfiguration mapBuildConfiguration(String? flavor) {

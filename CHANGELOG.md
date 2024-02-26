@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [0.3.0]
 ### Added
+- **ZOB-83** Rebuild Home screen after return to application.
 
 ### Changed
 

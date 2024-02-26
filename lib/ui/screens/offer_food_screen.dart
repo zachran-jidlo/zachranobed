@@ -196,8 +196,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return true;
   }
 
-  Future<DocumentReference<OfferedFood>> _offerFood() async {
-    var response = null;
+  Future<DocumentReference<OfferedFood>?> _offerFood() async {
+    DocumentReference<OfferedFood>? response;
     final canteen = HelperService.getCurrentUser(context) as Canteen;
     final now = DateTime.now();
     for (var foodInfo in _foodSections) {

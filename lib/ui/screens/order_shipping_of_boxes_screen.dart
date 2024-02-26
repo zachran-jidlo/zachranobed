@@ -171,8 +171,8 @@ class _OrderShippingOfBoxesScreenState
     return true;
   }
 
-  Future<DocumentReference<BoxMovement>> _orderShipping() async {
-    var response = null;
+  Future<DocumentReference<BoxMovement>?> _orderShipping() async {
+    DocumentReference<BoxMovement>? response;
     final charity = HelperService.getCurrentUser(context) as Charity;
     final now = DateTime.now();
     for (var shippingInfo in _shippingOfBoxesSections) {
