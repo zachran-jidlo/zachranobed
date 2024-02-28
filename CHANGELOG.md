@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-83** Rebuild Home screen after return to application.
 
 ### Changed
+- **ZOB-80** InfoBanner background color customisation and set to success color.
 
 ### Fixed
 

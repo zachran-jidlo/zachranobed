@@ -112,7 +112,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ZOButton(
                         text: context.l10n!.addAnotherFood,
                         icon: MaterialSymbols.add,
-                        isSecondary: true,
+                        type: ZOButtonType.secondary,
                         height: 40.0,
                         onPressed: () {
                           setState(() {
