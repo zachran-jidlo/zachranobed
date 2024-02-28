@@ -95,7 +95,7 @@ class _OrderShippingOfBoxesScreenState
                       ZOButton(
                         text: context.l10n!.addAnotherBoxType,
                         icon: MaterialSymbols.add,
-                        isSecondary: true,
+                        type: ZOButtonType.secondary,
                         height: 40.0,
                         onPressed: () {
                           setState(() {

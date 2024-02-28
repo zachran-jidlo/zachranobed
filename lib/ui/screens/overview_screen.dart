@@ -90,7 +90,7 @@ class OverviewScreen extends StatelessWidget {
             color: ZOColors.onPrimaryLight,
           ),
         ),
-        backgroundColor: ZOColors.lightSuccessColor,
+        backgroundColor: ZOColors.successLight,
       ),
     );
   }
@@ -102,15 +102,13 @@ class OverviewScreen extends StatelessWidget {
         infoValue: const DonationCountdownTimer(),
         button: ZOButton(
           text: context.l10n!.callACourier,
-          icon: Icons.directions_car_filled_outlined,
           fullWidth: false,
+          type: ZOButtonType.success,
           onPressed: () async {
             await DeliveryUtils.confirmDelivery(context);
           },
-          backgroundColor: ZOColors.successColor,
-          foregroundColor: ZOColors.onPrimary,
         ),
-        backgroundColor: ZOColors.lightSuccessColor,
+        backgroundColor: ZOColors.successLight,
       ),
     );
   }
