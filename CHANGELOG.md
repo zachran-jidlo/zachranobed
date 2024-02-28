@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-80** InfoBanner background color customisation and set to success color.
+- **ZOB-90** Update simple menu item with app version by design.
 
 ### Fixed
 
