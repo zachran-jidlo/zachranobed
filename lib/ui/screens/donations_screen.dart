@@ -76,7 +76,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                     text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
                     height: 40.0,
-                    isSecondary: true,
+                    type: ZOButtonType.secondary,
                     onPressed: () {
                       _buildDonationsList(context);
                     },

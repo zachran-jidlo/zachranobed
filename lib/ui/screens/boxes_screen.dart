@@ -72,7 +72,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
                     text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
                     height: 40.0,
-                    isSecondary: true,
+                    type: ZOButtonType.secondary,
                     onPressed: () {
                       _buildBoxMovementList(context);
                     },

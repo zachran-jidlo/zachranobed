@@ -4,6 +4,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/canteen.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
   final _screens = [
     const OverviewScreen(),
     const DonationsScreen(),
@@ -40,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       await Notifications().getFCMToken();
     });
+  }
+
+  @override
+  void onResume() {
+    HelperService.loadUserInfo(context);
+    super.onResume();
   }
 
   @override

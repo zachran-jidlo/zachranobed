@@ -1,8 +1,8 @@
-import 'package:zachranobed/features/appConfiguration/AppConfiguration.dart';
-import 'package:zachranobed/features/appConfiguration/entity/BuildConfiguration.dart';
+import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
+import 'package:zachranobed/features/appConfiguration/entity/build_configuration.dart';
 
 class CheckIfDevtoolsAreEnabledUseCase {
-  AppConfiguration _appConfiguration = AppConfiguration.instance;
+  final AppConfiguration _appConfiguration = AppConfiguration.instance;
 
   bool checkIfDevtoolsAreEnabled() {
     switch (_appConfiguration.buildConfiguration) {
