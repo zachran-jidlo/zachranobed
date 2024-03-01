@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Changed
+- **ZOB-92** Update toolbar in Profile screen.
 
 ### Fixed
 
