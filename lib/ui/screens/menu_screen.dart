@@ -13,6 +13,7 @@ import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
+import 'package:zachranobed/ui/widgets/menu/menu_user_info.dart';
 
 @RoutePage()
 class MenuScreen extends StatefulWidget {
@@ -56,6 +57,10 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           child: Column(
             children: [
+              MenuUserInfo(
+                  user: HelperService.getCurrentUser(context)!
+              ),
+              const SizedBox(height: GapSize.m),
               MenuSection(
                 label: context.l10n!.settings,
                 menuItems: [

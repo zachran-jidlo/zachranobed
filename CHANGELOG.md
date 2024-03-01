@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [0.4.0]
 ### Added
+- **ZOB-91** Add user info item.
 
 ### Changed
 
