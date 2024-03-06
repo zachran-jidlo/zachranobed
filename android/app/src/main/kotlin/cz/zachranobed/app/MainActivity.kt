@@ -1,4 +1,4 @@
-package com.example.zachranobed
+package cz.zachranobed.app
 
 import io.flutter.embedding.android.FlutterActivity
 
