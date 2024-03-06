@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:925797833830:android:c2fe4064acaf46468c21a7",
+        "mobilesdk_app_id": "1:925797833830:android:9d01e7438f95738b8c21a7",
         "android_client_info": {
-          "package_name": "com.example.zachranobed"
+          "package_name": "cz.zachranobed.app"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "925797833830-m7l33ahoa5a8fctmg1bfvqqo9nf8k7fq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cz.zachranobed"
+              }
             }
           ]
         }
