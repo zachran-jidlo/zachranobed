@@ -65,11 +65,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAYkCjaySfTEdIIaDMPbFikbA7Z1BZonVQ',
-    appId: '1:925797833830:ios:d2af9b959bdf16748c21a7',
+    appId: '1:925797833830:ios:4b5b76fbb65828f88c21a7',
     messagingSenderId: '925797833830',
     projectId: 'zachran-obed',
     storageBucket: 'zachran-obed.appspot.com',
     iosClientId: '925797833830-m7l33ahoa5a8fctmg1bfvqqo9nf8k7fq.apps.googleusercontent.com',
-    iosBundleId: 'cz.zachranobed',
+    iosBundleId: 'cz.zachranobed.app',
   );
 }
