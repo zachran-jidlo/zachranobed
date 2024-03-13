@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-91** Add user info item.
 
 ### Changed
+- **ZOB-105** Add non-prod firebase projects.
 - **ZOB-92** Update toolbar in Profile screen.
 - **ZOB-105** Add non-prod firebase projects.
 - **ZOB-114** Fetch user data from entities and entity pairs collections.
