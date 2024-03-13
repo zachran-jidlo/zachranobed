@@ -6,6 +6,7 @@ class Canteen extends UserData {
   final String? recipientId;
 
   Canteen({
+    required super.entityId,
     required super.email,
     required super.establishmentName,
     required super.establishmentId,

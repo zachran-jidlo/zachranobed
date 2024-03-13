@@ -4,6 +4,7 @@ class Charity extends UserData {
   final List<String>? donorId;
 
   Charity({
+    required super.entityId,
     required super.email,
     required super.establishmentName,
     required super.establishmentId,

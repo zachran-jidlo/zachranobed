@@ -122,6 +122,7 @@ class AuthService {
     }
 
     return Canteen(
+      entityId: entity.id,
       email: entity.email,
       establishmentName: entity.establishmentName,
       establishmentId: entity.establishmentId,
@@ -144,6 +145,7 @@ class AuthService {
     }
 
     return Charity(
+      entityId: entity.id,
       email: entity.email,
       establishmentName: entity.establishmentName,
       establishmentId: entity.establishmentId,

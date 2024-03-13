@@ -6,7 +6,6 @@ import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
-import 'package:zachranobed/services/fcm_token_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 
@@ -24,7 +23,6 @@ class IoCContainer {
     );
     GetIt.I.registerSingleton(OfferedFoodService());
     GetIt.I.registerSingleton(DeliveryService());
-    GetIt.I.registerSingleton(FCMTokenService(GetIt.I<AuthService>()));
     GetIt.I.registerSingleton(AppRouter());
     GetIt.I.registerSingleton(BoxService());
     GetIt.I.registerSingleton(BoxMovementService());
