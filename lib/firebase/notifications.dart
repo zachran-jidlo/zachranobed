@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/models/fcm_token.dart';
-import 'package:zachranobed/services/fcm_token_service.dart';
+import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/services/entity_service.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print('Title: ${message.notification?.title}');
@@ -24,7 +25,8 @@ class Notifications {
 
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
-  final _fCMTokenService = GetIt.I<FCMTokenService>();
+  final _authService = GetIt.I<AuthService>();
+  final _entityService = GetIt.I<EntityService>();
 
   /// Initializes local notifications for the application.
   ///
@@ -94,6 +96,11 @@ class Notifications {
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
     final fCMToken = await _firebaseMessaging.getToken();
-    _fCMTokenService.saveFCMToken(FCMToken(id: "", token: fCMToken!));
+    final user = await _authService.getUserData();
+    if (user == null) {
+      ZOLogger.logMessage("User is not logged in, nothing to update");
+      return;
+    }
+    _entityService.saveFCMToken(user.entityId, fCMToken);
   }
 }
