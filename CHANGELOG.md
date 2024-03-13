@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Changed
+- **ZOB-105** Add non-prod firebase projects.
 
 ### Fixed
 
