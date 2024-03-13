@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-92** Update toolbar in Profile screen.
 - **ZOB-105** Add non-prod firebase projects.
 - **ZOB-114** Fetch used data from entities and entity pairs collections.
+- **ZOB-125** Change FCM tokens location in Firestore.
 
 ### Fixed
 
