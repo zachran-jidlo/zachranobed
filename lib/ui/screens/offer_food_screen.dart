@@ -68,7 +68,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
               content: context.l10n!.cancelOfferDialogContent,
               confirmText: context.l10n!.confirmCancel,
               cancelText: context.l10n!.continueTheOffer,
-              icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
             ),
