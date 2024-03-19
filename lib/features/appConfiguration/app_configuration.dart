@@ -1,4 +1,3 @@
-import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/features/appConfiguration/entity/api_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/entity/build_configuration.dart';
 
@@ -50,11 +49,6 @@ class AppConfiguration {
     BuildConfiguration buildConfiguration,
     ApiConfiguration apiConfiguration
   ) {
-    ZOLogger.logMessage('''
-      Setting `AppConfiguration` environment values with 
-      buildConfiguration = ${buildConfiguration.name} 
-      and apiConfiguration = ${apiConfiguration.name}
-    ''');
     this.buildConfiguration = buildConfiguration;
     this.apiConfiguration = apiConfiguration;
   }

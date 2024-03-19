@@ -13,6 +13,10 @@ import 'package:zachranobed/ui/widgets/app_root.dart';
 import 'common/firebase/firebase_helper.dart';
 
 void main() async {
+  AppConfiguration.instance.set(
+      AppConfigurationMapper.mapBuildConfiguration(appFlavor),
+      AppConfigurationMapper.mapApiConfiguration(appFlavor)
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -31,14 +35,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]);
-  
-  // App configuration setup from current runtime app flavor
-  const String? appFlavor = String.fromEnvironment('FLUTTER_APP_FLAVOR') != '' ?
-  String.fromEnvironment('FLUTTER_APP_FLAVOR') : null;
-  AppConfiguration.instance.set(
-      AppConfigurationMapper.mapBuildConfiguration(appFlavor),
-      AppConfigurationMapper.mapApiConfiguration(appFlavor)
-  );
 
   runApp(AppRoot());
 }

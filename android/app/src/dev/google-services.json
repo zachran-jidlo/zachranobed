@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "806560021540",
+    "project_id": "zachran-obed-dev",
+    "storage_bucket": "zachran-obed-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806560021540:android:26baed7f11b275e6d82cb1",
+        "android_client_info": {
+          "package_name": "cz.etnetera.mobile.zachranobed.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5087u0aPHCv7B4t-W-9tYEbD200yRw5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806560021540:android:3b1f0e9c880ecc7ed82cb1",
+        "android_client_info": {
+          "package_name": "cz.etnetera.mobile.zachranobed.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5087u0aPHCv7B4t-W-9tYEbD200yRw5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
