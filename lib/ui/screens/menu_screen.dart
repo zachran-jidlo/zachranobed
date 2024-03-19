@@ -13,6 +13,7 @@ import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
+import 'package:zachranobed/ui/widgets/menu/menu_user_info.dart';
 
 @RoutePage()
 class MenuScreen extends StatefulWidget {
@@ -47,7 +48,14 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(HelperService.getCurrentUser(context)!.email),
+        title: Text(context.l10n!.profileScreenTitle),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -56,6 +64,10 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           child: Column(
             children: [
+              MenuUserInfo(
+                  user: HelperService.getCurrentUser(context)!
+              ),
+              const SizedBox(height: GapSize.m),
               MenuSection(
                 label: context.l10n!.settings,
                 menuItems: [
