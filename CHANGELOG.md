@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Removed
+- **ZOB-97** Remove icons from dialog widget.
 
 ## [0.3.0]
 ### Added
