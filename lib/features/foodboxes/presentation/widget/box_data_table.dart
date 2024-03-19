@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/box.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
+import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/box_service.dart';
 
 class BoxDataTable extends StatelessWidget {
   final UserData user;
@@ -13,11 +13,10 @@ class BoxDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxService = GetIt.I<BoxService>();
+    final repository = GetIt.I<FoodBoxRepository>();
 
-    return StreamBuilder<List<Box>>(
-      stream: boxService.loggedUserBoxesStream(
-          establishmentId: user.establishmentId),
+    return StreamBuilder<Iterable<FoodBoxStatistics>>(
+      stream: repository.observeStatistics(user.entityId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final boxes = snapshot.data!;
@@ -59,7 +58,7 @@ class BoxDataTable extends StatelessWidget {
               ],
               rows: boxes.map((box) {
                 return DataRow(cells: [
-                  DataCell(Text(box.boxType)),
+                  DataCell(Text(box.type.name)),
                   DataCell(Text(box.totalQuantity.toString())),
                   DataCell(Text(box.quantityAtCharity.toString())),
                   DataCell(Text(box.quantityAtCanteen.toString())),
