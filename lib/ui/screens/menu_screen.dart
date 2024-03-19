@@ -47,7 +47,14 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(HelperService.getCurrentUser(context)!.email),
+        title: Text(context.l10n!.profileScreenTitle),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
