@@ -42,4 +42,24 @@ class EntityPairService {
     }
     return null;
   }
+
+  /// Sets up a Firestore stream to listen for changes in the `entityPairs`
+  /// collection, filtering pairs based on the provided [entityId] that belongs
+  /// to the currently signed in user. The user can be associated
+  /// with the [EntityPairDto] either as a `donor` or a `recipient`.
+  ///
+  /// Returns a [Stream] that emits a list of [EntityPairDto] objects whenever
+  /// there is a change in the Firestore collection that matches the specified
+  /// criteria.
+  Stream<Iterable<EntityPairDto>> observePairs(String entityId) {
+    final query = _collection.where(
+      Filter.or(
+        Filter('donorId', isEqualTo: entityId),
+        Filter('recipientId', isEqualTo: entityId),
+      ),
+    );
+
+    return query.snapshots().map((querySnapshot) =>
+        querySnapshot.docs.map((docSnapshot) => docSnapshot.data()));
+  }
 }
