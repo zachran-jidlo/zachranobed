@@ -40,7 +40,6 @@ class NewOfferFloatingButton extends StatelessWidget {
                     content: context.l10n!.newOfferDialogContent,
                     confirmText: context.l10n!.callACourier,
                     cancelText: context.l10n!.cancel,
-                    icon: Icons.directions_car_filled_outlined,
                     onConfirmPressed: () async {
                       await DeliveryUtils.confirmDelivery(context);
                       if (context.mounted) {
@@ -54,7 +53,6 @@ class NewOfferFloatingButton extends StatelessWidget {
                   title: '${context.l10n!.newOffer}?',
                   content: context.l10n!.cantOfferAnymoreDialogContent,
                   cancelText: context.l10n!.cancel,
-                  icon: Icons.edit_calendar_outlined,
                   onCancelPressed: () => Navigator.of(context).pop(false),
                 );
               },

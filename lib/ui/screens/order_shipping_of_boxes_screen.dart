@@ -53,7 +53,6 @@ class _OrderShippingOfBoxesScreenState
               content: context.l10n!.cancelShippingOfBoxesDialogContent,
               confirmText: context.l10n!.confirmCancel,
               cancelText: context.l10n!.continueTheOffer,
-              icon: Icons.delete_outline,
               onConfirmPressed: () => Navigator.of(context).pop(true),
               onCancelPressed: () => Navigator.of(context).pop(false),
             ),
