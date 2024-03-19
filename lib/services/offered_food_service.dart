@@ -50,39 +50,6 @@ class OfferedFoodService {
         querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList());
   }
 
-  /// Queries the Firestore collection for offered foods based on the
-  /// establishment ID of the provided [user] who is either the donor or
-  /// recipient of the offered food. It allows an optional parameter for
-  /// specifying a [timePeriod] to filter the results.
-  ///
-  /// Returns a [Future] that completes with an [int] representing the total
-  /// count of saved meals for the specified [timePeriod] and [user].
-  Future<int> getSavedMealsCount({
-    required UserData user,
-    int? timePeriod,
-  }) async {
-    var mealsCount = 0;
-
-    var query = _offeredFoodCollection.where(Filter.or(
-        Filter('donorId', isEqualTo: user.establishmentId),
-        Filter('recipientId', isEqualTo: user.establishmentId)));
-
-    if (timePeriod != null) {
-      query = query.where('date',
-          isGreaterThan: DateTime.now().subtract(Duration(days: timePeriod)));
-    }
-
-    final querySnapshot = await query.get();
-
-    final donations = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-    for (var donation in donations) {
-      mealsCount += donation.numberOfServings!;
-    }
-
-    return mealsCount;
-  }
-
   /// Stores provided [offeredFood] object to the Firestore collection.
   ///
   /// Returns a [Future] that completes with a [DocumentReference] to the

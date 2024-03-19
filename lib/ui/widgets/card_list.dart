@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/services/offered_food_service.dart';
+import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 
 class CardList extends StatelessWidget {
@@ -11,7 +11,7 @@ class CardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offeredFoodService = GetIt.I<OfferedFoodService>();
+    final deliveryService = GetIt.I<DeliveryService>();
     final user = HelperService.getCurrentUser(context);
 
     return SliverToBoxAdapter(
@@ -21,8 +21,7 @@ class CardList extends StatelessWidget {
           children: [
             Expanded(
               child: ZOCard(
-                measuredValue:
-                    offeredFoodService.getSavedMealsCount(user: user!),
+                measuredValue: deliveryService.getSavedMealsCount(user: user!),
                 metricsText: context.l10n!.savedLunches,
                 periodText: context.l10n!.total,
               ),
@@ -30,7 +29,7 @@ class CardList extends StatelessWidget {
             const SizedBox(width: GapSize.xxs),
             Expanded(
               child: ZOCard(
-                measuredValue: offeredFoodService.getSavedMealsCount(
+                measuredValue: deliveryService.getSavedMealsCount(
                   user: user,
                   timePeriod: 30,
                 ),
