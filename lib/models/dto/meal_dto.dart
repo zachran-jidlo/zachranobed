@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/converters/timestamp_converter.dart';
 
 /*
  * Command to rebuild the meal_dto.g.dart file:
@@ -10,10 +12,13 @@ part 'meal_dto.g.dart';
 class MealDto {
   final String mealId;
   final int count;
+  @TimestampConverter()
+  final DateTime consumeBy;
 
   MealDto({
     required this.mealId,
     required this.count,
+    required this.consumeBy,
   });
 
   factory MealDto.fromJson(Map<String, dynamic> json) =>

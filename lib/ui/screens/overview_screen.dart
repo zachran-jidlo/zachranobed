@@ -6,15 +6,15 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/utils/delivery_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/card_list.dart';
-import 'package:zachranobed/ui/widgets/donated_food_list.dart';
+import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
+import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
@@ -47,7 +47,7 @@ class OverviewScreen extends StatelessWidget {
             ),
             sliver: MultiSliver(
               children: [
-                const CardList(),
+                CardList(user: user),
                 const SizedBox(height: GapSize.m),
                 BoxDataTable(user: user),
                 const SizedBox(height: GapSize.m),
