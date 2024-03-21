@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
 
 /*
@@ -11,6 +13,8 @@ part 'delivery_dto.g.dart';
 class DeliveryDto {
   final String donorId;
   final String recipientId;
+  @TimestampConverter()
+  final DateTime deliveryDate;
   final List<MealDto> meals;
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final DeliveryStateDto? state;
@@ -18,6 +22,7 @@ class DeliveryDto {
   DeliveryDto({
     required this.donorId,
     required this.recipientId,
+    required this.deliveryDate,
     required this.meals,
     required this.state,
   });

@@ -14,6 +14,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-125** Change FCM tokens location in Firestore.
 - **ZOB-126** Fetch data for dashboard cards.
 - **ZOB-129** Fetch data for food boxes table.
+- **ZOB-133** Fetch data for offered food.
 
 ### Fixed
 
