@@ -9,6 +9,7 @@ import 'package:zachranobed/converters/timestamp_converter.dart';
 part 'offered_food.freezed.dart';
 part 'offered_food.g.dart';
 
+// TODO Remove when "create-offer" is refactored on new DB
 @Freezed()
 class OfferedFood with _$OfferedFood {
   const factory OfferedFood({

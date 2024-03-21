@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/services/delivery_service.dart';
+import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/ui/widgets/card.dart';
 
 class CardList extends StatelessWidget {
-  const CardList({super.key});
+  final UserData user;
+
+  const CardList({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
-    final deliveryService = GetIt.I<DeliveryService>();
-    final user = HelperService.getCurrentUser(context);
+    final repository = GetIt.I<OfferedFoodRepository>();
 
     return SliverToBoxAdapter(
       child: SizedBox(
@@ -21,7 +22,8 @@ class CardList extends StatelessWidget {
           children: [
             Expanded(
               child: ZOCard(
-                measuredValue: deliveryService.getSavedMealsCount(user: user!),
+                measuredValue:
+                    repository.getSavedMealsCount(entityId: user.entityId),
                 metricsText: context.l10n!.savedLunches,
                 periodText: context.l10n!.total,
               ),
@@ -29,8 +31,8 @@ class CardList extends StatelessWidget {
             const SizedBox(width: GapSize.xxs),
             Expanded(
               child: ZOCard(
-                measuredValue: deliveryService.getSavedMealsCount(
-                  user: user,
+                measuredValue: repository.getSavedMealsCount(
+                  entityId: user.entityId,
                   timePeriod: 30,
                 ),
                 metricsText: context.l10n!.savedLunches,

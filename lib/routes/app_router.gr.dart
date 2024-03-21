@@ -14,12 +14,14 @@ import 'package:flutter/material.dart' as _i13;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i3;
 import 'package:zachranobed/features/login/presentation/screen/login_screen.dart'
     as _i7;
+import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
+    as _i16;
+import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
+    as _i4;
 import 'package:zachranobed/models/box_movement.dart' as _i14;
-import 'package:zachranobed/models/offered_food.dart' as _i16;
 import 'package:zachranobed/models/user_data.dart' as _i15;
 import 'package:zachranobed/ui/screens/box_movement_detail_screen.dart' as _i1;
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i2;
-import 'package:zachranobed/ui/screens/donated_food_detail_screen.dart' as _i4;
 import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i5;
 import 'package:zachranobed/ui/screens/home_screen.dart' as _i6;
 import 'package:zachranobed/ui/screens/menu_screen.dart' as _i8;

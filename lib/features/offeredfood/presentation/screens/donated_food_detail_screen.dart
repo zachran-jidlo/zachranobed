@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -29,7 +29,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      offeredFood.dishName ?? '',
+                      offeredFood.dishName,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(fontSize: FontSize.l),
                     ),
@@ -39,7 +39,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               const SizedBox(height: GapSize.m),
               ZOTextField(
                 label: context.l10n!.allergens,
-                initialValue: offeredFood.allergens?.join(", "),
+                initialValue: offeredFood.allergens.join(", "),
                 readOnly: true,
               ),
               _buildGap(),
@@ -70,15 +70,15 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ZOTextField(
                 label: context.l10n!.consumeBy,
                 initialValue:
-                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy!),
+                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
               SupportingText(
                 text: '${context.l10n!.donatedOn}'
-                    ' ${DateFormat('d.M.y').format(offeredFood.date!)}'
+                    ' ${DateFormat('d.M.y').format(offeredFood.date)}'
                     ' ${context.l10n!.atTime}'
-                    ' ${DateFormat('HH:mm').format(offeredFood.date!)}.',
+                    ' ${DateFormat('HH:mm').format(offeredFood.date)}.',
               ),
               const SizedBox(height: GapSize.xs),
               ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
