@@ -12,7 +12,6 @@ import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
