@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/box_movement_list_info.dart';
+import 'package:zachranobed/services/box_movement_service.dart';
 import 'package:zachranobed/ui/widgets/box_movement_list.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+
+import '../widgets/empty_page.dart';
+import '../widgets/error_page.dart';
+import '../widgets/loading_page.dart';
 
 class BoxesScreen extends StatefulWidget {
   const BoxesScreen({super.key});
@@ -16,6 +22,7 @@ class BoxesScreen extends StatefulWidget {
 
 class _BoxesScreenState extends State<BoxesScreen> {
   final List<BoxMovementListInfo> _boxMovementLists = [];
+  late Future<int> _boxMovementCountFuture;
 
   var year = DateTime.now().year.toInt();
   final currentWeekNumber = HelperService.getCurrentWeekNumber;
@@ -24,11 +31,44 @@ class _BoxesScreenState extends State<BoxesScreen> {
   @override
   void initState() {
     super.initState();
+    final boxMovementService = GetIt.I<BoxMovementService>();
+    final user = HelperService.getCurrentUser(context);
     desiredWeekNumber = currentWeekNumber - _boxMovementLists.length - 2;
+    _boxMovementCountFuture =
+        boxMovementService.getMovementBoxesCount(user: user!);
   }
 
   @override
   Widget build(BuildContext context) {
+    final pageTitle = context.l10n!.boxes;
+    return FutureBuilder<int>(
+      future: _boxMovementCountFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return LoadingPage(pageTitle: pageTitle);
+        } else if (snapshot.hasError) {
+          return ErrorPage(
+            pageTitle: pageTitle,
+            error: snapshot.error,
+          );
+        } else {
+          final boxCount = snapshot.data!;
+          return boxCount < 1
+              ? Scaffold(
+                  appBar: AppBar(title: Text(pageTitle)),
+                  body: EmptyPage(
+                    vectorImagePath: ZOStrings.boxEmptyPath,
+                    title: context.l10n!.boxesEmptyTitle,
+                    description: context.l10n!.boxesEmptyDescription,
+                  ),
+                )
+              : _buildContent(context);
+        }
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.boxes),

@@ -4,7 +4,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/models/box_movement.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/box_movement_srvice.dart';
+import 'package:zachranobed/services/box_movement_service.dart';
 import 'package:zachranobed/ui/widgets/box_movement_list_tile.dart';
 
 class BoxMovementList extends StatelessWidget {
