@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/services/box_movement_srvice.dart';
+import 'package:zachranobed/services/box_movement_service.dart';
 import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/canteen_service.dart';
 import 'package:zachranobed/services/charity_service.dart';

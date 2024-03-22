@@ -10,7 +10,7 @@ import 'package:zachranobed/models/box_movement.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/shipping_of_boxes.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/box_movement_srvice.dart';
+import 'package:zachranobed/services/box_movement_service.dart';
 import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
