@@ -9,6 +9,7 @@ import 'package:zachranobed/converters/timestamp_converter.dart';
 part 'box_movement.freezed.dart';
 part 'box_movement.g.dart';
 
+// TODO Remove when "box-shipping" is refactored on new DB
 @Freezed()
 class BoxMovement with _$BoxMovement {
   const factory BoxMovement({

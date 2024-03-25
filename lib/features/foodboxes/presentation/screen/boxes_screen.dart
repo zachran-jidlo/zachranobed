@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/box_movement_list_info.dart';
-import 'package:zachranobed/ui/widgets/box_movement_list.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_movement_list.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 
 class BoxesScreen extends StatefulWidget {
@@ -15,17 +14,11 @@ class BoxesScreen extends StatefulWidget {
 }
 
 class _BoxesScreenState extends State<BoxesScreen> {
-  final List<BoxMovementListInfo> _boxMovementLists = [];
+  final List<DateTime> _previousWeeks = [];
 
-  var year = DateTime.now().year.toInt();
-  final currentWeekNumber = HelperService.getCurrentWeekNumber;
-  var desiredWeekNumber = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    desiredWeekNumber = currentWeekNumber - _boxMovementLists.length - 2;
-  }
+  final DateTime _thisWeekStart = DateTimeUtils.getWeekStart(DateTime.now());
+  late final DateTime _previousWeekStart =
+      DateTimeUtils.getPreviousWeek(_thisWeekStart);
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +36,23 @@ class _BoxesScreenState extends State<BoxesScreen> {
               children: [
                 BoxMovementList(
                   title: context.l10n!.thisWeek,
-                  weekNumber: '${DateTime.now().year}-$currentWeekNumber',
-                  user: HelperService.getCurrentUser(context)!,
+                  deliveredFrom: _thisWeekStart,
+                  deliveredTo: DateTimeUtils.getNextWeek(_thisWeekStart),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 BoxMovementList(
                   title: context.l10n!.lastWeek,
-                  weekNumber: '${DateTime.now().year}-${currentWeekNumber - 1}',
-                  user: HelperService.getCurrentUser(context)!,
+                  deliveredFrom: _previousWeekStart,
+                  deliveredTo: DateTimeUtils.getNextWeek(_previousWeekStart),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                for (var boxMovement in _boxMovementLists)
+                for (var weekStart in _previousWeeks)
                   MultiSliver(
                     children: [
                       BoxMovementList(
-                        title: boxMovement.title,
-                        weekNumber: boxMovement.weekNumber,
-                        user: boxMovement.user,
+                        title: DateTimeUtils.getTitleForWeek(weekStart),
+                        deliveredFrom: weekStart,
+                        deliveredTo: DateTimeUtils.getNextWeek(weekStart),
                       ),
                       const SliverToBoxAdapter(
                         child: SizedBox(height: GapSize.xs),
@@ -73,9 +66,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
                     icon: Icons.expand_more,
                     height: 40.0,
                     type: ZOButtonType.secondary,
-                    onPressed: () {
-                      _buildBoxMovementList(context);
-                    },
+                    onPressed: _addPreviousWeek,
                   ),
                 ),
               ],
@@ -87,22 +78,13 @@ class _BoxesScreenState extends State<BoxesScreen> {
     );
   }
 
-  void _buildBoxMovementList(BuildContext context) {
-    if (desiredWeekNumber <= 0) {
-      desiredWeekNumber = Constants.lastWeekOfYear;
-      year--;
-    }
-
+  void _addPreviousWeek() {
     setState(() {
-      _boxMovementLists.add(
-        BoxMovementListInfo(
-          title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
-          weekNumber: '$year-$desiredWeekNumber',
-          user: HelperService.getCurrentUser(context)!,
-        ),
-      );
+      if (_previousWeeks.isEmpty) {
+        _previousWeeks.add(DateTimeUtils.getPreviousWeek(_previousWeekStart));
+      } else {
+        _previousWeeks.add(DateTimeUtils.getPreviousWeek(_previousWeeks.last));
+      }
     });
-
-    desiredWeekNumber--;
   }
 }

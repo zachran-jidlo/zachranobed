@@ -66,9 +66,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                     icon: Icons.expand_more,
                     height: 40.0,
                     type: ZOButtonType.secondary,
-                    onPressed: () {
-                      _addPreviousWeek();
-                    },
+                    onPressed: _addPreviousWeek,
                   ),
                 ),
               ],
