@@ -1,27 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'canteen.dart';
+part of 'entity_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Canteen _$CanteenFromJson(Map<String, dynamic> json) => Canteen(
+EntityDto _$EntityDtoFromJson(Map<String, dynamic> json) => EntityDto(
+      id: json['id'] as String,
       email: json['email'] as String,
       establishmentName: json['establishmentName'] as String,
       establishmentId: json['establishmentId'] as String,
       organization: json['organization'] as String,
-      pickUpFrom: json['pickUpFrom'] as String?,
-      pickUpWithin: json['pickUpWithin'] as String?,
-      recipientId: json['recipientId'] as String?,
+      entityType: $enumDecodeNullable(
+          _$EntityTypeDtoEnumMap, json['entityType'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
     );
 
-Map<String, dynamic> _$CanteenToJson(Canteen instance) => <String, dynamic>{
+Map<String, dynamic> _$EntityDtoToJson(EntityDto instance) => <String, dynamic>{
+      'id': instance.id,
       'email': instance.email,
       'establishmentName': instance.establishmentName,
       'establishmentId': instance.establishmentId,
       'organization': instance.organization,
-      'pickUpFrom': instance.pickUpFrom,
-      'pickUpWithin': instance.pickUpWithin,
-      'recipientId': instance.recipientId,
+      'entityType': _$EntityTypeDtoEnumMap[instance.entityType],
     };
+
+const _$EntityTypeDtoEnumMap = {
+  EntityTypeDto.donor: 'DONOR',
+  EntityTypeDto.recipient: 'RECIPIENT',
+};
