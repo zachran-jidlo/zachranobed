@@ -9,18 +9,19 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:cloud_firestore/cloud_firestore.dart' as _i17;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i16;
 import 'package:flutter/material.dart' as _i13;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i3;
+import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
+    as _i14;
+import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_detail_screen.dart'
+    as _i1;
 import 'package:zachranobed/features/login/presentation/screen/login_screen.dart'
     as _i7;
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
-    as _i16;
+    as _i15;
 import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
     as _i4;
-import 'package:zachranobed/models/box_movement.dart' as _i14;
-import 'package:zachranobed/models/user_data.dart' as _i15;
-import 'package:zachranobed/ui/screens/box_movement_detail_screen.dart' as _i1;
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i2;
 import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i5;
 import 'package:zachranobed/ui/screens/home_screen.dart' as _i6;
@@ -42,7 +43,6 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         child: _i1.BoxMovementDetailScreen(
           key: args.key,
           boxMovement: args.boxMovement,
-          user: args.user,
         ),
       );
     },
@@ -125,14 +125,12 @@ class BoxMovementDetailRoute
   BoxMovementDetailRoute({
     _i13.Key? key,
     required _i14.BoxMovement boxMovement,
-    required _i15.UserData user,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           BoxMovementDetailRoute.name,
           args: BoxMovementDetailRouteArgs(
             key: key,
             boxMovement: boxMovement,
-            user: user,
           ),
           initialChildren: children,
         );
@@ -147,18 +145,15 @@ class BoxMovementDetailRouteArgs {
   const BoxMovementDetailRouteArgs({
     this.key,
     required this.boxMovement,
-    required this.user,
   });
 
   final _i13.Key? key;
 
   final _i14.BoxMovement boxMovement;
 
-  final _i15.UserData user;
-
   @override
   String toString() {
-    return 'BoxMovementDetailRouteArgs{key: $key, boxMovement: $boxMovement, user: $user}';
+    return 'BoxMovementDetailRouteArgs{key: $key, boxMovement: $boxMovement}';
   }
 }
 
@@ -196,7 +191,7 @@ class DonatedFoodDetailRoute
     extends _i12.PageRouteInfo<DonatedFoodDetailRouteArgs> {
   DonatedFoodDetailRoute({
     _i13.Key? key,
-    required _i16.OfferedFood offeredFood,
+    required _i15.OfferedFood offeredFood,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           DonatedFoodDetailRoute.name,
@@ -221,7 +216,7 @@ class DonatedFoodDetailRouteArgs {
 
   final _i13.Key? key;
 
-  final _i16.OfferedFood offeredFood;
+  final _i15.OfferedFood offeredFood;
 
   @override
   String toString() {
@@ -318,7 +313,7 @@ class OrderShippingOfBoxesRoute extends _i12.PageRouteInfo<void> {
 class ThankYouRoute extends _i12.PageRouteInfo<ThankYouRouteArgs> {
   ThankYouRoute({
     _i13.Key? key,
-    required _i17.DocumentReference<Object>? response,
+    required _i16.DocumentReference<Object>? response,
     required String message,
     List<_i12.PageRouteInfo>? children,
   }) : super(
@@ -346,7 +341,7 @@ class ThankYouRouteArgs {
 
   final _i13.Key? key;
 
-  final _i17.DocumentReference<Object>? response;
+  final _i16.DocumentReference<Object>? response;
 
   final String message;
 
