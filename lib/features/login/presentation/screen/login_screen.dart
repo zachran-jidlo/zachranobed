@@ -7,6 +7,7 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/app_terms/presentation/app_terms_screen.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -119,13 +120,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _logIn() async {
+    /*
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
+    */
 
-    final result = await _authService.signIn(
+    context.router.push(const AppTermsRoute());
+
+    /*final result = await _authService.signIn(
       _emailController.text,
       _passwordController.text,
     );
@@ -150,6 +155,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       }
-    }
+    }*/
   }
 }
