@@ -15,6 +15,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-126** Fetch data for dashboard cards.
 - **ZOB-129** Fetch data for food boxes table.
 - **ZOB-133** Fetch data for offered food.
+- **ZOB-135** Fetch data for box movements.
 
 ### Fixed
 

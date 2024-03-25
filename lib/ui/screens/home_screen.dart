@@ -10,7 +10,7 @@ import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
-import 'package:zachranobed/ui/screens/boxes_screen.dart';
+import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
