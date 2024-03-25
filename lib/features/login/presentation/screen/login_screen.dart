@@ -8,6 +8,7 @@ import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/app_terms/presentation/app_terms_screen.dart';
+import 'package:zachranobed/features/login/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -28,6 +29,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -128,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     */
 
-    context.router.push(const AppTermsRoute());
+    _continueToApp();
 
     /*final result = await _authService.signIn(
       _emailController.text,
@@ -156,5 +158,15 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     }*/
+  }
+
+  Future<void> _continueToApp() async {
+    final result = await _checkIfAppTermsShouldBeShownUseCase.checkIfAppTermsShouldBeShown();
+
+    if (result == true) {
+      context.router.replace(const AppTermsRoute());
+    } else {
+      context.router.replace(const HomeRoute());
+    }
   }
 }

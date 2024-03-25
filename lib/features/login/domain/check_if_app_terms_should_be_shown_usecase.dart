@@ -11,6 +11,8 @@ class CheckIfAppTermsShouldBeShownUseCase {
     var userData = authService.getUserData();
 
     // FIXME: - this should access the value `lastAcceptedAppTermsVersion` and compare it to the `lastAppTermsVersion`
-    return userData.then((value) => value?.email != null);
+    // FIXME: - Remove mock
+    //return userData.then((value) => value?.email != null);
+    return Future.delayed(Duration(seconds: 1), () => true);
   }
 }
