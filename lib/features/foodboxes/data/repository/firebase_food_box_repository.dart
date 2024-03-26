@@ -1,12 +1,16 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/features/foodboxes/data/mapper/food_box_mapper.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
+import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
+import 'package:zachranobed/models/dto/food_box_type_dto.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/food_box_service.dart';
@@ -24,8 +28,12 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   );
 
   @override
-  Future<Iterable<FoodBoxType>> getTypes() async {
-    final types = await _foodBoxService.getAll();
+  Future<Iterable<FoodBoxType>> getTypes({
+    bool includeDisposable = false,
+  }) async {
+    final types = (await _foodBoxService.getAll()).where((element) {
+      return includeDisposable || element.id != FoodBoxTypeDto.idDisposable;
+    });
     return types.map((e) => e.toDomain());
   }
 
@@ -106,18 +114,84 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     });
   }
 
+  @override
+  Future<bool> verifyAvailableBoxCount({
+    required String entityId,
+    required Map<String, int> requiredBoxes,
+    required int Function(FoodBoxStatistics) getQuantity,
+  }) async {
+    final statistics = await observeStatistics(entityId).first;
+    final statisticsMap = {for (final s in statistics) s.type.id: s};
+
+    for (final item in requiredBoxes.entries) {
+      final required = item.value;
+
+      var available = 0;
+      final statisticsItem = statisticsMap[item.key];
+      if (statisticsItem != null) {
+        available = getQuantity(statisticsItem);
+      }
+
+      if (available < required && item.key != FoodBoxTypeDto.idDisposable) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  @override
+  Future<bool> createBoxDelivery({
+    required String entityId,
+    required String donorId,
+    required List<BoxInfo> boxInfo,
+  }) async {
+    final foodBoxesCount = <String, int>{};
+    for (final info in boxInfo) {
+      final foodBoxId = info.foodBoxId;
+      if (foodBoxId == null) {
+        continue;
+      }
+      final required = info.numberOfBoxes ?? 0;
+      foodBoxesCount[foodBoxId] = (foodBoxesCount[foodBoxId] ?? 0) + required;
+    }
+
+    final foodBoxes = foodBoxesCount.entries.map((e) {
+      return FoodBoxDeliveryDto(
+        foodBoxId: e.key,
+        count: e.value,
+      );
+    });
+
+    final id = '$donorId-$entityId-${DateTimeUtils.getCurrentDayMark()}';
+    final dto = DeliveryDto(
+      id: id,
+      donorId: donorId,
+      recipientId: entityId,
+      deliveryDate: DateTime.now(),
+      foodBoxes: foodBoxes.toList(),
+      meals: [],
+      state: DeliveryStateDto.offered,
+      type: DeliveryTypeDto.boxDelivery,
+    );
+
+    return _deliveryService.createDelivery(dto);
+  }
+
   /// Get sort order for the [FoodBoxType].
   /// Reusable box should go first, and IKEA boxes should follow.
   int _getSortOrder(FoodBoxType type) {
     switch (type.id) {
-      case "rekrabicka":
+      case FoodBoxTypeDto.idRekrabicka:
         return 0;
-      case "ikea_large":
+      case FoodBoxTypeDto.idIkeaLarge:
         return 1;
-      case "ikea_small":
+      case FoodBoxTypeDto.idIkeaSmall:
         return 2;
+      case FoodBoxTypeDto.idDisposable:
+        return 3;
     }
-    return 3;
+    return 4;
   }
 
   /// The box count is always a positive integer, thus in some cases we need

@@ -1,9 +1,9 @@
 import 'package:zachranobed/models/user_data.dart';
 
 class Canteen extends UserData {
-  final String? pickUpFrom;
-  final String? pickUpWithin;
-  final String? recipientId;
+  final String pickUpFrom;
+  final String pickUpWithin;
+  final String recipientId;
 
   Canteen({
     required super.entityId,
@@ -11,8 +11,8 @@ class Canteen extends UserData {
     required super.establishmentName,
     required super.establishmentId,
     required super.organization,
-    this.pickUpFrom,
-    this.pickUpWithin,
-    this.recipientId,
+    required this.pickUpFrom,
+    required this.pickUpWithin,
+    required this.recipientId,
   });
 }

@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,12 +8,12 @@ import 'package:zachranobed/ui/widgets/button.dart';
 
 @RoutePage()
 class ThankYouScreen extends StatelessWidget {
-  final DocumentReference<Object>? response;
+  final bool isSuccess;
   final String message;
 
   const ThankYouScreen({
     super.key,
-    required this.response,
+    required this.isSuccess,
     required this.message,
   });
 
@@ -41,7 +40,7 @@ class ThankYouScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 45.0),
                       child: Column(
                         children: <Widget>[
-                          response != null
+                          isSuccess
                               ? Text(
                                   message,
                                   textAlign: TextAlign.center,

@@ -8,6 +8,12 @@ part 'food_box_type_dto.g.dart';
 
 @JsonSerializable()
 class FoodBoxTypeDto {
+
+  static const String idRekrabicka = "rekrabicka";
+  static const String idIkeaLarge = "ikea_large";
+  static const String idIkeaSmall = "ikea_small";
+  static const String idDisposable = "disposable";
+
   final String id;
   final String name;
   final String type;
