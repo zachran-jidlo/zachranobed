@@ -9,7 +9,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:cloud_firestore/cloud_firestore.dart' as _i16;
 import 'package:flutter/material.dart' as _i13;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i3;
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
@@ -110,7 +109,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         routeData: routeData,
         child: _i11.ThankYouScreen(
           key: args.key,
-          response: args.response,
+          isSuccess: args.isSuccess,
           message: args.message,
         ),
       );
@@ -313,14 +312,14 @@ class OrderShippingOfBoxesRoute extends _i12.PageRouteInfo<void> {
 class ThankYouRoute extends _i12.PageRouteInfo<ThankYouRouteArgs> {
   ThankYouRoute({
     _i13.Key? key,
-    required _i16.DocumentReference<Object>? response,
+    required bool isSuccess,
     required String message,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           ThankYouRoute.name,
           args: ThankYouRouteArgs(
             key: key,
-            response: response,
+            isSuccess: isSuccess,
             message: message,
           ),
           initialChildren: children,
@@ -335,18 +334,18 @@ class ThankYouRoute extends _i12.PageRouteInfo<ThankYouRouteArgs> {
 class ThankYouRouteArgs {
   const ThankYouRouteArgs({
     this.key,
-    required this.response,
+    required this.isSuccess,
     required this.message,
   });
 
   final _i13.Key? key;
 
-  final _i16.DocumentReference<Object>? response;
+  final bool isSuccess;
 
   final String message;
 
   @override
   String toString() {
-    return 'ThankYouRouteArgs{key: $key, response: $response, message: $message}';
+    return 'ThankYouRouteArgs{key: $key, isSuccess: $isSuccess, message: $message}';
   }
 }

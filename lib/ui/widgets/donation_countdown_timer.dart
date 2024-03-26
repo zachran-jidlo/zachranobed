@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/enums/delivery_state.dart';
 import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
@@ -83,7 +83,8 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer> {
     if (!canDonate) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context.read<DeliveryNotifier>().updateDeliveryState(
-            DeliveryStateHelper.toValue(DeliveryState.canceled, context));
+          DeliveryState.notUsed
+        );
       });
     }
 

@@ -12,9 +12,24 @@ class Delivery with _$Delivery {
   const factory Delivery({
     required String id,
     required String donorId,
-    required String state,
+    required DeliveryState state,
+    required DeliveryType type,
   }) = _Delivery;
 
   factory Delivery.fromJson(Map<String, dynamic> json) =>
       _$DeliveryFromJson(json);
+}
+
+enum DeliveryState {
+  prepared,
+  offered,
+  accepted,
+  inDelivery,
+  delivered,
+  notUsed,
+}
+
+enum DeliveryType {
+  foodDelivery,
+  boxDelivery,
 }

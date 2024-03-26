@@ -8,7 +8,6 @@ import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
@@ -54,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
     return DefaultTabController(
       length: _screens.length,
       child: Scaffold(
-        body: context.watch<DeliveryNotifier>().delivery != null
+        body: context.watch<UserNotifier>().user != null
             ? TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: _screens,
@@ -91,11 +90,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
           ),
         ),
         floatingActionButton: HelperService.getCurrentUser(context) is Canteen
-            ? NewOfferFloatingButton(
-                enabled: context
-                    .watch<DeliveryNotifier>()
-                    .isDeliveryConfirmed(context),
-              )
+            ? NewOfferFloatingButton()
             : const NewShippingOfBoxesFloatingButton(),
       ),
     );
