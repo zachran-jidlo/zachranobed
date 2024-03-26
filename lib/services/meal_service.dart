@@ -24,4 +24,13 @@ class MealService {
 
     return {for (final v in snapshot.docs) v.id: v.data()};
   }
+
+  /// Adds the given [meals] to the collection. Returns a future with true
+  /// when operation succeeds and false otherwise.
+  Future<bool> addMeals(Iterable<MealDetailDto> meals) {
+    return Future.wait(meals.map((e) => _collection.doc(e.id).set(e))).then(
+      (value) => true,
+      onError: (error) => false,
+    );
+  }
 }

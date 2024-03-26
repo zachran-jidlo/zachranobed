@@ -1,16 +1,71 @@
+import 'package:uuid/uuid.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/features/offeredfood/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/offered_food_mapper.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/dto/meal_detail_dto.dart';
+import 'package:zachranobed/models/dto/meal_dto.dart';
 import 'package:zachranobed/services/delivery_service.dart';
+import 'package:zachranobed/services/food_box_service.dart';
 import 'package:zachranobed/services/meal_service.dart';
 
 /// Implementation of the [OfferedFoodRepository] via Firebase services.
 class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
+  final List<DeliveryState> closedStates = [
+    DeliveryState.inDelivery,
+    DeliveryState.delivered,
+    DeliveryState.notUsed,
+  ];
+
   final DeliveryService _deliveryService;
   final MealService _mealService;
+  final FoodBoxService _foodBoxService;
 
-  FirebaseOfferedFoodRepository(this._deliveryService, this._mealService);
+  FirebaseOfferedFoodRepository(
+    this._deliveryService,
+    this._mealService,
+    this._foodBoxService,
+  );
+
+  @override
+  Future<Delivery?> getCurrentDelivery({
+    required String entityId,
+    required DateTime time,
+  }) async {
+    final dto = await _deliveryService.getDelivery(entityId, time);
+    return dto?.toDomain();
+  }
+
+  @override
+  bool canDonateFood({required Delivery delivery, required DateTime time}) {
+    if (closedStates.contains(delivery.state)) {
+      return false;
+    }
+
+    const pickupDuration = Duration(minutes: Constants.pickupConfirmationTime);
+    final canDonateUntil = time.subtract(pickupDuration);
+    if (delivery.state == DeliveryState.prepared &&
+        DateTime.now().isAfter(canDonateUntil)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @override
+  Future<bool> updateDeliveryState({
+    required Delivery delivery,
+    required DeliveryState state,
+  }) {
+    return _deliveryService.updateDeliveryState(
+      delivery.id,
+      state.toDto(),
+    );
+  }
 
   @override
   Future<int> getSavedMealsCount({
@@ -32,8 +87,11 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     int? limit,
     DateTime? from,
     DateTime? to,
-  }) {
-    return _deliveryService
+  }) async* {
+    final boxTypes = await _foodBoxService.getAll();
+    final boxTypeMap = {for (final e in boxTypes) e.id: e.name};
+
+    yield* _deliveryService
         .observeDeliveries(entityId, limit, from, to)
         .asyncMap((deliveries) async {
       final foodLists = await Future.wait(deliveries.map((delivery) async {
@@ -51,7 +109,15 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
           if (detail == null) {
             return null;
           }
-          return detail.toDomain(delivery, meal);
+          final boxType = boxTypeMap[meal.foodBoxId];
+          if (boxType == null) {
+            return null;
+          }
+          return detail.toDomain(
+            delivery,
+            meal,
+            boxType,
+          );
         });
       }));
       // Flatten a list of lists in single list
@@ -63,5 +129,52 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       }
       return food;
     });
+  }
+
+  @override
+  Future<bool> createOffer({
+    required Delivery delivery,
+    required List<FoodInfo> foodInfo,
+  }) async {
+    const uuid = Uuid();
+    final List<MealDetailDto> mealDetails = [];
+    final List<MealDto> meals = [];
+    for (final element in foodInfo) {
+      final id = uuid.v4();
+      mealDetails.add(
+        MealDetailDto(
+          id: id,
+          name: element.dishName ?? "",
+          donorId: delivery.donorId,
+          foodCategory: element.foodCategory ?? "",
+          allergens: element.allergens ?? [],
+        ),
+      );
+
+      meals.add(
+        MealDto(
+          mealId: id,
+          count: element.numberOfServings ?? 0,
+          consumeBy: element.consumeBy ?? DateTime.now(),
+          foodBoxId: element.foodBoxId ?? "",
+          foodBoxCount: element.numberOfBoxes ?? element.numberOfServings ?? 0,
+        ),
+      );
+    }
+
+    if (!await _mealService.addMeals(mealDetails)) {
+      return false;
+    }
+
+    if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals)) {
+      return false;
+    }
+
+    const state = DeliveryState.offered;
+    if (!await updateDeliveryState(delivery: delivery, state: state)) {
+      return false;
+    }
+
+    return true;
   }
 }

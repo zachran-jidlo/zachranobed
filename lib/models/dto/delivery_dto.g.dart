@@ -7,6 +7,7 @@ part of 'delivery_dto.dart';
 // **************************************************************************
 
 DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
+      id: json['id'] as String,
       donorId: json['donorId'] as String,
       recipientId: json['recipientId'] as String,
       deliveryDate: const TimestampConverter()
@@ -25,13 +26,14 @@ DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
 
 Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'donorId': instance.donorId,
       'recipientId': instance.recipientId,
       'deliveryDate': const TimestampConverter().toJson(instance.deliveryDate),
-      'foodBoxes': instance.foodBoxes,
-      'meals': instance.meals,
-      'state': instance.state,
-      'type': instance.type,
+      'foodBoxes': instance.foodBoxes.map((e) => e.toJson()).toList(),
+      'meals': instance.meals.map((e) => e.toJson()).toList(),
+      'state': instance.state?.toJson(),
+      'type': instance.type?.toJson(),
     };
 
 const _$DeliveryStateDtoEnumMap = {
