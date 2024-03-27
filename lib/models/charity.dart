@@ -9,6 +9,7 @@ class Charity extends UserData {
     required super.establishmentName,
     required super.establishmentId,
     required super.organization,
+    required super.lastAcceptedAppTermsVersion,
     this.donorId,
   });
 }

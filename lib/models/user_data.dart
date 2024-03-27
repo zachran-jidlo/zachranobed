@@ -6,6 +6,7 @@ abstract class UserData extends ChangeNotifier {
   final String establishmentName;
   final String establishmentId;
   final String organization;
+  final int? lastAcceptedAppTermsVersion;
 
   UserData({
     required this.entityId,
@@ -13,9 +14,17 @@ abstract class UserData extends ChangeNotifier {
     required this.establishmentName,
     required this.establishmentId,
     required this.organization,
+    required this.lastAcceptedAppTermsVersion
   });
 
   String get debugInfo {
-    return 'EntityID: $entityId, Email: $email, Establishment: $establishmentName, ID: $establishmentId, Organization: $organization';
+    return '''
+      EntityID: $entityId, 
+      Email: $email, 
+      Establishment: $establishmentName, 
+      ID: $establishmentId, 
+      Organization: $organization,
+      Last accepted app terms version: $lastAcceptedAppTermsVersion
+    ''';
   }
 }

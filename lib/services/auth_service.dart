@@ -121,6 +121,8 @@ class AuthService {
       return null;
     }
 
+
+
     return Canteen(
       entityId: entity.id,
       email: entity.email,
@@ -130,6 +132,7 @@ class AuthService {
       pickUpFrom: window.start,
       pickUpWithin: window.end,
       recipientId: pair.recipientId,
+      lastAcceptedAppTermsVersion: _mapLastAcceptedAppTermsVersion(entity.lastAcceptedAppTermsVersion)
     );
   }
 
@@ -151,6 +154,18 @@ class AuthService {
       establishmentId: entity.establishmentId,
       organization: entity.organization,
       donorId: pairs.map((e) => e.donorId).toList(),
+      lastAcceptedAppTermsVersion: _mapLastAcceptedAppTermsVersion(entity.lastAcceptedAppTermsVersion)
     );
+  }
+
+  // Mapping
+
+  int? _mapLastAcceptedAppTermsVersion(String? version) {
+    int? lastAcceptedAppTermsVersion = null;
+    if (version != null) {
+      lastAcceptedAppTermsVersion = int.parse(version);
+    }
+
+    return lastAcceptedAppTermsVersion;
   }
 }

@@ -11,6 +11,7 @@ class Canteen extends UserData {
     required super.establishmentName,
     required super.establishmentId,
     required super.organization,
+    required super.lastAcceptedAppTermsVersion,
     this.pickUpFrom,
     this.pickUpWithin,
     this.recipientId,
