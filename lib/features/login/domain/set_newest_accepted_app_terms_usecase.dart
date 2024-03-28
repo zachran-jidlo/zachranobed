@@ -6,8 +6,8 @@ class SetNewestAcceptedAppTermsUseCase {
   SetNewestAcceptedAppTermsUseCase(this.authService);
 
   Future<bool> setNewestAcceptedAppTerms() async {
-    // FIXME: - Add newest app terms value fetch
-
+    // FIXME: - Add actual value fetching
+    int lastAppTermsVersion = 1;
     // FIXME: - Add user flag update call
 
     // FIXME: - Remove mock

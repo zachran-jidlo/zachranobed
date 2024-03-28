@@ -122,17 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _logIn() async {
-    /*
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
-    */
 
-    _continueToApp();
-
-    /*final result = await _authService.signIn(
+    final result = await _authService.signIn(
       _emailController.text,
       _passwordController.text,
     );
@@ -143,9 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ZOLogger.logMessage(
             "Přihlášen uživatel: ${HelperService.getCurrentUser(_formKey.currentContext!)?.debugInfo}");
 
-        if (mounted) {
-          context.router.replace(const HomeRoute());
-        }
+        _continueToLoggedInContext();
       }
     } else {
       if (mounted) {
@@ -157,10 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       }
-    }*/
+    }
   }
 
-  Future<void> _continueToApp() async {
+  Future<void> _continueToLoggedInContext() async {
     final result = await _checkIfAppTermsShouldBeShownUseCase.checkIfAppTermsShouldBeShown();
 
     if (result == true) {
