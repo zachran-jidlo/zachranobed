@@ -14,7 +14,7 @@ class CheckIfAppTermsShouldBeShownUseCase {
       var lastAcceptedVersion = value?.lastAcceptedAppTermsVersion;
 
       if (lastAcceptedVersion != null) {
-        return lastAcceptedVersion >= lastAppTermsVersion;
+        return lastAcceptedVersion > lastAppTermsVersion;
       } else {
         return true;
       }

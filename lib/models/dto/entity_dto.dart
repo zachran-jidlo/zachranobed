@@ -15,7 +15,7 @@ class EntityDto {
   final String organization;
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final EntityTypeDto? entityType;
-  final String? lastAcceptedAppTermsVersion;
+  final int? lastAcceptedAppTermsVersion;
 
   EntityDto({
     required this.id,
