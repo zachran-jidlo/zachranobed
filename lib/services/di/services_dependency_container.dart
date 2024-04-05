@@ -9,8 +9,8 @@ import 'package:zachranobed/services/entity_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 
-class IoCContainer {
-  const IoCContainer._();
+class ServicesDependencyContainer {
+  const ServicesDependencyContainer._();
 
   static void setup() {
     GetIt.I.registerSingleton(EntityService());
