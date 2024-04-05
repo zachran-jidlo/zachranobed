@@ -14,6 +14,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Removed
 - **ZOB-97** Remove icons from dialog widget.
+- **ZOB-147** Remove footer consent from offer food screen.
 
 ## [0.3.0]
 ### Added
