@@ -39,6 +39,10 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       final foodLists = await Future.wait(deliveries.map((delivery) async {
         // Get meal IDs and fetch meal details from MealService
         final mealIds = delivery.meals.map((e) => e.mealId);
+        if (mealIds.isEmpty) {
+          return const Iterable<OfferedFood>.empty();
+        }
+
         final details = await _mealService.getDetails(mealIds.toList());
 
         // Map meal with details to the OfferedFood
