@@ -47,4 +47,28 @@ class BoxMovementService {
       BoxMovement boxMovement) async {
     return await _boxMovementCollection.add(boxMovement);
   }
+
+  /// Returns the total count of boxes involved in movements for the given [user].
+  ///
+  /// Returns a [Future] that completes with an [int] representing the total
+  /// count of movement boxes for the specified [user].
+  Future<int> getMovementBoxesCount({
+    required UserData user,
+  }) async {
+    var boxCount = 0;
+
+    var query = _boxMovementCollection.where(Filter.or(
+        Filter('senderId', isEqualTo: user.establishmentId),
+        Filter('recipientId', isEqualTo: user.establishmentId)));
+
+    final querySnapshot = await query.get();
+
+    final boxMovements = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    for (var boxMovement in boxMovements) {
+      boxCount += boxMovement.numberOfBoxes!;
+    }
+
+    return boxCount;
+  }
 }
