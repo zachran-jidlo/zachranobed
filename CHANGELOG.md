@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [0.4.0]
 ### Added
 - **ZOB-91** Add user info item.
+- **ZOB-36** Add "Empty page" for the boxes and meal section.
 
 ### Changed
 - **ZOB-105** Add non-prod firebase projects.
