@@ -8,10 +8,9 @@ import 'package:zachranobed/models/box_movement_list_info.dart';
 import 'package:zachranobed/services/box_movement_service.dart';
 import 'package:zachranobed/ui/widgets/box_movement_list.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-
-import '../widgets/empty_page.dart';
-import '../widgets/error_page.dart';
-import '../widgets/loading_page.dart';
+import 'package:zachranobed/ui/widgets/empty_page.dart';
+import 'package:zachranobed/ui/widgets/error_page.dart';
+import 'package:zachranobed/ui/widgets/loading_page.dart';
 
 class BoxesScreen extends StatefulWidget {
   const BoxesScreen({super.key});

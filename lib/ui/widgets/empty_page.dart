@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../common/constants.dart';
+import 'package:zachranobed/common/constants.dart';
 
 class EmptyPage extends StatelessWidget {
   final String vectorImagePath;
@@ -34,7 +33,7 @@ class EmptyPage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: GapSize.m),
+            const SizedBox(height: GapSize.xs),
             Text(
               description,
               style: Theme.of(context).textTheme.bodyLarge,
