@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-105** Add non-prod firebase projects.
 - **ZOB-92** Update toolbar in Profile screen.
+- **ZOB-150** Update pickup config time from 35min to 45min.
 
 ### Fixed
 
