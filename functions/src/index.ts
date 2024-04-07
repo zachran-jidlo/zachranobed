@@ -7,41 +7,45 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-/**
- * Is triggered when a document in the "deliveries" collection is updated.
- * Notifies the charity about a donation when the delivery is confirmed for today.
- *
- * @param change - The updated delivery document snapshot.
- * @param context - The context object containing metadata about the update event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
- */
 export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
   .onUpdate((change, context) => {
     const newValue = change.after.data();
-    const previousValue = change.before.data();
+    const oldValue = change.before.data();
 
-    if (newValue.state === "Potvrzeno" && newValue.state !== previousValue.state && isToday(newValue.pickUpFrom.toDate())) {
-      const charityId = newValue.recipientId;
+    console.log("Change catched");
 
-      return admin.firestore().collection("fCMTokens").doc(charityId).get()
-        .then((tokenDoc) => {
-          if (tokenDoc.exists) {
-            const fcmToken = tokenDoc.data()?.token;
+    if(newValue.state === "ACCEPTED" && newValue.state !== oldValue.state && isToday(newValue.pickupTimeWindow.start.toDate())) {
+      console.log("Should notify about delivery.");
+      const recipientId = newValue.recipientId;
 
-            const message = {
-              notification: {
-                title: "Potvrzení doručování",
-                body: "Dnes vám budou doručovány darované pokrmy.",
-              },
-              token: fcmToken,
-            };
+      return admin.firestore().collection("entities").doc(recipientId).get()
+        .then((entityDoc) => {
+          if (entityDoc.exists) {
+            const fcmTokens = entityDoc.data()!.fcmTokens;
 
-            return admin.messaging().send(message);
+            // Create message for all tokens of given entity
+            const messages = Object.values(fcmTokens).map(token => {
+               return {
+                notification: {
+                  title: "Ahoj",
+                  body: "Dej mi vědět, že ti dorazila notifikace. Zoudy :D",
+                },
+                token: token as string,
+              };
+            }); 
+            
+            return admin.messaging().sendEach(messages)
+
           } else {
-            console.log("FCM token not found for recipient:", charityId);
+            console.log("Entity not found for recipientId:", recipientId);
             return null;
           }
+        })
+        .then((response) => {
+          console.log("Sent messages" + JSON.stringify(response));
+          // TODO: Go through success of each message and remove tokens that are not registered.
+          // TODO: Thjere is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
         })
         .catch((error) => {
           console.error("Error sending push notification:", error);
