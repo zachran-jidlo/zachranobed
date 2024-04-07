@@ -8,56 +8,6 @@ admin.initializeApp();
 const db = admin.firestore();
 
 /**
- * Sets a custom user claim for a user associated with a canteen when the corresponding canteen document is
- * updated in Firestore.
- *
- * @param canteen - The updated canteen document snapshot.
- * @param context - The context object containing metadata about the update event.
- */
-export const setCanteenRole = functions.firestore.document("canteens/{id}").onUpdate((canteen, context) => {
-  const uid = canteen.after.data().authUid;
-
-  if (!uid) {
-    return;
-  }
-
-  try {
-    admin.auth().setCustomUserClaims(uid, {
-      canteen: true,
-    });
-
-    console.log(`Custom claim set for user with UID: ${uid}`);
-  } catch (error) {
-    console.error("Error setting custom claim:", error);
-  }
-});
-
-/**
- * Sets a custom user claim for a user associated with a charity when the corresponding charity document is
- * updated in Firestore.
- *
- * @param charity - The updated charity document snapshot.
- * @param context - The context object containing metadata about the update event.
- */
-export const setCharityRole = functions.firestore.document("charities/{id}").onUpdate((charity, context) => {
-  const uid = charity.after.data().authUid;
-
-  if (!uid) {
-    return;
-  }
-
-  try {
-    admin.auth().setCustomUserClaims(uid, {
-      charity: true,
-    });
-
-    console.log(`Custom claim set for user with UID: ${uid}`);
-  } catch (error) {
-    console.error("Error setting custom claim:", error);
-  }
-});
-
-/**
  * Is triggered when a document in the "deliveries" collection is updated.
  * Notifies the charity about a donation when the delivery is confirmed for today.
  *
