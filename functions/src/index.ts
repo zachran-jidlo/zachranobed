@@ -7,6 +7,14 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
+/**
+ * Function triggered when a document in the "deliveries" collection is updated.
+ * Notifies the charity about a donation if the delivery state is "ACCEPTED" and it's the current day.
+ *
+ * @param change - The change event that triggered the function.
+ * @param context - The context of the function execution.
+ * @returns A Promise that resolves when the notification is sent.
+ */
 export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
   .onUpdate((change, context) => {
@@ -15,28 +23,27 @@ export const notifyCharityAboutDonation = functions.firestore
 
     console.log("Change catched");
 
-    if(newValue.state === "ACCEPTED" && newValue.state !== oldValue.state && isToday(newValue.pickupTimeWindow.start.toDate())) {
+    if (newValue.state === "ACCEPTED" && newValue.state !== oldValue.state && isToday(newValue.pickupTimeWindow.start.toDate())) {
       console.log("Should notify about delivery.");
       const recipientId = newValue.recipientId;
 
-      return admin.firestore().collection("entities").doc(recipientId).get()
+      return db.collection("entities").doc(recipientId).get()
         .then((entityDoc) => {
           if (entityDoc.exists) {
             const fcmTokens = entityDoc.data()!.fcmTokens;
 
             // Create message for all tokens of given entity
-            const messages = Object.values(fcmTokens).map(token => {
-               return {
+            const messages = Object.values(fcmTokens).map((token) => {
+              return {
                 notification: {
-                  title: "Ahoj",
-                  body: "Dej mi vědět, že ti dorazila notifikace. Zoudy :D",
+                  title: "Potvrzení doručování",
+                  body: "Dnes vám budou doručovány darované pokrmy.",
                 },
                 token: token as string,
               };
-            }); 
-            
-            return admin.messaging().sendEach(messages)
+            });
 
+            return admin.messaging().sendEach(messages);
           } else {
             console.log("Entity not found for recipientId:", recipientId);
             return null;
@@ -56,194 +63,207 @@ export const notifyCharityAboutDonation = functions.firestore
     return null;
   });
 
-/**
- * Is triggereed when a document in the "boxes" collection is updated.
- * Notifies the charity when the quantity of a certain box type at the canteen is below 10.
- *
- * @param change - The updated box document snapshot.
- * @param context - The context object containing metadata about the update event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
- */
-export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
-  .document("boxes/{id}")
-  .onUpdate((change, context) => {
-    const data = change.after.data();
-    const numberOfBoxes = data.quantityAtCanteen;
-    const charityId = data.charityId;
-    const boxType = data.boxType;
+// export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
+// .document("entityPairs/{id}")
+// .onUpdate((change, context) => {
+//   const newBoxes = change.after.data();
+//   const oldBoxes = change.before.data();
 
-    if (numberOfBoxes < 10) {
-      return admin.firestore().collection("fCMTokens").doc(charityId).get()
-        .then((tokenDoc) => {
-          if (tokenDoc.exists) {
-            const fcmToken = tokenDoc.data()?.token;
+//   if() {
 
-            const message = {
-              notification: {
-                title: "Jídelně docházejí krabičky",
-                body: `Objednejte prosím svoz krabiček typu "${boxType}" do jídelny`,
-              },
-              token: fcmToken,
-            };
+//   }
 
-            return admin.messaging().send(message);
-          } else {
-            console.log("FCM token not found for recipient:", charityId);
-            return null;
-          }
-        })
-        .catch((error) => {
-          console.error("Error sending push notification:", error);
-          return null;
-        });
-    }
+//   return null;
+// });
 
-    return null;
-  });
+// /**
+//  * Is triggereed when a document in the "boxes" collection is updated.
+//  * Notifies the charity when the quantity of a certain box type at the canteen is below 10.
+//  *
+//  * @param change - The updated box document snapshot.
+//  * @param context - The context object containing metadata about the update event.
+//  * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+//  */
+// export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
+//   .document("boxes/{id}")
+//   .onUpdate((change, context) => {
+//     const data = change.after.data();
+//     const numberOfBoxes = data.quantityAtCanteen;
+//     const charityId = data.charityId;
+//     const boxType = data.boxType;
 
-/**
- * Is triggered when a document is created in the "shippingOfBoxes" collection.
- * Notifies the canteen about the shipment of boxes.
- *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
- */
-export const notifyCanteenAboutBoxShippment = functions.firestore
-  .document("shippingOfBoxes/{id}")
-  .onCreate((snapshot, context) => {
-    const data = snapshot.data();
-    const canteenId = data.canteenId;
+//     if (numberOfBoxes < 10) {
+//       return admin.firestore().collection("fCMTokens").doc(charityId).get()
+//         .then((tokenDoc) => {
+//           if (tokenDoc.exists) {
+//             const fcmToken = tokenDoc.data()?.token;
 
-    return admin.firestore().collection("fCMTokens").doc(canteenId).get()
-      .then((tokenDoc) => {
-        if (tokenDoc.exists) {
-          const fcmToken = tokenDoc.data()?.token;
+//             const message = {
+//               notification: {
+//                 title: "Jídelně docházejí krabičky",
+//                 body: `Objednejte prosím svoz krabiček typu "${boxType}" do jídelny`,
+//               },
+//               token: fcmToken,
+//             };
 
-          const message = {
-            notification: {
-              title: "Potvrzení svozu krabiček",
-              body: "Charita vám posílá krabičky.",
-            },
-            token: fcmToken,
-          };
+//             return admin.messaging().send(message);
+//           } else {
+//             console.log("FCM token not found for recipient:", charityId);
+//             return null;
+//           }
+//         })
+//         .catch((error) => {
+//           console.error("Error sending push notification:", error);
+//           return null;
+//         });
+//     }
 
-          return admin.messaging().send(message);
-        } else {
-          console.log("FCM token not found for recipient:", canteenId);
-          return null;
-        }
-      })
-      .catch((error) => {
-        console.error("Error sending push notification:", error);
-        return null;
-      });
-  });
+//     return null;
+//   });
 
-/**
- * Is triggered when a document is created in the "offeredFood" collection.
- * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
- *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
- */
-export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
-  const data = snapshot.data();
-  const donorId = data.donorId;
-  const recipientId = data.recipientId;
-  const boxType = data.boxType;
-  const numberOfBoxes = data.numberOfBoxes;
-  const weekNumber = data.weekNumber;
-  const date = data.date;
+// /**
+//  * Is triggered when a document is created in the "shippingOfBoxes" collection.
+//  * Notifies the canteen about the shipment of boxes.
+//  *
+//  * @param snapshot - The snapshot of the created document.
+//  * @param context - The context object containing metadata about the create event.
+//  * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+//  */
+// export const notifyCanteenAboutBoxShippment = functions.firestore
+//   .document("shippingOfBoxes/{id}")
+//   .onCreate((snapshot, context) => {
+//     const data = snapshot.data();
+//     const canteenId = data.canteenId;
 
-  if (boxType == "jednorázový obal") {
-    return;
-  }
+//     return admin.firestore().collection("fCMTokens").doc(canteenId).get()
+//       .then((tokenDoc) => {
+//         if (tokenDoc.exists) {
+//           const fcmToken = tokenDoc.data()?.token;
 
-  const boxMovementData = {
-    senderId: donorId,
-    recipientId: recipientId,
-    boxType: boxType,
-    numberOfBoxes: numberOfBoxes,
-    weekNumber: weekNumber,
-    date: date,
-  };
+//           const message = {
+//             notification: {
+//               title: "Potvrzení svozu krabiček",
+//               body: "Charita vám posílá krabičky.",
+//             },
+//             token: fcmToken,
+//           };
 
-  try {
-    const docRef = await db.collection("boxMovement").add(boxMovementData);
-    console.log("New box movement document added with ID:", docRef.id);
-    return null;
-  } catch (error) {
-    console.error("Error creating box movement document:", error);
-    return null;
-  }
-});
+//           return admin.messaging().send(message);
+//         } else {
+//           console.log("FCM token not found for recipient:", canteenId);
+//           return null;
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error sending push notification:", error);
+//         return null;
+//       });
+//   });
 
-/**
- * Is triggered when a document is created in the "boxMovement" collection.
- * Updates box quantities in the "boxes" collection based on the box movement.
- *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
- */
-export const updateBoxQuantitiesOnBoxMovement = functions.firestore
-  .document("boxMovement/{id}")
-  .onCreate(async (snapshot, context) => {
-    const data = snapshot.data();
-    const senderId = data.senderId;
-    const recipientId = data.recipientId;
-    const boxType = data.boxType;
-    const numberOfBoxes = data.numberOfBoxes;
+// /**
+//  * Is triggered when a document is created in the "offeredFood" collection.
+//  * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
+//  *
+//  * @param snapshot - The snapshot of the created document.
+//  * @param context - The context object containing metadata about the create event.
+//  */
+// export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
+//   const data = snapshot.data();
+//   const donorId = data.donorId;
+//   const recipientId = data.recipientId;
+//   const boxType = data.boxType;
+//   const numberOfBoxes = data.numberOfBoxes;
+//   const weekNumber = data.weekNumber;
+//   const date = data.date;
 
-    const canteenQuery = db.collection("boxes")
-      .where("canteenId", "==", senderId)
-      .where("charityId", "==", recipientId)
-      .where("boxType", "==", boxType);
+//   if (boxType == "jednorázový obal") {
+//     return;
+//   }
 
-    const charityQuery = db.collection("boxes")
-      .where("charityId", "==", senderId)
-      .where("canteenId", "==", recipientId)
-      .where("boxType", "==", boxType);
+//   const boxMovementData = {
+//     senderId: donorId,
+//     recipientId: recipientId,
+//     boxType: boxType,
+//     numberOfBoxes: numberOfBoxes,
+//     weekNumber: weekNumber,
+//     date: date,
+//   };
 
-    try {
-      await db.runTransaction(async (transaction) => {
-        const canteenSnapshot = await transaction.get(canteenQuery);
-        const charitySnapshot = await transaction.get(charityQuery);
+//   try {
+//     const docRef = await db.collection("boxMovement").add(boxMovementData);
+//     console.log("New box movement document added with ID:", docRef.id);
+//     return null;
+//   } catch (error) {
+//     console.error("Error creating box movement document:", error);
+//     return null;
+//   }
+// });
 
-        if (!canteenSnapshot.empty) {
-          const canteenDocRef = canteenSnapshot.docs[0].ref;
-          const canteenData = canteenSnapshot.docs[0].data();
+// /**
+//  * Is triggered when a document is created in the "boxMovement" collection.
+//  * Updates box quantities in the "boxes" collection based on the box movement.
+//  *
+//  * @param snapshot - The snapshot of the created document.
+//  * @param context - The context object containing metadata about the create event.
+//  */
+// export const updateBoxQuantitiesOnBoxMovement = functions.firestore
+//   .document("boxMovement/{id}")
+//   .onCreate(async (snapshot, context) => {
+//     const data = snapshot.data();
+//     const senderId = data.senderId;
+//     const recipientId = data.recipientId;
+//     const boxType = data.boxType;
+//     const numberOfBoxes = data.numberOfBoxes;
 
-          const updatedCanteenQuantity = canteenData.quantityAtCanteen - numberOfBoxes;
-          const updatedCharityQuantity = canteenData.quantityAtCharity + numberOfBoxes;
+//     const canteenQuery = db.collection("boxes")
+//       .where("canteenId", "==", senderId)
+//       .where("charityId", "==", recipientId)
+//       .where("boxType", "==", boxType);
 
-          transaction.update(canteenDocRef, {
-            quantityAtCanteen: updatedCanteenQuantity,
-            quantityAtCharity: updatedCharityQuantity,
-          });
-        } else if (!charitySnapshot.empty) {
-          const charityDocRef = charitySnapshot.docs[0].ref;
-          const charityData = charitySnapshot.docs[0].data();
+//     const charityQuery = db.collection("boxes")
+//       .where("charityId", "==", senderId)
+//       .where("canteenId", "==", recipientId)
+//       .where("boxType", "==", boxType);
 
-          const updatedCanteenQuantity = charityData.quantityAtCanteen + numberOfBoxes;
-          const updatedCharityQuantity = charityData.quantityAtCharity - numberOfBoxes;
+//     try {
+//       await db.runTransaction(async (transaction) => {
+//         const canteenSnapshot = await transaction.get(canteenQuery);
+//         const charitySnapshot = await transaction.get(charityQuery);
 
-          transaction.update(charityDocRef, {
-            quantityAtCanteen: updatedCanteenQuantity,
-            quantityAtCharity: updatedCharityQuantity,
-          });
-        } else {
-          console.error("Matching box not found for update.");
-        }
-      });
+//         if (!canteenSnapshot.empty) {
+//           const canteenDocRef = canteenSnapshot.docs[0].ref;
+//           const canteenData = canteenSnapshot.docs[0].data();
 
-      console.log("Box quantities updated successfully in the \"boxes\" collection.");
-      return null;
-    } catch (error) {
-      console.error("Error updating box quantities in \"boxes\" collection:", error);
-      return null;
-    }
-  });
+//           const updatedCanteenQuantity = canteenData.quantityAtCanteen - numberOfBoxes;
+//           const updatedCharityQuantity = canteenData.quantityAtCharity + numberOfBoxes;
+
+//           transaction.update(canteenDocRef, {
+//             quantityAtCanteen: updatedCanteenQuantity,
+//             quantityAtCharity: updatedCharityQuantity,
+//           });
+//         } else if (!charitySnapshot.empty) {
+//           const charityDocRef = charitySnapshot.docs[0].ref;
+//           const charityData = charitySnapshot.docs[0].data();
+
+//           const updatedCanteenQuantity = charityData.quantityAtCanteen + numberOfBoxes;
+//           const updatedCharityQuantity = charityData.quantityAtCharity - numberOfBoxes;
+
+//           transaction.update(charityDocRef, {
+//             quantityAtCanteen: updatedCanteenQuantity,
+//             quantityAtCharity: updatedCharityQuantity,
+//           });
+//         } else {
+//           console.error("Matching box not found for update.");
+//         }
+//       });
+
+//       console.log("Box quantities updated successfully in the \"boxes\" collection.");
+//       return null;
+//     } catch (error) {
+//       console.error("Error updating box quantities in \"boxes\" collection:", error);
+//       return null;
+//     }
+//   });
 
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.

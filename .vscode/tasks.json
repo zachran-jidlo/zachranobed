@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "functions",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - functions",
+			"detail": "tsc"
+		}
+	]
+}
