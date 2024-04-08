@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
+import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
+import 'package:zachranobed/models/dto/meal_dto.dart';
 
 class DeliveryService {
-  /// Valid states for delivery items.
-  final List<String> _validStates = [
+  /// Valid states for delivery items in history.
+  final List<String> _validHistoryStates = [
     DeliveryStateDto.offered.toJson(),
     DeliveryStateDto.accepted.toJson(),
     DeliveryStateDto.inDelivery.toJson(),
@@ -25,27 +28,30 @@ class DeliveryService {
     },
   );
 
-  ///  Returns a [Future] that completes with a [Delivery] object if a delivery
-  ///  with the provided [date] and [donorId] is found in the Firestore
-  ///  collection and `null` if no delivery is found with the specified
-  ///  criteria.
-  Future<Delivery?> getDelivery(DateTime date, String donorId) async {
-    // TODO: Add DeliveryDto to Delivery mapping and return correct instance
-    // final deliveryQuerySnapshot = await _collection
-    //     .where('pickUpFrom', isEqualTo: date)
-    //     .where('donorId', isEqualTo: donorId)
-    //     .get();
-    //
-    // if (deliveryQuerySnapshot.docs.isNotEmpty) {
-    //   return deliveryQuerySnapshot.docs.first.data();
-    // }
+  /// Returns a [Future] that completes with a [DeliveryDto] object if a
+  /// delivery with the provided [time] and [donorId] is found in the Firestore
+  /// collection and `null` if no delivery is found with the specified
+  /// criteria.
+  Future<DeliveryDto?> getDelivery(String donorId, DateTime time) async {
+    final deliveryQuerySnapshot = await _collection
+        .where('donorId', isEqualTo: donorId)
+        .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
+        .whereTime('pickupTimeWindow.start', time)
+        .get();
+
+    if (deliveryQuerySnapshot.docs.isNotEmpty) {
+      return deliveryQuerySnapshot.docs.first.data();
+    }
     return null;
   }
 
   /// Updates the 'state' field of a delivery document identified by the
   /// specified [id] with the provided [state] value.
-  Future<void> updateDeliveryStatus(String id, String state) async {
-    await _collection.doc(id).update({'state': state});
+  Future<bool> updateDeliveryState(String id, DeliveryStateDto state) async {
+    return await _collection.doc(id).update({'state': state.toJson()}).then(
+      (value) => true,
+      onError: (error) => false,
+    );
   }
 
   /// Queries the Firestore collection for deliveries based on the entity ID
@@ -111,6 +117,55 @@ class DeliveryService {
         .map((snapshot) => snapshot.docs.map((document) => document.data()));
   }
 
+  /// Adds [meals] to the delivery with given [id]. Then recalculates foodboxes
+  /// for the same delivery. Returns a future with true when operation succeeds
+  /// and false otherwise.
+  Future<bool> addMealsAndBoxes(String id, Iterable<MealDto> meals) async {
+    final addMeals = await _collection.doc(id).update({
+      'meals': FieldValue.arrayUnion(
+        meals.map((e) => e.toJson()).toList(),
+      )
+    }).then(
+      (value) => true,
+      onError: (error) => false,
+    );
+
+    if (!addMeals) {
+      return false;
+    }
+
+    final delivery = (await _collection.doc(id).get()).data();
+    final Map<String, int> foodBoxesCount = {};
+    for (final meal in (delivery?.meals ?? List<MealDto>.empty())) {
+      final acc = (foodBoxesCount[meal.foodBoxId] ?? 0) + meal.foodBoxCount;
+      foodBoxesCount[meal.foodBoxId] = acc;
+    }
+
+    final foodBoxes = foodBoxesCount.entries.map(
+      (e) => FoodBoxDeliveryDto(
+        foodBoxId: e.key,
+        count: e.value,
+      ).toJson(),
+    );
+
+    return _collection.doc(id).update({'foodBoxes': foodBoxes.toList()}).then(
+      (value) => true,
+      onError: (error) => false,
+    );
+  }
+
+  /// Creates a delivery from the given [dto] instance.
+  /// Returns a future with true when operation succeeds and false otherwise.
+  Future<bool> createDelivery(DeliveryDto dto) {
+    return _collection //
+        .doc(dto.id)
+        .set(dto)
+        .then(
+      (value) => true,
+      onError: (error) => false,
+    );
+  }
+
   /// Prepares a filter to get only deliveries where [entityId] is either the
   /// donor or recipient of the offered food. Also filters deliveries with only
   /// valid (offered, accepted, in-delivery and delivered) states.
@@ -122,7 +177,7 @@ class DeliveryService {
       ),
       Filter(
         'state',
-        whereIn: _validStates,
+        whereIn: _validHistoryStates,
       ),
     );
   }

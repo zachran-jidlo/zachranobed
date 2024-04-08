@@ -34,4 +34,19 @@ class DateTimeUtils {
 
     return '${formatter.format(week)}$yearStart - ${formatter.format(weekEnd)}$yearEnd';
   }
+
+  /// Returns a [DateTime] object representing the parsed date and [time] of
+  /// delivery for today.
+  static DateTime getDateTimeOfCurrentDelivery(String time) {
+    final timePart = DateFormat('HH:mm').parse(time);
+    final duration = Duration(hours: timePart.hour, minutes: timePart.minute);
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day).add(duration);
+  }
+
+  /// Returns a [String] with current day in 'yyyy-MM-dd' format.
+  static String getCurrentDayMark() {
+    final formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(DateTime.now());
+  }
 }

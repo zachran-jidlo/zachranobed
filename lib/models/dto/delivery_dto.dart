@@ -10,8 +10,9 @@ import 'package:zachranobed/models/dto/meal_dto.dart';
  */
 part 'delivery_dto.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class DeliveryDto {
+  final String id;
   final String donorId;
   final String recipientId;
   @TimestampConverter()
@@ -24,6 +25,7 @@ class DeliveryDto {
   final DeliveryTypeDto? type;
 
   DeliveryDto({
+    required this.id,
     required this.donorId,
     required this.recipientId,
     required this.deliveryDate,

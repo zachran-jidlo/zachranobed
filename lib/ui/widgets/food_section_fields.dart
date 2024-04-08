@@ -1,12 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
@@ -14,15 +14,17 @@ import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class FoodSectionFields extends StatefulWidget {
-  final List<OfferedFood> foodSections;
+  final List<FoodInfo> foodSections;
   final List<TextEditingController> controllers;
   final List<bool> checkboxValues;
+  final List<FoodBoxType> boxTypes;
 
   const FoodSectionFields({
     super.key,
     required this.foodSections,
     required this.controllers,
     required this.checkboxValues,
+    required this.boxTypes,
   });
 
   @override
@@ -47,7 +49,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   }
 
   Widget _buildFoodSection(
-    OfferedFood offeredFood,
+    FoodInfo offeredFood,
     int index,
     TextEditingController controller,
   ) {
@@ -189,16 +191,17 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
             : const SizedBox(),
         ZODropdown(
           hintText: context.l10n!.boxType,
-          items: BoxType.values
-              .map((type) => BoxTypeHelper.toValue(type, context))
-              .toList(),
+          items: widget.boxTypes.map((type) => type.name).toList(),
           onValidation: (val) =>
               val == null ? context.l10n!.requiredDropdownError : null,
           onChanged: (val) {
+            final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
             widget.foodSections[index] =
-                widget.foodSections[index].copyWith(boxType: val);
+                widget.foodSections[index].copyWith(foodBoxId: type?.id);
           },
-          initialValue: offeredFood.boxType,
+          initialValue: widget.boxTypes
+              .firstWhereOrNull((e) => e.id == offeredFood.foodBoxId)
+              ?.name,
         ),
         _buildGap(),
         ZODateTimePicker(
@@ -208,10 +211,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           minimumDate: DateTime.now(),
           onValidation: (val) =>
               val!.isEmpty ? context.l10n!.requiredFieldError : null,
-          onTappedOutside: (val) {
-            if (controller.text != '') {
+          onDateTimePicked: (date) {
+            if (date != null) {
               widget.foodSections[index] = widget.foodSections[index].copyWith(
-                consumeBy: DateFormat('dd.MM.y HH:mm').parse(controller.text),
+                consumeBy: date,
               );
             }
           },
