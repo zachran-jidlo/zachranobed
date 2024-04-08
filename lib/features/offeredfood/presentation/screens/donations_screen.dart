@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/donated_food_list_info.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/donated_food_list.dart';
+import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 
 class DonationsScreen extends StatefulWidget {
   const DonationsScreen({super.key});
@@ -15,17 +14,11 @@ class DonationsScreen extends StatefulWidget {
 }
 
 class _DonationsScreenState extends State<DonationsScreen> {
-  final List<DonatedFoodListInfo> _donationsLists = [];
+  final List<DateTime> _previousWeeks = [];
 
-  var year = DateTime.now().year.toInt();
-  final currentWeekNumber = HelperService.getCurrentWeekNumber;
-  var desiredWeekNumber = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    desiredWeekNumber = currentWeekNumber - _donationsLists.length - 2;
-  }
+  final DateTime _thisWeekStart = DateTimeUtils.getWeekStart(DateTime.now());
+  late final DateTime _previousWeekStart =
+      DateTimeUtils.getPreviousWeek(_thisWeekStart);
 
   @override
   Widget build(BuildContext context) {
@@ -43,27 +36,23 @@ class _DonationsScreenState extends State<DonationsScreen> {
               children: [
                 DonatedFoodList(
                   title: context.l10n!.thisWeek,
-                  additionalFilterField: 'weekNumber',
-                  additionalFilterValue:
-                      '${DateTime.now().year}-$currentWeekNumber',
+                  deliveredFrom: _thisWeekStart,
+                  deliveredTo: DateTimeUtils.getNextWeek(_thisWeekStart),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
                 DonatedFoodList(
                   title: context.l10n!.lastWeek,
-                  additionalFilterField: 'weekNumber',
-                  additionalFilterValue:
-                      '${DateTime.now().year}-${HelperService.getCurrentWeekNumber - 1}',
+                  deliveredFrom: _previousWeekStart,
+                  deliveredTo: DateTimeUtils.getNextWeek(_previousWeekStart),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                for (var donatedFood in _donationsLists)
+                for (final weekStart in _previousWeeks)
                   MultiSliver(
                     children: [
                       DonatedFoodList(
-                        title: donatedFood.title,
-                        additionalFilterField:
-                            donatedFood.additionalFilterField,
-                        additionalFilterValue:
-                            donatedFood.additionalFilterValue,
+                        title: DateTimeUtils.getTitleForWeek(weekStart),
+                        deliveredFrom: weekStart,
+                        deliveredTo: DateTimeUtils.getNextWeek(weekStart),
                       ),
                       const SliverToBoxAdapter(
                         child: SizedBox(height: GapSize.xs),
@@ -78,7 +67,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                     height: 40.0,
                     type: ZOButtonType.secondary,
                     onPressed: () {
-                      _buildDonationsList(context);
+                      _addPreviousWeek();
                     },
                   ),
                 ),
@@ -91,22 +80,13 @@ class _DonationsScreenState extends State<DonationsScreen> {
     );
   }
 
-  void _buildDonationsList(BuildContext context) {
-    if (desiredWeekNumber <= 0) {
-      desiredWeekNumber = Constants.lastWeekOfYear;
-      year--;
-    }
-
+  void _addPreviousWeek() {
     setState(() {
-      _donationsLists.add(
-        DonatedFoodListInfo(
-          title: HelperService.getScopeOfTheWeek(desiredWeekNumber, year),
-          additionalFilterField: 'weekNumber',
-          additionalFilterValue: '$year-$desiredWeekNumber',
-        ),
-      );
+      if (_previousWeeks.isEmpty) {
+        _previousWeeks.add(DateTimeUtils.getPreviousWeek(_previousWeekStart));
+      } else {
+        _previousWeeks.add(DateTimeUtils.getPreviousWeek(_previousWeeks.last));
+      }
     });
-
-    desiredWeekNumber--;
   }
 }

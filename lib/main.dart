@@ -6,6 +6,7 @@ import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/mapper/app_configuration_mapper.dart';
 import 'package:zachranobed/features/foodboxes/di/food_box_dependency_container.dart';
 import 'package:zachranobed/features/login/di/login_dependency_container.dart';
+import 'package:zachranobed/features/offeredfood/di/offered_food_dependency_container.dart';
 import 'package:zachranobed/firebase/firebase_options.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/services/di/services_dependency_container.dart';
@@ -25,6 +26,7 @@ void main() async {
   ServicesDependencyContainer.setup();
   LoginDependencyContainer.setup();
   FoodBoxDependencyContainer.setup();
+  OfferedFoodDependencyContainer.setup();
 
   await Notifications().initNotifications();
 
