@@ -31,7 +31,7 @@ class ZOStrings {
 
 class Constants {
   static const lastWeekOfYear = 52;
-  static const pickupConfirmationTime = 35;
+  static const pickupConfirmationTime = 45;
 }
 
 class WidgetStyle {
