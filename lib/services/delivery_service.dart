@@ -137,7 +137,7 @@ class DeliveryService {
     final delivery = (await _collection.doc(id).get()).data();
     final Map<String, int> foodBoxesCount = {};
     for (final meal in (delivery?.meals ?? List<MealDto>.empty())) {
-      final acc = (foodBoxesCount[meal.foodBoxId] ?? 0) + meal.count;
+      final acc = (foodBoxesCount[meal.foodBoxId] ?? 0) + meal.foodBoxCount;
       foodBoxesCount[meal.foodBoxId] = acc;
     }
 
