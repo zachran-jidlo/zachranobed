@@ -7,13 +7,18 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
+class FoodBox {
+  constructor(
+    public foodBoxId: string,
+    public count: number,
+    public donorCount: number,
+    public recipientCount: number
+  ) {}
+}
+
 /**
  * Function triggered when a document in the "deliveries" collection is updated.
  * Notifies the charity about a donation if the delivery state is "ACCEPTED" and it's the current day.
- *
- * @param change - The change event that triggered the function.
- * @param context - The context of the function execution.
- * @returns A Promise that resolves when the notification is sent.
  */
 export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
@@ -21,13 +26,17 @@ export const notifyCharityAboutDonation = functions.firestore
     const newValue = change.after.data();
     const oldValue = change.before.data();
 
-    console.log("Change catched");
-
-    if (newValue.state === "ACCEPTED" && newValue.state !== oldValue.state && isToday(newValue.pickupTimeWindow.start.toDate())) {
-      console.log("Should notify about delivery.");
+    if (
+      newValue.state === "ACCEPTED" &&
+      newValue.state !== oldValue.state &&
+      isToday(newValue.pickupTimeWindow.start.toDate())
+    ) {
       const recipientId = newValue.recipientId;
 
-      return db.collection("entities").doc(recipientId).get()
+      return db
+        .collection("entities")
+        .doc(recipientId)
+        .get()
         .then((entityDoc) => {
           if (entityDoc.exists) {
             const fcmTokens = entityDoc.data()!.fcmTokens;
@@ -45,12 +54,14 @@ export const notifyCharityAboutDonation = functions.firestore
 
             return admin.messaging().sendEach(messages);
           } else {
-            console.log("Entity not found for recipientId:", recipientId);
+            console.error("Entity not found for recipientId:", recipientId);
             return null;
           }
         })
         .then((response) => {
-          console.log("Sent messages" + JSON.stringify(response));
+          console.info(
+            "Successfully sent " + response?.successCount + " push messages."
+          );
           // TODO: Go through success of each message and remove tokens that are not registered.
           // TODO: Thjere is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
         })
@@ -63,63 +74,97 @@ export const notifyCharityAboutDonation = functions.firestore
     return null;
   });
 
-// export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
-// .document("entityPairs/{id}")
-// .onUpdate((change, context) => {
-//   const newBoxes = change.after.data();
-//   const oldBoxes = change.before.data();
+/**
+ * Function triggered when there is an update in the "entityPairs" collection in foodboxes list.
+ * It notifies a charity about the lack of boxes at a canteen.
+ */
+export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
+  .document("entityPairs/{id}")
+  .onUpdate((change, context) => {
+    const newBoxes = change.after.data().foodboxes;
+    const oldBoxes = change.before.data().foodboxes;
 
-//   if() {
+    console.log("Catched change");
 
-//   }
+    const differenceMap: { [foodBoxId: string]: number } = {};
+    newBoxes.forEach((newBox: FoodBox) => {
+      const matchingOldBox = oldBoxes.find(
+        (oldBox: FoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+      );
+      if (matchingOldBox && newBox.donoCount - matchingOldBox.donorCount;
+        differenchanges
+    if (Object.keys(differenceMap).length <= 0) {
+      return null;
+    }
 
-//   return null;
-// });
+    // TODO: Cache changes and send notification only once a day. Right now each change triggers a notification.
 
-// /**
-//  * Is triggereed when a document in the "boxes" collection is updated.
-//  * Notifies the charity when the quantity of a certain box type at the canteen is below 10.
-//  *
-//  * @param change - The updated box document snapshot.
-//  * @param context - The context object containing metadata about the update event.
-//  * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
-//  */
-// export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
-//   .document("boxes/{id}")
-//   .onUpdate((change, context) => {
-//     const data = change.after.data();
-//     const numberOfBoxes = data.quantityAtCanteen;
-//     const charityId = data.charityId;
-//     const boxType = data.boxType;
+    const recipientId = change.after.data().recipientId;
+    const donorId = change.after.data().donorId;
 
-//     if (numberOfBoxes < 10) {
-//       return admin.firestore().collection("fCMTokens").doc(charityId).get()
-//         .then((tokenDoc) => {
-//           if (tokenDoc.exists) {
-//             const fcmToken = tokenDoc.data()?.token;
+    return Promise.all([
+      db.collection("entities").doc(recipientId).get(),
+      db.collection("entities").doc(donorId).get(),
+      db.collection("foodBoxes").get(),
+    ]).then((results) => {
+      var insufficentBoxes: string[] = [];
 
-//             const message = {
-//               notification: {
-//                 title: "Jídelně docházejí krabičky",
-//                 body: `Objednejte prosím svoz krabiček typu "${boxType}" do jídelny`,
-//               },
-//               token: fcmToken,
-//             };
+      // Create boxes array from insufficent boxes types
+      Object.keys(differenceMap).forEach((foodBoxId: string) => {
+        console.log(
+          `Food box ${foodBoxId} has decreased by ${differenceMap[foodBoxId]}.`
+        );
 
-//             return admin.messaging().send(message);
-//           } else {
-//             console.log("FCM token not found for recipient:", charityId);
-//             return null;
-//           }
-//         })
-//         .catch((error) => {
-//           console.error("Error sending push notification:", error);
-//           return null;
-//         });
-//     }
+        if (
+          newBoxes.find((box: FoodBox) => box.foodBoxId === foodBoxId)
+            ?.donorCount >= 10
+        ) {
+          return;
+        }
 
-//     return null;
-//   });
+        results[2].docs
+          .filter((doc) => doc.id === foodBoxId)
+          .forEach((doc) => {
+            const foodBox = doc.data();
+            insufficentBoxes.push(foodBox.name);
+          });
+      });
+
+      if (results[0].exists && results[1].exists) {
+        const fcmTokens = results[0].data()!.fcmTokens;
+        const donor = results[1].data();
+
+        const boxesString = insufficentBoxes.join(", ");
+
+        // Create message for all tokens of given entity
+        const messages = Object.values(fcmTokens).map((token) => {
+          return {
+            notification: {
+              title: "Jídelně docházejí krabičky",
+              body: `Objednejte prosím svoz krabiček typu "${boxesString}" do jídelny "${donor?.establishmentName}"`,
+            },
+            token: token as string,
+          };
+        });
+
+        console.log(messages);
+
+        return admin.messaging().sendEach(messages);
+      } else {
+        console.error("Entity not found for recipientId:", recipientId);
+        return null;
+      }
+    })
+    .then((response) => {
+      console.info(
+        "Successfully sent " + response?.successCount + " push messages."
+      );
+    })
+    .catch((error) => {
+      console.error("Error sending push notification:", error);
+      return null;
+    });
+  });
 
 // /**
 //  * Is triggered when a document is created in the "shippingOfBoxes" collection.
@@ -273,7 +318,7 @@ function isToday(date: Date): boolean {
   const today = new Date();
   return (
     date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate()
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
   );
 }
