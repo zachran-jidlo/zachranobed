@@ -66,7 +66,8 @@ class OverviewScreen extends StatelessWidget {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    return delivery?.state == DeliveryState.accepted
+    return delivery?.state == DeliveryState.accepted ||
+            delivery?.state == DeliveryState.offered
         ? _buildDeliveryConfirmedBanner(context, user)
         : _buildDonationCountdownBanner(context);
   }
