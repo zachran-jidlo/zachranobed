@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [0.4.0]
 ### Added
 - **ZOB-91** Add user info item.
+- **ZOB-36** Add "Empty page" for the boxes and meal section.
 
 ### Changed
 - **ZOB-105** Add non-prod firebase projects.
@@ -17,11 +18,13 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-133** Fetch data for offered food.
 - **ZOB-134** Write data to deliveries collection.
 - **ZOB-135** Fetch data for box movements.
+- **ZOB-150** Update pickup config time from 35min to 45min.
 
 ### Fixed
 
 ### Removed
 - **ZOB-97** Remove icons from dialog widget.
+- **ZOB-147** Remove footer consent from offer food screen.
 
 ## [0.3.0]
 ### Added

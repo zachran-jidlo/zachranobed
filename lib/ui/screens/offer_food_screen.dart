@@ -13,7 +13,6 @@ import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
@@ -161,14 +160,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: GapSize.m),
-                      ZOClickableText(
-                        clickableText: context.l10n!.manualName,
-                        prefixText: context.l10n!.consent,
-                        underline: true,
-                        onTap: () => print('Kliknuto na příručku'),
-                      ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: GapSize.l),
                     ],
                   ),
                 ),

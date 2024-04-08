@@ -39,4 +39,8 @@ abstract class FoodBoxRepository {
     required String donorId,
     required List<BoxInfo> boxInfo,
   });
+
+  Future<int> getMovementBoxesCount({
+    required String entityId,
+  });
 }

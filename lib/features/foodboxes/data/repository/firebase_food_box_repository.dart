@@ -178,6 +178,18 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     return _deliveryService.createDelivery(dto);
   }
 
+  @override
+  Future<int> getMovementBoxesCount({required String entityId}) async {
+    final deliveries = await _deliveryService
+        .observeDeliveries(entityId, null, null, null)
+        .first;
+
+    return deliveries.fold<int>(0, (totalCount, delivery) {
+      final count = delivery.foodBoxes.fold(0, (acc, foodBox) => foodBox.count);
+      return totalCount + count;
+    });
+  }
+
   /// Get sort order for the [FoodBoxType].
   /// Reusable box should go first, and IKEA boxes should follow.
   int _getSortOrder(FoodBoxType type) {
