@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/box_movement.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
@@ -12,16 +11,15 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 @RoutePage()
 class BoxMovementDetailScreen extends StatelessWidget {
   final BoxMovement boxMovement;
-  final UserData user;
 
   const BoxMovementDetailScreen({
     super.key,
     required this.boxMovement,
-    required this.user,
   });
 
   @override
   Widget build(BuildContext context) {
+    final countPrefix = boxMovement.count > 0 ? '+' : '';
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -35,7 +33,7 @@ class BoxMovementDetailScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      boxMovement.boxType ?? '',
+                      boxMovement.type.name,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(fontSize: FontSize.l),
                     ),
@@ -45,17 +43,15 @@ class BoxMovementDetailScreen extends StatelessWidget {
               const SizedBox(height: GapSize.m),
               ZOTextField(
                 label: context.l10n!.numberOfBoxes,
-                initialValue: user.establishmentId == boxMovement.senderId
-                    ? '-${boxMovement.numberOfBoxes.toString()}'
-                    : '+${boxMovement.numberOfBoxes.toString()}',
+                initialValue: '$countPrefix${boxMovement.count}',
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
               SupportingText(
                 text: '${context.l10n!.sentOn}'
-                    ' ${DateFormat('d.M.y').format(boxMovement.date!)}'
+                    ' ${DateFormat('d.M.y').format(boxMovement.date)}'
                     ' ${context.l10n!.atTime}'
-                    ' ${DateFormat('HH:mm').format(boxMovement.date!)}.',
+                    ' ${DateFormat('HH:mm').format(boxMovement.date)}.',
               ),
               const SizedBox(height: GapSize.xs),
               ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),

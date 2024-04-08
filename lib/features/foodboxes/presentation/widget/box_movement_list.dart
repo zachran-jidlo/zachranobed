@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/models/box_movement.dart';
-import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/box_movement_srvice.dart';
-import 'package:zachranobed/ui/widgets/box_movement_list_tile.dart';
+import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
+import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_movement_list_tile.dart';
 
 class BoxMovementList extends StatelessWidget {
   final String title;
-  final String weekNumber;
-  final UserData user;
+  final DateTime deliveredFrom;
+  final DateTime deliveredTo;
 
   const BoxMovementList({
     super.key,
     required this.title,
-    required this.weekNumber,
-    required this.user,
+    required this.deliveredFrom,
+    required this.deliveredTo,
   });
 
   @override
   Widget build(BuildContext context) {
-    final boxMovementService = GetIt.I<BoxMovementService>();
+    final repository = GetIt.I<FoodBoxRepository>();
 
     return MultiSliver(
       pushPinnedChildren: true,
@@ -40,23 +40,21 @@ class BoxMovementList extends StatelessWidget {
           ),
         ),
         const SizedBox(height: GapSize.xs),
-        StreamBuilder<List<BoxMovement>>(
-          stream: boxMovementService.loggedUserBoxMovementStream(
-            user: user,
-            weekNumber: weekNumber,
+        StreamBuilder<Iterable<BoxMovement>>(
+          stream: repository.observeHistory(
+            entityId: HelperService.getCurrentUser(context)!.entityId,
+            from: deliveredFrom,
+            to: deliveredTo,
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              final boxMovements = snapshot.data!;
+              final movements = snapshot.data!.toList();
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: boxMovements.length,
-                  (context, index) {
-                    return BoxMovementListTile(
-                      boxMovement: boxMovements[index],
-                      user: user,
-                    );
-                  },
+                  childCount: movements.length,
+                  (context, index) => BoxMovementListTile(
+                    boxMovement: movements[index],
+                  ),
                 ),
               );
             } else if (snapshot.hasError) {
