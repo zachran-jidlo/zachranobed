@@ -6,6 +6,7 @@ import 'package:zachranobed/services/box_service.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
+import 'package:zachranobed/services/food_box_service.dart';
 import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 
@@ -13,6 +14,7 @@ class ServicesDependencyContainer {
   const ServicesDependencyContainer._();
 
   static void setup() {
+    GetIt.I.registerSingleton(FoodBoxService());
     GetIt.I.registerSingleton(EntityService());
     GetIt.I.registerSingleton(EntityPairService());
     GetIt.I.registerSingleton(
