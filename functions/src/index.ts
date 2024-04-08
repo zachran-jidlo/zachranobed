@@ -91,8 +91,13 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
       const matchingOldBox = oldBoxes.find(
         (oldBox: FoodBox) => oldBox.foodBoxId === newBox.foodBoxId
       );
-      if (matchingOldBox && newBox.donoCount - matchingOldBox.donorCount;
-        differenchanges
+      if (matchingOldBox && newBox.donorCount < matchingOldBox.donorCount) {
+        const difference = newBox.donorCount - matchingOldBox.donorCount;
+        differenceMap[newBox.foodBoxId] = difference;
+      }
+    });
+
+    // Stop if there are no changes
     if (Object.keys(differenceMap).length <= 0) {
       return null;
     }
@@ -166,45 +171,60 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
     });
   });
 
-// /**
-//  * Is triggered when a document is created in the "shippingOfBoxes" collection.
-//  * Notifies the canteen about the shipment of boxes.
-//  *
-//  * @param snapshot - The snapshot of the created document.
-//  * @param context - The context object containing metadata about the create event.
-//  * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
-//  */
-// export const notifyCanteenAboutBoxShippment = functions.firestore
-//   .document("shippingOfBoxes/{id}")
-//   .onCreate((snapshot, context) => {
-//     const data = snapshot.data();
-//     const canteenId = data.canteenId;
+  /**
+   * Is triggered when a document is created in the "shippingOfBoxes" collection.
+   * Notifies the canteen about the shipment of boxes.
+   */
+  export const notifyCanteenAboutBoxShippment = functions.firestore
+    .document("deliveries/{id}")
+    .onCreate((snapshot, context) => {
+      const data = snapshot.data();
+      const donorId = data.donorId;
 
-//     return admin.firestore().collection("fCMTokens").doc(canteenId).get()
-//       .then((tokenDoc) => {
-//         if (tokenDoc.exists) {
-//           const fcmToken = tokenDoc.data()?.token;
+      if (data.type === "BOX_DELIVERY") {
+        return db
+          .collection("entities")
+          .doc(donorId)
+          .get()
+          .then((entityDoc) => {
+            console.log("Entity doc", entityDoc);
 
-//           const message = {
-//             notification: {
-//               title: "Potvrzení svozu krabiček",
-//               body: "Charita vám posílá krabičky.",
-//             },
-//             token: fcmToken,
-//           };
+            if (entityDoc.exists) {
+              const fcmTokens = entityDoc.data()!.fcmTokens;
 
-//           return admin.messaging().send(message);
-//         } else {
-//           console.log("FCM token not found for recipient:", canteenId);
-//           return null;
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Error sending push notification:", error);
-//         return null;
-//       });
-//   });
+              // Create message for all tokens of given entity
+              const messages = Object.values(fcmTokens).map((token) => {
+                return {
+                  notification: {
+                    title: "Potvrzení svozu krabiček",
+                    body: "Charita vám posílá krabičky.",
+                  },
+                  token: token as string,
+                };
+              });
 
+              console.log(messages);
+
+              return admin.messaging().sendEach(messages);
+            } else {
+              console.error("Entity not found for donorId:", donorId);
+              return null;
+            }
+          })
+          .then((response) => {
+            console.info(
+              "Successfully sent " + response?.successCount + " push messages."
+            );
+          })
+          .catch((error) => {
+            console.error("Error sending push notification:", error);
+            return null;
+          });
+      }
+
+      return null;
+    });
+  
 // /**
 //  * Is triggered when a document is created in the "offeredFood" collection.
 //  * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
