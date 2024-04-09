@@ -25,11 +25,13 @@ class ZOStrings {
 
   static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';
+  static const chefEmptyPath = 'assets/chef-empty.svg';
+  static const boxEmptyPath = 'assets/box-empty.svg';
 }
 
 class Constants {
   static const lastWeekOfYear = 52;
-  static const pickupConfirmationTime = 35;
+  static const pickupConfirmationTime = 45;
 }
 
 class WidgetStyle {
