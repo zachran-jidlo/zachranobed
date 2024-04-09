@@ -1,19 +1,22 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/box_movement.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class ShippingOfBoxesSectionFields extends StatefulWidget {
-  final List<BoxMovement> shippingSections;
+  final List<BoxInfo> shippingSections;
+  final List<FoodBoxType> boxTypes;
 
   const ShippingOfBoxesSectionFields({
     super.key,
     required this.shippingSections,
+    required this.boxTypes,
   });
 
   @override
@@ -35,9 +38,9 @@ class _ShippingOfBoxesSectionFieldsState
     );
   }
 
-  Widget _buildShippingSection(BoxMovement shipping, int index) {
+  Widget _buildShippingSection(BoxInfo info, int index) {
     return Column(
-      key: ValueKey(shipping),
+      key: ValueKey(info),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,22 +78,22 @@ class _ShippingOfBoxesSectionFieldsState
             widget.shippingSections[index] = widget.shippingSections[index]
                 .copyWith(numberOfBoxes: val.isEmpty ? null : int.parse(val));
           },
-          initialValue: shipping.numberOfBoxes?.toString(),
+          initialValue: info.numberOfBoxes?.toString(),
         ),
         const SizedBox(height: GapSize.m),
         ZODropdown(
           hintText: context.l10n!.boxType,
-          items: BoxType.values
-              .where((type) => type != BoxType.disposablePackaging)
-              .map((type) => BoxTypeHelper.toValue(type, context))
-              .toList(),
+          items: widget.boxTypes.map((type) => type.name).toList(),
           onValidation: (val) =>
               val == null ? context.l10n!.requiredDropdownError : null,
           onChanged: (val) {
+            final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
             widget.shippingSections[index] =
-                widget.shippingSections[index].copyWith(boxType: val);
+                widget.shippingSections[index].copyWith(foodBoxId: type?.id);
           },
-          initialValue: shipping.boxType,
+          initialValue: widget.boxTypes
+              .firstWhereOrNull((e) => e.id == info.foodBoxId)
+              ?.name,
         ),
         const SizedBox(height: GapSize.xl),
       ],
