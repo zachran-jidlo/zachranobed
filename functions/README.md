@@ -64,6 +64,18 @@ firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T
 
 ## Deploy functions to cloud
 
+To deploy Firebase Function to a selected environment you need to run following command in `functions` directory.
+
+```
+npm run deploy
+```
+
+If you run into any lint issues, you can try to solve them automatically by running following command in `functions` direcotry.
+
+```
+npm --prefix "$RESOURCE_DIR" run lint:fix
+```
+
 # Snippets
 ## Create box shipment in deliveries collection
 ```
