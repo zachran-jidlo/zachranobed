@@ -20,9 +20,9 @@ abstract class UserData extends ChangeNotifier {
   String get debugInfo {
     return '''
       EntityID: $entityId, 
-      Email: $email, 
-      Establishment: $establishmentName, 
-      ID: $establishmentId, 
+      Email: $email,
+      Establishment: $establishmentName,
+      ID: $establishmentId,
       Organization: $organization,
       Last accepted app terms version: $lastAcceptedAppTermsVersion
     ''';

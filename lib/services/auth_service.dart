@@ -121,8 +121,6 @@ class AuthService {
       return null;
     }
 
-
-
     return Canteen(
       entityId: entity.id,
       email: entity.email,

@@ -1,7 +1,7 @@
 import 'package:zachranobed/models/user_data.dart';
 
 class Charity extends UserData {
-  final List<String>? donorId;
+  final List<String> donorId;
 
   Charity({
     required super.entityId,
@@ -10,6 +10,6 @@ class Charity extends UserData {
     required super.establishmentId,
     required super.organization,
     required super.lastAcceptedAppTermsVersion,
-    this.donorId,
+    required this.donorId,
   });
 }

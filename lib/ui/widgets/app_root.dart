@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
+import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.dart';
@@ -48,7 +49,9 @@ class _AppRootState extends State<AppRoot> with WidgetsBindingObserver {
     return MultiProvider(
       providers: [
         ListenableProvider<UserNotifier>(create: (_) => UserNotifier()),
-        ListenableProvider<DeliveryNotifier>(create: (_) => DeliveryNotifier()),
+        ListenableProvider<DeliveryNotifier>(create: (_) {
+          return DeliveryNotifier(GetIt.I<OfferedFoodRepository>());
+        }),
       ],
       builder: (context, child) {
         return MaterialApp.router(

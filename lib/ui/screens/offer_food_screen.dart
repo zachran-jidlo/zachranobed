@@ -1,19 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/enums/box_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/offered_food.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
+import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
+import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/box_service.dart';
-import 'package:zachranobed/services/offered_food_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
@@ -27,18 +26,29 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  final _offeredFoodService = GetIt.I<OfferedFoodService>();
-  final _boxService = GetIt.I<BoxService>();
-
-  DocumentReference<OfferedFood>? _futureResponse;
+  final _offeredFoodRepository = GetIt.I<OfferedFoodRepository>();
+  final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
 
   final _formKey = GlobalKey<FormState>();
 
-  final List<OfferedFood> _foodSections = [const OfferedFood()];
+  final List<FoodInfo> _foodSections = [const FoodInfo()];
   final List<TextEditingController> _consumeByControllers = [
     TextEditingController()
   ];
   final List<bool> _checkboxValues = [true];
+  final List<FoodBoxType> _foodBoxTypes = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _foodBoxRepository.getTypes(includeDisposable: true).then((value) {
+      setState(() {
+        _foodBoxTypes.clear();
+        _foodBoxTypes.addAll(value);
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -52,10 +62,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     return _foodSections.any((foodInfo) =>
         foodInfo.dishName != null ||
         foodInfo.allergens != null ||
+        foodInfo.foodCategory != null ||
         foodInfo.numberOfServings != null ||
         foodInfo.numberOfBoxes != null ||
-        foodInfo.boxType != null ||
-        foodInfo.foodCategory != null ||
+        foodInfo.foodBoxId != null ||
         foodInfo.consumeBy != null);
   }
 
@@ -107,6 +117,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         foodSections: _foodSections,
                         controllers: _consumeByControllers,
                         checkboxValues: _checkboxValues,
+                        boxTypes: _foodBoxTypes,
                       ),
                       ZOButton(
                         text: context.l10n!.addAnotherFood,
@@ -115,7 +126,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         height: 40.0,
                         onPressed: () {
                           setState(() {
-                            _foodSections.add(const OfferedFood());
+                            _foodSections.add(const FoodInfo());
                             _consumeByControllers.add(TextEditingController());
                             _checkboxValues.add(true);
                           });
@@ -128,10 +139,10 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             if (await _verifyAvailableBoxCount()) {
-                              _futureResponse = await _offerFood();
+                              final isSuccess = await _offerFood();
                               if (mounted) {
                                 context.router.replace(ThankYouRoute(
-                                  response: _futureResponse,
+                                  isSuccess: isSuccess,
                                   message:
                                       context.l10n!.foodDonationConfirmation,
                                 ));
@@ -149,14 +160,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: GapSize.m),
-                      ZOClickableText(
-                        clickableText: context.l10n!.manualName,
-                        prefixText: context.l10n!.consent,
-                        underline: true,
-                        onTap: () => print('Kliknuto na příručku'),
-                      ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: GapSize.l),
                     ],
                   ),
                 ),
@@ -175,50 +179,44 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    final canteen = HelperService.getCurrentUser(context) as Canteen;
-    for (var foodInfo in _foodSections) {
-      final isAvailable = await _boxService.verifyAvailableBoxCount(
-        numberOfBoxes: foodInfo.numberOfBoxes ?? foodInfo.numberOfServings!,
-        boxType: foodInfo.boxType!,
-        establishmentId: canteen.establishmentId,
-        isCanteen: true,
-      );
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return false;
+    }
+
+    final requiredBoxes = <String, int>{};
+    for (final foodInfo in _foodSections) {
+      final foodBoxId = foodInfo.foodBoxId;
+      if (foodBoxId == null) {
+        continue;
+      }
+      final required = foodInfo.numberOfBoxes ?? foodInfo.numberOfServings ?? 0;
+      requiredBoxes[foodBoxId] = (requiredBoxes[foodBoxId] ?? 0) + required;
+    }
+
+    final available = await _foodBoxRepository.verifyAvailableBoxCount(
+      entityId: user.entityId,
+      requiredBoxes: requiredBoxes,
+      getQuantity: (e) => e.quantityAtCanteen,
+    );
+
+    if (!available) {
       if (mounted) {
-        if (!isAvailable &&
-            foodInfo.boxType !=
-                BoxTypeHelper.toValue(BoxType.disposablePackaging, context)) {
-          context.router.pop();
-          return false;
-        }
+        context.router.pop();
       }
     }
-    return true;
+
+    return available;
   }
 
-  Future<DocumentReference<OfferedFood>?> _offerFood() async {
-    DocumentReference<OfferedFood>? response;
-    final canteen = HelperService.getCurrentUser(context) as Canteen;
-    final now = DateTime.now();
-    for (var foodInfo in _foodSections) {
-      response = await _offeredFoodService.createOffer(
-        OfferedFood(
-          date: now,
-          dateTimestamp: now.millisecondsSinceEpoch ~/ 1000,
-          dishName: foodInfo.dishName,
-          allergens: foodInfo.allergens,
-          foodCategory: foodInfo.foodCategory,
-          numberOfServings: foodInfo.numberOfServings,
-          numberOfBoxes: foodInfo.numberOfBoxes ?? foodInfo.numberOfServings,
-          boxType: foodInfo.boxType,
-          consumeBy: foodInfo.consumeBy,
-          consumeByTimestamp:
-              foodInfo.consumeBy!.millisecondsSinceEpoch ~/ 1000,
-          weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
-          donorId: canteen.establishmentId,
-          recipientId: canteen.recipientId,
-        ),
-      );
+  Future<bool> _offerFood() async {
+    final delivery = context.read<DeliveryNotifier>().delivery;
+    if (delivery == null) {
+      return false;
     }
-    return response;
+    return _offeredFoodRepository.createOffer(
+      delivery: delivery,
+      foodInfo: _foodSections,
+    );
   }
 }
