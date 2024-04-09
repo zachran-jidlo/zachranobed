@@ -19,6 +19,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-134** Write data to deliveries collection.
 - **ZOB-135** Fetch data for box movements.
 - **ZOB-150** Update pickup config time from 35min to 45min.
+- **ZOB-155** Update notification icon.
 
 ### Fixed
 
