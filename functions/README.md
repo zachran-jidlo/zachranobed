@@ -63,3 +63,80 @@ firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T
 ```
 
 ## Deploy functions to cloud
+
+# Snippets
+## Create box shipment in deliveries collection
+```
+curl -X POST \
+  "http://localhost:8080/v1/projects/zachran-obed-dev/databases/(default)/documents/deliveries" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "fields": {
+      "donorId": {"stringValue": "test-zo-jidelna"},
+      "foodBoxes": {
+        "arrayValue": {
+          "values": [
+            {
+              "mapValue": {
+                "fields": {
+                  "count": {"stringValue": "1"},
+                  "foodBoxId": {"stringValue": "ikea_small"}
+                }
+              }
+            },
+            {
+              "mapValue": {
+                "fields": {
+                  "count": {"stringValue": "1"},
+                  "foodBoxId": {"stringValue": "ikea_large"}
+                }
+              }
+            }
+          ]
+        }
+      },
+      "recipientId": {"stringValue": "test-zo-charita"},
+      "type": {"stringValue": "BOX_DELIVERY"}
+    }
+  }'
+
+```
+
+## Update food delivery with correct state for box shipment
+*Note: At the end of url needs to be existing `documentId` and **there needs to be real update in data** *
+```
+curl -X PATCH \
+  "http://localhost:8080/v1/projects/zachran-obed-dev/databases/(default)/documents/deliveries/L07P06Ya0GY6Mq8VJvON" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "fields": {
+      "donorId": {"stringValue": "test-zo-jidelna"},
+      "foodBoxes": {
+        "arrayValue": {
+          "values": [
+            {
+              "mapValue": {
+                "fields": {
+                  "count": {"stringValue": "1"},
+                  "foodBoxId": {"stringValue": "ikea_small"}
+                }
+              }
+            },
+            {
+              "mapValue": {
+                "fields": {
+                  "count": {"stringValue": "1"},
+                  "foodBoxId": {"stringValue": "ikea_large"}
+                }
+              }
+            }
+          ]
+        }
+      },
+      "recipientId": {"stringValue": "test-zo-charita"},
+      "type": {"stringValue": "FOOD_DELIVERY"},
+      "state": {"stringValue": "OFFERED"}
+    }
+  }'
+
+```

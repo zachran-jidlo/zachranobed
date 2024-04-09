@@ -16,6 +16,15 @@ class FoodBox {
   ) {}
 }
 
+class DeliveryFoodBox {
+  constructor(
+    public foodBoxId: string,
+    public count: number
+  ) {}
+}
+
+const disposableBoxId = "disposable"
+
 /**
  * Function triggered when a document in the "deliveries" collection is updated.
  * Notifies the charity about a donation if the delivery state is "ACCEPTED" and it's the current day.
@@ -133,7 +142,11 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
           });
       });
 
-      if (results[0].exists && results[1].exists) {
+      if (
+        results[0].exists && 
+        results[1].exists && 
+        insufficentBoxes.length > 0
+      ) {
         const fcmTokens = results[0].data()!.fcmTokens;
         const donor = results[1].data();
 
@@ -198,7 +211,7 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
                   token: token as string,
                 };
               });
-              
+
               return admin.messaging().sendEach(messages);
             } else {
               console.error("Entity not found for donorId:", donorId);
@@ -219,110 +232,150 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
       return null;
     });
   
-// /**
-//  * Is triggered when a document is created in the "offeredFood" collection.
-//  * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
-//  *
-//  * @param snapshot - The snapshot of the created document.
-//  * @param context - The context object containing metadata about the create event.
-//  */
-// export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
-//   const data = snapshot.data();
-//   const donorId = data.donorId;
-//   const recipientId = data.recipientId;
-//   const boxType = data.boxType;
-//   const numberOfBoxes = data.numberOfBoxes;
-//   const weekNumber = data.weekNumber;
-//   const date = data.date;
+    export const moveBoxes = functions.firestore
+      .document("deliveries/{id}")
+      .onWrite((change, context) => {
+        const newValue = change.after.data();
+        const oldValue = change.before.data();
 
-//   if (boxType == "jednorázový obal") {
-//     return;
-//   }
+        // Do not process delete actions
+        if (newValue == null) {
+          return null;
+        }
 
-//   const boxMovementData = {
-//     senderId: donorId,
-//     recipientId: recipientId,
-//     boxType: boxType,
-//     numberOfBoxes: numberOfBoxes,
-//     weekNumber: weekNumber,
-//     date: date,
-//   };
+        if (newValue.type === "FOOD_DELIVERY") {
+          return moveBoxesFromDonorToRecipient(newValue, oldValue);
+        } else {
+          return moveBoxesFromRecipientToDonor(newValue, oldValue);
+        }
+      });
 
-//   try {
-//     const docRef = await db.collection("boxMovement").add(boxMovementData);
-//     console.log("New box movement document added with ID:", docRef.id);
-//     return null;
-//   } catch (error) {
-//     console.error("Error creating box movement document:", error);
-//     return null;
-//   }
-// });
+    function moveBoxesFromDonorToRecipient(
+      newValue: admin.firestore.DocumentData,
+      oldValue: admin.firestore.DocumentData | undefined
+    ) {
+      console.log("moveBoxesFromDonorToRecipient");
+      // The change in the food boxes can occur multiple times in the multiple updates in the same state.
+      // We dont take into account newly created delivery because process doesn't allow to create food delivery with alredy filled in boxes.
+      // TODO: This doesn't take into account that donor removed all food boxes from the delivery.
+      if (
+        newValue.state === "OFFERED" &&
+        newValue.foodBoxes.length > 0 &&
+        oldValue != null
+      ) {
+        console.log("moveBoxesFromDonorToRecipient - updateEntityPairs");
 
-// /**
-//  * Is triggered when a document is created in the "boxMovement" collection.
-//  * Updates box quantities in the "boxes" collection based on the box movement.
-//  *
-//  * @param snapshot - The snapshot of the created document.
-//  * @param context - The context object containing metadata about the create event.
-//  */
-// export const updateBoxQuantitiesOnBoxMovement = functions.firestore
-//   .document("boxMovement/{id}")
-//   .onCreate(async (snapshot, context) => {
-//     const data = snapshot.data();
-//     const senderId = data.senderId;
-//     const recipientId = data.recipientId;
-//     const boxType = data.boxType;
-//     const numberOfBoxes = data.numberOfBoxes;
+        const diffArray: { [foodBoxId: string]: number } = {};
 
-//     const canteenQuery = db.collection("boxes")
-//       .where("canteenId", "==", senderId)
-//       .where("charityId", "==", recipientId)
-//       .where("boxType", "==", boxType);
+        newValue.foodBoxes.forEach((newBox: DeliveryFoodBox) => {
+          if (newBox.foodBoxId == disposableBoxId) {
+            return;
+          }
 
-//     const charityQuery = db.collection("boxes")
-//       .where("charityId", "==", senderId)
-//       .where("canteenId", "==", recipientId)
-//       .where("boxType", "==", boxType);
+          const matchingOldBox = oldValue.foodBoxes.find(
+            (oldBox: DeliveryFoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+          );
 
-//     try {
-//       await db.runTransaction(async (transaction) => {
-//         const canteenSnapshot = await transaction.get(canteenQuery);
-//         const charitySnapshot = await transaction.get(charityQuery);
+          if (matchingOldBox && newBox.count !== matchingOldBox.count) {
+            // Found old box with changed count
+            const countDiff = newBox.count - matchingOldBox.count;
+            diffArray[newBox.foodBoxId] = countDiff;
+          } else if (!matchingOldBox) {
+            // New box added
+            diffArray[newBox.foodBoxId] = newBox.count;
+          }
+        });
 
-//         if (!canteenSnapshot.empty) {
-//           const canteenDocRef = canteenSnapshot.docs[0].ref;
-//           const canteenData = canteenSnapshot.docs[0].data();
+        updateEntityPairs(diffArray, newValue);
+      } else {
+        console.log("moveBoxesFromDonorToRecipient - no action");
+      }
+    }
 
-//           const updatedCanteenQuantity = canteenData.quantityAtCanteen - numberOfBoxes;
-//           const updatedCharityQuantity = canteenData.quantityAtCharity + numberOfBoxes;
+    function moveBoxesFromRecipientToDonor(
+      newValue: admin.firestore.DocumentData,
+      oldValue: admin.firestore.DocumentData | undefined
+    ) {
+      console.log("moveBoxesFromRecipientToDonor");
 
-//           transaction.update(canteenDocRef, {
-//             quantityAtCanteen: updatedCanteenQuantity,
-//             quantityAtCharity: updatedCharityQuantity,
-//           });
-//         } else if (!charitySnapshot.empty) {
-//           const charityDocRef = charitySnapshot.docs[0].ref;
-//           const charityData = charitySnapshot.docs[0].data();
+      // Takes into account create and update actions
+      if (newValue.foodBoxes.length > 0) {
+        console.log("moveBoxesFromRecipientToDonor - updateEntityPairs");
 
-//           const updatedCanteenQuantity = charityData.quantityAtCanteen + numberOfBoxes;
-//           const updatedCharityQuantity = charityData.quantityAtCharity - numberOfBoxes;
+        const diffArray: { [foodBoxId: string]: number } = {};
 
-//           transaction.update(charityDocRef, {
-//             quantityAtCanteen: updatedCanteenQuantity,
-//             quantityAtCharity: updatedCharityQuantity,
-//           });
-//         } else {
-//           console.error("Matching box not found for update.");
-//         }
-//       });
+        newValue.foodBoxes.forEach((newBox: DeliveryFoodBox) => {
+          if (newBox.foodBoxId == disposableBoxId) {
+            return;
+          }
 
-//       console.log("Box quantities updated successfully in the \"boxes\" collection.");
-//       return null;
-//     } catch (error) {
-//       console.error("Error updating box quantities in \"boxes\" collection:", error);
-//       return null;
-//     }
-//   });
+          const matchingOldBox = oldValue?.foodBoxes.find(
+            (oldBox: DeliveryFoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+          );
+
+          if (matchingOldBox && newBox.count !== matchingOldBox.count) {
+            // Found old box with changed count, its minus because we are moving boxes from recipient to donor
+            const countDiff = newBox.count - matchingOldBox.count;
+            diffArray[newBox.foodBoxId] = -countDiff;
+          } else if (!matchingOldBox) {
+            // New box added
+            diffArray[newBox.foodBoxId] = -newBox.count;
+          }
+        });
+
+        updateEntityPairs(diffArray, newValue);
+      } else {
+        console.log("moveBoxesFromRecipientToDonor - no action");
+      }
+    }
+
+    function updateEntityPairs(
+      diffArray: { [foodBoxId: string]: number },
+      newValue: admin.firestore.DocumentData
+    ) {
+      console.log("updateEntityPairs" + diffArray);
+
+      const recipientId = newValue.recipientId;
+      const donorId = newValue.donorId;
+
+      return db
+        .collection("entityPairs")
+        .where("recipientId", "==", recipientId)
+        .where("donorId", "==", donorId)
+        .get()
+        .then((result) => {
+          if (result.empty) {
+            console.error(
+              "EntityPair not found for recipientId:",
+              recipientId,
+              " and donorId:",
+              donorId
+            );
+            return null;
+          }
+
+          const entityPairDoc = result.docs[0];
+          const foodBoxes = entityPairDoc.data().foodboxes;
+
+          Object.keys(diffArray).forEach((foodBoxId: string) => {
+            const foodBox = foodBoxes.find(
+              (box: FoodBox) => box.foodBoxId === foodBoxId
+            );
+
+            if (foodBox) {
+              foodBox.donorCount -= diffArray[foodBoxId];
+              foodBox.recipientCount += diffArray[foodBoxId];
+            } else {
+              // TODO: Should we add the new type of food box to the entityPair?
+              console.error("FoodBox not found for foodBoxId:", foodBoxId);
+            }
+          });
+
+          return entityPairDoc.ref.update({
+            foodboxes: foodBoxes,
+          });
+        });
+    }
 
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.
