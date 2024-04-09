@@ -6,7 +6,7 @@ class ZODateTimePicker extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? onValidation;
   final IconData icon;
-  final Function(PointerDownEvent)? onTappedOutside;
+  final Function(DateTime?) onDateTimePicked;
   final DateTime? minimumDate;
 
   const ZODateTimePicker({
@@ -15,7 +15,7 @@ class ZODateTimePicker extends StatefulWidget {
     required this.controller,
     this.onValidation,
     required this.icon,
-    this.onTappedOutside,
+    required this.onDateTimePicked,
     this.minimumDate,
   });
 
@@ -44,12 +44,12 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
         },
       );
 
-  Future _pickDateTime() async {
+  Future<DateTime?> _pickDateTime() async {
     DateTime? date = await _pickDate();
-    if (date == null) return;
+    if (date == null) return null;
 
     TimeOfDay? time = await _pickTime();
-    if (time == null) return;
+    if (time == null) return null;
 
     final dateTime = DateTime(
       date.year,
@@ -64,6 +64,8 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
       widget.controller.text =
           '${_dateTime.day}.${_dateTime.month}.${_dateTime.year} ${_dateTime.hour.toString().padLeft(2, '0')}:${_dateTime.minute.toString().padLeft(2, '0')}';
     });
+
+    return dateTime;
   }
 
   final _dateTimePickerErrorBorder = const UnderlineInputBorder(
@@ -73,12 +75,14 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: _pickDateTime,
+      onTap: () async {
+        final date = await _pickDateTime();
+        widget.onDateTimePicked(date);
+      },
       child: TextFormField(
         controller: widget.controller,
         validator: widget.onValidation,
         enabled: false,
-        onTapOutside: widget.onTappedOutside,
         style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
           labelText: widget.label,

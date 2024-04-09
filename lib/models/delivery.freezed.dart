@@ -12,7 +12,7 @@ part of 'delivery.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Delivery _$DeliveryFromJson(Map<String, dynamic> json) {
   return _Delivery.fromJson(json);
@@ -22,7 +22,8 @@ Delivery _$DeliveryFromJson(Map<String, dynamic> json) {
 mixin _$Delivery {
   String get id => throw _privateConstructorUsedError;
   String get donorId => throw _privateConstructorUsedError;
-  String get state => throw _privateConstructorUsedError;
+  DeliveryState get state => throw _privateConstructorUsedError;
+  DeliveryType get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,8 @@ abstract class $DeliveryCopyWith<$Res> {
   factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) then) =
       _$DeliveryCopyWithImpl<$Res, Delivery>;
   @useResult
-  $Res call({String id, String donorId, String state});
+  $Res call(
+      {String id, String donorId, DeliveryState state, DeliveryType type});
 }
 
 /// @nodoc
@@ -54,6 +56,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
     Object? id = null,
     Object? donorId = null,
     Object? state = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -67,7 +70,11 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DeliveryState,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as DeliveryType,
     ) as $Val);
   }
 }
@@ -80,7 +87,8 @@ abstract class _$$DeliveryImplCopyWith<$Res>
       __$$DeliveryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String donorId, String state});
+  $Res call(
+      {String id, String donorId, DeliveryState state, DeliveryType type});
 }
 
 /// @nodoc
@@ -97,6 +105,7 @@ class __$$DeliveryImplCopyWithImpl<$Res>
     Object? id = null,
     Object? donorId = null,
     Object? state = null,
+    Object? type = null,
   }) {
     return _then(_$DeliveryImpl(
       id: null == id
@@ -110,7 +119,11 @@ class __$$DeliveryImplCopyWithImpl<$Res>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DeliveryState,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as DeliveryType,
     ));
   }
 }
@@ -119,7 +132,10 @@ class __$$DeliveryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DeliveryImpl implements _Delivery {
   const _$DeliveryImpl(
-      {required this.id, required this.donorId, required this.state});
+      {required this.id,
+      required this.donorId,
+      required this.state,
+      required this.type});
 
   factory _$DeliveryImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeliveryImplFromJson(json);
@@ -129,26 +145,29 @@ class _$DeliveryImpl implements _Delivery {
   @override
   final String donorId;
   @override
-  final String state;
+  final DeliveryState state;
+  @override
+  final DeliveryType type;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, state: $state)';
+    return 'Delivery(id: $id, donorId: $donorId, state: $state, type: $type)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeliveryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
-            (identical(other.state, state) || other.state == state));
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, donorId, state);
+  int get hashCode => Object.hash(runtimeType, id, donorId, state, type);
 
   @JsonKey(ignore: true)
   @override
@@ -168,7 +187,8 @@ abstract class _Delivery implements Delivery {
   const factory _Delivery(
       {required final String id,
       required final String donorId,
-      required final String state}) = _$DeliveryImpl;
+      required final DeliveryState state,
+      required final DeliveryType type}) = _$DeliveryImpl;
 
   factory _Delivery.fromJson(Map<String, dynamic> json) =
       _$DeliveryImpl.fromJson;
@@ -178,7 +198,9 @@ abstract class _Delivery implements Delivery {
   @override
   String get donorId;
   @override
-  String get state;
+  DeliveryState get state;
+  @override
+  DeliveryType get type;
   @override
   @JsonKey(ignore: true)
   _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
