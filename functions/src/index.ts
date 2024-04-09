@@ -84,8 +84,6 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
     const newBoxes = change.after.data().foodboxes;
     const oldBoxes = change.before.data().foodboxes;
 
-    console.log("Catched change");
-
     const differenceMap: { [foodBoxId: string]: number } = {};
     newBoxes.forEach((newBox: FoodBox) => {
       const matchingOldBox = oldBoxes.find(
@@ -187,8 +185,6 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
           .doc(donorId)
           .get()
           .then((entityDoc) => {
-            console.log("Entity doc", entityDoc);
-
             if (entityDoc.exists) {
               const fcmTokens = entityDoc.data()!.fcmTokens;
 
@@ -202,9 +198,7 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
                   token: token as string,
                 };
               });
-
-              console.log(messages);
-
+              
               return admin.messaging().sendEach(messages);
             } else {
               console.error("Entity not found for donorId:", donorId);
