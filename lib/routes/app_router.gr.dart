@@ -24,7 +24,7 @@ import 'package:zachranobed/features/offeredfood/presentation/screens/donated_fo
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i2;
 import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i5;
 import 'package:zachranobed/ui/screens/home_screen.dart' as _i6;
-import 'package:zachranobed/ui/screens/menu_screen.dart' as _i8;
+import 'package:zachranobed/features/menu/presentation/menu_screen.dart' as _i8;
 import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i9;
 import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
     as _i10;
