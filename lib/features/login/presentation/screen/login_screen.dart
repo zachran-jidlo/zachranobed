@@ -7,7 +7,6 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/app_terms/presentation/app_terms_screen.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';

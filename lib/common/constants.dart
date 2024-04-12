@@ -22,11 +22,13 @@ class ZOColors {
 class ZOStrings {
   static const zjUrl = 'https://zachranobed.cz';
   static const zjEmail = 'info@zachranjidlo.cz';
+  static const appTerms = 'https://zachranobed.cz/app/uploads/2024/03/podminky-zachran-obed.pdf';
 
   static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';
   static const chefEmptyPath = 'assets/chef-empty.svg';
   static const boxEmptyPath = 'assets/box-empty.svg';
+  static const certificationCheckPath = 'assets/certification_check.svg';
 }
 
 class Constants {

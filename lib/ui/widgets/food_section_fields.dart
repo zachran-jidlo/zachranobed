@@ -145,7 +145,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           initialValue: offeredFood.numberOfServings?.toString(),
         ),
         _buildGap(),
-        ZOCheckbox(
+        ZOCheckbox.plain(
           isChecked: widget.checkboxValues[index],
           onChanged: (bool? value) {
             setState(() {
