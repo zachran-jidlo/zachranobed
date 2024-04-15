@@ -19,8 +19,8 @@ class FoodBox {
    * Creates a new instance of the FoodBox class.
    * @param {string} foodBoxId - The ID of the food box.
    * @param {string} count - The total count of the food box.
-   * @param {string} donorCount - The count of donors for the food box.
-   * @param {string} recipientCount - The count of recipients for the food box.
+   * @param {string} donorCount - The count of boxes at donor side.
+   * @param {string} recipientCount - The count boxes at recipient side.
    */
   constructor(
     public foodBoxId: string,
@@ -134,8 +134,9 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
         (oldBox: FoodBox) => oldBox.foodBoxId === newBox.foodBoxId
       );
       if (matchingOldBox && newBox.donorCount < matchingOldBox.donorCount) {
+        // TODO: Difference is used only for logging purposes. It can be deleted in future but leaving it here for now because of debugging.
         const difference = newBox.donorCount - matchingOldBox.donorCount;
-        differenceMap[newBox.foodBoxId] = difference;
+        differenceMap[newBox.foodBoxId] = difference; 
       }
     });
 
@@ -218,7 +219,7 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
   });
 
 /**
- * Is triggered when a document is created in the "shippingOfBoxes" collection.
+ * Is triggered when a document is created in the "deliveries" collection.
  * Notifies the canteen about the shipment of boxes.
  *
  * @param {admin.firestore.DocumentSnapshot} snapshot - The snapshot of the created delivery document.
