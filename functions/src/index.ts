@@ -136,7 +136,7 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
       if (matchingOldBox && newBox.donorCount < matchingOldBox.donorCount) {
         // TODO: Difference is used only for logging purposes. It can be deleted in future but leaving it here for now because of debugging.
         const difference = newBox.donorCount - matchingOldBox.donorCount;
-        differenceMap[newBox.foodBoxId] = difference; 
+        differenceMap[newBox.foodBoxId] = difference;
       }
     });
 
