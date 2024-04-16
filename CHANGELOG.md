@@ -2,7 +2,7 @@
 
 This is a changelog for **ZachranObed** application.
 
-## [0.4.0]
+## [1.0.0]
 ### Added
 - **ZOB-91** Add user info item.
 - **ZOB-36** Add "Empty page" for the boxes and meal section.
