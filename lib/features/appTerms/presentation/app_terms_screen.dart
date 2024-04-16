@@ -7,6 +7,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -23,8 +26,7 @@ class AppTermsScreen extends StatefulWidget {
 }
 
 class _AppTermsScreen extends State<AppTermsScreen> {
-  final _setNewestAcceptedAppTermsUseCase =
-      GetIt.I<SetNewestAcceptedAppTermsUseCase>();
+  final _setNewestAcceptedAppTermsUseCase = GetIt.I<SetNewestAcceptedAppTermsUseCase>();
   var _areTermsAccepted = false;
 
   @override
