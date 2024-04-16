@@ -6,6 +6,9 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-91** Add user info item.
 - **ZOB-36** Add "Empty page" for the boxes and meal section.
+- **ZOB-48** Connected app terms link in menu screen
+- **ZOB-53** Connected partners link in menu screen
+- **ZOB-54** Connected app privacy link in menu screen
 
 ### Changed
 - **ZOB-92** Update toolbar in Profile screen.
@@ -20,6 +23,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-134** Write data to deliveries collection.
 - **ZOB-135** Fetch data for box movements.
 - **ZOB-150** Update pickup config time from 35min to 45min.
+- **ZOB-155** Update notification icon.
 - **ZOB-139** Added domain logic and data connection for app terms.
 
 ### Fixed

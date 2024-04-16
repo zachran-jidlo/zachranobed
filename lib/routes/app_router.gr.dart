@@ -19,6 +19,7 @@ import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_
     as _i2;
 import 'package:zachranobed/features/login/presentation/screen/login_screen.dart'
     as _i8;
+import 'package:zachranobed/features/menu/presentation/menu_screen.dart' as _i9;
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
     as _i16;
 import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
@@ -26,7 +27,6 @@ import 'package:zachranobed/features/offeredfood/presentation/screens/donated_fo
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i3;
 import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i6;
 import 'package:zachranobed/ui/screens/home_screen.dart' as _i7;
-import 'package:zachranobed/ui/screens/menu_screen.dart' as _i9;
 import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i10;
 import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
     as _i11;
