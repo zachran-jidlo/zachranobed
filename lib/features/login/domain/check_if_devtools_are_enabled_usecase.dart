@@ -4,7 +4,7 @@ import 'package:zachranobed/features/appConfiguration/entity/build_configuration
 class CheckIfDevtoolsAreEnabledUseCase {
   final AppConfiguration _appConfiguration = AppConfiguration.instance;
 
-  bool checkIfDevtoolsAreEnabled() {
+  bool invoke() {
     switch (_appConfiguration.buildConfiguration) {
       case BuildConfiguration.dev:
       case BuildConfiguration.stage:

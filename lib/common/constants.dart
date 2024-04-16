@@ -22,7 +22,10 @@ class ZOColors {
 class ZOStrings {
   static const zjUrl = 'https://zachranobed.cz';
   static const zjEmail = 'info@zachranjidlo.cz';
+  static const zobWebHomepage = 'https://zachranobed.cz';
   static const appTerms = 'https://zachranobed.cz/app/uploads/2024/03/podminky-zachran-obed.pdf';
+  static const appPrivacy = 'https://docs.google.com/document/d/1NhEGlrN4TgS49HviLkhcF4zCBU3i8w3ITkVQJhtMz-Q/edit';
+  static const sponsors = 'https://zachranobed.cz/';
 
   static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';

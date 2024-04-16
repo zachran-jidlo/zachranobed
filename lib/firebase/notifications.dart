@@ -35,7 +35,7 @@ class Notifications {
   /// notification channel for Android.
   Future initLocalNotifications() async {
     const iOS = DarwinInitializationSettings();
-    const android = AndroidInitializationSettings('@drawable/ic_launcher');
+    const android = AndroidInitializationSettings('@drawable/ic_notification');
     const settings = InitializationSettings(android: android, iOS: iOS);
 
     await _localNotifications.initialize(settings);

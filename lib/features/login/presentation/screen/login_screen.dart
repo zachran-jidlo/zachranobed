@@ -7,6 +7,7 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void showDebugScreenIfPossible() {
-    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.invoke();
     if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 
@@ -154,7 +155,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _continueToLoggedInContext() async {
-    final result = await _checkIfAppTermsShouldBeShownUseCase.checkIfAppTermsShouldBeShown();
+    final result = await _checkIfAppTermsShouldBeShownUseCase.invoke();
+
+    if (!mounted) {
+      return;
+    }
 
     if (result == true) {
       context.router.replace(const AppTermsRoute());

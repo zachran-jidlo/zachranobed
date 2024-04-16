@@ -94,7 +94,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     leadingIcon: Icons.language,
                     text: context.l10n!.about,
                     onPressed: () async {
-                      await _openUrlInBrowser(ZOStrings.zjUrl);
+                      await _openUrlInBrowser(ZOStrings.zobWebHomepage);
                     },
                   ),
                   const SizedBox(height: 8.0),
@@ -102,7 +102,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     leadingIcon: Icons.volunteer_activism_outlined,
                     text: context.l10n!.sponsors,
                     onPressed: () async {
-                      await _openUrlInBrowser(ZOStrings.zjUrl);
+                      await _openUrlInBrowser(ZOStrings.sponsors);
                     },
                   ),
                 ],
@@ -120,14 +120,14 @@ class _MenuScreenState extends State<MenuScreen> {
                     leadingIcon: Icons.security,
                     text: context.l10n!.privacyProtection,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                        await _openUrlInBrowser(ZOStrings.appPrivacy),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
                     text: context.l10n!.termsOfUse,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.zjUrl),
+                        await _openUrlInBrowser(ZOStrings.appTerms),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
@@ -171,7 +171,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   void showDebugScreenIfPossible() {
     bool areDevtoolsEnabled =
-        _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+        _checkIfDevtoolsAreEnabledUseCase.invoke();
     if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 }

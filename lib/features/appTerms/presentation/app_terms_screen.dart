@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/features/app_terms/domain/set_newest_accepted_app_terms_usecase.dart';
+import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -96,7 +96,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
 
   void _setNewestAcceptedAppTerms() {
     if (mounted && _areTermsAccepted) {
-      _setNewestAcceptedAppTermsUseCase.setNewestAcceptedAppTerms();
+      _setNewestAcceptedAppTermsUseCase.invoke();
       context.router.replace(const HomeRoute());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
