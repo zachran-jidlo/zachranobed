@@ -35,6 +35,12 @@ class EntityService {
     return null;
   }
 
+  Future<void> saveAppTermsVersion(String entityId, int version) async {
+    return _collection
+        .doc(entityId)
+        .update({'lastAcceptedAppTermsVersion': version});
+  }
+
   /// Stores the given FCM [token] to the entity with ID [entityId] in in the
   /// entities collection. It either updates the FCM token for this device
   /// or creates a new one for this device's ID.
