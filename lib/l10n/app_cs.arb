@@ -104,10 +104,8 @@
     "boxesEmptyDescription": "Historie přepravy krabiček není k dispozici, přeprava ještě neproběhla.",
     "appTermsTitle": "Než budete pokračovat,",
     "appTermsSubtitle": "tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.",
-    "appTermsCheckboxLabel": {
-        "plain": "Souhlasím s \\n",
-        "underlined": "podmínkami účasti na projektu."
-    },
+    "appTermsCheckboxLabelPlain": "Souhlasím s ",
+    "appTermsCheckboxLabelUnderlined": "podmínkami účasti na projektu.",
     "appTermsConfirm": "Potvrdit",
     "appTermsNotAcceptedError": "Pro pokračování do aplikace musíte nejdříve souhlasit s podmínkami účasti na projektu."
 }

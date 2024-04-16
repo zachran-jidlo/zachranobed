@@ -31,61 +31,62 @@ class _AppTermsScreen extends State<AppTermsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(GapSize.xl),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(ZOStrings.certificationCheckPath, width: 205, height: 294),
-                SizedBox(height: GapSize.xl),
-                Text(
-                  'Než budete pokračovat,', // FIXME: - Localize
-                  style: TextStyle(fontSize: FontSize.m),
-                ),
-                SizedBox(height: GapSize.xs),
-                Text(
-                  'tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.', // FIXME: - Localize
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: FontSize.s),
-                ),
-                SizedBox(height: GapSize.m),
-                ZOCheckbox.rich(
-                    isChecked: _areTermsAccepted,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _areTermsAccepted = value ?? false;
-                      });
-                    },
-                    titleWidget: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: "Souhlasím s \n", // FIXME: - Localize
-                              style: TextStyle(color: Colors.black)
-                          ),
-                          TextSpan(
-                            text: 'podmínkami účasti na projektu.', // FIXME: - Localize
-                            style: TextStyle(
-                                color: Colors.black,
-                                decoration: TextDecoration.underline
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async {
-                                await _openUrlInBrowser(ZOStrings.appTerms);
-                              },
-                          ),
-                        ]
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(GapSize.xl),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(ZOStrings.certificationCheckPath, width: 205, height: 294),
+                  SizedBox(height: GapSize.xl),
+                  Text(
+                    'Než budete pokračovat,', // FIXME: - Localize
+                    style: TextStyle(fontSize: FontSize.m),
+                  ),
+                  SizedBox(height: GapSize.xs),
+                  Text(
+                    'tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.', // FIXME: - Localize
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: FontSize.s),
+                  ),
+                  SizedBox(height: GapSize.m),
+                  ZOCheckbox.rich(
+                      isChecked: _areTermsAccepted,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _areTermsAccepted = value ?? false;
+                        });
+                      },
+                      titleWidget: RichText(
+                          text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'Souhlasím s ', // FIXME: - Localize
+                                    style: TextStyle(color: Colors.black)
+                                ),
+                                TextSpan(
+                                  text: 'podmínkami účasti na projektu.', // FIXME: - Localize
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      await _openUrlInBrowser(ZOStrings.appTerms);
+                                    },
+                                ),
+                              ]
+                          )
                       )
-                    )
-                ),
-                SizedBox(height: GapSize.s),
-                ZOButton(
-                  text: "Potvrdit", // FIXME: - Localize
-                  icon: MaterialSymbols.check,
-                  onPressed: _setNewestAcceptedAppTerms,
-                ),
-              ],
+                  ),
+                  SizedBox(height: GapSize.l),
+                  ZOButton(
+                    text: 'Pokračovat do aplikace', // FIXME: - Localize
+                    onPressed: _setNewestAcceptedAppTerms,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
