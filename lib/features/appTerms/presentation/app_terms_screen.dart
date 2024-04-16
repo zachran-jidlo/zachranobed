@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/features/app_terms/domain/set_newest_accepted_app_terms_usecase.dart';
+import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -35,8 +35,8 @@ class _AppTermsScreen extends State<AppTermsScreen> {
                       text: "Potvrdit",
                       icon: MaterialSymbols.check,
                       onPressed: () {
+                        _setNewestAcceptedAppTermsUseCase.invoke();
                         if (mounted) {
-                          _setNewestAcceptedAppTermsUseCase.setNewestAcceptedAppTerms();
                           context.router.replace(const HomeRoute());
                         }
                       },

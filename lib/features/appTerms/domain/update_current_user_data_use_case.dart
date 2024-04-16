@@ -8,12 +8,13 @@ class UpdateCurrentUserDataUseCase {
 
   UpdateCurrentUserDataUseCase(this.entityService);
 
-  Future<void> updateCurrentUserData(Map<Object, Object?> data) async {
-    var currentUserEmail = _auth.currentUser?.email;
-    if (currentUserEmail != null) {
-      entityService.updateEntityDataWithEmail(currentUserEmail, data);
+  Future<void> updateLastAcceptedAppTermsVersion(int lastAppTermsVersion) async {
+    final currentUserId = _auth.currentUser?.uid;
+
+    if (currentUserId != null) {
+      entityService.saveAppTermsVersion(currentUserId, lastAppTermsVersion);
     } else {
-      ZOLogger.logMessage("Email for the current user has not been found. The user is most probably not logged in.");
+      ZOLogger.logMessage("UID for the current user has not been found. The user is most probably not logged in.");
     }
   }
 }

@@ -34,7 +34,7 @@ class _AppRootState extends State<AppRoot> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      final result = await _checkIfAppTermsShouldBeShownUseCase.checkIfAppTermsShouldBeShown();
+      final result = await _checkIfAppTermsShouldBeShownUseCase.invoke();
 
       // If should be shown, replace current route with app terms.
       // Otherwise do nothing - no action from the user is required.

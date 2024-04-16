@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 /*
- * Command to rebuild the entity.g.dart file:
+ * Command to rebuild the remote_app_configuration_dto.g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
 part 'remote_app_configuration_dto.g.dart';

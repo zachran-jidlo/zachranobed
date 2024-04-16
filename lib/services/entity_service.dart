@@ -35,26 +35,10 @@ class EntityService {
     return null;
   }
 
-  /// TODO - document
-  Future<void> updateEntityDataWithEmail(String email, Map<Object, Object?> data) async {
-    final snapshot = await _collection
-        .where(
-          'email',
-          isEqualTo: email,
-        )
-        .get();
-
-    final List<DocumentSnapshot> documents = snapshot.docs;
-
-    if (documents.isNotEmpty) {
-      final DocumentSnapshot documentSnapshot = documents.first;
-      final DocumentReference documentReference = documentSnapshot.reference;
-
-      await documentReference.update(data);
-      ZOLogger.logMessage("Successfully updated entity with email = ${email} and data = ${data}");
-    } else {
-      ZOLogger.logMessage("Unable to find the entity with email = ${email}. Will not update entity.", isError: true);
-    }
+  Future<void> saveAppTermsVersion(String entityId, int version) async {
+    return _collection
+        .doc(entityId)
+        .update({'lastAcceptedAppTermsVersion': version});
   }
 
   /// Stores the given FCM [token] to the entity with ID [entityId] in in the

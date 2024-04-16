@@ -5,7 +5,6 @@ class RemoteAppConfigurationRepository {
   final _collection = FirebaseFirestore.instance.collection('appConfiguration').doc('app-terms').withConverter(
       fromFirestore: (snapshot, _) {
         final json = snapshot.data() ?? {};
-        json['id'] = snapshot.id;
 
         // Mapping to correct property name (`RemoteAppConfigurationDto.lastAppTermsVersion`)
         json['lastAppTermsVersion'] = snapshot['lastVersion'];

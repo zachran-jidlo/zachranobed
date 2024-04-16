@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/material.dart' as _i14;
-import 'package:zachranobed/features/app_terms/presentation/app_terms_screen.dart'
+import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart'
     as _i1;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i4;
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
