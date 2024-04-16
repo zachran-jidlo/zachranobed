@@ -157,7 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _continueToLoggedInContext() async {
     final result = await _checkIfAppTermsShouldBeShownUseCase.invoke();
 
-    if (result == true && mounted) {
+    if (!mounted) {
+      return;
+    }
+
+    if (result == true) {
       context.router.replace(const AppTermsRoute());
     } else {
       context.router.replace(const HomeRoute());
