@@ -130,6 +130,7 @@ class AuthService {
       pickUpFrom: window.start,
       pickUpWithin: window.end,
       recipientId: pair.recipientId,
+      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion
     );
   }
 
@@ -151,6 +152,7 @@ class AuthService {
       establishmentId: entity.establishmentId,
       organization: entity.organization,
       donorId: pairs.map((e) => e.donorId).toList(),
+      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion
     );
   }
 }

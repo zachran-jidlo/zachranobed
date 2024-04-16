@@ -41,8 +41,7 @@ class AppRouter extends $AppRouter {
           page: OrderShippingOfBoxesRoute.page,
           guards: [AuthGuard()],
         ),
-        MaterialRoute(
-            page: DebugRoute.page
-        ),
+        MaterialRoute(page: DebugRoute.page),
+        MaterialRoute(page: AppTermsRoute.page)
       ];
 }
