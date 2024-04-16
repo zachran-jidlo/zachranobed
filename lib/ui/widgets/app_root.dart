@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
+import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -15,33 +16,30 @@ class AppRoot extends StatefulWidget {
   _AppRootState createState() => _AppRootState();
 }
 
-class _AppRootState extends State<AppRoot> with WidgetsBindingObserver {
+class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
   final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+
+    _checkAppTerms();
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+  void onResume() {
+    _checkAppTerms();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      final result = await _checkIfAppTermsShouldBeShownUseCase.invoke();
-
+  void _checkAppTerms() {
+    _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
       // If should be shown, replace current route with app terms.
       // Otherwise do nothing - no action from the user is required.
       if (result == true) {
-        _appRouter.replace(AppTermsRoute());
+        _appRouter.replace(AppTermsRoute())
       }
-    }
+    });
   }
 
   @override

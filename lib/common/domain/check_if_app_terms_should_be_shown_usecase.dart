@@ -20,7 +20,7 @@ class CheckIfAppTermsShouldBeShownUseCase {
     if (lastAcceptedVersion != null && lastAppTermsVersion != null) {
       return lastAppTermsVersion > lastAcceptedVersion;
     } else {
-      return true;
+      return userData != null;
     }
   }
 }
