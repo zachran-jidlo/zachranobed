@@ -101,5 +101,11 @@
     "donationsEmptyTitle": "Zatím nebyly darovány žádné pokrmy",
     "donationsEmptyDescription": "Jakmile proběhne první darování, najdete zde historii darovaných pokrmů.",
     "boxesEmptyTitle": "Zatím neproběhla žádná přeprava krabiček",
-    "boxesEmptyDescription": "Historie přepravy krabiček není k dispozici, přeprava ještě neproběhla."
+    "boxesEmptyDescription": "Historie přepravy krabiček není k dispozici, přeprava ještě neproběhla.",
+    "appTermsTitle": "Než budete pokračovat,",
+    "appTermsSubtitle": "tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.",
+    "appTermsCheckboxLabelPlain": "Souhlasím s ",
+    "appTermsCheckboxLabelUnderlined": "podmínkami účasti na projektu.",
+    "appTermsConfirm": "Potvrdit",
+    "appTermsNotAcceptedError": "Pro pokračování do aplikace musíte nejdříve souhlasit s podmínkami účasti na projektu."
 }
