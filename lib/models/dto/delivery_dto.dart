@@ -15,6 +15,7 @@ class DeliveryDto {
   final String id;
   final String donorId;
   final String recipientId;
+  final String carrierId;
   @TimestampConverter()
   final DateTime deliveryDate;
   final List<FoodBoxDeliveryDto> foodBoxes;
@@ -28,6 +29,7 @@ class DeliveryDto {
     required this.id,
     required this.donorId,
     required this.recipientId,
+    required this.carrierId,
     required this.deliveryDate,
     required this.foodBoxes,
     required this.meals,

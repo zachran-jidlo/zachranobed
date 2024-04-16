@@ -194,11 +194,13 @@ class _OrderShippingOfBoxesScreenState
       return false;
     }
 
-    final donorId = user.donorId.first;
+    final donorId = user.donorIds.first;
+    final carrierId = user.carrierIds.first;
 
     return _foodBoxRepository.createBoxDelivery(
       entityId: user.entityId,
       donorId: donorId,
+      carrierId: carrierId,
       boxInfo: _shippingOfBoxesSections,
     );
   }

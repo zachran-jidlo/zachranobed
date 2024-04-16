@@ -33,10 +33,11 @@ abstract class FoodBoxRepository {
   });
 
   /// Creates a box delivery from the given [entityId] to the [donorId] with
-  /// a given list of boxes.
+  /// a given list of boxes using the [carrierId].
   Future<bool> createBoxDelivery({
     required String entityId,
     required String donorId,
+    required String carrierId,
     required List<BoxInfo> boxInfo,
   });
 

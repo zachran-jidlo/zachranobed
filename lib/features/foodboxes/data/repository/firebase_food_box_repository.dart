@@ -144,6 +144,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   Future<bool> createBoxDelivery({
     required String entityId,
     required String donorId,
+    required String carrierId,
     required List<BoxInfo> boxInfo,
   }) async {
     final foodBoxesCount = <String, int>{};
@@ -181,6 +182,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         id: id,
         donorId: donorId,
         recipientId: entityId,
+        carrierId: carrierId,
         deliveryDate: DateTime.now(),
         foodBoxes: foodBoxes.toList(),
         meals: [],
