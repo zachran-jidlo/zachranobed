@@ -3,14 +3,35 @@ import 'package:flutter/material.dart';
 class ZOCheckbox extends StatefulWidget {
   final bool isChecked;
   final Function(bool?)? onChanged;
-  final String title;
+  final Widget titleWidget;
 
   const ZOCheckbox({
-    super.key,
+    Key? key,
     required this.isChecked,
     required this.onChanged,
-    required this.title,
-  });
+    required this.titleWidget,
+  }) : super(key: key);
+
+  factory ZOCheckbox.plain({
+    Key? key,
+    required bool isChecked,
+    required Function(bool?)? onChanged,
+    required String title,
+  }) {
+    return ZOCheckbox(
+      key: key,
+      isChecked: isChecked,
+      onChanged: onChanged,
+      titleWidget: Text(title),
+    );
+  }
+
+  const ZOCheckbox.rich({
+    Key? key,
+    required this.isChecked,
+    required this.onChanged,
+    required this.titleWidget,
+  }) : super(key: key);
 
   @override
   State<ZOCheckbox> createState() => _ZOCheckboxState();
@@ -23,7 +44,7 @@ class _ZOCheckboxState extends State<ZOCheckbox> {
       controlAffinity: ListTileControlAffinity.leading,
       value: widget.isChecked,
       onChanged: widget.onChanged,
-      title: Text(widget.title),
+      title: widget.titleWidget,
     );
   }
 }
