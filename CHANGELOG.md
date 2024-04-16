@@ -11,11 +11,11 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-54** Connected app privacy link in menu screen
 
 ### Changed
-- **ZOB-105** Add non-prod firebase projects.
 - **ZOB-92** Update toolbar in Profile screen.
 - **ZOB-105** Add non-prod firebase projects.
-- **ZOB-114** Fetch user data from entities and entity pairs collections.
+- **ZOB-114** Fetch used data from entities and entity pairs collections.
 - **ZOB-125** Change FCM tokens location in Firestore.
+- **ZOB-114** Fetch user data from entities and entity pairs collections.
 - **ZOB-126** Fetch data for dashboard cards.
 - **ZOB-129** Fetch data for food boxes table.
 - **ZOB-133** Fetch data for offered food.
@@ -23,6 +23,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-135** Fetch data for box movements.
 - **ZOB-150** Update pickup config time from 35min to 45min.
 - **ZOB-155** Update notification icon.
+- **ZOB-139** Added domain logic and data connection for app terms.
 
 ### Fixed
 

@@ -15,6 +15,7 @@ class EntityDto {
   final String organization;
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final EntityTypeDto? entityType;
+  final int? lastAcceptedAppTermsVersion;
 
   EntityDto({
     required this.id,
@@ -23,6 +24,7 @@ class EntityDto {
     required this.establishmentId,
     required this.organization,
     required this.entityType,
+    required this.lastAcceptedAppTermsVersion
   });
 
   factory EntityDto.fromJson(Map<String, dynamic> json) =>

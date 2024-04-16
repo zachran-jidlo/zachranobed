@@ -31,6 +31,7 @@ class ZOStrings {
   static const foodImagePath = 'assets/food-image.png';
   static const chefEmptyPath = 'assets/chef-empty.svg';
   static const boxEmptyPath = 'assets/box-empty.svg';
+  static const certificationCheckPath = 'assets/certification_check.svg';
 }
 
 class Constants {

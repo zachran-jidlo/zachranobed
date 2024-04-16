@@ -171,7 +171,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   void showDebugScreenIfPossible() {
     bool areDevtoolsEnabled =
-        _checkIfDevtoolsAreEnabledUseCase.checkIfDevtoolsAreEnabled();
+        _checkIfDevtoolsAreEnabledUseCase.invoke();
     if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 }
