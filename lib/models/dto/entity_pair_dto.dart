@@ -12,12 +12,14 @@ part 'entity_pair_dto.g.dart';
 class EntityPairDto {
   final String donorId;
   final String recipientId;
+  final String carrierId;
   final List<TimeWindowDto> pickupTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
 
   EntityPairDto({
     required this.donorId,
     required this.recipientId,
+    required this.carrierId,
     required this.pickupTimeWindows,
     required this.foodboxes,
   });

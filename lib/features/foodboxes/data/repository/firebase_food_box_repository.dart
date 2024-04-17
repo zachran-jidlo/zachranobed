@@ -144,9 +144,21 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   Future<bool> createBoxDelivery({
     required String entityId,
     required String donorId,
+    required String carrierId,
     required List<BoxInfo> boxInfo,
   }) async {
     final foodBoxesCount = <String, int>{};
+
+    // Prepare delivery ID and check if any exists in Firebase
+    final id = '$entityId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
+    final delivery = await _deliveryService.getDeliveryById(id);
+    if (delivery != null) {
+      // Prefill count map with existing boxes count
+      for (final box in delivery.foodBoxes) {
+        foodBoxesCount[box.foodBoxId] = box.count;
+      }
+    }
+
     for (final info in boxInfo) {
       final foodBoxId = info.foodBoxId;
       if (foodBoxId == null) {
@@ -163,19 +175,24 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       );
     });
 
-    final id = '$donorId-$entityId-${DateTimeUtils.getCurrentDayMark()}';
-    final dto = DeliveryDto(
-      id: id,
-      donorId: donorId,
-      recipientId: entityId,
-      deliveryDate: DateTime.now(),
-      foodBoxes: foodBoxes.toList(),
-      meals: [],
-      state: DeliveryStateDto.offered,
-      type: DeliveryTypeDto.boxDelivery,
-    );
-
-    return _deliveryService.createDelivery(dto);
+    // Create a new delivery if it is not yet created in Firebase, otherwise
+    // just update the existing delivery
+    if (delivery == null) {
+      final newDelivery = DeliveryDto(
+        id: id,
+        donorId: donorId,
+        recipientId: entityId,
+        carrierId: carrierId,
+        deliveryDate: DateTime.now(),
+        foodBoxes: foodBoxes.toList(),
+        meals: [],
+        state: DeliveryStateDto.offered,
+        type: DeliveryTypeDto.boxDelivery,
+      );
+      return _deliveryService.createDelivery(newDelivery);
+    } else {
+      return _deliveryService.updateDeliveryFoodboxes(id, foodBoxes.toList());
+    }
   }
 
   @override

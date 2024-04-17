@@ -45,6 +45,13 @@ class DeliveryService {
     return null;
   }
 
+  /// Returns a [Future] that completes with a [DeliveryDto] object with a
+  /// given [deliveryId].
+  Future<DeliveryDto?> getDeliveryById(String deliveryId) async {
+    final snapshot = await _collection.doc(deliveryId).get();
+    return snapshot.data();
+  }
+
   /// Updates the 'state' field of a delivery document identified by the
   /// specified [id] with the provided [state] value.
   Future<bool> updateDeliveryState(String id, DeliveryStateDto state) async {
@@ -134,7 +141,7 @@ class DeliveryService {
       return false;
     }
 
-    final delivery = (await _collection.doc(id).get()).data();
+    final delivery = await getDeliveryById(id);
     final Map<String, int> foodBoxesCount = {};
     for (final meal in (delivery?.meals ?? List<MealDto>.empty())) {
       final acc = (foodBoxesCount[meal.foodBoxId] ?? 0) + meal.foodBoxCount;
@@ -145,13 +152,10 @@ class DeliveryService {
       (e) => FoodBoxDeliveryDto(
         foodBoxId: e.key,
         count: e.value,
-      ).toJson(),
+      ),
     );
 
-    return _collection.doc(id).update({'foodBoxes': foodBoxes.toList()}).then(
-      (value) => true,
-      onError: (error) => false,
-    );
+    return updateDeliveryFoodboxes(id, foodBoxes.toList());
   }
 
   /// Creates a delivery from the given [dto] instance.
@@ -161,9 +165,24 @@ class DeliveryService {
         .doc(dto.id)
         .set(dto)
         .then(
-      (value) => true,
-      onError: (error) => false,
-    );
+          (value) => true,
+          onError: (error) => false,
+        );
+  }
+
+  /// Updates foodboxes in a delivery with a given [id].
+  /// Returns a future with true when operation succeeds and false otherwise.
+  Future<bool> updateDeliveryFoodboxes(
+    String id,
+    List<FoodBoxDeliveryDto> foodBoxes,
+  ) {
+    return _collection //
+        .doc(id)
+        .update({'foodBoxes': foodBoxes.map((e) => e.toJson())})
+        .then(
+          (value) => true,
+          onError: (error) => false,
+        );
   }
 
   /// Prepares a filter to get only deliveries where [entityId] is either the
