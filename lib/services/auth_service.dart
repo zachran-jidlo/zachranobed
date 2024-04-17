@@ -151,8 +151,9 @@ class AuthService {
       establishmentName: entity.establishmentName,
       establishmentId: entity.establishmentId,
       organization: entity.organization,
-      donorId: pairs.map((e) => e.donorId).toList(),
-      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion
+      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
+      donorIds: pairs.map((e) => e.donorId).toList(),
+      carrierIds: pairs.map((e) => e.carrierId).toList(),
     );
   }
 }

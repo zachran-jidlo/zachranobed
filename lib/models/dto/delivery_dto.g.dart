@@ -10,6 +10,7 @@ DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
       id: json['id'] as String,
       donorId: json['donorId'] as String,
       recipientId: json['recipientId'] as String,
+      carrierId: json['carrierId'] as String,
       deliveryDate: const TimestampConverter()
           .fromJson(json['deliveryDate'] as Timestamp),
       foodBoxes: (json['foodBoxes'] as List<dynamic>)
@@ -29,6 +30,7 @@ Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
       'id': instance.id,
       'donorId': instance.donorId,
       'recipientId': instance.recipientId,
+      'carrierId': instance.carrierId,
       'deliveryDate': const TimestampConverter().toJson(instance.deliveryDate),
       'foodBoxes': instance.foodBoxes.map((e) => e.toJson()).toList(),
       'meals': instance.meals.map((e) => e.toJson()).toList(),

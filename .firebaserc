@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "zachran-obed"
-  }
+    "default": "zachran-obed-dev",
+    "prod": "zachran-obed"
+  },
+  "targets": {},
+  "etags": {}
 }
