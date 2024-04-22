@@ -7,6 +7,78 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:925797833830:android:c2fe4064acaf46468c21a7",
+        "android_client_info": {
+          "package_name": "com.example.zachranobed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV8g0z-EBnGPEzKISr3D1UO1XJyoGvIa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "925797833830-m7l33ahoa5a8fctmg1bfvqqo9nf8k7fq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cz.zachranobed"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925797833830:android:c38c9c82063d30708c21a7",
+        "android_client_info": {
+          "package_name": "cz.zachranobed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV8g0z-EBnGPEzKISr3D1UO1XJyoGvIa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925797833830-bun2apq1jdnto9usl6qnl5r8ga8vn3om.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "925797833830-m7l33ahoa5a8fctmg1bfvqqo9nf8k7fq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cz.zachranobed"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:925797833830:android:9d01e7438f95738b8c21a7",
         "android_client_info": {
           "package_name": "cz.zachranobed.app"
