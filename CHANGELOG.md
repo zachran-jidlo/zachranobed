@@ -21,9 +21,10 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-133** Fetch data for offered food.
 - **ZOB-134** Write data to deliveries collection.
 - **ZOB-135** Fetch data for box movements.
+- **ZOB-139** Added domain logic and data connection for app terms.
 - **ZOB-150** Update pickup config time from 35min to 45min.
 - **ZOB-155** Update notification icon.
-- **ZOB-139** Added domain logic and data connection for app terms.
+- **ZOB-167** Update Android production application ID.
 
 ### Fixed
 
