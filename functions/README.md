@@ -1,3 +1,33 @@
+# Flow of updating Firestore after development on DEV
+## Indexes
+Firstly you need to print out current indexes on DEV.
+
+Switch to DEV
+```
+firebase use default
+```
+
+Print Firestore indexes
+```
+firebase firestore:indexes
+```
+
+Current DEV indexes will be printed to stdout of terminal. Now you should copypaste them into the file `firestore.indexes.json`. Or use `firebase firestore:indexes > firestore.indexes.json` from project root.
+
+Then switch to PROD 
+```
+firebase use prod
+```
+
+and deploy indexes
+
+```
+firebase deploy --only firestore:indexes
+```
+
+And don't forget to commit changes into repo, so we all have the last version.
+TODO: Create a script that does this automatically.
+
 # How to deploy Firebase Functions
 ## Select correct Firebase project
 
