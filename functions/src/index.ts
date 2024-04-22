@@ -312,9 +312,8 @@ function moveBoxesFromDonorToRecipient(
   // We dont take into account newly created delivery because process doesn't allow to create food delivery with alredy filled in boxes.
   // TODO: This doesn't take into account that donor removed all food boxes from the delivery.
   if (
-    newValue.state === "OFFERED" &&
-        newValue.foodBoxes.length > 0 &&
-        oldValue != null
+    newValue.foodBoxes.length > 0 &&
+    oldValue != null
   ) {
     console.log("moveBoxesFromDonorToRecipient - updateEntityPairs");
 
