@@ -68,6 +68,11 @@ class _DonationsScreenState extends State<DonationsScreen> {
   }
 
   Widget _buildContent(BuildContext context) {
+    //TODO ZOB-170 - remove this after success Google app review.
+    final DateTime fromDate =
+        _previousWeeks.isEmpty ? _previousWeekStart : _previousWeeks.last;
+    final bool isOlderThanMonth = DateTimeUtils.isOlderThanMonth(fromDate);
+
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n!.food)),
       body: CustomScrollView(
@@ -103,15 +108,16 @@ class _DonationsScreenState extends State<DonationsScreen> {
                     ],
                   ),
                 const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
-                SliverToBoxAdapter(
-                  child: ZOButton(
-                    text: context.l10n!.loadMore,
-                    icon: Icons.expand_more,
-                    height: 40.0,
-                    type: ZOButtonType.secondary,
-                    onPressed: _addPreviousWeek,
+                if (!isOlderThanMonth) //TODO ZOB-170 - remove this after success Google app review.
+                  SliverToBoxAdapter(
+                    child: ZOButton(
+                      text: context.l10n!.loadMore,
+                      icon: Icons.expand_more,
+                      height: 40.0,
+                      type: ZOButtonType.secondary,
+                      onPressed: _addPreviousWeek,
+                    ),
                   ),
-                ),
               ],
             ),
           ),
