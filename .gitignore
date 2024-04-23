@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/release
 
 /lib/auth_token.dart
+
+# Firebase
+node_modules

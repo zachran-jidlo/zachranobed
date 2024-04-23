@@ -1,40 +1,61 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zachranobed/enums/delivery_state.dart';
+import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
+  final OfferedFoodRepository _repository;
   Delivery? _delivery;
+
+  DeliveryNotifier(this._repository);
 
   Delivery? get delivery => _delivery;
 
-  /// Sets the value of the [Delivery] instance to the provided [value], then
-  /// triggers a notification to inform listeners about the change.
-  set delivery(Delivery? value) {
-    _delivery = value;
+  void init(UserData user) async {
+    if (user is! Canteen) {
+      return;
+    }
+
+    final delivery = await _repository.getCurrentDelivery(
+      entityId: user.entityId,
+      time: DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom),
+    );
+    _delivery = delivery;
     notifyListeners();
   }
 
   /// Modifies the state of the current [Delivery] instance by creating a new
   /// instance with the specified [state], and then triggers a notification to
   /// inform listeners about the change.
-  void updateDeliveryState(String state) {
-    _delivery = _delivery!.copyWith(state: state);
+  Future<void> updateDeliveryState(DeliveryState state) async {
+    final currentDelivery = _delivery;
+    _delivery = currentDelivery?.copyWith(state: state);
     notifyListeners();
+
+    if (currentDelivery != null) {
+      await _repository.updateDeliveryState(
+        delivery: currentDelivery,
+        state: state,
+      );
+    }
   }
 
-  /// Checks if the current delivery is in the 'confirmed' state.
-  ///
-  /// Returns `true` if the delivery is confirmed, and `false` otherwise.
-  bool isDeliveryConfirmed(BuildContext context) {
-    return _delivery?.state ==
-        DeliveryStateHelper.toValue(DeliveryState.confirmed, context);
-  }
+  bool canDonate(UserData user) {
+    if (user is! Canteen) {
+      return false;
+    }
 
-  /// Checks if the current delivery is in the 'canceled' state.
-  ///
-  /// Returns `true` if the delivery is canceled, and `false` otherwise.
-  bool isDeliveryCancelled(BuildContext context) {
-    return _delivery?.state ==
-        DeliveryStateHelper.toValue(DeliveryState.canceled, context);
+    final currentDelivery = _delivery;
+    if (currentDelivery == null) {
+      return false;
+    }
+
+    final time = DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom);
+    return _repository.canDonateFood(
+      delivery: currentDelivery,
+      time: time,
+    );
   }
 }

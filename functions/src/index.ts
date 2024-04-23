@@ -8,90 +8,102 @@ admin.initializeApp();
 const db = admin.firestore();
 
 /**
- * Sets a custom user claim for a user associated with a canteen when the corresponding canteen document is
- * updated in Firestore.
- *
- * @param canteen - The updated canteen document snapshot.
- * @param context - The context object containing metadata about the update event.
+ * Represents a food box.
+ * @param {string} foodBoxId - The ID of the food box.
+ * @param {string} count - The total count of the food box.
+ * @param {string} donorCount - The count of donors for the food box.
+ * @param {string} recipientCount - The count of recipients for the food box.
  */
-export const setCanteenRole = functions.firestore.document("canteens/{id}").onUpdate((canteen, context) => {
-  const uid = canteen.after.data().authUid;
-
-  if (!uid) {
-    return;
-  }
-
-  try {
-    admin.auth().setCustomUserClaims(uid, {
-      canteen: true,
-    });
-
-    console.log(`Custom claim set for user with UID: ${uid}`);
-  } catch (error) {
-    console.error("Error setting custom claim:", error);
-  }
-});
+class FoodBox {
+  /**
+   * Creates a new instance of the FoodBox class.
+   * @param {string} foodBoxId - The ID of the food box.
+   * @param {string} count - The total count of the food box.
+   * @param {string} donorCount - The count of boxes at donor side.
+   * @param {string} recipientCount - The count boxes at recipient side.
+   */
+  constructor(
+    public foodBoxId: string,
+    public count: number,
+    public donorCount: number,
+    public recipientCount: number
+  ) {}
+}
 
 /**
- * Sets a custom user claim for a user associated with a charity when the corresponding charity document is
- * updated in Firestore.
- *
- * @param charity - The updated charity document snapshot.
- * @param context - The context object containing metadata about the update event.
+ * Represents a delivery food box.
+ * @param {string} foodBoxId - The ID of the food box.
+ * @param {string} count - The total count of the food box.
  */
-export const setCharityRole = functions.firestore.document("charities/{id}").onUpdate((charity, context) => {
-  const uid = charity.after.data().authUid;
-
-  if (!uid) {
-    return;
-  }
-
-  try {
-    admin.auth().setCustomUserClaims(uid, {
-      charity: true,
-    });
-
-    console.log(`Custom claim set for user with UID: ${uid}`);
-  } catch (error) {
-    console.error("Error setting custom claim:", error);
-  }
-});
+class DeliveryFoodBox {
+  /**
+   * Represents a food box.
+   * @param {string} foodBoxId - The ID of the food box.
+   * @param {string} count - The total count of the food box.
+   */
+  constructor(
+    public foodBoxId: string,
+    public count: number
+  ) {}
+}
 
 /**
- * Is triggered when a document in the "deliveries" collection is updated.
- * Notifies the charity about a donation when the delivery is confirmed for today.
+ * The ID of the disposable box.
+ */
+const disposableBoxId = "disposable";
+
+/**
+ * Function triggered when a document in the "deliveries" collection is updated.
+ * Notifies the charity about a donation if the delivery state is "ACCEPTED" and it's the current day.
  *
- * @param change - The updated delivery document snapshot.
- * @param context - The context object containing metadata about the update event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+ * @param change - The change object containing the new and old data of the document.
+ * @param context - The context object containing metadata about the event.
+ * @returns A Promise that resolves when the push notifications are sent.
  */
 export const notifyCharityAboutDonation = functions.firestore
   .document("deliveries/{id}")
   .onUpdate((change, context) => {
     const newValue = change.after.data();
-    const previousValue = change.before.data();
+    const oldValue = change.before.data();
 
-    if (newValue.state === "Potvrzeno" && newValue.state !== previousValue.state && isToday(newValue.pickUpFrom.toDate())) {
-      const charityId = newValue.recipientId;
+    if (
+      newValue.state === "ACCEPTED" &&
+      newValue.state !== oldValue.state &&
+      isToday(newValue.pickupTimeWindow.start.toDate())
+    ) {
+      const recipientId = newValue.recipientId;
 
-      return admin.firestore().collection("fCMTokens").doc(charityId).get()
-        .then((tokenDoc) => {
-          if (tokenDoc.exists) {
-            const fcmToken = tokenDoc.data()?.token;
+      return db
+        .collection("entities")
+        .doc(recipientId)
+        .get()
+        .then((entityDoc) => {
+          if (entityDoc.exists) {
+            const fcmTokens = entityDoc.data()!.fcmTokens;
 
-            const message = {
-              notification: {
-                title: "Potvrzení doručování",
-                body: "Dnes vám budou doručovány darované pokrmy.",
-              },
-              token: fcmToken,
-            };
+            // Create message for all tokens of given entity
+            const messages = Object.values(fcmTokens).map((token) => {
+              return {
+                notification: {
+                  title: "Potvrzení doručování",
+                  body: "Dnes vám budou doručovány darované pokrmy.",
+                },
+                token: token as string,
+              };
+            });
 
-            return admin.messaging().send(message);
+            return admin.messaging().sendEach(messages);
           } else {
-            console.log("FCM token not found for recipient:", charityId);
+            console.error("Entity not found for recipientId:", recipientId);
             return null;
           }
+        })
+        .then((response) => {
+          console.info(
+            "Successfully sent " + response?.successCount + " push messages."
+          );
+          // TODO: Go through success of each message and remove tokens that are not registered.
+          // TODO: Thjere is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
         })
         .catch((error) => {
           console.error("Error sending push notification:", error);
@@ -103,82 +115,102 @@ export const notifyCharityAboutDonation = functions.firestore
   });
 
 /**
- * Is triggereed when a document in the "boxes" collection is updated.
- * Notifies the charity when the quantity of a certain box type at the canteen is below 10.
+ * Function triggered when there is an update in the "entityPairs" collection in foodboxes list.
+ * It notifies a charity about the lack of boxes at a canteen.
  *
- * @param change - The updated box document snapshot.
- * @param context - The context object containing metadata about the update event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
+ * @param change - The change event that triggered the function.
+ * @param context - The context of the function execution.
+ * @returns A promise that resolves when the notification is sent successfully.
  */
 export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
-  .document("boxes/{id}")
+  .document("entityPairs/{id}")
   .onUpdate((change, context) => {
-    const data = change.after.data();
-    const numberOfBoxes = data.quantityAtCanteen;
-    const charityId = data.charityId;
-    const boxType = data.boxType;
+    const newBoxes = change.after.data().foodboxes;
+    const oldBoxes = change.before.data().foodboxes;
 
-    if (numberOfBoxes < 10) {
-      return admin.firestore().collection("fCMTokens").doc(charityId).get()
-        .then((tokenDoc) => {
-          if (tokenDoc.exists) {
-            const fcmToken = tokenDoc.data()?.token;
+    const differenceMap: { [foodBoxId: string]: number } = {};
+    newBoxes.forEach((newBox: FoodBox) => {
+      const matchingOldBox = oldBoxes.find(
+        (oldBox: FoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+      );
+      if (matchingOldBox && newBox.donorCount < matchingOldBox.donorCount) {
+        // TODO: Difference is used only for logging purposes. It can be deleted in future but leaving it here for now because of debugging.
+        const difference = newBox.donorCount - matchingOldBox.donorCount;
+        differenceMap[newBox.foodBoxId] = difference;
+      }
+    });
 
-            const message = {
-              notification: {
-                title: "Jídelně docházejí krabičky",
-                body: `Objednejte prosím svoz krabiček typu "${boxType}" do jídelny`,
-              },
-              token: fcmToken,
-            };
-
-            return admin.messaging().send(message);
-          } else {
-            console.log("FCM token not found for recipient:", charityId);
-            return null;
-          }
-        })
-        .catch((error) => {
-          console.error("Error sending push notification:", error);
-          return null;
-        });
+    // Stop if there are no changes
+    if (Object.keys(differenceMap).length <= 0) {
+      return null;
     }
 
-    return null;
-  });
+    // TODO: Cache changes and send notification only once a day. Right now each change triggers a notification.
 
-/**
- * Is triggered when a document is created in the "shippingOfBoxes" collection.
- * Notifies the canteen about the shipment of boxes.
- *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
- * @returns A promise that resolves when the notification is sent, or null if conditions are not met.
- */
-export const notifyCanteenAboutBoxShippment = functions.firestore
-  .document("shippingOfBoxes/{id}")
-  .onCreate((snapshot, context) => {
-    const data = snapshot.data();
-    const canteenId = data.canteenId;
+    const recipientId = change.after.data().recipientId;
+    const donorId = change.after.data().donorId;
 
-    return admin.firestore().collection("fCMTokens").doc(canteenId).get()
-      .then((tokenDoc) => {
-        if (tokenDoc.exists) {
-          const fcmToken = tokenDoc.data()?.token;
+    return Promise.all([
+      db.collection("entities").doc(recipientId).get(),
+      db.collection("entities").doc(donorId).get(),
+      db.collection("foodBoxes").get(),
+    ]).then((results) => {
+      const insufficentBoxes: string[] = [];
 
-          const message = {
-            notification: {
-              title: "Potvrzení svozu krabiček",
-              body: "Charita vám posílá krabičky.",
-            },
-            token: fcmToken,
-          };
+      // Create boxes array from insufficent boxes types
+      Object.keys(differenceMap).forEach((foodBoxId: string) => {
+        console.log(
+          `Food box ${foodBoxId} has decreased by ${differenceMap[foodBoxId]}.`
+        );
 
-          return admin.messaging().send(message);
-        } else {
-          console.log("FCM token not found for recipient:", canteenId);
-          return null;
+        if (
+          newBoxes.find((box: FoodBox) => box.foodBoxId === foodBoxId)
+            ?.donorCount >= 10
+        ) {
+          return;
         }
+
+        results[2].docs
+          .filter((doc) => doc.id === foodBoxId)
+          .forEach((doc) => {
+            const foodBox = doc.data();
+            insufficentBoxes.push(foodBox.name);
+          });
+      });
+
+      if (
+        results[0].exists &&
+        results[1].exists &&
+        insufficentBoxes.length > 0
+      ) {
+        const fcmTokens = results[0].data()!.fcmTokens;
+        const donor = results[1].data();
+
+        const boxesString = insufficentBoxes.join(", ");
+
+        // Create message for all tokens of given entity
+        const messages = Object.values(fcmTokens).map((token) => {
+          return {
+            notification: {
+              title: "Jídelně docházejí krabičky",
+              body: `Objednejte prosím svoz krabiček typu "${boxesString}" do jídelny "${donor?.establishmentName}"`,
+            },
+            token: token as string,
+          };
+        });
+
+        console.log(messages);
+
+        return admin.messaging().sendEach(messages);
+      } else {
+        console.error("Entity not found for recipientId:", recipientId);
+        return null;
+      }
+    })
+      .then((response) => {
+        console.info(
+          "Successfully sent " + response?.successCount + " push messages."
+        );
       })
       .catch((error) => {
         console.error("Error sending push notification:", error);
@@ -187,109 +219,227 @@ export const notifyCanteenAboutBoxShippment = functions.firestore
   });
 
 /**
- * Is triggered when a document is created in the "offeredFood" collection.
- * Logs a box movement from the canteen to the charity in the "boxMovement" collection.
+ * Is triggered when a document is created in the "deliveries" collection.
+ * Notifies the canteen about the shipment of boxes.
  *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
+ * @param {admin.firestore.DocumentSnapshot} snapshot - The snapshot of the created delivery document.
+ * @param {functions.EventContext} context - The event context.
+ * @returns {Promise<any>} A promise that resolves when the notification is sent.
  */
-export const moveBoxesFromCanteenToCharity = functions.firestore.document("offeredFood/{id}").onCreate(async (snapshot, context) => {
-  const data = snapshot.data();
-  const donorId = data.donorId;
-  const recipientId = data.recipientId;
-  const boxType = data.boxType;
-  const numberOfBoxes = data.numberOfBoxes;
-  const weekNumber = data.weekNumber;
-  const date = data.date;
+export const notifyCanteenAboutBoxShippment = functions.firestore
+  .document("deliveries/{id}")
+  .onCreate((snapshot, context) => {
+    const data = snapshot.data();
+    const donorId = data.donorId;
 
-  if (boxType == "jednorázový obal") {
-    return;
-  }
+    if (data.type === "BOX_DELIVERY") {
+      return db
+        .collection("entities")
+        .doc(donorId)
+        .get()
+        .then((entityDoc) => {
+          if (entityDoc.exists) {
+            const fcmTokens = entityDoc.data()!.fcmTokens;
 
-  const boxMovementData = {
-    senderId: donorId,
-    recipientId: recipientId,
-    boxType: boxType,
-    numberOfBoxes: numberOfBoxes,
-    weekNumber: weekNumber,
-    date: date,
-  };
+            // Create message for all tokens of given entity
+            const messages = Object.values(fcmTokens).map((token) => {
+              return {
+                notification: {
+                  title: "Potvrzení svozu krabiček",
+                  body: "Charita vám posílá krabičky.",
+                },
+                token: token as string,
+              };
+            });
 
-  try {
-    const docRef = await db.collection("boxMovement").add(boxMovementData);
-    console.log("New box movement document added with ID:", docRef.id);
+            return admin.messaging().sendEach(messages);
+          } else {
+            console.error("Entity not found for donorId:", donorId);
+            return null;
+          }
+        })
+        .then((response) => {
+          console.info(
+            "Successfully sent " + response?.successCount + " push messages."
+          );
+        })
+        .catch((error) => {
+          console.error("Error sending push notification:", error);
+          return null;
+        });
+    }
+
     return null;
-  } catch (error) {
-    console.error("Error creating box movement document:", error);
-    return null;
-  }
-});
+  });
 
 /**
- * Is triggered when a document is created in the "boxMovement" collection.
- * Updates box quantities in the "boxes" collection based on the box movement.
+ * Moves boxes based on the type of delivery.
  *
- * @param snapshot - The snapshot of the created document.
- * @param context - The context object containing metadata about the create event.
+ * @param change - The change event that triggered the function.
+ * @param context - The context of the function execution.
+ * @returns A Promise that resolves when the boxes are moved.
  */
-export const updateBoxQuantitiesOnBoxMovement = functions.firestore
-  .document("boxMovement/{id}")
-  .onCreate(async (snapshot, context) => {
-    const data = snapshot.data();
-    const senderId = data.senderId;
-    const recipientId = data.recipientId;
-    const boxType = data.boxType;
-    const numberOfBoxes = data.numberOfBoxes;
+export const moveBoxes = functions.firestore
+  .document("deliveries/{id}")
+  .onWrite((change, context) => {
+    const newValue = change.after.data();
+    const oldValue = change.before.data();
 
-    const canteenQuery = db.collection("boxes")
-      .where("canteenId", "==", senderId)
-      .where("charityId", "==", recipientId)
-      .where("boxType", "==", boxType);
+    // Do not process delete actions
+    if (newValue == null) {
+      return null;
+    }
 
-    const charityQuery = db.collection("boxes")
-      .where("charityId", "==", senderId)
-      .where("canteenId", "==", recipientId)
-      .where("boxType", "==", boxType);
+    if (newValue.type === "FOOD_DELIVERY") {
+      return moveBoxesFromDonorToRecipient(newValue, oldValue);
+    } else {
+      return moveBoxesFromRecipientToDonor(newValue, oldValue);
+    }
+  });
 
-    try {
-      await db.runTransaction(async (transaction) => {
-        const canteenSnapshot = await transaction.get(canteenQuery);
-        const charitySnapshot = await transaction.get(charityQuery);
+/**
+ * Moves food boxes from a donor to a recipient based on the changes in the delivery state.
+ *
+ * @param {admin.firestore.DocumentData} newValue - The new value of the delivery document.
+ * @param {admin.firestore.DocumentData} oldValue - The previous value of the delivery document.
+ */
+function moveBoxesFromDonorToRecipient(
+  newValue: admin.firestore.DocumentData,
+  oldValue: admin.firestore.DocumentData | undefined
+) {
+  console.log("moveBoxesFromDonorToRecipient");
+  // The change in the food boxes can occur multiple times in the multiple updates in the same state.
+  // We dont take into account newly created delivery because process doesn't allow to create food delivery with alredy filled in boxes.
+  // TODO: This doesn't take into account that donor removed all food boxes from the delivery.
+  if (
+    newValue.foodBoxes.length > 0 &&
+    oldValue != null
+  ) {
+    console.log("moveBoxesFromDonorToRecipient - updateEntityPairs");
 
-        if (!canteenSnapshot.empty) {
-          const canteenDocRef = canteenSnapshot.docs[0].ref;
-          const canteenData = canteenSnapshot.docs[0].data();
+    const diffArray: { [foodBoxId: string]: number } = {};
 
-          const updatedCanteenQuantity = canteenData.quantityAtCanteen - numberOfBoxes;
-          const updatedCharityQuantity = canteenData.quantityAtCharity + numberOfBoxes;
+    newValue.foodBoxes.forEach((newBox: DeliveryFoodBox) => {
+      if (newBox.foodBoxId == disposableBoxId) {
+        return;
+      }
 
-          transaction.update(canteenDocRef, {
-            quantityAtCanteen: updatedCanteenQuantity,
-            quantityAtCharity: updatedCharityQuantity,
-          });
-        } else if (!charitySnapshot.empty) {
-          const charityDocRef = charitySnapshot.docs[0].ref;
-          const charityData = charitySnapshot.docs[0].data();
+      const matchingOldBox = oldValue.foodBoxes.find(
+        (oldBox: DeliveryFoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+      );
 
-          const updatedCanteenQuantity = charityData.quantityAtCanteen + numberOfBoxes;
-          const updatedCharityQuantity = charityData.quantityAtCharity - numberOfBoxes;
+      if (matchingOldBox && newBox.count !== matchingOldBox.count) {
+        // Found old box with changed count
+        const countDiff = newBox.count - matchingOldBox.count;
+        diffArray[newBox.foodBoxId] = countDiff;
+      } else if (!matchingOldBox) {
+        // New box added
+        diffArray[newBox.foodBoxId] = newBox.count;
+      }
+    });
 
-          transaction.update(charityDocRef, {
-            quantityAtCanteen: updatedCanteenQuantity,
-            quantityAtCharity: updatedCharityQuantity,
-          });
+    updateEntityPairs(diffArray, newValue);
+  } else {
+    console.log("moveBoxesFromDonorToRecipient - no action");
+  }
+}
+
+/**
+ * Moves food boxes from recipient to donor based on the changes in the provided values.
+ *
+ * @param {admin.firestore.DocumentData} newValue - The new value of the document.
+ * @param {admin.firestore.DocumentData} oldValue - The previous value of the document.
+ */
+function moveBoxesFromRecipientToDonor(
+  newValue: admin.firestore.DocumentData,
+  oldValue: admin.firestore.DocumentData | undefined
+) {
+  console.log("moveBoxesFromRecipientToDonor");
+
+  // Takes into account create and update actions
+  if (newValue.foodBoxes.length > 0) {
+    console.log("moveBoxesFromRecipientToDonor - updateEntityPairs");
+
+    const diffArray: { [foodBoxId: string]: number } = {};
+
+    newValue.foodBoxes.forEach((newBox: DeliveryFoodBox) => {
+      if (newBox.foodBoxId == disposableBoxId) {
+        return;
+      }
+
+      const matchingOldBox = oldValue?.foodBoxes.find(
+        (oldBox: DeliveryFoodBox) => oldBox.foodBoxId === newBox.foodBoxId
+      );
+
+      if (matchingOldBox && newBox.count !== matchingOldBox.count) {
+        // Found old box with changed count, its minus because we are moving boxes from recipient to donor
+        const countDiff = newBox.count - matchingOldBox.count;
+        diffArray[newBox.foodBoxId] = -countDiff;
+      } else if (!matchingOldBox) {
+        // New box added
+        diffArray[newBox.foodBoxId] = -newBox.count;
+      }
+    });
+
+    updateEntityPairs(diffArray, newValue);
+  } else {
+    console.log("moveBoxesFromRecipientToDonor - no action");
+  }
+}
+
+/**
+ * Updates the entity pairs by modifying the food box counts based on the provided diff array.
+ * @param {admin.firestore.DocumentData} diffArray - An object representing the changes to be made to the food box counts.
+ * @param {admin.firestore.DocumentData} newValue - The new value containing recipientId and donorId.
+ * @return {Promise} A Promise that resolves to the updated entity pair document.
+ */
+function updateEntityPairs(
+  diffArray: { [foodBoxId: string]: number },
+  newValue: admin.firestore.DocumentData
+) {
+  console.log("updateEntityPairs" + diffArray);
+
+  const recipientId = newValue.recipientId;
+  const donorId = newValue.donorId;
+
+  return db
+    .collection("entityPairs")
+    .where("recipientId", "==", recipientId)
+    .where("donorId", "==", donorId)
+    .get()
+    .then((result) => {
+      if (result.empty) {
+        console.error(
+          "EntityPair not found for recipientId:",
+          recipientId,
+          " and donorId:",
+          donorId
+        );
+        return;
+      }
+
+      const entityPairDoc = result.docs[0];
+      const foodBoxes = entityPairDoc.data().foodboxes;
+
+      Object.keys(diffArray).forEach((foodBoxId: string) => {
+        const foodBox = foodBoxes.find(
+          (box: FoodBox) => box.foodBoxId === foodBoxId
+        );
+
+        if (foodBox) {
+          foodBox.donorCount -= diffArray[foodBoxId];
+          foodBox.recipientCount += diffArray[foodBoxId];
         } else {
-          console.error("Matching box not found for update.");
+          // TODO: Should we add the new type of food box to the entityPair?
+          console.error("FoodBox not found for foodBoxId:", foodBoxId);
         }
       });
 
-      console.log("Box quantities updated successfully in the \"boxes\" collection.");
-      return null;
-    } catch (error) {
-      console.error("Error updating box quantities in \"boxes\" collection:", error);
-      return null;
-    }
-  });
+      return entityPairDoc.ref.update({
+        foodboxes: foodBoxes,
+      });
+    });
+}
 
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.
@@ -299,7 +449,7 @@ function isToday(date: Date): boolean {
   const today = new Date();
   return (
     date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate()
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
   );
 }

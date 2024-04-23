@@ -1,18 +1,15 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/box_movement.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
+import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/models/shipping_of_boxes.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/box_movement_srvice.dart';
-import 'package:zachranobed/services/box_service.dart';
-import 'package:zachranobed/services/shipping_of_boxes_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/shipping_of_boxes_section_fields.dart';
@@ -29,19 +26,28 @@ class OrderShippingOfBoxesScreen extends StatefulWidget {
 
 class _OrderShippingOfBoxesScreenState
     extends State<OrderShippingOfBoxesScreen> {
-  final _shippingOfBoxesService = GetIt.I<ShippingOfBoxesService>();
-  final _boxMovementService = GetIt.I<BoxMovementService>();
-  final _boxService = GetIt.I<BoxService>();
-
-  DocumentReference<BoxMovement>? _futureResponse;
+  final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
 
   final _formKey = GlobalKey<FormState>();
 
-  final List<BoxMovement> _shippingOfBoxesSections = [const BoxMovement()];
+  final List<BoxInfo> _shippingOfBoxesSections = [const BoxInfo()];
+  final List<FoodBoxType> _foodBoxTypes = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _foodBoxRepository.getTypes().then((value) {
+      setState(() {
+        _foodBoxTypes.clear();
+        _foodBoxTypes.addAll(value);
+      });
+    });
+  }
 
   bool _somethingIsFilled() {
     return _shippingOfBoxesSections.any((shippingInfo) =>
-        shippingInfo.boxType != null || shippingInfo.numberOfBoxes != null);
+        shippingInfo.foodBoxId != null || shippingInfo.numberOfBoxes != null);
   }
 
   Future<bool> _showConfirmationDialog() async {
@@ -90,6 +96,7 @@ class _OrderShippingOfBoxesScreenState
                     children: <Widget>[
                       ShippingOfBoxesSectionFields(
                         shippingSections: _shippingOfBoxesSections,
+                        boxTypes: _foodBoxTypes,
                       ),
                       ZOButton(
                         text: context.l10n!.addAnotherBoxType,
@@ -98,9 +105,7 @@ class _OrderShippingOfBoxesScreenState
                         height: 40.0,
                         onPressed: () {
                           setState(() {
-                            _shippingOfBoxesSections.add(
-                              const BoxMovement(),
-                            );
+                            _shippingOfBoxesSections.add(const BoxInfo());
                           });
                         },
                       ),
@@ -111,11 +116,11 @@ class _OrderShippingOfBoxesScreenState
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             if (await _verifyAvailableBoxCount()) {
-                              _futureResponse = await _orderShipping();
+                              final isSuccess = await _orderShipping();
                               if (mounted) {
                                 context.router.replace(
                                   ThankYouRoute(
-                                    response: _futureResponse,
+                                    isSuccess: isSuccess,
                                     message:
                                         context.l10n!.shippingOrderConfirmation,
                                   ),
@@ -153,47 +158,50 @@ class _OrderShippingOfBoxesScreenState
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    final charity = HelperService.getCurrentUser(context) as Charity;
-    for (var shippingInfo in _shippingOfBoxesSections) {
-      final isAvailable = await _boxService.verifyAvailableBoxCount(
-        numberOfBoxes: shippingInfo.numberOfBoxes!,
-        boxType: shippingInfo.boxType!,
-        establishmentId: charity.establishmentId,
-      );
-      if (!isAvailable) {
-        if (mounted) {
-          context.router.pop();
-        }
-        return false;
-      }
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return false;
     }
-    return true;
-  }
 
-  Future<DocumentReference<BoxMovement>?> _orderShipping() async {
-    DocumentReference<BoxMovement>? response;
-    final charity = HelperService.getCurrentUser(context) as Charity;
-    final now = DateTime.now();
-    for (var shippingInfo in _shippingOfBoxesSections) {
-      response = await _boxMovementService.addBoxMovement(
-        BoxMovement(
-          senderId: charity.establishmentId,
-          recipientId: charity.donorId![0],
-          boxType: shippingInfo.boxType,
-          numberOfBoxes: shippingInfo.numberOfBoxes,
-          date: now,
-          weekNumber: '${now.year}-${HelperService.getCurrentWeekNumber}',
-        ),
-      );
+    final requiredBoxes = <String, int>{};
+    for (final boxInfo in _shippingOfBoxesSections) {
+      final foodBoxId = boxInfo.foodBoxId;
+      if (foodBoxId == null) {
+        continue;
+      }
+      final required = boxInfo.numberOfBoxes ?? 0;
+      requiredBoxes[foodBoxId] = (requiredBoxes[foodBoxId] ?? 0) + required;
     }
-    await _shippingOfBoxesService.createShippingOfBoxes(
-      ShippingOfBoxes(
-        charityId: charity.establishmentId,
-        canteenId: charity.donorId![0],
-        date: DateTime.now(),
-      ),
+
+    final available = await _foodBoxRepository.verifyAvailableBoxCount(
+      entityId: user.entityId,
+      requiredBoxes: requiredBoxes,
+      getQuantity: (e) => e.quantityAtCharity,
     );
 
-    return response;
+    if (!available) {
+      if (mounted) {
+        context.router.pop();
+      }
+    }
+
+    return available;
+  }
+
+  Future<bool> _orderShipping() async {
+    final user = HelperService.getCurrentUser(context);
+    if (user is! Charity) {
+      return false;
+    }
+
+    final donorId = user.donorIds.first;
+    final carrierId = user.carrierIds.first;
+
+    return _foodBoxRepository.createBoxDelivery(
+      entityId: user.entityId,
+      donorId: donorId,
+      carrierId: carrierId,
+      boxInfo: _shippingOfBoxesSections,
+    );
   }
 }

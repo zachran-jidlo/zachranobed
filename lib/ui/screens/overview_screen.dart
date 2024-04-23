@@ -4,17 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/utils/delivery_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
+import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
+import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/ui/widgets/box_data_table.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/card_list.dart';
-import 'package:zachranobed/ui/widgets/donated_food_list.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 
@@ -47,7 +46,7 @@ class OverviewScreen extends StatelessWidget {
             ),
             sliver: MultiSliver(
               children: [
-                const CardList(),
+                CardList(user: user),
                 const SizedBox(height: GapSize.m),
                 BoxDataTable(user: user),
                 const SizedBox(height: GapSize.m),
@@ -62,20 +61,15 @@ class OverviewScreen extends StatelessWidget {
   }
 
   Widget _buildInfoBanner(BuildContext context, UserData user) {
-    final deliveryConfirmed =
-        context.watch<DeliveryNotifier>().isDeliveryConfirmed(context);
-
-    if (user is Charity || !HelperService.canDonate(context)) {
+    final delivery = context.watch<DeliveryNotifier>().delivery;
+    if (user is! Canteen || !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    if (user is Canteen) {
-      return deliveryConfirmed
-          ? _buildDeliveryConfirmedBanner(context, user)
-          : _buildDonationCountdownBanner(context);
-    }
-
-    return const SliverToBoxAdapter(child: SizedBox());
+    return delivery?.state == DeliveryState.accepted ||
+            delivery?.state == DeliveryState.offered
+        ? _buildDeliveryConfirmedBanner(context, user)
+        : _buildDonationCountdownBanner(context);
   }
 
   Widget _buildDeliveryConfirmedBanner(BuildContext context, Canteen user) {
@@ -104,8 +98,10 @@ class OverviewScreen extends StatelessWidget {
           text: context.l10n!.callACourier,
           fullWidth: false,
           type: ZOButtonType.success,
-          onPressed: () async {
-            await DeliveryUtils.confirmDelivery(context);
+          onPressed: () {
+            context
+                .read<DeliveryNotifier>()
+                .updateDeliveryState(DeliveryState.accepted);
           },
         ),
         backgroundColor: ZOColors.successLight,
