@@ -5,6 +5,6 @@ class AppConfigurationDependencyContainer {
   const AppConfigurationDependencyContainer._();
 
   static void setup() {
-    GetIt.I.registerFactory(RemoteAppConfigurationRepository());
+    GetIt.I.registerFactory(RemoteAppConfigurationRepository() as FactoryFunc<Object>);
   }
 }

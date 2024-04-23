@@ -49,4 +49,10 @@ class DateTimeUtils {
     final formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(DateTime.now());
   }
+
+  /// Returns True if is [date] older than one month.
+  static bool isOlderThanMonth(DateTime date) {
+    final twoMonthsAgo = DateTime.now().subtract(const Duration(days: 30));
+    return date.isBefore(twoMonthsAgo);
+  }
 }
