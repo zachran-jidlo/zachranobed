@@ -25,6 +25,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-150** Update pickup config time from 35min to 45min.
 - **ZOB-155** Update notification icon.
 - **ZOB-167** Update Android production application ID.
+- **ZOB-169** Limiting the donation and shipping history of a box to 1 month.
 
 ### Fixed
 
