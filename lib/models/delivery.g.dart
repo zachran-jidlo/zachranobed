@@ -10,6 +10,7 @@ _$DeliveryImpl _$$DeliveryImplFromJson(Map<String, dynamic> json) =>
     _$DeliveryImpl(
       id: json['id'] as String,
       donorId: json['donorId'] as String,
+      recipientId: json['recipientId'] as String,
       state: $enumDecode(_$DeliveryStateEnumMap, json['state']),
       type: $enumDecode(_$DeliveryTypeEnumMap, json['type']),
     );
@@ -18,6 +19,7 @@ Map<String, dynamic> _$$DeliveryImplToJson(_$DeliveryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'donorId': instance.donorId,
+      'recipientId': instance.recipientId,
       'state': _$DeliveryStateEnumMap[instance.state]!,
       'type': _$DeliveryTypeEnumMap[instance.type]!,
     };

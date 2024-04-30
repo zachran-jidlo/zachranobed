@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
@@ -10,6 +11,7 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
 import 'package:zachranobed/services/delivery_service.dart';
+import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/food_box_service.dart';
 import 'package:zachranobed/services/meal_service.dart';
 
@@ -24,11 +26,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   final DeliveryService _deliveryService;
   final MealService _mealService;
   final FoodBoxService _foodBoxService;
+  final EntityPairService _entityPairService;
 
   FirebaseOfferedFoodRepository(
     this._deliveryService,
     this._mealService,
     this._foodBoxService,
+    this._entityPairService,
   );
 
   @override
@@ -139,6 +143,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     const uuid = Uuid();
     final List<MealDetailDto> mealDetails = [];
     final List<MealDto> meals = [];
+    final Map<String, int> changeBoxesMap = {};
     for (final element in foodInfo) {
       final id = uuid.v4();
       mealDetails.add(
@@ -151,15 +156,19 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
         ),
       );
 
+      final boxId = element.foodBoxId ?? "";
+      final boxCount = element.numberOfBoxes ?? element.numberOfServings ?? 0;
       meals.add(
         MealDto(
           mealId: id,
           count: element.numberOfServings ?? 0,
           consumeBy: element.consumeBy ?? DateTime.now(),
-          foodBoxId: element.foodBoxId ?? "",
-          foodBoxCount: element.numberOfBoxes ?? element.numberOfServings ?? 0,
+          foodBoxId: boxId,
+          foodBoxCount: boxCount,
         ),
       );
+
+      changeBoxesMap[boxId] = (changeBoxesMap[boxId] ?? 0) + boxCount;
     }
 
     if (!await _mealService.addMeals(mealDetails)) {
@@ -167,6 +176,16 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     }
 
     if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals)) {
+      return false;
+    }
+
+    final moveBoxesSuccess = await _entityPairService.moveBoxesToRecipient(
+      donorId: delivery.donorId,
+      recipientId: delivery.recipientId,
+      changeMap: changeBoxesMap,
+    );
+
+    if (!moveBoxesSuccess) {
       return false;
     }
 

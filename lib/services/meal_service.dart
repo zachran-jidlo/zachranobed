@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zachranobed/common/utils/future_utils.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 
 class MealService {
@@ -28,9 +29,7 @@ class MealService {
   /// Adds the given [meals] to the collection. Returns a future with true
   /// when operation succeeds and false otherwise.
   Future<bool> addMeals(Iterable<MealDetailDto> meals) {
-    return Future.wait(meals.map((e) => _collection.doc(e.id).set(e))).then(
-      (value) => true,
-      onError: (error) => false,
-    );
+    return Future.wait(meals.map((e) => _collection.doc(e.id).set(e)))
+        .toSuccess();
   }
 }

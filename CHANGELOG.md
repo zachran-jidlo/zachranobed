@@ -2,13 +2,17 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.0.1]
+### Changed
+- **ZOB-176** Move 'moveBoxes' logic to frontend.
+
 ## [1.0.0]
 ### Added
 - **ZOB-91** Add user info item.
 - **ZOB-36** Add "Empty page" for the boxes and meal section.
-- **ZOB-48** Connected app terms link in menu screen
-- **ZOB-53** Connected partners link in menu screen
-- **ZOB-54** Connected app privacy link in menu screen
+- **ZOB-48** Connected app terms link in menu screen.
+- **ZOB-53** Connected partners link in menu screen.
+- **ZOB-54** Connected app privacy link in menu screen.
 
 ### Changed
 - **ZOB-92** Update toolbar in Profile screen.

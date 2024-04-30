@@ -18,6 +18,7 @@ extension DeliveryMapper on DeliveryDto {
     return Delivery(
       id: id,
       donorId: donorId,
+      recipientId: recipientId,
       state: deliveryState,
       type: deliveryType,
     );

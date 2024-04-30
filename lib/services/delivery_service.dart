@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/firestore_utils.dart';
+import 'package:zachranobed/common/utils/future_utils.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
@@ -55,10 +55,9 @@ class DeliveryService {
   /// Updates the 'state' field of a delivery document identified by the
   /// specified [id] with the provided [state] value.
   Future<bool> updateDeliveryState(String id, DeliveryStateDto state) async {
-    return await _collection.doc(id).update({'state': state.toJson()}).then(
-      (value) => true,
-      onError: (error) => false,
-    );
+    return await _collection
+        .doc(id)
+        .update({'state': state.toJson()}).toSuccess();
   }
 
   /// Queries the Firestore collection for deliveries based on the entity ID
@@ -132,10 +131,7 @@ class DeliveryService {
       'meals': FieldValue.arrayUnion(
         meals.map((e) => e.toJson()).toList(),
       )
-    }).then(
-      (value) => true,
-      onError: (error) => false,
-    );
+    }).toSuccess();
 
     if (!addMeals) {
       return false;
@@ -164,10 +160,7 @@ class DeliveryService {
     return _collection //
         .doc(dto.id)
         .set(dto)
-        .then(
-          (value) => true,
-          onError: (error) => false,
-        );
+        .toSuccess();
   }
 
   /// Updates foodboxes in a delivery with a given [id].
@@ -179,10 +172,7 @@ class DeliveryService {
     return _collection //
         .doc(id)
         .update({'foodBoxes': foodBoxes.map((e) => e.toJson())})
-        .then(
-          (value) => true,
-          onError: (error) => false,
-        );
+        .toSuccess();
   }
 
   /// Prepares a filter to get only deliveries where [entityId] is either the

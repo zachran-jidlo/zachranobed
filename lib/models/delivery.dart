@@ -12,6 +12,7 @@ class Delivery with _$Delivery {
   const factory Delivery({
     required String id,
     required String donorId,
+    required String recipientId,
     required DeliveryState state,
     required DeliveryType type,
   }) = _Delivery;
