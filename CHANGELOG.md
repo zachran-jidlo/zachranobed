@@ -2,13 +2,17 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.0.1]
+### Fixed
+- **ZOB-155** Fix notification icon for android.
+
 ## [1.0.0]
 ### Added
 - **ZOB-91** Add user info item.
 - **ZOB-36** Add "Empty page" for the boxes and meal section.
-- **ZOB-48** Connected app terms link in menu screen
-- **ZOB-53** Connected partners link in menu screen
-- **ZOB-54** Connected app privacy link in menu screen
+- **ZOB-48** Connected app terms link in menu screen.
+- **ZOB-53** Connected partners link in menu screen.
+- **ZOB-54** Connected app privacy link in menu screen.
 
 ### Changed
 - **ZOB-92** Update toolbar in Profile screen.
@@ -26,8 +30,6 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-155** Update notification icon.
 - **ZOB-167** Update Android production application ID.
 - **ZOB-169** Limiting the donation and shipping history of a box to 1 month.
-
-### Fixed
 
 ### Removed
 - **ZOB-97** Remove icons from dialog widget.
