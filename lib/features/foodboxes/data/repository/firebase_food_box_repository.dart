@@ -147,18 +147,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     required String carrierId,
     required List<BoxInfo> boxInfo,
   }) async {
-    final foodBoxesCount = <String, int>{};
-
-    // Prepare delivery ID and check if any exists in Firebase
-    final id = '$entityId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
-    final delivery = await _deliveryService.getDeliveryById(id);
-    if (delivery != null) {
-      // Prefill count map with existing boxes count
-      for (final box in delivery.foodBoxes) {
-        foodBoxesCount[box.foodBoxId] = box.count;
-      }
-    }
-
+    final Map<String, int> foodBoxesCount = {};
     for (final info in boxInfo) {
       final foodBoxId = info.foodBoxId;
       if (foodBoxId == null) {
@@ -166,6 +155,27 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       }
       final required = info.numberOfBoxes ?? 0;
       foodBoxesCount[foodBoxId] = (foodBoxesCount[foodBoxId] ?? 0) + required;
+    }
+
+    final moveBoxesSuccess = await _entityPairService.moveBoxesToDonor(
+      donorId: donorId,
+      recipientId: entityId,
+      changeMap: foodBoxesCount,
+    );
+
+    if (!moveBoxesSuccess) {
+      return false;
+    }
+
+    // Prepare delivery ID and check if any exists in Firebase
+    final id = '$entityId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
+    final delivery = await _deliveryService.getDeliveryById(id);
+    if (delivery != null) {
+      // Add to count map existing boxes count
+      for (final box in delivery.foodBoxes) {
+        final value = foodBoxesCount[box.foodBoxId] ?? 0;
+        foodBoxesCount[box.foodBoxId] = value + box.count;
+      }
     }
 
     final foodBoxes = foodBoxesCount.entries.map((e) {
