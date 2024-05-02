@@ -1,6 +1,14 @@
 # Changelog
 
 This is a changelog for **ZachranObed** application.
+## [1.0.2]
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
 
 ## [1.0.1]
 ### Fixed
