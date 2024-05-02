@@ -72,7 +72,7 @@ class Notifications {
             _androidChannel.id,
             _androidChannel.name,
             channelDescription: _androidChannel.description,
-            icon: '@mipmap/launcher_icon',
+            icon: '@drawable/ic_notification',
           ),
         ),
         payload: jsonEncode(message.toMap()),

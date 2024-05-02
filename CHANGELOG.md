@@ -3,6 +3,9 @@
 This is a changelog for **ZachranObed** application.
 
 ## [1.0.1]
+### Fixed
+- **ZOB-155** Fix notification icon for android.
+
 ### Changed
 - **ZOB-176** Move 'moveBoxes' logic to frontend.
 
@@ -30,8 +33,6 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-155** Update notification icon.
 - **ZOB-167** Update Android production application ID.
 - **ZOB-169** Limiting the donation and shipping history of a box to 1 month.
-
-### Fixed
 
 ### Removed
 - **ZOB-97** Remove icons from dialog widget.
