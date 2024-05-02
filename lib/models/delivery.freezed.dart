@@ -22,6 +22,7 @@ Delivery _$DeliveryFromJson(Map<String, dynamic> json) {
 mixin _$Delivery {
   String get id => throw _privateConstructorUsedError;
   String get donorId => throw _privateConstructorUsedError;
+  String get recipientId => throw _privateConstructorUsedError;
   DeliveryState get state => throw _privateConstructorUsedError;
   DeliveryType get type => throw _privateConstructorUsedError;
 
@@ -37,7 +38,11 @@ abstract class $DeliveryCopyWith<$Res> {
       _$DeliveryCopyWithImpl<$Res, Delivery>;
   @useResult
   $Res call(
-      {String id, String donorId, DeliveryState state, DeliveryType type});
+      {String id,
+      String donorId,
+      String recipientId,
+      DeliveryState state,
+      DeliveryType type});
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
   $Res call({
     Object? id = null,
     Object? donorId = null,
+    Object? recipientId = null,
     Object? state = null,
     Object? type = null,
   }) {
@@ -66,6 +72,10 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
       donorId: null == donorId
           ? _value.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _value.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -88,7 +98,11 @@ abstract class _$$DeliveryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id, String donorId, DeliveryState state, DeliveryType type});
+      {String id,
+      String donorId,
+      String recipientId,
+      DeliveryState state,
+      DeliveryType type});
 }
 
 /// @nodoc
@@ -104,6 +118,7 @@ class __$$DeliveryImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? donorId = null,
+    Object? recipientId = null,
     Object? state = null,
     Object? type = null,
   }) {
@@ -115,6 +130,10 @@ class __$$DeliveryImplCopyWithImpl<$Res>
       donorId: null == donorId
           ? _value.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _value.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
           ? _value.state
@@ -134,6 +153,7 @@ class _$DeliveryImpl implements _Delivery {
   const _$DeliveryImpl(
       {required this.id,
       required this.donorId,
+      required this.recipientId,
       required this.state,
       required this.type});
 
@@ -145,13 +165,15 @@ class _$DeliveryImpl implements _Delivery {
   @override
   final String donorId;
   @override
+  final String recipientId;
+  @override
   final DeliveryState state;
   @override
   final DeliveryType type;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, state: $state, type: $type)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type)';
   }
 
   @override
@@ -161,13 +183,16 @@ class _$DeliveryImpl implements _Delivery {
             other is _$DeliveryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, donorId, state, type);
+  int get hashCode =>
+      Object.hash(runtimeType, id, donorId, recipientId, state, type);
 
   @JsonKey(ignore: true)
   @override
@@ -187,6 +212,7 @@ abstract class _Delivery implements Delivery {
   const factory _Delivery(
       {required final String id,
       required final String donorId,
+      required final String recipientId,
       required final DeliveryState state,
       required final DeliveryType type}) = _$DeliveryImpl;
 
@@ -197,6 +223,8 @@ abstract class _Delivery implements Delivery {
   String get id;
   @override
   String get donorId;
+  @override
+  String get recipientId;
   @override
   DeliveryState get state;
   @override

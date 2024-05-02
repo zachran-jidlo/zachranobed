@@ -6,6 +6,9 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 - **ZOB-155** Fix notification icon for android.
 
+### Changed
+- **ZOB-176** Move 'moveBoxes' logic to frontend.
+
 ## [1.0.0]
 ### Added
 - **ZOB-91** Add user info item.
