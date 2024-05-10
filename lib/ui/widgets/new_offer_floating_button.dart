@@ -40,28 +40,36 @@ class NewOfferFloatingButton extends StatelessWidget {
             onPressed: () => showDialog(
               context: context,
               builder: (context) {
-                if (HelperService.canDonate(context)) {
-                  return ZODialog(
-                    title: '${context.l10n!.newOffer}?',
-                    content: context.l10n!.newOfferDialogContent,
-                    confirmText: context.l10n!.callACourier,
-                    cancelText: context.l10n!.cancel,
-                    onConfirmPressed: () async {
-                      context
-                          .read<DeliveryNotifier>()
-                          .updateDeliveryState(DeliveryState.accepted);
-                      if (context.mounted) {
-                        Navigator.of(context).pop(true);
-                      }
-                    },
-                    onCancelPressed: () => Navigator.of(context).pop(false),
-                  );
-                }
-                return ZODialog(
-                  title: '${context.l10n!.newOffer}?',
-                  content: context.l10n!.cantOfferAnymoreDialogContent,
-                  cancelText: context.l10n!.cancel,
-                  onCancelPressed: () => Navigator.of(context).pop(false),
+                return FutureBuilder<bool>(
+                  future: HelperService.canDonate(context),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    return snapshot.data == true
+                        ? ZODialog(
+                            title: '${context.l10n!.newOffer}?',
+                            content: context.l10n!.newOfferDialogContent,
+                            confirmText: context.l10n!.callACourier,
+                            cancelText: context.l10n!.cancel,
+                            onConfirmPressed: () async {
+                              context
+                                  .read<DeliveryNotifier>()
+                                  .updateDeliveryState(DeliveryState.accepted);
+                              if (context.mounted) {
+                                Navigator.of(context).pop(true);
+                              }
+                            },
+                            onCancelPressed: () =>
+                                Navigator.of(context).pop(false),
+                          )
+                        : ZODialog(
+                            title: '${context.l10n!.newOffer}?',
+                            content:
+                                context.l10n!.cantOfferAnymoreDialogContent,
+                            cancelText: context.l10n!.cancel,
+                            onCancelPressed: () =>
+                                Navigator.of(context).pop(false),
+                          );
+                  },
                 );
               },
             ),

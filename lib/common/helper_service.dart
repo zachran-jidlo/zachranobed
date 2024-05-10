@@ -27,12 +27,12 @@ class HelperService {
   ///
   /// Returns a [bool] indicating whether the current user is eligible to
   /// donate food.
-  static bool canDonate(BuildContext context) {
+  static Future<bool> canDonate(BuildContext context) async {
     final user = getCurrentUser(context);
     if (user == null) {
       return false;
     }
-    return context.watch<DeliveryNotifier>().canDonate(user);
+    return await context.watch<DeliveryNotifier>().canDonate(user);
   }
 
   /// Retrieves user information using the [AuthService] and sets the user data

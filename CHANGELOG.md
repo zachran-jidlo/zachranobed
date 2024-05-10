@@ -5,13 +5,14 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-123** Fix loading and conditions for displaying the banner for courier arrival.
 
 ### Changed
 
 ### Removed
 
 ## [1.0.1]
-### Fixed
+### Fixed 
 - **ZOB-155** Fix notification icon for android.
 
 ### Changed

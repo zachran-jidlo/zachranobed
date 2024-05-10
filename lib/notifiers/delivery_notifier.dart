@@ -42,16 +42,28 @@ class DeliveryNotifier extends ChangeNotifier {
     }
   }
 
-  bool canDonate(UserData user) {
+  /// Checks if the user can donate food.
+  ///
+  /// This method is only applicable if the [UserData] instance is a [Canteen].
+  /// It fetches the current delivery for the canteen and checks if it exists.
+  /// If the delivery exists, it checks if the canteen can donate food at the current time.
+  ///
+  /// Returns `true` if the canteen can donate food, `false` otherwise.
+  Future<bool> canDonate(UserData user) async {
     if (user is! Canteen) {
       return false;
     }
 
-    final currentDelivery = _delivery;
+    final currentDelivery = await _repository.getCurrentDelivery(
+      entityId: user.entityId,
+      time: DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom),
+    );
+
     if (currentDelivery == null) {
       return false;
     }
 
+    // Check if the canteen can donate food at the current time
     final time = DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom);
     return _repository.canDonateFood(
       delivery: currentDelivery,

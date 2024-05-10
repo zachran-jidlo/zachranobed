@@ -38,7 +38,16 @@ class OverviewScreen extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          _buildInfoBanner(context, user!),
+          FutureBuilder<Widget>(
+            future: _buildInfoBanner(context, user!),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done ||
+                  !snapshot.hasData) {
+                return const SliverToBoxAdapter(child: SizedBox());
+              }
+              return snapshot.data!;
+            },
+          ),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
@@ -60,16 +69,24 @@ class OverviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoBanner(BuildContext context, UserData user) {
-    final delivery = context.watch<DeliveryNotifier>().delivery;
-    if (user is! Canteen || !HelperService.canDonate(context)) {
+  Future<Widget> _buildInfoBanner(BuildContext context, UserData user) async {
+    final deliveryNotifier = context.watch<DeliveryNotifier>();
+    final canDonate = await HelperService.canDonate(context);
+
+    if (user is! Canteen || !canDonate) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    return delivery?.state == DeliveryState.accepted ||
-            delivery?.state == DeliveryState.offered
-        ? _buildDeliveryConfirmedBanner(context, user)
-        : _buildDonationCountdownBanner(context);
+    if (deliveryNotifier.delivery?.state == DeliveryState.accepted ||
+        deliveryNotifier.delivery?.state == DeliveryState.offered) {
+      if (user.isCurrentTimeWithinPickupRange()) {
+        return _buildDeliveryConfirmedBanner(context, user);
+      } else {
+        return const SliverToBoxAdapter(child: SizedBox());
+      }
+    } else {
+      return _buildDonationCountdownBanner(context);
+    }
   }
 
   Widget _buildDeliveryConfirmedBanner(BuildContext context, Canteen user) {
