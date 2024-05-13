@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-155** Fix notification icon color for android.
 
 ### Changed
 

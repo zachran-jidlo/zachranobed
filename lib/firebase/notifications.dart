@@ -7,6 +7,8 @@ import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
 
+import '../common/constants.dart';
+
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print('Title: ${message.notification?.title}');
   print('Body: ${message.notification?.body}');
@@ -73,6 +75,7 @@ class Notifications {
             _androidChannel.name,
             channelDescription: _androidChannel.description,
             icon: '@drawable/ic_notification',
+            color: ZOColors.primary,
           ),
         ),
         payload: jsonEncode(message.toMap()),
