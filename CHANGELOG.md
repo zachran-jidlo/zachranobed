@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-178** Fix the issue with wrong layout borders on donated food list.
 
 ### Changed
 
