@@ -1,19 +1,11 @@
 # Changelog
 
 This is a changelog for **ZachranObed** application.
-## [1.0.2]
-### Added
-
-### Fixed
-- **ZOB-155** Fix notification icon color for android.
-
-### Changed
-
-### Removed
 
 ## [1.0.1]
 ### Fixed
 - **ZOB-155** Fix notification icon for android.
+- **ZOB-155** Fix notification icon color for android.
 
 ### Changed
 - **ZOB-176** Move 'moveBoxes' logic to frontend.
