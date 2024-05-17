@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-122** Use Ticker for more precision countdown timer.
 
 ### Removed
 
