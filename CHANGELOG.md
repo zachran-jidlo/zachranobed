@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [1.0.1]
 ### Fixed
 - **ZOB-155** Fix notification icon for android.
+- **ZOB-155** Fix notification icon color for android.
 - **ZOB-178** Fix the issue with wrong layout borders on donated food list.
 
 ### Changed
