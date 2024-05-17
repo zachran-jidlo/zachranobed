@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-158** Hide list header on overview screen when list is empty.
 
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.
