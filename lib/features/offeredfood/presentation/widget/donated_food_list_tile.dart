@@ -16,16 +16,21 @@ class DonatedFoodListTile extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: ZOColors.borderColor),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: ZOColors.borderColor,
+            width: 1,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
-        title: Text(offeredFood.dishName),
-        subtitle: Text(date),
-        trailing: Text('${offeredFood.numberOfServings} ks'),
-        onTap: () => context.router
-            .push(DonatedFoodDetailRoute(offeredFood: offeredFood)),
+        child: ListTile(
+          title: Text(offeredFood.dishName),
+          subtitle: Text(date),
+          trailing: Text('${offeredFood.numberOfServings} ks'),
+          onTap: () => context.router
+              .push(DonatedFoodDetailRoute(offeredFood: offeredFood)),
+        ),
       ),
     );
   }
