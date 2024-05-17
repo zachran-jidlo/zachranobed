@@ -77,15 +77,16 @@ class OverviewScreen extends StatelessWidget {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    if (deliveryNotifier.delivery?.state == DeliveryState.accepted ||
-        deliveryNotifier.delivery?.state == DeliveryState.offered) {
-      if (user.isCurrentTimeWithinPickupRange()) {
-        return _buildDeliveryConfirmedBanner(context, user);
-      } else {
-        return const SliverToBoxAdapter(child: SizedBox());
-      }
-    } else {
-      return _buildDonationCountdownBanner(context);
+    switch (deliveryNotifier.delivery?.state) {
+      case DeliveryState.accepted:
+      case DeliveryState.offered:
+        if (user.isCurrentTimeWithinPickupRange()) {
+          return _buildDeliveryConfirmedBanner(context, user);
+        } else {
+          return const SliverToBoxAdapter(child: SizedBox());
+        }
+      default:
+        return _buildDonationCountdownBanner(context);
     }
   }
 
