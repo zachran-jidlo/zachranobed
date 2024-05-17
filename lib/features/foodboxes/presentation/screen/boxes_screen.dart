@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -7,6 +8,8 @@ import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_movement_list.dart';
+import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/error_page.dart';
@@ -52,14 +55,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
         } else {
           final boxCount = snapshot.data!;
           return boxCount < 1
-              ? Scaffold(
-                  appBar: AppBar(title: Text(pageTitle)),
-                  body: EmptyPage(
-                    vectorImagePath: ZOStrings.boxEmptyPath,
-                    title: context.l10n!.boxesEmptyTitle,
-                    description: context.l10n!.boxesEmptyDescription,
-                  ),
-                )
+              ? _buildEmptyPage(context)
               : _buildContent(context);
         }
       },
@@ -125,6 +121,36 @@ class _BoxesScreenState extends State<BoxesScreen> {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 50)),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyPage(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(context.l10n!.boxes)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            EmptyPage(
+              vectorImagePath: ZOStrings.boxEmptyPath,
+              title: context.l10n!.boxesEmptyTitle,
+              description: context.l10n!.boxesEmptyDescription,
+            ),
+            if (HelperService.getCurrentUser(context) is Charity)
+              Column(
+                children: [
+                  ZOButton(
+                    text: context.l10n!.orderShippingOfBoxes,
+                    fullWidth: false,
+                    onPressed: () {
+                      context.router.push(const OrderShippingOfBoxesRoute());
+                    },
+                  ),
+                  const SizedBox(height: GapSize.xl),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }

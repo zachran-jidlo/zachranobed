@@ -89,6 +89,7 @@
     "shippingOfBoxes": "Svoz krabiček",
     "shippingOfBoxesToCanteen": "Svoz krabiček do jídelny",
     "orderShipping": "Objednat svoz",
+    "orderShippingOfBoxes": "Objednat svoz krabiček",
     "addAnotherBoxType": "Přidat další typ krabičky",
     "passwordReset": "Obnova hesla",
     "resetPassword": "Obnovit heslo",

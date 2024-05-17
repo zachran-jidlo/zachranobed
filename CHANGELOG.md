@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-96** Move FAB to overview screen, add button on empty page.
 
 ### Removed
 

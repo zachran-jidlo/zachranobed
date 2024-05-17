@@ -7,13 +7,10 @@ import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/firebase/notifications.dart';
-import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
-import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
-import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -89,9 +86,6 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
             ),
           ),
         ),
-        floatingActionButton: HelperService.getCurrentUser(context) is Canteen
-            ? NewOfferFloatingButton()
-            : const NewShippingOfBoxesFloatingButton(),
       ),
     );
   }

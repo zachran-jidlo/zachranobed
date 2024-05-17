@@ -16,6 +16,8 @@ import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/donation_countdown_timer.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
+import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
+import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
@@ -36,13 +38,18 @@ class OverviewScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: HelperService.getCurrentUser(context) is Canteen
+          ? NewOfferFloatingButton()
+          : const NewShippingOfBoxesFloatingButton(),
       body: CustomScrollView(
         slivers: [
           _buildInfoBanner(context, user!),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.padding,
+            padding: const EdgeInsets.only(
+              left: WidgetStyle.padding,
+              right: WidgetStyle.padding,
+              bottom: WidgetStyle.overviewBottomPadding,
             ),
             sliver: MultiSliver(
               children: [
