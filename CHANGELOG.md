@@ -1,19 +1,11 @@
 # Changelog
 
 This is a changelog for **ZachranObed** application.
-## [1.0.2]
-### Added
-
-### Fixed
-- **ZOB-178** Fix the issue with wrong layout borders on donated food list.
-
-### Changed
-
-### Removed
 
 ## [1.0.1]
 ### Fixed
 - **ZOB-155** Fix notification icon for android.
+- **ZOB-178** Fix the issue with wrong layout borders on donated food list.
 
 ### Changed
 - **ZOB-176** Move 'moveBoxes' logic to frontend.
