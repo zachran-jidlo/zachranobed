@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-98** Change how info banner content is displayed.
 
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.
