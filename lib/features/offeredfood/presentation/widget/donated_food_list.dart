@@ -7,26 +7,20 @@ import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list_tile.dart';
 
-class DonatedFoodList extends StatefulWidget {
+class DonatedFoodList extends StatelessWidget {
   final int? itemsLimit;
   final DateTime? deliveredFrom;
   final DateTime? deliveredTo;
   final String title;
+  final _repository = GetIt.I<OfferedFoodRepository>();
 
-  const DonatedFoodList({
-    super.key,
+  DonatedFoodList({
+    Key? key,
     this.itemsLimit,
     this.deliveredFrom,
     this.deliveredTo,
     required this.title,
-  });
-
-  @override
-  State<DonatedFoodList> createState() => _DonatedFoodListState();
-}
-
-class _DonatedFoodListState extends State<DonatedFoodList> {
-  final _repository = GetIt.I<OfferedFoodRepository>();
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +30,9 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
         SliverPinnedHeader(
           child: Container(
             color: Colors.white,
-            child: Row(
-              children: <Widget>[
-                Text(
-                  widget.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+            child: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -50,19 +40,17 @@ class _DonatedFoodListState extends State<DonatedFoodList> {
         StreamBuilder<Iterable<OfferedFood>>(
           stream: _repository.observeHistory(
             entityId: HelperService.getCurrentUser(context)!.entityId,
-            limit: widget.itemsLimit,
-            from: widget.deliveredFrom,
-            to: widget.deliveredTo,
+            limit: itemsLimit,
+            from: deliveredFrom,
+            to: deliveredTo,
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              final offers = snapshot.data!.toList();
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: offers.length,
-                  (context, index) {
-                    return DonatedFoodListTile(offeredFood: offers[index]);
-                  },
+                  (context, index) => DonatedFoodListTile(
+                      offeredFood: snapshot.data!.toList()[index]),
+                  childCount: snapshot.data!.length,
                 ),
               );
             } else if (snapshot.hasError) {
