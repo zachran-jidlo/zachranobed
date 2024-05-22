@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
@@ -7,6 +6,7 @@ import 'package:zachranobed/features/offeredfood/data/mapper/offered_food_mapper
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
@@ -133,6 +133,20 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       }
       return food;
     });
+  }
+
+  /// It observes the deliveries for a specific entity and emits them as a stream.
+  ///
+  /// The method uses the `_deliveryService` to observe the deliveries and then maps them to the domain model.
+  ///
+  /// [entityId] is the ID of the entity [Canteen] for which the deliveries are to be observed.
+  @override
+  Stream<Iterable<Delivery?>> observeDelivery({
+    required String entityId,
+  }) async* {
+    yield* _deliveryService
+        .observeDeliveries(entityId, 1, null, null)
+        .map((event) => event.map((e) => e.toDomain()));
   }
 
   @override

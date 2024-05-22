@@ -18,12 +18,17 @@ class DeliveryNotifier extends ChangeNotifier {
       return;
     }
 
-    final delivery = await _repository.getCurrentDelivery(
-      entityId: user.entityId,
-      time: DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom),
-    );
-    _delivery = delivery;
-    notifyListeners();
+    _repository
+        .observeDelivery(entityId: user.entityId)
+        .listen((deliveries) async {
+      final delivery = await _repository.getCurrentDelivery(
+        entityId: user.entityId,
+        time: DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom),
+      );
+
+      _delivery = delivery;
+      notifyListeners();
+    });
   }
 
   /// Modifies the state of the current [Delivery] instance by creating a new

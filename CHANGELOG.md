@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-123** Fix loading and conditions for displaying the banner for courier arrival.
 
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.

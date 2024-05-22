@@ -55,4 +55,16 @@ class DateTimeUtils {
     final twoMonthsAgo = DateTime.now().subtract(const Duration(days: 30));
     return date.isBefore(twoMonthsAgo);
   }
+
+  /// Helper method to create a [DateTime] object from a time string.
+  ///
+  /// The time string should be in the format 'HH:mm'. The [DateTime] object
+  /// is created with the current date and the time from the time string.
+  ///
+  /// Returns a [DateTime] object with the current date and the time from the time string.
+  static DateTime getTime(String time, DateTime now) {
+    List<String> timeParts = time.split(':');
+    return DateTime(now.year, now.month, now.day, int.parse(timeParts[0]),
+        int.parse(timeParts[1]));
+  }
 }
