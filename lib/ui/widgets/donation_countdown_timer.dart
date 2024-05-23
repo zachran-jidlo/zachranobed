@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
+import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
@@ -96,12 +97,20 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _value,
-      style: const TextStyle(
-        color: ZOColors.onPrimaryLight,
-        fontSize: FontSize.s,
-        fontWeight: FontWeight.bold,
+    return Text.rich(
+      textAlign: TextAlign.center,
+      TextSpan(
+        text: '${context.l10n!.youCanDonate} ',
+        style: const TextStyle(
+          color: ZOColors.onPrimaryLight,
+          fontSize: FontSize.s,
+        ),
+        children: <InlineSpan>[
+          TextSpan(
+            text: _value,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
     );
   }

@@ -1,11 +1,14 @@
 # Changelog
 
 This is a changelog for **ZachranObed** application.
+
 ## [1.0.2]
 ### Added
 
 ### Fixed
-- **ZOB-123** Fix loading and conditions for displaying the banner for courier arrival.
+- **ZOB-98** Change how info banner content is displayed.
+- **ZOB-123** Change observation of delivery for displaying the banner for courier arrival.
+- **ZOB-158** Hide list header on overview screen when list is empty.
 
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.
