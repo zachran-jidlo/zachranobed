@@ -11,6 +11,7 @@ class DonatedFoodList extends StatelessWidget {
   final int? itemsLimit;
   final DateTime? deliveredFrom;
   final DateTime? deliveredTo;
+  final bool alwaysShowTitle;
   final String title;
   final _repository = GetIt.I<OfferedFoodRepository>();
 
@@ -19,47 +20,53 @@ class DonatedFoodList extends StatelessWidget {
     this.itemsLimit,
     this.deliveredFrom,
     this.deliveredTo,
+    this.alwaysShowTitle = true,
     required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiSliver(
-      pushPinnedChildren: true,
-      children: <Widget>[
-        SliverPinnedHeader(
-          child: Container(
-            color: Colors.white,
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-        const SizedBox(height: GapSize.xs),
-        StreamBuilder<Iterable<OfferedFood>>(
-          stream: _repository.observeHistory(
-            entityId: HelperService.getCurrentUser(context)!.entityId,
-            limit: itemsLimit,
-            from: deliveredFrom,
-            to: deliveredTo,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => DonatedFoodListTile(
-                      offeredFood: snapshot.data!.toList()[index]),
-                  childCount: snapshot.data!.length,
+    return StreamBuilder<Iterable<OfferedFood>>(
+      stream: _repository.observeHistory(
+        entityId: HelperService.getCurrentUser(context)!.entityId,
+        limit: itemsLimit,
+        from: deliveredFrom,
+        to: deliveredTo,
+      ),
+      builder: (context, snapshot) {
+        return MultiSliver(
+          pushPinnedChildren: true,
+          children: <Widget>[
+            if (alwaysShowTitle || snapshot.data?.isNotEmpty == true)
+              SliverPinnedHeader(
+                child: Container(
+                  color: Colors.white,
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('${snapshot.error}'));
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ],
+              ),
+            const SizedBox(height: GapSize.xs),
+            Builder(
+              builder: (context) {
+                if (snapshot.hasData) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => DonatedFoodListTile(
+                          offeredFood: snapshot.data!.toList()[index]),
+                      childCount: snapshot.data!.length,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('${snapshot.error}'));
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
