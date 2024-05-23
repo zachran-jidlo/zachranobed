@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Fixed
 - **ZOB-98** Change how info banner content is displayed.
+- **ZOB-158** Hide list header on overview screen when list is empty.
 
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.

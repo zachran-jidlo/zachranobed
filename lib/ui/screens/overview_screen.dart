@@ -126,6 +126,7 @@ class OverviewScreen extends StatelessWidget {
     return DonatedFoodList(
       title: context.l10n!.lastDonated,
       itemsLimit: 5,
+      alwaysShowTitle: false,
     );
   }
 }
