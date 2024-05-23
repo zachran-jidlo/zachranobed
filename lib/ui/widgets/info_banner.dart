@@ -3,15 +3,13 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 
 class InfoBanner extends StatelessWidget {
-  final String infoText;
-  final Widget infoValue;
+  final Widget message;
   final Color backgroundColor;
   final ZOButton? button;
 
   const InfoBanner({
     super.key,
-    required this.infoText,
-    required this.infoValue,
+    required this.message,
     required this.backgroundColor,
     this.button,
   });
@@ -25,21 +23,7 @@ class InfoBanner extends StatelessWidget {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
-                    '$infoText ',
-                    style: const TextStyle(
-                      color: ZOColors.onPrimaryLight,
-                      fontSize: FontSize.s,
-                    ),
-                  ),
-                ),
-                infoValue,
-              ],
-            ),
+            message,
             if (button != null)
               Column(
                 children: [

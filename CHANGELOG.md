@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-98** Change how info banner content is displayed.
 - **ZOB-158** Hide list header on overview screen when list is empty.
 
 ### Changed

@@ -82,16 +82,23 @@ class OverviewScreen extends StatelessWidget {
   Widget _buildDeliveryConfirmedBanner(BuildContext context, Canteen user) {
     return SliverToBoxAdapter(
       child: InfoBanner(
-        infoText: context.l10n!.courierWillCome,
-        infoValue: Text(
-          '${user.pickUpFrom} a ${user.pickUpWithin}',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: FontSize.s,
-            color: ZOColors.onPrimaryLight,
+        backgroundColor: ZOColors.successLight,
+        message: Text.rich(
+          textAlign: TextAlign.center,
+          TextSpan(
+            text: '${context.l10n!.courierWillCome} ',
+            style: const TextStyle(
+              color: ZOColors.onPrimaryLight,
+              fontSize: FontSize.s,
+            ),
+            children: <InlineSpan>[
+              TextSpan(
+                text: '${user.pickUpFrom} a ${user.pickUpWithin}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
         ),
-        backgroundColor: ZOColors.successLight,
       ),
     );
   }
@@ -99,8 +106,8 @@ class OverviewScreen extends StatelessWidget {
   Widget _buildDonationCountdownBanner(BuildContext context) {
     return SliverToBoxAdapter(
       child: InfoBanner(
-        infoText: context.l10n!.youCanDonate,
-        infoValue: const DonationCountdownTimer(),
+        backgroundColor: ZOColors.successLight,
+        message: const DonationCountdownTimer(),
         button: ZOButton(
           text: context.l10n!.callACourier,
           fullWidth: false,
@@ -111,7 +118,6 @@ class OverviewScreen extends StatelessWidget {
                 .updateDeliveryState(DeliveryState.accepted);
           },
         ),
-        backgroundColor: ZOColors.successLight,
       ),
     );
   }
