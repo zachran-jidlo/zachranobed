@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,8 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
-  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfAppTermsShouldBeShownUseCase =
+      GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
 
   @override
   void initState() {
@@ -34,12 +36,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
   void _checkAppTerms() {
     _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
-      // If should be shown, replace current route with app terms.
-      // Otherwise do nothing - no action from the user is required.
-      if (result == true) {
-        _appRouter.replace(AppTermsRoute())
-      }
-    });
+          // If should be shown, replace current route with app terms.
+          // Otherwise do nothing - no action from the user is required.
+          if (result == true) {_appRouter.replace(AppTermsRoute())}
+        });
   }
 
   @override
@@ -79,5 +79,26 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
         );
       },
     );
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    // TODO: implement handleCancelBackGesture
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    // TODO: implement handleCommitBackGesture
+  }
+
+  @override
+  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
+    // TODO: implement handleStartBackGesture
+    throw UnimplementedError();
+  }
+
+  @override
+  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
+    // TODO: implement handleUpdateBackGestureProgress
   }
 }

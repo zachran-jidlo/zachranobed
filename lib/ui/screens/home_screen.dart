@@ -1,15 +1,16 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/firebase/notifications.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
+import 'package:zachranobed/firebase/notifications.dart';
+import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 
 @RoutePage()
@@ -88,5 +89,26 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
         ),
       ),
     );
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    // TODO: implement handleCancelBackGesture
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    // TODO: implement handleCommitBackGesture
+  }
+
+  @override
+  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
+    // TODO: implement handleStartBackGesture
+    throw UnimplementedError();
+  }
+
+  @override
+  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
+    // TODO: implement handleUpdateBackGestureProgress
   }
 }

@@ -5,11 +5,11 @@ import 'package:zachranobed/models/delivery.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-  /// Returns a [Future] that completes with a [Delivery] object if a delivery
-  /// with the provided [time] and [entityId] as a donor ID is found in the
-  /// Firestore collection and `null` if no delivery is found with the specified
-  /// criteria.
-  Future<Delivery?> getCurrentDelivery({
+  /// Observes the current delivery for a specific entity at a specific time.
+  ///
+  /// The [entityId] parameter is the ID of the entity whose delivery is to be observed.
+  /// The [time] parameter is the start time of the pickup window for the delivery.
+  Stream<Delivery?> observeCurrentDelivery({
     required String entityId,
     required DateTime time,
   });

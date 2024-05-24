@@ -36,12 +36,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   );
 
   @override
-  Future<Delivery?> getCurrentDelivery({
+  Stream<Delivery?> observeCurrentDelivery({
     required String entityId,
     required DateTime time,
-  }) async {
-    final dto = await _deliveryService.getDelivery(entityId, time);
-    return dto?.toDomain();
+  }) async* {
+    yield* _deliveryService
+        .observeDelivery(entityId, time)
+        .map((event) => event?.toDomain());
   }
 
   @override

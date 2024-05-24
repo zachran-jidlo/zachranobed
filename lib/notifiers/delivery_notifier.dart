@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
@@ -13,19 +15,29 @@ class DeliveryNotifier extends ChangeNotifier {
 
   Delivery? get delivery => _delivery;
 
+  /// A subscription to the stream of deliveries.
+  StreamSubscription<Delivery?>? _streamSubscription;
+
   void init(UserData user) async {
     if (user is! Canteen) {
       return;
     }
+    observeDelivery(user);
+  }
 
-    _repository
-        .observeDelivery(entityId: user.entityId)
-        .listen((deliveries) async {
-      final delivery = await _repository.getCurrentDelivery(
-        entityId: user.entityId,
-        time: DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom),
-      );
-
+  /// Observes the deliveries for a Canteen.
+  ///
+  /// This method subscribes to the stream of deliveries from the repository and updates the current delivery whenever a new delivery is emitted.
+  ///
+  /// The [canteen] parameter must not be null.
+  void observeDelivery(Canteen canteen) {
+    _streamSubscription?.cancel();
+    _streamSubscription = _repository
+        .observeCurrentDelivery(
+            entityId: canteen.entityId,
+            time:
+                DateTimeUtils.getDateTimeOfCurrentDelivery(canteen.pickUpFrom))
+        .listen((delivery) async {
       _delivery = delivery;
       notifyListeners();
     });

@@ -27,8 +27,8 @@ class Canteen extends UserData {
   /// Returns `true` if the current time is within the pickup range, `false` otherwise.
   bool isCurrentTimeWithinPickupRange() {
     DateTime now = DateTime.now();
-    DateTime timeFrom = DateTimeUtils.getTime(pickUpFrom, now);
-    DateTime timeWithin = DateTimeUtils.getTime(pickUpWithin, now);
-    return now.isAfter(timeFrom) && now.isBefore(timeWithin);
+    DateTime timeWithin =
+        DateTimeUtils.getDateTimeOfCurrentDelivery(pickUpWithin);
+    return now.isBefore(timeWithin);
   }
 }

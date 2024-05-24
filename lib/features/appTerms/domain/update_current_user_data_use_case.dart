@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/entity_service.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
-import '../../common/constants.dart';
-import '../../common/helper_service.dart';
-import '../../models/canteen.dart';
-import '../../models/delivery.dart';
-import '../../models/user_data.dart';
-import '../../notifiers/delivery_notifier.dart';
 import 'button.dart';
 import 'donation_countdown_timer.dart';
 import 'info_banner.dart';

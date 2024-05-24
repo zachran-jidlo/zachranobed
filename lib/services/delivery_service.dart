@@ -28,21 +28,26 @@ class DeliveryService {
     },
   );
 
-  /// Returns a [Future] that completes with a [DeliveryDto] object if a
-  /// delivery with the provided [time] and [donorId] is found in the Firestore
-  /// collection and `null` if no delivery is found with the specified
-  /// criteria.
-  Future<DeliveryDto?> getDelivery(String donorId, DateTime time) async {
-    final deliveryQuerySnapshot = await _collection
+  /// Observes a delivery for a specific donor at a specific time.
+  ///
+  /// This method sets up a Firestore stream to listen for changes in the `deliveries` collection.
+  /// It filters deliveries based on the provided [donorId] and [time].
+  /// The [donorId] parameter is the ID of the donor whose delivery is to be observed.
+  /// The [time] parameter is the start time of the pickup window for the delivery.
+  ///
+  /// The method returns a `Stream` of `DeliveryDto?`. Each `DeliveryDto?` in the `Stream` represents a delivery for the donor.
+  /// The `Stream` emits a new `DeliveryDto?` whenever there is a change in the delivery for the donor.
+  ///
+  /// The `where` method is used to filter the deliveries based on the donor ID, the type of the delivery, and the start time of the pickup window.
+  /// The `snapshots` method is used to listen for changes in the `deliveries` collection.
+  /// The `map` method is used to transform the snapshots into `DeliveryDto?` objects.
+  Stream<DeliveryDto?> observeDelivery(String donorId, DateTime time) {
+    final snapshots = _collection
         .where('donorId', isEqualTo: donorId)
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
         .whereTime('pickupTimeWindow.start', time)
-        .get();
-
-    if (deliveryQuerySnapshot.docs.isNotEmpty) {
-      return deliveryQuerySnapshot.docs.first.data();
-    }
-    return null;
+        .snapshots();
+    return snapshots.map((snapshot) => snapshot.docs.firstOrNull?.data());
   }
 
   /// Returns a [Future] that completes with a [DeliveryDto] object with a
@@ -171,8 +176,7 @@ class DeliveryService {
   ) {
     return _collection //
         .doc(id)
-        .update({'foodBoxes': foodBoxes.map((e) => e.toJson())})
-        .toSuccess();
+        .update({'foodBoxes': foodBoxes.map((e) => e.toJson())}).toSuccess();
   }
 
   /// Prepares a filter to get only deliveries where [entityId] is either the
