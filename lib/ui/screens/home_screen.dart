@@ -1,6 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -89,26 +88,5 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
         ),
       ),
     );
-  }
-
-  @override
-  void handleCancelBackGesture() {
-    // TODO: implement handleCancelBackGesture
-  }
-
-  @override
-  void handleCommitBackGesture() {
-    // TODO: implement handleCommitBackGesture
-  }
-
-  @override
-  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
-    // TODO: implement handleStartBackGesture
-    throw UnimplementedError();
-  }
-
-  @override
-  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
-    // TODO: implement handleUpdateBackGestureProgress
   }
 }

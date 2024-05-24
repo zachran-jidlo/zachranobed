@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -79,26 +78,5 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
         );
       },
     );
-  }
-
-  @override
-  void handleCancelBackGesture() {
-    // TODO: implement handleCancelBackGesture
-  }
-
-  @override
-  void handleCommitBackGesture() {
-    // TODO: implement handleCommitBackGesture
-  }
-
-  @override
-  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
-    // TODO: implement handleStartBackGesture
-    throw UnimplementedError();
-  }
-
-  @override
-  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
-    // TODO: implement handleUpdateBackGestureProgress
   }
 }

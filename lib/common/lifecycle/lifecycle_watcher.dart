@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 /// A mixin that provides lifecycle watching capabilities to a [StatefulWidget]'s State.
@@ -42,6 +43,26 @@ mixin LifecycleWatcher<T extends StatefulWidget> on State<T>
         onHide();
         break;
     }
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    // TODO: implement handleCancelBackGesture
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    // TODO: implement handleCommitBackGesture
+  }
+
+  @override
+  void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
+    // TODO: implement handleUpdateBackGestureProgress
+  }
+
+  @override
+  bool handleStartBackGesture(PredictiveBackEvent backEvent) {
+    return false;
   }
 
   /// Called when the app is in an resumed state.
