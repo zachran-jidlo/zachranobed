@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Fixed
 - **ZOB-98** Change how info banner content is displayed.
+- **ZOB-99** Refactor statistics table to support smaller screen sizes.
 - **ZOB-123** Change observation of delivery for displaying the banner for courier arrival.
 - **ZOB-158** Hide list header on overview screen when list is empty.
 
