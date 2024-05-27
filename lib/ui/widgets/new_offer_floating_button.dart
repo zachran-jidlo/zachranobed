@@ -20,8 +20,9 @@ class NewOfferFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<DeliveryNotifier>().delivery?.state;
-    return enabledStates.contains(state)
+    final delivery = context.watch<DeliveryNotifier>().delivery;
+
+    return enabledStates.contains(delivery?.state)
         ? FloatingActionButton.extended(
             onPressed: () => context.router.push(const OfferFoodRoute()),
             elevation: 0,

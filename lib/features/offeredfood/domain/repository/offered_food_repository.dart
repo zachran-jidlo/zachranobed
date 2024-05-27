@@ -1,6 +1,5 @@
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
-import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
 
 /// Repository to manage offered food.
@@ -33,12 +32,6 @@ abstract class OfferedFoodRepository {
   Future<int> getSavedMealsCount({
     required String entityId,
     int? timePeriod,
-  });
-
-  /// Returns a stream with a list of deliveries for the user with given
-  /// [entityId] identifier of [Canteen] user.
-  Stream<Iterable<Delivery?>> observeDelivery({
-    required String entityId,
   });
 
   /// Returns a stream with a list of offered food for the user with given
