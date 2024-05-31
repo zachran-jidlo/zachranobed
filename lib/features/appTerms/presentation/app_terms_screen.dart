@@ -1,19 +1,13 @@
-import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:get_it/get_it.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
@@ -26,7 +20,8 @@ class AppTermsScreen extends StatefulWidget {
 }
 
 class _AppTermsScreen extends State<AppTermsScreen> {
-  final _setNewestAcceptedAppTermsUseCase = GetIt.I<SetNewestAcceptedAppTermsUseCase>();
+  final _setNewestAcceptedAppTermsUseCase =
+      GetIt.I<SetNewestAcceptedAppTermsUseCase>();
   var _areTermsAccepted = false;
 
   @override
@@ -40,7 +35,8 @@ class _AppTermsScreen extends State<AppTermsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(ZOStrings.certificationCheckPath, width: 205, height: 294),
+                  SvgPicture.asset(ZOStrings.certificationCheckPath,
+                      width: 205, height: 294),
                   SizedBox(height: GapSize.xl),
                   Text(
                     'Než budete pokračovat,', // FIXME: - Localize
@@ -48,7 +44,8 @@ class _AppTermsScreen extends State<AppTermsScreen> {
                   ),
                   SizedBox(height: GapSize.xs),
                   Text(
-                    'tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.', // FIXME: - Localize
+                    'tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.',
+                    // FIXME: - Localize
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: FontSize.s),
                   ),
@@ -61,27 +58,22 @@ class _AppTermsScreen extends State<AppTermsScreen> {
                         });
                       },
                       titleWidget: RichText(
-                          text: TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: 'Souhlasím s ', // FIXME: - Localize
-                                    style: TextStyle(color: Colors.black)
-                                ),
-                                TextSpan(
-                                  text: 'podmínkami účasti na projektu.', // FIXME: - Localize
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      decoration: TextDecoration.underline
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () async {
-                                      await _openUrlInBrowser(ZOStrings.appTerms);
-                                    },
-                                ),
-                              ]
-                          )
-                      )
-                  ),
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Souhlasím s ', // FIXME: - Localize
+                            style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                          text: 'podmínkami účasti na projektu.',
+                          // FIXME: - Localize
+                          style: TextStyle(
+                              color: Colors.black,
+                              decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              await _openUrlInBrowser(ZOStrings.appTerms);
+                            },
+                        ),
+                      ]))),
                   SizedBox(height: GapSize.l),
                   ZOButton(
                     text: 'Pokračovat do aplikace', // FIXME: - Localize
@@ -104,7 +96,8 @@ class _AppTermsScreen extends State<AppTermsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         ZOTemporarySnackBar(
           backgroundColor: Colors.red,
-          message: "Pro pokračování do aplikace musíte nejdříve souhlasit s podmínkami účasti na projektu.", // FIXME: - Localize
+          message:
+              "Pro pokračování do aplikace musíte nejdříve souhlasit s podmínkami účasti na projektu.", // FIXME: - Localize
         ),
       );
     }

@@ -18,7 +18,8 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
-  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfAppTermsShouldBeShownUseCase =
+      GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
 
   @override
   void initState() {
@@ -34,12 +35,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
   void _checkAppTerms() {
     _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
-      // If should be shown, replace current route with app terms.
-      // Otherwise do nothing - no action from the user is required.
-      if (result == true) {
-        _appRouter.replace(AppTermsRoute())
-      }
-    });
+          // If should be shown, replace current route with app terms.
+          // Otherwise do nothing - no action from the user is required.
+          if (result == true) {_appRouter.replace(AppTermsRoute())}
+        });
   }
 
   @override

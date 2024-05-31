@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
@@ -36,12 +35,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   );
 
   @override
-  Future<Delivery?> getCurrentDelivery({
+  Stream<Delivery?> observeCurrentDelivery({
     required String entityId,
     required DateTime time,
-  }) async {
-    final dto = await _deliveryService.getDelivery(entityId, time);
-    return dto?.toDomain();
+  }) {
+    return _deliveryService
+        .observeDelivery(entityId, time)
+        .map((event) => event?.toDomain());
   }
 
   @override
