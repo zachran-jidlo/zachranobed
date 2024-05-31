@@ -6,10 +6,10 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/firebase/notifications.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
+import 'package:zachranobed/firebase/notifications.dart';
+import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 
 @RoutePage()
