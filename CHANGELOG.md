@@ -2,7 +2,7 @@
 
 This is a changelog for **ZachranObed** application.
 
-## [1.0.2]
+## [1.1.0]
 ### Added
 
 ### Fixed
