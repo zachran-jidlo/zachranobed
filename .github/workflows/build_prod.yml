@@ -1,0 +1,56 @@
+# This workflow is designed to automate the process of building a release AAB for the 'prod' flavor
+# of a Flutter application and distributing it to AppCenter.
+name: Build Prod
+
+on:
+  # Workflow is triggered manually through the GitHub Actions interface.
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Checkouts the repository with entire commit history, which is needed to calculate the
+      # correct build version code in 'Setup environment' step.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setups Java, Flutter and correct version code before build.
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      # Injects Android keystore file and its associated properties into project before build.
+      # File and properties are stored in GitHub secrets in Base64.
+      - name: Decode and inject keystore
+        env:
+          KEYSTORE_FILE: ${{ secrets.ANDROID_PROD_KEYSTORE_FILE_BASE64 }}
+          KEYSTORE_PROPERTIES: ${{ secrets.ANDROID_PROD_KEYSTORE_PROPERTIES_BASE64 }}
+        run: |
+          echo $KEYSTORE_FILE | base64 --decode > android/keystore/zob_store_keystore.jks
+          echo $KEYSTORE_PROPERTIES | base64 --decode > android/keystore/zob_keystore.properties
+
+      # Builds a release AAB for the 'prod' flavor.
+      - name: Build Android AAB
+        run: flutter build appbundle --release --flavor prod
+
+      # Removes previously injected Android keystore file and its associated properties.
+      - name: Remove keystore files
+        run: |
+          rm android/keystore/zob_store_keystore.jks
+          rm android/keystore/zob_keystore.properties
+
+      # Uploads Android related artifacts (AAB and mappings) from build to GitHub Actions.
+      - name: Upload artifacts
+        uses: ./.github/actions/artifacts-android
+
+      # Upload AAB to the AppCenter slot and distribute it with latest release notes.
+      - name: Distribute to AppCenter
+        uses: ./.github/actions/distribute
+        with:
+          token: ${{ secrets.APPCENTER_TOKEN }}
+          path: 'build/app/outputs/bundle/prodRelease/app-prod-release.aab '
+          application: ${{ secrets.APPCENTER_ANDROID_PROD_APP_NAME }}
+          groups: ${{ vars.APPCENTER_GROUPS }}
