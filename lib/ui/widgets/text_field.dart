@@ -13,6 +13,7 @@ class ZOTextField extends StatelessWidget {
   final String? initialValue;
   final String? supportingText;
   final bool readOnly;
+  final FocusNode? focusNode;
 
   const ZOTextField({
     super.key,
@@ -25,11 +26,12 @@ class ZOTextField extends StatelessWidget {
     this.initialValue,
     this.supportingText,
     this.readOnly = false,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
-    var focus = FocusNode();
+    var internalFocusNode = focusNode ?? FocusNode();
 
     return Column(
       children: [
@@ -47,8 +49,8 @@ class ZOTextField extends StatelessWidget {
             focusedBorder: WidgetStyle.inputBorder,
           ),
           initialValue: initialValue,
-          focusNode: focus,
-          onTapOutside: (event) => focus.unfocus(),
+          focusNode: internalFocusNode,
+          onTapOutside: (event) => internalFocusNode.unfocus(),
           readOnly: readOnly,
         ),
         supportingText != null

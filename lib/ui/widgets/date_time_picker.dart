@@ -8,6 +8,7 @@ class ZODateTimePicker extends StatefulWidget {
   final IconData icon;
   final Function(DateTime?) onDateTimePicked;
   final DateTime? minimumDate;
+  final FocusNode? focusNode;
 
   const ZODateTimePicker({
     super.key,
@@ -17,6 +18,7 @@ class ZODateTimePicker extends StatefulWidget {
     required this.icon,
     required this.onDateTimePicked,
     this.minimumDate,
+    this.focusNode,
   });
 
   @override
@@ -84,6 +86,7 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
         validator: widget.onValidation,
         enabled: false,
         style: const TextStyle(color: Colors.black),
+        focusNode: widget.focusNode,
         decoration: InputDecoration(
           labelText: widget.label,
           labelStyle: TextStyle(color: Colors.grey[600]),
