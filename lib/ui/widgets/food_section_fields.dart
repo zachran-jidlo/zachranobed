@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
@@ -10,10 +11,12 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
+import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class FoodSectionFields extends StatefulWidget {
+  final FormValidationManager formValidationManager;
   final List<FoodInfo> foodSections;
   final List<TextEditingController> controllers;
   final List<bool> checkboxValues;
@@ -21,6 +24,7 @@ class FoodSectionFields extends StatefulWidget {
 
   const FoodSectionFields({
     super.key,
+    required this.formValidationManager,
     required this.foodSections,
     required this.controllers,
     required this.checkboxValues,
@@ -45,6 +49,59 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           widget.controllers[index],
         );
       },
+    );
+  }
+
+  String _createFormFieldKey(int index, FormFieldType type) =>
+      "form$index-field${type.name.toUpperCase()}";
+
+  Widget _buildTextField({
+    required int index,
+    required FormFieldType type,
+    required final String label,
+    required final String? Function(String?) onValidation,
+    final TextInputType? inputType,
+    final List<TextInputFormatter>? textInputFormatters,
+    final Function(String)? onChanged,
+    final String? initialValue,
+    final String? supportingText,
+  }) {
+    final formFieldKey = _createFormFieldKey(index, type);
+    return ZOTextField(
+      label: label,
+      focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+      onValidation: widget.formValidationManager.wrapValidator(
+        formFieldKey,
+        onValidation,
+      ),
+      inputType: inputType,
+      textInputFormatters: textInputFormatters,
+      onChanged: onChanged,
+      initialValue: initialValue,
+      supportingText: supportingText,
+    );
+  }
+
+  Widget _buildDropdown({
+    required int index,
+    required FormFieldType type,
+    required final String hintText,
+    required final List<String> items,
+    required final String? Function(String?) onValidation,
+    required final Function(String) onChanged,
+    final String? initialValue,
+  }) {
+    final formFieldKey = _createFormFieldKey(index, type);
+    return ZODropdown(
+      hintText: hintText,
+      items: items,
+      focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+      onValidation: widget.formValidationManager.wrapValidator(
+        formFieldKey,
+        onValidation,
+      ),
+      onChanged: onChanged,
+      initialValue: initialValue,
     );
   }
 
@@ -76,7 +133,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           ],
         ),
         _buildGap(),
-        ZOTextField(
+        _buildTextField(
+          index: index,
+          type: FormFieldType.foodName,
           label: context.l10n!.foodName,
           onValidation: (val) =>
               val!.isEmpty ? context.l10n!.requiredFieldError : null,
@@ -87,7 +146,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           initialValue: offeredFood.dishName,
         ),
         _buildGap(),
-        ZOTextField(
+        _buildTextField(
+          index: index,
+          type: FormFieldType.allergens,
           label: context.l10n!.allergens,
           onValidation: (val) {
             RegExp allergensRegex =
@@ -110,7 +171,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           supportingText: context.l10n!.allergensSupportingText,
         ),
         _buildGap(),
-        ZODropdown(
+        _buildDropdown(
+          index: index,
+          type: FormFieldType.foodCategory,
           hintText: context.l10n!.foodCategory,
           items: FoodCategory.values
               .map((e) => FoodCategoryHelper.toValue(e, context))
@@ -124,7 +187,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           initialValue: offeredFood.foodCategory,
         ),
         _buildGap(),
-        ZOTextField(
+        _buildTextField(
+          index: index,
+          type: FormFieldType.numberOfServings,
           label: context.l10n!.numberOfServings,
           onValidation: (val) {
             if (val!.isEmpty) {
@@ -161,7 +226,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         !widget.checkboxValues[index]
             ? Column(
                 children: [
-                  ZOTextField(
+                  _buildTextField(
+                    index: index,
+                    type: FormFieldType.numberOfBoxes,
                     label: context.l10n!.numberOfBoxes,
                     onValidation: (val) {
                       if (val!.isEmpty) {
@@ -189,7 +256,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 ],
               )
             : const SizedBox(),
-        ZODropdown(
+        _buildDropdown(
+          index: index,
+          type: FormFieldType.boxType,
           hintText: context.l10n!.boxType,
           items: widget.boxTypes.map((type) => type.name).toList(),
           onValidation: (val) =>
@@ -209,8 +278,13 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           icon: MaterialSymbols.calendar_today,
           controller: controller,
           minimumDate: DateTime.now(),
-          onValidation: (val) =>
-              val!.isEmpty ? context.l10n!.requiredFieldError : null,
+          focusNode: widget.formValidationManager.getFocusNode(
+            _createFormFieldKey(index, FormFieldType.consumeBy),
+          ),
+          onValidation: widget.formValidationManager.wrapValidator(
+            _createFormFieldKey(index, FormFieldType.consumeBy),
+            (val) => val!.isEmpty ? context.l10n!.requiredFieldError : null,
+          ),
           onDateTimePicked: (date) {
             if (date != null) {
               widget.foodSections[index] = widget.foodSections[index].copyWith(
@@ -227,4 +301,17 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   Widget _buildGap() {
     return const SizedBox(height: GapSize.m);
   }
+}
+
+/// The enumeration represents the different types of fields that can be
+/// included in a food donation form. Used to create a key for
+/// [FormValidationManager].
+enum FormFieldType {
+  foodName,
+  allergens,
+  foodCategory,
+  numberOfServings,
+  numberOfBoxes,
+  boxType,
+  consumeBy,
 }
