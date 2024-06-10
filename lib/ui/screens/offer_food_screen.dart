@@ -12,6 +12,7 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
@@ -30,6 +31,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
 
   final _formKey = GlobalKey<FormState>();
+  final _formValidationManager = FormValidationManager();
 
   final List<FoodInfo> _foodSections = [const FoodInfo()];
   final List<TextEditingController> _consumeByControllers = [
@@ -52,6 +54,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   @override
   void dispose() {
+    _formValidationManager.dispose();
     for (var controller in _consumeByControllers) {
       controller.dispose();
     }
@@ -114,6 +117,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                   child: Column(
                     children: <Widget>[
                       FoodSectionFields(
+                        formValidationManager: _formValidationManager,
                         foodSections: _foodSections,
                         controllers: _consumeByControllers,
                         checkboxValues: _checkboxValues,
@@ -157,6 +161,8 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                                 );
                               }
                             }
+                          } else {
+                            _formValidationManager.scrollToFirstError();
                           }
                         },
                       ),
