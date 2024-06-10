@@ -2,9 +2,16 @@
 
 This is a changelog for **ZachranObed** application.
 
-## [1.1.0]
+## [1.2.0]
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+## [1.1.0]
 ### Fixed
 - **ZOB-98** Change how info banner content is displayed.
 - **ZOB-99** Refactor statistics table to support smaller screen sizes.
@@ -15,8 +22,6 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-96** Move FAB to overview screen, add button on empty page.
 - **ZOB-122** Use Ticker for more precision countdown timer.
-
-### Removed
 
 ## [1.0.1]
 ### Fixed
