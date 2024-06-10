@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/features/appConfiguration/entity/api_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/entity/build_configuration.dart';
 
@@ -51,5 +54,7 @@ class AppConfiguration {
   ) {
     this.buildConfiguration = buildConfiguration;
     this.apiConfiguration = apiConfiguration;
+
+    ZOLogger.logMessage("Set up app with build configuration of `${buildConfiguration}` and `${apiConfiguration}`.");
   }
 }
