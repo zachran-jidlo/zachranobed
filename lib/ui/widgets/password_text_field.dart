@@ -63,6 +63,8 @@ class _ZOPasswordTextFieldState extends State<ZOPasswordTextField> {
       initialValue: widget.value,
       focusNode: focus,
       onTapOutside: (event) => focus.unfocus(),
+      autocorrect: false,
+      spellCheckConfiguration: const SpellCheckConfiguration.disabled(),
     );
   }
 }

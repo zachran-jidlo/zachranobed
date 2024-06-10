@@ -72,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ZOTextField(
                         label: context.l10n!.emailAddress,
                         inputType: TextInputType.emailAddress,
+                        disableAutocorrect: true,
                         controller: _emailController,
                         onValidation: (val) => val!.isEmpty
                             ? context.l10n!.requiredFieldError

@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-101** Disable auto-correct for login fields.
 
 ### Removed
 
