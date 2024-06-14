@@ -262,3 +262,58 @@ function isToday(date: Date): boolean {
     date.getDate() === today.getDate()
   );
 }
+
+/*const deliveryId = context.params.deliveryId;
+        const beforeData = change.before.data();
+        const afterData = change.after.data();
+
+        if (beforeData.state !== 'ACCEPTED' && afterData.state === 'ACCEPTED') {
+            const reportData = {
+                deliveryId: deliveryId,
+                donorId: afterData.donorId
+            };
+
+            const reportDocRef = admin.firestore().collection('reports').doc(deliveryId);
+
+            return reportDocRef.set(reportData, { merge: true })
+                .then(() => {
+                    console.log(`Report document for delivery ${deliveryId} successfully updated!`);
+                })
+                .catch((error) => {
+                    console.error(`Error updating report document for delivery ${deliveryId}: `, error);
+                });
+        }*/
+
+export const createReportForCompletedMealDelivery = functions.firestore
+  .document('deliveries/{deliveryId}')
+  .onUpdate(async (change, context) => {
+    const afterData = change.after.data();
+
+    // Check if the state changed to ACCEPTED
+    if (afterData.state === 'ACCEPTED') {
+      const orderId = context.params.deliveryId;
+      const donorId = afterData.donorId;
+      const deliveryDate = afterData.deliveryDate;
+      const meals = afterData.meals;
+
+      // Define the data to be added or updated in the report collection
+      const reportData = {
+        orderId: orderId,
+        donorId: donorId,
+        deliveryDate: deliveryDate,
+        meals: meals
+      };
+
+      // Update the document in the report collection
+      const reportDocRef = admin.firestore().collection('reports').doc(orderId);
+
+      try {
+        await reportDocRef.set(reportData, { merge: true });
+        //console.log(`Report document for order ${orderId} successfully updated!`);
+      } catch (error) {
+        //console.error(`Error updating report document for order ${orderId}: `, error);
+      }
+    } else {
+      //console.log(`Order ${orderId} state did not change to ACCEPTED. No action taken.`);
+    }
+  });
