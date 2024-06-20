@@ -263,34 +263,15 @@ function isToday(date: Date): boolean {
   );
 }
 
-/*const deliveryId = context.params.deliveryId;
-        const beforeData = change.before.data();
-        const afterData = change.after.data();
+/* Creates report after a food delivery gets into `ACCEPTED` state */
 
-        if (beforeData.state !== 'ACCEPTED' && afterData.state === 'ACCEPTED') {
-            const reportData = {
-                deliveryId: deliveryId,
-                donorId: afterData.donorId
-            };
-
-            const reportDocRef = admin.firestore().collection('reports').doc(deliveryId);
-
-            return reportDocRef.set(reportData, { merge: true })
-                .then(() => {
-                    console.log(`Report document for delivery ${deliveryId} successfully updated!`);
-                })
-                .catch((error) => {
-                    console.error(`Error updating report document for delivery ${deliveryId}: `, error);
-                });
-        }*/
-
-export const createReportForCompletedMealDelivery = functions.firestore
+exports.createReportForCompletedMealDelivery = functions.firestore
   .document('deliveries/{deliveryId}')
   .onUpdate(async (change, context) => {
     const afterData = change.after.data();
 
-    // Check if the state changed to ACCEPTED
-    if (afterData.state === 'ACCEPTED') {
+    // Check if the state changed to `ACCEPTED` and it is for food delivery
+    if (afterData.state === 'ACCEPTED' && afterData.type == 'FOOD_DELIVERY') {
       const orderId = context.params.deliveryId;
       const donorId = afterData.donorId;
       const deliveryDate = afterData.deliveryDate;
@@ -301,7 +282,20 @@ export const createReportForCompletedMealDelivery = functions.firestore
         orderId: orderId,
         donorId: donorId,
         deliveryDate: deliveryDate,
-        meals: meals
+        meals: await Promise.all(meals.map(async (meal) => {
+            let mealName = "";
+            const mealData = await getMealById(meal.mealId);
+
+            if (mealData) {
+                mealName = mealData.name;
+            }
+
+            return {
+                count: meal.count,
+                foodBoxCount: meal.foodBoxCount,
+                mealName: mealName
+            }
+        }))
       };
 
       // Update the document in the report collection
@@ -309,11 +303,31 @@ export const createReportForCompletedMealDelivery = functions.firestore
 
       try {
         await reportDocRef.set(reportData, { merge: true });
-        //console.log(`Report document for order ${orderId} successfully updated!`);
+        console.log(`Report document for order ${orderId} successfully updated!`);
       } catch (error) {
-        //console.error(`Error updating report document for order ${orderId}: `, error);
+        console.error(`Error updating report document for order ${orderId}: `, error);
       }
-    } else {
-      //console.log(`Order ${orderId} state did not change to ACCEPTED. No action taken.`);
     }
   });
+
+async function getMealById(mealId) {
+    try {
+        // Create a reference to the document
+        const mealDocRef = admin.firestore().collection('meals').doc(mealId);
+
+        // Fetch the document
+        const mealDoc = await mealDocRef.get();
+
+        if (mealDoc.exists) {
+            // Document exists, return the data
+            return mealDoc.data();
+        } else {
+            // Document does not exist
+            return null;
+        }
+    } catch (error) {
+        // Log the error and return null
+        console.error("Error getting document:", error);
+        return null;
+    }
+}
