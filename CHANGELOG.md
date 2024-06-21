@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-199** Update notification package to 17.1.2.
 
 ### Removed
 
