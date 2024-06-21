@@ -14,6 +14,7 @@ class ZOTextField extends StatelessWidget {
   final String? supportingText;
   final bool readOnly;
   final FocusNode? focusNode;
+  final bool disableAutocorrect;
 
   const ZOTextField({
     super.key,
@@ -27,6 +28,7 @@ class ZOTextField extends StatelessWidget {
     this.supportingText,
     this.readOnly = false,
     this.focusNode,
+    this.disableAutocorrect = false,
   });
 
   @override
@@ -52,6 +54,8 @@ class ZOTextField extends StatelessWidget {
           focusNode: internalFocusNode,
           onTapOutside: (event) => internalFocusNode.unfocus(),
           readOnly: readOnly,
+          autocorrect: !disableAutocorrect,
+          spellCheckConfiguration: disableAutocorrect ? const SpellCheckConfiguration.disabled() : null,
         ),
         supportingText != null
             ? Padding(
