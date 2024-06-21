@@ -2,15 +2,6 @@
 
 This is a changelog for **ZachranObed** application.
 
-## [1.2.0]
-### Added
-
-### Fixed
-
-### Changed
-
-### Removed
-
 ## [1.1.0]
 ### Fixed
 - **ZOB-98** Change how info banner content is displayed.

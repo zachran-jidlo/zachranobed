@@ -10,14 +10,14 @@ import 'package:flutter/widgets.dart';
 mixin LifecycleWatcher<T extends StatefulWidget> on State<T>
     implements WidgetsBindingObserver {
   /// Registers the observer on initState.
-  @override
+  @mustCallSuper
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
 
   /// Removes the observer on dispose to prevent memory leaks.
-  @override
+  @mustCallSuper
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
