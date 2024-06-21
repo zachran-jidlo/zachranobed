@@ -19,16 +19,21 @@ class BoxMovementListTile extends StatelessWidget {
     final countPrefix = boxMovement.count > 0 ? '+' : '';
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: ZOColors.borderColor),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: ZOColors.borderColor,
+            width: 1,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
-        title: Text(boxMovement.type.name),
-        subtitle: Text(formattedDate),
-        trailing: Text('$countPrefix${boxMovement.count} ks'),
-        onTap: () => context.router.push(
-          BoxMovementDetailRoute(boxMovement: boxMovement),
+        child: ListTile(
+          title: Text(boxMovement.type.name),
+          subtitle: Text(formattedDate),
+          trailing: Text('$countPrefix${boxMovement.count} ks'),
+          onTap: () => context.router.push(
+            BoxMovementDetailRoute(boxMovement: boxMovement),
+          ),
         ),
       ),
     );

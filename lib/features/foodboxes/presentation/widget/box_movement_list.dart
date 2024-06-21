@@ -11,8 +11,9 @@ class BoxMovementList extends StatelessWidget {
   final String title;
   final DateTime deliveredFrom;
   final DateTime deliveredTo;
+  final _repository = GetIt.I<FoodBoxRepository>();
 
-  const BoxMovementList({
+  BoxMovementList({
     super.key,
     required this.title,
     required this.deliveredFrom,
@@ -21,8 +22,6 @@ class BoxMovementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = GetIt.I<FoodBoxRepository>();
-
     return MultiSliver(
       pushPinnedChildren: true,
       children: <Widget>[
@@ -41,7 +40,7 @@ class BoxMovementList extends StatelessWidget {
         ),
         const SizedBox(height: GapSize.xs),
         StreamBuilder<Iterable<BoxMovement>>(
-          stream: repository.observeHistory(
+          stream: _repository.observeHistory(
             entityId: HelperService.getCurrentUser(context)!.entityId,
             from: deliveredFrom,
             to: deliveredTo,
