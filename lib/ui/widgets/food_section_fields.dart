@@ -15,6 +15,9 @@ import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
+import '../../enums/food_form_field_type.dart';
+import 'food_alergens_text_field.dart';
+
 class FoodSectionFields extends StatefulWidget {
   final FormValidationManager formValidationManager;
   final List<FoodInfo> foodSections;
@@ -52,9 +55,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     );
   }
 
-  String _createFormFieldKey(int index, FormFieldType type) =>
-      "form$index-field${type.name.toUpperCase()}";
-
   Widget _buildTextField({
     required int index,
     required FormFieldType type,
@@ -66,7 +66,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final String? initialValue,
     final String? supportingText,
   }) {
-    final formFieldKey = _createFormFieldKey(index, type);
+    final formFieldKey = type.createFormFieldKey(index);
     return ZOTextField(
       label: label,
       focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
@@ -91,7 +91,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     required final Function(String) onChanged,
     final String? initialValue,
   }) {
-    final formFieldKey = _createFormFieldKey(index, type);
+    final formFieldKey = type.createFormFieldKey(index);
     return ZODropdown(
       hintText: hintText,
       items: items,
@@ -146,29 +146,17 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           initialValue: offeredFood.dishName,
         ),
         _buildGap(),
-        _buildTextField(
+        FoodAllergensTextField(
           index: index,
-          type: FormFieldType.allergens,
           label: context.l10n!.allergens,
-          onValidation: (val) {
-            RegExp allergensRegex =
-                RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
-            if (val!.isEmpty) {
-              return context.l10n!.requiredFieldError;
-            }
-            if (!allergensRegex.hasMatch(val)) {
-              return context.l10n!.invalidAllergensFormatError;
-            }
-            return null;
-          },
           onChanged: (val) {
             widget.foodSections[index] =
                 widget.foodSections[index].copyWith(allergens: val.split(','));
           },
+          formValidationManager: widget.formValidationManager,
           initialValue: offeredFood.allergens
               ?.toString()
               .substring(1, offeredFood.allergens!.toString().length - 1),
-          supportingText: context.l10n!.allergensSupportingText,
         ),
         _buildGap(),
         _buildDropdown(
@@ -279,10 +267,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           controller: controller,
           minimumDate: DateTime.now(),
           focusNode: widget.formValidationManager.getFocusNode(
-            _createFormFieldKey(index, FormFieldType.consumeBy),
+            FormFieldType.consumeBy.createFormFieldKey(index),
           ),
           onValidation: widget.formValidationManager.wrapValidator(
-            _createFormFieldKey(index, FormFieldType.consumeBy),
+            FormFieldType.consumeBy.createFormFieldKey(index),
             (val) => val!.isEmpty ? context.l10n!.requiredFieldError : null,
           ),
           onDateTimePicked: (date) {
@@ -301,17 +289,4 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   Widget _buildGap() {
     return const SizedBox(height: GapSize.m);
   }
-}
-
-/// The enumeration represents the different types of fields that can be
-/// included in a food donation form. Used to create a key for
-/// [FormValidationManager].
-enum FormFieldType {
-  foodName,
-  allergens,
-  foodCategory,
-  numberOfServings,
-  numberOfBoxes,
-  boxType,
-  consumeBy,
 }
