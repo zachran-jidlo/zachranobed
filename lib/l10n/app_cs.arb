@@ -7,7 +7,6 @@
     "wrongCredentialsError": "Špatné přihlašovací údaje.",
     "requiredFieldError": "Vyplňte prosím toto pole",
     "invalidNumberError": "Zadejte prosím validní číslo",
-    "invalidAllergensFormatError": "Zadejte prosím alergeny ve správném formátu",
     "requiredDropdownError": "Vyberte prosím nějakou možnost",
     "foodCategoryWarm": "Teplý pokrm",
     "foodCategoryCooled": "Zchlazený pokrm",
