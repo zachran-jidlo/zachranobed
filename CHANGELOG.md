@@ -11,6 +11,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-101** Disable auto-correct for login fields.
 - **ZOB-199** Update notification package to 17.1.2.
+- **ZOB-214** Change Android launcher icon to rounded.
 
 ### Removed
 
