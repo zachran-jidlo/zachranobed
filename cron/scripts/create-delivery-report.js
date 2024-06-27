@@ -1,5 +1,5 @@
-const firebase = require('firebase/app');
-require('firebase/firestore');
+const { initializeApp } = require('firebase/app');
+const { getFirestore, collection, addDoc } = require('firebase/firestore');
 
 // Firebase configuration
 const firebaseConfig = {
@@ -12,19 +12,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Function to create a new report
-function createReport(name) {
-  db.collection('reports').add({
-    name: name
-  }).then((docRef) => {
+async function createReport(name) {
+  try {
+    const docRef = await addDoc(collection(db, 'reports'), { name: name });
     console.log('Document successfully written with ID: ', docRef.id);
-  }).catch(error => {
+  } catch (error) {
     console.error('Error writing document: ', error);
-  });
+  }
 }
 
 // Call the function with the desired name parameter
