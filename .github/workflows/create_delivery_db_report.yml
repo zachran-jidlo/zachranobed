@@ -23,7 +23,7 @@ jobs:
       run: npm install
 
     - name: Run Firestore modification script
-      run: node cron/scripts/modify-firestore.js
+      run: node cron/scripts/create-delivery-report.js
       env:
         FIREBASE_API_KEY: "AIzaSyCyU8qokxKyqL8UbUFdOMek0cbcWtsRXCg"
         FIREBASE_AUTH_DOMAIN: "zachran-obed-dev.firebaseapp.com"
