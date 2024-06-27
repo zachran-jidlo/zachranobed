@@ -2,7 +2,7 @@ name: Scheduled Firestore Modification
 
 on:
   schedule:
-    - cron: '0 * * * *'  # This runs the script every hour at the start of the hour
+    - cron: '*/15 * * * *'  # This runs the script every hour at the start of the hour
 
 jobs:
   modify-firestore:
