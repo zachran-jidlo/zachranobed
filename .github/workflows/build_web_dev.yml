@@ -26,3 +26,5 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'zachran-jidlo/zachranobed-web-dev'
+          token: ${{ secrets.WEB_GITHUB_TOKEN }}
+          path: destination
