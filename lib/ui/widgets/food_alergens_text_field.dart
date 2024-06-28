@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-import '../../enums/food_form_field_type.dart';
 import 'form/form_validation_manager.dart';
 
 class FoodAllergensTextField extends StatefulWidget {
@@ -22,7 +22,7 @@ class FoodAllergensTextField extends StatefulWidget {
   });
 
   @override
-  _FoodAllergensTextFieldState createState() => _FoodAllergensTextFieldState();
+  State<FoodAllergensTextField> createState() => _FoodAllergensTextFieldState();
 }
 
 class _FoodAllergensTextFieldState extends State<FoodAllergensTextField> {
@@ -30,13 +30,13 @@ class _FoodAllergensTextFieldState extends State<FoodAllergensTextField> {
 
   @override
   Widget build(BuildContext context) {
-    String _formFieldKey =
+    String formFieldKey =
         FormFieldType.allergens.createFormFieldKey(widget.index);
     return ZOTextField(
       label: widget.label,
-      focusNode: widget.formValidationManager.getFocusNode(_formFieldKey),
+      focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
       onValidation: widget.formValidationManager.wrapValidator(
-        _formFieldKey,
+        formFieldKey,
         (val) {
           RegExp allergensRegex =
               RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');

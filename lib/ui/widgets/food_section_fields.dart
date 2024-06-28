@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/food_category.dart';
+import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
@@ -15,7 +16,6 @@ import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-import '../../enums/food_form_field_type.dart';
 import 'food_alergens_text_field.dart';
 
 class FoodSectionFields extends StatefulWidget {
