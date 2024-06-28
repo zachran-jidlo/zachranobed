@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-84** Fix display of duplicated messages on allergens field.
 - **ZOB-200** Fix the issue with wrong layout borders on food boxes list.
 
 ### Changed
