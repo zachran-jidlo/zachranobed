@@ -23,7 +23,7 @@ runs:
     - name: Pushes files to the GitHub Pages repository
       shell: bash
       run: |
-        cd github-page-repository
+        cd github-pages-repository
         git rm *
         cp -r ../build/web/* .
         git config user.name "ZachranJidlo Bot"
