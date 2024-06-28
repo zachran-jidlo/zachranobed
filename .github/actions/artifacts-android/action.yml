@@ -1,0 +1,17 @@
+name: 'Upload Android Artifacts'
+description: 'Store APKs, AABs and mapping in artifacts'
+
+runs:
+  using: 'composite'
+
+  steps:
+    # Uploads build artifacts generated during an Android build process. This allows easy access
+    # and preservation of these build outputs.
+    - name: Upload Android artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-artifacts
+        path: |
+          **/*.apk
+          **/*.aab
+          **/mapping.txt
