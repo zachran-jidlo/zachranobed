@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
@@ -90,6 +91,11 @@ class Notifications {
   /// notifications and local notifications by calling the corresponding
   /// initialization methods.
   Future<void> initNotifications() async {
+    if (kIsWeb) {
+      // Disable notifications for web
+      return;
+    }
+
     await _firebaseMessaging.requestPermission();
 
     initPushNotifications();
