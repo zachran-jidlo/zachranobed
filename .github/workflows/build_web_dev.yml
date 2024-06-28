@@ -8,19 +8,19 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # Checkouts the repository with entire commit history, which is needed to calculate the
-      # correct build version code in 'Setup environment' step.
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      # Setups Java, Flutter and correct version code before build.
-      - name: Setup environment
-        uses: ./.github/actions/setup
-
-      - name: Build web
-        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-dev/" --dart-define=FLUTTER_APP_FLAVOR=dev
+#      # Checkouts the repository with entire commit history, which is needed to calculate the
+#      # correct build version code in 'Setup environment' step.
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      # Setups Java, Flutter and correct version code before build.
+#      - name: Setup environment
+#        uses: ./.github/actions/setup
+#
+#      - name: Build web
+#        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-dev/" --dart-define=FLUTTER_APP_FLAVOR=dev
 
       - name: Checkout web repository
         uses: actions/checkout@v4
