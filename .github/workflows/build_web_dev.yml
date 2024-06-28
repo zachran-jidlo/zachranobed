@@ -1,0 +1,20 @@
+name: Build Web Dev
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build web
+        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-dev/" --dart-define=FLUTTER_APP_FLAVOR=dev
+
+      - name: Checkout web repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'https://github.com/zachran-jidlo/zachranobed-web-dev'
