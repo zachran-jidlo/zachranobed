@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         cd github-pages-repository
-        git rm *
+        git rm -r .
         cp -r ../build/web/* .
         git config user.name "ZachranJidlo Bot"
         git config user.email "zachran-jidlo-bot@users.noreply.github.com"
