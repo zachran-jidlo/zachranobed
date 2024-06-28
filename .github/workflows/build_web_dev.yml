@@ -25,4 +25,4 @@ jobs:
       - name: Checkout web repository
         uses: actions/checkout@v4
         with:
-          repository: 'https://github.com/zachran-jidlo/zachranobed-web-dev'
+          repository: 'zachran-jidlo/zachranobed-web-dev'
