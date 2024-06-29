@@ -80,8 +80,9 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  image_path_ios: "assets/zj_app_icon.png"
   ios: true
+  android: false
   image_path: "assets/zj_app_icon.png"
   min_sdk_android:
 
