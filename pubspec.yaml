@@ -80,10 +80,10 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_launcher_icons:
-  image_path_android: "assets/zj_app_rounded_icon.png"
   image_path_ios: "assets/zj_app_icon.png"
-  android: "launcher_icon"
   ios: true
+  android: false
+  image_path: "assets/zj_app_icon.png"
   min_sdk_android:
 
 # For information on the generic Dart part of this file, see the
