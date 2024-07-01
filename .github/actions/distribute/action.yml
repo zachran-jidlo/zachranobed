@@ -29,16 +29,12 @@ runs:
       shell: bash
       run: npm install -g appcenter-cli
 
-    # Logs in into AppCenter with login token stored in GitHub secrets.
-    - name: Log in to AppCenter
-      shell: bash
-      run: appcenter login --token ${{ inputs.token }}
-
     # Creates a new distribution with release notes created before.
     - name: Upload a file to AppCenter
       shell: bash
       run: |
         appcenter distribute release \
+          --token ${{ inputs.token }} \
           --app ${{ inputs.application }} \
           --file ${{ inputs.path }} \
           --group ${{ inputs.groups }} \
