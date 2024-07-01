@@ -73,7 +73,7 @@ jobs:
         uses: ./.github/actions/distribute
         with:
           token: ${{ secrets.APPCENTER_TOKEN }}
-          path: 'build/ios/ipa/Zachraň Oběd Stage.ipa'
+          path: '"build/ios/ipa/Zachraň Oběd Stage.ipa"'
           application: ${{ secrets.APPCENTER_IOS_STAGE_APP_NAME }}
           groups: ${{ vars.APPCENTER_GROUPS }}
 
