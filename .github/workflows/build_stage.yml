@@ -52,6 +52,14 @@ jobs:
       - name: Build iOS IPA
         run: flutter build ipa --release --flavor stage --export-options-plist=ios/ExportOptionsStage.plist
 
+      # Important! Cleanup: remove the certificate and provisioning profile from the runner
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+          security unlock-keychain ~/Library/Keychains/login.keychain-db
+
       # Uploads build artifacts generated during an iOS build process. This allows easy access
       # and preservation of these build outputs.
       - name: Upload iOS artifacts
@@ -69,13 +77,6 @@ jobs:
           path: '"build/ios/ipa/Zachraň Oběd Stage.ipa"'
           application: ${{ secrets.APPCENTER_IOS_STAGE_APP_NAME }}
           groups: ${{ vars.APPCENTER_GROUPS }}
-
-      # Important! Cleanup: remove the certificate and provisioning profile from the runner
-      - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
-        run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
 
 #      # Builds a release APK for the 'stage' flavor.
 #      - name: Build Android APK
