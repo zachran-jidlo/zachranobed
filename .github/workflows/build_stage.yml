@@ -68,6 +68,15 @@ jobs:
           path: |
             **/*.ipa
 
+      # Upload IPA to the AppCenter slot and distribute it with latest release notes.
+      - name: Distribute to AppCenter
+        uses: ./.github/actions/distribute
+        with:
+          token: ${{ secrets.APPCENTER_TOKEN }}
+          path: 'build/ios/ipa/Zachraň Oběd Stage.ipa'
+          application: ${{ secrets.APPCENTER_IOS_STAGE_APP_NAME }}
+          groups: ${{ vars.APPCENTER_GROUPS }}
+
 #      # Builds a release APK for the 'stage' flavor.
 #      - name: Build Android APK
 #        run: flutter build apk --release --flavor stage
