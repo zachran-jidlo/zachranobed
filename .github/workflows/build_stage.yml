@@ -50,7 +50,7 @@ jobs:
 
       # Builds a release IPA for the 'stage' flavor.
       - name: Build iOS IPA
-        run: flutter build ipa --release --flavor stage --export-method enterprise
+        run: flutter build ipa --release --flavor stage ---export-options-plist=ios/ExportOptionsStage.plist
 
       # Important! Cleanup: remove the certificate and provisioning profile from the runner
       - name: Clean up keychain and provisioning profile
