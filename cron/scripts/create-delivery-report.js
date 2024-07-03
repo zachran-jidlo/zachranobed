@@ -1,4 +1,4 @@
-const { initializeApp } = require('firebase/app');
+/*const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc } = require('firebase/firestore');
 
 // Firebase configuration
@@ -26,4 +26,6 @@ async function createReport(name) {
 }
 
 // Call the function with the desired name parameter
-createReport("Testing report 1");
+createReport("Testing report 1");*/
+
+console.log("Hello world");
