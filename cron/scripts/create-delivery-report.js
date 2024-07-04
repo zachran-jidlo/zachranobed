@@ -1,5 +1,6 @@
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc } = require('firebase/firestore');
+const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Firebase configuration
 const firebaseConfig = {
@@ -14,16 +15,26 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-// Function to create a new report
-async function createReport(name) {
+// Sign in user
+async function signInAndCreateReport(email, password, reportName) {
   try {
-    const docRef = await addDoc(collection(db, 'reports'), { name: name });
+    // Sign in the user
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log('User signed in:', userCredential.user.uid);
+
+    // Create a new report
+    const docRef = await addDoc(collection(db, 'reports'), { name: reportName });
     console.log('Document successfully written with ID: ', docRef.id);
   } catch (error) {
-    console.error('Error writing document: ', error);
+    console.error('Error:', error);
   }
 }
 
+// Replace with your Firebase Authentication email and password
+const email = process.env.FIREBASE_REPORT_USER_EMAIL;
+const password = process.env.FIREBASE_REPORT_USER_PASSWORD;
+
 // Call the function with the desired name parameter
-createReport("Testing report 1");
+signInAndCreateReport(email, password, "Testing report 1");
