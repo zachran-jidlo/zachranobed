@@ -1,4 +1,4 @@
-name: Build Prod
+name: Build Android Prod
 
 on:
   workflow_dispatch:

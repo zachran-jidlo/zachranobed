@@ -1,4 +1,4 @@
-name: Build Stage
+name: Build Android Stage
 
 on:
   workflow_dispatch:
