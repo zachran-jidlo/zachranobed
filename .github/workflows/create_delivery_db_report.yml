@@ -20,7 +20,9 @@ jobs:
         node-version: '14'  # Specify the Node.js version you need
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        cd /cron/scripts
+        npm install
 
     - name: List node_modules
       run: ls node_modules
