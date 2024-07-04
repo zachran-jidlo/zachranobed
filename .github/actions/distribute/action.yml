@@ -1,0 +1,45 @@
+name: 'Distribute'
+description: 'Distributes an application to AppCenter'
+
+inputs:
+  token:
+    description: 'The AppCenter token'
+    required: true
+  path:
+    description: 'The path to the file'
+    required: true
+  application:
+    description: 'The application ID'
+    required: true
+  groups:
+    description: 'The list of distribution groups'
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    # Extracts latest release notes from CHANGELOG.md.
+    - name: Prepare release notes
+      shell: bash
+      run: ./scripts/last_changelog_section.sh CHANGELOG.md > RELEASE_NOTES.md
+
+    # Installs AppCenter command line interface.
+    - name: Install AppCenter CLI
+      shell: bash
+      run: npm install -g appcenter-cli
+
+    # Logs in into AppCenter with login token stored in GitHub secrets.
+    - name: Log in to AppCenter
+      shell: bash
+      run: appcenter login --token ${{ inputs.token }}
+
+    # Creates a new distribution with release notes created before.
+    - name: Upload a file to AppCenter
+      shell: bash
+      run: |
+        appcenter distribute release \
+          --app ${{ inputs.application }} \
+          --file ${{ inputs.path }} \
+          --group ${{ inputs.groups }} \
+          --release-notes-file RELEASE_NOTES.md
