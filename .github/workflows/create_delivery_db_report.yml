@@ -27,9 +27,9 @@ jobs:
     - name: Run Firestore modification script
       run: node cron/scripts/create-delivery-report.js
       env:
-        FIREBASE_API_KEY: "AIzaSyCyU8qokxKyqL8UbUFdOMek0cbcWtsRXCg"
-        FIREBASE_AUTH_DOMAIN: "zachran-obed-dev.firebaseapp.com"
-        FIREBASE_PROJECT_ID: "zachran-obed-dev"
-        FIREBASE_STORAGE_BUCKET: "zachran-obed-dev.appspot.com"
-        FIREBASE_MESSAGING_SENDER_ID: "806560021540"
-        FIREBASE_APP_ID: "1:806560021540:web:9be29b3e13dced8ad82cb1"
+        FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+        FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+        FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
