@@ -1,6 +1,6 @@
-# This workflow is designed to automate the process of building a release APK for the 'dev' flavor
+# This workflow is designed to automate the process of building a release APK for the 'stage' flavor
 # of a Flutter application and distributing it to AppCenter.
-name: Build Dev
+name: Build Android Stage
 
 on:
   # Workflow is triggered manually through the GitHub Actions interface.
@@ -22,9 +22,9 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup
 
-      # Builds a release APK for the 'dev' flavor.
+      # Builds a release APK for the 'stage' flavor.
       - name: Build Android APK
-        run: flutter build apk --release --flavor dev
+        run: flutter build apk --release --flavor stage
 
       # Uploads Android related artifacts (APK and mappings) from build to GitHub Actions.
       - name: Upload artifacts
@@ -35,6 +35,6 @@ jobs:
         uses: ./.github/actions/distribute
         with:
           token: ${{ secrets.APPCENTER_TOKEN }}
-          path: 'build/app/outputs/flutter-apk/app-dev-release.apk'
-          application: ${{ secrets.APPCENTER_ANDROID_DEV_APP_NAME }}
+          path: 'build/app/outputs/flutter-apk/app-stage-release.apk'
+          application: ${{ secrets.APPCENTER_ANDROID_STAGE_APP_NAME }}
           groups: ${{ vars.APPCENTER_GROUPS }}

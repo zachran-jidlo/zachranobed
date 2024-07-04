@@ -1,6 +1,6 @@
 # This workflow is designed to automate the process of building a release AAB for the 'prod' flavor
 # of a Flutter application and distributing it to AppCenter.
-name: Build Prod
+name: Build Android Prod
 
 on:
   # Workflow is triggered manually through the GitHub Actions interface.
