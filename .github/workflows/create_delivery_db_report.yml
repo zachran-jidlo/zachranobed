@@ -24,9 +24,6 @@ jobs:
         cd ./cron/scripts
         npm install
 
-    - name: List node_modules
-      run: ls node_modules
-
     - name: Run Firestore modification script
       run: node cron/scripts/create-delivery-report.js
       env:
