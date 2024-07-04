@@ -2,7 +2,7 @@ name: Scheduled Firestore Modification
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # This runs the script every hour at the start of the hour
+    - cron: '*/5 * * * *'  # This runs the script every hour at the start of the hour
 
 jobs:
   modify-firestore:
@@ -21,7 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd /cron/scripts
+        cd ./cron/scripts
         npm install
 
     - name: List node_modules
