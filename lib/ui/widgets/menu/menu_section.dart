@@ -16,8 +16,14 @@ class MenuSection extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: [Text(label, style: const TextStyle(fontSize: FontSize.s))],
+          children: [
+            Text(
+              label,
+              style: Theme.of(context).textTheme.titleMedium,
+            )
+          ],
         ),
+        const SizedBox(height: 8),
         for (var item in menuItems) item,
         const SizedBox(height: GapSize.m),
       ],
