@@ -108,6 +108,8 @@
     "appTermsCheckboxLabelUnderlined": "podmínkami účasti na projektu.",
     "appTermsConfirm": "Potvrdit",
     "appTermsNotAcceptedError": "Pro pokračování do aplikace musíte nejdříve souhlasit s podmínkami účasti na projektu.",
+    "contactsMenuLabel": "Všechny kontakty",
+    "contactsTitle": "Všechny kontakty",
     "contactsPreferredLabel": "Preferovaný kontakt",
     "contactsNoPhoneLabel": "Telefonní číslo neuvedeno"
 }

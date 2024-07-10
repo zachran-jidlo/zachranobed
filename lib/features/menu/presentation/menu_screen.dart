@@ -64,8 +64,12 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           child: Column(
             children: [
-              MenuUserInfo(
-                  user: HelperService.getCurrentUser(context)!
+              MenuUserInfo(user: HelperService.getCurrentUser(context)!),
+              const SizedBox(height: 8.0),
+              MenuItem(
+                leadingIcon: Icons.call_outlined,
+                text: context.l10n!.contactsMenuLabel,
+                onPressed: () => context.router.push(const ContactsRoute()),
               ),
               const SizedBox(height: GapSize.m),
               MenuSection(
@@ -110,12 +114,6 @@ class _MenuScreenState extends State<MenuScreen> {
               MenuSection(
                 label: context.l10n!.more,
                 menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.star_border,
-                    text: context.l10n!.rate,
-                    isVisible: false,
-                  ),
-                  const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.security,
                     text: context.l10n!.privacyProtection,
@@ -170,8 +168,7 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void showDebugScreenIfPossible() {
-    bool areDevtoolsEnabled =
-        _checkIfDevtoolsAreEnabledUseCase.invoke();
+    bool areDevtoolsEnabled = _checkIfDevtoolsAreEnabledUseCase.invoke();
     if (areDevtoolsEnabled) context.router.push(const DebugRoute());
   }
 }

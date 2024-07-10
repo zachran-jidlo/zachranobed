@@ -22,6 +22,10 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: ContactsRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: ChangePasswordRoute.page,
           guards: [AuthGuard()],
         ),
