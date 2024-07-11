@@ -66,9 +66,21 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
       }
 
       if (data.type === 'FOOD_DELIVERY') {
-        documentsByMonth[yearMonth].foodDeliveries.push({ id: doc.id, ...data });
+        documentsByMonth[yearMonth].foodDeliveries.push({
+            id: doc.id,
+            deliveryDate: doc.deliveryDate,
+            donorId: doc.donorId,
+            recipientId: doc.recipientId,
+            meals: doc.meals
+        });
       } else if (data.type === 'BOX_DELIVERY') {
-        documentsByMonth[yearMonth].boxDeliveries.push({ id: doc.id, ...data });
+        documentsByMonth[yearMonth].boxDeliveries.push({
+            id: doc.id,
+            deliveryDate: doc.deliveryDate,
+            donorId: doc.donorId,
+            recipientId: doc.recipientId,
+            foodBoxes: doc.foodBoxes
+        });
       }
     });
 
