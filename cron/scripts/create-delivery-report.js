@@ -2,7 +2,8 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
-// Firebase configuration
+// Values
+
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -12,12 +13,21 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID
 };
 
-// Initialize Firebase
+// User credentials setup
+const email = process.env.FIREBASE_REPORT_USER_EMAIL;
+const password = process.env.FIREBASE_REPORT_USER_PASSWORD;
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Sign in user and create a report
+const timeout = setTimeout(() => {
+  console.error('Script timed out');
+  process.exit(1);
+}, 10 * 60 * 1000); // Set timeout to 10 minutes
+
+// Functions
+
 async function signInAndCreateReport(email, password, reportName) {
   try {
     // Sign in the user
@@ -25,8 +35,12 @@ async function signInAndCreateReport(email, password, reportName) {
     console.log('User signed in:', userCredential.user.uid);
 
     // Create a new report
-    const docRef = await addDoc(collection(db, 'reports'), { name: reportName });
-    console.log('Document successfully written with ID: ', docRef.id);
+    // const docRef = await addDoc(collection(db, 'reports'), { name: reportName });
+    // console.log('Document successfully written with ID: ', docRef.id);
+
+    const test = await fetchAndSortDocumentsByMonth("deliveries");
+    console.log("The sorted deliveries are:")
+    console.log(test)
 
     // Clear timeout on successful execution
     clearTimeout(timeout);
@@ -37,15 +51,33 @@ async function signInAndCreateReport(email, password, reportName) {
   }
 }
 
-// Set a timeout to prevent the script from running indefinitely
-const timeout = setTimeout(() => {
-  console.error('Script timed out');
-  process.exit(1);
-}, 25 * 60 * 1000); // Set timeout to 25 minutes
+async function fetchAndSortDocumentsByMonth(collectionName) {
+  try {
+    const snapshot = await db.collection(collectionName).get();
 
-// Replace with your Firebase Authentication email and password
-const email = process.env.FIREBASE_REPORT_USER_EMAIL;
-const password = process.env.FIREBASE_REPORT_USER_PASSWORD;
+    const documentsByMonth = {};
+
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const deliveryDate = data.deliveryDate.toDate(); // Convert Firestore Timestamp to JavaScript Date
+      const yearMonth = `${deliveryDate.getFullYear()}-${String(deliveryDate.getMonth() + 1).padStart(2, '0')}`;
+
+      if (!documentsByMonth[yearMonth]) {
+        documentsByMonth[yearMonth] = [];
+      }
+
+      documentsByMonth[yearMonth].push({ id: doc.id, ...data });
+    });
+
+    // Convert the object to an array of arrays
+    const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
+
+    return sortedDocuments;
+  } catch (error) {
+    console.error("Error fetching documents: ", error);
+    return [];
+  }
+}
 
 // Call the function with the desired name parameter
 signInAndCreateReport(email, password, "Testing report 1");
