@@ -35,6 +35,13 @@ class EntityService {
     return null;
   }
 
+  /// Returns a [Future] that completes with a [EntityDto] object if an entity
+  /// document with the provided [entityId] is found in the Firestore collection
+  /// and `null` if no entity is found.
+  Future<EntityDto?> getEntity(String entityId) {
+    return _collection.doc(entityId).get().then((e) => e.data());
+  }
+
   Future<void> saveAppTermsVersion(String entityId, int version) async {
     return _collection
         .doc(entityId)
