@@ -53,8 +53,8 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
 
     const documentsByMonth = {};
 
-    for (const doc of snapshot.docs) {
-      const data = doc.data();
+    for (const docSnapshot of snapshot.docs) {
+      const data = docSnapshot.data();
       const deliveryDate = data.deliveryDate.toDate(); // Convert Firestore Timestamp to JavaScript Date
       const yearMonth = `${deliveryDate.getFullYear()}-${String(deliveryDate.getMonth() + 1).padStart(2, '0')}`;
 
@@ -66,7 +66,7 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
       }
 
       if (data.type === 'FOOD_DELIVERY') {
-        const mealsWithNames = await Promise.all(
+        const mealsWithNames = data.meals ? await Promise.all(
           data.meals.map(async (meal) => {
             const mealName = await getMealName(meal.mealId);
             return {
@@ -74,56 +74,13 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
               name: mealName
             };
           })
-        );
+        ) : [];
 
         documentsByMonth[yearMonth].foodDeliveries.push({
-          id: doc.id,
+          id: docSnapshot.id,
           deliveryDate: data.deliveryDate,
           donorId: data.donorId,
           recipientId: data.recipientId,
           meals: mealsWithNames
         });
-      } else if (data.type === 'BOX_DELIVERY') {
-        const boxDelivery = {
-          id: doc.id,
-          deliveryDate: data.deliveryDate,
-          donorId: data.donorId,
-          recipientId: data.recipientId,
-          foodBoxes: data.foodBoxes // Assuming this structure doesn't need modification
-        };
-
-        documentsByMonth[yearMonth].boxDeliveries.push(boxDelivery);
-      }
-    }
-
-    // Create or update documents in the reports collection
-    for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
-      const reportDocRef = doc(db, "reports", `${yearMonth}-report`);
-      await setDoc(reportDocRef, docs, { merge: true });
-    }
-
-    // Convert the object to an array of arrays for logging
-    const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
-
-    return sortedDocuments;
-  } catch (error) {
-    console.error("Error fetching documents: ", error);
-    return [];
-  }
-}
-
-async function getMealName(mealId) {
-  // Fetch meal names for each mealId in the meals array
-  const mealDocRef = doc(db, "meals", mealId);
-  const mealDocSnapshot = await getDoc(mealDocRef);
-
-  if (mealDocSnapshot.exists()) {
-    const mealData = mealDocSnapshot.data();
-    return mealData.name;
-  } else {
-    return "Not found";
-  }
-}
-
-// Call the function with the desired name parameter
-signInAndCreateReport(email, password, "Testing report 1");
+      } else if (data
