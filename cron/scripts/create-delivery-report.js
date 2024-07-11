@@ -66,12 +66,22 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
       }
 
       if (data.type === 'FOOD_DELIVERY') {
+        const mealsWithNames = await Promise.all(
+          data.meals.map(async (meal) => {
+            const mealName = await getMealName(meal.mealId);
+            return {
+              count: meal.count,
+              name: mealName
+            };
+          })
+        );
+
         documentsByMonth[yearMonth].foodDeliveries.push({
-            id: doc.id,
-            deliveryDate: data.deliveryDate,
-            donorId: data.donorId,
-            recipientId: data.recipientId,
-            meals: data.meals
+          id: doc.id,
+          deliveryDate: data.deliveryDate,
+          donorId: data.donorId,
+          recipientId: data.recipientId,
+          meals: mealsWithNames
         });
       } else if (data.type === 'BOX_DELIVERY') {
         const boxDelivery = {
@@ -79,23 +89,8 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
           deliveryDate: data.deliveryDate,
           donorId: data.donorId,
           recipientId: data.recipientId,
-          foodBoxes: []
+          foodBoxes: data.foodBoxes // Assuming this structure doesn't need modification
         };
-
-        // Fetch meal names for each mealId in the meals array
-        for (const meal of data.meals) {
-          const mealDocRef = doc(db, "meals", meal.mealId);
-          const mealDocSnapshot = await getDoc(mealDocRef);
-          if (mealDocSnapshot.exists()) {
-            const mealData = mealDocSnapshot.data();
-            boxDelivery.foodBoxes.push({
-              mealName: mealData.name,
-              // Copy other parameters from meal object as needed
-              ...meal,
-              mealId: undefined // Remove mealId from the object
-            });
-          }
-        }
 
         documentsByMonth[yearMonth].boxDeliveries.push(boxDelivery);
       }
@@ -114,6 +109,19 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
   } catch (error) {
     console.error("Error fetching documents: ", error);
     return [];
+  }
+}
+
+async function getMealName(mealId) {
+  // Fetch meal names for each mealId in the meals array
+  const mealDocRef = doc(db, "meals", mealId);
+  const mealDocSnapshot = await getDoc(mealDocRef);
+
+  if (mealDocSnapshot.exists()) {
+    const mealData = mealDocSnapshot.data();
+    return mealData.name;
+  } else {
+    return "Not found";
   }
 }
 
