@@ -1,9 +1,8 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, addDoc } = require('firebase/firestore');
+const { getFirestore, collection, getDocs } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Values
-
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -53,7 +52,8 @@ async function signInAndCreateReport(email, password, reportName) {
 
 async function fetchAndSortDocumentsByMonth(collectionName) {
   try {
-    const snapshot = await collection(db, collectionName).get();//await db.collection(collectionName).get();
+    const collectionRef = collection(db, collectionName);
+    const snapshot = await getDocs(collectionRef);
 
     const documentsByMonth = {};
 
