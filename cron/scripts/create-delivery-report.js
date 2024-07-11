@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, addDoc, doc, getDoc, setDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Values
@@ -68,6 +68,17 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
 
       documentsByMonth[yearMonth].push({ id: doc.id, ...data });
     });
+
+    // Create new collections for each month and add or update documents
+    for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
+      const newCollectionName = `${yearMonth}-report`;
+      for (const docData of docs) {
+        const docRef = doc(db, newCollectionName, docData.id);
+
+        // Use setDoc with merge: true to update the document if it exists, or create it if it doesn't
+        await setDoc(docRef, docData, { merge: true });
+      }
+    }
 
     // Convert the object to an array of arrays
     const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
