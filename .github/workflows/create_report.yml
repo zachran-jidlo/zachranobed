@@ -1,8 +1,9 @@
 name: Scheduled Firestore Modification
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # This runs the script every 5 minutes
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '*/5 * * * *'  # This runs the script every 5 minutes
 
 jobs:
   modify-firestore:
