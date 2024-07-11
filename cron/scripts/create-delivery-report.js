@@ -83,4 +83,47 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
           recipientId: data.recipientId,
           meals: mealsWithNames
         });
-      } else if (data
+      } else if (data.type === 'BOX_DELIVERY') {
+        const boxDelivery = {
+          id: docSnapshot.id,
+          deliveryDate: data.deliveryDate,
+          donorId: data.donorId,
+          recipientId: data.recipientId,
+          foodBoxes: data.foodBoxes // Assuming this structure doesn't need modification
+        };
+
+        documentsByMonth[yearMonth].boxDeliveries.push(boxDelivery);
+      }
+    }
+
+    // Create or update documents in the reports collection
+    for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
+      const reportDocRef = doc(db, "reports", `${yearMonth}-report`);
+      await setDoc(reportDocRef, docs, { merge: true });
+    }
+
+    // Convert the object to an array of arrays for logging
+    const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
+
+    return sortedDocuments;
+  } catch (error) {
+    console.error("Error fetching documents: ", error);
+    return [];
+  }
+}
+
+async function getMealName(mealId) {
+  // Fetch meal names for each mealId in the meals array
+  const mealDocRef = doc(db, "meals", mealId);
+  const mealDocSnapshot = await getDoc(mealDocRef);
+
+  if (mealDocSnapshot.exists()) {
+    const mealData = mealDocSnapshot.data();
+    return mealData.name;
+  } else {
+    return "Not found";
+  }
+}
+
+// Call the function with the desired name parameter
+signInAndCreateReport(email, password, "Testing report 1");
