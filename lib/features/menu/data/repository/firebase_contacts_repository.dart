@@ -5,6 +5,8 @@ import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
+import 'package:zachranobed/models/dto/entity_pair_dto.dart';
+import 'package:zachranobed/services/carrier_service.dart';
 import 'package:zachranobed/services/configuration_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
@@ -14,20 +16,22 @@ class FirebaseContactsRepository implements ContactsRepository {
   final EntityService _entityService;
   final EntityPairService _entityPairService;
   final ConfigurationService _configurationService;
+  final CarrierService _carrierService;
 
   FirebaseContactsRepository(
     this._entityService,
     this._entityPairService,
     this._configurationService,
+    this._carrierService,
   );
 
   @override
   Future<ContactsSummary> getContacts({required String entityId}) async {
-    final targetEntityIds = await getTargetEntityIds(entityId);
+    final pairs = await getPairs(entityId);
     return Future.wait(
       [
-        getEntityContacts(targetEntityIds.toList()),
-        getDeliveryContacts(),
+        getEntityContacts(getTargetEntityIds(entityId, pairs)),
+        getDeliveryContacts(pairs),
         getOrganisationContacts(),
       ],
     ).then((values) {
@@ -39,12 +43,19 @@ class FirebaseContactsRepository implements ContactsRepository {
     });
   }
 
+  /// Retrieves a list of entity pairs for the given [entityId].
+  Future<List<EntityPairDto>> getPairs(String entityId) async {
+    return (await _entityPairService.observePairs(entityId).first).toList();
+  }
+
   /// Retrieves a list of entity IDs that are paired with the given [entityId].
-  Future<Iterable<String>> getTargetEntityIds(String entityId) async {
-    final pairs = await _entityPairService.observePairs(entityId).first;
-    return pairs.map((pair) {
-      return entityId == pair.recipientId ? pair.donorId : pair.recipientId;
-    });
+  List<String> getTargetEntityIds(
+    String entityId,
+    List<EntityPairDto> pairs,
+  ) {
+    return pairs
+        .map((e) => entityId == e.recipientId ? e.donorId : e.recipientId)
+        .toList();
   }
 
   /// Retrieves a list of [EntityContacts] of given entity IDs.
@@ -68,16 +79,18 @@ class FirebaseContactsRepository implements ContactsRepository {
   }
 
   /// Retrieves a list of contacts of carriers.
-  Future<List<Contact>> getDeliveryContacts() {
-    // TODO (ZOB-223) Replace mocked values in next PR part
-    return Future.value(
-      [
-        const Contact(
-          name: "DODO - dispečink",
-          phoneNumber: "+420 XXX XXX XXX",
-        ),
-      ],
-    );
+  Future<List<Contact>> getDeliveryContacts(
+    List<EntityPairDto> pairs,
+  ) {
+    // Get a set of carrier IDs to exclude duplicates
+    final carrierIds = pairs.map((e) => e.carrierId).toSet().toList();
+    return _carrierService.fetchCarriers(carrierIds).then((carriers) {
+      return carriers
+          .map((e) => e.contacts ?? [])
+          .flattened
+          .map((e) => e.toDomain())
+          .toList();
+    });
   }
 
   /// Retrieves a list of contacts of ZOB organisation.
