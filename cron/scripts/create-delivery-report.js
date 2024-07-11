@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, doc, setDoc } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, doc, setDoc, getDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Values
@@ -53,7 +53,7 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
 
     const documentsByMonth = {};
 
-    snapshot.forEach(doc => {
+    for (const doc of snapshot.docs) {
       const data = doc.data();
       const deliveryDate = data.deliveryDate.toDate(); // Convert Firestore Timestamp to JavaScript Date
       const yearMonth = `${deliveryDate.getFullYear()}-${String(deliveryDate.getMonth() + 1).padStart(2, '0')}`;
@@ -74,15 +74,32 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
             meals: data.meals
         });
       } else if (data.type === 'BOX_DELIVERY') {
-        documentsByMonth[yearMonth].boxDeliveries.push({
-            id: doc.id,
-            deliveryDate: data.deliveryDate,
-            donorId: data.donorId,
-            recipientId: data.recipientId,
-            foodBoxes: data.foodBoxes
-        });
+        const boxDelivery = {
+          id: doc.id,
+          deliveryDate: data.deliveryDate,
+          donorId: data.donorId,
+          recipientId: data.recipientId,
+          foodBoxes: []
+        };
+
+        // Fetch meal names for each mealId in the meals array
+        for (const meal of data.meals) {
+          const mealDocRef = doc(db, "meals", meal.mealId);
+          const mealDocSnapshot = await getDoc(mealDocRef);
+          if (mealDocSnapshot.exists()) {
+            const mealData = mealDocSnapshot.data();
+            boxDelivery.foodBoxes.push({
+              mealName: mealData.name,
+              // Copy other parameters from meal object as needed
+              ...meal,
+              mealId: undefined // Remove mealId from the object
+            });
+          }
+        }
+
+        documentsByMonth[yearMonth].boxDeliveries.push(boxDelivery);
       }
-    });
+    }
 
     // Create or update documents in the reports collection
     for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
