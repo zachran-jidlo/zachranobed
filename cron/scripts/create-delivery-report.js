@@ -53,7 +53,7 @@ async function signInAndCreateReport(email, password, reportName) {
 
 async function fetchAndSortDocumentsByMonth(collectionName) {
   try {
-    const snapshot = await collection(db, collectionName)//await db.collection(collectionName).get();
+    const snapshot = await collection(db, collectionName).get();//await db.collection(collectionName).get();
 
     const documentsByMonth = {};
 
