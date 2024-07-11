@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, addDoc, doc, getDoc, setDoc } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, doc, setDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Values
@@ -33,13 +33,9 @@ async function signInAndCreateReport(email, password, reportName) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log('User signed in:', userCredential.user.uid);
 
-    // Create a new report
-    // const docRef = await addDoc(collection(db, 'reports'), { name: reportName });
-    // console.log('Document successfully written with ID: ', docRef.id);
-
-    const test = await fetchAndSortDocumentsByMonth("deliveries");
-    console.log("The sorted deliveries are:")
-    console.log(test)
+    // Fetch and sort documents by month and update reports collection
+    const sortedDocuments = await fetchAndSortDocumentsByMonth("deliveries");
+    console.log("The sorted deliveries are:", sortedDocuments);
 
     // Clear timeout on successful execution
     clearTimeout(timeout);
@@ -69,18 +65,13 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
       documentsByMonth[yearMonth].push({ id: doc.id, ...data });
     });
 
-    // Create new collections for each month and add or update documents
+    // Create or update documents in the reports collection
     for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
-      const newCollectionName = `${yearMonth}-report`;
-      for (const docData of docs) {
-        const docRef = doc(db, newCollectionName, docData.id);
-
-        // Use setDoc with merge: true to update the document if it exists, or create it if it doesn't
-        await setDoc(docRef, docData, { merge: true });
-      }
+      const reportDocRef = doc(db, "reports", `${yearMonth}-report`);
+      await setDoc(reportDocRef, { deliveryReports: docs }, { merge: true });
     }
 
-    // Convert the object to an array of arrays
+    // Convert the object to an array of arrays for logging
     const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
 
     return sortedDocuments;
