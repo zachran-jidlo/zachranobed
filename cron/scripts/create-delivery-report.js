@@ -59,16 +59,23 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
       const yearMonth = `${deliveryDate.getFullYear()}-${String(deliveryDate.getMonth() + 1).padStart(2, '0')}`;
 
       if (!documentsByMonth[yearMonth]) {
-        documentsByMonth[yearMonth] = [];
+        documentsByMonth[yearMonth] = {
+          foodDeliveries: [],
+          boxDeliveries: []
+        };
       }
 
-      documentsByMonth[yearMonth].push({ id: doc.id, ...data });
+      if (data.type === 'FOOD_DELIVERY') {
+        documentsByMonth[yearMonth].foodDeliveries.push({ id: doc.id, ...data });
+      } else if (data.type === 'BOX_DELIVERY') {
+        documentsByMonth[yearMonth].boxDeliveries.push({ id: doc.id, ...data });
+      }
     });
 
     // Create or update documents in the reports collection
     for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
       const reportDocRef = doc(db, "reports", `${yearMonth}-report`);
-      await setDoc(reportDocRef, { deliveryReports: docs }, { merge: true });
+      await setDoc(reportDocRef, docs, { merge: true });
     }
 
     // Convert the object to an array of arrays for logging
