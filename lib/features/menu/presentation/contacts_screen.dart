@@ -10,6 +10,7 @@ import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';
 import 'package:zachranobed/ui/widgets/contact_row.dart';
+import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
 
 /// A screen that displays a list of contacts.
@@ -28,77 +29,97 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   void initState() {
     super.initState();
-
-    final entityId = HelperService.getCurrentUser(context)!.entityId;
-    final getContacts = GetIt.I<GetContactsUseCase>();
-    _contactsFuture = getContacts.invoke(entityId);
+    _loadContacts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.padding,
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  Text(
-                    context.l10n!.contactsTitle,
-                    style: const TextStyle(fontSize: FontSize.l),
-                  ),
-                ],
-              ),
-              const SizedBox(height: GapSize.s),
-              _screenContent(),
-            ],
-          ),
-        ),
+      body: FutureBuilder(
+        future: _contactsFuture,
+        builder:
+            (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _loading();
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return _error(context);
+          }
+          return _contacts(snapshot.data!);
+        },
       ),
     );
   }
 
-  Widget _screenContent() {
-    return FutureBuilder(
-      future: _contactsFuture,
-      builder: (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
-        // TODO (ZOB-226) Implement correct loading & error UI
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
-        } else if (snapshot.hasError || snapshot.data == null) {
-          return const Text("Error");
-        }
-        return _contacts(snapshot.data!);
-      },
-    );
+  /// Loads contacts summary.
+  void _loadContacts() {
+    final entityId = HelperService.getCurrentUser(context)!.entityId;
+    final getContacts = GetIt.I<GetContactsUseCase>();
+    setState(() {
+      _contactsFuture = getContacts.invoke(entityId);
+    });
   }
 
+  /// Builds the screen content, optionally wrapping it in a
+  /// [SingleChildScrollView]. The [child] parameter represents the main
+  /// content of the screen.
+  Widget _screen({
+    bool scrollable = true,
+    required Widget child,
+  }) {
+    final content = Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: WidgetStyle.padding,
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              Text(
+                context.l10n!.contactsTitle,
+                style: const TextStyle(fontSize: FontSize.l),
+              ),
+            ],
+          ),
+          const SizedBox(height: GapSize.s),
+          child,
+        ],
+      ),
+    );
+
+    if (scrollable) {
+      return SingleChildScrollView(child: content);
+    } else {
+      return content;
+    }
+  }
+
+  /// Builds the contacts content for the given [summary].
   Widget _contacts(ContactsSummary summary) {
-    return Column(
-      children: [
-        ...summary.targets.map((e) {
-          return _menuSection(
-            label: e.name,
-            contacts: e.contacts,
-            markFirstAsPreferred: e.contacts.length > 1,
-          );
-        }),
-        _menuSection(
-          label: context.l10n!.contactsDeliveryHeader,
-          contacts: summary.deliveryContacts,
-        ),
-        _menuSection(
-          label: context.l10n!.contactsOrganisationHeader,
-          contacts: summary.organisationContacts,
-        ),
-      ],
+    return _screen(
+      child: Column(
+        children: [
+          ...summary.targets.map((e) {
+            return _menuSection(
+              label: e.name,
+              contacts: e.contacts,
+              markFirstAsPreferred: e.contacts.length > 1,
+            );
+          }),
+          _menuSection(
+            label: context.l10n!.contactsDeliveryHeader,
+            contacts: summary.deliveryContacts,
+          ),
+          _menuSection(
+            label: context.l10n!.contactsOrganisationHeader,
+            contacts: summary.organisationContacts,
+          ),
+        ],
+      ),
     );
   }
 
+  /// Builds a section within contacts menu.
   Widget _menuSection({
     required String label,
     required List<Contact> contacts,
@@ -119,6 +140,28 @@ class _ContactsScreenState extends State<ContactsScreen> {
           })
           .separated(const SizedBox(height: 8.0))
           .toList(),
+    );
+  }
+
+  /// Builds a loading screen.
+  Widget _loading() {
+    return _screen(
+      scrollable: false,
+      child: const Expanded(child: Center(child: CircularProgressIndicator())),
+    );
+  }
+
+  /// Builds a generic error screen.
+  Widget _error(BuildContext context) {
+    return _screen(
+      child: Column(
+        children: [
+          ErrorContent(
+            onRetryPressed: _loadContacts,
+          ),
+          const SizedBox(height: GapSize.xs),
+        ],
+      ),
     );
   }
 }
