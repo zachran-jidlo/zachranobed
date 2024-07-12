@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:zachranobed/common/utils/generic_utils.dart';
-import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/features/menu/data/mapper/contacts_mapper.dart';
 import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
@@ -56,25 +55,21 @@ class FirebaseContactsRepository implements ContactsRepository {
 
   /// Retrieves a list of [EntityContacts] of given entity IDs.
   /// The final list is sorted by establishment name.
-  Future<Iterable<EntityContacts>> getEntityContacts(List<String> entityIds) {
-    final entitiesFutures = entityIds.map((e) => _entityService.getEntity(e));
-    return Future.wait(entitiesFutures).then((entities) {
-      return entities.mapNotNull((e) {
-        if (e == null) {
-          return null;
-        }
+  Future<Iterable<EntityContacts>> getEntityContacts(
+    List<String> entityIds,
+  ) async {
+    final entities = await _entityService.fetchEntities(entityIds);
+    return entities.map((e) {
+      final mainContact = Contact(
+        name: e.responsiblePerson,
+        phoneNumber: e.phone?.takeIf((e) => e.isNotEmpty),
+      );
+      final contacts = (e.additionalContacts ?? []).map((e) => e.toDomain());
 
-        final mainContact = Contact(
-          name: e.responsiblePerson,
-          phoneNumber: e.phone?.takeIf((e) => e.isNotEmpty),
-        );
-        final contacts = (e.additionalContacts ?? []).map((e) => e.toDomain());
-
-        return EntityContacts(
-          name: e.establishmentName,
-          contacts: [mainContact, ...contacts],
-        );
-      }).sortedBy((e) => e.name);
-    });
+      return EntityContacts(
+        name: e.establishmentName,
+        contacts: [mainContact, ...contacts],
+      );
+    }).sortedBy((e) => e.name);
   }
 }

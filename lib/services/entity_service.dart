@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/device_utils.dart';
+import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';
 
 class EntityService {
@@ -35,12 +36,9 @@ class EntityService {
     return null;
   }
 
-  /// Returns a [Future] that completes with a [EntityDto] object if an entity
-  /// document with the provided [entityId] is found in the Firestore collection
-  /// and `null` if no entity is found.
-  Future<EntityDto?> getEntity(String entityId) {
-    return _collection.doc(entityId).get().then((e) => e.data());
-  }
+  /// Fetches a list of [EntityDto] objects for the given entity IDs.
+  Future<List<EntityDto>> fetchEntities(List<String> ids) =>
+      _collection.fetchMultipleDocs(ids);
 
   Future<void> saveAppTermsVersion(String entityId, int version) async {
     return _collection
