@@ -1,5 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:logger/logger.dart';
+import 'package:zachranobed/common/firebase/firebase_helper.dart';
 
 /// `ZOLogger` is a utility class for logging messages and exceptions.
 /// It supports both console logging with enhanced readability via PrettyPrinter
@@ -20,10 +21,14 @@ class ZOLogger {
 
     if (isError) {
       logger.e(message);
-      FirebaseCrashlytics.instance.recordError(Exception(message), null);
+      if (FirebaseHelper.isCrashlyticsSupported()) {
+        FirebaseCrashlytics.instance.recordError(Exception(message), null);
+      }
     } else {
       logger.d(message);
-      FirebaseCrashlytics.instance.log(message);
+      if (FirebaseHelper.isCrashlyticsSupported()) {
+        FirebaseCrashlytics.instance.log(message);
+      }
     }
   }
 
@@ -40,6 +45,8 @@ class ZOLogger {
   static void logException(Exception exception, String customMessage) {
     var logger = Logger(printer: PrettyPrinter(methodCount: 0));
     logger.e("$customMessage-Exception: $exception");
-    FirebaseCrashlytics.instance.recordError(exception, null);
+    if (FirebaseHelper.isCrashlyticsSupported()) {
+      FirebaseCrashlytics.instance.recordError(exception, null);
+    }
   }
 }

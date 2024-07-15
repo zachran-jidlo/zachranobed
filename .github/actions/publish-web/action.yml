@@ -1,0 +1,33 @@
+name: 'Publish Web'
+description: 'Copies web resources to repository for GitHub Pages'
+
+inputs:
+  token:
+    description: 'The GitHub token to access a repository'
+    required: true
+  repository:
+    description: 'The repository which hosts GitHub Pages'
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Checkout GitHub Pages repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        path: github-pages-repository
+
+    - name: Pushes files to the GitHub Pages repository
+      shell: bash
+      run: |
+        cd github-pages-repository
+        git rm -r .
+        cp -r ../build/web/* .
+        git config user.name "ZachranJidlo Bot"
+        git config user.email "zachran-jidlo-bot@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy a new version"
+        git push origin main
