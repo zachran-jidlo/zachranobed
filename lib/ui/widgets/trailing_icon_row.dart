@@ -33,41 +33,52 @@ class TrailingIconRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: ZOColors.borderColor,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(10),
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: ZOColors.borderColor,
+              width: 1,
             ),
-            child: ListTile(
-                title: Text(title,
-                    style: const TextStyle(fontSize: FontSize.s),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
-                subtitle: Text(description,
-                    style: const TextStyle(
-                        fontSize: FontSize.xxs, color: ZOColors.onPrimaryLight),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(trailInfo,
-                        style: const TextStyle(
-                            fontSize: FontSize.xs,
-                            color: ZOColors.onPrimaryLight),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
-                    const SizedBox(width: GapSize.xs),
-                    Icon(trailingIcon, size: 18),
-                  ],
-                )),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ));
+          child: ListTile(
+            title: Text(
+              title,
+              style: const TextStyle(fontSize: FontSize.s),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              description,
+              style: const TextStyle(
+                fontSize: FontSize.xxs,
+                color: ZOColors.onPrimaryLight,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  trailInfo,
+                  style: const TextStyle(
+                    fontSize: FontSize.xs,
+                    color: ZOColors.onPrimaryLight,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(width: GapSize.xs),
+                Icon(trailingIcon, size: 18),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
