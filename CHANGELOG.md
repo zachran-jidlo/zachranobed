@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.2.0]
 ### Added
+- **ZOB-218** Add reusable contact row. 
 
 ### Fixed
 - **ZOB-84** Fix display of duplicated messages on allergens field.

@@ -14,6 +14,7 @@ class ZOColors {
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
   static const infoSnackBarBackground = Color.fromRGBO(54, 47, 46, 1);
   static const onInfoSnackBarBackground = Color.fromRGBO(255, 251, 238, 1);
+  static const outline = Color.fromRGBO(133, 115, 113, 1);
   static const success = Color.fromRGBO(135, 179, 0, 1);
   static const successLight = Color.fromRGBO(231, 240, 204, 1);
   static const onSuccess = Color.fromRGBO(255, 255, 255, 1);
@@ -44,6 +45,7 @@ class WidgetStyle {
       OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
 
   static const padding = 16.0;
+  static const paddingSmall = 12.0;
   static const overviewBottomPadding = 64.0;
 }
 
