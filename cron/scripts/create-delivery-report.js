@@ -33,9 +33,9 @@ async function signInAndCreateReport(email, password, reportName) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log('User signed in:', userCredential.user.uid);
 
-    // Fetch and sort documents by month and update reports collection
-    const sortedDocuments = await fetchAndSortDocumentsByMonth("deliveries");
-    console.log("The sorted deliveries are:", sortedDocuments);
+    // Fetch and process documents
+    const processedDocuments = await fetchAndProcessDocuments("deliveries");
+    console.log("The processed deliveries are:", processedDocuments);
 
     // Clear timeout on successful execution
     clearTimeout(timeout);
@@ -46,24 +46,15 @@ async function signInAndCreateReport(email, password, reportName) {
   }
 }
 
-async function fetchAndSortDocumentsByMonth(collectionName) {
+async function fetchAndProcessDocuments(collectionName) {
   try {
     const collectionRef = collection(db, collectionName);
     const snapshot = await getDocs(collectionRef);
 
-    const documentsByMonth = {};
+    const processedDocuments = [];
 
     for (const docSnapshot of snapshot.docs) {
       const data = docSnapshot.data();
-      const deliveryDate = data.deliveryDate.toDate(); // Convert Firestore Timestamp to JavaScript Date
-      const yearMonth = `${deliveryDate.getFullYear()}-${String(deliveryDate.getMonth() + 1).padStart(2, '0')}`;
-
-      if (!documentsByMonth[yearMonth]) {
-        documentsByMonth[yearMonth] = {
-          foodDeliveries: [],
-          boxDeliveries: []
-        };
-      }
 
       if (data.type === 'FOOD_DELIVERY') {
         const mealsWithNames = data.meals ? await Promise.all(
@@ -76,36 +67,23 @@ async function fetchAndSortDocumentsByMonth(collectionName) {
           })
         ) : [];
 
-        documentsByMonth[yearMonth].foodDeliveries.push({
+        const foodDelivery = {
           id: docSnapshot.id,
           deliveryDate: data.deliveryDate,
           donorId: data.donorId,
           recipientId: data.recipientId,
           meals: mealsWithNames
-        });
-      } else if (data.type === 'BOX_DELIVERY') {
-        const boxDelivery = {
-          id: docSnapshot.id,
-          deliveryDate: data.deliveryDate,
-          donorId: data.donorId,
-          recipientId: data.recipientId,
-          foodBoxes: data.foodBoxes // Assuming this structure doesn't need modification
         };
 
-        documentsByMonth[yearMonth].boxDeliveries.push(boxDelivery);
+        // Create or update document in the reports collection
+        const reportDocRef = doc(db, "reports", foodDelivery.id);
+        await setDoc(reportDocRef, foodDelivery, { merge: true });
+
+        processedDocuments.push(foodDelivery);
       }
     }
 
-    // Create or update documents in the reports collection
-    for (const [yearMonth, docs] of Object.entries(documentsByMonth)) {
-      const reportDocRef = doc(db, "reports", `${yearMonth}-report`);
-      await setDoc(reportDocRef, docs, { merge: true });
-    }
-
-    // Convert the object to an array of arrays for logging
-    const sortedDocuments = Object.keys(documentsByMonth).map(month => documentsByMonth[month]);
-
-    return sortedDocuments;
+    return processedDocuments;
   } catch (error) {
     console.error("Error fetching documents: ", error);
     return [];
