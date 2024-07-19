@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:zachranobed/common/di/common_dependency_container.dart';
+import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/mapper/app_configuration_mapper.dart';
 import 'package:zachranobed/features/appTerms/di/app_terms_dependency_container.dart';
@@ -31,6 +32,8 @@ void main() async {
   LoginDependencyContainer.setup();
   FoodBoxDependencyContainer.setup();
   OfferedFoodDependencyContainer.setup();
+
+  ZOLogger.init();
 
   await Notifications().initNotifications();
 
