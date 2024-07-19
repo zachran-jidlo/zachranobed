@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
@@ -15,7 +16,7 @@ class ZOLogger {
   /// Initializes the logger based on whether developer tools are enabled.
   static void init() {
     final devtoolsAreEnabled = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-    if (devtoolsAreEnabled.invoke()) {
+    if (kDebugMode || devtoolsAreEnabled.invoke()) {
       final filter = ProductionFilter();
       filter.level = Level.all;
 
