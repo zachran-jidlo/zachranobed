@@ -17,6 +17,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-214** Change Android launcher icon to rounded.
 
 ### Removed
+- **ZOB-170** Remove limit in donation and shipping history.
 
 ## [1.1.0]
 ### Fixed
