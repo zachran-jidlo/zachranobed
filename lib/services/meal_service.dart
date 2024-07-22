@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/common/utils/future_utils.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 
@@ -20,10 +21,8 @@ class MealService {
   /// Queries the Firestore collection for meals with given IDs and returns a
   /// map with data.
   Future<Map<String, MealDetailDto>> getDetails(List<String> ids) async {
-    final snapshot =
-        await _collection.where(FieldPath.documentId, whereIn: ids).get();
-
-    return {for (final v in snapshot.docs) v.id: v.data()};
+    final docs = await _collection.fetchMultipleDocs(ids);
+    return {for (final v in docs) v.id: v};
   }
 
   /// Adds the given [meals] to the collection. Returns a future with true

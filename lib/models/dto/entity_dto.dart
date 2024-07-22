@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/models/dto/contact_dto.dart';
 
 /*
  * Command to rebuild the entity.g.dart file:
@@ -13,9 +14,12 @@ class EntityDto {
   final String establishmentName;
   final String establishmentId;
   final String organization;
+  final String responsiblePerson;
+  final String? phone;
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final EntityTypeDto? entityType;
   final int? lastAcceptedAppTermsVersion;
+  final List<ContactDto>? additionalContacts;
 
   EntityDto({
     required this.id,
@@ -23,8 +27,11 @@ class EntityDto {
     required this.establishmentName,
     required this.establishmentId,
     required this.organization,
+    required this.responsiblePerson,
+    required this.phone,
     required this.entityType,
-    required this.lastAcceptedAppTermsVersion
+    required this.lastAcceptedAppTermsVersion,
+    required this.additionalContacts,
   });
 
   factory EntityDto.fromJson(Map<String, dynamic> json) =>
