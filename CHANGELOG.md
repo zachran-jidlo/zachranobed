@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-218** Add reusable contact row. 
 - **ZOB-225** Add contacts screen with mocked values. 
+- **ZOB-226** Add loading and error states for contacts screen. 
 
 ### Fixed
 - **ZOB-84** Fix display of duplicated messages on allergens field.
@@ -16,8 +17,11 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-101** Disable auto-correct for login fields.
 - **ZOB-199** Update notification package to 17.1.2.
 - **ZOB-214** Change Android launcher icon to rounded.
+- **ZOB-223** Use real data for contacts screen.
+- **ZOB-237** Change pickup confirmation time for personal delivery.
 
 ### Removed
+- **ZOB-170** Remove limit in donation and shipping history.
 
 ## [1.1.0]
 ### Fixed

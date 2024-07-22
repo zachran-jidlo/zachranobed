@@ -33,11 +33,15 @@ class ZOStrings {
   static const chefEmptyPath = 'assets/chef-empty.svg';
   static const boxEmptyPath = 'assets/box-empty.svg';
   static const certificationCheckPath = 'assets/certification_check.svg';
+  static const genericErrorPath = 'assets/generic-error.svg';
 }
 
 class Constants {
   static const lastWeekOfYear = 52;
-  static const pickupConfirmationTime = 45;
+
+  // ZOB-234 Use shorter confirmation time for personal delivery
+  static const pickupConfirmationTimeDefault = 45;
+  static const pickupConfirmationTimePersonal = 20;
 }
 
 class WidgetStyle {

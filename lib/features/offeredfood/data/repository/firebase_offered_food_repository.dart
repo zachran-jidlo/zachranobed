@@ -50,7 +50,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       return false;
     }
 
-    const pickupDuration = Duration(minutes: Constants.pickupConfirmationTime);
+    final pickupDuration = Duration(minutes: delivery.getConfirmationTime());
     final canDonateUntil = time.subtract(pickupDuration);
     if (delivery.state == DeliveryState.prepared &&
         DateTime.now().isAfter(canDonateUntil)) {

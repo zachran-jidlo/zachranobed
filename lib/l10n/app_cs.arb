@@ -111,5 +111,10 @@
     "contactsMenuLabel": "Všechny kontakty",
     "contactsTitle": "Všechny kontakty",
     "contactsPreferredLabel": "Preferovaný kontakt",
-    "contactsNoPhoneLabel": "Telefonní číslo neuvedeno"
+    "contactsNoPhoneLabel": "Telefonní číslo neuvedeno",
+    "contactsDeliveryHeader": "Dopravce",
+    "contactsOrganisationHeader": "Zachraň jídlo",
+    "commonGenericErrorTitle": "Něco se pokazilo",
+    "commonGenericErrorDescription": "Při načítání dat došlo k chybě. Zkuste to prosím za chvíli znovu.",
+    "commonGenericErrorRetryAction": "Zkusit znovu"
 }

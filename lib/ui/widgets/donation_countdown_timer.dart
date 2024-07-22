@@ -11,7 +11,13 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
-  const DonationCountdownTimer({super.key});
+
+  final Delivery delivery;
+
+  const DonationCountdownTimer({
+    super.key,
+    required this.delivery,
+  });
 
   @override
   State<DonationCountdownTimer> createState() => _DonationCountdownTimerState();
@@ -91,8 +97,8 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
 
-    return endTime.difference(startTime) -
-        const Duration(minutes: Constants.pickupConfirmationTime);
+    final confirmationTime = widget.delivery.getConfirmationTime();
+    return endTime.difference(startTime) - Duration(minutes: confirmationTime);
   }
 
   @override
