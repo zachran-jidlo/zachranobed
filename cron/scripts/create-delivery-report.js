@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, doc, setDoc, getDoc } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, limit } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // Values
@@ -49,14 +49,15 @@ async function signInAndCreateReport(email, password, reportName) {
 async function fetchAndProcessDocuments(collectionName) {
   try {
     const collectionRef = collection(db, collectionName);
-    const snapshot = await getDocs(collectionRef);
+    const limitedQuery = query(collectionRef, limit(20));
+    const snapshot = await getDocs(limitedQuery);
 
     const processedDocuments = [];
 
     for (const docSnapshot of snapshot.docs) {
       const data = docSnapshot.data();
 
-      if (data.type === 'FOOD_DELIVERY' && data.meals) {
+      if (data.type === 'FOOD_DELIVERY' && data.meals && data.meals.length > 0) {
         for (const meal of data.meals) {
           const mealName = await getMealName(meal.mealId);
           const mealDocument = {
@@ -64,10 +65,8 @@ async function fetchAndProcessDocuments(collectionName) {
             deliveryDate: data.deliveryDate,
             donorId: data.donorId,
             recipientId: data.recipientId,
-            meal: {
-              count: meal.count,
-              name: mealName
-            }
+            mealCount: meal.count,
+            mealName: mealName
           };
 
           // Create document ID in the format "${deliveryId}-${mealId}"
