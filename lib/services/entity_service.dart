@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/device_utils.dart';
+import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';
 
 class EntityService {
@@ -34,6 +35,10 @@ class EntityService {
     }
     return null;
   }
+
+  /// Fetches a list of [EntityDto] objects for the given entity IDs.
+  Future<List<EntityDto>> fetchEntities(List<String> ids) =>
+      _collection.fetchMultipleDocs(ids);
 
   Future<void> saveAppTermsVersion(String entityId, int version) async {
     return _collection

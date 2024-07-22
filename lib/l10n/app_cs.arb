@@ -111,5 +111,7 @@
     "contactsMenuLabel": "Všechny kontakty",
     "contactsTitle": "Všechny kontakty",
     "contactsPreferredLabel": "Preferovaný kontakt",
-    "contactsNoPhoneLabel": "Telefonní číslo neuvedeno"
+    "contactsNoPhoneLabel": "Telefonní číslo neuvedeno",
+    "contactsDeliveryHeader": "Dopravce",
+    "contactsOrganisationHeader": "Zachraň jídlo"
 }
