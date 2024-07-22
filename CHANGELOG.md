@@ -17,6 +17,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-199** Update notification package to 17.1.2.
 - **ZOB-214** Change Android launcher icon to rounded.
 - **ZOB-223** Use real data for contacts screen.
+- **ZOB-237** Change pickup confirmation time for personal delivery.
 
 ### Removed
 

@@ -31,11 +31,13 @@ class DeliveryInfoBanner extends StatelessWidget {
     final user = HelperService.getCurrentUser(context);
     final delivery = context.watch<DeliveryNotifier>().delivery;
 
-    if (user is! Canteen || !HelperService.canDonate(context)) {
+    if (user is! Canteen ||
+        delivery == null ||
+        !HelperService.canDonate(context)) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
 
-    switch (delivery?.state) {
+    switch (delivery.state) {
       case DeliveryState.accepted:
       case DeliveryState.offered:
         if (user.isCurrentTimeWithinPickupRange()) {
@@ -44,7 +46,7 @@ class DeliveryInfoBanner extends StatelessWidget {
           return const SliverToBoxAdapter(child: SizedBox());
         }
       default:
-        return _buildDonationCountdownBanner(context);
+        return _buildDonationCountdownBanner(context, delivery);
     }
   }
 
@@ -72,11 +74,14 @@ class DeliveryInfoBanner extends StatelessWidget {
     );
   }
 
-  Widget _buildDonationCountdownBanner(BuildContext context) {
+  Widget _buildDonationCountdownBanner(
+    BuildContext context,
+    Delivery delivery,
+  ) {
     return SliverToBoxAdapter(
       child: InfoBanner(
         backgroundColor: ZOColors.successLight,
-        message: const DonationCountdownTimer(),
+        message: DonationCountdownTimer(delivery: delivery),
         button: ZOButton(
           text: context.l10n!.callACourier,
           fullWidth: false,

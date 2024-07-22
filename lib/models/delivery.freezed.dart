@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Delivery _$DeliveryFromJson(Map<String, dynamic> json) {
-  return _Delivery.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Delivery {
   String get id => throw _privateConstructorUsedError;
@@ -25,8 +21,8 @@ mixin _$Delivery {
   String get recipientId => throw _privateConstructorUsedError;
   DeliveryState get state => throw _privateConstructorUsedError;
   DeliveryType get type => throw _privateConstructorUsedError;
+  CarrierType get carrierType => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $DeliveryCopyWith<Delivery> get copyWith =>
       throw _privateConstructorUsedError;
@@ -42,7 +38,8 @@ abstract class $DeliveryCopyWith<$Res> {
       String donorId,
       String recipientId,
       DeliveryState state,
-      DeliveryType type});
+      DeliveryType type,
+      CarrierType carrierType});
 }
 
 /// @nodoc
@@ -63,6 +60,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
     Object? recipientId = null,
     Object? state = null,
     Object? type = null,
+    Object? carrierType = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,6 +83,10 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as DeliveryType,
+      carrierType: null == carrierType
+          ? _value.carrierType
+          : carrierType // ignore: cast_nullable_to_non_nullable
+              as CarrierType,
     ) as $Val);
   }
 }
@@ -102,7 +104,8 @@ abstract class _$$DeliveryImplCopyWith<$Res>
       String donorId,
       String recipientId,
       DeliveryState state,
-      DeliveryType type});
+      DeliveryType type,
+      CarrierType carrierType});
 }
 
 /// @nodoc
@@ -121,6 +124,7 @@ class __$$DeliveryImplCopyWithImpl<$Res>
     Object? recipientId = null,
     Object? state = null,
     Object? type = null,
+    Object? carrierType = null,
   }) {
     return _then(_$DeliveryImpl(
       id: null == id
@@ -143,22 +147,25 @@ class __$$DeliveryImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as DeliveryType,
+      carrierType: null == carrierType
+          ? _value.carrierType
+          : carrierType // ignore: cast_nullable_to_non_nullable
+              as CarrierType,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$DeliveryImpl implements _Delivery {
+
+class _$DeliveryImpl extends _Delivery {
   const _$DeliveryImpl(
       {required this.id,
       required this.donorId,
       required this.recipientId,
       required this.state,
-      required this.type});
-
-  factory _$DeliveryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DeliveryImplFromJson(json);
+      required this.type,
+      required this.carrierType})
+      : super._();
 
   @override
   final String id;
@@ -170,10 +177,12 @@ class _$DeliveryImpl implements _Delivery {
   final DeliveryState state;
   @override
   final DeliveryType type;
+  @override
+  final CarrierType carrierType;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, carrierType: $carrierType)';
   }
 
   @override
@@ -186,38 +195,31 @@ class _$DeliveryImpl implements _Delivery {
             (identical(other.recipientId, recipientId) ||
                 other.recipientId == recipientId) &&
             (identical(other.state, state) || other.state == state) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.carrierType, carrierType) ||
+                other.carrierType == carrierType));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, donorId, recipientId, state, type);
+  int get hashCode => Object.hash(
+      runtimeType, id, donorId, recipientId, state, type, carrierType);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
       __$$DeliveryImplCopyWithImpl<_$DeliveryImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DeliveryImplToJson(
-      this,
-    );
-  }
 }
 
-abstract class _Delivery implements Delivery {
+abstract class _Delivery extends Delivery {
   const factory _Delivery(
       {required final String id,
       required final String donorId,
       required final String recipientId,
       required final DeliveryState state,
-      required final DeliveryType type}) = _$DeliveryImpl;
-
-  factory _Delivery.fromJson(Map<String, dynamic> json) =
-      _$DeliveryImpl.fromJson;
+      required final DeliveryType type,
+      required final CarrierType carrierType}) = _$DeliveryImpl;
+  const _Delivery._() : super._();
 
   @override
   String get id;
@@ -229,6 +231,8 @@ abstract class _Delivery implements Delivery {
   DeliveryState get state;
   @override
   DeliveryType get type;
+  @override
+  CarrierType get carrierType;
   @override
   @JsonKey(ignore: true)
   _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
