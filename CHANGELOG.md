@@ -20,6 +20,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-237** Change pickup confirmation time for personal delivery.
 
 ### Removed
+- **ZOB-170** Remove limit in donation and shipping history.
 
 ## [1.1.0]
 ### Fixed
