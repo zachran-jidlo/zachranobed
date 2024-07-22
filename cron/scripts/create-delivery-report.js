@@ -56,30 +56,27 @@ async function fetchAndProcessDocuments(collectionName) {
     for (const docSnapshot of snapshot.docs) {
       const data = docSnapshot.data();
 
-      if (data.type === 'FOOD_DELIVERY') {
-        const mealsWithNames = data.meals ? await Promise.all(
-          data.meals.map(async (meal) => {
-            const mealName = await getMealName(meal.mealId);
-            return {
+      if (data.type === 'FOOD_DELIVERY' && data.meals) {
+        for (const meal of data.meals) {
+          const mealName = await getMealName(meal.mealId);
+          const mealDocument = {
+            deliveryId: docSnapshot.id,
+            deliveryDate: data.deliveryDate,
+            donorId: data.donorId,
+            recipientId: data.recipientId,
+            meal: {
               count: meal.count,
               name: mealName
-            };
-          })
-        ) : [];
+            }
+          };
 
-        const foodDelivery = {
-          id: docSnapshot.id,
-          deliveryDate: data.deliveryDate,
-          donorId: data.donorId,
-          recipientId: data.recipientId,
-          meals: mealsWithNames
-        };
+          // Create document ID in the format "${deliveryId}-${mealId}"
+          const reportDocId = `${docSnapshot.id}-${meal.mealId}`;
+          const reportDocRef = doc(db, "reports", reportDocId);
+          await setDoc(reportDocRef, mealDocument, { merge: true });
 
-        // Create or update document in the reports collection
-        const reportDocRef = doc(db, "reports", foodDelivery.id);
-        await setDoc(reportDocRef, foodDelivery, { merge: true });
-
-        processedDocuments.push(foodDelivery);
+          processedDocuments.push(mealDocument);
+        }
       }
     }
 
