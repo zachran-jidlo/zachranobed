@@ -120,5 +120,5 @@ async function getMealName(mealId) {
 // **************
 
 // Specify the target month (1-12) here
-const targetMonth = 7; // Example for July
+const targetMonth = 6;
 signInAndCreateReport(email, password, targetMonth);
