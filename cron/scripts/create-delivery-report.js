@@ -119,6 +119,14 @@ async function getMealName(mealId) {
 // Function calls
 // **************
 
-// Specify the target month (1-12) here
-const targetMonth = 6;
+// Take month integer from action argument
+const targetMonth = process.argv[2];
+
+if (!targetMonth || targetMonth < 1 || targetMonth > 12) {
+  console.error('No target month provided.');
+  process.exit(1);
+}
+
+// Call your main function with the targetMonth argument
+console.info(`Running script for target month: ${targetMonth}`);
 signInAndCreateReport(email, password, targetMonth);
