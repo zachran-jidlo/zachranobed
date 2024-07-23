@@ -1,5 +1,4 @@
 import 'package:uuid/uuid.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/offered_food_mapper.dart';
@@ -7,6 +6,7 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
 import 'package:zachranobed/services/delivery_service.dart';
@@ -69,6 +69,19 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       delivery.id,
       state.toDto(),
     );
+  }
+
+  @override
+  Future<bool> cancelDelivery({required Delivery delivery}) async {
+    final currentDelivery = await _deliveryService.getDeliveryById(delivery.id);
+    if (currentDelivery?.state == DeliveryStateDto.prepared) {
+      _deliveryService.updateDeliveryState(
+        delivery.id,
+        DeliveryStateDto.notUsed,
+      );
+      return true;
+    }
+    return false;
   }
 
   @override

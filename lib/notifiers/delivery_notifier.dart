@@ -59,6 +59,20 @@ class DeliveryNotifier extends ChangeNotifier {
     }
   }
 
+  /// Cancels current delivery if it is in prepared state and then triggers a
+  /// notification to inform listeners about the change.
+  Future<void> cancelCurrentDelivery() async {
+    final currentDelivery = _delivery;
+    if (currentDelivery == null) {
+      return;
+    }
+
+    if (await _repository.cancelDelivery(delivery: currentDelivery)) {
+      _delivery = currentDelivery.copyWith(state: DeliveryState.notUsed);
+      notifyListeners();
+    }
+  }
+
   bool canDonate(UserData user) {
     if (user is! Canteen) {
       return false;

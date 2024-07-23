@@ -68,7 +68,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
       SchedulerBinding.instance.addPostFrameCallback((_) {
         context
             .read<DeliveryNotifier>()
-            .updateDeliveryState(DeliveryState.notUsed);
+            .cancelCurrentDelivery();
       });
     }
   }
