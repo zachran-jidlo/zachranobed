@@ -2,6 +2,11 @@ name: Scheduled Firestore Modification
 
 on:
   workflow_dispatch:
+    inputs:
+      target_month:
+        description: 'Target month (1-12)'
+        required: true
+        default: '1'
   #schedule:
   #  - cron: '*/5 * * * *'  # This runs the script every 5 minutes
 
