@@ -1,0 +1,71 @@
+name: 'Build IPA'
+description: 'Prepares keychain and builds signed IPA'
+
+inputs:
+  certificate_file_base64:
+    description: 'The base64 encoded string of the certificate file (.p12) needed for signing the iOS app'
+    required: true
+  certificate_password:
+    description: 'The password required to decrypt the certificate file (.p12) for signing'
+    required: true
+  provisioning_profile_base64:
+    description: 'The base64 encoded string of the provisioning profile (.mobileprovision) needed for configuring the iOS app'
+    required: true
+  keychain_password:
+    description: 'The password for unlocking the keychain that stores the signing certificates'
+    required: true
+  build_flavor:
+    description: 'The specific configuration or flavor of the build (e.g., dev, stage, prod)'
+    required: true
+  build_export_options:
+    description: 'The property list containing export options for customizing the build process'
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+    # Install the Apple certificate and provisioning profile
+    # See https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+    - name: Install the Apple certificate and provisioning profile
+      shell: bash
+      env:
+        CERTIFICATE_FILE_BASE64: ${{ inputs.certificate_file_base64 }}
+        CERTIFICATE_PASSWORD: ${{ inputs.certificate_password }}
+        PROVISIONING_PROFILE_BASE64: ${{ inputs.provisioning_profile_base64 }}
+        KEYCHAIN_PASSWORD: ${{ inputs.keychain_password }}
+      run: |
+        # create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        # import certificate and provisioning profile from secrets
+        echo -n $CERTIFICATE_FILE_BASE64 | base64 --decode --output $CERTIFICATE_PATH
+        echo -n $PROVISIONING_PROFILE_BASE64 | base64 --decode --output $PP_PATH
+        # create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        # import certificate to keychain
+        security import $CERTIFICATE_PATH -P $CERTIFICATE_PASSWORD -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+        # apply provisioning profile
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+    # Builds a release IPA for the given flavor.
+    - name: Build iOS IPA
+      shell: bash
+      run: |
+        flutter build ipa \
+          --release \
+          --flavor ${{ inputs.build_flavor }} \
+          --export-options-plist ${{ inputs.build_export_options }}
+
+    # Important! Cleanup: remove the certificate and provisioning profile from the runner
+    - name: Clean up keychain and provisioning profile
+      shell: bash
+      if: ${{ always() }}
+      run: |
+        security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+        rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision

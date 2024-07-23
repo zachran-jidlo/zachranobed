@@ -1,0 +1,15 @@
+name: 'Upload iOS Artifacts'
+description: 'Store IPAs in artifacts'
+
+runs:
+  using: 'composite'
+
+  steps:
+    # Uploads build artifacts generated during an iOS build process. This allows easy access
+    # and preservation of these build outputs.
+    - name: Upload iOS artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-artifacts
+        path: |
+          **/*.ipa
