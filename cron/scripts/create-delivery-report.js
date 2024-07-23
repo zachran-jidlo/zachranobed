@@ -119,11 +119,7 @@ async function getMealName(mealId) {
 // Function calls
 // **************
 
-// Take month integer from action argument
-console.info("0 ", process.argv[0]);
-console.info("1 ", process.argv[1]);
-console.info("2 ", process.env.TARGET_MONTH);
-
+// Take month integer from environment
 const targetMonth = process.env.TARGET_MONTH;
 
 if (!targetMonth || targetMonth < 1 || targetMonth > 12) {
