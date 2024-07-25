@@ -9,7 +9,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>cz.zachranobed.app</key>
-        <string>Zachraň oběd production profile</string>
+        <string>Production profile</string>
     </dict>
     <key>signingCertificate</key>
     <string>iOS Distribution</string>

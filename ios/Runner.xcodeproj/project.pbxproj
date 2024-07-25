@@ -630,7 +630,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cz.zachranobed.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Zachraň oběd production profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Production profile";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
