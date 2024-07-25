@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, startAt, endAt } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, startAt, endAt, deleteDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // ******
@@ -39,6 +39,10 @@ async function signInAndCreateReport(email, password, targetMonth) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.info('User signed in: ', userCredential.user.uid);
 
+    // Clear the reports collection
+    await clearCollection('reports');
+    console.info('Cleared reports collection');
+
     // Fetch and process documents
     const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetMonth);
     console.info(`Fetched ${processedDocuments.length} delivery documents`);
@@ -49,6 +53,20 @@ async function signInAndCreateReport(email, password, targetMonth) {
   } catch (error) {
     console.error('`signInAndCreateReport` Function failed with following error: ', error);
     process.exit(1);
+  }
+}
+
+async function clearCollection(collectionName) {
+  try {
+    const collectionRef = collection(db, collectionName);
+    const snapshot = await getDocs(collectionRef);
+
+    const deletePromises = snapshot.docs.map(docSnapshot => deleteDoc(docSnapshot.ref));
+    await Promise.all(deletePromises);
+    console.info(`Cleared ${snapshot.size} documents from ${collectionName} collection`);
+  } catch (error) {
+    console.error('`clearCollection` Function failed with following error: ', error);
+    throw error;
   }
 }
 
