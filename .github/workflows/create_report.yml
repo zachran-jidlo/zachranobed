@@ -1,4 +1,4 @@
-name: Scheduled Firestore Modification
+name: Monthly deliveries report
 
 on:
   workflow_dispatch:
