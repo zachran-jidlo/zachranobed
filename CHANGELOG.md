@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-218** Add reusable contact row. 
 - **ZOB-225** Add contacts screen with mocked values. 
 - **ZOB-226** Add loading and error states for contacts screen. 
+- **ZOB-229** Add banner widget with text.
 - **ZOB-230** Add row widget with trailing icon.
 
 ### Fixed
