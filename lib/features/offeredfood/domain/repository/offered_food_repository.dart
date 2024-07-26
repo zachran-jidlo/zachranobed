@@ -26,6 +26,9 @@ abstract class OfferedFoodRepository {
     required DeliveryState state,
   });
 
+  /// Cancels the delivery if it is in prepared state.
+  Future<bool> cancelDelivery({required Delivery delivery});
+
   /// Returns a [Future] that completes with an [int] representing the total
   /// count of saved meals for the specified [timePeriod] and user with given
   /// [entityId].

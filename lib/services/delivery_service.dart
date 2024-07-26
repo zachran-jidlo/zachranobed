@@ -53,7 +53,9 @@ class DeliveryService {
   /// Returns a [Future] that completes with a [DeliveryDto] object with a
   /// given [deliveryId].
   Future<DeliveryDto?> getDeliveryById(String deliveryId) async {
-    final snapshot = await _collection.doc(deliveryId).get();
+    final snapshot = await _collection
+        .doc(deliveryId)
+        .get(const GetOptions(source: Source.server));
     return snapshot.data();
   }
 

@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-84** Fix display of duplicated messages on allergens field.
 - **ZOB-148** Enable / disable ZO logger based in build variant.
 - **ZOB-200** Fix the issue with wrong layout borders on food boxes list.
+- **ZOB-239** Fix NOT_USED state usage.
 
 ### Changed
 - **ZOB-101** Disable auto-correct for login fields.
