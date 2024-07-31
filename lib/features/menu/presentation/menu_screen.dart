@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/utils/device_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -35,10 +35,10 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
+    var version = await DeviceUtils.getAppVersion();
     setState(() {
-      ZOLogger.logMessage(info.toString());
-      _appVersion = "${info.version} (${info.buildNumber})";
+      ZOLogger.logMessage(version.toString());
+      _appVersion = version;
     });
   }
 
