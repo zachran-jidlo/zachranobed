@@ -31,7 +31,7 @@
     "offerFoodDescription": "Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.",
     "foodName": "Název pokrmu",
     "allergens": "Alergeny",
-    "allergensSupportingText": "Zapisujete jako čísla oddělená čárkami.",
+    "allergensSupportingText": "Zapisujte jako čísla oddělená čárkami, nebo 0 pokud žádné alergeny nejsou.",
     "foodCategory": "Druh pokrmu",
     "numberOfServings": "Počet porcí",
     "boxType": "Typ krabičky",
