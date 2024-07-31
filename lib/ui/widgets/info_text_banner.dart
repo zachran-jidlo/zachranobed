@@ -24,18 +24,14 @@ class InfoTextBanner extends StatelessWidget {
       color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(WidgetStyle.padding),
-        child: Column(
-          children: [
-            Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: textColor,
-                  ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: Text(
+          message,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: textColor,
+              ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
       ),
     );
