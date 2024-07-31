@@ -49,6 +49,7 @@ class ZOTextField extends StatelessWidget {
             labelStyle: TextStyle(color: Colors.grey[600]),
             enabledBorder: WidgetStyle.inputBorder,
             focusedBorder: WidgetStyle.inputBorder,
+            errorMaxLines: 2,
           ),
           initialValue: initialValue,
           focusNode: internalFocusNode,

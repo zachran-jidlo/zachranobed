@@ -38,8 +38,10 @@ class _FoodAllergensTextFieldState extends State<FoodAllergensTextField> {
       onValidation: widget.formValidationManager.wrapValidator(
         formFieldKey,
         (val) {
+          // Match a single zero or a sequence of numbers from 1 to 14,
+          // separated by commas and optional whitespace
           RegExp allergensRegex =
-              RegExp(r'^(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*$');
+              RegExp(r'^(0|(1[0-4]|[1-9])(,\s*(1[0-4]|[1-9]))*)$');
           if (val!.isEmpty || !allergensRegex.hasMatch(val)) {
             setState(() {
               _isValid = false;
