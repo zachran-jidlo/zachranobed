@@ -1,6 +1,7 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
@@ -10,7 +11,10 @@ import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
+import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -27,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
     const BoxesScreen()
   ];
 
+  bool _showLogoutButton = false;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +42,15 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
         await HelperService.loadUserInfo(context);
       }
       await Notifications().getFCMToken();
+    });
+
+    // Show logout button after 20 seconds if user is not loaded
+    Future.delayed(const Duration(seconds: 20), () {
+      if (mounted) {
+        setState(() {
+          _showLogoutButton = true;
+        });
+      }
     });
   }
 
@@ -47,6 +62,8 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
 
   @override
   Widget build(BuildContext context) {
+    final authService = GetIt.I<AuthService>();
+
     return DefaultTabController(
       length: _screens.length,
       child: Scaffold(
@@ -55,7 +72,28 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
                 physics: const NeverScrollableScrollPhysics(),
                 children: _screens,
               )
-            : const Center(child: CircularProgressIndicator()),
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(),
+                    if (_showLogoutButton)
+                      Padding(
+                        padding: const EdgeInsets.only(top: GapSize.m),
+                        child: ZOButton(
+                          text: context.l10n!.signOut,
+                          fullWidth: false,
+                          onPressed: () async {
+                            await authService.signOut();
+                            if (context.mounted) {
+                              context.router.replaceAll([const LoginRoute()]);
+                            }
+                          },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
         bottomNavigationBar: SizedBox(
           height: 90.0,
           child: Material(
