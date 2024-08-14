@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-229** Add banner widget with text.
 - **ZOB-230** Add row widget with trailing icon.
 - **ZOB-231** Add food offer overview screen and feature.
+- **ZOB-258** Add signOut button to home screen when user is not loaded.
 
 ### Fixed
 - **ZOB-84** Fix display of duplicated messages on allergens field.
