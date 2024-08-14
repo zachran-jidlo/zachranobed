@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-226** Add loading and error states for contacts screen. 
 - **ZOB-229** Add banner widget with text.
 - **ZOB-230** Add row widget with trailing icon.
+- **ZOB-231** Add food offer overview screen and feature.
 
 ### Fixed
 - **ZOB-84** Fix display of duplicated messages on allergens field.

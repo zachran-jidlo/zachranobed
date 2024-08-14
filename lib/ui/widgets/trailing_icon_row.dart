@@ -19,7 +19,7 @@ class TrailingIconRow extends StatelessWidget {
   final IconData trailingIcon;
 
   /// The function to be called when the row is tapped.
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const TrailingIconRow({
     super.key,
@@ -27,7 +27,7 @@ class TrailingIconRow extends StatelessWidget {
     required this.description,
     required this.trailInfo,
     required this.trailingIcon,
-    required this.onTap,
+    this.onTap,
   });
 
   @override

@@ -9,3 +9,14 @@ class FoodBoxType {
     required this.type,
   });
 }
+
+extension FoodBoxTypeListExtensions on List<FoodBoxType> {
+  /// Returns the first element that satisfies the given predicate [test].
+  FoodBoxType? getById(String id) {
+    try {
+      return firstWhere((type) => type.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+}
