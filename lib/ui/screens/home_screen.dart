@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
                   text: context.l10n!.food,
                 ),
                 Tab(
-                  icon: const Icon(Icons.takeout_dining_outlined),
+                  icon: customSvgIcon(ZOStrings.iconFoodBox),
                   text: context.l10n!.boxes,
                 ),
               ],
@@ -125,6 +126,23 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
           ),
         ),
       ),
+    );
+  }
+
+  Widget customSvgIcon(String resource) {
+    return Builder(
+      builder: (BuildContext context) {
+        final iconTheme = IconTheme.of(context);
+        return SvgPicture.asset(
+          ZOStrings.iconFoodBox,
+          width: iconTheme.size,
+          height: iconTheme.size,
+          colorFilter: ColorFilter.mode(
+            iconTheme.color ?? Colors.transparent,
+            BlendMode.srcIn,
+          ),
+        );
+      },
     );
   }
 }

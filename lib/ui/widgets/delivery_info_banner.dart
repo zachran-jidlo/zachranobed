@@ -83,7 +83,7 @@ class DeliveryInfoBanner extends StatelessWidget {
         backgroundColor: ZOColors.successLight,
         message: DonationCountdownTimer(delivery: delivery),
         button: ZOButton(
-          text: context.l10n!.callACourier,
+          text: context.l10n!.wantToDonate,
           fullWidth: false,
           type: ZOButtonType.success,
           onPressed: () {
