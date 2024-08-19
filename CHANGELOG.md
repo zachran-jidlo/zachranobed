@@ -23,6 +23,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-214** Change Android launcher icon to rounded.
 - **ZOB-223** Use real data for contacts screen.
 - **ZOB-237** Change pickup confirmation time for personal delivery.
+- **ZOB-260** Change app terms link.
 
 ### Removed
 - **ZOB-170** Remove limit in donation and shipping history.
