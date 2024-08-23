@@ -47,7 +47,7 @@ class DonatedFoodList extends StatelessWidget {
                   ),
                 ),
               ),
-            const SizedBox(height: GapSize.xs),
+            const SizedBox(height: 8.0),
             Builder(
               builder: (context) {
                 if (snapshot.hasData) {
