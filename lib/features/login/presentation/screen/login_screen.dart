@@ -83,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ZOPasswordTextField(
                         text: context.l10n!.password,
                         controller: _passwordController,
-                        onValidation: (val) => val!.isEmpty
-                            ? context.l10n!.requiredFieldError
-                            : null,
+                        onValidation: FieldValidationUtils.getPasswordValidator(
+                          context,
+                        ),
                       ),
                       const SizedBox(height: GapSize.l),
                       ZOButton(

@@ -25,6 +25,17 @@ class FieldValidationUtils {
     };
   }
 
+  /// Returns a validator for password field.
+  /// The validator checks if the value is not empty.
+  static String? Function(String?) getPasswordValidator(BuildContext context) {
+    return (value) {
+      if (!_isFilled(value)) {
+        return context.l10n!.requiredFieldError;
+      }
+      return null;
+    };
+  }
+
   /// Returns a validator for food name field.
   /// The validator checks if the value is not empty.
   static String? Function(String?) getFoodNameValidator(BuildContext context) {

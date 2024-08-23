@@ -48,8 +48,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               children: [
                 const SizedBox(height: GapSize.xxs),
-                Text(context.l10n!.passwordResetExplanation),
-                const SizedBox(height: GapSize.m),
+                Text(
+                    context.l10n!.passwordResetExplanation,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: GapSize.xl),
                 ZOTextField(
                   label: context.l10n!.emailAddress,
                   inputType: TextInputType.emailAddress,
@@ -59,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     context,
                   ),
                 ),
-                const SizedBox(height: GapSize.m),
+                const SizedBox(height: GapSize.xl),
                 ZOButton(
                   text: context.l10n!.resetPassword,
                   icon: Icons.email_outlined,

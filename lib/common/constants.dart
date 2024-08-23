@@ -73,6 +73,7 @@ class WidgetStyle {
         color: isValid ? ZOColors.onPrimaryLight : ZOColors.primary,
       ),
       enabledBorder: WidgetStyle.inputBorder,
+      focusedBorder: WidgetStyle.inputBorder,
       disabledBorder: WidgetStyle.inputBorder,
       errorBorder: WidgetStyle.errorBorder,
       focusedErrorBorder: WidgetStyle.errorBorder,
