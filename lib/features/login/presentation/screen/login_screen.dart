@@ -4,10 +4,11 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -74,9 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         inputType: TextInputType.emailAddress,
                         disableAutocorrect: true,
                         controller: _emailController,
-                        onValidation: (val) => val!.isEmpty
-                            ? context.l10n!.requiredFieldError
-                            : null,
+                        onValidation: FieldValidationUtils.getEmailValidator(
+                          context,
+                        ),
                       ),
                       const SizedBox(height: GapSize.m),
                       ZOPasswordTextField(

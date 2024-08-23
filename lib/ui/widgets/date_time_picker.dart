@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 
 class ZODateTimePicker extends StatefulWidget {
   final String label;
@@ -27,6 +28,7 @@ class ZODateTimePicker extends StatefulWidget {
 
 class _ZODateTimePickerState extends State<ZODateTimePicker> {
   DateTime _dateTime = DateTime.now();
+  bool _isValid = true;
 
   Future<DateTime?> _pickDate() => showDatePicker(
         context: context,
@@ -70,10 +72,6 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
     return dateTime;
   }
 
-  final _dateTimePickerErrorBorder = const UnderlineInputBorder(
-    borderSide: BorderSide(color: Color(0xffd32f2f)),
-  );
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -83,16 +81,21 @@ class _ZODateTimePickerState extends State<ZODateTimePicker> {
       },
       child: TextFormField(
         controller: widget.controller,
-        validator: widget.onValidation,
-        enabled: false,
-        style: const TextStyle(color: Colors.black),
+        validator: FieldValidationUtils.wrapValidator(
+          widget.onValidation,
+          (isValid) {
+            setState(() {
+              _isValid = isValid;
+            });
+          },
+        ),
+        ignorePointers: true,
+        style: Theme.of(context).textTheme.bodyLarge,
         focusNode: widget.focusNode,
-        decoration: InputDecoration(
-          labelText: widget.label,
-          labelStyle: TextStyle(color: Colors.grey[600]),
-          disabledBorder: WidgetStyle.inputBorder,
-          errorBorder: _dateTimePickerErrorBorder,
-          errorStyle: TextStyle(color: Theme.of(context).colorScheme.error),
+        decoration: WidgetStyle.createInputDecoration(
+          label: widget.label,
+          isValid: _isValid,
+        ).copyWith(
           suffixIcon: Icon(widget.icon),
           suffixIconColor: Colors.black,
         ),

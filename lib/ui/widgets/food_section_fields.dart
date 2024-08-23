@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
@@ -137,8 +138,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           index: index,
           type: FormFieldType.foodName,
           label: context.l10n!.foodName,
-          onValidation: (val) =>
-              val!.isEmpty ? context.l10n!.requiredFieldError : null,
+          onValidation: FieldValidationUtils.getFoodNameValidator(context),
           onChanged: (val) {
             widget.foodSections[index] =
                 widget.foodSections[index].copyWith(dishName: val);
@@ -166,8 +166,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           items: FoodCategory.values
               .map((e) => FoodCategoryHelper.toValue(e, context))
               .toList(),
-          onValidation: (val) =>
-              val == null ? context.l10n!.requiredDropdownError : null,
+          onValidation: FieldValidationUtils.getFoodCategoryValidator(context),
           onChanged: (val) {
             widget.foodSections[index] =
                 widget.foodSections[index].copyWith(foodCategory: val);
@@ -179,16 +178,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           index: index,
           type: FormFieldType.numberOfServings,
           label: context.l10n!.numberOfServings,
-          onValidation: (val) {
-            if (val!.isEmpty) {
-              return context.l10n!.requiredFieldError;
-            }
-            int? validNumber = int.tryParse(val);
-            if (validNumber == null) {
-              return context.l10n!.invalidNumberError;
-            }
-            return null;
-          },
+          onValidation: FieldValidationUtils.getServingsValidator(context),
           inputType: TextInputType.number,
           textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (val) {
@@ -218,16 +208,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                     index: index,
                     type: FormFieldType.numberOfBoxes,
                     label: context.l10n!.numberOfBoxes,
-                    onValidation: (val) {
-                      if (val!.isEmpty) {
-                        return context.l10n!.requiredFieldError;
-                      }
-                      int? validNumber = int.tryParse(val);
-                      if (validNumber == null) {
-                        return context.l10n!.invalidNumberError;
-                      }
-                      return null;
-                    },
+                    onValidation: FieldValidationUtils.getBoxNumberValidator(
+                        context
+                    ),
                     inputType: TextInputType.number,
                     textInputFormatters: [
                       FilteringTextInputFormatter.digitsOnly
@@ -249,8 +232,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           type: FormFieldType.boxType,
           hintText: context.l10n!.boxType,
           items: widget.boxTypes.map((type) => type.name).toList(),
-          onValidation: (val) =>
-              val == null ? context.l10n!.requiredDropdownError : null,
+          onValidation: FieldValidationUtils.getBoxTypeValidator(context),
           onChanged: (val) {
             final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
             widget.foodSections[index] =
@@ -271,7 +253,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           ),
           onValidation: widget.formValidationManager.wrapValidator(
             FormFieldType.consumeBy.createFormFieldKey(index),
-            (val) => val!.isEmpty ? context.l10n!.requiredFieldError : null,
+            FieldValidationUtils.getConsumeByValidator(context),
           ),
           onDateTimePicked: (date) {
             if (date != null) {

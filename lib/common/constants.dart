@@ -46,12 +46,38 @@ class Constants {
 }
 
 class WidgetStyle {
-  static const inputBorder =
-      OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey));
+  static const inputBorder = OutlineInputBorder(
+    borderSide: BorderSide(
+      width: 1,
+      color: ZOColors.outline,
+    ),
+  );
+  static const errorBorder = OutlineInputBorder(
+    borderSide: BorderSide(
+      width: 2,
+      color: ZOColors.primary,
+    ),
+  );
 
   static const padding = 16.0;
   static const paddingSmall = 12.0;
   static const overviewBottomPadding = 64.0;
+
+  static InputDecoration createInputDecoration({
+    required String? label,
+    required bool isValid,
+  }) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(
+        color: isValid ? ZOColors.onPrimaryLight : ZOColors.primary,
+      ),
+      enabledBorder: WidgetStyle.inputBorder,
+      disabledBorder: WidgetStyle.inputBorder,
+      errorBorder: WidgetStyle.errorBorder,
+      focusedErrorBorder: WidgetStyle.errorBorder,
+    );
+  }
 }
 
 class GapSize {

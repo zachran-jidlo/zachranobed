@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
@@ -62,16 +63,7 @@ class _ShippingOfBoxesSectionFieldsState
         const SizedBox(height: GapSize.xl),
         ZOTextField(
           label: context.l10n!.numberOfBoxes,
-          onValidation: (val) {
-            if (val!.isEmpty) {
-              return context.l10n!.requiredFieldError;
-            }
-            int? validNumber = int.tryParse(val);
-            if (validNumber == null) {
-              return context.l10n!.invalidNumberError;
-            }
-            return null;
-          },
+          onValidation: FieldValidationUtils.getBoxNumberValidator(context),
           inputType: TextInputType.number,
           textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (val) {
@@ -84,8 +76,7 @@ class _ShippingOfBoxesSectionFieldsState
         ZODropdown(
           hintText: context.l10n!.boxType,
           items: widget.boxTypes.map((type) => type.name).toList(),
-          onValidation: (val) =>
-              val == null ? context.l10n!.requiredDropdownError : null,
+          onValidation: FieldValidationUtils.getBoxTypeValidator(context),
           onChanged: (val) {
             final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
             widget.shippingSections[index] =
