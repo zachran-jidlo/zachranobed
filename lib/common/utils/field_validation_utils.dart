@@ -9,6 +9,10 @@ class FieldValidationUtils {
   static RegExp emailRegExp = RegExp(
       "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+");
 
+  /// Regular expression for validating a password.
+  /// Explanation: Any sequence of at least 8 characters.
+  static RegExp passwordRegExp = RegExp(".{8,}");
+
   /// Returns a validator for email field.
   /// The validator checks if the value is not empty and contains a valid email
   /// address.
@@ -31,6 +35,39 @@ class FieldValidationUtils {
     return (value) {
       if (!_isFilled(value)) {
         return context.l10n!.requiredFieldError;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for new password field.
+  /// The validator checks if the value is not empty and has enough length.
+  static String? Function(String?) getNewPasswordValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n!.requiredFieldError;
+      }
+      if (!passwordRegExp.hasMatch(value)) {
+        return context.l10n!.passwordLengthError;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for repeat new password field.
+  /// The validator checks if the value is not empty and matches new password.
+  static String? Function(String?) getRepeatNewPasswordValidator(
+    BuildContext context,
+    TextEditingController newPasswordController,
+  ) {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n!.requiredFieldError;
+      }
+      if (value != newPasswordController.text) {
+        return context.l10n!.passwordsDontMatchError;
       }
       return null;
     };
