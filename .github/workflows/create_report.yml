@@ -7,8 +7,6 @@ on:
         description: 'Target month (1-12)'
         required: true
         default: '1'
-  #schedule:
-  #  - cron: '*/5 * * * *'  # This runs the script every 5 minutes
 
 jobs:
   modify-firestore:
@@ -17,14 +15,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        ref: feature/ZOB-201_delivery_report_script  # Ensure it checks out the correct branch
+      uses: actions/checkout@v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '14'  # Specify the Node.js version you need
+        node-version: '20'  # Specify the Node.js version you need
 
     - name: Install dependencies
       run: |
