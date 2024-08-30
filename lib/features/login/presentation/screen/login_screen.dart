@@ -83,6 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ZOPasswordTextField(
                         text: context.l10n!.password,
                         controller: _passwordController,
+                        // Add more bottom padding to scroll above a snackbar
+                        scrollPadding: const EdgeInsets.only(
+                          left: 20,
+                          top: 20,
+                          right: 20,
+                          bottom: 128,
+                        ),
                         onValidation: FieldValidationUtils.getPasswordValidator(
                           context,
                         ),
@@ -145,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       if (mounted) {
         context.router.pop();
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,

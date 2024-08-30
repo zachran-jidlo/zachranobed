@@ -12,6 +12,7 @@ class ZOPasswordTextField extends StatefulWidget {
   final List<TextInputFormatter>? textInputFormatters;
   final Function(String)? onChanged;
   final String? value;
+  final EdgeInsets? scrollPadding;
 
   const ZOPasswordTextField({
     super.key,
@@ -22,6 +23,7 @@ class ZOPasswordTextField extends StatefulWidget {
     this.textInputFormatters,
     this.onChanged,
     this.value,
+    this.scrollPadding,
   });
 
   @override
@@ -73,6 +75,7 @@ class _ZOPasswordTextFieldState extends State<ZOPasswordTextField> {
       onTapOutside: (event) => focus.unfocus(),
       autocorrect: false,
       spellCheckConfiguration: const SpellCheckConfiguration.disabled(),
+      scrollPadding: widget.scrollPadding ?? const EdgeInsets.all(20),
     );
   }
 }
