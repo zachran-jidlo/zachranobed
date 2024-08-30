@@ -14,6 +14,7 @@ class BoxMovementListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final date = boxMovement.date;
     final formattedDate = '${date.day.toString()}.${date.month.toString()}.';
     final countPrefix = boxMovement.count > 0 ? '+' : '';
@@ -28,9 +29,22 @@ class BoxMovementListTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          title: Text(boxMovement.type.name),
-          subtitle: Text(formattedDate),
-          trailing: Text('$countPrefix${boxMovement.count} ks'),
+          title: Text(
+            boxMovement.type.name,
+            style: textTheme.bodyLarge,
+          ),
+          subtitle: Text(
+            formattedDate,
+            style: textTheme.bodySmall?.copyWith(
+              color: ZOColors.onPrimaryLight,
+            ),
+          ),
+          trailing: Text(
+            '$countPrefix${boxMovement.count} ks',
+            style: textTheme.labelLarge?.copyWith(
+              color: ZOColors.onPrimaryLight,
+            ),
+          ),
           onTap: () => context.router.push(
             BoxMovementDetailRoute(boxMovement: boxMovement),
           ),
