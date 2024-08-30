@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
@@ -37,80 +36,97 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   final _offeredFoodRepository = GetIt.I<OfferedFoodRepository>();
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
   final _foodBoxTypes = <FoodBoxType>[];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    foodInfos = widget.foodInfos;
-    ZOLogger.logMessage("OfferFoodOverviewScreen: $foodInfos");
+    _initData();
+  }
 
-    _foodBoxRepository.getTypes().then((value) {
+  Future<void> _initData() async {
+    try {
+      final boxTypes =
+          await _foodBoxRepository.getTypes(includeDisposable: true);
       setState(() {
-        _foodBoxTypes.clear();
-        _foodBoxTypes.addAll(value);
+        _foodBoxTypes.addAll(boxTypes);
+        foodInfos = widget.foodInfos;
+        _isLoading = false;
       });
-    });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: Column(children: [
-          Container(
-            padding: const EdgeInsets.all(WidgetStyle.padding),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              context.l10n!.offerFoodOverviewScreenTitle,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.clip,
-            ),
-          ),
-          InfoTextBanner(message: context.l10n!.offerFoodOverviewBanner),
-          const SizedBox(height: GapSize.m),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.padding,
-            ),
-            child: Column(children: [
-              _offerFoodListSection(context,
-                  foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (bool didPop) async {
+          Navigator.popUntil(context, ModalRoute.withName(OfferFoodRoute.name));
+        },
+        child: Scaffold(
+            appBar: AppBar(),
+            body: Column(children: [
+              Container(
+                padding: const EdgeInsets.all(WidgetStyle.padding),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  context.l10n!.offerFoodOverviewScreenTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.clip,
+                ),
+              ),
+              InfoTextBanner(message: context.l10n!.offerFoodOverviewBanner),
               const SizedBox(height: GapSize.m),
-              ZOButton(
-                  text: context.l10n!.offerFood,
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) =>
-                          const Center(child: CircularProgressIndicator()),
-                    );
+              if (_isLoading)
+                const Center(child: CircularProgressIndicator())
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: WidgetStyle.padding,
+                  ),
+                  child: Column(children: [
+                    _offerFoodListSection(context,
+                        foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
+                    const SizedBox(height: GapSize.m),
+                    ZOButton(
+                        text: context.l10n!.offerFood,
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => const Center(
+                                child: CircularProgressIndicator()),
+                          );
 
-                    if (await foodInfos.verifyAvailableBoxCount(
-                        context, _foodBoxRepository)) {
-                      final isSuccess = await _offerFood();
-                      if (context.mounted) {
-                        context.router.replace(ThankYouRoute(
-                          isSuccess: isSuccess,
-                          message: context.l10n!.foodDonationConfirmation,
-                        ));
-                      }
-                    } else {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          ZOTemporarySnackBar(
-                            backgroundColor: Colors.red,
-                            message: context.l10n!.boxCountError,
-                          ),
-                        );
-                      }
-                    }
-                  })
-            ]),
-          )
-        ]));
+                          if (await foodInfos.verifyAvailableBoxCount(
+                              context, _foodBoxRepository)) {
+                            final isSuccess = await _offerFood();
+                            if (context.mounted) {
+                              context.router.replace(ThankYouRoute(
+                                isSuccess: isSuccess,
+                                message: context.l10n!.foodDonationConfirmation,
+                              ));
+                            }
+                          } else {
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                ZOTemporarySnackBar(
+                                  backgroundColor: Colors.red,
+                                  message: context.l10n!.boxCountError,
+                                ),
+                              );
+                            }
+                          }
+                        })
+                  ]),
+                )
+            ])));
   }
 
   Future<bool> _offerFood() async {

@@ -19,7 +19,6 @@ class ZOColors {
   static const successLight = Color.fromRGBO(231, 240, 204, 1);
   static const onSuccess = Color.fromRGBO(255, 255, 255, 1);
   static const amberTransparent = Color.fromRGBO(255, 182, 0, 0.4);
-  static const transparent = Color.fromRGBO(0, 0, 0, 0);
 }
 
 class ZOStrings {

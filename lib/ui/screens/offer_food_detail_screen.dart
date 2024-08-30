@@ -37,7 +37,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   final List<TextEditingController> _consumeByControllers = [
     TextEditingController()
   ];
-  final List<bool> _checkboxValues = [true];
+  late List<bool> _checkboxValues;
   final List<FoodBoxType> _foodBoxTypes = [];
 
   @override
@@ -45,6 +45,10 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     super.initState();
     foodInfo = widget.editedFoodInfo;
     allFoodInfos = widget.allFoodInfos;
+    _checkboxValues = [
+      foodInfo.numberOfBoxes == foodInfo.numberOfServings ||
+          foodInfo.numberOfBoxes == null
+    ];
 
     _foodBoxRepository.getTypes(includeDisposable: true).then((value) {
       setState(() {
@@ -136,7 +140,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                       underline: false,
                       color: ZOColors.primary,
                       onTap: () {
-                        context.back();
+                        Navigator.pop(context);
                       }),
                   const SizedBox(height: GapSize.l),
                 ]),

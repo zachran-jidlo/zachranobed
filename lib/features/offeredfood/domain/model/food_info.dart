@@ -46,9 +46,7 @@ class FoodInfo with _$FoodInfo {
 }
 
 extension FoodInfoExtension on List<FoodInfo> {
-  /*
-  * Extension on List<FoodInfo> to verify the available box count.
- */
+  ///Extension on List<FoodInfo> to verify the available box count.
   Future<bool> verifyAvailableBoxCount(
       BuildContext context, FoodBoxRepository foodBoxRepository) async {
     final user = HelperService.getCurrentUser(context);
