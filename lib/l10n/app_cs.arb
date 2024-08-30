@@ -116,5 +116,9 @@
     "contactsOrganisationHeader": "Zachraň jídlo",
     "commonGenericErrorTitle": "Něco se pokazilo",
     "commonGenericErrorDescription": "Při načítání dat došlo k chybě. Zkuste to prosím za chvíli znovu.",
-    "commonGenericErrorRetryAction": "Zkusit znovu"
+    "commonGenericErrorRetryAction": "Zkusit znovu",
+    "offerFoodOverviewScreenTitle": "Shrnutí",
+    "offerFoodOverviewBanner": "Zkontrolujte si prosím počet krabiček a porcí.",
+    "offerFoodDetailScreenTitle": "Úprava zadaného pokrmu",
+    "offerFoodDetailSaveButton": "Uložit změny"
 }

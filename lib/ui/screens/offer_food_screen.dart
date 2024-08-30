@@ -2,20 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
-import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
+import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
@@ -27,13 +23,12 @@ class OfferFoodScreen extends StatefulWidget {
 }
 
 class _OfferFoodScreenState extends State<OfferFoodScreen> {
-  final _offeredFoodRepository = GetIt.I<OfferedFoodRepository>();
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
 
   final _formKey = GlobalKey<FormState>();
   final _formValidationManager = FormValidationManager();
 
-  final List<FoodInfo> _foodSections = [const FoodInfo()];
+  final List<FoodInfo> _foodSections = [FoodInfo.withUuid()];
   final List<TextEditingController> _consumeByControllers = [
     TextEditingController()
   ];
@@ -123,49 +118,34 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                         checkboxValues: _checkboxValues,
                         boxTypes: _foodBoxTypes,
                       ),
-                      ZOButton(
-                        text: context.l10n!.addAnotherFood,
-                        icon: MaterialSymbols.add,
-                        type: ZOButtonType.secondary,
-                        height: 40.0,
-                        onPressed: () {
-                          setState(() {
-                            _foodSections.add(const FoodInfo());
-                            _consumeByControllers.add(TextEditingController());
-                            _checkboxValues.add(true);
-                          });
-                        },
-                      ),
+                      _addAnotherFoodButton(),
                       const SizedBox(height: GapSize.xxl),
                       ZOButton(
-                        text: context.l10n!.offerFood,
-                        icon: MaterialSymbols.check,
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            if (await _verifyAvailableBoxCount()) {
-                              final isSuccess = await _offerFood();
-                              if (mounted) {
-                                context.router.replace(ThankYouRoute(
-                                  isSuccess: isSuccess,
-                                  message:
-                                      context.l10n!.foodDonationConfirmation,
-                                ));
+                          text: context.l10n!.continueTheOffer,
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              if (await _foodSections.verifyAvailableBoxCount(
+                                  context, _foodBoxRepository)) {
+                                if (mounted) {
+                                  context.router.navigate(
+                                    OfferFoodOverviewRoute(
+                                        foodInfos: _foodSections),
+                                  );
+                                }
+                              } else {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    ZOTemporarySnackBar(
+                                      backgroundColor: Colors.red,
+                                      message: context.l10n!.boxCountError,
+                                    ),
+                                  );
+                                }
                               }
                             } else {
-                              if (mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  ZOTemporarySnackBar(
-                                    backgroundColor: Colors.red,
-                                    message: context.l10n!.boxCountError,
-                                  ),
-                                );
-                              }
+                              _formValidationManager.scrollToFirstError();
                             }
-                          } else {
-                            _formValidationManager.scrollToFirstError();
-                          }
-                        },
-                      ),
+                          }),
                       const SizedBox(height: GapSize.l),
                     ],
                   ),
@@ -178,51 +158,19 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
     );
   }
 
-  Future<bool> _verifyAvailableBoxCount() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-
-    final user = HelperService.getCurrentUser(context);
-    if (user == null) {
-      return false;
-    }
-
-    final requiredBoxes = <String, int>{};
-    for (final foodInfo in _foodSections) {
-      final foodBoxId = foodInfo.foodBoxId;
-      if (foodBoxId == null) {
-        continue;
-      }
-      final required = foodInfo.numberOfBoxes ?? foodInfo.numberOfServings ?? 0;
-      requiredBoxes[foodBoxId] = (requiredBoxes[foodBoxId] ?? 0) + required;
-    }
-
-    final available = await _foodBoxRepository.verifyAvailableBoxCount(
-      entityId: user.entityId,
-      requiredBoxes: requiredBoxes,
-      getQuantity: (e) => e.quantityAtCanteen,
-    );
-
-    if (!available) {
-      if (mounted) {
-        context.router.pop();
-      }
-    }
-
-    return available;
-  }
-
-  Future<bool> _offerFood() async {
-    final delivery = context.read<DeliveryNotifier>().delivery;
-    if (delivery == null) {
-      return false;
-    }
-    return _offeredFoodRepository.createOffer(
-      delivery: delivery,
-      foodInfo: _foodSections,
+  Widget _addAnotherFoodButton() {
+    return ZOButton(
+      text: context.l10n!.addAnotherFood,
+      icon: MaterialSymbols.add,
+      type: ZOButtonType.secondary,
+      height: 40.0,
+      onPressed: () {
+        setState(() {
+          _foodSections.add(FoodInfo.withUuid());
+          _consumeByControllers.add(TextEditingController());
+          _checkboxValues.add(true);
+        });
+      },
     );
   }
 }
