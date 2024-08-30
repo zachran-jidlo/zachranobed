@@ -24,6 +24,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-223** Use real data for contacts screen.
 - **ZOB-237** Change pickup confirmation time for personal delivery.
 - **ZOB-260** Change app terms link.
+- **ZOB-265** Change current delivery search conditions.
 
 ### Removed
 - **ZOB-170** Remove limit in donation and shipping history.

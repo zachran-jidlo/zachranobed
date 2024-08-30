@@ -27,16 +27,14 @@ class DeliveryNotifier extends ChangeNotifier {
 
   /// Observes the deliveries for a Canteen.
   ///
-  /// This method subscribes to the stream of deliveries from the repository and updates the current delivery whenever a new delivery is emitted.
+  /// This method subscribes to the stream of deliveries from the repository and
+  /// updates the current delivery whenever a new delivery is emitted.
   ///
   /// The [canteen] parameter must not be null.
   void observeDelivery(Canteen canteen) {
     _streamSubscription?.cancel();
     _streamSubscription = _repository
-        .observeCurrentDelivery(
-            entityId: canteen.entityId,
-            time:
-                DateTimeUtils.getDateTimeOfCurrentDelivery(canteen.pickUpFrom))
+        .observeCurrentDelivery(entityId: canteen.entityId)
         .listen((delivery) async {
       _delivery = delivery;
       notifyListeners();

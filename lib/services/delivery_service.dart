@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/common/utils/future_utils.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
@@ -30,22 +31,30 @@ class DeliveryService {
 
   /// Observes a delivery for a specific donor at a specific time.
   ///
-  /// This method sets up a Firestore stream to listen for changes in the `deliveries` collection.
-  /// It filters deliveries based on the provided [donorId] and [time].
-  /// The [donorId] parameter is the ID of the donor whose delivery is to be observed.
-  /// The [time] parameter is the start time of the pickup window for the delivery.
+  /// This method sets up a Firestore stream to listen for changes in the
+  /// `deliveries` collection. It filters deliveries based on the provided
+  /// [donorId], type and last midnight timestamp to get "today's" delivery.
   ///
-  /// The method returns a `Stream` of `DeliveryDto?`. Each `DeliveryDto?` in the `Stream` represents a delivery for the donor.
-  /// The `Stream` emits a new `DeliveryDto?` whenever there is a change in the delivery for the donor.
+  /// The [donorId] parameter is the ID of the donor whose delivery is to be
+  /// observed.
   ///
-  /// The `where` method is used to filter the deliveries based on the donor ID, the type of the delivery, and the start time of the pickup window.
-  /// The `snapshots` method is used to listen for changes in the `deliveries` collection.
-  /// The `map` method is used to transform the snapshots into `DeliveryDto?` objects.
-  Stream<DeliveryDto?> observeDelivery(String donorId, DateTime time) {
+  /// The method returns a `Stream` of `DeliveryDto?`. Each `DeliveryDto?` in
+  /// the `Stream` represents a delivery for the donor. The `Stream` emits a new
+  /// `DeliveryDto?` whenever there is a change in the delivery for the donor.
+  ///
+  /// The `where` method is used to filter the deliveries based on the donor ID,
+  /// the type of the delivery, and the time of the last midnight timestamp.
+  /// The `snapshots` method is used to listen for changes in the `deliveries`
+  /// collection.
+  /// The `map` method is used to transform the snapshots into  `DeliveryDto?`
+  /// objects.
+  Stream<DeliveryDto?> observeDelivery(String donorId) {
+    final now = DateTime.now();
+    final lastMidnight = DateTime(now.year, now.month, now.day);
     final snapshots = _collection
         .where('donorId', isEqualTo: donorId)
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
-        .whereTime('pickupTimeWindow.start', time)
+        .whereTime('deliveryDate', lastMidnight)
         .snapshots();
     return snapshots.map((snapshot) => snapshot.docs.firstOrNull?.data());
   }

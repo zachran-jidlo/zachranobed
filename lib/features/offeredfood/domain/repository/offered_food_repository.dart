@@ -4,13 +4,12 @@ import 'package:zachranobed/models/delivery.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-  /// Observes the current delivery for a specific entity at a specific time.
+  /// Observes the current delivery for a specific entity.
   ///
-  /// The [entityId] parameter is the ID of the entity whose delivery is to be observed.
-  /// The [time] parameter is the start time of the pickup window for the delivery.
+  /// The [entityId] parameter is the ID of the entity whose delivery is to be
+  /// observed.
   Stream<Delivery?> observeCurrentDelivery({
     required String entityId,
-    required DateTime time,
   });
 
   /// Checks if canteen could donate to the given [delivery]. The [time]
