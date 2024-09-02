@@ -45,7 +45,7 @@ export const notifyCharityAboutDonation = functions.firestore
     const oldValue = change.before.data();
 
     if (
-      newValue.state === "ACCEPTED" &&
+      (newValue.state === "ACCEPTED" || newValue.state === "NOT_USED") && // Filter out unnecesary loading from Firestore for other states
       newValue.state !== oldValue.state &&
       isToday(newValue.pickupTimeWindow.start.toDate())
     ) {
