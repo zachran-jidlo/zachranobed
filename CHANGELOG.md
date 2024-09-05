@@ -19,6 +19,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-239** Fix NOT_USED state usage.
 
 ### Changed
+- **ZOB-38** Update dashboard visuals.
 - **ZOB-101** Disable auto-correct for login fields.
 - **ZOB-157** Update error fields visuals and error messages.
 - **ZOB-199** Update notification package to 17.1.2.

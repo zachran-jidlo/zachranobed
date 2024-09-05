@@ -11,6 +11,7 @@ class DonatedFoodListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final String date =
         '${offeredFood.date.day.toString()}.${offeredFood.date.month.toString()}.';
 
@@ -25,9 +26,22 @@ class DonatedFoodListTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          title: Text(offeredFood.dishName),
-          subtitle: Text(date),
-          trailing: Text('${offeredFood.numberOfServings} ks'),
+          title: Text(
+            offeredFood.dishName,
+            style: textTheme.bodyLarge,
+          ),
+          subtitle: Text(
+            date,
+            style: textTheme.bodySmall?.copyWith(
+              color: ZOColors.onPrimaryLight,
+            ),
+          ),
+          trailing: Text(
+            '${offeredFood.numberOfServings} ks',
+            style: textTheme.labelLarge?.copyWith(
+              color: ZOColors.onPrimaryLight,
+            ),
+          ),
           onTap: () => context.router
               .push(DonatedFoodDetailRoute(offeredFood: offeredFood)),
         ),

@@ -20,7 +20,17 @@ class BoxDataTable extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final boxes = snapshot.data!;
-          return _table(context, boxes);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.l10n!.boxStatisticsHeader,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              _table(context, boxes),
+            ],
+          );
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
         }
