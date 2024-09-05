@@ -35,6 +35,7 @@ class ZOStrings {
   static const boxEmptyPath = 'assets/box-empty.svg';
   static const certificationCheckPath = 'assets/certification_check.svg';
   static const genericErrorPath = 'assets/generic-error.svg';
+  static const iconFoodBox = 'assets/ic_food_box.svg';
 }
 
 class Constants {
