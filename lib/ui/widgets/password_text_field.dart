@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 
 class ZOPasswordTextField extends StatefulWidget {
   final String text;
@@ -30,6 +31,7 @@ class ZOPasswordTextField extends StatefulWidget {
 class _ZOPasswordTextFieldState extends State<ZOPasswordTextField> {
   bool obscureText = true;
   var focus = FocusNode();
+  bool _isValid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +39,21 @@ class _ZOPasswordTextFieldState extends State<ZOPasswordTextField> {
       controller: widget.controller,
       obscureText: obscureText,
       cursorColor: Colors.black,
-      validator: widget.onValidation,
+      validator: FieldValidationUtils.wrapValidator(
+        widget.onValidation,
+        (isValid) {
+          setState(() {
+            _isValid = isValid;
+          });
+        },
+      ),
       keyboardType: widget.inputType,
       inputFormatters: widget.textInputFormatters,
       onChanged: widget.onChanged,
-      decoration: InputDecoration(
-        labelText: widget.text,
-        labelStyle: TextStyle(color: Colors.grey[600]),
-        enabledBorder: WidgetStyle.inputBorder,
-        focusedBorder: WidgetStyle.inputBorder,
+      decoration: WidgetStyle.createInputDecoration(
+        label: widget.text,
+        isValid: _isValid,
+      ).copyWith(
         suffixIcon: IconButton(
           icon: Icon(
             obscureText

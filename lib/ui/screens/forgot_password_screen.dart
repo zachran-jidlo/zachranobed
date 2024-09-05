@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
@@ -47,20 +48,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               children: [
                 const SizedBox(height: GapSize.xxs),
-                Text(context.l10n!.passwordResetExplanation),
-                const SizedBox(height: GapSize.m),
+                Text(
+                    context.l10n!.passwordResetExplanation,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: GapSize.xl),
                 ZOTextField(
                   label: context.l10n!.emailAddress,
                   inputType: TextInputType.emailAddress,
                   disableAutocorrect: true,
                   controller: _emailController,
-                  onValidation: (val) {
-                    return val!.isEmpty
-                        ? context.l10n!.requiredFieldError
-                        : null;
-                  },
+                  onValidation: FieldValidationUtils.getEmailValidator(
+                    context,
+                  ),
                 ),
-                const SizedBox(height: GapSize.m),
+                const SizedBox(height: GapSize.xl),
                 ZOButton(
                   text: context.l10n!.resetPassword,
                   icon: Icons.email_outlined,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
 
-class ZOTextField extends StatelessWidget {
+class ZOTextField extends StatefulWidget {
   final String label;
   final TextEditingController? controller;
   final String? Function(String?)? onValidation;
@@ -32,38 +33,52 @@ class ZOTextField extends StatelessWidget {
   });
 
   @override
+  State<ZOTextField> createState() => _ZOTextFieldState();
+}
+
+class _ZOTextFieldState extends State<ZOTextField> {
+  bool _isValid = true;
+
+  @override
   Widget build(BuildContext context) {
-    var internalFocusNode = focusNode ?? FocusNode();
+    var internalFocusNode = widget.focusNode ?? FocusNode();
 
     return Column(
       children: [
         TextFormField(
-          controller: controller,
+          controller: widget.controller,
           cursorColor: Colors.black,
-          validator: onValidation,
-          keyboardType: inputType,
-          inputFormatters: textInputFormatters,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            labelText: label,
-            labelStyle: TextStyle(color: Colors.grey[600]),
-            enabledBorder: WidgetStyle.inputBorder,
-            focusedBorder: WidgetStyle.inputBorder,
-            errorMaxLines: 2,
+          validator: FieldValidationUtils.wrapValidator(
+            widget.onValidation,
+            (isValid) {
+              setState(() {
+                _isValid = isValid;
+              });
+            },
           ),
-          initialValue: initialValue,
+          keyboardType: widget.inputType,
+          inputFormatters: widget.textInputFormatters,
+          onChanged: widget.onChanged,
+          decoration: WidgetStyle.createInputDecoration(
+            label: widget.label,
+            isValid: _isValid,
+          ),
+          initialValue: widget.initialValue,
           focusNode: internalFocusNode,
           onTapOutside: (event) => internalFocusNode.unfocus(),
-          readOnly: readOnly,
-          autocorrect: !disableAutocorrect,
-          spellCheckConfiguration: disableAutocorrect ? const SpellCheckConfiguration.disabled() : null,
+          readOnly: widget.readOnly,
+          autocorrect: !widget.disableAutocorrect,
+          spellCheckConfiguration: widget.disableAutocorrect
+              ? const SpellCheckConfiguration.disabled()
+              : null,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
-        supportingText != null
+        widget.supportingText != null
             ? Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: WidgetStyle.padding,
                 ),
-                child: SupportingText(text: supportingText!),
+                child: SupportingText(text: widget.supportingText!),
               )
             : const SizedBox(),
       ],
