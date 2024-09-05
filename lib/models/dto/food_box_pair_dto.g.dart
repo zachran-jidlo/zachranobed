@@ -9,9 +9,9 @@ part of 'food_box_pair_dto.dart';
 FoodBoxPairDto _$FoodBoxPairDtoFromJson(Map<String, dynamic> json) =>
     FoodBoxPairDto(
       foodBoxId: json['foodBoxId'] as String,
-      count: json['count'] as int,
-      donorCount: json['donorCount'] as int,
-      recipientCount: json['recipientCount'] as int,
+      count: (json['count'] as num).toInt(),
+      donorCount: (json['donorCount'] as num).toInt(),
+      recipientCount: (json['recipientCount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$FoodBoxPairDtoToJson(FoodBoxPairDto instance) =>

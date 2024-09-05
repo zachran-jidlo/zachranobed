@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
@@ -40,6 +41,21 @@ class FoodSectionFields extends StatefulWidget {
 }
 
 class _FoodSectionFieldsState extends State<FoodSectionFields> {
+  @override
+  void initState() {
+    super.initState();
+    _initializeControllers();
+  }
+
+  void _initializeControllers() {
+    for (int i = 0; i < widget.foodSections.length; i++) {
+      if (widget.foodSections[i].consumeBy != null) {
+        widget.controllers[i].text = DateTimeUtils().formatDateTime(
+            widget.foodSections[i].consumeBy!, "d.M.yyyy HH:mm");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

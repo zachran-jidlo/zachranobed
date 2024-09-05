@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-226** Add loading and error states for contacts screen. 
 - **ZOB-229** Add banner widget with text.
 - **ZOB-230** Add row widget with trailing icon.
+- **ZOB-231** Add food offer overview screen and feature.
 - **ZOB-258** Add signOut button to home screen when user is not loaded.
 
 ### Fixed
@@ -21,6 +22,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-101** Disable auto-correct for login fields.
 - **ZOB-157** Update error fields visuals and error messages.
 - **ZOB-199** Update notification package to 17.1.2.
+- **ZOB-206** Allow to set 0 for allergens.
 - **ZOB-214** Change Android launcher icon to rounded.
 - **ZOB-223** Use real data for contacts screen.
 - **ZOB-237** Change pickup confirmation time for personal delivery.

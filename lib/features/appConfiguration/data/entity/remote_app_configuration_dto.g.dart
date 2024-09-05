@@ -9,7 +9,7 @@ part of 'remote_app_configuration_dto.dart';
 RemoteAppConfigurationDto _$RemoteAppConfigurationDtoFromJson(
         Map<String, dynamic> json) =>
     RemoteAppConfigurationDto(
-      lastAppTermsVersion: json['lastAppTermsVersion'] as int,
+      lastAppTermsVersion: (json['lastAppTermsVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$RemoteAppConfigurationDtoToJson(

@@ -49,4 +49,10 @@ class DateTimeUtils {
     final formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(DateTime.now());
   }
+
+  /// Returns a [String] with current time in 'HH:mm' format.
+  String formatDateTime(DateTime dateTime, String format) {
+    final DateFormat formatter = DateFormat(format);
+    return formatter.format(dateTime);
+  }
 }

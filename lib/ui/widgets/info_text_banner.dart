@@ -26,7 +26,7 @@ class InfoTextBanner extends StatelessWidget {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Text(
           message,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: textColor,
               ),
           maxLines: 1,
