@@ -67,6 +67,24 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "deliveryDate",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "deliveries",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "donorId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "pickupTimeWindow.start",
           "order": "ASCENDING"
         }

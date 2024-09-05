@@ -45,48 +45,60 @@ export const notifyCharityAboutDonation = functions.firestore
     const oldValue = change.before.data();
 
     if (
-      newValue.state === "ACCEPTED" &&
+      (newValue.state === "ACCEPTED" || newValue.state === "NOT_USED") && // Filter out unnecesary loading from Firestore for other states
       newValue.state !== oldValue.state &&
       isToday(newValue.pickupTimeWindow.start.toDate())
     ) {
       const recipientId = newValue.recipientId;
+      const donorId = newValue.donorId;
 
-      return db
-        .collection("entities")
-        .doc(recipientId)
-        .get()
-        .then((entityDoc) => {
-          if (entityDoc.exists) {
-            const fcmTokens = entityDoc.data()!.fcmTokens;
+      return Promise.all([
+        db.collection("entities").doc(recipientId).get(),
+        db.collection("entities").doc(donorId).get(),
+      ]).then((results) => {
+        if (results[0].exists && results[1].exists) {
+          const fcmTokens = results[0].data()!.fcmTokens;
+          const donor = results[1].data();
 
-            // Create message for all tokens of given entity
-            const messages = Object.values(fcmTokens).map((token) => {
-              return {
-                notification: {
-                  title: "Potvrzení doručování",
-                  body: "Dnes vám budou doručovány darované pokrmy.",
-                },
-                token: token as string,
-              };
-            });
+          var title: string
+          var body: string
 
-            return admin.messaging().sendEach(messages);
-          } else {
-            console.error("Entity not found for recipientId:", recipientId);
-            return null;
+          if (newValue.state === "ACCEPTED") {
+            title = "Potvrzení darování"
+            body = `${donor?.establishmentName} vám dnes daruje pokrmy.`
+          } else if (newValue.state === "NOT_USED") {
+            title = "Dnes nezbylo jídlo"
+            body = `V ${donor?.establishmentName} dnes nezbylo žádné jídlo.`
           }
-        })
-        .then((response) => {
-          console.info(
-            "Successfully sent " + response?.successCount + " push messages."
-          );
-          // TODO: Go through success of each message and remove tokens that are not registered.
-          // TODO: Thjere is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
-        })
-        .catch((error) => {
-          console.error("Error sending push notification:", error);
+
+          // Create message for all tokens of given entity
+          const messages = Object.values(fcmTokens).map((token) => {
+            return {
+              notification: {
+                title: title,
+                body: body,
+              },
+              token: token as string,
+            };
+          });
+
+          return admin.messaging().sendEach(messages);
+        } else {
+          console.error("Entity not found for recipientId:", recipientId, "or donorId:", donorId);
           return null;
-        });
+        }
+      })
+      .then((response) => {
+        console.info(
+          "Successfully sent " + response?.successCount + " push messages."
+        );
+        // TODO: Go through success of each message and remove tokens that are not registered.
+        // TODO: Thjere is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
+      })
+      .catch((error) => {
+        console.error("Error sending push notification:", error);
+        return null;
+      });
     }
 
     return null;
