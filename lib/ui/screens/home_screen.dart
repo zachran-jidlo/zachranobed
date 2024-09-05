@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
       builder: (BuildContext context) {
         final iconTheme = IconTheme.of(context);
         return SvgPicture.asset(
-          ZOStrings.iconFoodBox,
+          resource,
           width: iconTheme.size,
           height: iconTheme.size,
           colorFilter: ColorFilter.mode(
