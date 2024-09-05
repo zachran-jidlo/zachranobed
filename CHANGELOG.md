@@ -20,6 +20,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-38** Update dashboard visuals.
+- **ZOB-40** Update change password validations.
 - **ZOB-101** Disable auto-correct for login fields.
 - **ZOB-157** Update error fields visuals and error messages.
 - **ZOB-181** Change texts and food box icon.
