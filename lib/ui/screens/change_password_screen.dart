@@ -3,12 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/password_text_field.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
 class ChangePasswordScreen extends StatefulWidget {
@@ -52,45 +53,30 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: Column(
               children: [
                 const SizedBox(height: GapSize.xxs),
-                ZOTextField(
-                  label: context.l10n!.currentPassword,
-                  inputType: TextInputType.text,
+                ZOPasswordTextField(
+                  text: context.l10n!.currentPassword,
                   controller: _oldPasswordController,
-                  onValidation: (val) {
-                    return val!.isEmpty
-                        ? context.l10n!.requiredFieldError
-                        : null;
-                  },
+                  onValidation: FieldValidationUtils.getPasswordValidator(
+                    context,
+                  ),
                 ),
                 const SizedBox(height: GapSize.m),
-                ZOTextField(
-                  label: context.l10n!.newPassword,
-                  inputType: TextInputType.text,
+                ZOPasswordTextField(
+                  text: context.l10n!.newPassword,
                   controller: _newPasswordController,
-                  onValidation: (val) {
-                    if (val!.isEmpty) {
-                      return context.l10n!.requiredFieldError;
-                    }
-                    if (val.length < 6) {
-                      return context.l10n!.passwordLengthError;
-                    }
-                    return null;
-                  },
+                  onValidation: FieldValidationUtils.getNewPasswordValidator(
+                    context,
+                  ),
                 ),
                 const SizedBox(height: GapSize.m),
-                ZOTextField(
-                  label: context.l10n!.repeatNewPassword,
-                  inputType: TextInputType.text,
+                ZOPasswordTextField(
+                  text: context.l10n!.repeatNewPassword,
                   controller: _confirmNewPasswordController,
-                  onValidation: (val) {
-                    if (val!.isEmpty) {
-                      return context.l10n!.requiredFieldError;
-                    }
-                    if (val != _newPasswordController.text) {
-                      return context.l10n!.passwordsDontMatchError;
-                    }
-                    return null;
-                  },
+                  onValidation:
+                      FieldValidationUtils.getRepeatNewPasswordValidator(
+                    context,
+                    _newPasswordController,
+                  ),
                 ),
                 const SizedBox(height: GapSize.m),
                 ZOButton(
@@ -139,12 +125,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
-            message: e.code == 'wrong-password'
+            message: _isPasswordError(e)
                 ? context.l10n!.invalidCurrentPasswordError
                 : context.l10n!.somethingWentWrongError,
           ),
         );
       }
     }
+  }
+
+  bool _isPasswordError(FirebaseAuthException e) {
+    // TODO: Encapsulate this error codes in AuthService
+    debugPrint("___ $e");
+    return e.code == 'wrong-password' || e.code == 'invalid-credential';
   }
 }
