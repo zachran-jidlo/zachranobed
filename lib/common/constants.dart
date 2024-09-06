@@ -46,6 +46,16 @@ class Constants {
   static const pickupConfirmationTimePersonal = 20;
 }
 
+/// A class that defines layout constants.
+class LayoutStyle {
+  LayoutStyle._();
+
+  /// The breakpoint for screen layouts. If the web screen width is greater
+  /// than this value, the web layout is used. Otherwise, the mobile layout
+  /// is used.
+  static const webBreakpoint = 800;
+}
+
 class WidgetStyle {
   static const inputBorder = OutlineInputBorder(
     borderSide: BorderSide(

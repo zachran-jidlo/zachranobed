@@ -15,11 +15,15 @@ import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
+import 'package:zachranobed/ui/widgets/screen_content.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
+  /// The fixed width of login form in wide web layout.
+  static const loginFormWidth = 530;
+
   const LoginScreen({super.key});
 
   @override
@@ -28,8 +32,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
-  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfDevtoolsAreEnabledUseCase =
+      GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _checkIfAppTermsShouldBeShownUseCase =
+      GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -47,74 +53,128 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: GapSize.xl),
-              SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
-              const SizedBox(height: GapSize.l),
-              GestureDetector(
-                onLongPress: showDebugScreenIfPossible,
-                child: Image.asset(
-                  width: 415,
-                  ZOStrings.foodImagePath,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              const SizedBox(height: GapSize.l),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: WidgetStyle.padding,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      ZOTextField(
-                        label: context.l10n!.emailAddress,
-                        inputType: TextInputType.emailAddress,
-                        disableAutocorrect: true,
-                        controller: _emailController,
-                        onValidation: FieldValidationUtils.getEmailValidator(
-                          context,
-                        ),
-                      ),
-                      const SizedBox(height: GapSize.m),
-                      ZOPasswordTextField(
-                        text: context.l10n!.password,
-                        controller: _passwordController,
-                        onValidation: FieldValidationUtils.getPasswordValidator(
-                          context,
-                        ),
-                      ),
-                      const SizedBox(height: GapSize.l),
-                      ZOButton(
-                        text: context.l10n!.signIn,
-                        icon: MaterialSymbols.login,
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            await _logIn();
-                          }
-                        },
-                      ),
-                    ],
+        child: ScreenContent(
+          web: (context) {
+            return Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onLongPress: showDebugScreenIfPossible,
+                    // TODO (Alex) Use another image with better quality
+                    child: Image.asset(
+                      ZOStrings.foodImagePath,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      opacity: const AlwaysStoppedAnimation(.2),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: GapSize.m),
-              ZOClickableText(
-                  clickableText: context.l10n!.forgotPassword,
-                  color: ZOColors.onPrimaryLight,
-                  underline: false,
-                  onTap: () {
-                    context.router.push(const ForgotPasswordRoute());
-                  }),
-              const SizedBox(height: 30),
-            ],
-          ),
+                Material(
+                  elevation: 8,
+                  child: SizedBox(
+                    width: LoginScreen.loginFormWidth.toDouble(),
+                    child: Center(
+                      child: _loginScreenContent(
+                        showImageInForm: false,
+                        padding: const EdgeInsets.all(72.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+          mobile: (BuildContext context) {
+            return _loginScreenContent(
+              showImageInForm: true,
+            );
+          },
         ),
       ),
     );
+  }
+
+  Widget _loginScreenContent({
+    required bool showImageInForm,
+    EdgeInsetsGeometry? padding,
+  }) {
+    return SingleChildScrollView(
+      padding: padding,
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: GapSize.xl),
+          SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
+          _formImageContent(showImageInForm),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: WidgetStyle.padding,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  ZOTextField(
+                    label: context.l10n!.emailAddress,
+                    inputType: TextInputType.emailAddress,
+                    disableAutocorrect: true,
+                    controller: _emailController,
+                    onValidation: FieldValidationUtils.getEmailValidator(
+                      context,
+                    ),
+                  ),
+                  const SizedBox(height: GapSize.m),
+                  ZOPasswordTextField(
+                    text: context.l10n!.password,
+                    controller: _passwordController,
+                    onValidation: FieldValidationUtils.getPasswordValidator(
+                      context,
+                    ),
+                  ),
+                  const SizedBox(height: GapSize.l),
+                  ZOButton(
+                    text: context.l10n!.signIn,
+                    icon: MaterialSymbols.login,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _logIn();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: GapSize.m),
+          ZOClickableText(
+            clickableText: context.l10n!.forgotPassword,
+            color: ZOColors.onPrimaryLight,
+            underline: false,
+            onTap: () {
+              context.router.push(const ForgotPasswordRoute());
+            },
+          ),
+          const SizedBox(height: 30),
+        ],
+      ),
+    );
+  }
+
+  Widget _formImageContent(bool showImageInForm) {
+    if (showImageInForm) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: GapSize.l),
+        child: GestureDetector(
+          onLongPress: showDebugScreenIfPossible,
+          child: Image.asset(
+            width: double.infinity,
+            ZOStrings.foodImagePath,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      );
+    }
+
+    return const SizedBox(height: GapSize.xxl);
   }
 
   void showDebugScreenIfPossible() {
