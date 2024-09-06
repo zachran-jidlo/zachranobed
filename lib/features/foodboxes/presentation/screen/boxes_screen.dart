@@ -105,7 +105,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
                   child: ZOButton(
                     text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
-                    height: 40.0,
+                    minimumSize: ZOButtonSize.medium(),
                     type: ZOButtonType.secondary,
                     onPressed: _addPreviousWeek,
                   ),
@@ -135,7 +135,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
                 children: [
                   ZOButton(
                     text: context.l10n!.orderShippingOfBoxes,
-                    fullWidth: false,
+                    minimumSize: ZOButtonSize.tiny(),
                     onPressed: () {
                       context.router.push(const OrderShippingOfBoxesRoute());
                     },

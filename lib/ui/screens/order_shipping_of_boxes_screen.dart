@@ -102,7 +102,7 @@ class _OrderShippingOfBoxesScreenState
                         text: context.l10n!.addAnotherBoxType,
                         icon: MaterialSymbols.add,
                         type: ZOButtonType.secondary,
-                        height: 40.0,
+                        minimumSize: ZOButtonSize.medium(),
                         onPressed: () {
                           setState(() {
                             _shippingOfBoxesSections.add(const BoxInfo());

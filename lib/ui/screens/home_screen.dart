@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
                         padding: const EdgeInsets.only(top: GapSize.m),
                         child: ZOButton(
                           text: context.l10n!.signOut,
-                          fullWidth: false,
+                          minimumSize: ZOButtonSize.tiny(),
                           onPressed: () async {
                             await authService.signOut();
                             if (context.mounted) {
