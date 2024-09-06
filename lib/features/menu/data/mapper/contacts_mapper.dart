@@ -8,6 +8,7 @@ extension ContactMapper on ContactDto {
   Contact toDomain() {
     return Contact(
       name: name,
+      position: position?.takeIf((e) => e.isNotEmpty),
       phoneNumber: phoneNumber?.takeIf((e) => e.isNotEmpty),
     );
   }

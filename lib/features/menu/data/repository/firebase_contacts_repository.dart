@@ -67,6 +67,7 @@ class FirebaseContactsRepository implements ContactsRepository {
     return entities.map((e) {
       final mainContact = Contact(
         name: e.responsiblePerson,
+        position: e.responsiblePersonPosition?.takeIf((e) => e.isNotEmpty),
         phoneNumber: e.phone?.takeIf((e) => e.isNotEmpty),
       );
       final contacts = (e.additionalContacts ?? []).map((e) => e.toDomain());

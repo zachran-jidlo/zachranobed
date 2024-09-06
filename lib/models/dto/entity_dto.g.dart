@@ -13,6 +13,7 @@ EntityDto _$EntityDtoFromJson(Map<String, dynamic> json) => EntityDto(
       establishmentId: json['establishmentId'] as String,
       organization: json['organization'] as String,
       responsiblePerson: json['responsiblePerson'] as String,
+      responsiblePersonPosition: json['responsiblePersonPosition'] as String?,
       phone: json['phone'] as String?,
       entityType: $enumDecodeNullable(
           _$EntityTypeDtoEnumMap, json['entityType'],
@@ -31,6 +32,7 @@ Map<String, dynamic> _$EntityDtoToJson(EntityDto instance) => <String, dynamic>{
       'establishmentId': instance.establishmentId,
       'organization': instance.organization,
       'responsiblePerson': instance.responsiblePerson,
+      'responsiblePersonPosition': instance.responsiblePersonPosition,
       'phone': instance.phone,
       'entityType': _$EntityTypeDtoEnumMap[instance.entityType],
       'lastAcceptedAppTermsVersion': instance.lastAcceptedAppTermsVersion,

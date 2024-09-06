@@ -10,6 +10,7 @@ part 'contact.freezed.dart';
 class Contact with _$Contact {
   const factory Contact({
     required String name,
+    required String? position,
     required String? phoneNumber,
   }) = $Contact;
 }

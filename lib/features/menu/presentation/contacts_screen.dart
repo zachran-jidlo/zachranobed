@@ -132,9 +132,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
       label: label,
       menuItems: contacts
           .mapIndexed((index, e) {
+            final contactName =
+                e.position != null ? "${e.name} - ${e.position}" : e.name;
+
             return ContactRow(
               isPreferred: markFirstAsPreferred && index == 0,
-              name: e.name,
+              name: contactName,
               phoneNumber: e.phoneNumber,
             );
           })
