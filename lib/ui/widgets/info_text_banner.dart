@@ -29,7 +29,7 @@ class InfoTextBanner extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: textColor,
               ),
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
         ),
