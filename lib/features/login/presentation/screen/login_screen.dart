@@ -94,6 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  /// Builds the content of the login screen.
+  ///
+  /// The [showImageInForm] flag determines whether to show the image
+  /// in the form.
+  /// The [padding] parameter specifies the padding to add around the content.
   Widget _loginScreenContent({
     required bool showImageInForm,
     EdgeInsetsGeometry? padding,
@@ -159,6 +164,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  /// Builds the image content for the form.
+  ///
+  /// The [showImageInForm] parameter determines whether to show the image
+  /// in the form. If set to false returns only necessary padding.
   Widget _formImageContent(bool showImageInForm) {
     if (showImageInForm) {
       return Padding(
