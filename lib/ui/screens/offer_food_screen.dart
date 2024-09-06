@@ -163,7 +163,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       text: context.l10n!.addAnotherFood,
       icon: MaterialSymbols.add,
       type: ZOButtonType.secondary,
-      height: 40.0,
+      minimumSize: ZOButtonSize.medium(),
       onPressed: () {
         setState(() {
           _foodSections.add(FoodInfo.withUuid());
