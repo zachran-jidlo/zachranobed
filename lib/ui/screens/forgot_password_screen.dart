@@ -48,7 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             );
           },
-          mobile: (BuildContext context) {
+          mobile: (context) {
             return _forgotPasswordScreenContent(
               useWideButton: true,
             );
