@@ -53,7 +53,7 @@ class LayoutStyle {
   /// The breakpoint for screen layouts. If the web screen width is greater
   /// than this value, the web layout is used. Otherwise, the mobile layout
   /// is used.
-  static const webBreakpoint = 800;
+  static const webBreakpoint = 740;
 }
 
 class WidgetStyle {
