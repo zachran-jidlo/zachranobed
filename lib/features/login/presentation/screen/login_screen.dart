@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             );
           },
-          mobile: (BuildContext context) {
+          mobile: (context) {
             return _loginScreenContent(
               showImageInForm: true,
             );
