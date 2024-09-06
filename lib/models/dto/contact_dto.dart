@@ -9,10 +9,12 @@ part 'contact_dto.g.dart';
 @JsonSerializable()
 class ContactDto {
   final String name;
+  final String? position;
   final String? phoneNumber;
 
   ContactDto({
     required this.name,
+    required this.position,
     required this.phoneNumber,
   });
 

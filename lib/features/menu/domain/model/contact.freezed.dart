@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Contact {
   String get name => throw _privateConstructorUsedError;
+  String? get position => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -28,7 +29,7 @@ abstract class $ContactCopyWith<$Res> {
   factory $ContactCopyWith(Contact value, $Res Function(Contact) then) =
       _$ContactCopyWithImpl<$Res, Contact>;
   @useResult
-  $Res call({String name, String? phoneNumber});
+  $Res call({String name, String? position, String? phoneNumber});
 }
 
 /// @nodoc
@@ -45,6 +46,7 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
   @override
   $Res call({
     Object? name = null,
+    Object? position = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_value.copyWith(
@@ -52,6 +54,10 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -67,7 +73,7 @@ abstract class _$$$ContactImplCopyWith<$Res> implements $ContactCopyWith<$Res> {
       __$$$ContactImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String? phoneNumber});
+  $Res call({String name, String? position, String? phoneNumber});
 }
 
 /// @nodoc
@@ -82,6 +88,7 @@ class __$$$ContactImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? position = freezed,
     Object? phoneNumber = freezed,
   }) {
     return _then(_$$ContactImpl(
@@ -89,6 +96,10 @@ class __$$$ContactImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -100,16 +111,19 @@ class __$$$ContactImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$$ContactImpl implements $Contact {
-  const _$$ContactImpl({required this.name, required this.phoneNumber});
+  const _$$ContactImpl(
+      {required this.name, required this.position, required this.phoneNumber});
 
   @override
   final String name;
+  @override
+  final String? position;
   @override
   final String? phoneNumber;
 
   @override
   String toString() {
-    return 'Contact(name: $name, phoneNumber: $phoneNumber)';
+    return 'Contact(name: $name, position: $position, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -118,12 +132,14 @@ class _$$ContactImpl implements $Contact {
         (other.runtimeType == runtimeType &&
             other is _$$ContactImpl &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, name, position, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -135,10 +151,13 @@ class _$$ContactImpl implements $Contact {
 abstract class $Contact implements Contact {
   const factory $Contact(
       {required final String name,
+      required final String? position,
       required final String? phoneNumber}) = _$$ContactImpl;
 
   @override
   String get name;
+  @override
+  String? get position;
   @override
   String? get phoneNumber;
   @override

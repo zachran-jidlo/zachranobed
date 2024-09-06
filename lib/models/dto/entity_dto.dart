@@ -15,6 +15,7 @@ class EntityDto {
   final String establishmentId;
   final String organization;
   final String responsiblePerson;
+  final String? responsiblePersonPosition;
   final String? phone;
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final EntityTypeDto? entityType;
@@ -28,6 +29,7 @@ class EntityDto {
     required this.establishmentId,
     required this.organization,
     required this.responsiblePerson,
+    required this.responsiblePersonPosition,
     required this.phone,
     required this.entityType,
     required this.lastAcceptedAppTermsVersion,
