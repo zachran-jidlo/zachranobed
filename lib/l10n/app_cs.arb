@@ -100,7 +100,6 @@
     "resetPassword": "Odeslat",
     "passwordResetExplanation": "Na zadanou e-mailovou adresu vám dojde odkaz pro obnovení hesla.",
     "passwordResetConfirmation": "Email pro obnovu hesla byl úspěšně odeslán.",
-    "invalidEmailAddressError": "Emailová adresa je ve špatném formátu.",
     "userNotFoundError": "Uživatel s touto emailovou adresou neexistuje.",
     "version": "Verze",
     "profileScreenTitle": "Profil",
