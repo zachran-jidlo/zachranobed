@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -104,6 +105,10 @@ class Notifications {
 
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
+    if (Platform.operatingSystem == 'ios') {
+      await _firebaseMessaging.getAPNSToken();
+    }
+
     final fCMToken = await _firebaseMessaging.getToken();
     final user = await _authService.getUserData();
     if (user == null) {
