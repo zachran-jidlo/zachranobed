@@ -5,6 +5,9 @@ import {
   onDocumentCreated,
   onDocumentUpdated,
 } from "firebase-functions/v2/firestore";
+import { setGlobalOptions } from "firebase-functions/v2";
+
+setGlobalOptions({ region: 'europe-west1' });
 
 admin.initializeApp();
 
@@ -40,7 +43,7 @@ class FoodBox {
  * @param change - The change object containing the new and old data of the document.
  * @returns A Promise that resolves when the push notifications are sent.
  */
-exports.notifyCharityAboutDonation = onDocumentUpdated(
+exports.notifyCharityAboutDonationV2 = onDocumentUpdated(
   "deliveries/{id}", event => {
     const newValue = event.data?.after?.data();
     const oldValue = event.data?.before?.data();
@@ -115,7 +118,7 @@ exports.notifyCharityAboutDonation = onDocumentUpdated(
  * @param change - The change event that triggered the function.
  * @returns A promise that resolves when the notification is sent successfully.
  */
-exports.notifyCharityAboutLackOfBoxesAtCanteen = onDocumentUpdated(
+exports.notifyCharityAboutLackOfBoxesAtCanteenV2 = onDocumentUpdated(
   "entityPairs/{id}", event => {
     const newBoxes = event.data?.after?.data().foodboxes;
     const oldBoxes = event.data?.before?.data().foodboxes;
@@ -218,7 +221,7 @@ exports.notifyCharityAboutLackOfBoxesAtCanteen = onDocumentUpdated(
  * @param {admin.firestore.DocumentSnapshot} snapshot - The snapshot of the created delivery document.
  * @returns {Promise<any>} A promise that resolves when the notification is sent.
  */
-exports.notifyCanteenAboutBoxShippment = onDocumentCreated(
+exports.notifyCanteenAboutBoxShippmentV2 = onDocumentCreated(
   "deliveries/{id}", (event) => {
     const data = event.data;
     if (!data) {
