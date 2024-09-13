@@ -1,7 +1,10 @@
 // Deploy functions: firebase deploy --only functions
 /* eslint-disable max-len */
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import {
+  onDocumentCreated,
+  onDocumentUpdated,
+} from "firebase-functions/v2/firestore";
 
 admin.initializeApp();
 
@@ -35,14 +38,15 @@ class FoodBox {
  * Notifies the charity about a donation if the delivery state is "ACCEPTED" and it's the current day.
  *
  * @param change - The change object containing the new and old data of the document.
- * @param context - The context object containing metadata about the event.
  * @returns A Promise that resolves when the push notifications are sent.
  */
-export const notifyCharityAboutDonation = functions.firestore
-  .document("deliveries/{id}")
-  .onUpdate((change, context) => {
-    const newValue = change.after.data();
-    const oldValue = change.before.data();
+exports.notifyCharityAboutDonation = onDocumentUpdated(
+  "deliveries/{id}", event => {
+    const newValue = event.data?.after?.data();
+    const oldValue = event.data?.before?.data();
+
+    // Not a valid state, do not continue with notification.
+    if (!newValue || !oldValue) return null;
 
     if (
       (newValue.state === "ACCEPTED" || newValue.state === "NOT_USED") && // Filter out unnecesary loading from Firestore for other states
@@ -109,14 +113,13 @@ export const notifyCharityAboutDonation = functions.firestore
  * It notifies a charity about the lack of boxes at a canteen.
  *
  * @param change - The change event that triggered the function.
- * @param context - The context of the function execution.
  * @returns A promise that resolves when the notification is sent successfully.
  */
-export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
-  .document("entityPairs/{id}")
-  .onUpdate((change, context) => {
-    const newBoxes = change.after.data().foodboxes;
-    const oldBoxes = change.before.data().foodboxes;
+exports.notifyCharityAboutLackOfBoxesAtCanteen = onDocumentUpdated(
+  "entityPairs/{id}", event => {
+    const newBoxes = event.data?.after?.data().foodboxes;
+    const oldBoxes = event.data?.before?.data().foodboxes;
+
 
     const differenceMap: { [foodBoxId: string]: number } = {};
     newBoxes.forEach((newBox: FoodBox) => {
@@ -137,8 +140,8 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
 
     // TODO: Cache changes and send notification only once a day. Right now each change triggers a notification.
 
-    const recipientId = change.after.data().recipientId;
-    const donorId = change.after.data().donorId;
+    const recipientId = event.data?.after?.data().recipientId;
+    const donorId = event.data?.after?.data().donorId;
 
     return Promise.all([
       db.collection("entities").doc(recipientId).get(),
@@ -213,16 +216,19 @@ export const notifyCharityAboutLackOfBoxesAtCanteen = functions.firestore
  * Notifies the canteen about the shipment of boxes.
  *
  * @param {admin.firestore.DocumentSnapshot} snapshot - The snapshot of the created delivery document.
- * @param {functions.EventContext} context - The event context.
  * @returns {Promise<any>} A promise that resolves when the notification is sent.
  */
-export const notifyCanteenAboutBoxShippment = functions.firestore
-  .document("deliveries/{id}")
-  .onCreate((snapshot, context) => {
-    const data = snapshot.data();
-    const donorId = data.donorId;
+exports.notifyCanteenAboutBoxShippment = onDocumentCreated(
+  "deliveries/{id}", (event) => {
+    const data = event.data;
+    if (!data) {
+      console.log("No data associated with the event");
+      return;
+    }
+    const delivery = data.data();
+    const donorId = delivery.donorId;
 
-    if (data.type === "BOX_DELIVERY") {
+    if (delivery.type === "BOX_DELIVERY") {
       return db
         .collection("entities")
         .doc(donorId)
