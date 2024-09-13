@@ -79,6 +79,12 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               centerTitle: !kIsWeb && Platform.isIOS,
               scrolledUnderElevation: 0,
             ),
+            drawerTheme: DrawerThemeData(
+              backgroundColor: ZOColors.cardBackground,
+              surfaceTintColor: ZOColors.primary,
+              shape: const Border(),
+              width: LayoutStyle.navigationDrawerSize.toDouble(),
+            ),
           ),
         );
       },

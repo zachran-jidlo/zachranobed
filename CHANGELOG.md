@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.3.0]
 ### Added
+- **ZOB-278** Add web navigation drawer.
 
 ### Fixed
 

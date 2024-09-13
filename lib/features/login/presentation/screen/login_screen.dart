@@ -21,8 +21,6 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
-  /// The fixed width of login form in wide web layout.
-  static const loginFormWidth = 530;
 
   const LoginScreen({super.key});
 
@@ -72,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Material(
                   elevation: 8,
                   child: SizedBox(
-                    width: LoginScreen.loginFormWidth.toDouble(),
+                    width: LayoutStyle.loginFormWidth.toDouble(),
                     child: Center(
                       child: _loginScreenContent(
                         showImageInForm: false,
