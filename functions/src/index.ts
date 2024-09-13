@@ -7,10 +7,12 @@ import {
 } from "firebase-functions/v2/firestore";
 import { setGlobalOptions } from "firebase-functions/v2";
 
-setGlobalOptions({ region: 'europe-west1' });
+setGlobalOptions({ 
+  region: 'europe-west1',
+  serviceAccount: "firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com"
+});
 
 admin.initializeApp();
-
 const db = admin.firestore();
 
 /**
