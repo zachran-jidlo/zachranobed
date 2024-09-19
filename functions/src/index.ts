@@ -191,7 +191,7 @@ exports.notifyCharityAboutLackOfBoxesAtCanteenV2 = onDocumentUpdated(
           return {
             notification: {
               title: "Jídelně docházejí krabičky",
-              body: `Objednejte prosím svoz krabiček typu "${boxesString}" do jídelny "${donor?.establishmentName}"`,
+              body: `Prosím proveďte vratku krabiček typu "${boxesString}" do jídelny "${donor?.establishmentName}"`,
             },
             token: token as string,
           };
@@ -247,7 +247,7 @@ exports.notifyCanteenAboutBoxShippmentV2 = onDocumentCreated(
               return {
                 notification: {
                   title: "Potvrzení svozu krabiček",
-                  body: "Charita vám posílá krabičky.",
+                  body: "Charita Vám vrací krabičky.",
                 },
                 token: token as string,
               };
