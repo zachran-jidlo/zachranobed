@@ -134,7 +134,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
               Column(
                 children: [
                   ZOButton(
-                    text: context.l10n!.orderShippingOfBoxes,
+                    text: context.l10n!.orderShipping,
                     fullWidth: false,
                     onPressed: () {
                       context.router.push(const OrderShippingOfBoxesRoute());
