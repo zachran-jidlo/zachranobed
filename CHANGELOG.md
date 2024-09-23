@@ -11,6 +11,10 @@ This is a changelog for **ZachranObed** application.
 
 ### Removed
 
+## [1.2.1]
+### Fixed
+- **ZOB-284** Fix scrolling on food offer overview screen.
+
 ## [1.2.0]
 ### Added
 - **ZOB-218** Add reusable contact row. 
