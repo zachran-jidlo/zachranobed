@@ -104,7 +104,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
             message: e.code == 'invalid-email'
-                ? context.l10n!.invalidEmailAddressError
+                ? context.l10n!.invalidFieldEmail
                 : e.code == 'user-not-found'
                     ? context.l10n!.userNotFoundError
                     : context.l10n!.somethingWentWrongError,
