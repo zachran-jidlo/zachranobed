@@ -6,6 +6,9 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-283** Update strings related to shipping boxes from charity.
 
+### Fixed
+- **ZOB-284** Fix scrolling on food offer overview screen.
+
 ## [1.2.0]
 ### Added
 - **ZOB-218** Add reusable contact row. 
