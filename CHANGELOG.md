@@ -12,6 +12,9 @@ This is a changelog for **ZachranObed** application.
 ### Removed
 
 ## [1.2.1]
+### Changed
+- **ZOB-283** Update strings related to shipping boxes from charity.
+
 ### Fixed
 - **ZOB-284** Fix scrolling on food offer overview screen.
 
