@@ -63,13 +63,15 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-        canPop: false,
-        onPopInvoked: (bool didPop) async {
-          Navigator.popUntil(context, ModalRoute.withName(OfferFoodRoute.name));
-        },
-        child: Scaffold(
-            appBar: AppBar(),
-            body: Column(children: [
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        Navigator.popUntil(context, ModalRoute.withName(OfferFoodRoute.name));
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
               Container(
                 padding: const EdgeInsets.all(WidgetStyle.padding),
                 alignment: Alignment.centerLeft,
@@ -89,11 +91,12 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: WidgetStyle.padding,
                   ),
-                  child: Column(children: [
-                    _offerFoodListSection(context,
-                        foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
-                    const SizedBox(height: GapSize.m),
-                    ZOButton(
+                  child: Column(
+                    children: [
+                      _offerFoodListSection(context,
+                          foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
+                      const SizedBox(height: GapSize.m),
+                      ZOButton(
                         text: context.l10n!.offerFood,
                         onPressed: () async {
                           showDialog(
@@ -123,10 +126,17 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                               );
                             }
                           }
-                        })
-                  ]),
-                )
-            ])));
+                        },
+                      ),
+                      const SizedBox(height: GapSize.xs),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<bool> _offerFood() async {
