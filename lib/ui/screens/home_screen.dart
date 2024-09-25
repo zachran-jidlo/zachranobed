@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ScreenContent(
+        child: AdaptiveContent(
           web: (context) {
             return Row(
               children: [

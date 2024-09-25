@@ -71,7 +71,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               primaryContainer: ZOColors.secondary,
             ),
             scaffoldBackgroundColor: Colors.white,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+            visualDensity: VisualDensity.standard,
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             appBarTheme: AppBarTheme(

@@ -13,10 +13,12 @@ import 'package:zachranobed/notifiers/delivery_notifier.dart';
 class DonationCountdownTimer extends StatefulWidget {
 
   final Delivery delivery;
+  final TextAlign textAlign;
 
   const DonationCountdownTimer({
     super.key,
     required this.delivery,
+    required this.textAlign,
   });
 
   @override
@@ -104,7 +106,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
   @override
   Widget build(BuildContext context) {
     return Text.rich(
-      textAlign: TextAlign.center,
+      textAlign: widget.textAlign,
       TextSpan(
         text: '${context.l10n!.youCanDonate} ',
         style: const TextStyle(
