@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-273** Adjust web layout for login screen.
+- **ZOB-287** Update image for login background.
 
 ### Removed
 

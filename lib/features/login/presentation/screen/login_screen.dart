@@ -60,12 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Expanded(
                   child: GestureDetector(
                     onLongPress: showDebugScreenIfPossible,
-                    // TODO (Alex) Use another image with better quality
                     child: Image.asset(
-                      ZOStrings.foodImagePath,
+                      ZOStrings.foodImageBackgroundPath,
                       fit: BoxFit.cover,
+                      alignment: Alignment.centerLeft,
                       height: double.infinity,
-                      opacity: const AlwaysStoppedAnimation(.2),
                     ),
                   ),
                 ),
