@@ -37,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ScreenContent(
+        child: AdaptiveContent(
           web: (context) {
             return Center(
               child: SizedBox(

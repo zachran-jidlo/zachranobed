@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-273** Adjust web layout for login screen.
+- **ZOB-286** Adjust web layout for delivery info banner.
 
 ### Removed
 

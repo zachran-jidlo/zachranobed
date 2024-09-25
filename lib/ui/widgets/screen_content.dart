@@ -8,7 +8,7 @@ import 'package:zachranobed/common/constants.dart';
 /// If the platform is web and the screen width is greater than
 /// [LayoutStyle.webBreakpoint], the [web] child is displayed.
 /// Otherwise, the [mobile] child is displayed.
-class ScreenContent extends StatelessWidget {
+class AdaptiveContent extends StatelessWidget {
   /// The child to display on the web when the screen width is greater than
   /// [LayoutStyle.webBreakpoint].
   final WidgetBuilder web;
@@ -17,8 +17,8 @@ class ScreenContent extends StatelessWidget {
   /// [LayoutStyle.webBreakpoint].
   final WidgetBuilder mobile;
 
-  /// Creates a new [ScreenContent] widget.
-  const ScreenContent({
+  /// Creates a new [AdaptiveContent] widget.
+  const AdaptiveContent({
     super.key,
     required this.web,
     required this.mobile,
