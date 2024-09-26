@@ -10,6 +10,8 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/adaptive_content.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
@@ -44,6 +46,36 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: AdaptiveContent(
+          web: (context) {
+            return Center(
+              child: SizedBox(
+                width: LayoutStyle.webBreakpoint.toDouble(),
+                child: _menuScreenContent(
+                  useWideButton: false,
+                ),
+              ),
+            );
+          },
+          mobile: (context) {
+            return _menuScreenContent(
+              useWideButton: true,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Builds the content of the menu screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch logout button
+  /// to screen width.
+  Widget _menuScreenContent({
+    required bool useWideButton,
+  }) {
     final authService = GetIt.I<AuthService>();
 
     return Scaffold(
@@ -63,6 +95,7 @@ class _MenuScreenState extends State<MenuScreen> {
             horizontal: WidgetStyle.padding,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MenuUserInfo(user: HelperService.getCurrentUser(context)!),
               const SizedBox(height: 8.0),
@@ -118,14 +151,14 @@ class _MenuScreenState extends State<MenuScreen> {
                     leadingIcon: Icons.security,
                     text: context.l10n!.privacyProtection,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.appPrivacy),
+                    await _openUrlInBrowser(ZOStrings.appPrivacy),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
                     leadingIcon: Icons.text_snippet_outlined,
                     text: context.l10n!.termsOfUse,
                     onPressed: () async =>
-                        await _openUrlInBrowser(ZOStrings.appTerms),
+                    await _openUrlInBrowser(ZOStrings.appTerms),
                   ),
                   const SizedBox(height: 8.0),
                   MenuItem(
@@ -138,9 +171,10 @@ class _MenuScreenState extends State<MenuScreen> {
               MenuButton(
                 text: context.l10n!.signOut,
                 icon: Icons.logout,
+                minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
                 onPressed: () async {
                   await authService.signOut();
-                  if (context.mounted) {
+                  if (mounted) {
                     context.router.replaceAll([const LoginRoute()]);
                   }
                 },
