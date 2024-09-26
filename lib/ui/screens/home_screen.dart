@@ -14,8 +14,8 @@ import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
+import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/screen_content.dart';
 import 'package:zachranobed/ui/widgets/svg_icon.dart';
 
 @RoutePage()
