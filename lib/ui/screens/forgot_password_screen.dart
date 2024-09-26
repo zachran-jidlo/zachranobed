@@ -7,8 +7,8 @@ import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/screen_content.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 

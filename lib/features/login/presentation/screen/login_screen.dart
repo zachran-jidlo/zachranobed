@@ -12,10 +12,10 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
-import 'package:zachranobed/ui/widgets/screen_content.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 

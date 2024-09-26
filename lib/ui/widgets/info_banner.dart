@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/screen_content.dart';
 
 class InfoBanner extends StatelessWidget {
   final Widget Function(TextAlign) message;
