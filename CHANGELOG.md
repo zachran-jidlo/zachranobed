@@ -11,6 +11,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-273** Adjust web layout for login screen.
 - **ZOB-286** Adjust web layout for delivery info banner.
+- **ZOB-288** Adjust web layout for profile, contacts, change password and debug screens.
 
 ### Removed
 
