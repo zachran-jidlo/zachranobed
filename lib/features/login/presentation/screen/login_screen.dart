@@ -12,10 +12,10 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -49,46 +49,39 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            return Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onLongPress: showDebugScreenIfPossible,
-                    // TODO (Alex) Use another image with better quality
-                    child: Image.asset(
-                      ZOStrings.foodImagePath,
-                      fit: BoxFit.cover,
-                      height: double.infinity,
-                      opacity: const AlwaysStoppedAnimation(.2),
-                    ),
+    return ScreenScaffold(
+      centerWebLayout: false,
+      web: (context) {
+        return Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onLongPress: showDebugScreenIfPossible,
+                // TODO (Alex) Use another image with better quality
+                child: Image.asset(
+                  ZOStrings.foodImagePath,
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  opacity: const AlwaysStoppedAnimation(.2),
+                ),
+              ),
+            ),
+            Material(
+              elevation: 8,
+              child: SizedBox(
+                width: LayoutStyle.loginFormWidth.toDouble(),
+                child: Center(
+                  child: _loginScreenContent(
+                    showImageInForm: false,
+                    padding: const EdgeInsets.all(72.0),
                   ),
                 ),
-                Material(
-                  elevation: 8,
-                  child: SizedBox(
-                    width: LayoutStyle.loginFormWidth.toDouble(),
-                    child: Center(
-                      child: _loginScreenContent(
-                        showImageInForm: false,
-                        padding: const EdgeInsets.all(72.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-          mobile: (context) {
-            return _loginScreenContent(
-              showImageInForm: true,
-            );
-          },
-        ),
-      ),
+              ),
+            ),
+          ],
+        );
+      },
+      mobile: (context) => _loginScreenContent(showImageInForm: true),
     );
   }
 
@@ -154,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          const SizedBox(height: GapSize.m),
+          const SizedBox(height: GapSize.xs),
           ZOClickableText(
             clickableText: context.l10n!.forgotPassword,
             color: ZOColors.onPrimaryLight,

@@ -4,7 +4,7 @@ import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 
 class InfoBanner extends StatelessWidget {
-  final Widget Function(TextAlign) message;
+  final Widget Function(BuildContext, TextAlign) message;
   final Color backgroundColor;
   final ZOButton? button;
 
@@ -14,6 +14,27 @@ class InfoBanner extends StatelessWidget {
     required this.backgroundColor,
     this.button,
   });
+
+  InfoBanner.text({
+    Key? key,
+    required String message,
+    required Color backgroundColor,
+    Color textColor = ZOColors.onPrimaryLight,
+    int maxLines = 2,
+  }) : this(
+          key: key,
+          backgroundColor: backgroundColor,
+          message: (context, textAlign) {
+            final theme = Theme.of(context).textTheme;
+            return Text(
+              message,
+              style: theme.bodyLarge?.copyWith(color: textColor),
+              maxLines: maxLines,
+              overflow: TextOverflow.ellipsis,
+              textAlign: textAlign,
+            );
+          },
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +60,7 @@ class InfoBanner extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: message(TextAlign.start),
+                  child: message(context, TextAlign.start),
                 ),
               ),
               _button(Axis.horizontal),
@@ -58,7 +79,7 @@ class InfoBanner extends StatelessWidget {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Column(
           children: [
-            message(TextAlign.center),
+            message(context, TextAlign.center),
             _button(Axis.vertical),
           ],
         ),

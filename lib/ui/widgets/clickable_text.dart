@@ -20,22 +20,25 @@ class ZOClickableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: prefixText,
-              style: const TextStyle(color: Colors.black),
-            ),
-            TextSpan(
-              text: clickableText,
-              style: TextStyle(
-                color: color,
-                decoration: underline ? TextDecoration.underline : null,
-                decorationColor: color,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: prefixText,
+                style: const TextStyle(color: Colors.black),
               ),
-            ),
-          ],
+              TextSpan(
+                text: clickableText,
+                style: TextStyle(
+                  color: color,
+                  decoration: underline ? TextDecoration.underline : null,
+                  decorationColor: color,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
