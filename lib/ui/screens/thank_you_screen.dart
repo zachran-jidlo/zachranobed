@@ -43,25 +43,27 @@ class ThankYouScreen extends StatelessWidget {
           child: SizedBox(
             width: LayoutStyle.webBreakpoint.toDouble(),
             child: Center(
-                child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: GapSize.xxl),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: GapSize.l),
-                    child: _screenContent(context, useWideButton: false),
-                  ),
-                  const SizedBox(height: 80.0),
-                  SvgPicture.asset(
-                    ZOStrings.zoLogoPath,
-                    width: 270,
-                    height: 46,
-                  ),
-                  const SizedBox(height: GapSize.xxl),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: GapSize.xxl),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: GapSize.l),
+                      child: _screenContent(context, useWideButton: false),
+                    ),
+                    const SizedBox(height: 80.0),
+                    SvgPicture.asset(
+                      ZOStrings.zoLogoPath,
+                      width: 270,
+                      height: 46,
+                    ),
+                    const SizedBox(height: GapSize.xxl),
+                  ],
+                ),
               ),
-            )),
+            ),
           ),
         ),
       ],
