@@ -15,6 +15,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-288** Adjust web layout for profile, contacts, change password and debug screens.
 - **ZOB-289** Adjust web layout for detail and form screens.
 - **ZOB-290** Adjust web layout for thank you screen.
+- **ZOB-291** Adjust web layout for app terms screen.
 
 ### Removed
 
