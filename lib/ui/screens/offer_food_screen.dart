@@ -12,6 +12,7 @@ import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
@@ -87,6 +88,19 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenScaffold(
+      web: (context) => _offerFoodScreenContent(useWideButton: false),
+      mobile: (context) => _offerFoodScreenContent(useWideButton: true),
+    );
+  }
+
+  /// Builds the content of the offer food screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch confirmation
+  /// button to screen width.
+  Widget _offerFoodScreenContent({
+    required bool useWideButton,
+  }) {
     return WillPopScope(
       onWillPop: _showConfirmationDialog,
       child: Scaffold(
@@ -120,32 +134,16 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       ),
                       _addAnotherFoodButton(),
                       const SizedBox(height: GapSize.xxl),
-                      ZOButton(
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ZOButton(
                           text: context.l10n!.continueTheOffer,
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (await _foodSections.verifyAvailableBoxCount(
-                                  context, _foodBoxRepository)) {
-                                if (mounted) {
-                                  context.router.navigate(
-                                    OfferFoodOverviewRoute(
-                                        foodInfos: _foodSections),
-                                  );
-                                }
-                              } else {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    ZOTemporarySnackBar(
-                                      backgroundColor: Colors.red,
-                                      message: context.l10n!.boxCountError,
-                                    ),
-                                  );
-                                }
-                              }
-                            } else {
-                              _formValidationManager.scrollToFirstError();
-                            }
-                          }),
+                          minimumSize: ZOButtonSize.large(
+                            fullWidth: useWideButton,
+                          ),
+                          onPressed: _onConfirmationButtonPressed,
+                        ),
+                      ),
                       const SizedBox(height: GapSize.l),
                     ],
                   ),
@@ -172,5 +170,29 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         });
       },
     );
+  }
+
+  void _onConfirmationButtonPressed() async {
+    if (_formKey.currentState!.validate()) {
+      if (await _foodSections.verifyAvailableBoxCount(
+          context, _foodBoxRepository)) {
+        if (mounted) {
+          context.router.navigate(
+            OfferFoodOverviewRoute(foodInfos: _foodSections),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            ZOTemporarySnackBar(
+              backgroundColor: Colors.red,
+              message: context.l10n!.boxCountError,
+            ),
+          );
+        }
+      }
+    } else {
+      _formValidationManager.scrollToFirstError();
+    }
   }
 }

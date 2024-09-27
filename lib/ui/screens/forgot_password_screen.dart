@@ -7,8 +7,8 @@ import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -35,26 +35,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            return Center(
-              child: SizedBox(
-                width: LayoutStyle.webBreakpoint.toDouble(),
-                child: _forgotPasswordScreenContent(
-                  useWideButton: false,
-                ),
-              ),
-            );
-          },
-          mobile: (context) {
-            return _forgotPasswordScreenContent(
-              useWideButton: true,
-            );
-          },
-        ),
-      ),
+    return ScreenScaffold(
+      web: (context) => _forgotPasswordScreenContent(useWideButton: false),
+      mobile: (context) => _forgotPasswordScreenContent(useWideButton: true),
     );
   }
 

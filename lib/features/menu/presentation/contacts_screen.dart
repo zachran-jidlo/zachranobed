@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -10,10 +9,10 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';
-import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/contact_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of contacts.
 @RoutePage()
@@ -36,38 +35,21 @@ class _ContactsScreenState extends State<ContactsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            return Center(
-              child: SizedBox(
-                width: LayoutStyle.webBreakpoint.toDouble(),
-                child: _contactsScreenContent(),
-              ),
-            );
+    return ScreenScaffold.universal(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: FutureBuilder(
+          future: _contactsFuture,
+          builder:
+              (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _loading();
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return _error(context);
+            }
+            return _contacts(snapshot.data!);
           },
-          mobile: (context) => _contactsScreenContent(),
         ),
-      ),
-    );
-  }
-
-  /// Builds the content of the contacts screen.
-  Widget _contactsScreenContent() {
-    return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
-        future: _contactsFuture,
-        builder:
-            (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _loading();
-          } else if (snapshot.hasError || snapshot.data == null) {
-            return _error(context);
-          }
-          return _contacts(snapshot.data!);
-        },
       ),
     );
   }

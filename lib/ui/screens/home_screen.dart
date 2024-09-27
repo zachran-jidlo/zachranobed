@@ -14,8 +14,8 @@ import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
-import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/svg_icon.dart';
 
 @RoutePage()
@@ -101,85 +101,82 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            return Row(
-              children: [
-                NavigationDrawer(
-                  indicatorColor: ZOColors.secondary,
-                  onDestinationSelected: (i) {
-                    _tabController.animateTo(i);
-                  },
-                  selectedIndex: _selectedIndex,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 42, 40, 52),
-                      child: SvgPicture.asset(ZOStrings.zoLogoPath, width: 180),
-                    ),
-                    ..._tabs.map(
-                      (data) {
-                        return NavigationDrawerDestination(
-                          label: DefaultTextStyle.merge(
-                            style: const TextStyle(
-                              color: ZOColors.onSecondary,
-                            ),
-                            child: data.label(context),
-                          ),
-                          icon: IconTheme.merge(
-                            data: const IconThemeData(
-                              size: 24.0,
-                              color: ZOColors.onSecondary,
-                            ),
-                            child: data.icon(context),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+    return ScreenScaffold(
+      centerWebLayout: false,
+      web: (context) {
+        return Row(
+          children: [
+            NavigationDrawer(
+              indicatorColor: ZOColors.secondary,
+              onDestinationSelected: (i) {
+                _tabController.animateTo(i);
+              },
+              selectedIndex: _selectedIndex,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 42, 40, 52),
+                  child: SvgPicture.asset(ZOStrings.zoLogoPath, width: 180),
                 ),
-                Expanded(
-                  child: Center(
-                    child: SizedBox(
-                        width: LayoutStyle.webBreakpoint.toDouble(),
-                        child: _homeScreenContent()),
-                  ),
+                ..._tabs.map(
+                  (data) {
+                    return NavigationDrawerDestination(
+                      label: DefaultTextStyle.merge(
+                        style: const TextStyle(
+                          color: ZOColors.onSecondary,
+                        ),
+                        child: data.label(context),
+                      ),
+                      icon: IconTheme.merge(
+                        data: const IconThemeData(
+                          size: 24.0,
+                          color: ZOColors.onSecondary,
+                        ),
+                        child: data.icon(context),
+                      ),
+                    );
+                  },
                 ),
               ],
-            );
-          },
-          mobile: (context) {
-            return Scaffold(
-              body: _homeScreenContent(),
-              bottomNavigationBar: SizedBox(
-                height: 90.0,
-                child: Material(
-                  color: ZOColors.primaryLight,
-                  child: TabBar(
-                    controller: _tabController,
-                    splashFactory: NoSplash.splashFactory,
-                    overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                        (Set<WidgetState> states) {
-                      return states.contains(WidgetState.focused)
-                          ? null
-                          : Colors.transparent;
-                    }),
-                    unselectedLabelColor: ZOColors.onPrimaryLight,
-                    indicatorColor: Colors.transparent,
-                    tabs: _tabs.map((data) {
-                      return Tab(
-                        icon: data.icon(context),
-                        child: data.label(context),
-                      );
-                    }).toList(),
-                  ),
-                ),
+            ),
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                    width: LayoutStyle.webBreakpoint.toDouble(),
+                    child: _homeScreenContent()),
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ],
+        );
+      },
+      mobile: (context) {
+        return Scaffold(
+          body: _homeScreenContent(),
+          bottomNavigationBar: SizedBox(
+            height: 90.0,
+            child: Material(
+              color: ZOColors.primaryLight,
+              child: TabBar(
+                controller: _tabController,
+                splashFactory: NoSplash.splashFactory,
+                overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                    (Set<WidgetState> states) {
+                  return states.contains(WidgetState.focused)
+                      ? null
+                      : Colors.transparent;
+                }),
+                unselectedLabelColor: ZOColors.onPrimaryLight,
+                indicatorColor: Colors.transparent,
+                tabs: _tabs.map((data) {
+                  return Tab(
+                    icon: data.icon(context),
+                    child: data.label(context),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

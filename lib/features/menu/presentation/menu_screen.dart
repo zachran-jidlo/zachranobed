@@ -10,12 +10,12 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/ui/widgets/adaptive_content.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_user_info.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 @RoutePage()
 class MenuScreen extends StatefulWidget {
@@ -46,26 +46,9 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            return Center(
-              child: SizedBox(
-                width: LayoutStyle.webBreakpoint.toDouble(),
-                child: _menuScreenContent(
-                  useWideButton: false,
-                ),
-              ),
-            );
-          },
-          mobile: (context) {
-            return _menuScreenContent(
-              useWideButton: true,
-            );
-          },
-        ),
-      ),
+    return ScreenScaffold(
+      web: (context) => _menuScreenContent(useWideButton: false),
+      mobile: (context) => _menuScreenContent(useWideButton: true),
     );
   }
 

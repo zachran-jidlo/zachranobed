@@ -54,7 +54,7 @@ class DeliveryInfoBanner extends StatelessWidget {
     return SliverToBoxAdapter(
       child: InfoBanner(
         backgroundColor: ZOColors.successLight,
-        message: (textAlign) {
+        message: (context, textAlign) {
           return Text.rich(
             textAlign: textAlign,
             TextSpan(
@@ -83,7 +83,7 @@ class DeliveryInfoBanner extends StatelessWidget {
     return SliverToBoxAdapter(
       child: InfoBanner(
         backgroundColor: ZOColors.successLight,
-        message: (textAlign) {
+        message: (context, textAlign) {
           return DonationCountdownTimer(
             delivery: delivery,
             textAlign: textAlign,
