@@ -3,7 +3,7 @@
     "password": "Heslo",
     "signIn": "Přihlásit se",
     "signOut": "Odhlásit se",
-    "forgotPassword": "Zapomenuté heslo",
+    "forgotPassword": "Zapomenuté heslo \u2764",
     "wrongCredentialsError": "Špatné přihlašovací údaje.",
     "requiredFieldError": "Vyplňte prosím toto pole.",
     "invalidFieldFoodCategory": "Vyberte druh pokrmu.",

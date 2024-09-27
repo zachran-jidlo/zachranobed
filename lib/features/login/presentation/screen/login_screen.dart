@@ -19,6 +19,8 @@ import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
+import 'dart:js' as js;
+
 @RoutePage()
 class LoginScreen extends StatefulWidget {
 
@@ -93,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
     required bool showImageInForm,
     EdgeInsetsGeometry? padding,
   }) {
+    final isCanvasKit = js.context['flutterCanvasKit'] != null;
     return SingleChildScrollView(
       padding: padding,
       child: Column(
@@ -135,6 +138,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
+                  Text(isCanvasKit ? "♥️" : "/♥️/", style: TextStyle(fontWeight: FontWeight.w100),),
+                  Text("test❤️", style: TextStyle(fontWeight: FontWeight.w100),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w200),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w300),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w400),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w500),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w600),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w700),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w800),),
+                  Text("test", style: TextStyle(fontWeight: FontWeight.w900),),
                 ],
               ),
             ),
