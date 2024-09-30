@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
@@ -42,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
       if (context.read<UserNotifier>().user == null) {
         await HelperService.loadUserInfo(context);
       }
-      await Notifications().getFCMToken();
+      final notifications = Notifications();
+      notifications.listenToTokenRefresh();
+      await notifications.getFCMToken();
     });
 
     // Show logout button after 20 seconds if user is not loaded
@@ -59,6 +62,11 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
   void onResume() {
     HelperService.loadUserInfo(context);
     super.onResume();
+  }
+
+  @override
+  void didChangeViewFocus(ViewFocusEvent event) {
+    // Do nothing
   }
 
   @override

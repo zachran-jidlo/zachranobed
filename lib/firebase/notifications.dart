@@ -105,16 +105,49 @@ class Notifications {
 
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
-    if (Platform.operatingSystem == 'ios') {
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      ZOLogger.logMessage('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      ZOLogger.logMessage('User granted provisional permission');
+    } else {
+      ZOLogger.logMessage('User declined or has not accepted permission');
+      return;
+    }
+
+    if (Platform.isIOS) {
       await _firebaseMessaging.getAPNSToken();
     }
 
     final fCMToken = await _firebaseMessaging.getToken();
     final user = await _authService.getUserData();
+
+    ZOLogger.logMessage('FCM token: $fCMToken', isError: true);
     if (user == null) {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
     }
     _entityService.saveFCMToken(user.entityId, fCMToken);
+  }
+
+  void listenToTokenRefresh() async {
+    _firebaseMessaging.onTokenRefresh.listen((token) async {
+      final user = await _authService.getUserData();
+      if (user == null) {
+        ZOLogger.logMessage("User is not logged in, nothing to update");
+        return;
+      }
+      _entityService.saveFCMToken(user.entityId, token);
+    });
   }
 }

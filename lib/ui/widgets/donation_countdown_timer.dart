@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,6 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
-
   final Delivery delivery;
 
   const DonationCountdownTimer({
@@ -46,6 +46,11 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
     _checkTicker();
   }
 
+  @override
+  void didChangeViewFocus(ViewFocusEvent event) {
+    // Do nothing
+  }
+
   void _checkTicker() {
     final total = _getRemainingTimeForDonation();
     if (total.inSeconds > 0) {
@@ -66,9 +71,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
       _ticker?.dispose();
 
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        context
-            .read<DeliveryNotifier>()
-            .cancelCurrentDelivery();
+        context.read<DeliveryNotifier>().cancelCurrentDelivery();
       });
     }
   }
