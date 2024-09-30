@@ -65,11 +65,6 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
   }
 
   @override
-  void didChangeViewFocus(ViewFocusEvent event) {
-    // Do nothing
-  }
-
-  @override
   Widget build(BuildContext context) {
     final authService = GetIt.I<AuthService>();
 

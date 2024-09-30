@@ -112,7 +112,7 @@ class Notifications {
     final fCMToken = await _firebaseMessaging.getToken();
     final user = await _authService.getUserData();
 
-    ZOLogger.logMessage('FCM token: $fCMToken', isError: true);
+    ZOLogger.logMessage('FCM token: $fCMToken');
     if (user == null) {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
@@ -120,7 +120,8 @@ class Notifications {
     _entityService.saveFCMToken(user.entityId, fCMToken);
   }
 
-  void listenToTokenRefresh() async {
+  /// Listens to token refresh events and saves the new token to the database.
+  void listenToTokenRefresh() {
     _firebaseMessaging.onTokenRefresh.listen((token) async {
       final user = await _authService.getUserData();
       if (user == null) {

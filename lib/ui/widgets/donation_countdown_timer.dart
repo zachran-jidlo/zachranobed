@@ -46,11 +46,6 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
     _checkTicker();
   }
 
-  @override
-  void didChangeViewFocus(ViewFocusEvent event) {
-    // Do nothing
-  }
-
   void _checkTicker() {
     final total = _getRemainingTimeForDonation();
     if (total.inSeconds > 0) {

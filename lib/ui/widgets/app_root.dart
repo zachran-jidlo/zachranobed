@@ -34,11 +34,6 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     _checkAppTerms();
   }
 
-  @override
-  void didChangeViewFocus(ViewFocusEvent event) {
-    // Do nothing
-  }
-
   void _checkAppTerms() {
     _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
           // If should be shown, replace current route with app terms.
