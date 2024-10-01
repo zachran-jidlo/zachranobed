@@ -80,6 +80,9 @@ mixin LifecycleWatcher<T extends StatefulWidget> on State<T>
   /// Called when the app is hidden, but not closed.
   void onHide() {}
 
+  @override
+  void didChangeViewFocus(ViewFocusEvent event) {}
+
   /// Default implementation to deny pop route requests.
   @override
   Future<bool> didPopRoute() async => false;
