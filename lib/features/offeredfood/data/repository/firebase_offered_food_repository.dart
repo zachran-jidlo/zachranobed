@@ -71,19 +71,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   }
 
   @override
-  Future<bool> cancelDelivery({required Delivery delivery}) async {
-    final currentDelivery = await _deliveryService.getDeliveryById(delivery.id);
-    if (currentDelivery?.state == DeliveryStateDto.prepared) {
-      _deliveryService.updateDeliveryState(
-        delivery.id,
-        DeliveryStateDto.notUsed,
-      );
-      return true;
-    }
-    return false;
-  }
-
-  @override
   Future<int> getSavedMealsCount({
     required String entityId,
     int? timePeriod,
