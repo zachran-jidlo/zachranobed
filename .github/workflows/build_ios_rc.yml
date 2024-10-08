@@ -1,0 +1,47 @@
+# This workflow is designed to automate the process of building a release IPA for the 'prod' flavor
+# of a Flutter application and distributing it to AppCenter.
+name: Build iOS RC
+
+on:
+  # Workflow is triggered manually through the GitHub Actions interface.
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Checkouts the repository with entire commit history, which is needed to calculate the
+      # correct build version code in 'Setup environment' step.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setups Java, Flutter and correct version code before build.
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      # Prepares keychain and builds signed IPA.
+      - name: Build iOS IPA
+        uses: ./.github/actions/build-ipa
+        with:
+          certificate_file_base64: ${{ secrets.IOS_RC_CERTIFICATE_FILE_BASE64 }}
+          certificate_password: ${{ secrets.IOS_RC_CERTIFICATE_PASSWORD }}
+          provisioning_profile_base64: ${{ secrets.IOS_RC_PROVISIONING_PROFILE_BASE64 }}
+          keychain_password: ${{ secrets.IOS_TEMPORARY_KEYCHAIN_PASSWORD }}
+          build_flavor: 'rc'
+          build_export_options: 'ios/ExportOptionsRc.plist'
+
+      # Uploads iOS related artifacts from build to GitHub Actions.
+      - name: Upload artifacts
+        uses: ./.github/actions/artifacts-ios
+
+      # Upload IPA to the AppCenter slot and distribute it with latest release notes.
+      - name: Distribute to AppCenter
+        uses: ./.github/actions/distribute
+        with:
+          token: ${{ secrets.APPCENTER_TOKEN }}
+          path: '"build/ios/ipa/Zachraň Oběd.ipa"'
+          application: ${{ secrets.APPCENTER_IOS_PROD_APP_NAME }}
+          groups: ${{ vars.APPCENTER_GROUPS }}
