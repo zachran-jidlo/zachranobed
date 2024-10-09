@@ -9,7 +9,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>cz.etnetera.mobile.zachranobed.prod</key>
-        <string>Zachran Obed RC</string>
+        <string>ZachranObed RC</string>
     </dict>
     <key>signingCertificate</key>
     <string>iOS Distribution</string>
