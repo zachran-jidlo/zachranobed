@@ -74,8 +74,11 @@ class HelperService {
     }
 
     final userNotifier = context.read<UserNotifier>();
+    final deliveryNotifier = context.read<DeliveryNotifier>();
     if (context.mounted) {
-      userNotifier.user = user.copyWith(activePair: pair);
+      final updatedUser = user.copyWith(activePair: pair);
+      userNotifier.user = updatedUser;
+      deliveryNotifier.init(updatedUser);
     }
   }
 }

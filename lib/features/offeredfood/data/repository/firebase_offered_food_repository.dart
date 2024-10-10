@@ -37,10 +37,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
   @override
   Stream<Delivery?> observeCurrentDelivery({
-    required String entityId,
+    required UserData user,
   }) {
     return _deliveryService
-        .observeDelivery(entityId)
+        .observeDelivery(
+          donorId: user.activePair.donorId,
+          recipientId: user.activePair.recipientId,
+        )
         .map((event) => event?.toDomain());
   }
 

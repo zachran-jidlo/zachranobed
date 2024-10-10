@@ -5,12 +5,9 @@ import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-  /// Observes the current delivery for a specific entity.
-  ///
-  /// The [entityId] parameter is the ID of the entity whose delivery is to be
-  /// observed.
+  /// Observes the current delivery for a given [user].
   Stream<Delivery?> observeCurrentDelivery({
-    required String entityId,
+    required UserData user,
   });
 
   /// Checks if canteen could donate to the given [delivery]. The [time]

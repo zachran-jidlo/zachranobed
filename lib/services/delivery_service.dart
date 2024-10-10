@@ -33,10 +33,8 @@ class DeliveryService {
   ///
   /// This method sets up a Firestore stream to listen for changes in the
   /// `deliveries` collection. It filters deliveries based on the provided
-  /// [donorId], type and last midnight timestamp to get "today's" delivery.
-  ///
-  /// The [donorId] parameter is the ID of the donor whose delivery is to be
-  /// observed.
+  /// [donorId] & [recipientId] pair, type and last midnight timestamp to get
+  /// "today's" delivery.
   ///
   /// The method returns a `Stream` of `DeliveryDto?`. Each `DeliveryDto?` in
   /// the `Stream` represents a delivery for the donor. The `Stream` emits a new
@@ -48,11 +46,15 @@ class DeliveryService {
   /// collection.
   /// The `map` method is used to transform the snapshots into  `DeliveryDto?`
   /// objects.
-  Stream<DeliveryDto?> observeDelivery(String donorId) {
+  Stream<DeliveryDto?> observeDelivery({
+    required String donorId,
+    required String recipientId,
+  }) {
     final now = DateTime.now();
     final lastMidnight = DateTime(now.year, now.month, now.day);
     final snapshots = _collection
         .where('donorId', isEqualTo: donorId)
+        .where('recipientId', isEqualTo: recipientId)
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
         .whereTime('deliveryDate', lastMidnight)
         .snapshots();
