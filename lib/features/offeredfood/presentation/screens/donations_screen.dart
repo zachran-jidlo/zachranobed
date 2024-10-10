@@ -32,7 +32,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
     super.initState();
     final repository = GetIt.I<OfferedFoodRepository>();
     _mealsCountFuture = repository.getSavedMealsCount(
-      entityId: HelperService.getCurrentUser(context)!.entityId,
+      user: HelperService.getCurrentUser(context)!,
       timePeriod: null,
     );
   }

@@ -53,10 +53,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
 
   /// Loads contacts summary.
   void _loadContacts() {
-    final entityId = HelperService.getCurrentUser(context)!.entityId;
     final getContacts = GetIt.I<GetContactsUseCase>();
     setState(() {
-      _contactsFuture = getContacts.invoke(entityId);
+      final user = HelperService.getCurrentUser(context)!;
+      _contactsFuture = getContacts.invoke(user);
     });
   }
 

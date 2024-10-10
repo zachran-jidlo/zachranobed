@@ -65,7 +65,7 @@ extension FoodInfoExtension on List<FoodInfo> {
     }
 
     final available = await foodBoxRepository.verifyAvailableBoxCount(
-      entityId: user.entityId,
+      user: user,
       requiredBoxes: requiredBoxes,
       getQuantity: (e) => e.quantityAtCanteen,
     );

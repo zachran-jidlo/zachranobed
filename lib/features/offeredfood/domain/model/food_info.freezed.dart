@@ -18,17 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FoodInfo {
   String get id => throw _privateConstructorUsedError; // The UUID identifier
   String? get dishName => throw _privateConstructorUsedError;
-
   List<String>? get allergens => throw _privateConstructorUsedError;
-
   String? get foodCategory => throw _privateConstructorUsedError;
-
   int? get numberOfServings => throw _privateConstructorUsedError;
-
   int? get numberOfBoxes => throw _privateConstructorUsedError;
-
   String? get foodBoxId => throw _privateConstructorUsedError;
-
   DateTime? get consumeBy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,7 +34,6 @@ mixin _$FoodInfo {
 abstract class $FoodInfoCopyWith<$Res> {
   factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) then) =
       _$FoodInfoCopyWithImpl<$Res, FoodInfo>;
-
   @useResult
   $Res call(
       {String id,
@@ -60,7 +53,6 @@ class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -119,7 +111,6 @@ abstract class _$$FoodInfoImplCopyWith<$Res>
   factory _$$FoodInfoImplCopyWith(
           _$FoodInfoImpl value, $Res Function(_$FoodInfoImpl) then) =
       __$$FoodInfoImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -206,12 +197,10 @@ class _$FoodInfoImpl implements _FoodInfo {
 
   @override
   final String id;
-
 // The UUID identifier
   @override
   final String? dishName;
   final List<String>? _allergens;
-
   @override
   List<String>? get allergens {
     final value = _allergens;
@@ -291,28 +280,20 @@ abstract class _FoodInfo implements FoodInfo {
 
   @override
   String get id;
-
-  @override
+  @override // The UUID identifier
   String? get dishName;
-
   @override
   List<String>? get allergens;
-
   @override
   String? get foodCategory;
-
   @override
   int? get numberOfServings;
-
   @override
   int? get numberOfBoxes;
-
   @override
   String? get foodBoxId;
-
   @override
   DateTime? get consumeBy;
-
   @override
   @JsonKey(ignore: true)
   _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>

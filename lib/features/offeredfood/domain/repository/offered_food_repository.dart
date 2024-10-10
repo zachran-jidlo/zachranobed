@@ -1,6 +1,7 @@
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
@@ -29,17 +30,15 @@ abstract class OfferedFoodRepository {
   Future<bool> cancelDelivery({required Delivery delivery});
 
   /// Returns a [Future] that completes with an [int] representing the total
-  /// count of saved meals for the specified [timePeriod] and user with given
-  /// [entityId].
+  /// count of saved meals for the specified [timePeriod] and [user].
   Future<int> getSavedMealsCount({
-    required String entityId,
+    required UserData user,
     int? timePeriod,
   });
 
-  /// Returns a stream with a list of offered food for the user with given
-  /// [entityId].
+  /// Returns a stream with a list of offered food for the [user].
   Stream<Iterable<OfferedFood>> observeHistory({
-    required String entityId,
+    required UserData user,
     int? limit,
     DateTime? from,
     DateTime? to,

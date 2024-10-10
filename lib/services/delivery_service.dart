@@ -76,15 +76,15 @@ class DeliveryService {
         .update({'state': state.toJson()}).toSuccess();
   }
 
-  /// Queries the Firestore collection for deliveries based on the entity ID
-  /// of the provided [user] who is either the donor or recipient of the
-  /// offered food. It allows an optional parameter for specifying a
-  /// [timePeriod] to filter the results.
-  Future<Iterable<DeliveryDto>> getDeliveries(
-    String entityId,
+  /// Queries the Firestore collection for deliveries of the given pair defined
+  /// by [donorId] and [recipientId] of the offered food. It allows an optional
+  /// parameter for specifying a [timePeriod] to filter the results.
+  Future<Iterable<DeliveryDto>> getDeliveries({
+    required String donorId,
+    required String recipientId,
     int? timePeriod,
-  ) async {
-    var query = _collection.where(_hasEntity(entityId));
+  }) async {
+    var query = _collection.where(_hasEntity(donorId, recipientId));
 
     if (timePeriod != null) {
       query = query.where(
@@ -98,23 +98,23 @@ class DeliveryService {
   }
 
   /// Sets up a Firestore stream to listen for changes in the `deliveries`
-  /// collection, filtering deliveries based on the provided [entityId] that
-  /// belongs to the currently signed in user. The user can be associated
-  /// with the [DeliveryDto] either as a `donor` or a `recipient`.
+  /// collection, filtering deliveries based on the provided pair of [donorId]
+  /// and [recipientId].
   ///
   /// Additional parameters may be used to filter response. Specify [limit] to
   /// return as much deliveries from Firestore. Use [from] to filter items
   /// delivered after (including) this date. Use [to] to filter items
   /// delivered before (excluding) this date.
-  Stream<Iterable<DeliveryDto>> observeDeliveries(
-    String entityId,
+  Stream<Iterable<DeliveryDto>> observeDeliveries({
+    required String donorId,
+    required String recipientId,
     int? limit,
     DateTime? from,
     DateTime? to,
-  ) {
+  }) {
     var query = _collection
         .orderBy('deliveryDate', descending: true)
-        .where(_hasEntity(entityId));
+        .where(_hasEntity(donorId, recipientId));
 
     if (limit != null) {
       query = query.limit(limit);
@@ -190,14 +190,14 @@ class DeliveryService {
         .update({'foodBoxes': foodBoxes.map((e) => e.toJson())}).toSuccess();
   }
 
-  /// Prepares a filter to get only deliveries where [entityId] is either the
-  /// donor or recipient of the offered food. Also filters deliveries with only
-  /// valid (offered, accepted, in-delivery and delivered) states.
-  Filter _hasEntity(String entityId) {
+  /// Prepares a filter to get only deliveries of the offered food for the given
+  /// [donorId] and [recipientId]. Also filters deliveries with only valid
+  /// (offered, accepted, in-delivery and delivered) states.
+  Filter _hasEntity(String donorId, String recipientId) {
     return Filter.and(
-      Filter.or(
-        Filter('donorId', isEqualTo: entityId),
-        Filter('recipientId', isEqualTo: entityId),
+      Filter.and(
+        Filter('donorId', isEqualTo: donorId),
+        Filter('recipientId', isEqualTo: recipientId),
       ),
       Filter(
         'state',

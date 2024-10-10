@@ -6,6 +6,7 @@ import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
 import 'package:zachranobed/models/dto/entity_pair_dto.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/carrier_service.dart';
 import 'package:zachranobed/services/configuration_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
@@ -26,11 +27,14 @@ class FirebaseContactsRepository implements ContactsRepository {
   );
 
   @override
-  Future<ContactsSummary> getContacts({required String entityId}) async {
-    final pairs = await getPairs(entityId);
+  Future<ContactsSummary> getContacts({required UserData user}) async {
+    final pairs = await _entityPairService.getByUser(user);
+    if (pairs == null) {
+      throw Exception('Unable to retrieve entity pairs summary');
+    }
     return Future.wait(
       [
-        getEntityContacts(getTargetEntityIds(entityId, pairs)),
+        getEntityContacts(getTargetEntityIds(user.entityId, pairs)),
         getDeliveryContacts(pairs),
         getOrganisationContacts(),
       ],
@@ -41,11 +45,6 @@ class FirebaseContactsRepository implements ContactsRepository {
         organisationContacts: values[2].cast(),
       );
     });
-  }
-
-  /// Retrieves a list of entity pairs for the given [entityId].
-  Future<List<EntityPairDto>> getPairs(String entityId) async {
-    return (await _entityPairService.observePairs(entityId).first).toList();
   }
 
   /// Retrieves a list of entity IDs that are paired with the given [entityId].

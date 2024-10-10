@@ -47,7 +47,17 @@ class AppRouter extends $AppRouter {
         ),
         MaterialRoute(page: DebugRoute.page),
         MaterialRoute(page: AppTermsRoute.page),
-        MaterialRoute(page: OfferFoodOverviewRoute.page),
-    MaterialRoute(page: OfferFoodDetailRoute.page),
+        MaterialRoute(
+          page: OfferFoodOverviewRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
+          page: OfferFoodDetailRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
+          page: ChangeActivePairRoute.page,
+          guards: [AuthGuard()],
+        ),
       ];
 }

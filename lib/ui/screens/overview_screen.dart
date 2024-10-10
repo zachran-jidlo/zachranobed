@@ -8,7 +8,10 @@ import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_tabl
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/card_row.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 
@@ -19,7 +22,7 @@ class OverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = HelperService.getCurrentUser(context);
+    final user = HelperService.watchCurrentUser(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,6 +51,7 @@ class OverviewScreen extends StatelessWidget {
             ),
             sliver: MultiSliver(
               children: [
+                _buildActiveCanteen(context),
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
                 BoxDataTable(user: user),
@@ -67,6 +71,36 @@ class OverviewScreen extends StatelessWidget {
       title: context.l10n!.lastDonated,
       itemsLimit: 5,
       alwaysShowTitle: false,
+    );
+  }
+
+  Widget _buildActiveCanteen(BuildContext context) {
+    final user = HelperService.watchCurrentUser(context);
+    if (user is! Charity) {
+      return const SizedBox();
+    }
+    return Column(
+      children: [
+        CardRow(
+          label: context.l10n!.activePairCardCanteenLabel,
+          title: user.activePair.donorEstablishmentName,
+          action: (context) {
+            if (!user.hasMultiplePairs) {
+              return const SizedBox();
+            }
+            return ZOButton(
+              text: context.l10n!.activePairCardChangeAction,
+              type: ZOButtonType.secondary,
+              height: 40.0,
+              fullWidth: false,
+              onPressed: () {
+                context.router.push(const ChangeActivePairRoute());
+              },
+            );
+          },
+        ),
+        const SizedBox(height: GapSize.xs),
+      ],
     );
   }
 }
