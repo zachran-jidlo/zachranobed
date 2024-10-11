@@ -34,7 +34,7 @@ class FirebaseContactsRepository implements ContactsRepository {
     }
     return Future.wait(
       [
-        getEntityContacts(getTargetEntityIds(user.entityId, pairs)),
+        getEntityContacts(user, getTargetEntityIds(user.entityId, pairs)),
         getDeliveryContacts(pairs),
         getOrganisationContacts(),
       ],
@@ -60,9 +60,11 @@ class FirebaseContactsRepository implements ContactsRepository {
   /// Retrieves a list of [EntityContacts] of given entity IDs.
   /// The final list is sorted by establishment name.
   Future<List<EntityContacts>> getEntityContacts(
+    UserData user,
     List<String> entityIds,
   ) async {
     final entities = await _entityService.fetchEntities(entityIds);
+    final activePair = user.activePair;
     return entities.map((e) {
       final mainContact = Contact(
         name: e.responsiblePerson,
@@ -73,6 +75,7 @@ class FirebaseContactsRepository implements ContactsRepository {
 
       return EntityContacts(
         name: e.establishmentName,
+        active: e.id == activePair.donorId || e.id == activePair.recipientId,
         contacts: [mainContact, ...contacts],
       );
     }).sortedBy((e) => e.name);

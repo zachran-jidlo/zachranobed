@@ -128,5 +128,6 @@
     "activePairCardCanteenLabel": "Aktivní jídelna",
     "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
-    "activePairCanteenTitle": "Jídelna"
+    "activePairCanteenTitle": "Jídelna",
+    "activePairContactsCanteenLabel": "(aktivní jídelna)"
 }
