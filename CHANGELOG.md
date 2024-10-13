@@ -6,7 +6,6 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
-- **ZOB-72** Add scroll padding for password field.
 
 ### Changed
 

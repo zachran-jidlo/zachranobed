@@ -42,7 +42,9 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher {
       if (context.read<UserNotifier>().user == null) {
         await HelperService.loadUserInfo(context);
       }
-      await Notifications().getFCMToken();
+      final notifications = Notifications();
+      notifications.listenToTokenRefresh();
+      await notifications.getFCMToken();
     });
 
     // Show logout button after 20 seconds if user is not loaded

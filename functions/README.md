@@ -35,6 +35,11 @@ There are two Firebase projects configured.
 - (default) DEV environment `Zachran obed DEV`
 - (prod) PROD environment `Zachran obed`
 
+**BEWARE**
+functions/src/index.ts contains service account id in `setGlobalOptions`. This account is for prod account. You can change account to DEV one.
+PROD: firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com
+DEV: firebase-adminsdk-ju14s@zachran-obed-dev.iam.gserviceaccount.com
+
 You can select project where you want deploy functions with `firebase use` e.g.
 ```
 firebase use prod
@@ -94,7 +99,7 @@ firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T
 
 ## Deploy functions to cloud
 
-To deploy Firebase Function to a selected environment you need to run following command in `functions` directory.
+To deploy Firebase Function to a selected environment you need to run following command in `functions` directory. Do not delete non-existing functions in sourcecode. There are funtions that are needed by Rowy or other connected services.
 
 ```
 npm run deploy
