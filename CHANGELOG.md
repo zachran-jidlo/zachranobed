@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-113** Lock Android for portrait screen orientation in Manifest.
 
 ### Changed
 
