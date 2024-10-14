@@ -9,6 +9,7 @@ import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
@@ -39,6 +40,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenScaffold(
+      web: (context) => _changePasswordScreenContent(useWideButton: false),
+      mobile: (context) => _changePasswordScreenContent(useWideButton: true),
+    );
+  }
+
+  /// Builds the content of the change password screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch confirmation
+  /// button to screen width.
+  Widget _changePasswordScreenContent({
+    required bool useWideButton,
+  }) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.changePassword),
@@ -73,20 +87,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   text: context.l10n!.repeatNewPassword,
                   controller: _confirmNewPasswordController,
                   onValidation:
-                      FieldValidationUtils.getRepeatNewPasswordValidator(
+                  FieldValidationUtils.getRepeatNewPasswordValidator(
                     context,
                     _newPasswordController,
                   ),
                 ),
                 const SizedBox(height: GapSize.m),
-                ZOButton(
-                  text: context.l10n!.savePassword,
-                  icon: Icons.check,
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await _changePassword();
-                    }
-                  },
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ZOButton(
+                    text: context.l10n!.savePassword,
+                    icon: Icons.check,
+                    minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _changePassword();
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

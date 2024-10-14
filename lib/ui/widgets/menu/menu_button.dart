@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/ui/widgets/button.dart';
 
 class MenuButton extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback onPressed;
+  final Size? minimumSize;
 
   const MenuButton({
     super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
+    this.minimumSize = ZOButtonSize.largeMatchParent,
   });
 
   @override
@@ -23,7 +26,7 @@ class MenuButton extends StatelessWidget {
               color: ZOColors.lightBorderColor,
             ),
             borderRadius: BorderRadius.circular(8)),
-        minimumSize: const Size.fromHeight(56),
+        minimumSize: minimumSize,
       ),
       onPressed: onPressed,
       icon: Icon(icon),

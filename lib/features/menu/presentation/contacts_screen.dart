@@ -12,6 +12,7 @@ import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.d
 import 'package:zachranobed/ui/widgets/contact_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of contacts.
 @RoutePage()
@@ -34,19 +35,21 @@ class _ContactsScreenState extends State<ContactsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
-        future: _contactsFuture,
-        builder:
-            (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _loading();
-          } else if (snapshot.hasError || snapshot.data == null) {
-            return _error(context);
-          }
-          return _contacts(snapshot.data!);
-        },
+    return ScreenScaffold.universal(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: FutureBuilder(
+          future: _contactsFuture,
+          builder:
+              (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _loading();
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return _error(context);
+            }
+            return _contacts(snapshot.data!);
+          },
+        ),
       ),
     );
   }
