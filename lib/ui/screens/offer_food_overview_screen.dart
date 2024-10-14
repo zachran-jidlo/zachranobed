@@ -83,49 +83,55 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       },
       child: Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(WidgetStyle.padding),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                context.l10n!.offerFoodOverviewScreenTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            InfoBanner.text(
-              backgroundColor: ZOColors.amberTransparent,
-              message: context.l10n!.offerFoodOverviewBanner,
-            ),
-            const SizedBox(height: GapSize.m),
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator())
-            else
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: WidgetStyle.padding,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(WidgetStyle.padding),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  context.l10n!.offerFoodOverviewScreenTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.clip,
                 ),
-                child: Column(
-                  children: [
-                    _offerFoodListSection(context,
-                        foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
-                    const SizedBox(height: GapSize.m),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ZOButton(
-                        text: context.l10n!.offerFood,
-                        minimumSize: ZOButtonSize.large(
-                          fullWidth: useWideButton,
-                        ),
-                        onPressed: _onConfirmationButtonPressed,
+              ),
+              InfoBanner.text(
+                backgroundColor: ZOColors.amberTransparent,
+                message: context.l10n!.offerFoodOverviewBanner,
+              ),
+              const SizedBox(height: GapSize.m),
+              if (_isLoading)
+                const Center(child: CircularProgressIndicator())
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: WidgetStyle.padding,
+                  ),
+                  child: Column(
+                    children: [
+                      _offerFoodListSection(
+                        context,
+                        foodInfos: foodInfos,
+                        foodBoxTypes: _foodBoxTypes,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: GapSize.m),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ZOButton(
+                          text: context.l10n!.offerFood,
+                          minimumSize: ZOButtonSize.large(
+                            fullWidth: useWideButton,
+                          ),
+                          onPressed: _onConfirmationButtonPressed,
+                        ),
+                      ),
+                      const SizedBox(height: GapSize.xs),
+                    ],
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
