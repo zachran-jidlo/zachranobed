@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-113** Lock Android for portrait screen orientation in Manifest.
 
 ### Changed
+- **ZOB-296** Update allergens UI in food offer form.
 
 ### Removed
 

@@ -84,6 +84,19 @@ class FieldValidationUtils {
     };
   }
 
+  /// Returns a validator for food allergens chips.
+  /// The validator checks if at least some value is selected.
+  static String? Function(List<String>?) getFoodAllergensValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n!.requiredFieldError;
+      }
+      return null;
+    };
+  }
+
   /// Returns a validator for food category field.
   /// The validator checks if the value is not empty.
   static String? Function(String?) getFoodCategoryValidator(
