@@ -6,10 +6,19 @@ This is a changelog for **ZachranObed** application.
 ### Added
 
 ### Fixed
+- **ZOB-72** Add scroll padding for password field.
+- **ZOB-113** Lock Android for portrait screen orientation in Manifest.
 
 ### Changed
 
 ### Removed
+
+## [1.2.1]
+### Changed
+- **ZOB-283** Update strings related to shipping boxes from charity.
+
+### Fixed
+- **ZOB-284** Fix scrolling on food offer overview screen.
 
 ## [1.2.0]
 ### Added
