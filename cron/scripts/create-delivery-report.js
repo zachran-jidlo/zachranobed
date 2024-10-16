@@ -94,12 +94,13 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
         data.meals.length > 0
       ) {
         for (const meal of data.meals) {
-          const mealName = await getMealName(meal.mealId);
+          const mealDetails = await getMealDetails(meal.mealId);
           const mealDocument = {
             deliveryDate: data.deliveryDate,
             donorId: data.donorId,
             mealCount: meal.count,
-            mealName: mealName
+            mealName: mealDetails.name,
+            foodCategory: mealDetails.foodCategory
           };
 
           // Create document
@@ -119,17 +120,24 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
   }
 }
 
-async function getMealName(mealId) {
+async function getMealDetails(mealId) {
   // Fetch meal names for each mealId in the meals array
   const mealDocRef = doc(db, "meals", mealId);
   const mealDocSnapshot = await getDoc(mealDocRef);
 
   if (mealDocSnapshot.exists()) {
     const mealData = mealDocSnapshot.data();
-    return mealData.name;
+    return {
+      name: mealData.name,
+      foodCategory: mealData.foodCategory
+    };
   } else {
-    console.error("`fetchAndProcessDocuments` Function failed because no document was found for meal id ", mealId, ". Returning NotFound as a meal name.");
+    console.error("`fetchAndProcessDocuments` Function failed because no document was found for meal id ", mealId, ". Returning NotFound as a meal name and category.");
     return `NotFound(${mealId})`;
+    return {
+      name: `NotFound(${mealId})`,
+      foodCategory: `NotFound(${mealId})`
+    };
   }
 }
 
