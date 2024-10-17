@@ -8,7 +8,7 @@
     <string>enterprise</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>cz.etnetera.mobile.zachranobed.stage</key>
+        <key>cz.etnetera.mobile.zachranobed.test</key>
         <string>Zachran Obed Stage</string>
     </dict>
     <key>signingCertificate</key>
