@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.3.0]
 ### Added
+- **ZOB-189** Add multi-pair support for Charity.
 
 ### Fixed
 - **ZOB-72** Add scroll padding for password field.

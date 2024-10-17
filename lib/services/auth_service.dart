@@ -2,9 +2,13 @@ import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/prefs/app_preferences.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';
+import 'package:zachranobed/models/dto/entity_pair_dto.dart';
+import 'package:zachranobed/models/entity_pair.dart';
+import 'package:zachranobed/models/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
@@ -13,8 +17,13 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final EntityService _entityService;
   final EntityPairService _entityPairService;
+  final AppPreferences _appPreferences;
 
-  AuthService(this._entityService, this._entityPairService);
+  AuthService(
+    this._entityService,
+    this._entityPairService,
+    this._appPreferences,
+  );
 
   /// Gets the current user's e-mail and fetches entity, which also determines
   /// user's role. Depending on the entity type (`donor` or `recipient`), it
@@ -79,6 +88,7 @@ class AuthService {
   /// Signs out the current user.
   Future<void> signOut() async {
     await _auth.signOut();
+    await _appPreferences.clear();
     FirebaseHelper.setUserIdentifier(null);
   }
 
@@ -102,8 +112,7 @@ class AuthService {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
-  /// Fetches canteen data from entity pairs relation. Each canteen may have
-  /// only one charity, thus the first pair may be taken.
+  /// Fetches canteen data from entity pairs relation.
   Future<Canteen?> _getCanteenData(EntityDto entity) async {
     final pairs = await _entityPairService.getByDonorId(entity.id);
     if (pairs == null) {
@@ -112,12 +121,13 @@ class AuthService {
       return null;
     }
 
-    // Canteen may have only one charity, so it is safe to take the first pair
-    final pair = pairs.first;
-    final window = pair.pickupTimeWindows.firstOrNull;
-    if (window == null) {
-      ZOLogger.logMessage("Unable to get canteen data, it's pair "
-          "with ${pair.recipientId} has no pick up windows");
+    final activePair = await _resolveActivePair(
+      userEntityId: entity.id,
+      pairs: pairs,
+    );
+    if (activePair == null) {
+      ZOLogger.logMessage("Unable to get canteen data, no active "
+          "pair is found");
       return null;
     }
 
@@ -127,21 +137,28 @@ class AuthService {
       establishmentName: entity.establishmentName,
       establishmentId: entity.establishmentId,
       organization: entity.organization,
-      pickUpFrom: window.start,
-      pickUpWithin: window.end,
-      recipientId: pair.recipientId,
-      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion
+      lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
+      activePair: activePair,
+      hasMultiplePairs: pairs.length > 1,
     );
   }
 
-  /// Fetches charity data from entity pairs relation. Each charity may have
-  /// multiple canteens, thus all pairs should be taken into account.
+  /// Fetches charity data from entity pairs relation.
   Future<Charity?> _getCharityData(EntityDto entity) async {
-    final pairs =
-        await _entityPairService.getByRecipientId(entity.id);
+    final pairs = await _entityPairService.getByRecipientId(entity.id);
     if (pairs == null) {
-      ZOLogger.logMessage("Unable to get canteen data, no pair "
+      ZOLogger.logMessage("Unable to get charity data, no pair "
           "is found for recipient ID ${entity.id}");
+      return null;
+    }
+
+    final activePair = await _resolveActivePair(
+      userEntityId: entity.id,
+      pairs: pairs,
+    );
+    if (activePair == null) {
+      ZOLogger.logMessage("Unable to get charity data, no active "
+          "pair is found");
       return null;
     }
 
@@ -152,8 +169,27 @@ class AuthService {
       establishmentId: entity.establishmentId,
       organization: entity.organization,
       lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
-      donorIds: pairs.map((e) => e.donorId).toList(),
-      carrierIds: pairs.map((e) => e.carrierId).toList(),
+      activePair: activePair,
+      hasMultiplePairs: pairs.length > 1,
     );
+  }
+
+  Future<EntityPair?> _resolveActivePair({
+    required String userEntityId,
+    required List<EntityPairDto> pairs,
+  }) async {
+    final entityPairs = await pairs.toDomain(
+      userEntityId: userEntityId,
+      entities: _entityService.fetchEntities,
+    );
+
+    final savedActivePair = await _appPreferences.getActivePair();
+    final activePair = entityPairs.firstWhereOrNull(
+      (pair) =>
+          pair.donorId == savedActivePair?.donorId &&
+          pair.recipientId == savedActivePair?.recipientId,
+    );
+
+    return activePair ?? entityPairs.firstOrNull;
   }
 }

@@ -9,6 +9,7 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/food_box_service.dart';
@@ -36,10 +37,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
   @override
   Stream<Delivery?> observeCurrentDelivery({
-    required String entityId,
+    required UserData user,
   }) {
     return _deliveryService
-        .observeDelivery(entityId)
+        .observeDelivery(
+          donorId: user.activePair.donorId,
+          recipientId: user.activePair.recipientId,
+        )
         .map((event) => event?.toDomain());
   }
 
@@ -72,12 +76,15 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
   @override
   Future<int> getSavedMealsCount({
-    required String entityId,
+    required UserData user,
     int? timePeriod,
   }) async {
     var mealsCount = 0;
-    final deliveries =
-        await _deliveryService.getDeliveries(entityId, timePeriod);
+    final deliveries = await _deliveryService.getDeliveries(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      timePeriod: timePeriod,
+    );
     for (var delivery in deliveries) {
       mealsCount += delivery.meals.fold(0, (inc, e) => inc + e.count);
     }
@@ -86,17 +93,22 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
   @override
   Stream<Iterable<OfferedFood>> observeHistory({
-    required String entityId,
+    required UserData user,
     int? limit,
     DateTime? from,
     DateTime? to,
   }) async* {
     final boxTypes = await _foodBoxService.getAll();
     final boxTypeMap = {for (final e in boxTypes) e.id: e.name};
+    final deliveries = _deliveryService.observeDeliveries(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      limit: limit,
+      from: from,
+      to: to,
+    );
 
-    yield* _deliveryService
-        .observeDeliveries(entityId, limit, from, to)
-        .asyncMap((deliveries) async {
+    yield* deliveries.asyncMap((deliveries) async {
       final foodLists = await Future.wait(deliveries.map((delivery) async {
         // Get meal IDs and fetch meal details from MealService
         final mealIds = delivery.meals.map((e) => e.mealId);

@@ -11,6 +11,7 @@ part 'entity_contacts.freezed.dart';
 class EntityContacts with _$EntityContacts {
   const factory EntityContacts({
     required String name,
+    required bool active,
     required List<Contact> contacts,
   }) = $EntityContacts;
 }

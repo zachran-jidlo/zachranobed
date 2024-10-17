@@ -124,5 +124,10 @@
     "offerFoodOverviewScreenTitle": "Shrnutí",
     "offerFoodOverviewBanner": "Zkontrolujte si prosím počet krabiček a porcí.",
     "offerFoodDetailScreenTitle": "Úprava zadaného pokrmu",
-    "offerFoodDetailSaveButton": "Uložit změny"
+    "offerFoodDetailSaveButton": "Uložit změny",
+    "activePairCardCanteenLabel": "Aktivní jídelna",
+    "activePairCardChangeAction": "Změnit",
+    "activePairCardSelectAction": "Vybrat",
+    "activePairCanteenTitle": "Jídelna",
+    "activePairContactsCanteenLabel": "(aktivní jídelna)"
 }

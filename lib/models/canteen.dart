@@ -1,12 +1,9 @@
+import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/models/user_data.dart';
 
-import '../common/utils/date_time_utils.dart';
+import 'entity_pair.dart';
 
 class Canteen extends UserData {
-  final String pickUpFrom;
-  final String pickUpWithin;
-  final String recipientId;
-
   Canteen({
     required super.entityId,
     required super.email,
@@ -14,9 +11,8 @@ class Canteen extends UserData {
     required super.establishmentId,
     required super.organization,
     required super.lastAcceptedAppTermsVersion,
-    required this.pickUpFrom,
-    required this.pickUpWithin,
-    required this.recipientId,
+    required super.activePair,
+    required super.hasMultiplePairs,
   });
 
   /// Checks if the current time is within the pickup range for a [Canteen].
@@ -30,5 +26,23 @@ class Canteen extends UserData {
     DateTime timeWithin =
         DateTimeUtils.getDateTimeOfCurrentDelivery(pickUpWithin);
     return now.isBefore(timeWithin);
+  }
+
+  String get pickUpFrom => activePair.pickupTimeStart;
+
+  String get pickUpWithin => activePair.pickupTimeEnd;
+
+  @override
+  UserData copyWith({required EntityPair activePair}) {
+    return Canteen(
+      entityId: entityId,
+      email: email,
+      establishmentName: establishmentName,
+      establishmentId: establishmentId,
+      organization: organization,
+      lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
+      hasMultiplePairs: hasMultiplePairs,
+      activePair: activePair,
+    );
   }
 }

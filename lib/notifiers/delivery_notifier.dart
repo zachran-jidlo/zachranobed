@@ -34,7 +34,7 @@ class DeliveryNotifier extends ChangeNotifier {
   void observeDelivery(Canteen canteen) {
     _streamSubscription?.cancel();
     _streamSubscription = _repository
-        .observeCurrentDelivery(entityId: canteen.entityId)
+        .observeCurrentDelivery(user: canteen)
         .listen((delivery) async {
       _delivery = delivery;
       notifyListeners();
