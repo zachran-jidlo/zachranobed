@@ -7,9 +7,14 @@
     <key>method</key>
     <string>enterprise</string>
     <key>provisioningProfiles</key>
-    <dict/>
+    <dict>
+        <key>cz.etnetera.mobile.zachranobed.test</key>
+        <string>Zachran Obed Stage</string>
+    </dict>
+    <key>signingCertificate</key>
+    <string>iOS Distribution</string>
     <key>signingStyle</key>
-    <string>automatic</string>
+    <string>manual</string>
     <key>stripSwiftSymbols</key>
     <true/>
     <key>teamID</key>
