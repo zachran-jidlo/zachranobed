@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
@@ -14,11 +13,12 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/dropdown.dart';
+import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
+import 'package:zachranobed/ui/widgets/food_allergens_chips.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
+import 'package:zachranobed/ui/widgets/section_header.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
-
-import 'food_alergens_text_field.dart';
 
 class FoodSectionFields extends StatefulWidget {
   final FormValidationManager formValidationManager;
@@ -122,6 +122,50 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     );
   }
 
+  List<Widget> _buildFoodNamePart(int index) {
+    return [
+      SectionHeader(
+        text: context.l10n!.foodName,
+      ),
+      const SizedBox(height: GapSize.xs),
+      _buildTextField(
+        index: index,
+        type: FormFieldType.foodName,
+        label: context.l10n!.foodName,
+        onValidation: FieldValidationUtils.getFoodNameValidator(context),
+        onChanged: (val) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(dishName: val);
+        },
+        initialValue: widget.foodSections[index].dishName,
+      ),
+    ];
+  }
+
+  List<Widget> _buildFoodAllergensPart(int index) {
+    final formFieldKey = FormFieldType.allergens.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.allergens,
+        actionIcon: const Icon(Icons.info_outline),
+        onActionPressed: () => FoodAllergensBottomSheet.show(context),
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodAllergensChips(
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        selection: widget.foodSections[index].allergens ?? [],
+        onSelectionChanged: (allergens) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(allergens: allergens);
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodAllergensValidator(context),
+        ),
+      ),
+    ];
+  }
+
   Widget _buildFoodSection(
     FoodInfo offeredFood,
     int index,
@@ -150,30 +194,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           ],
         ),
         _buildGap(),
-        _buildTextField(
-          index: index,
-          type: FormFieldType.foodName,
-          label: context.l10n!.foodName,
-          onValidation: FieldValidationUtils.getFoodNameValidator(context),
-          onChanged: (val) {
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWith(dishName: val);
-          },
-          initialValue: offeredFood.dishName,
-        ),
+        ..._buildFoodNamePart(index),
         _buildGap(),
-        FoodAllergensTextField(
-          index: index,
-          label: context.l10n!.allergens,
-          onChanged: (val) {
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWith(allergens: val.split(','));
-          },
-          formValidationManager: widget.formValidationManager,
-          initialValue: offeredFood.allergens
-              ?.toString()
-              .substring(1, offeredFood.allergens!.toString().length - 1),
-        ),
+        ..._buildFoodAllergensPart(index),
         _buildGap(),
         _buildDropdown(
           index: index,
@@ -225,7 +248,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                     type: FormFieldType.numberOfBoxes,
                     label: context.l10n!.numberOfBoxes,
                     onValidation: FieldValidationUtils.getBoxNumberValidator(
-                        context
+                      context,
                     ),
                     inputType: TextInputType.number,
                     textInputFormatters: [
@@ -285,6 +308,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: GapSize.m);
+    return const SizedBox(height: GapSize.xl);
   }
 }
