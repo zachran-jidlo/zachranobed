@@ -7,14 +7,9 @@
     <key>method</key>
     <string>enterprise</string>
     <key>provisioningProfiles</key>
-    <dict>
-        <key>cz.etnetera.mobile.zachranobed.stage</key>
-        <string>Zachran Obed Stage</string>
-    </dict>
-    <key>signingCertificate</key>
-    <string>iOS Distribution</string>
+    <dict/>
     <key>signingStyle</key>
-    <string>manual</string>
+    <string>automatic</string>
     <key>stripSwiftSymbols</key>
     <true/>
     <key>teamID</key>
