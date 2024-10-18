@@ -1,19 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_chips.dart';
+import 'package:zachranobed/ui/widgets/food_date_time_chips.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/section_header.dart';
@@ -41,21 +41,6 @@ class FoodSectionFields extends StatefulWidget {
 }
 
 class _FoodSectionFieldsState extends State<FoodSectionFields> {
-  @override
-  void initState() {
-    super.initState();
-    _initializeControllers();
-  }
-
-  void _initializeControllers() {
-    for (int i = 0; i < widget.foodSections.length; i++) {
-      if (widget.foodSections[i].consumeBy != null) {
-        widget.controllers[i].text = DateTimeUtils().formatDateTime(
-            widget.foodSections[i].consumeBy!, "d.M.yyyy HH:mm");
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -196,6 +181,46 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     ];
   }
 
+  List<Widget> _buildConsumeByPart(int index) {
+    final formFieldKey = FormFieldType.consumeBy.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.consumeBy,
+        actionIcon: const Icon(Icons.today_rounded),
+        onActionPressed: () async {
+          final now = DateTime.now();
+          final date = await DateTimePicker.pickDateTime(
+            context: context,
+            initial: widget.foodSections[index].consumeBy?.getDate() ?? now,
+            minimum: now,
+          );
+
+          if (date != null) {
+            setState(() {
+              final consumeBy = FoodDateTimeSpecified(date: date);
+              widget.foodSections[index] =
+                  widget.foodSections[index].copyWith(consumeBy: consumeBy);
+            });
+          }
+        },
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodDateTimeChips(
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodDateTimeOption.createFutureOptions(context),
+        selection: widget.foodSections[index].consumeBy,
+        onSelectionChanged: (value) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(consumeBy: value);
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getConsumeByValidator(context),
+        ),
+      ),
+    ];
+  }
+
   Widget _buildFoodSection(
     FoodInfo offeredFood,
     int index,
@@ -285,26 +310,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 ],
               )
             : const SizedBox(),
-        ZODateTimePicker(
-          label: context.l10n!.consumeBy,
-          icon: MaterialSymbols.calendar_today,
-          controller: controller,
-          minimumDate: DateTime.now(),
-          focusNode: widget.formValidationManager.getFocusNode(
-            FormFieldType.consumeBy.createFormFieldKey(index),
-          ),
-          onValidation: widget.formValidationManager.wrapValidator(
-            FormFieldType.consumeBy.createFormFieldKey(index),
-            FieldValidationUtils.getConsumeByValidator(context),
-          ),
-          onDateTimePicked: (date) {
-            if (date != null) {
-              widget.foodSections[index] = widget.foodSections[index].copyWith(
-                consumeBy: date,
-              );
-            }
-          },
-        ),
+        ..._buildConsumeByPart(index),
         _buildGap(),
       ],
     );

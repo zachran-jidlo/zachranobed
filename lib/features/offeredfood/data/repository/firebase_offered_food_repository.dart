@@ -173,7 +173,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
         MealDto(
           mealId: id,
           count: element.numberOfServings ?? 0,
-          consumeBy: element.consumeBy ?? DateTime.now(),
+          consumeBy: element.consumeBy?.getDate(),
           foodBoxId: boxId,
           foodBoxCount: boxCount,
         ),

@@ -23,7 +23,7 @@ mixin _$FoodInfo {
   int? get numberOfServings => throw _privateConstructorUsedError;
   int? get numberOfBoxes => throw _privateConstructorUsedError;
   String? get foodBoxId => throw _privateConstructorUsedError;
-  DateTime? get consumeBy => throw _privateConstructorUsedError;
+  FoodDateTime? get consumeBy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FoodInfoCopyWith<FoodInfo> get copyWith =>
@@ -43,7 +43,7 @@ abstract class $FoodInfoCopyWith<$Res> {
       int? numberOfServings,
       int? numberOfBoxes,
       String? foodBoxId,
-      DateTime? consumeBy});
+      FoodDateTime? consumeBy});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
       consumeBy: freezed == consumeBy
           ? _value.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as FoodDateTime?,
     ) as $Val);
   }
 }
@@ -121,7 +121,7 @@ abstract class _$$FoodInfoImplCopyWith<$Res>
       int? numberOfServings,
       int? numberOfBoxes,
       String? foodBoxId,
-      DateTime? consumeBy});
+      FoodDateTime? consumeBy});
 }
 
 /// @nodoc
@@ -176,7 +176,7 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
       consumeBy: freezed == consumeBy
           ? _value.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as FoodDateTime?,
     ));
   }
 }
@@ -219,7 +219,7 @@ class _$FoodInfoImpl implements _FoodInfo {
   @override
   final String? foodBoxId;
   @override
-  final DateTime? consumeBy;
+  final FoodDateTime? consumeBy;
 
   @override
   String toString() {
@@ -276,7 +276,7 @@ abstract class _FoodInfo implements FoodInfo {
       final int? numberOfServings,
       final int? numberOfBoxes,
       final String? foodBoxId,
-      final DateTime? consumeBy}) = _$FoodInfoImpl;
+      final FoodDateTime? consumeBy}) = _$FoodInfoImpl;
 
   @override
   String get id;
@@ -293,7 +293,7 @@ abstract class _FoodInfo implements FoodInfo {
   @override
   String? get foodBoxId;
   @override
-  DateTime? get consumeBy;
+  FoodDateTime? get consumeBy;
   @override
   @JsonKey(ignore: true)
   _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>
