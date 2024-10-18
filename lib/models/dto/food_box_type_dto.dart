@@ -13,6 +13,7 @@ class FoodBoxTypeDto {
   static const String idIkeaLarge = "ikea_large";
   static const String idIkeaSmall = "ikea_small";
   static const String idDisposable = "disposable";
+  static const String idOther = "other";
 
   final String id;
   final String name;

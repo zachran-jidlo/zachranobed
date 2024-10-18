@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/assist_chip.dart';
+import 'package:zachranobed/ui/widgets/form_field_error.dart';
 
 /// A widget that displays a set of chips representing food allergens.
 ///
@@ -55,8 +56,8 @@ class FoodAllergensChips extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: 16.0,
-                  runSpacing: 16.0,
+                  spacing: GapSize.xs,
+                  runSpacing: GapSize.xs,
                   children: [
                     ..._allergensList.map(
                       (number) {
@@ -79,7 +80,8 @@ class FoodAllergensChips extends StatelessWidget {
                   ],
                 ),
               ),
-              if (state.hasError) _buildError(context, state),
+              if (state.hasError)
+                FormFieldError(message: state.errorText ?? ""),
             ],
           ),
         );
@@ -115,22 +117,5 @@ class FoodAllergensChips extends StatelessWidget {
     }
     state.didChange(newSelection);
     onSelectionChanged(newSelection);
-  }
-
-  /// Builds the error message widget.
-  ///
-  /// TODO (Alex) Fix error text style to match Figma
-  Widget _buildError(BuildContext context, FormFieldState<List<String>> state) {
-    final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 4.0,
-        left: WidgetStyle.paddingSmall,
-      ),
-      child: Text(
-        state.errorText!,
-        style: textTheme.bodySmall?.copyWith(color: ZOColors.primary),
-      ),
-    );
   }
 }
