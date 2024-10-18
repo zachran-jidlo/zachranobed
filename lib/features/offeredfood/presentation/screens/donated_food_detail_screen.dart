@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
@@ -69,8 +70,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.consumeBy,
-                initialValue:
-                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy),
+                initialValue: _formatConsumeBy(context, offeredFood.consumeBy),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
@@ -92,5 +92,14 @@ class DonatedFoodDetailScreen extends StatelessWidget {
 
   Widget _buildGap() {
     return const SizedBox(height: GapSize.m);
+  }
+
+  String _formatConsumeBy(BuildContext context, FoodDateTime date) {
+    switch (date) {
+      case FoodDateTimeSpecified():
+        return DateFormat('d.M.y HH:mm').format(date.date);
+      case FoodDateTimeOnPackaging():
+        return context.l10n!.consumeByOnPackaging;
+    }
   }
 }

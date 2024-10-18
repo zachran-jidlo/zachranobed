@@ -11,6 +11,7 @@
     "invalidFieldBoxType": "Vyberte typ krabičky.",
     "invalidFieldServings": "Napište číslem počet pokrmů.",
     "invalidFieldConsumeBy": "Zvolte datum spotřeby.",
+    "invalidFieldConsumeByDateInPast": "Zvolte datum spotřeby v budoucnu.",
     "invalidFieldEmail": "Zadali jste neplatnou e-mailovou adresu.",
     "foodCategoryWarm": "Teplý pokrm",
     "foodCategoryCooled": "Zchlazený pokrm",
@@ -57,6 +58,22 @@
     "boxType": "Typ krabičky",
     "box": "Typ krabičky",
     "consumeBy": "Spotřebujte do",
+    "consumeByOnPackaging": "Datum je uveden na obalu",
+    "consumeByTemplate": "Datum a čas spotřeby: {dateTime}",
+    "@hello": {
+      "placeholders": {
+        "dateTime": {
+          "type": "String",
+          "example": "28.11.2024  20:00"
+        }
+      }
+    },
+    "foodDateTimeLabelToday": "Dnes",
+    "foodDateTimeLabelPlus1Day": "Zítra",
+    "foodDateTimeLabelPlus2Days": "+2 dny",
+    "foodDateTimeLabelMinus1Day": "Včera",
+    "foodDateTimeLabelMinus2Days": "-2 dny",
+    "foodDateTimeLabelOnPackaging": "Viz obal",
     "addAnotherFood": "Přidat další",
     "dish": "Pokrm",
     "formCantBeEdited": "Formulář po odeslání již není možné upravovat.",

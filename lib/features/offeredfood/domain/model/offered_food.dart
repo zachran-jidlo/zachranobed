@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /*
  * Command to rebuild the offered_food.g.dart file:
@@ -16,7 +17,7 @@ class OfferedFood with _$OfferedFood {
     required List<String> allergens,
     required int numberOfServings,
     required String boxType,
-    required DateTime consumeBy,
+    required FoodDateTime consumeBy,
     required String donorId,
     required String recipientId,
     required int numberOfBoxes,

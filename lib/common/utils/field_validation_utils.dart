@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /// Provides utility methods for field validation.
 class FieldValidationUtils {
@@ -144,11 +145,17 @@ class FieldValidationUtils {
   }
 
   /// Returns a validator for consume by field.
-  /// The validator checks if the value is not empty.
-  static String? Function(String?) getConsumeByValidator(BuildContext context) {
+  /// The validator checks if the value is set and date is not in the past.
+  static String? Function(FoodDateTime?) getConsumeByValidator(
+    BuildContext context,
+  ) {
     return (value) {
-      if (!_isFilled(value)) {
+      if (value == null) {
         return context.l10n!.invalidFieldConsumeBy;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
+        return context.l10n!.invalidFieldConsumeByDateInPast;
       }
       return null;
     };

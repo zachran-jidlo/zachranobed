@@ -23,7 +23,7 @@ mixin _$OfferedFood {
   List<String> get allergens => throw _privateConstructorUsedError;
   int get numberOfServings => throw _privateConstructorUsedError;
   String get boxType => throw _privateConstructorUsedError;
-  DateTime get consumeBy => throw _privateConstructorUsedError;
+  FoodDateTime get consumeBy => throw _privateConstructorUsedError;
   String get donorId => throw _privateConstructorUsedError;
   String get recipientId => throw _privateConstructorUsedError;
   int get numberOfBoxes => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $OfferedFoodCopyWith<$Res> {
       List<String> allergens,
       int numberOfServings,
       String boxType,
-      DateTime consumeBy,
+      FoodDateTime consumeBy,
       String donorId,
       String recipientId,
       int numberOfBoxes});
@@ -110,7 +110,7 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
       consumeBy: null == consumeBy
           ? _value.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as FoodDateTime,
       donorId: null == donorId
           ? _value.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
@@ -143,7 +143,7 @@ abstract class _$$OfferedFoodImplCopyWith<$Res>
       List<String> allergens,
       int numberOfServings,
       String boxType,
-      DateTime consumeBy,
+      FoodDateTime consumeBy,
       String donorId,
       String recipientId,
       int numberOfBoxes});
@@ -204,7 +204,7 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
       consumeBy: null == consumeBy
           ? _value.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as FoodDateTime,
       donorId: null == donorId
           ? _value.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
@@ -259,7 +259,7 @@ class _$OfferedFoodImpl implements _OfferedFood {
   @override
   final String boxType;
   @override
-  final DateTime consumeBy;
+  final FoodDateTime consumeBy;
   @override
   final String donorId;
   @override
@@ -328,7 +328,7 @@ abstract class _OfferedFood implements OfferedFood {
       required final List<String> allergens,
       required final int numberOfServings,
       required final String boxType,
-      required final DateTime consumeBy,
+      required final FoodDateTime consumeBy,
       required final String donorId,
       required final String recipientId,
       required final int numberOfBoxes}) = _$OfferedFoodImpl;
@@ -348,7 +348,7 @@ abstract class _OfferedFood implements OfferedFood {
   @override
   String get boxType;
   @override
-  DateTime get consumeBy;
+  FoodDateTime get consumeBy;
   @override
   String get donorId;
   @override

@@ -13,7 +13,7 @@ class MealDto {
   final String mealId;
   final int count;
   @TimestampConverter()
-  final DateTime consumeBy;
+  final DateTime? consumeBy;
   final String foodBoxId;
   final int foodBoxCount;
 

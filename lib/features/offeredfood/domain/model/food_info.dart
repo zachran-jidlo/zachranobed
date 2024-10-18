@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /*
  * Command to rebuild the food_info.g.dart file:
@@ -20,7 +21,7 @@ class FoodInfo with _$FoodInfo {
     int? numberOfServings,
     int? numberOfBoxes,
     String? foodBoxId,
-    DateTime? consumeBy,
+    FoodDateTime? consumeBy,
   }) = _FoodInfo;
 
   factory FoodInfo.withUuid({
@@ -30,10 +31,11 @@ class FoodInfo with _$FoodInfo {
     int? numberOfServings,
     int? numberOfBoxes,
     String? foodBoxId,
-    DateTime? consumeBy,
+    FoodDateTime? consumeBy,
   }) {
     return FoodInfo(
-      id: const Uuid().v4(), // Generating the UUID for id
+      id: const Uuid().v4(),
+      // Generating the UUID for id
       dishName: dishName,
       allergens: allergens,
       foodCategory: foodCategory,
