@@ -230,6 +230,8 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         _buildGap(),
         ..._buildFoodCategoryPart(index),
         _buildGap(),
+        ..._buildBoxTypesPart(index),
+        _buildGap(),
         _buildTextField(
           index: index,
           type: FormFieldType.numberOfServings,
@@ -283,8 +285,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 ],
               )
             : const SizedBox(),
-        ..._buildBoxTypesPart(index),
-        _buildGap(),
         ZODateTimePicker(
           label: context.l10n!.consumeBy,
           icon: MaterialSymbols.calendar_today,
