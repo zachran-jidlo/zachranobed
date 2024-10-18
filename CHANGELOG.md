@@ -12,6 +12,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-296** Update allergens UI in food offer form.
+- **ZOB-298** Update food categories and box types UI in food offer form.
 
 ### Removed
 - **ZOB-295** Remove updating delivery state to NOT_USED from application.
