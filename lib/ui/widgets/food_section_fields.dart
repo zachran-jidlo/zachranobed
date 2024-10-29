@@ -137,13 +137,14 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
       const SizedBox(height: GapSize.xs),
       SingleSelectChips(
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: FoodCategory.values
-            .map((e) => FoodCategoryHelper.toValue(e, context))
-            .toList(),
+        options: FoodCategory.createValues(context),
         selection: widget.foodSections[index].foodCategory,
+        optionLabel: (e) => e.name,
         onSelectionChanged: (value) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(foodCategory: value);
+          setState(() {
+            widget.foodSections[index] =
+                widget.foodSections[index].copyWithFoodCategory(value);
+          });
         },
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
@@ -160,24 +161,44 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         text: context.l10n!.boxType,
       ),
       const SizedBox(height: GapSize.xs),
-      SingleSelectChips(
+      SingleSelectChips<FoodBoxType>(
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: widget.boxTypes.map((type) => type.name).toList(),
-        selection: widget.boxTypes
-            .firstWhereOrNull(
-              (e) => e.id == widget.foodSections[index].foodBoxId,
-            )
-            ?.name,
+        options: widget.boxTypes,
+        selection: widget.foodSections[index].foodBoxType,
+        optionLabel: (e) => e.name,
         onSelectionChanged: (value) {
-          final type = widget.boxTypes.firstWhereOrNull((e) => e.name == value);
           widget.foodSections[index] =
-              widget.foodSections[index].copyWith(foodBoxId: type?.id);
+              widget.foodSections[index].copyWith(foodBoxType: value);
         },
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
           FieldValidationUtils.getBoxTypeValidator(context),
         ),
       )
+    ];
+  }
+
+  List<Widget> _buildPreparedAtPart(int index) {
+    final formFieldKey = FormFieldType.preparedAt.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.preparedAt,
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodDateTimeChips(
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodDateTimeOption.createPastOptions(context),
+        selection: widget.foodSections[index].preparedAt,
+        onSelectionChanged: (value) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(preparedAt: value);
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getPreparedAtValidator(context),
+        ),
+        formatSelectedDate: context.l10n!.preparedAtTemplate,
+      ),
     ];
   }
 
@@ -217,6 +238,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           formFieldKey,
           FieldValidationUtils.getConsumeByValidator(context),
         ),
+        formatSelectedDate: context.l10n!.consumeByTemplate,
       ),
     ];
   }
@@ -310,6 +332,13 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 ],
               )
             : const SizedBox(),
+        if (widget.foodSections[index].foodCategory?.type == FoodCategoryType.cooled)
+          Column(
+            children: [
+              ..._buildPreparedAtPart(index),
+              _buildGap(),
+            ],
+          ),
         ..._buildConsumeByPart(index),
         _buildGap(),
       ],

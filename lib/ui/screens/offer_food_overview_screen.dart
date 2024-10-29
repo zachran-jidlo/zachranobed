@@ -166,7 +166,7 @@ Widget _offerFoodListSection(
           return TrailingIconRow(
               title: food.dishName.toString(),
               description:
-                  "${food.numberOfBoxes ?? food.numberOfServings}x ${foodBoxTypes.getById(food.foodBoxId ?? "")?.name}",
+                  "${food.numberOfBoxes ?? food.numberOfServings}x ${food.foodBoxType?.name ?? ""}",
               trailInfo: "${food.numberOfServings} ks",
               trailingIcon: Icons.edit,
               onTap: () {

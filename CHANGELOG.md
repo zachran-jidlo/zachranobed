@@ -15,6 +15,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-296** Update allergens UI in food offer form.
 - **ZOB-298** Update food categories and box types UI in food offer form.
 - **ZOB-300** Update consume-by UI in food offer form.
+- **ZOB-301** Add "prepared-at" field for cooled meals.
 
 ### Removed
 - **ZOB-295** Remove updating delivery state to NOT_USED from application.

@@ -30,12 +30,16 @@ class FoodDateTimeChips extends StatelessWidget {
   /// Signature for validating a form field.
   final FormFieldValidator<FoodDateTime?>? onValidation;
 
+  /// Lambda function to format the selected date.
+  final String Function(String) formatSelectedDate;
+
   /// Creates a [FoodDateTimeChips] widget.
   const FoodDateTimeChips({
     super.key,
     required this.selection,
     required this.onSelectionChanged,
     required this.options,
+    required this.formatSelectedDate,
     this.focusNode,
     this.onValidation,
   });
@@ -143,7 +147,7 @@ class FoodDateTimeChips extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: GapSize.xs),
       child: Text(
-        context.l10n!.consumeByTemplate(dateTime),
+        formatSelectedDate(dateTime),
         style: textTheme.bodyLarge?.copyWith(color: ZOColors.onPrimaryLight),
       ),
     );
@@ -179,6 +183,32 @@ class FoodDateTimeOption {
       FoodDateTimeOption(
         text: context.l10n!.foodDateTimeLabelPlus2Days,
         date: FoodDateTimeSpecified(date: now.add(const Duration(days: 2))),
+      ),
+      FoodDateTimeOption(
+        text: context.l10n!.foodDateTimeLabelOnPackaging,
+        date: FoodDateTimeOnPackaging(),
+      ),
+    ];
+  }
+
+  /// Creates a list of past date and time options.
+  ///
+  /// Returns a list of [FoodDateTimeOption] instances representing today,
+  /// yesterday, the day before yesterday, and "on packaging" options.
+  static List<FoodDateTimeOption> createPastOptions(BuildContext context) {
+    final now = DateTime.now();
+    return [
+      FoodDateTimeOption(
+        text: context.l10n!.foodDateTimeLabelToday,
+        date: FoodDateTimeSpecified(date: now),
+      ),
+      FoodDateTimeOption(
+        text: context.l10n!.foodDateTimeLabelMinus1Day,
+        date: FoodDateTimeSpecified(date: now.add(const Duration(days: -1))),
+      ),
+      FoodDateTimeOption(
+        text: context.l10n!.foodDateTimeLabelMinus2Days,
+        date: FoodDateTimeSpecified(date: now.add(const Duration(days: -2))),
       ),
       FoodDateTimeOption(
         text: context.l10n!.foodDateTimeLabelOnPackaging,

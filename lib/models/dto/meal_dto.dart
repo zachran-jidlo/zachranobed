@@ -13,6 +13,8 @@ class MealDto {
   final String mealId;
   final int count;
   @TimestampConverter()
+  final DateTime? preparedAt;
+  @TimestampConverter()
   final DateTime? consumeBy;
   final String foodBoxId;
   final int foodBoxCount;
@@ -20,6 +22,7 @@ class MealDto {
   MealDto({
     required this.mealId,
     required this.count,
+    required this.preparedAt,
     required this.consumeBy,
     required this.foodBoxId,
     required this.foodBoxCount,
