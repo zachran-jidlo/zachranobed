@@ -197,7 +197,8 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           formFieldKey,
           FieldValidationUtils.getPreparedAtValidator(context),
         ),
-        formatSelectedDate: context.l10n!.preparedAtTemplate,
+        formatSelectedDate: (e) => null,
+        hasTime: false,
       ),
     ];
   }

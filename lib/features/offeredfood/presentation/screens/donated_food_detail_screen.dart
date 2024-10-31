@@ -76,6 +76,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                       initialValue: _formatFoodDateTime(
                         date: offeredFood.preparedAt!,
                         dateOnPackaging: context.l10n!.preparedAtOnPackaging,
+                        withTime: false,
                       ),
                       readOnly: true,
                     ),
@@ -87,6 +88,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 initialValue: _formatFoodDateTime(
                   date: offeredFood.consumeBy,
                   dateOnPackaging: context.l10n!.consumeByOnPackaging,
+                  withTime: true,
                 ),
                 readOnly: true,
               ),
@@ -114,10 +116,12 @@ class DonatedFoodDetailScreen extends StatelessWidget {
   String _formatFoodDateTime({
     required FoodDateTime date,
     required String dateOnPackaging,
+    required bool withTime,
   }) {
     switch (date) {
       case FoodDateTimeSpecified():
-        return DateFormat('d.M.y HH:mm').format(date.date);
+        final format = withTime ? "d.M.y HH:mm" : "d.M.y";
+        return DateFormat(format).format(date.date);
       case FoodDateTimeOnPackaging():
         return dateOnPackaging;
     }
