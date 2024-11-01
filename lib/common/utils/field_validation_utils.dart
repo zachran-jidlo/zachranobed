@@ -81,7 +81,7 @@ class FieldValidationUtils {
   static String? Function(String?) getFoodNameValidator(BuildContext context) {
     return (value) {
       if (!_isFilled(value)) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n!.invalidFieldFoodName;
       }
       return null;
     };
@@ -94,7 +94,7 @@ class FieldValidationUtils {
   ) {
     return (value) {
       if (value == null || value.isEmpty) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n!.invalidFieldFoodAllergens;
       }
       return null;
     };
@@ -150,11 +150,22 @@ class FieldValidationUtils {
     };
   }
 
-  /// Returns a validator for number of servings field.
-  /// The validator checks if the value is a number.
-  static String? Function(String?) getServingsValidator(BuildContext context) {
+  /// Returns a validator for number of boxes field.
+  /// The validator checks if the value is a non-zero number.
+  static String? Function(int?) getBoxNumberCounterValidator(BuildContext context) {
     return (value) {
-      if (!_isNumber(value)) {
+      if (value == null || value <= 0) {
+        return context.l10n!.invalidFieldBoxNumber;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for number of servings field.
+  /// The validator checks if the value is a non-zero number.
+  static String? Function(int?) getServingsValidator(BuildContext context) {
+    return (value) {
+      if (value == null || value <= 0) {
         return context.l10n!.invalidFieldServings;
       }
       return null;

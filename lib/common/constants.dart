@@ -12,6 +12,8 @@ class ZOColors {
   static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
   static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
   static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
+  static const disabledButtonBackground = Color.fromRGBO(28, 27, 31, 0.12);
+  static const disabledButtonForeground = Color.fromRGBO(32, 26, 25, 0.38);
   static const infoSnackBarBackground = Color.fromRGBO(54, 47, 46, 1);
   static const onInfoSnackBarBackground = Color.fromRGBO(255, 251, 238, 1);
   static const outline = Color.fromRGBO(133, 115, 113, 1);

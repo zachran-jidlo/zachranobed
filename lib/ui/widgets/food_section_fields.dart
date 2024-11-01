@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -10,6 +9,7 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
+import 'package:zachranobed/ui/widgets/counter_field.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_chips.dart';
@@ -23,7 +23,6 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 class FoodSectionFields extends StatefulWidget {
   final FormValidationManager formValidationManager;
   final List<FoodInfo> foodSections;
-  final List<TextEditingController> controllers;
   final List<bool> checkboxValues;
   final List<FoodBoxType> boxTypes;
 
@@ -31,7 +30,6 @@ class FoodSectionFields extends StatefulWidget {
     super.key,
     required this.formValidationManager,
     required this.foodSections,
-    required this.controllers,
     required this.checkboxValues,
     required this.boxTypes,
   });
@@ -51,7 +49,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         return _buildFoodSection(
           widget.foodSections[index],
           index,
-          widget.controllers[index],
         );
       },
     );
@@ -178,6 +175,63 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     ];
   }
 
+  List<Widget> _buildNumberOfServingsPart(int index) {
+    return [
+      SectionHeader(
+        text: context.l10n!.numberOfServings,
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        label: context.l10n!.numberOfServings,
+        focusNode: widget.formValidationManager.getFocusNode(
+          FormFieldType.numberOfServings.createFormFieldKey(index),
+        ),
+        onValidation: widget.formValidationManager.wrapValidator(
+          FormFieldType.numberOfServings.createFormFieldKey(index),
+          FieldValidationUtils.getServingsValidator(context),
+        ),
+        initialValue: widget.foodSections[index].numberOfServings ?? 0,
+        onChanged: (val) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(numberOfServings: val);
+        },
+      ),
+      _buildGap(),
+      ZOCheckbox.plain(
+        isChecked: widget.checkboxValues[index],
+        onChanged: (bool? value) {
+          setState(() {
+            widget.checkboxValues[index] = value!;
+            widget.foodSections[index] =
+                widget.foodSections[index].copyWith(numberOfBoxes: null);
+          });
+        },
+        title: context.l10n!.sameNumberOfServingsAsBoxes,
+      ),
+      if (!widget.checkboxValues[index])
+        Column(
+          children: [
+            _buildGap(),
+            CounterField(
+              label: context.l10n!.numberOfBoxes,
+              focusNode: widget.formValidationManager.getFocusNode(
+                FormFieldType.numberOfBoxes.createFormFieldKey(index),
+              ),
+              onValidation: widget.formValidationManager.wrapValidator(
+                FormFieldType.numberOfBoxes.createFormFieldKey(index),
+                FieldValidationUtils.getBoxNumberCounterValidator(context),
+              ),
+              initialValue: widget.foodSections[index].numberOfBoxes ?? 0,
+              onChanged: (val) {
+                widget.foodSections[index] =
+                    widget.foodSections[index].copyWith(numberOfBoxes: val);
+              },
+            ),
+          ],
+        )
+    ];
+  }
+
   List<Widget> _buildPreparedAtPart(int index) {
     final formFieldKey = FormFieldType.preparedAt.createFormFieldKey(index);
     return [
@@ -247,7 +301,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   Widget _buildFoodSection(
     FoodInfo offeredFood,
     int index,
-    TextEditingController controller,
   ) {
     return Column(
       key: ValueKey(offeredFood),
@@ -264,7 +317,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 onClick: () {
                   setState(() {
                     widget.foodSections.removeAt(index);
-                    widget.controllers.removeAt(index);
                     widget.checkboxValues.removeAt(index);
                   });
                 },
@@ -280,59 +332,8 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         _buildGap(),
         ..._buildBoxTypesPart(index),
         _buildGap(),
-        _buildTextField(
-          index: index,
-          type: FormFieldType.numberOfServings,
-          label: context.l10n!.numberOfServings,
-          onValidation: FieldValidationUtils.getServingsValidator(context),
-          inputType: TextInputType.number,
-          textInputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (val) {
-            widget.foodSections[index] = widget.foodSections[index].copyWith(
-                numberOfServings: val.isEmpty ? null : int.parse(val));
-          },
-          initialValue: offeredFood.numberOfServings?.toString(),
-        ),
+        ..._buildNumberOfServingsPart(index),
         _buildGap(),
-        ZOCheckbox.plain(
-          isChecked: widget.checkboxValues[index],
-          onChanged: (bool? value) {
-            setState(() {
-              widget.checkboxValues[index] = value!;
-
-              widget.foodSections[index] =
-                  widget.foodSections[index].copyWith(numberOfBoxes: null);
-            });
-          },
-          title: context.l10n!.sameNumberOfServingsAsBoxes,
-        ),
-        _buildGap(),
-        !widget.checkboxValues[index]
-            ? Column(
-                children: [
-                  _buildTextField(
-                    index: index,
-                    type: FormFieldType.numberOfBoxes,
-                    label: context.l10n!.numberOfBoxes,
-                    onValidation: FieldValidationUtils.getBoxNumberValidator(
-                      context,
-                    ),
-                    inputType: TextInputType.number,
-                    textInputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    onChanged: (val) {
-                      widget.foodSections[index] = widget.foodSections[index]
-                          .copyWith(
-                              numberOfBoxes:
-                                  val.isEmpty ? null : int.parse(val));
-                    },
-                    initialValue: offeredFood.numberOfBoxes?.toString(),
-                  ),
-                  _buildGap(),
-                ],
-              )
-            : const SizedBox(),
         if (widget.foodSections[index].foodCategory?.type == FoodCategoryType.cooled)
           Column(
             children: [
