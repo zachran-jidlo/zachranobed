@@ -22,6 +22,9 @@ class CounterField extends StatefulWidget {
   /// The maximum allowed value for the counter.
   final int maxValue;
 
+  /// The value which is set when user clears the value from text field.
+  final int noValueFallback;
+
   /// Signature for validating a form field.
   final String? Function(int)? onValidation;
 
@@ -41,6 +44,7 @@ class CounterField extends StatefulWidget {
     required this.initialValue,
     this.minValue = 0,
     this.maxValue = intMax,
+    this.noValueFallback = 0,
     this.onValidation,
     this.onChanged,
     this.supportingText,
@@ -67,8 +71,8 @@ class _CounterFieldState extends State<CounterField> {
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        final counter = int.tryParse(_controller.text) ?? widget.initialValue;
-        _updateValue(counter);
+        final counterValue = _getCounterValue(_controller.text);
+        _updateValue(counterValue);
       }
     });
   }
@@ -89,8 +93,8 @@ class _CounterFieldState extends State<CounterField> {
             label: widget.label,
             controller: _controller,
             onValidation: (value) {
-              final counter = int.tryParse(value ?? "") ?? widget.initialValue;
-              return widget.onValidation?.call(counter);
+              final counterValue = _getCounterValue(value);
+              return widget.onValidation?.call(counterValue);
             },
             onChanged: (value) {
               final counter = int.tryParse(value);
@@ -146,8 +150,14 @@ class _CounterFieldState extends State<CounterField> {
   void _updateValue(int value) {
     setState(() {
       _currentValue = value;
-      _controller.text = value.toString();
+      final textValue = value.toString();
+      if (_controller.text != textValue) {
+        _controller.text = textValue;
+      }
       widget.onChanged?.call(value);
     });
   }
+
+  int _getCounterValue(String? value) =>
+      int.tryParse(value ?? "") ?? widget.noValueFallback;
 }

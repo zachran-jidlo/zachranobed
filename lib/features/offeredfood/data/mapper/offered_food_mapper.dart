@@ -22,6 +22,7 @@ extension OfferedFoodMapper on MealDetailDto {
       date: delivery.deliveryDate,
       dishName: name,
       foodCategory: foodCategory,
+      foodTemperature: meal.foodTemperature,
       allergens: allergens,
       numberOfServings: meal.count,
       boxType: boxType,

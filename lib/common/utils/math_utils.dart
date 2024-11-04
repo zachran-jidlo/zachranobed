@@ -1,2 +1,2 @@
-/// 2^63 - 1
-const int intMax = 9223372036854775807;
+/// 2^63 - 1, or 2^53 for web
+const int intMax = -1 >>> 1;

@@ -50,6 +50,13 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 readOnly: true,
               ),
               _buildGap(),
+              if (offeredFood.foodTemperature != null)
+                ZOTextField(
+                  label: context.l10n!.foodTemperatureWithCelsius,
+                  initialValue: offeredFood.foodTemperature?.toString(),
+                  readOnly: true,
+                ),
+              _buildGap(),
               ZOTextField(
                 label: context.l10n!.numberOfServings,
                 initialValue: offeredFood.numberOfServings.toString(),

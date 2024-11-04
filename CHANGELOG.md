@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-72** Add scroll padding for password field.
 - **ZOB-113** Lock Android for portrait screen orientation in Manifest.
 - **ZOB-219** Add validation for consume-by date.
+- **ZOB-305** Add temperature field for warm meals.
 
 ### Changed
 - **ZOB-296** Update allergens UI in food offer form.

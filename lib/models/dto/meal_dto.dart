@@ -18,6 +18,7 @@ class MealDto {
   final DateTime? consumeBy;
   final String foodBoxId;
   final int foodBoxCount;
+  final int? foodTemperature;
 
   MealDto({
     required this.mealId,
@@ -26,6 +27,7 @@ class MealDto {
     required this.consumeBy,
     required this.foodBoxId,
     required this.foodBoxCount,
+    required this.foodTemperature,
   });
 
   factory MealDto.fromJson(Map<String, dynamic> json) =>
