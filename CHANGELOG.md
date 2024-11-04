@@ -18,6 +18,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-300** Update consume-by UI in food offer form.
 - **ZOB-301** Add "prepared-at" field for cooled meals.
 - **ZOB-302** Add counter field for number of servings and number of boxes.
+- **ZOB-304** Update assist chip and error UI.
 
 ### Removed
 - **ZOB-295** Remove updating delivery state to NOT_USED from application.
