@@ -112,7 +112,7 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
 
   /// Builds a loading screen.
   Widget _loading() {
-    return const Expanded(child: Center(child: CircularProgressIndicator()));
+    return const Center(child: CircularProgressIndicator());
   }
 
   /// Builds a generic error screen.

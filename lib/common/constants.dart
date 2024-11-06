@@ -26,7 +26,7 @@ class ZOColors {
 
 class ZOStrings {
   static const zjUrl = 'https://zachranobed.cz';
-  static const zjEmail = 'info@zachranjidlo.cz';
+  static const zjEmail = 'aplikace.zo@zachranjidlo.cz';
   static const zobWebHomepage = 'https://zachranobed.cz';
   static const appTerms = 'https://zachranobed.cz/wp-content/uploads/2024/07/Podminky-zapojeni-do-projektu-Zachran-obed.pdf';
   static const appPrivacy = 'https://docs.google.com/document/d/1NhEGlrN4TgS49HviLkhcF4zCBU3i8w3ITkVQJhtMz-Q/edit';
