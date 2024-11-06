@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-305** Add temperature field for warm meals.
 
 ### Changed
+- **ZOB-161** Update e-mail address for feedback.
 - **ZOB-296** Update allergens UI in food offer form.
 - **ZOB-298** Update food categories and box types UI in food offer form.
 - **ZOB-300** Update consume-by UI in food offer form.
