@@ -151,6 +151,33 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     ];
   }
 
+  List<Widget> _buildTemperaturePart(int index) {
+    final formFieldKey = FormFieldType.temperature.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.foodTemperature,
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        label: context.l10n!.foodTemperatureWithCelsius,
+        minValue: Constants.foodTemperatureMin,
+        maxValue: Constants.foodTemperatureMax,
+        noValueFallback: Constants.foodTemperatureInitial,
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodTemperatureValidator(context),
+        ),
+        initialValue: widget.foodSections[index].foodTemperature ??
+            Constants.foodTemperatureInitial,
+        onChanged: (val) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(foodTemperature: val);
+        },
+      ),
+    ];
+  }
+
   List<Widget> _buildBoxTypesPart(int index) {
     final formFieldKey = FormFieldType.boxType.createFormFieldKey(index);
     return [
@@ -302,6 +329,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     FoodInfo offeredFood,
     int index,
   ) {
+    final foodType = widget.foodSections[index].foodCategory?.type;
     return Column(
       key: ValueKey(offeredFood),
       children: [
@@ -330,11 +358,18 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         _buildGap(),
         ..._buildFoodCategoryPart(index),
         _buildGap(),
+        if (foodType == FoodCategoryType.warm)
+          Column(
+            children: [
+              ..._buildTemperaturePart(index),
+              _buildGap(),
+            ],
+          ),
         ..._buildBoxTypesPart(index),
         _buildGap(),
         ..._buildNumberOfServingsPart(index),
         _buildGap(),
-        if (widget.foodSections[index].foodCategory?.type == FoodCategoryType.cooled)
+        if (foodType == FoodCategoryType.cooled)
           Column(
             children: [
               ..._buildPreparedAtPart(index),

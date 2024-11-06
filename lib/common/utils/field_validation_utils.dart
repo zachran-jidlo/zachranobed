@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
@@ -108,6 +109,23 @@ class FieldValidationUtils {
     return (value) {
       if (value == null) {
         return context.l10n!.invalidFieldFoodCategory;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for food temperature field.
+  /// The validator checks if the value is in allowed range.
+  static String? Function(int?) getFoodTemperatureValidator(BuildContext context) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.requiredFieldError;
+      }
+      if (value < Constants.foodTemperatureMin) {
+        return context.l10n!.invalidFieldFoodTemperatureTooLow;
+      }
+      if (value > Constants.foodTemperatureMax) {
+        return context.l10n!.invalidFieldFoodTemperatureTooHigh;
       }
       return null;
     };

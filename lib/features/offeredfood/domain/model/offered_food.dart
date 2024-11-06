@@ -14,6 +14,7 @@ class OfferedFood with _$OfferedFood {
     required DateTime date,
     required String dishName,
     required String foodCategory,
+    required int? foodTemperature,
     required List<String> allergens,
     required int numberOfServings,
     required String boxType,

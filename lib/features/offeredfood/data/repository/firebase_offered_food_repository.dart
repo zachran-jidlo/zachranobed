@@ -178,6 +178,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
           consumeBy: element.consumeBy?.getDate(),
           foodBoxId: boxId,
           foodBoxCount: boxCount,
+          foodTemperature: element.foodTemperature,
         ),
       );
 

@@ -47,6 +47,11 @@ class Constants {
   // ZOB-234 Use shorter confirmation time for personal delivery
   static const pickupConfirmationTimeDefault = 45;
   static const pickupConfirmationTimePersonal = 20;
+
+  // ZOB-305 Food temperature related constants
+  static const foodTemperatureMin = 50;
+  static const foodTemperatureMax = 100;
+  static const foodTemperatureInitial = 68;
 }
 
 class WidgetStyle {

@@ -5,6 +5,7 @@ enum FormFieldType {
   foodName,
   allergens,
   foodCategory,
+  temperature,
   numberOfServings,
   numberOfBoxes,
   boxType,
