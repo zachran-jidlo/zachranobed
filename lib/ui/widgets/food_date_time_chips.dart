@@ -38,6 +38,9 @@ class FoodDateTimeChips extends StatelessWidget {
   /// is selected.
   final bool hasTime;
 
+  /// Lambda function to provide initial time for the time picker.
+  final DateTime? Function()? initialTime;
+
   /// Creates a [FoodDateTimeChips] widget.
   const FoodDateTimeChips({
     super.key,
@@ -46,6 +49,7 @@ class FoodDateTimeChips extends StatelessWidget {
     required this.options,
     required this.formatSelectedDate,
     this.hasTime = true,
+    this.initialTime,
     this.focusNode,
     this.onValidation,
   });
@@ -109,7 +113,8 @@ class FoodDateTimeChips extends StatelessWidget {
     switch (option.date) {
       case FoodDateTimeSpecified(date: final date):
         if (hasTime) {
-          final initial = state.value?.getDate() ?? DateTime.now();
+          final initial =
+              state.value?.getDate() ?? initialTime?.call() ?? DateTime.now();
           time = await DateTimePicker.pickTime(
             context: context,
             initial: TimeOfDay(

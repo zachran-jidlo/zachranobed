@@ -42,6 +42,9 @@ class ZOStrings {
 class Constants {
   static const lastWeekOfYear = 52;
 
+  /// The offset in minutes for "consume-by" field.
+  static const foodConsumeByMinutesOffset = 30;
+
   // ZOB-234 Use shorter confirmation time for personal delivery
   static const pickupConfirmationTimeDefault = 45;
   static const pickupConfirmationTimePersonal = 20;

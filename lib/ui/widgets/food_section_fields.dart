@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -213,7 +212,8 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           final now = DateTime.now();
           final date = await DateTimePicker.pickDateTime(
             context: context,
-            initial: widget.foodSections[index].consumeBy?.getDate() ?? now,
+            initial: widget.foodSections[index].consumeBy?.getDate() ??
+                _consumeByInitialTime(),
             minimum: now,
           );
 
@@ -240,6 +240,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
           FieldValidationUtils.getConsumeByValidator(context),
         ),
         formatSelectedDate: context.l10n!.consumeByTemplate,
+        initialTime: _consumeByInitialTime,
       ),
     ];
   }
@@ -348,5 +349,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
 
   Widget _buildGap() {
     return const SizedBox(height: GapSize.xl);
+  }
+
+  DateTime _consumeByInitialTime() {
+    const offset = Duration(minutes: Constants.foodConsumeByMinutesOffset);
+    return DateTime.now().add(offset);
   }
 }
