@@ -1,3 +1,4 @@
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
@@ -15,10 +16,18 @@ extension OfferedFoodMapper on MealDetailDto {
       allergens: allergens,
       numberOfServings: meal.count,
       boxType: boxType,
-      consumeBy: meal.consumeBy,
+      consumeBy: _getFoodDateTime(meal.consumeBy),
       donorId: delivery.donorId,
       recipientId: delivery.recipientId,
       numberOfBoxes: meal.foodBoxCount,
     );
+  }
+
+  FoodDateTime _getFoodDateTime(DateTime? date) {
+    if (date != null) {
+      return FoodDateTimeSpecified(date: date);
+    } else {
+      return FoodDateTimeOnPackaging();
+    }
   }
 }
