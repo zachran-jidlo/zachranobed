@@ -12,12 +12,12 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
-import 'package:zachranobed/ui/widgets/dropdown.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_chips.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/section_header.dart';
+import 'package:zachranobed/ui/widgets/single_select_chips.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
 class FoodSectionFields extends StatefulWidget {
@@ -99,29 +99,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     );
   }
 
-  Widget _buildDropdown({
-    required int index,
-    required FormFieldType type,
-    required final String hintText,
-    required final List<String> items,
-    required final String? Function(String?) onValidation,
-    required final Function(String) onChanged,
-    final String? initialValue,
-  }) {
-    final formFieldKey = type.createFormFieldKey(index);
-    return ZODropdown(
-      hintText: hintText,
-      items: items,
-      focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-      onValidation: widget.formValidationManager.wrapValidator(
-        formFieldKey,
-        onValidation,
-      ),
-      onChanged: onChanged,
-      initialValue: initialValue,
-    );
-  }
-
   List<Widget> _buildFoodNamePart(int index) {
     return [
       SectionHeader(
@@ -166,6 +143,59 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     ];
   }
 
+  List<Widget> _buildFoodCategoryPart(int index) {
+    final formFieldKey = FormFieldType.foodCategory.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.foodCategory,
+      ),
+      const SizedBox(height: GapSize.xs),
+      SingleSelectChips(
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodCategory.values
+            .map((e) => FoodCategoryHelper.toValue(e, context))
+            .toList(),
+        selection: widget.foodSections[index].foodCategory,
+        onSelectionChanged: (value) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(foodCategory: value);
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodCategoryValidator(context),
+        ),
+      )
+    ];
+  }
+
+  List<Widget> _buildBoxTypesPart(int index) {
+    final formFieldKey = FormFieldType.boxType.createFormFieldKey(index);
+    return [
+      SectionHeader(
+        text: context.l10n!.boxType,
+      ),
+      const SizedBox(height: GapSize.xs),
+      SingleSelectChips(
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: widget.boxTypes.map((type) => type.name).toList(),
+        selection: widget.boxTypes
+            .firstWhereOrNull(
+              (e) => e.id == widget.foodSections[index].foodBoxId,
+            )
+            ?.name,
+        onSelectionChanged: (value) {
+          final type = widget.boxTypes.firstWhereOrNull((e) => e.name == value);
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(foodBoxId: type?.id);
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getBoxTypeValidator(context),
+        ),
+      )
+    ];
+  }
+
   Widget _buildFoodSection(
     FoodInfo offeredFood,
     int index,
@@ -198,20 +228,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         _buildGap(),
         ..._buildFoodAllergensPart(index),
         _buildGap(),
-        _buildDropdown(
-          index: index,
-          type: FormFieldType.foodCategory,
-          hintText: context.l10n!.foodCategory,
-          items: FoodCategory.values
-              .map((e) => FoodCategoryHelper.toValue(e, context))
-              .toList(),
-          onValidation: FieldValidationUtils.getFoodCategoryValidator(context),
-          onChanged: (val) {
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWith(foodCategory: val);
-          },
-          initialValue: offeredFood.foodCategory,
-        ),
+        ..._buildFoodCategoryPart(index),
+        _buildGap(),
+        ..._buildBoxTypesPart(index),
         _buildGap(),
         _buildTextField(
           index: index,
@@ -266,22 +285,6 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
                 ],
               )
             : const SizedBox(),
-        _buildDropdown(
-          index: index,
-          type: FormFieldType.boxType,
-          hintText: context.l10n!.boxType,
-          items: widget.boxTypes.map((type) => type.name).toList(),
-          onValidation: FieldValidationUtils.getBoxTypeValidator(context),
-          onChanged: (val) {
-            final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWith(foodBoxId: type?.id);
-          },
-          initialValue: widget.boxTypes
-              .firstWhereOrNull((e) => e.id == offeredFood.foodBoxId)
-              ?.name,
-        ),
-        _buildGap(),
         ZODateTimePicker(
           label: context.l10n!.consumeBy,
           icon: MaterialSymbols.calendar_today,

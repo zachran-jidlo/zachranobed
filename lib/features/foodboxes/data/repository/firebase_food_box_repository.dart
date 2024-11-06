@@ -35,7 +35,9 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     final types = (await _foodBoxService.getAll()).where((element) {
       return includeDisposable || element.id != FoodBoxTypeDto.idDisposable;
     });
-    return types.map((e) => e.toDomain());
+    return types.map((e) => e.toDomain()).sorted((a, b) {
+      return _getSortOrder(a).compareTo(_getSortOrder(b));
+    });
   }
 
   @override
@@ -230,16 +232,18 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   /// Reusable box should go first, and IKEA boxes should follow.
   int _getSortOrder(FoodBoxType type) {
     switch (type.id) {
-      case FoodBoxTypeDto.idRekrabicka:
-        return 0;
-      case FoodBoxTypeDto.idIkeaLarge:
-        return 1;
-      case FoodBoxTypeDto.idIkeaSmall:
-        return 2;
       case FoodBoxTypeDto.idDisposable:
+        return 0;
+      case FoodBoxTypeDto.idRekrabicka:
+        return 1;
+      case FoodBoxTypeDto.idIkeaLarge:
+        return 2;
+      case FoodBoxTypeDto.idIkeaSmall:
         return 3;
+      case FoodBoxTypeDto.idOther:
+        return 4;
     }
-    return 4;
+    return 5;
   }
 
   /// The box count is always a positive integer, thus in some cases we need
