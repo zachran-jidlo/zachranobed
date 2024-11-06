@@ -67,10 +67,29 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 initialValue: offeredFood.boxType,
                 readOnly: true,
               ),
+              if (offeredFood.preparedAt != null)
+                Column(
+                  children: [
+                    _buildGap(),
+                    ZOTextField(
+                      label: context.l10n!.preparedAt,
+                      initialValue: _formatFoodDateTime(
+                        date: offeredFood.preparedAt!,
+                        dateOnPackaging: context.l10n!.preparedAtOnPackaging,
+                        withTime: false,
+                      ),
+                      readOnly: true,
+                    ),
+                  ],
+                ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.consumeBy,
-                initialValue: _formatConsumeBy(context, offeredFood.consumeBy),
+                initialValue: _formatFoodDateTime(
+                  date: offeredFood.consumeBy,
+                  dateOnPackaging: context.l10n!.consumeByOnPackaging,
+                  withTime: true,
+                ),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
@@ -94,12 +113,17 @@ class DonatedFoodDetailScreen extends StatelessWidget {
     return const SizedBox(height: GapSize.m);
   }
 
-  String _formatConsumeBy(BuildContext context, FoodDateTime date) {
+  String _formatFoodDateTime({
+    required FoodDateTime date,
+    required String dateOnPackaging,
+    required bool withTime,
+  }) {
     switch (date) {
       case FoodDateTimeSpecified():
-        return DateFormat('d.M.y HH:mm').format(date.date);
+        final format = withTime ? "d.M.y HH:mm" : "d.M.y";
+        return DateFormat(format).format(date.date);
       case FoodDateTimeOnPackaging():
-        return context.l10n!.consumeByOnPackaging;
+        return dateOnPackaging;
     }
   }
 }

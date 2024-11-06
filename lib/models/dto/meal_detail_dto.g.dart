@@ -12,6 +12,7 @@ MealDetailDto _$MealDetailDtoFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       donorId: json['donorId'] as String,
       foodCategory: json['foodCategory'] as String,
+      foodCategoryType: json['foodCategoryType'] as String?,
       allergens:
           (json['allergens'] as List<dynamic>).map((e) => e as String).toList(),
     );
@@ -22,5 +23,6 @@ Map<String, dynamic> _$MealDetailDtoToJson(MealDetailDto instance) =>
       'name': instance.name,
       'donorId': instance.donorId,
       'foodCategory': instance.foodCategory,
+      'foodCategoryType': instance.foodCategoryType,
       'allergens': instance.allergens,
     };

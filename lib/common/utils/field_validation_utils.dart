@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /// Provides utility methods for field validation.
@@ -99,12 +101,12 @@ class FieldValidationUtils {
   }
 
   /// Returns a validator for food category field.
-  /// The validator checks if the value is not empty.
-  static String? Function(String?) getFoodCategoryValidator(
+  /// The validator checks if the value is set.
+  static String? Function(FoodCategory?) getFoodCategoryValidator(
     BuildContext context,
   ) {
     return (value) {
-      if (!_isFilled(value)) {
+      if (value == null) {
         return context.l10n!.invalidFieldFoodCategory;
       }
       return null;
@@ -113,9 +115,24 @@ class FieldValidationUtils {
 
   /// Returns a validator for box type field.
   /// The validator checks if the value is not empty.
-  static String? Function(String?) getBoxTypeValidator(BuildContext context) {
+  static String? Function(String?) getBoxTypeByIdValidator(
+    BuildContext context,
+  ) {
     return (value) {
       if (!_isFilled(value)) {
+        return context.l10n!.invalidFieldBoxType;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for box type field.
+  /// The validator checks if the value is set.
+  static String? Function(FoodBoxType?) getBoxTypeValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
         return context.l10n!.invalidFieldBoxType;
       }
       return null;
@@ -156,6 +173,23 @@ class FieldValidationUtils {
       final now = DateTime.now();
       if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
         return context.l10n!.invalidFieldConsumeByDateInPast;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for prepared at field.
+  /// The validator checks if the value is set and date is not in the future.
+  static String? Function(FoodDateTime?) getPreparedAtValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.invalidFieldPreparedAt;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isAfter(now)) {
+        return context.l10n!.invalidFieldPreparedAtDateInPast;
       }
       return null;
     };

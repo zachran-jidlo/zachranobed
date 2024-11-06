@@ -162,17 +162,19 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
           id: id,
           name: element.dishName ?? "",
           donorId: delivery.donorId,
-          foodCategory: element.foodCategory ?? "",
+          foodCategory: element.foodCategory?.name ?? "",
+          foodCategoryType: element.foodCategory?.type.name ?? "",
           allergens: element.allergens ?? [],
         ),
       );
 
-      final boxId = element.foodBoxId ?? "";
+      final boxId = element.foodBoxType?.id ?? "";
       final boxCount = element.numberOfBoxes ?? element.numberOfServings ?? 0;
       meals.add(
         MealDto(
           mealId: id,
           count: element.numberOfServings ?? 0,
+          preparedAt: element.preparedAt?.getDate(),
           consumeBy: element.consumeBy?.getDate(),
           foodBoxId: boxId,
           foodBoxCount: boxCount,

@@ -63,7 +63,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         foodInfo.foodCategory != null ||
         foodInfo.numberOfServings != null ||
         foodInfo.numberOfBoxes != null ||
-        foodInfo.foodBoxId != null ||
+        foodInfo.foodBoxType != null ||
         foodInfo.consumeBy != null);
   }
 

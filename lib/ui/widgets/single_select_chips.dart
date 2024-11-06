@@ -9,21 +9,24 @@ import 'package:zachranobed/ui/widgets/form_field_error.dart';
 /// represented by chips. It uses [AssistChip] widgets to display the options
 /// and provides callbacks for handling selection changes and validation.
 /// Internally uses [FormField] for validation in [Form].
-class SingleSelectChips extends StatelessWidget {
+class SingleSelectChips <T> extends StatelessWidget {
   /// The currently selected chip, or null.
-  final String? selection;
+  final T? selection;
 
   /// Callback function triggered when the selection changes.
-  final Function(String?) onSelectionChanged;
+  final Function(T?) onSelectionChanged;
 
   /// The list of available options.
-  final List<String> options;
+  final List<T> options;
 
   /// Focus node for the widget.
   final FocusNode? focusNode;
 
   /// Signature for validating a form field.
-  final FormFieldValidator<String?>? onValidation;
+  final FormFieldValidator<T?>? onValidation;
+
+  /// Lambda function to format the option name.
+  final String Function(T) optionLabel;
 
   /// Creates a [SingleSelectChips] widget.
   const SingleSelectChips({
@@ -31,13 +34,14 @@ class SingleSelectChips extends StatelessWidget {
     required this.selection,
     required this.onSelectionChanged,
     required this.options,
+    required this.optionLabel,
     this.focusNode,
     this.onValidation,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FormField<String>(
+    return FormField<T>(
       initialValue: selection,
       validator: onValidation,
       builder: (state) {
@@ -53,7 +57,7 @@ class SingleSelectChips extends StatelessWidget {
                   runSpacing: GapSize.xs,
                   children: options.map((option) {
                     return AssistChip(
-                      text: option,
+                      text: optionLabel(option),
                       selected: option == state.value,
                       onPressed: () {
                         state.didChange(option);

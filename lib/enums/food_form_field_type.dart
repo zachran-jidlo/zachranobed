@@ -8,6 +8,7 @@ enum FormFieldType {
   numberOfServings,
   numberOfBoxes,
   boxType,
+  preparedAt,
   consumeBy,
 }
 

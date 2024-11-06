@@ -10,6 +10,8 @@
     "invalidFieldBoxNumber": "Napište číslem počet krabiček.",
     "invalidFieldBoxType": "Vyberte typ krabičky.",
     "invalidFieldServings": "Napište číslem počet pokrmů.",
+    "invalidFieldPreparedAt": "Zvolte datum výroby.",
+    "invalidFieldPreparedAtDateInPast": "Zvolte datum spotřeby v minulosti.",
     "invalidFieldConsumeBy": "Zvolte datum spotřeby.",
     "invalidFieldConsumeByDateInPast": "Zvolte datum spotřeby v budoucnu.",
     "invalidFieldEmail": "Zadali jste neplatnou e-mailovou adresu.",
@@ -57,6 +59,17 @@
     "numberOfServings": "Počet porcí",
     "boxType": "Typ krabičky",
     "box": "Typ krabičky",
+    "preparedAt": "Datum výroby",
+    "preparedAtOnPackaging": "Datum je uveden na obalu",
+    "preparedAtTemplate": "Datum a čas výroby: {dateTime}",
+    "@hello": {
+      "placeholders": {
+        "dateTime": {
+          "type": "String",
+          "example": "28.11.2024  20:00"
+        }
+      }
+    },
     "consumeBy": "Spotřebujte do",
     "consumeByOnPackaging": "Datum je uveden na obalu",
     "consumeByTemplate": "Datum a čas spotřeby: {dateTime}",
