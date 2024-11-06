@@ -30,16 +30,22 @@ def getKeystoreProperties(fileName) {
 }
 
 android {
+    namespace 'cz.zachranobed.app'
+
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    ndkVersion '27.2.12479018'
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        // Version 10+ of the flutter_local_notifications plugin is now relies on desugaring to support scheduled
+        // notifications with backwards compatibility on older versions of Android.
+        // https://pub.dev/packages/flutter_local_notifications#gradle-setup
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -100,4 +106,8 @@ flutter {
 }
 
 dependencies {
+    // Version 10+ of the flutter_local_notifications plugin is now relies on desugaring to support scheduled
+    // notifications with backwards compatibility on older versions of Android.
+    // https://pub.dev/packages/flutter_local_notifications#gradle-setup
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.2'
 }
