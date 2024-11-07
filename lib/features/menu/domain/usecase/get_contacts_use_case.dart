@@ -1,5 +1,6 @@
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 /// A use case for retrieving contact information.
 class GetContactsUseCase {
@@ -7,8 +8,8 @@ class GetContactsUseCase {
 
   GetContactsUseCase(this._repository);
 
-  /// Fetches available contacts for the user with given [entityId].
-  Future<ContactsSummary> invoke(String entityId) {
-    return _repository.getContacts(entityId: entityId);
+  /// Fetches available contacts for the [user].
+  Future<ContactsSummary> invoke(UserData user) {
+    return _repository.getContacts(user: user);
   }
 }

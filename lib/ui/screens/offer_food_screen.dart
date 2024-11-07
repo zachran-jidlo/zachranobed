@@ -30,9 +30,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _formValidationManager = FormValidationManager();
 
   final List<FoodInfo> _foodSections = [FoodInfo.withUuid()];
-  final List<TextEditingController> _consumeByControllers = [
-    TextEditingController()
-  ];
   final List<bool> _checkboxValues = [true];
   final List<FoodBoxType> _foodBoxTypes = [];
 
@@ -51,9 +48,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   @override
   void dispose() {
     _formValidationManager.dispose();
-    for (var controller in _consumeByControllers) {
-      controller.dispose();
-    }
     super.dispose();
   }
 
@@ -64,7 +58,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         foodInfo.foodCategory != null ||
         foodInfo.numberOfServings != null ||
         foodInfo.numberOfBoxes != null ||
-        foodInfo.foodBoxId != null ||
+        foodInfo.foodBoxType != null ||
         foodInfo.consumeBy != null);
   }
 
@@ -128,7 +122,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       FoodSectionFields(
                         formValidationManager: _formValidationManager,
                         foodSections: _foodSections,
-                        controllers: _consumeByControllers,
                         checkboxValues: _checkboxValues,
                         boxTypes: _foodBoxTypes,
                       ),
@@ -165,7 +158,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       onPressed: () {
         setState(() {
           _foodSections.add(FoodInfo.withUuid());
-          _consumeByControllers.add(TextEditingController());
           _checkboxValues.add(true);
         });
       },

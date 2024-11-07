@@ -8,51 +8,53 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i16;
-import 'package:flutter/material.dart' as _i17;
+import 'package:auto_route/auto_route.dart' as _i17;
+import 'package:flutter/material.dart' as _i18;
+import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart'
+    as _i3;
 import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart'
     as _i1;
-import 'package:zachranobed/features/debug/debug_screen.dart' as _i5;
+import 'package:zachranobed/features/debug/debug_screen.dart' as _i6;
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
-    as _i18;
+    as _i19;
 import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_detail_screen.dart'
     as _i2;
 import 'package:zachranobed/features/login/presentation/screen/login_screen.dart'
-    as _i9;
-import 'package:zachranobed/features/menu/presentation/contacts_screen.dart'
-    as _i4;
-import 'package:zachranobed/features/menu/presentation/menu_screen.dart'
     as _i10;
+import 'package:zachranobed/features/menu/presentation/contacts_screen.dart'
+    as _i5;
+import 'package:zachranobed/features/menu/presentation/menu_screen.dart'
+    as _i11;
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart'
-    as _i20;
+    as _i21;
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
-    as _i19;
+    as _i20;
 import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
-    as _i6;
-import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i3;
-import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i7;
-import 'package:zachranobed/ui/screens/home_screen.dart' as _i8;
-import 'package:zachranobed/ui/screens/offer_food_detail_screen.dart' as _i11;
-import 'package:zachranobed/ui/screens/offer_food_overview_screen.dart' as _i12;
-import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i13;
+    as _i7;
+import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i4;
+import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i8;
+import 'package:zachranobed/ui/screens/home_screen.dart' as _i9;
+import 'package:zachranobed/ui/screens/offer_food_detail_screen.dart' as _i12;
+import 'package:zachranobed/ui/screens/offer_food_overview_screen.dart' as _i13;
+import 'package:zachranobed/ui/screens/offer_food_screen.dart' as _i14;
 import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
-    as _i14;
-import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i15;
+    as _i15;
+import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i16;
 
-abstract class $AppRouter extends _i16.RootStackRouter {
+abstract class $AppRouter extends _i17.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i16.PageFactory> pagesMap = {
+  final Map<String, _i17.PageFactory> pagesMap = {
     AppTermsRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AppTermsScreen(),
       );
     },
     BoxMovementDetailRoute.name: (routeData) {
       final args = routeData.argsAs<BoxMovementDetailRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BoxMovementDetailScreen(
           key: args.key,
@@ -60,63 +62,69 @@ abstract class $AppRouter extends _i16.RootStackRouter {
         ),
       );
     },
-    ChangePasswordRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+    ChangeActivePairRoute.name: (routeData) {
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.ChangePasswordScreen(),
+        child: const _i3.ChangeActivePairScreen(),
+      );
+    },
+    ChangePasswordRoute.name: (routeData) {
+      return _i17.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.ChangePasswordScreen(),
       );
     },
     ContactsRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.ContactsScreen(),
+        child: const _i5.ContactsScreen(),
       );
     },
     DebugRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.DebugScreen(),
+        child: const _i6.DebugScreen(),
       );
     },
     DonatedFoodDetailRoute.name: (routeData) {
       final args = routeData.argsAs<DonatedFoodDetailRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.DonatedFoodDetailScreen(
+        child: _i7.DonatedFoodDetailScreen(
           key: args.key,
           offeredFood: args.offeredFood,
         ),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.ForgotPasswordScreen(),
+        child: const _i8.ForgotPasswordScreen(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.HomeScreen(),
+        child: const _i9.HomeScreen(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.LoginScreen(),
+        child: const _i10.LoginScreen(),
       );
     },
     MenuRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.MenuScreen(),
+        child: const _i11.MenuScreen(),
       );
     },
     OfferFoodDetailRoute.name: (routeData) {
       final args = routeData.argsAs<OfferFoodDetailRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.OfferFoodDetailScreen(
+        child: _i12.OfferFoodDetailScreen(
           key: args.key,
           editedFoodInfo: args.editedFoodInfo,
           allFoodInfos: args.allFoodInfos,
@@ -125,31 +133,31 @@ abstract class $AppRouter extends _i16.RootStackRouter {
     },
     OfferFoodOverviewRoute.name: (routeData) {
       final args = routeData.argsAs<OfferFoodOverviewRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i12.OfferFoodOverviewScreen(
+        child: _i13.OfferFoodOverviewScreen(
           key: args.key,
           foodInfos: args.foodInfos,
         ),
       );
     },
     OfferFoodRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.OfferFoodScreen(),
+        child: const _i14.OfferFoodScreen(),
       );
     },
     OrderShippingOfBoxesRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.OrderShippingOfBoxesScreen(),
+        child: const _i15.OrderShippingOfBoxesScreen(),
       );
     },
     ThankYouRoute.name: (routeData) {
       final args = routeData.argsAs<ThankYouRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i15.ThankYouScreen(
+        child: _i16.ThankYouScreen(
           key: args.key,
           isSuccess: args.isSuccess,
           message: args.message,
@@ -161,8 +169,8 @@ abstract class $AppRouter extends _i16.RootStackRouter {
 
 /// generated route for
 /// [_i1.AppTermsScreen]
-class AppTermsRoute extends _i16.PageRouteInfo<void> {
-  const AppTermsRoute({List<_i16.PageRouteInfo>? children})
+class AppTermsRoute extends _i17.PageRouteInfo<void> {
+  const AppTermsRoute({List<_i17.PageRouteInfo>? children})
       : super(
           AppTermsRoute.name,
           initialChildren: children,
@@ -170,17 +178,17 @@ class AppTermsRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'AppTermsRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.BoxMovementDetailScreen]
 class BoxMovementDetailRoute
-    extends _i16.PageRouteInfo<BoxMovementDetailRouteArgs> {
+    extends _i17.PageRouteInfo<BoxMovementDetailRouteArgs> {
   BoxMovementDetailRoute({
-    _i17.Key? key,
-    required _i18.BoxMovement boxMovement,
-    List<_i16.PageRouteInfo>? children,
+    _i18.Key? key,
+    required _i19.BoxMovement boxMovement,
+    List<_i17.PageRouteInfo>? children,
   }) : super(
           BoxMovementDetailRoute.name,
           args: BoxMovementDetailRouteArgs(
@@ -192,8 +200,8 @@ class BoxMovementDetailRoute
 
   static const String name = 'BoxMovementDetailRoute';
 
-  static const _i16.PageInfo<BoxMovementDetailRouteArgs> page =
-      _i16.PageInfo<BoxMovementDetailRouteArgs>(name);
+  static const _i17.PageInfo<BoxMovementDetailRouteArgs> page =
+      _i17.PageInfo<BoxMovementDetailRouteArgs>(name);
 }
 
 class BoxMovementDetailRouteArgs {
@@ -202,9 +210,9 @@ class BoxMovementDetailRouteArgs {
     required this.boxMovement,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i18.BoxMovement boxMovement;
+  final _i19.BoxMovement boxMovement;
 
   @override
   String toString() {
@@ -213,9 +221,23 @@ class BoxMovementDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i3.ChangePasswordScreen]
-class ChangePasswordRoute extends _i16.PageRouteInfo<void> {
-  const ChangePasswordRoute({List<_i16.PageRouteInfo>? children})
+/// [_i3.ChangeActivePairScreen]
+class ChangeActivePairRoute extends _i17.PageRouteInfo<void> {
+  const ChangeActivePairRoute({List<_i17.PageRouteInfo>? children})
+      : super(
+          ChangeActivePairRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangeActivePairRoute';
+
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i4.ChangePasswordScreen]
+class ChangePasswordRoute extends _i17.PageRouteInfo<void> {
+  const ChangePasswordRoute({List<_i17.PageRouteInfo>? children})
       : super(
           ChangePasswordRoute.name,
           initialChildren: children,
@@ -223,13 +245,13 @@ class ChangePasswordRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ChangePasswordRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.ContactsScreen]
-class ContactsRoute extends _i16.PageRouteInfo<void> {
-  const ContactsRoute({List<_i16.PageRouteInfo>? children})
+/// [_i5.ContactsScreen]
+class ContactsRoute extends _i17.PageRouteInfo<void> {
+  const ContactsRoute({List<_i17.PageRouteInfo>? children})
       : super(
           ContactsRoute.name,
           initialChildren: children,
@@ -237,13 +259,13 @@ class ContactsRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ContactsRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.DebugScreen]
-class DebugRoute extends _i16.PageRouteInfo<void> {
-  const DebugRoute({List<_i16.PageRouteInfo>? children})
+/// [_i6.DebugScreen]
+class DebugRoute extends _i17.PageRouteInfo<void> {
+  const DebugRoute({List<_i17.PageRouteInfo>? children})
       : super(
           DebugRoute.name,
           initialChildren: children,
@@ -251,17 +273,17 @@ class DebugRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'DebugRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i6.DonatedFoodDetailScreen]
+/// [_i7.DonatedFoodDetailScreen]
 class DonatedFoodDetailRoute
-    extends _i16.PageRouteInfo<DonatedFoodDetailRouteArgs> {
+    extends _i17.PageRouteInfo<DonatedFoodDetailRouteArgs> {
   DonatedFoodDetailRoute({
-    _i17.Key? key,
-    required _i19.OfferedFood offeredFood,
-    List<_i16.PageRouteInfo>? children,
+    _i18.Key? key,
+    required _i20.OfferedFood offeredFood,
+    List<_i17.PageRouteInfo>? children,
   }) : super(
           DonatedFoodDetailRoute.name,
           args: DonatedFoodDetailRouteArgs(
@@ -273,8 +295,8 @@ class DonatedFoodDetailRoute
 
   static const String name = 'DonatedFoodDetailRoute';
 
-  static const _i16.PageInfo<DonatedFoodDetailRouteArgs> page =
-      _i16.PageInfo<DonatedFoodDetailRouteArgs>(name);
+  static const _i17.PageInfo<DonatedFoodDetailRouteArgs> page =
+      _i17.PageInfo<DonatedFoodDetailRouteArgs>(name);
 }
 
 class DonatedFoodDetailRouteArgs {
@@ -283,9 +305,9 @@ class DonatedFoodDetailRouteArgs {
     required this.offeredFood,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i19.OfferedFood offeredFood;
+  final _i20.OfferedFood offeredFood;
 
   @override
   String toString() {
@@ -294,9 +316,9 @@ class DonatedFoodDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i7.ForgotPasswordScreen]
-class ForgotPasswordRoute extends _i16.PageRouteInfo<void> {
-  const ForgotPasswordRoute({List<_i16.PageRouteInfo>? children})
+/// [_i8.ForgotPasswordScreen]
+class ForgotPasswordRoute extends _i17.PageRouteInfo<void> {
+  const ForgotPasswordRoute({List<_i17.PageRouteInfo>? children})
       : super(
           ForgotPasswordRoute.name,
           initialChildren: children,
@@ -304,13 +326,13 @@ class ForgotPasswordRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.HomeScreen]
-class HomeRoute extends _i16.PageRouteInfo<void> {
-  const HomeRoute({List<_i16.PageRouteInfo>? children})
+/// [_i9.HomeScreen]
+class HomeRoute extends _i17.PageRouteInfo<void> {
+  const HomeRoute({List<_i17.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -318,13 +340,13 @@ class HomeRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.LoginScreen]
-class LoginRoute extends _i16.PageRouteInfo<void> {
-  const LoginRoute({List<_i16.PageRouteInfo>? children})
+/// [_i10.LoginScreen]
+class LoginRoute extends _i17.PageRouteInfo<void> {
+  const LoginRoute({List<_i17.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -332,13 +354,13 @@ class LoginRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.MenuScreen]
-class MenuRoute extends _i16.PageRouteInfo<void> {
-  const MenuRoute({List<_i16.PageRouteInfo>? children})
+/// [_i11.MenuScreen]
+class MenuRoute extends _i17.PageRouteInfo<void> {
+  const MenuRoute({List<_i17.PageRouteInfo>? children})
       : super(
           MenuRoute.name,
           initialChildren: children,
@@ -346,18 +368,18 @@ class MenuRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'MenuRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.OfferFoodDetailScreen]
+/// [_i12.OfferFoodDetailScreen]
 class OfferFoodDetailRoute
-    extends _i16.PageRouteInfo<OfferFoodDetailRouteArgs> {
+    extends _i17.PageRouteInfo<OfferFoodDetailRouteArgs> {
   OfferFoodDetailRoute({
-    _i17.Key? key,
-    required _i20.FoodInfo editedFoodInfo,
-    required List<_i20.FoodInfo> allFoodInfos,
-    List<_i16.PageRouteInfo>? children,
+    _i18.Key? key,
+    required _i21.FoodInfo editedFoodInfo,
+    required List<_i21.FoodInfo> allFoodInfos,
+    List<_i17.PageRouteInfo>? children,
   }) : super(
           OfferFoodDetailRoute.name,
           args: OfferFoodDetailRouteArgs(
@@ -370,8 +392,8 @@ class OfferFoodDetailRoute
 
   static const String name = 'OfferFoodDetailRoute';
 
-  static const _i16.PageInfo<OfferFoodDetailRouteArgs> page =
-      _i16.PageInfo<OfferFoodDetailRouteArgs>(name);
+  static const _i17.PageInfo<OfferFoodDetailRouteArgs> page =
+      _i17.PageInfo<OfferFoodDetailRouteArgs>(name);
 }
 
 class OfferFoodDetailRouteArgs {
@@ -381,11 +403,11 @@ class OfferFoodDetailRouteArgs {
     required this.allFoodInfos,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final _i20.FoodInfo editedFoodInfo;
+  final _i21.FoodInfo editedFoodInfo;
 
-  final List<_i20.FoodInfo> allFoodInfos;
+  final List<_i21.FoodInfo> allFoodInfos;
 
   @override
   String toString() {
@@ -394,13 +416,13 @@ class OfferFoodDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i12.OfferFoodOverviewScreen]
+/// [_i13.OfferFoodOverviewScreen]
 class OfferFoodOverviewRoute
-    extends _i16.PageRouteInfo<OfferFoodOverviewRouteArgs> {
+    extends _i17.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
-    _i17.Key? key,
-    required List<_i20.FoodInfo> foodInfos,
-    List<_i16.PageRouteInfo>? children,
+    _i18.Key? key,
+    required List<_i21.FoodInfo> foodInfos,
+    List<_i17.PageRouteInfo>? children,
   }) : super(
           OfferFoodOverviewRoute.name,
           args: OfferFoodOverviewRouteArgs(
@@ -412,8 +434,8 @@ class OfferFoodOverviewRoute
 
   static const String name = 'OfferFoodOverviewRoute';
 
-  static const _i16.PageInfo<OfferFoodOverviewRouteArgs> page =
-      _i16.PageInfo<OfferFoodOverviewRouteArgs>(name);
+  static const _i17.PageInfo<OfferFoodOverviewRouteArgs> page =
+      _i17.PageInfo<OfferFoodOverviewRouteArgs>(name);
 }
 
 class OfferFoodOverviewRouteArgs {
@@ -422,9 +444,9 @@ class OfferFoodOverviewRouteArgs {
     required this.foodInfos,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
-  final List<_i20.FoodInfo> foodInfos;
+  final List<_i21.FoodInfo> foodInfos;
 
   @override
   String toString() {
@@ -433,9 +455,9 @@ class OfferFoodOverviewRouteArgs {
 }
 
 /// generated route for
-/// [_i13.OfferFoodScreen]
-class OfferFoodRoute extends _i16.PageRouteInfo<void> {
-  const OfferFoodRoute({List<_i16.PageRouteInfo>? children})
+/// [_i14.OfferFoodScreen]
+class OfferFoodRoute extends _i17.PageRouteInfo<void> {
+  const OfferFoodRoute({List<_i17.PageRouteInfo>? children})
       : super(
           OfferFoodRoute.name,
           initialChildren: children,
@@ -443,13 +465,13 @@ class OfferFoodRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'OfferFoodRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.OrderShippingOfBoxesScreen]
-class OrderShippingOfBoxesRoute extends _i16.PageRouteInfo<void> {
-  const OrderShippingOfBoxesRoute({List<_i16.PageRouteInfo>? children})
+/// [_i15.OrderShippingOfBoxesScreen]
+class OrderShippingOfBoxesRoute extends _i17.PageRouteInfo<void> {
+  const OrderShippingOfBoxesRoute({List<_i17.PageRouteInfo>? children})
       : super(
           OrderShippingOfBoxesRoute.name,
           initialChildren: children,
@@ -457,17 +479,17 @@ class OrderShippingOfBoxesRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'OrderShippingOfBoxesRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i17.PageInfo<void> page = _i17.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i15.ThankYouScreen]
-class ThankYouRoute extends _i16.PageRouteInfo<ThankYouRouteArgs> {
+/// [_i16.ThankYouScreen]
+class ThankYouRoute extends _i17.PageRouteInfo<ThankYouRouteArgs> {
   ThankYouRoute({
-    _i17.Key? key,
+    _i18.Key? key,
     required bool isSuccess,
     required String message,
-    List<_i16.PageRouteInfo>? children,
+    List<_i17.PageRouteInfo>? children,
   }) : super(
           ThankYouRoute.name,
           args: ThankYouRouteArgs(
@@ -480,8 +502,8 @@ class ThankYouRoute extends _i16.PageRouteInfo<ThankYouRouteArgs> {
 
   static const String name = 'ThankYouRoute';
 
-  static const _i16.PageInfo<ThankYouRouteArgs> page =
-      _i16.PageInfo<ThankYouRouteArgs>(name);
+  static const _i17.PageInfo<ThankYouRouteArgs> page =
+      _i17.PageInfo<ThankYouRouteArgs>(name);
 }
 
 class ThankYouRouteArgs {
@@ -491,7 +513,7 @@ class ThankYouRouteArgs {
     required this.message,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
   final bool isSuccess;
 

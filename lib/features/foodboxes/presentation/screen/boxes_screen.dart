@@ -35,7 +35,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
     super.initState();
     final repository = GetIt.I<FoodBoxRepository>();
     _boxMovementCountFuture = repository.getMovementBoxesCount(
-      entityId: HelperService.getCurrentUser(context)!.entityId,
+      user: HelperService.getCurrentUser(context)!,
     );
   }
 

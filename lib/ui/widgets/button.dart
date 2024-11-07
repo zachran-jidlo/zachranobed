@@ -25,6 +25,7 @@ class ZOButton extends StatelessWidget {
       minimumSize: minimumSize,
       shape: const StadiumBorder(),
       textStyle: const TextStyle(fontSize: FontSize.xs),
+      elevation: 0.0,
     );
 
     if (icon != null) {

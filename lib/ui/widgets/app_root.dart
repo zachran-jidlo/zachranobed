@@ -79,6 +79,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               centerTitle: !kIsWeb && Platform.isIOS,
               scrolledUnderElevation: 0,
             ),
+            bottomSheetTheme: const BottomSheetThemeData(
+              showDragHandle: true,
+              dragHandleColor: ZOColors.outline,
+            ),
             drawerTheme: DrawerThemeData(
               backgroundColor: ZOColors.cardBackground,
               surfaceTintColor: ZOColors.primary,

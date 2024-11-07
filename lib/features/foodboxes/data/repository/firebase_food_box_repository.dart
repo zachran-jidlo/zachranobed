@@ -11,6 +11,7 @@ import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
 import 'package:zachranobed/models/dto/food_box_type_dto.dart';
+import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
 import 'package:zachranobed/services/food_box_service.dart';
@@ -34,32 +35,35 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     final types = (await _foodBoxService.getAll()).where((element) {
       return includeDisposable || element.id != FoodBoxTypeDto.idDisposable;
     });
-    return types.map((e) => e.toDomain());
+    return types.map((e) => e.toDomain()).sorted((a, b) {
+      return _getSortOrder(a).compareTo(_getSortOrder(b));
+    });
   }
 
   @override
-  Stream<Iterable<FoodBoxStatistics>> observeStatistics(
-      String entityId) async* {
+  Stream<Iterable<FoodBoxStatistics>> observeStatistics(UserData user) async* {
     // Prefetch types once before stream is started to not fetch them with
     // every change in the stream.
     final typesList = await getTypes();
     final typesMap = {for (final v in typesList) v.id: v};
+    final pairStream = _entityPairService.observePair(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+    );
 
-    yield* _entityPairService.observePairs(entityId).map((pairs) {
+    yield* pairStream.map((pair) {
       // Create accumulator map, as multiple pairs may have same food box types
       // and we would like to show aggregated statistics across all pairs.
       final Map<String, FoodBoxPairDto> boxesCountMap = {};
 
-      for (final pair in pairs) {
-        for (final foodBox in pair.foodboxes) {
-          final acc = boxesCountMap[foodBox.foodBoxId];
-          boxesCountMap[foodBox.foodBoxId] = FoodBoxPairDto(
-            foodBoxId: foodBox.foodBoxId,
-            count: (acc?.count ?? 0) + foodBox.count,
-            donorCount: (acc?.donorCount ?? 0) + foodBox.donorCount,
-            recipientCount: (acc?.recipientCount ?? 0) + foodBox.recipientCount,
-          );
-        }
+      for (final foodBox in pair?.foodboxes ?? <FoodBoxPairDto>[]) {
+        final acc = boxesCountMap[foodBox.foodBoxId];
+        boxesCountMap[foodBox.foodBoxId] = FoodBoxPairDto(
+          foodBoxId: foodBox.foodBoxId,
+          count: (acc?.count ?? 0) + foodBox.count,
+          donorCount: (acc?.donorCount ?? 0) + foodBox.donorCount,
+          recipientCount: (acc?.recipientCount ?? 0) + foodBox.recipientCount,
+        );
       }
 
       // Map accumulated values to domain instances
@@ -83,7 +87,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
 
   @override
   Stream<Iterable<BoxMovement>> observeHistory({
-    required String entityId,
+    required UserData user,
     required DateTime from,
     required DateTime to,
   }) async* {
@@ -91,10 +95,14 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     // every change in the stream.
     final typesList = await getTypes();
     final typesMap = {for (final v in typesList) v.id: v};
+    final deliveries = _deliveryService.observeDeliveries(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      from: from,
+      to: to,
+    );
 
-    yield* _deliveryService
-        .observeDeliveries(entityId, null, from, to)
-        .map((deliveries) {
+    yield* deliveries.map((deliveries) {
       final foodLists = deliveries.map((delivery) {
         // Map food-boxes with types to the BoxMovement
         return delivery.foodBoxes.mapNotNull((element) {
@@ -105,7 +113,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
           return element.toDomain(
             delivery: delivery,
             type: type,
-            isNegative: _shouldUseNegativeBoxCount(entityId, delivery),
+            isNegative: _shouldUseNegativeBoxCount(user.entityId, delivery),
           );
         });
       });
@@ -116,11 +124,11 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
 
   @override
   Future<bool> verifyAvailableBoxCount({
-    required String entityId,
+    required UserData user,
     required Map<String, int> requiredBoxes,
     required int Function(FoodBoxStatistics) getQuantity,
   }) async {
-    final statistics = await observeStatistics(entityId).first;
+    final statistics = await observeStatistics(user).first;
     final statisticsMap = {for (final s in statistics) s.type.id: s};
 
     for (final item in requiredBoxes.entries) {
@@ -142,9 +150,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
 
   @override
   Future<bool> createBoxDelivery({
-    required String entityId,
-    required String donorId,
-    required String carrierId,
+    required UserData user,
     required List<BoxInfo> boxInfo,
   }) async {
     final Map<String, int> foodBoxesCount = {};
@@ -157,9 +163,11 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       foodBoxesCount[foodBoxId] = (foodBoxesCount[foodBoxId] ?? 0) + required;
     }
 
+    final donorId = user.activePair.donorId;
+    final recipientId = user.activePair.recipientId;
     final moveBoxesSuccess = await _entityPairService.moveBoxesToDonor(
       donorId: donorId,
-      recipientId: entityId,
+      recipientId: recipientId,
       changeMap: foodBoxesCount,
     );
 
@@ -168,7 +176,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     }
 
     // Prepare delivery ID and check if any exists in Firebase
-    final id = '$entityId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
+    final id = '$recipientId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
     final delivery = await _deliveryService.getDeliveryById(id);
     if (delivery != null) {
       // Add to count map existing boxes count
@@ -191,8 +199,8 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       final newDelivery = DeliveryDto(
         id: id,
         donorId: donorId,
-        recipientId: entityId,
-        carrierId: carrierId,
+        recipientId: recipientId,
+        carrierId: user.activePair.carrierId,
         deliveryDate: DateTime.now(),
         foodBoxes: foodBoxes.toList(),
         meals: [],
@@ -206,9 +214,12 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   }
 
   @override
-  Future<int> getMovementBoxesCount({required String entityId}) async {
+  Future<int> getMovementBoxesCount({required UserData user}) async {
     final deliveries = await _deliveryService
-        .observeDeliveries(entityId, null, null, null)
+        .observeDeliveries(
+          donorId: user.activePair.donorId,
+          recipientId: user.activePair.recipientId,
+        )
         .first;
 
     return deliveries.fold<int>(0, (totalCount, delivery) {
@@ -221,16 +232,18 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   /// Reusable box should go first, and IKEA boxes should follow.
   int _getSortOrder(FoodBoxType type) {
     switch (type.id) {
-      case FoodBoxTypeDto.idRekrabicka:
-        return 0;
-      case FoodBoxTypeDto.idIkeaLarge:
-        return 1;
-      case FoodBoxTypeDto.idIkeaSmall:
-        return 2;
       case FoodBoxTypeDto.idDisposable:
+        return 0;
+      case FoodBoxTypeDto.idRekrabicka:
+        return 1;
+      case FoodBoxTypeDto.idIkeaLarge:
+        return 2;
+      case FoodBoxTypeDto.idIkeaSmall:
         return 3;
+      case FoodBoxTypeDto.idOther:
+        return 4;
     }
-    return 4;
+    return 5;
   }
 
   /// The box count is always a positive integer, thus in some cases we need

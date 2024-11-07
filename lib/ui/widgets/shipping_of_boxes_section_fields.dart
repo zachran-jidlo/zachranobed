@@ -76,7 +76,7 @@ class _ShippingOfBoxesSectionFieldsState
         ZODropdown(
           hintText: context.l10n!.boxType,
           items: widget.boxTypes.map((type) => type.name).toList(),
-          onValidation: FieldValidationUtils.getBoxTypeValidator(context),
+          onValidation: FieldValidationUtils.getBoxTypeByIdValidator(context),
           onChanged: (val) {
             final type = widget.boxTypes.firstWhereOrNull((e) => e.name == val);
             widget.shippingSections[index] =
