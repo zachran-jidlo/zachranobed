@@ -12,6 +12,7 @@ import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of available pairs and allows to change it.
 ///
@@ -41,27 +42,29 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n!.activePairCanteenTitle),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-      body: FutureBuilder(
-        future: _entityPairsSummaryFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _loading();
-          } else if (snapshot.hasError || snapshot.data == null) {
-            return _error(context);
-          }
-          return _entityPairs(snapshot.data!);
-        },
+    return ScreenScaffold.universal(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(context.l10n!.activePairCanteenTitle),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+        body: FutureBuilder(
+          future: _entityPairsSummaryFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _loading();
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return _error(context);
+            }
+            return _entityPairs(snapshot.data!);
+          },
+        ),
       ),
     );
   }
@@ -93,8 +96,7 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
                   return ZOButton(
                     text: context.l10n!.activePairCardSelectAction,
                     type: ZOButtonType.secondary,
-                    height: 40.0,
-                    fullWidth: false,
+                    minimumSize: ZOButtonSize.tiny(),
                     onPressed: () {
                       _changeActivePair.invoke(pair.donorId, pair.recipientId);
                       HelperService.updateActivePair(context, pair);

@@ -91,8 +91,7 @@ class OverviewScreen extends StatelessWidget {
             return ZOButton(
               text: context.l10n!.activePairCardChangeAction,
               type: ZOButtonType.secondary,
-              height: 40.0,
-              fullWidth: false,
+              minimumSize: ZOButtonSize.tiny(),
               onPressed: () {
                 context.router.push(const ChangeActivePairRoute());
               },
