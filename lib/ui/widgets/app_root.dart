@@ -55,6 +55,9 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
       ],
       builder: (context, child) {
         return MaterialApp.router(
+          // It is not possible to use AppLocalizations here, because it is not
+          // available yet. Therefore, the title is hardcoded.
+          title: "Zachraň oběd",
           routerConfig: _appRouter.config(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
