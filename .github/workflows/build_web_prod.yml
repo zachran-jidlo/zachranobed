@@ -20,10 +20,14 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build web
-        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web/" --dart-define=FLUTTER_APP_FLAVOR=prod
+        run: flutter build web --release --no-tree-shake-icons --base-href "." --dart-define=FLUTTER_APP_FLAVOR=prod
 
       - name: Publish to GitHub Pages
         uses: ./.github/actions/publish-web
         with:
           token: ${{ secrets.WEB_GITHUB_TOKEN }}
           repository: 'zachran-jidlo/zachranobed-web'
+
+      # Creates a CNAME file for custom domain configuration
+      - name: Create CNAME file
+        run: echo "app.zachranobed.cz" > build/web/CNAME
