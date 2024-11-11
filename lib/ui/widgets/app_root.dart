@@ -74,6 +74,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
             appBarTheme: const AppBarTheme(
               scrolledUnderElevation: 0,
             ),
+            bottomSheetTheme: const BottomSheetThemeData(
+              showDragHandle: true,
+              dragHandleColor: ZOColors.outline,
+            ),
           ),
         );
       },

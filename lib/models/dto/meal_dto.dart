@@ -13,16 +13,21 @@ class MealDto {
   final String mealId;
   final int count;
   @TimestampConverter()
-  final DateTime consumeBy;
+  final DateTime? preparedAt;
+  @TimestampConverter()
+  final DateTime? consumeBy;
   final String foodBoxId;
   final int foodBoxCount;
+  final int? foodTemperature;
 
   MealDto({
     required this.mealId,
     required this.count,
+    required this.preparedAt,
     required this.consumeBy,
     required this.foodBoxId,
     required this.foodBoxCount,
+    required this.foodTemperature,
   });
 
   factory MealDto.fromJson(Map<String, dynamic> json) =>

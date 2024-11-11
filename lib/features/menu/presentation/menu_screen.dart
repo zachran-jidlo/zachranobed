@@ -72,7 +72,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 onPressed: () => context.router.push(const ContactsRoute()),
               ),
               const SizedBox(height: GapSize.m),
-              MenuSection(
+              MenuSection.simple(
                 label: context.l10n!.settings,
                 menuItems: [
                   MenuItem(
@@ -83,7 +83,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   )
                 ],
               ),
-              MenuSection(
+              MenuSection.simple(
                 label: context.l10n!.saveLunch,
                 menuItems: [
                   MenuItem(
@@ -111,7 +111,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ],
               ),
-              MenuSection(
+              MenuSection.simple(
                 label: context.l10n!.more,
                 menuItems: [
                   MenuItem(

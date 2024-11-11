@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
@@ -48,6 +49,17 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 initialValue: offeredFood.foodCategory,
                 readOnly: true,
               ),
+              if (offeredFood.foodTemperature != null)
+                Column(
+                  children: [
+                    _buildGap(),
+                    ZOTextField(
+                      label: context.l10n!.foodTemperatureWithCelsius,
+                      initialValue: offeredFood.foodTemperature?.toString(),
+                      readOnly: true,
+                    ),
+                  ],
+                ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.numberOfServings,
@@ -66,11 +78,29 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 initialValue: offeredFood.boxType,
                 readOnly: true,
               ),
+              if (offeredFood.preparedAt != null)
+                Column(
+                  children: [
+                    _buildGap(),
+                    ZOTextField(
+                      label: context.l10n!.preparedAt,
+                      initialValue: _formatFoodDateTime(
+                        date: offeredFood.preparedAt!,
+                        dateOnPackaging: context.l10n!.preparedAtOnPackaging,
+                        withTime: false,
+                      ),
+                      readOnly: true,
+                    ),
+                  ],
+                ),
               _buildGap(),
               ZOTextField(
                 label: context.l10n!.consumeBy,
-                initialValue:
-                    DateFormat('d.M.y HH:mm').format(offeredFood.consumeBy),
+                initialValue: _formatFoodDateTime(
+                  date: offeredFood.consumeBy,
+                  dateOnPackaging: context.l10n!.consumeByOnPackaging,
+                  withTime: true,
+                ),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
@@ -92,5 +122,19 @@ class DonatedFoodDetailScreen extends StatelessWidget {
 
   Widget _buildGap() {
     return const SizedBox(height: GapSize.m);
+  }
+
+  String _formatFoodDateTime({
+    required FoodDateTime date,
+    required String dateOnPackaging,
+    required bool withTime,
+  }) {
+    switch (date) {
+      case FoodDateTimeSpecified():
+        final format = withTime ? "d.M.y HH:mm" : "d.M.y";
+        return DateFormat(format).format(date.date);
+      case FoodDateTimeOnPackaging():
+        return dateOnPackaging;
+    }
   }
 }

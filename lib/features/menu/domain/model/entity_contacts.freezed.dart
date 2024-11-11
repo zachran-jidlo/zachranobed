@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$EntityContacts {
   String get name => throw _privateConstructorUsedError;
+  bool get active => throw _privateConstructorUsedError;
   List<Contact> get contacts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +31,7 @@ abstract class $EntityContactsCopyWith<$Res> {
           EntityContacts value, $Res Function(EntityContacts) then) =
       _$EntityContactsCopyWithImpl<$Res, EntityContacts>;
   @useResult
-  $Res call({String name, List<Contact> contacts});
+  $Res call({String name, bool active, List<Contact> contacts});
 }
 
 /// @nodoc
@@ -47,6 +48,7 @@ class _$EntityContactsCopyWithImpl<$Res, $Val extends EntityContacts>
   @override
   $Res call({
     Object? name = null,
+    Object? active = null,
     Object? contacts = null,
   }) {
     return _then(_value.copyWith(
@@ -54,6 +56,10 @@ class _$EntityContactsCopyWithImpl<$Res, $Val extends EntityContacts>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
       contacts: null == contacts
           ? _value.contacts
           : contacts // ignore: cast_nullable_to_non_nullable
@@ -70,7 +76,7 @@ abstract class _$$$EntityContactsImplCopyWith<$Res>
       __$$$EntityContactsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, List<Contact> contacts});
+  $Res call({String name, bool active, List<Contact> contacts});
 }
 
 /// @nodoc
@@ -85,6 +91,7 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? active = null,
     Object? contacts = null,
   }) {
     return _then(_$$EntityContactsImpl(
@@ -92,6 +99,10 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
       contacts: null == contacts
           ? _value._contacts
           : contacts // ignore: cast_nullable_to_non_nullable
@@ -104,11 +115,15 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
 
 class _$$EntityContactsImpl implements $EntityContacts {
   const _$$EntityContactsImpl(
-      {required this.name, required final List<Contact> contacts})
+      {required this.name,
+      required this.active,
+      required final List<Contact> contacts})
       : _contacts = contacts;
 
   @override
   final String name;
+  @override
+  final bool active;
   final List<Contact> _contacts;
   @override
   List<Contact> get contacts {
@@ -119,7 +134,7 @@ class _$$EntityContactsImpl implements $EntityContacts {
 
   @override
   String toString() {
-    return 'EntityContacts(name: $name, contacts: $contacts)';
+    return 'EntityContacts(name: $name, active: $active, contacts: $contacts)';
   }
 
   @override
@@ -128,12 +143,13 @@ class _$$EntityContactsImpl implements $EntityContacts {
         (other.runtimeType == runtimeType &&
             other is _$$EntityContactsImpl &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.active, active) || other.active == active) &&
             const DeepCollectionEquality().equals(other._contacts, _contacts));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, const DeepCollectionEquality().hash(_contacts));
+  int get hashCode => Object.hash(runtimeType, name, active,
+      const DeepCollectionEquality().hash(_contacts));
 
   @JsonKey(ignore: true)
   @override
@@ -146,10 +162,13 @@ class _$$EntityContactsImpl implements $EntityContacts {
 abstract class $EntityContacts implements EntityContacts {
   const factory $EntityContacts(
       {required final String name,
+      required final bool active,
       required final List<Contact> contacts}) = _$$EntityContactsImpl;
 
   @override
   String get name;
+  @override
+  bool get active;
   @override
   List<Contact> get contacts;
   @override

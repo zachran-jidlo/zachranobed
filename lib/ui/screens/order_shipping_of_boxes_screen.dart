@@ -174,7 +174,7 @@ class _OrderShippingOfBoxesScreenState
     }
 
     final available = await _foodBoxRepository.verifyAvailableBoxCount(
-      entityId: user.entityId,
+      user: user,
       requiredBoxes: requiredBoxes,
       getQuantity: (e) => e.quantityAtCharity,
     );
@@ -194,13 +194,8 @@ class _OrderShippingOfBoxesScreenState
       return false;
     }
 
-    final donorId = user.donorIds.first;
-    final carrierId = user.carrierIds.first;
-
     return _foodBoxRepository.createBoxDelivery(
-      entityId: user.entityId,
-      donorId: donorId,
-      carrierId: carrierId,
+      user: user,
       boxInfo: _shippingOfBoxesSections,
     );
   }

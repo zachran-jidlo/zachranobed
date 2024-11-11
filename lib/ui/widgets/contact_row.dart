@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/ui/widgets/card_row.dart';
 
 /// A widget that displays contact information, including name, optional phone
 /// number, and whether the contact is a preferred contact. If contact can be
@@ -31,70 +32,15 @@ class ContactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: ZOColors.cardBackground,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: WidgetStyle.padding,
-          vertical: WidgetStyle.paddingSmall,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: _rowContent(context),
-            ),
-            _actionContent(),
-          ],
-        ),
-      ),
+    return CardRow(
+      label: isPreferred ? context.l10n!.contactsPreferredLabel : null,
+      title: name,
+      subtitle: _subtitleContent,
+      action: _actionContent,
     );
   }
 
-  Widget _rowContent(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (isPreferred)
-          Column(
-            children: [
-              Text(
-                context.l10n!.contactsPreferredLabel,
-                style: textTheme.labelMedium?.copyWith(
-                  color: ZOColors.onPrimaryLight,
-                ),
-              ),
-              const SizedBox(height: 4),
-            ],
-          ),
-        Text(
-          name,
-          style: textTheme.titleMedium,
-        ),
-        const SizedBox(height: 4),
-        if (phoneNumber != null)
-          Text(
-            phoneNumber ?? "",
-            style: textTheme.bodyMedium?.copyWith(
-              color: ZOColors.onPrimaryLight,
-            ),
-          )
-        else
-          Text(
-            context.l10n!.contactsNoPhoneLabel,
-            style: textTheme.bodyMedium?.copyWith(
-              color: ZOColors.outline,
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _actionContent() {
+  Widget _actionContent(BuildContext context) {
     return FutureBuilder(
       future: _canCall,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -110,6 +56,25 @@ class ContactRow extends StatelessWidget {
         return const SizedBox();
       },
     );
+  }
+
+  Widget _subtitleContent(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    if (phoneNumber != null) {
+      return Text(
+        phoneNumber ?? "",
+        style: textTheme.bodyMedium?.copyWith(
+          color: ZOColors.onPrimaryLight,
+        ),
+      );
+    } else {
+      return Text(
+        context.l10n!.contactsNoPhoneLabel,
+        style: textTheme.bodyMedium?.copyWith(
+          color: ZOColors.outline,
+        ),
+      );
+    }
   }
 
   void _dialUpNumber() async {

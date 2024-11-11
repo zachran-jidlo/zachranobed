@@ -12,6 +12,7 @@ class MealDetailDto {
   final String name;
   final String donorId;
   final String foodCategory;
+  final String? foodCategoryType;
   final List<String> allergens;
 
   MealDetailDto({
@@ -19,6 +20,7 @@ class MealDetailDto {
     required this.name,
     required this.donorId,
     required this.foodCategory,
+    required this.foodCategoryType,
     required this.allergens,
   });
 

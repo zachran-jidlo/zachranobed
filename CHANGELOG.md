@@ -2,6 +2,28 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.3.0]
+### Added
+- **ZOB-189** Add multi-pair support for Charity.
+
+### Fixed
+- **ZOB-72** Add scroll padding for password field.
+- **ZOB-113** Lock Android for portrait screen orientation in Manifest.
+- **ZOB-219** Add validation for consume-by date.
+- **ZOB-305** Add temperature field for warm meals.
+
+### Changed
+- **ZOB-161** Update e-mail address for feedback.
+- **ZOB-296** Update allergens UI in food offer form.
+- **ZOB-298** Update food categories and box types UI in food offer form.
+- **ZOB-300** Update consume-by UI in food offer form.
+- **ZOB-301** Add "prepared-at" field for cooled meals.
+- **ZOB-302** Add counter field for number of servings and number of boxes.
+- **ZOB-304** Update assist chip and error UI.
+
+### Removed
+- **ZOB-295** Remove updating delivery state to NOT_USED from application.
+
 ## [1.2.1]
 ### Changed
 - **ZOB-283** Update strings related to shipping boxes from charity.

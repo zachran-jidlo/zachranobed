@@ -34,9 +34,6 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
-  final List<TextEditingController> _consumeByControllers = [
-    TextEditingController()
-  ];
   late List<bool> _checkboxValues;
   final List<FoodBoxType> _foodBoxTypes = [];
 
@@ -85,11 +82,11 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                 key: _formKey,
                 child: Column(children: [
                   FoodSectionFields(
-                      formValidationManager: _formValidationManager,
-                      foodSections: foodSections,
-                      controllers: _consumeByControllers,
-                      checkboxValues: _checkboxValues,
-                      boxTypes: _foodBoxTypes),
+                    formValidationManager: _formValidationManager,
+                    foodSections: foodSections,
+                    checkboxValues: _checkboxValues,
+                    boxTypes: _foodBoxTypes,
+                  ),
                   const SizedBox(height: GapSize.m),
                   ZOButton(
                     text: context.l10n!.offerFoodDetailSaveButton,

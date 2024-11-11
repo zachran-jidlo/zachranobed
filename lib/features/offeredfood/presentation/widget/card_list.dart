@@ -23,7 +23,7 @@ class CardList extends StatelessWidget {
             Expanded(
               child: ZOCard(
                 measuredValue:
-                    repository.getSavedMealsCount(entityId: user.entityId),
+                    repository.getSavedMealsCount(user: user),
                 metricsText: context.l10n!.savedLunches,
                 periodText: context.l10n!.total,
               ),
@@ -32,7 +32,7 @@ class CardList extends StatelessWidget {
             Expanded(
               child: ZOCard(
                 measuredValue: repository.getSavedMealsCount(
-                  entityId: user.entityId,
+                  user: user,
                   timePeriod: 30,
                 ),
                 metricsText: context.l10n!.savedLunches,

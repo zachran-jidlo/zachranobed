@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -104,12 +105,30 @@ class Notifications {
 
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
+    if (Platform.isIOS) {
+      await _firebaseMessaging.getAPNSToken();
+    }
+
     final fCMToken = await _firebaseMessaging.getToken();
     final user = await _authService.getUserData();
+
+    ZOLogger.logMessage('FCM token: $fCMToken');
     if (user == null) {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
     }
     _entityService.saveFCMToken(user.entityId, fCMToken);
+  }
+
+  /// Listens to token refresh events and saves the new token to the database.
+  void listenToTokenRefresh() {
+    _firebaseMessaging.onTokenRefresh.listen((token) async {
+      final user = await _authService.getUserData();
+      if (user == null) {
+        ZOLogger.logMessage("User is not logged in, nothing to update");
+        return;
+      }
+      _entityService.saveFCMToken(user.entityId, token);
+    });
   }
 }

@@ -11,7 +11,6 @@ import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 class DonationCountdownTimer extends StatefulWidget {
-
   final Delivery delivery;
 
   const DonationCountdownTimer({
@@ -66,9 +65,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
       _ticker?.dispose();
 
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        context
-            .read<DeliveryNotifier>()
-            .cancelCurrentDelivery();
+        context.read<DeliveryNotifier>().refreshDelivery();
       });
     }
   }

@@ -41,7 +41,7 @@ class BoxMovementList extends StatelessWidget {
         const SizedBox(height: GapSize.xs),
         StreamBuilder<Iterable<BoxMovement>>(
           stream: _repository.observeHistory(
-            entityId: HelperService.getCurrentUser(context)!.entityId,
+            user: HelperService.getCurrentUser(context)!,
             from: deliveredFrom,
             to: deliveredTo,
           ),
