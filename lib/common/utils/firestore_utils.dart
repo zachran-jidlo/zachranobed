@@ -17,7 +17,13 @@ extension QueryUtils<T> on Query<T> {
 extension CollectionReferenceUtils<T> on CollectionReference<T> {
   /// Fetches a list of [T] objects for the given document IDs.
   Future<List<T>> fetchMultipleDocs<V>(List<String> ids) async {
-    final snapshot = await where(FieldPath.documentId, whereIn: ids).get();
-    return snapshot.docs.mapNotNull((e) => e.data()).toList();
+    // Firestore does not allow more than 30 "in" clauses, so we need to split
+    // the list of IDs into chunks of 30.
+    final List<T> results = [];
+    for (var batch in ids.chunked(30)) {
+      final snapshot = await where(FieldPath.documentId, whereIn: batch).get();
+      results.addAll(snapshot.docs.mapNotNull((e) => e.data()).toList());
+    }
+    return results;
   }
 }

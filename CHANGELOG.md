@@ -2,6 +2,10 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.4.0]
+### Fixed
+- **ZOB-275** Fix error when there are more than 30 meals in delivery.
+
 ## [1.3.0]
 ### Added
 - **ZOB-189** Add multi-pair support for Charity.
