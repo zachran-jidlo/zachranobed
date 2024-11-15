@@ -51,7 +51,9 @@ class ZOButton extends StatelessWidget {
 enum ZOButtonType {
   primary(ZOColors.primary, ZOColors.onPrimary),
   secondary(ZOColors.secondary, ZOColors.onSecondary),
-  success(ZOColors.success, ZOColors.onSuccess);
+  tertiary(Colors.white, ZOColors.onPrimaryLight),
+  success(ZOColors.success, ZOColors.onSuccess),
+  cancel(Colors.white, ZOColors.primary);
 
   const ZOButtonType(this.backgroundColor, this.foregroundColor);
 

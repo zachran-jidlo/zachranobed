@@ -8,7 +8,6 @@ import 'package:zachranobed/features/foodboxes/domain/repository/food_box_reposi
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
@@ -124,12 +123,14 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                               _onConfirmationButtonPressed(foodSections.first);
                             },
                           ),
-                          const SizedBox.square(dimension: GapSize.m),
-                          ZOClickableText(
-                            clickableText: context.l10n!.cancel,
-                            underline: false,
-                            color: ZOColors.primary,
-                            onTap: () {
+                          const SizedBox.square(dimension: GapSize.xs),
+                          ZOButton(
+                            text: context.l10n!.cancel,
+                            type: ZOButtonType.cancel,
+                            minimumSize: ZOButtonSize.large(
+                              fullWidth: actionButtonsAxis == Axis.vertical,
+                            ),
+                            onPressed: () {
                               Navigator.pop(context);
                             },
                           ),

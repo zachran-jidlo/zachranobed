@@ -13,7 +13,6 @@ import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/clickable_text.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
@@ -142,20 +141,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
+                  const SizedBox(height: 6),
+                  ZOButton(
+                    text: context.l10n!.forgotPassword,
+                    type: ZOButtonType.tertiary,
+                    onPressed: () {
+                      context.router.push(const ForgotPasswordRoute());
+                    },
+                  ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: GapSize.xs),
-          ZOClickableText(
-            clickableText: context.l10n!.forgotPassword,
-            color: ZOColors.onPrimaryLight,
-            underline: false,
-            onTap: () {
-              context.router.push(const ForgotPasswordRoute());
-            },
-          ),
-          const SizedBox(height: 30),
         ],
       ),
     );
