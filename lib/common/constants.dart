@@ -34,6 +34,7 @@ class ZOStrings {
 
   static const zoLogoPath = 'assets/zo-logo.svg';
   static const foodImagePath = 'assets/food-image.png';
+  static const foodImageBackgroundPath = 'assets/food-image-background.png';
   static const chefEmptyPath = 'assets/chef-empty.svg';
   static const boxEmptyPath = 'assets/box-empty.svg';
   static const certificationCheckPath = 'assets/certification_check.svg';
@@ -55,6 +56,22 @@ class Constants {
   static const foodTemperatureMin = 50;
   static const foodTemperatureMax = 100;
   static const foodTemperatureInitial = 68;
+}
+
+/// A class that defines layout constants.
+class LayoutStyle {
+  LayoutStyle._();
+
+  /// The breakpoint for screen layouts. If the web screen width is greater
+  /// than this value, the web layout is used. Otherwise, the mobile layout
+  /// is used.
+  static const webBreakpoint = 740;
+
+  /// The fixed width of login form in wide web layout.
+  static const loginFormWidth = 530;
+
+  /// The fixed width of the navigation drawer in wide web layout.
+  static const navigationDrawerSize = 244;
 }
 
 class WidgetStyle {

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
@@ -68,15 +71,23 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               primaryContainer: ZOColors.secondary,
             ),
             scaffoldBackgroundColor: Colors.white,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+            visualDensity: VisualDensity.standard,
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            appBarTheme: const AppBarTheme(
+            appBarTheme: AppBarTheme(
+              // Center title only for iOS platform
+              centerTitle: !kIsWeb && Platform.isIOS,
               scrolledUnderElevation: 0,
             ),
             bottomSheetTheme: const BottomSheetThemeData(
               showDragHandle: true,
               dragHandleColor: ZOColors.outline,
+            ),
+            drawerTheme: DrawerThemeData(
+              backgroundColor: ZOColors.cardBackground,
+              surfaceTintColor: ZOColors.primary,
+              shape: const Border(),
+              width: LayoutStyle.navigationDrawerSize.toDouble(),
             ),
           ),
         );
