@@ -80,7 +80,7 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
     const filteredQuery = query(
       collectionRef,
       where('deliveryDate', '>=', startDate),
-      where('deliveryDate', '<=', endDate)
+      where('deliveryDate', '<', endDate)
     );
     const snapshot = await getDocs(filteredQuery);
 
