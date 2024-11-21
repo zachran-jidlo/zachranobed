@@ -12,6 +12,7 @@ import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_section_fields.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
@@ -29,9 +30,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   final _formValidationManager = FormValidationManager();
 
   final List<FoodInfo> _foodSections = [FoodInfo.withUuid()];
-  final List<TextEditingController> _consumeByControllers = [
-    TextEditingController()
-  ];
   final List<bool> _checkboxValues = [true];
   final List<FoodBoxType> _foodBoxTypes = [];
 
@@ -50,9 +48,6 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
   @override
   void dispose() {
     _formValidationManager.dispose();
-    for (var controller in _consumeByControllers) {
-      controller.dispose();
-    }
     super.dispose();
   }
 
@@ -63,7 +58,7 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
         foodInfo.foodCategory != null ||
         foodInfo.numberOfServings != null ||
         foodInfo.numberOfBoxes != null ||
-        foodInfo.foodBoxId != null ||
+        foodInfo.foodBoxType != null ||
         foodInfo.consumeBy != null);
   }
 
@@ -87,6 +82,19 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenScaffold(
+      web: (context) => _offerFoodScreenContent(useWideButton: false),
+      mobile: (context) => _offerFoodScreenContent(useWideButton: true),
+    );
+  }
+
+  /// Builds the content of the offer food screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch confirmation
+  /// button to screen width.
+  Widget _offerFoodScreenContent({
+    required bool useWideButton,
+  }) {
     return WillPopScope(
       onWillPop: _showConfirmationDialog,
       child: Scaffold(
@@ -114,38 +122,21 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
                       FoodSectionFields(
                         formValidationManager: _formValidationManager,
                         foodSections: _foodSections,
-                        controllers: _consumeByControllers,
                         checkboxValues: _checkboxValues,
                         boxTypes: _foodBoxTypes,
                       ),
                       _addAnotherFoodButton(),
                       const SizedBox(height: GapSize.xxl),
-                      ZOButton(
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ZOButton(
                           text: context.l10n!.continueTheOffer,
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (await _foodSections.verifyAvailableBoxCount(
-                                  context, _foodBoxRepository)) {
-                                if (mounted) {
-                                  context.router.navigate(
-                                    OfferFoodOverviewRoute(
-                                        foodInfos: _foodSections),
-                                  );
-                                }
-                              } else {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    ZOTemporarySnackBar(
-                                      backgroundColor: Colors.red,
-                                      message: context.l10n!.boxCountError,
-                                    ),
-                                  );
-                                }
-                              }
-                            } else {
-                              _formValidationManager.scrollToFirstError();
-                            }
-                          }),
+                          minimumSize: ZOButtonSize.large(
+                            fullWidth: useWideButton,
+                          ),
+                          onPressed: _onConfirmationButtonPressed,
+                        ),
+                      ),
                       const SizedBox(height: GapSize.l),
                     ],
                   ),
@@ -163,14 +154,37 @@ class _OfferFoodScreenState extends State<OfferFoodScreen> {
       text: context.l10n!.addAnotherFood,
       icon: MaterialSymbols.add,
       type: ZOButtonType.secondary,
-      height: 40.0,
+      minimumSize: ZOButtonSize.medium(),
       onPressed: () {
         setState(() {
           _foodSections.add(FoodInfo.withUuid());
-          _consumeByControllers.add(TextEditingController());
           _checkboxValues.add(true);
         });
       },
     );
+  }
+
+  void _onConfirmationButtonPressed() async {
+    if (_formKey.currentState!.validate()) {
+      if (await _foodSections.verifyAvailableBoxCount(
+          context, _foodBoxRepository)) {
+        if (mounted) {
+          context.router.navigate(
+            OfferFoodOverviewRoute(foodInfos: _foodSections),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            ZOTemporarySnackBar(
+              backgroundColor: Colors.red,
+              message: context.l10n!.boxCountError,
+            ),
+          );
+        }
+      }
+    } else {
+      _formValidationManager.scrollToFirstError();
+    }
   }
 }

@@ -2,16 +2,45 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.4.0]
+### Added
+- **ZOB-278** Add web navigation drawer.
+
+### Fixed
+
+### Changed
+- **ZOB-273** Adjust web layout for login screen.
+- **ZOB-286** Adjust web layout for delivery info banner.
+- **ZOB-287** Update image for login background.
+- **ZOB-288** Adjust web layout for profile, contacts, change password and debug screens.
+- **ZOB-289** Adjust web layout for detail and form screens.
+- **ZOB-290** Adjust web layout for thank you screen.
+- **ZOB-291** Adjust web layout for app terms screen.
+- **ZOB-307** Update web metadata.
+
+### Removed
+
 ## [1.3.0]
 ### Added
+- **ZOB-189** Add multi-pair support for Charity.
 
 ### Fixed
 - **ZOB-72** Add scroll padding for password field.
 - **ZOB-113** Lock Android for portrait screen orientation in Manifest.
+- **ZOB-219** Add validation for consume-by date.
+- **ZOB-305** Add temperature field for warm meals.
 
 ### Changed
+- **ZOB-161** Update e-mail address for feedback.
+- **ZOB-296** Update allergens UI in food offer form.
+- **ZOB-298** Update food categories and box types UI in food offer form.
+- **ZOB-300** Update consume-by UI in food offer form.
+- **ZOB-301** Add "prepared-at" field for cooled meals.
+- **ZOB-302** Add counter field for number of servings and number of boxes.
+- **ZOB-304** Update assist chip and error UI.
 
 ### Removed
+- **ZOB-295** Remove updating delivery state to NOT_USED from application.
 
 ## [1.2.1]
 ### Changed

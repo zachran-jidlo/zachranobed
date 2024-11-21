@@ -13,7 +13,8 @@ import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/info_text_banner.dart';
+import 'package:zachranobed/ui/widgets/info_banner.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/trailing_icon_row.dart';
 
@@ -62,6 +63,19 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenScaffold(
+      web: (context) => _offerFoodOverviewScreenContent(useWideButton: false),
+      mobile: (context) => _offerFoodOverviewScreenContent(useWideButton: true),
+    );
+  }
+
+  /// Builds the content of the offer food overview screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch confirmation
+  /// button to screen width.
+  Widget _offerFoodOverviewScreenContent({
+    required bool useWideButton,
+  }) {
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {
@@ -82,7 +96,10 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                   overflow: TextOverflow.clip,
                 ),
               ),
-              InfoTextBanner(message: context.l10n!.offerFoodOverviewBanner),
+              InfoBanner.text(
+                backgroundColor: ZOColors.amberTransparent,
+                message: context.l10n!.offerFoodOverviewBanner,
+              ),
               const SizedBox(height: GapSize.m),
               if (_isLoading)
                 const Center(child: CircularProgressIndicator())
@@ -93,40 +110,21 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                   ),
                   child: Column(
                     children: [
-                      _offerFoodListSection(context,
-                          foodInfos: foodInfos, foodBoxTypes: _foodBoxTypes),
+                      _offerFoodListSection(
+                        context,
+                        foodInfos: foodInfos,
+                        foodBoxTypes: _foodBoxTypes,
+                      ),
                       const SizedBox(height: GapSize.m),
-                      ZOButton(
-                        text: context.l10n!.offerFood,
-                        onPressed: () async {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => const Center(
-                                child: CircularProgressIndicator()),
-                          );
-
-                          if (await foodInfos.verifyAvailableBoxCount(
-                              context, _foodBoxRepository)) {
-                            final isSuccess = await _offerFood();
-                            if (context.mounted) {
-                              context.router.replace(ThankYouRoute(
-                                isSuccess: isSuccess,
-                                message: context.l10n!.foodDonationConfirmation,
-                              ));
-                            }
-                          } else {
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                ZOTemporarySnackBar(
-                                  backgroundColor: Colors.red,
-                                  message: context.l10n!.boxCountError,
-                                ),
-                              );
-                            }
-                          }
-                        },
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ZOButton(
+                          text: context.l10n!.offerFood,
+                          minimumSize: ZOButtonSize.large(
+                            fullWidth: useWideButton,
+                          ),
+                          onPressed: _onConfirmationButtonPressed,
+                        ),
                       ),
                       const SizedBox(height: GapSize.xs),
                     ],
@@ -149,6 +147,34 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       foodInfo: foodInfos,
     );
   }
+
+  void _onConfirmationButtonPressed() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    if (await foodInfos.verifyAvailableBoxCount(context, _foodBoxRepository)) {
+      final isSuccess = await _offerFood();
+      if (mounted) {
+        context.router.replace(ThankYouRoute(
+          isSuccess: isSuccess,
+          message: context.l10n!.foodDonationConfirmation,
+        ));
+      }
+    } else {
+      if (mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          ZOTemporarySnackBar(
+            backgroundColor: Colors.red,
+            message: context.l10n!.boxCountError,
+          ),
+        );
+      }
+    }
+  }
 }
 
 /// Builds a section within offer food list.
@@ -166,7 +192,7 @@ Widget _offerFoodListSection(
           return TrailingIconRow(
               title: food.dishName.toString(),
               description:
-                  "${food.numberOfBoxes ?? food.numberOfServings}x ${foodBoxTypes.getById(food.foodBoxId ?? "")?.name}",
+                  "${food.numberOfBoxes ?? food.numberOfServings}x ${food.foodBoxType?.name ?? ""}",
               trailInfo: "${food.numberOfServings} ks",
               trailingIcon: Icons.edit,
               onTap: () {

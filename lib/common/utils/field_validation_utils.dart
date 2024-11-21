@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
+import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /// Provides utility methods for field validation.
 class FieldValidationUtils {
@@ -78,20 +82,50 @@ class FieldValidationUtils {
   static String? Function(String?) getFoodNameValidator(BuildContext context) {
     return (value) {
       if (!_isFilled(value)) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n!.invalidFieldFoodName;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for food allergens chips.
+  /// The validator checks if at least some value is selected.
+  static String? Function(List<String>?) getFoodAllergensValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return context.l10n!.invalidFieldFoodAllergens;
       }
       return null;
     };
   }
 
   /// Returns a validator for food category field.
-  /// The validator checks if the value is not empty.
-  static String? Function(String?) getFoodCategoryValidator(
+  /// The validator checks if the value is set.
+  static String? Function(FoodCategory?) getFoodCategoryValidator(
     BuildContext context,
   ) {
     return (value) {
-      if (!_isFilled(value)) {
+      if (value == null) {
         return context.l10n!.invalidFieldFoodCategory;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for food temperature field.
+  /// The validator checks if the value is in allowed range.
+  static String? Function(int?) getFoodTemperatureValidator(BuildContext context) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.requiredFieldError;
+      }
+      if (value < Constants.foodTemperatureMin) {
+        return context.l10n!.invalidFieldFoodTemperatureTooLow;
+      }
+      if (value > Constants.foodTemperatureMax) {
+        return context.l10n!.invalidFieldFoodTemperatureTooHigh;
       }
       return null;
     };
@@ -99,9 +133,24 @@ class FieldValidationUtils {
 
   /// Returns a validator for box type field.
   /// The validator checks if the value is not empty.
-  static String? Function(String?) getBoxTypeValidator(BuildContext context) {
+  static String? Function(String?) getBoxTypeByIdValidator(
+    BuildContext context,
+  ) {
     return (value) {
       if (!_isFilled(value)) {
+        return context.l10n!.invalidFieldBoxType;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for box type field.
+  /// The validator checks if the value is set.
+  static String? Function(FoodBoxType?) getBoxTypeValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
         return context.l10n!.invalidFieldBoxType;
       }
       return null;
@@ -119,11 +168,22 @@ class FieldValidationUtils {
     };
   }
 
-  /// Returns a validator for number of servings field.
-  /// The validator checks if the value is a number.
-  static String? Function(String?) getServingsValidator(BuildContext context) {
+  /// Returns a validator for number of boxes field.
+  /// The validator checks if the value is a non-zero number.
+  static String? Function(int?) getBoxNumberCounterValidator(BuildContext context) {
     return (value) {
-      if (!_isNumber(value)) {
+      if (value == null || value <= 0) {
+        return context.l10n!.invalidFieldBoxNumber;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for number of servings field.
+  /// The validator checks if the value is a non-zero number.
+  static String? Function(int?) getServingsValidator(BuildContext context) {
+    return (value) {
+      if (value == null || value <= 0) {
         return context.l10n!.invalidFieldServings;
       }
       return null;
@@ -131,11 +191,34 @@ class FieldValidationUtils {
   }
 
   /// Returns a validator for consume by field.
-  /// The validator checks if the value is not empty.
-  static String? Function(String?) getConsumeByValidator(BuildContext context) {
+  /// The validator checks if the value is set and date is not in the past.
+  static String? Function(FoodDateTime?) getConsumeByValidator(
+    BuildContext context,
+  ) {
     return (value) {
-      if (!_isFilled(value)) {
+      if (value == null) {
         return context.l10n!.invalidFieldConsumeBy;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
+        return context.l10n!.invalidFieldConsumeByDateInPast;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for prepared at field.
+  /// The validator checks if the value is set and date is not in the future.
+  static String? Function(FoodDateTime?) getPreparedAtValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.invalidFieldPreparedAt;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isAfter(now)) {
+        return context.l10n!.invalidFieldPreparedAtDateInPast;
       }
       return null;
     };

@@ -11,7 +11,6 @@ extension FoodBoxTypeMapper on FoodBoxTypeDto {
     return FoodBoxType(
       id: id,
       name: name,
-      type: type,
     );
   }
 }

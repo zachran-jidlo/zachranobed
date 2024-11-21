@@ -34,7 +34,7 @@ class DeliveryNotifier extends ChangeNotifier {
   void observeDelivery(Canteen canteen) {
     _streamSubscription?.cancel();
     _streamSubscription = _repository
-        .observeCurrentDelivery(entityId: canteen.entityId)
+        .observeCurrentDelivery(user: canteen)
         .listen((delivery) async {
       _delivery = delivery;
       notifyListeners();
@@ -57,18 +57,10 @@ class DeliveryNotifier extends ChangeNotifier {
     }
   }
 
-  /// Cancels current delivery if it is in prepared state and then triggers a
-  /// notification to inform listeners about the change.
-  Future<void> cancelCurrentDelivery() async {
-    final currentDelivery = _delivery;
-    if (currentDelivery == null) {
-      return;
-    }
-
-    if (await _repository.cancelDelivery(delivery: currentDelivery)) {
-      _delivery = currentDelivery.copyWith(state: DeliveryState.notUsed);
-      notifyListeners();
-    }
+  /// Inform listeners about the change.
+  void refreshDelivery() {
+    // Only update UI listeners, so that "canDonate" flag is reevaluated
+    notifyListeners();
   }
 
   bool canDonate(UserData user) {

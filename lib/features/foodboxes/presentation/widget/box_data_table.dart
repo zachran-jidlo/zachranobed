@@ -16,7 +16,7 @@ class BoxDataTable extends StatelessWidget {
     final repository = GetIt.I<FoodBoxRepository>();
 
     return StreamBuilder<Iterable<FoodBoxStatistics>>(
-      stream: repository.observeStatistics(user.entityId),
+      stream: repository.observeStatistics(user),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final boxes = snapshot.data!;

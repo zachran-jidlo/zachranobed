@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/utils/future_utils.dart';
+import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/dto/entity_pair_dto.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
+import 'package:zachranobed/models/user_data.dart';
 
 class EntityPairService {
   final _collection =
@@ -45,24 +48,41 @@ class EntityPairService {
     return null;
   }
 
+  /// Returns a [Future] that completes with a list of [EntityPairDto] objects
+  /// for the given [user], or `null` if no entity pairs are found.
+  Future<List<EntityPairDto>?> getByUser(UserData user) async {
+    if (user is Canteen) {
+      return getByDonorId(user.entityId);
+    } else if (user is Charity) {
+      return getByRecipientId(user.entityId);
+    }
+    return null;
+  }
+
   /// Sets up a Firestore stream to listen for changes in the `entityPairs`
-  /// collection, filtering pairs based on the provided [entityId] that belongs
-  /// to the currently signed in user. The user can be associated
-  /// with the [EntityPairDto] either as a `donor` or a `recipient`.
+  /// collection, filtering the only pair based on the provided [donorId] and
+  /// [recipientId].
   ///
   /// Returns a [Stream] that emits a list of [EntityPairDto] objects whenever
   /// there is a change in the Firestore collection that matches the specified
   /// criteria.
-  Stream<Iterable<EntityPairDto>> observePairs(String entityId) {
+  Stream<EntityPairDto?> observePair({
+    required String donorId,
+    required String recipientId,
+  }) {
     final query = _collection.where(
-      Filter.or(
-        Filter('donorId', isEqualTo: entityId),
-        Filter('recipientId', isEqualTo: entityId),
+      Filter.and(
+        Filter('donorId', isEqualTo: donorId),
+        Filter('recipientId', isEqualTo: recipientId),
       ),
     );
 
-    return query.snapshots().map((querySnapshot) =>
-        querySnapshot.docs.map((docSnapshot) => docSnapshot.data()));
+    return query.snapshots().map((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first.data();
+      }
+      return null;
+    });
   }
 
   /// Moves food boxes from [donorId] to [recipientId]. This method should be
@@ -73,7 +93,8 @@ class EntityPairService {
     required String donorId,
     required String recipientId,
     required Map<String, int> changeMap,
-  }) => _moveBoxes(donorId, recipientId, changeMap);
+  }) =>
+      _moveBoxes(donorId, recipientId, changeMap);
 
   /// Moves food boxes from [recipientId] to [donorId]. This method should be
   /// called when charity orders a box delivery, and as a result food boxes

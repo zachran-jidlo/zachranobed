@@ -28,7 +28,7 @@ class DonatedFoodList extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<Iterable<OfferedFood>>(
       stream: _repository.observeHistory(
-        entityId: HelperService.getCurrentUser(context)!.entityId,
+        user: HelperService.getCurrentUser(context)!,
         limit: itemsLimit,
         from: deliveredFrom,
         to: deliveredTo,

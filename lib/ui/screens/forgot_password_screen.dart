@@ -8,6 +8,7 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
@@ -34,6 +35,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenScaffold(
+      web: (context) => _forgotPasswordScreenContent(useWideButton: false),
+      mobile: (context) => _forgotPasswordScreenContent(useWideButton: true),
+    );
+  }
+
+  /// Builds the content of the forgot password screen.
+  ///
+  /// The [useWideButton] parameter determines whether to stretch confirmation
+  /// button to screen width.
+  Widget _forgotPasswordScreenContent({
+    required bool useWideButton,
+  }) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n!.passwordReset),
@@ -63,14 +77,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: GapSize.xl),
-                ZOButton(
-                  text: context.l10n!.resetPassword,
-                  icon: Icons.email_outlined,
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await _resetPassword();
-                    }
-                  },
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ZOButton(
+                    text: context.l10n!.resetPassword,
+                    icon: Icons.email_outlined,
+                    minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _resetPassword();
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

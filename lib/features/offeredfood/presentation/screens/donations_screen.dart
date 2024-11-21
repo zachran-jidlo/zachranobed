@@ -32,7 +32,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
     super.initState();
     final repository = GetIt.I<OfferedFoodRepository>();
     _mealsCountFuture = repository.getSavedMealsCount(
-      entityId: HelperService.getCurrentUser(context)!.entityId,
+      user: HelperService.getCurrentUser(context)!,
       timePeriod: null,
     );
   }
@@ -107,7 +107,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                   child: ZOButton(
                     text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
-                    height: 40.0,
+                    minimumSize: ZOButtonSize.medium(),
                     type: ZOButtonType.secondary,
                     onPressed: _addPreviousWeek,
                   ),
