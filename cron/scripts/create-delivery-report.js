@@ -76,6 +76,8 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
     const startDate = new Date(year, (month || 1) - 1, 1);
     const endDate = new Date(year, (month || 12), 0, 23, 59, 59);
 
+    console.info(`Fetching deliveries for period ${startDate.toISOString()} - ${endDate.toISOString()}`);
+
     const collectionRef = collection(db, fromCollectionName);
     const filteredQuery = query(
       collectionRef,
