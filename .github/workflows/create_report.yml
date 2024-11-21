@@ -20,6 +20,12 @@ jobs:
           echo "Invalid target period format. Must be YYYY or YYYY-MM."
           exit 1
         fi
+
+    - name: Set timezone
+      uses: szenius/set-timezone@v2.0
+      with:
+        timezoneLinux: "Europe/Prague"
+
     - name: Checkout repository
       uses: actions/checkout@v4
 
