@@ -1,12 +1,12 @@
-name: Monthly deliveries report
+name: Deliveries report
 
 on:
   workflow_dispatch:
     inputs:
-      target_month:
-        description: 'Target month (1-12)'
+      target_period:
+        description: 'Target period. Can be a month (YYYY-MM), or a full year (YYYY).'
         required: true
-        default: '1'
+        default: '2024-01'
 
 jobs:
   modify-firestore:
@@ -14,6 +14,12 @@ jobs:
     timeout-minutes: 15  # Set a timeout of 15 minutes
 
     steps:
+    - name: Validate target period
+      run: |
+        if [[ ! "${{ github.event.inputs.target_period }}" =~ ^[0-9]{4}-(0[1-9]|1[0-2])?$ ]]; then
+          echo "Invalid target period format. Must be YYYY or YYYY-MM."
+          exit 1
+        fi
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -31,7 +37,7 @@ jobs:
       run: |
         node cron/scripts/create-delivery-report.js
       env:
-        TARGET_MONTH: ${{ github.event.inputs.target_month }}
+        TARGET_PERIOD: ${{ github.event.inputs.target_period }}
         FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
         FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
         FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}

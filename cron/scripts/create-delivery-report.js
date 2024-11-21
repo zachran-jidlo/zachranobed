@@ -33,7 +33,7 @@ const timeout = setTimeout(() => {
 // Functions
 // *********
 
-async function signInAndCreateReport(email, password, targetMonth) {
+async function signInAndCreateReport(email, password, targetPeriod) {
   try {
     // Sign in the user
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -44,7 +44,7 @@ async function signInAndCreateReport(email, password, targetMonth) {
     console.info('Cleared reports collection');
 
     // Fetch and process documents
-    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetMonth);
+    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetPeriod);
     console.info(`Fetched ${processedDocuments.length} delivery documents`);
 
     // Clear timeout on successful execution
@@ -70,10 +70,11 @@ async function clearCollection(collectionName) {
   }
 }
 
-async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, targetMonth) {
+async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, targetPeriod) {
   try {
-    const startDate = new Date(new Date().getFullYear(), targetMonth - 1, 1);
-    const endDate = new Date(new Date().getFullYear(), targetMonth, 0, 23, 59, 59);
+    const [year, month] = targetPeriod.split('-').map(Number);
+    const startDate = new Date(year, (month || 1) - 1, 1);
+    const endDate = new Date(year, (month || 12), 0, 23, 59, 59);
 
     const collectionRef = collection(db, fromCollectionName);
     const filteredQuery = query(
@@ -145,14 +146,14 @@ async function getMealDetails(mealId) {
 // Function calls
 // **************
 
-// Take month integer from environment
-const targetMonth = process.env.TARGET_MONTH;
+// Take period string from environment
+const targetPeriod = process.env.TARGET_PERIOD;
 
-if (!targetMonth || targetMonth < 1 || targetMonth > 12) {
-  console.error('No target month provided.');
+if (!targetPeriod) {
+  console.error('No target period provided.');
   process.exit(1);
 }
 
-// Call your main function with the targetMonth argument
-console.info(`Running script for target month: ${targetMonth}`);
-signInAndCreateReport(email, password, targetMonth);
+// Call your main function with the targetPeriod argument
+console.info(`Running script for period: ${targetPeriod}`);
+signInAndCreateReport(email, password, targetPeriod);
