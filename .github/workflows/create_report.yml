@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Validate target period
       run: |
-        if [[ ! "${{ github.event.inputs.target_period }}" =~ ^[0-9]{4}-(0[1-9]|1[0-2])?$ ]]; then
+        if [[ ! "${{ github.event.inputs.target_period }}" =~ ^[0-9]{4}(-(0[1-9]|1[0-2]))?$ ]]; then
           echo "Invalid target period format. Must be YYYY or YYYY-MM."
           exit 1
         fi
