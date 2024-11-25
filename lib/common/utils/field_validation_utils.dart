@@ -190,6 +190,17 @@ class FieldValidationUtils {
     };
   }
 
+  /// Returns a validator for number of packages field.
+  /// The validator checks if the value is a non-zero number.
+  static String? Function(int?) getPackagesValidator(BuildContext context) {
+    return (value) {
+      if (value == null || value <= 0) {
+        return context.l10n!.invalidFieldPackages;
+      }
+      return null;
+    };
+  }
+
   /// Returns a validator for consume by field.
   /// The validator checks if the value is set and date is not in the past.
   static String? Function(FoodDateTime?) getConsumeByValidator(

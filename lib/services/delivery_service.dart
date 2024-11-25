@@ -158,8 +158,14 @@ class DeliveryService {
     final delivery = await getDeliveryById(id);
     final Map<String, int> foodBoxesCount = {};
     for (final meal in (delivery?.meals ?? List<MealDto>.empty())) {
-      final acc = (foodBoxesCount[meal.foodBoxId] ?? 0) + meal.foodBoxCount;
-      foodBoxesCount[meal.foodBoxId] = acc;
+      // Skip meals without foodBoxId or foodBoxCount (those are packaged meals)
+      final foodBoxId = meal.foodBoxId;
+      final foodBoxCount = meal.foodBoxCount;
+      if (foodBoxId == null || foodBoxCount == null) {
+        continue;
+      }
+      final acc = (foodBoxesCount[foodBoxId] ?? 0) + foodBoxCount;
+      foodBoxesCount[foodBoxId] = acc;
     }
 
     final foodBoxes = foodBoxesCount.entries.map(

@@ -51,53 +51,62 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                   initialValue: offeredFood.foodCategory,
                   readOnly: true,
                 ),
-                if (offeredFood.foodTemperature != null)
-                Column(
-                  children: [
-                    _buildGap(),
-                    ZOTextField(
+                _buildGap(),
+                if (offeredFood.foodTemperature != null) ...[
+                  ZOTextField(
                       label: context.l10n!.foodTemperatureWithCelsius,
                       initialValue: offeredFood.foodTemperature?.toString(),
                       readOnly: true,
                     ),
+                  _buildGap(),
                   ],
-                ),_buildGap(),
-                ZOTextField(
-                  label: context.l10n!.numberOfServings,
-                  initialValue: offeredFood.numberOfServings.toString(),
-                  readOnly: true,
-                ),
-                _buildGap(),
-                ZOTextField(
-                  label: context.l10n!.numberOfBoxes,
-                  initialValue: offeredFood.numberOfBoxes.toString(),
-                  readOnly: true,
-                ),
-                _buildGap(),
-                ZOTextField(
-                  label: context.l10n!.boxType,
-                  initialValue: offeredFood.boxType,
-                  readOnly: true,
-                ),
-                if (offeredFood.preparedAt != null)
-                  Column(
-                    children: [
-                      _buildGap(),
-                      ZOTextField(
-                        label: context.l10n!.preparedAt,
-                        initialValue: _formatFoodDateTime(
-                          date: offeredFood.preparedAt!,
-                          dateOnPackaging: context.l10n!.preparedAtOnPackaging,
-                          withTime: false,
-                        ),
-                        readOnly: true,
-                      ),
-                    ],
+                if (offeredFood.numberOfPackages != null) ...[
+                  ZOTextField(
+                    label: context.l10n!.numberOfPackages,
+                    initialValue: offeredFood.numberOfPackages.toString(),
+                    readOnly: true,
                   ),
-                _buildGap(),
+                  _buildGap(),
+                ],
+                if (offeredFood.numberOfServings != null) ...[
+                  ZOTextField(
+                    label: context.l10n!.numberOfServings,
+                    initialValue: offeredFood.numberOfServings.toString(),
+                    readOnly: true,
+                  ),
+                  _buildGap(),
+                ],
+                if (offeredFood.numberOfBoxes != null) ...[
+                  ZOTextField(
+                    label: context.l10n!.numberOfBoxes,
+                    initialValue: offeredFood.numberOfBoxes.toString(),
+                    readOnly: true,
+                  ),
+                  _buildGap(),
+                ],
+                if (offeredFood.numberOfBoxes != null) ...[
+                  ZOTextField(
+                    label: context.l10n!.boxType,
+                    initialValue: offeredFood.boxType,
+                    readOnly: true,
+                  ),
+                  _buildGap(),
+                ],
+                if (offeredFood.preparedAt != null) ...[
+                  ZOTextField(
+                    label: context.l10n!.preparedAt,
+                    initialValue: _formatFoodDateTime(
+                      date: offeredFood.preparedAt!,
+                      dateOnPackaging: context.l10n!.preparedAtOnPackaging,
+                      withTime: false,
+                    ),
+                    readOnly: true,
+                  ),
+                  _buildGap(),
+                ],
                 ZOTextField(
                   label: context.l10n!.consumeBy,
-                  initialValue:_formatFoodDateTime(
+                  initialValue: _formatFoodDateTime(
                     date: offeredFood.consumeBy,
                     dateOnPackaging: context.l10n!.consumeByOnPackaging,
                     withTime: true,

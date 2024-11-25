@@ -8,6 +8,9 @@ enum FoodCategoryType {
 
   /// Represents a cooled food category.
   cooled,
+
+  /// Represents a packaged food category.
+  packaged,
 }
 
 /// Represents a food category.
@@ -41,6 +44,10 @@ class FoodCategory {
       FoodCategory(
         name: context.l10n!.foodCategoryCooled,
         type: FoodCategoryType.cooled,
+      ),
+      FoodCategory(
+        name: context.l10n!.foodCategoryPackaged,
+        type: FoodCategoryType.packaged,
       ),
     ];
   }

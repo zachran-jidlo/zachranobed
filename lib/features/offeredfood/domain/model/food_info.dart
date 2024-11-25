@@ -21,6 +21,7 @@ class FoodInfo with _$FoodInfo {
     List<String>? allergens,
     FoodCategory? foodCategory,
     int? foodTemperature,
+    int? numberOfPackages,
     int? numberOfServings,
     int? numberOfBoxes,
     FoodBoxType? foodBoxType,
@@ -33,6 +34,7 @@ class FoodInfo with _$FoodInfo {
     List<String>? allergens,
     FoodCategory? foodCategory,
     int? foodTemperature,
+    int? numberOfPackages,
     int? numberOfServings,
     int? numberOfBoxes,
     FoodBoxType? foodBoxType,
@@ -46,6 +48,7 @@ class FoodInfo with _$FoodInfo {
       allergens: allergens,
       foodCategory: foodCategory,
       foodTemperature: foodTemperature,
+      numberOfPackages: numberOfPackages,
       numberOfServings: numberOfServings,
       numberOfBoxes: numberOfBoxes,
       foodBoxType: foodBoxType,
@@ -57,11 +60,7 @@ class FoodInfo with _$FoodInfo {
 
 extension FoodInfoExtension on FoodInfo {
   /// Creates a copy of this [FoodInfo] object with the given [foodCategory] and
-  /// updates the [preparedAt] field accordingly.
-  ///
-  /// If the [foodCategory] type is not [FoodCategoryType.cooled], the
-  /// [preparedAt] field will be set to null. This is because the [preparedAt]
-  /// field is only relevant for cooled food categories.
+  /// resets category-specific values if the category changes.
   ///
   /// Returns a new [FoodInfo] object with the updated values.
   FoodInfo copyWithFoodCategory(FoodCategory? foodCategory) {
@@ -69,9 +68,35 @@ extension FoodInfoExtension on FoodInfo {
     if (foodCategory?.type != FoodCategoryType.cooled) {
       newPreparedAt = null;
     }
+
+    int? newFoodTemperature = foodTemperature;
+    if (foodCategory?.type != FoodCategoryType.warm) {
+      newFoodTemperature = null;
+    }
+
+    int? newNumberOfPackages = numberOfPackages;
+    if (foodCategory?.type != FoodCategoryType.packaged) {
+      newNumberOfPackages = null;
+    }
+
+    int? newNumberOfServings = numberOfServings;
+    int? newNumberOfBoxes = numberOfBoxes;
+    FoodBoxType? newFoodBoxType = foodBoxType;
+    if (foodCategory?.type != FoodCategoryType.warm &&
+        foodCategory?.type != FoodCategoryType.cooled) {
+      newNumberOfServings = null;
+      newNumberOfBoxes = null;
+      newFoodBoxType = null;
+    }
+
     return copyWith(
       foodCategory: foodCategory,
       preparedAt: newPreparedAt,
+      foodTemperature: newFoodTemperature,
+      numberOfPackages: newNumberOfPackages,
+      numberOfServings: newNumberOfServings,
+      numberOfBoxes: newNumberOfBoxes,
+      foodBoxType: newFoodBoxType,
     );
   }
 }

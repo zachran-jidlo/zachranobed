@@ -86,7 +86,8 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       timePeriod: timePeriod,
     );
     for (var delivery in deliveries) {
-      mealsCount += delivery.meals.fold(0, (inc, e) => inc + e.count);
+      // Count all meals in all deliveries except packaged meals
+      mealsCount += delivery.meals.fold(0, (inc, e) => inc + (e.count ?? 0));
     }
     return mealsCount;
   }
@@ -125,9 +126,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
             return null;
           }
           final boxType = boxTypeMap[meal.foodBoxId];
-          if (boxType == null) {
-            return null;
-          }
           return detail.toDomain(
             delivery,
             meal,
@@ -168,12 +166,13 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
         ),
       );
 
-      final boxId = element.foodBoxType?.id ?? "";
-      final boxCount = element.numberOfBoxes ?? element.numberOfServings ?? 0;
+      final boxId = element.foodBoxType?.id;
+      final boxCount = element.numberOfBoxes ?? element.numberOfServings;
       meals.add(
         MealDto(
           mealId: id,
-          count: element.numberOfServings ?? 0,
+          count: element.numberOfServings,
+          packagesCount: element.numberOfPackages,
           preparedAt: element.preparedAt?.getDate(),
           consumeBy: element.consumeBy?.getDate(),
           foodBoxId: boxId,
@@ -182,7 +181,9 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
         ),
       );
 
-      changeBoxesMap[boxId] = (changeBoxesMap[boxId] ?? 0) + boxCount;
+      if (boxId != null && boxCount != null) {
+        changeBoxesMap[boxId] = (changeBoxesMap[boxId] ?? 0) + boxCount;
+      }
     }
 
     if (!await _mealService.addMeals(mealDetails)) {

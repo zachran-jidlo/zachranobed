@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [1.4.0]
 ### Added
 - **ZOB-278** Add web navigation drawer.
+- **ZOB-308** Add packaged food category.
 
 ### Fixed
 

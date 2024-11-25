@@ -259,6 +259,30 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     ];
   }
 
+  List<Widget> _buildNumberOfPackages(int index) {
+    return [
+      SectionHeader(
+        text: context.l10n!.numberOfPackages,
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        label: context.l10n!.numberOfPackages,
+        focusNode: widget.formValidationManager.getFocusNode(
+          FormFieldType.numberOfPackages.createFormFieldKey(index),
+        ),
+        onValidation: widget.formValidationManager.wrapValidator(
+          FormFieldType.numberOfPackages.createFormFieldKey(index),
+          FieldValidationUtils.getPackagesValidator(context),
+        ),
+        initialValue: widget.foodSections[index].numberOfPackages ?? 0,
+        onChanged: (val) {
+          widget.foodSections[index] =
+              widget.foodSections[index].copyWith(numberOfPackages: val);
+        },
+      ),
+    ];
+  }
+
   List<Widget> _buildPreparedAtPart(int index) {
     final formFieldKey = FormFieldType.preparedAt.createFormFieldKey(index);
     return [
@@ -360,24 +384,24 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
         _buildGap(),
         ..._buildFoodCategoryPart(index),
         _buildGap(),
-        if (foodType == FoodCategoryType.warm)
-          Column(
-            children: [
-              ..._buildTemperaturePart(index),
-              _buildGap(),
-            ],
-          ),
-        ..._buildBoxTypesPart(index),
-        _buildGap(),
-        ..._buildNumberOfServingsPart(index),
-        _buildGap(),
-        if (foodType == FoodCategoryType.cooled)
-          Column(
-            children: [
-              ..._buildPreparedAtPart(index),
-              _buildGap(),
-            ],
-          ),
+        if (foodType == FoodCategoryType.warm) ...[
+          ..._buildTemperaturePart(index),
+          _buildGap(),
+        ],
+        if (foodType == FoodCategoryType.packaged) ...[
+          ..._buildNumberOfPackages(index),
+          _buildGap(),
+        ],
+        if (foodType != FoodCategoryType.packaged) ...[
+          ..._buildBoxTypesPart(index),
+          _buildGap(),
+          ..._buildNumberOfServingsPart(index),
+          _buildGap(),
+        ],
+        if (foodType == FoodCategoryType.cooled) ...[
+          ..._buildPreparedAtPart(index),
+          _buildGap(),
+        ],
         ..._buildConsumeByPart(index),
         _buildGap(),
       ],

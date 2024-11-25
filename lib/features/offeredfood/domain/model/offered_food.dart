@@ -16,12 +16,13 @@ class OfferedFood with _$OfferedFood {
     required String foodCategory,
     required int? foodTemperature,
     required List<String> allergens,
-    required int numberOfServings,
-    required String boxType,
+    required int? numberOfServings,
+    required String? boxType,
     required FoodDateTime? preparedAt,
     required FoodDateTime consumeBy,
     required String donorId,
     required String recipientId,
-    required int numberOfBoxes,
+    required int? numberOfBoxes,
+    required int? numberOfPackages,
   }) = _OfferedFood;
 }

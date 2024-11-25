@@ -11,18 +11,20 @@ part 'meal_dto.g.dart';
 @JsonSerializable()
 class MealDto {
   final String mealId;
-  final int count;
+  final int? count;
+  final int? packagesCount;
   @TimestampConverter()
   final DateTime? preparedAt;
   @TimestampConverter()
   final DateTime? consumeBy;
-  final String foodBoxId;
-  final int foodBoxCount;
+  final String? foodBoxId;
+  final int? foodBoxCount;
   final int? foodTemperature;
 
   MealDto({
     required this.mealId,
     required this.count,
+    required this.packagesCount,
     required this.preparedAt,
     required this.consumeBy,
     required this.foodBoxId,

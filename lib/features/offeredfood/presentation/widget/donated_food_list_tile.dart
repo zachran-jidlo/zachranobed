@@ -37,7 +37,7 @@ class DonatedFoodListTile extends StatelessWidget {
             ),
           ),
           trailing: Text(
-            '${offeredFood.numberOfServings} ks',
+            '${offeredFood.numberOfServings ?? offeredFood.numberOfPackages} ks',
             style: textTheme.labelLarge?.copyWith(
               color: ZOColors.onPrimaryLight,
             ),
