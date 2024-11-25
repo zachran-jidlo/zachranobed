@@ -148,6 +148,9 @@ class _CounterFieldState extends State<CounterField> {
   }
 
   void _updateValue(int value) {
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _currentValue = value;
       final textValue = value.toString();

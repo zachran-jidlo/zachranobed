@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-278** Add web navigation drawer.
 
 ### Fixed
+- **ZOB-321** Fix exception in counter.
 
 ### Changed
 - **ZOB-273** Adjust web layout for login screen.
