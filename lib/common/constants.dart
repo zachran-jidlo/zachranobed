@@ -7,6 +7,7 @@ class ZOColors {
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
+  static const onBackgroundSecondary = Color.fromRGBO(0, 0, 0, 0.5);
   static const borderColor = Color.fromRGBO(216, 194, 191, 1);
   static const lightBorderColor = Color.fromRGBO(251, 238, 236, 1);
   static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
@@ -106,6 +107,7 @@ class WidgetStyle {
       disabledBorder: WidgetStyle.inputBorder,
       errorBorder: WidgetStyle.errorBorder,
       focusedErrorBorder: WidgetStyle.errorBorder,
+      errorMaxLines: 2,
     );
   }
 }

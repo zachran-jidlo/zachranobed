@@ -16,6 +16,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-289** Adjust web layout for detail and form screens.
 - **ZOB-290** Adjust web layout for thank you screen.
 - **ZOB-291** Adjust web layout for app terms screen.
+- **ZOB-306** Update UI in box shipping form.
 - **ZOB-307** Update web metadata.
 
 ### Removed

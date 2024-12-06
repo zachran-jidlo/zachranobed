@@ -132,19 +132,6 @@ class FieldValidationUtils {
   }
 
   /// Returns a validator for box type field.
-  /// The validator checks if the value is not empty.
-  static String? Function(String?) getBoxTypeByIdValidator(
-    BuildContext context,
-  ) {
-    return (value) {
-      if (!_isFilled(value)) {
-        return context.l10n!.invalidFieldBoxType;
-      }
-      return null;
-    };
-  }
-
-  /// Returns a validator for box type field.
   /// The validator checks if the value is set.
   static String? Function(FoodBoxType?) getBoxTypeValidator(
     BuildContext context,
@@ -158,21 +145,23 @@ class FieldValidationUtils {
   }
 
   /// Returns a validator for number of boxes field.
-  /// The validator checks if the value is a number.
-  static String? Function(String?) getBoxNumberValidator(BuildContext context) {
+  ///
+  /// The validator checks if the input value is within the allowed range
+  /// and returns an error message if it's invalid.
+  ///
+  /// [context] is used to access localization strings.
+  /// [allowZero] determines if zero is a valid input. Defaults to false.
+  /// [max] specifies the maximum allowed value.
+  static String? Function(int?) getBoxNumberValidator(
+    BuildContext context, {
+    bool allowZero = false,
+    int? max,
+  }) {
     return (value) {
-      if (!_isNumber(value)) {
-        return context.l10n!.invalidFieldBoxNumber;
+      if (max != null && (value == null || value > max)) {
+        return context.l10n!.invalidFieldBoxNumberTooHigh;
       }
-      return null;
-    };
-  }
-
-  /// Returns a validator for number of boxes field.
-  /// The validator checks if the value is a non-zero number.
-  static String? Function(int?) getBoxNumberCounterValidator(BuildContext context) {
-    return (value) {
-      if (value == null || value <= 0) {
+      if (!allowZero && (value == null || value <= 0)) {
         return context.l10n!.invalidFieldBoxNumber;
       }
       return null;
