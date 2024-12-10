@@ -54,22 +54,24 @@ class DeliveryInfoBanner extends StatelessWidget {
     return SliverToBoxAdapter(
       child: InfoBanner(
         backgroundColor: ZOColors.successLight,
-        message: Text.rich(
-          textAlign: TextAlign.center,
-          TextSpan(
-            text: '${context.l10n!.courierWillCome} ',
-            style: const TextStyle(
-              color: ZOColors.onPrimaryLight,
-              fontSize: FontSize.s,
-            ),
-            children: <InlineSpan>[
-              TextSpan(
-                text: '${user.pickUpFrom} a ${user.pickUpWithin}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+        message: (context, textAlign) {
+          return Text.rich(
+            textAlign: textAlign,
+            TextSpan(
+              text: '${context.l10n!.courierWillCome} ',
+              style: const TextStyle(
+                color: ZOColors.onPrimaryLight,
+                fontSize: FontSize.s,
               ),
-            ],
-          ),
-        ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: '${user.pickUpFrom} a ${user.pickUpWithin}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -81,10 +83,15 @@ class DeliveryInfoBanner extends StatelessWidget {
     return SliverToBoxAdapter(
       child: InfoBanner(
         backgroundColor: ZOColors.successLight,
-        message: DonationCountdownTimer(delivery: delivery),
+        message: (context, textAlign) {
+          return DonationCountdownTimer(
+            delivery: delivery,
+            textAlign: textAlign,
+          );
+        },
         button: ZOButton(
           text: context.l10n!.wantToDonate,
-          fullWidth: false,
+          minimumSize: ZOButtonSize.tiny(),
           type: ZOButtonType.success,
           onPressed: () {
             context

@@ -107,7 +107,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
                   child: ZOButton(
                     text: context.l10n!.loadMore,
                     icon: Icons.expand_more,
-                    height: 40.0,
+                    minimumSize: ZOButtonSize.medium(),
                     type: ZOButtonType.secondary,
                     onPressed: _addPreviousWeek,
                   ),

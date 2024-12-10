@@ -6,8 +6,7 @@ class ZOButton extends StatelessWidget {
   final VoidCallback onPressed;
   final ZOButtonType type;
   final IconData? icon;
-  final double height;
-  final bool fullWidth;
+  final Size? minimumSize;
 
   const ZOButton({
     super.key,
@@ -15,8 +14,7 @@ class ZOButton extends StatelessWidget {
     required this.onPressed,
     this.type = ZOButtonType.primary,
     this.icon,
-    this.height = 56.0,
-    this.fullWidth = true,
+    this.minimumSize = ZOButtonSize.largeMatchParent,
   });
 
   @override
@@ -24,7 +22,7 @@ class ZOButton extends StatelessWidget {
     final style = ElevatedButton.styleFrom(
       foregroundColor: type.foregroundColor,
       backgroundColor: type.backgroundColor,
-      minimumSize: fullWidth ? Size.fromHeight(height) : null,
+      minimumSize: minimumSize,
       shape: const StadiumBorder(),
       textStyle: const TextStyle(fontSize: FontSize.xs),
       elevation: 0.0,
@@ -53,10 +51,51 @@ class ZOButton extends StatelessWidget {
 enum ZOButtonType {
   primary(ZOColors.primary, ZOColors.onPrimary),
   secondary(ZOColors.secondary, ZOColors.onSecondary),
-  success(ZOColors.success, ZOColors.onSuccess);
+  tertiary(Colors.white, ZOColors.onPrimaryLight),
+  success(ZOColors.success, ZOColors.onSuccess),
+  cancel(Colors.white, ZOColors.primary);
 
   const ZOButtonType(this.backgroundColor, this.foregroundColor);
 
   final Color backgroundColor;
   final Color foregroundColor;
+}
+
+/// Defines default size of a [ZOButton].
+class ZOButtonSize {
+  /// The height of a large button.
+  static const _heightLarge = 56.0;
+
+  /// The height of a medium button.
+  static const _heightMedium = 40.0;
+
+  static const largeWrapContent = Size(0.0, _heightLarge);
+  static const largeMatchParent = Size(double.infinity, _heightLarge);
+  static const mediumWrapContent = Size(0.0, _heightMedium);
+  static const mediumMatchParent = Size(double.infinity, _heightMedium);
+
+  /// Private constructor to prevent instantiation.
+  ZOButtonSize._();
+
+  /// Returns a size for large (default) button.
+  ///
+  /// The [fullWidth] parameter determines whether the button should match
+  /// parent widget width.
+  static Size? large({bool fullWidth = true}) {
+    return fullWidth ? largeMatchParent : largeWrapContent;
+  }
+
+  /// Returns a size for medium button.
+  ///
+  /// The [fullWidth] parameter determines whether the button should match
+  /// parent widget width.
+  static Size? medium({bool fullWidth = true}) {
+    return fullWidth ? mediumMatchParent : mediumWrapContent;
+  }
+
+  /// Returns a size for tiny button. Tiny button has no minimal size, so
+  /// this method just returns null to use [Button] default behavior.
+  static Size? tiny() {
+    return null;
+  }
 }

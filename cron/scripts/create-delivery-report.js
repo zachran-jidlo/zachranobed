@@ -33,7 +33,7 @@ const timeout = setTimeout(() => {
 // Functions
 // *********
 
-async function signInAndCreateReport(email, password, targetMonth) {
+async function signInAndCreateReport(email, password, targetPeriod) {
   try {
     // Sign in the user
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -44,7 +44,7 @@ async function signInAndCreateReport(email, password, targetMonth) {
     console.info('Cleared reports collection');
 
     // Fetch and process documents
-    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetMonth);
+    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetPeriod);
     console.info(`Fetched ${processedDocuments.length} delivery documents`);
 
     // Clear timeout on successful execution
@@ -70,16 +70,19 @@ async function clearCollection(collectionName) {
   }
 }
 
-async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, targetMonth) {
+async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, targetPeriod) {
   try {
-    const startDate = new Date(new Date().getFullYear(), targetMonth - 1, 1);
-    const endDate = new Date(new Date().getFullYear(), targetMonth, 0, 23, 59, 59);
+    const [year, month] = targetPeriod.split('-').map(Number);
+    const startDate = new Date(year, (month || 1) - 1, 1);
+    const endDate = new Date(year, (month || 12), 0, 23, 59, 59);
+
+    console.info(`Fetching deliveries for period ${startDate.toISOString()} - ${endDate.toISOString()}`);
 
     const collectionRef = collection(db, fromCollectionName);
     const filteredQuery = query(
       collectionRef,
       where('deliveryDate', '>=', startDate),
-      where('deliveryDate', '<=', endDate)
+      where('deliveryDate', '<', endDate)
     );
     const snapshot = await getDocs(filteredQuery);
 
@@ -94,12 +97,13 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
         data.meals.length > 0
       ) {
         for (const meal of data.meals) {
-          const mealName = await getMealName(meal.mealId);
+          const mealDetails = await getMealDetails(meal.mealId);
           const mealDocument = {
             deliveryDate: data.deliveryDate,
             donorId: data.donorId,
             mealCount: meal.count,
-            mealName: mealName
+            mealName: mealDetails.name,
+            foodCategory: mealDetails.foodCategory
           };
 
           // Create document
@@ -119,17 +123,24 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, ta
   }
 }
 
-async function getMealName(mealId) {
+async function getMealDetails(mealId) {
   // Fetch meal names for each mealId in the meals array
   const mealDocRef = doc(db, "meals", mealId);
   const mealDocSnapshot = await getDoc(mealDocRef);
 
   if (mealDocSnapshot.exists()) {
     const mealData = mealDocSnapshot.data();
-    return mealData.name;
+    return {
+      name: mealData.name,
+      foodCategory: mealData.foodCategory
+    };
   } else {
-    console.error("`fetchAndProcessDocuments` Function failed because no document was found for meal id ", mealId, ". Returning NotFound as a meal name.");
+    console.error("`fetchAndProcessDocuments` Function failed because no document was found for meal id ", mealId, ". Returning NotFound as a meal name and category.");
     return `NotFound(${mealId})`;
+    return {
+      name: `NotFound(${mealId})`,
+      foodCategory: `NotFound(${mealId})`
+    };
   }
 }
 
@@ -137,14 +148,14 @@ async function getMealName(mealId) {
 // Function calls
 // **************
 
-// Take month integer from environment
-const targetMonth = process.env.TARGET_MONTH;
+// Take period string from environment
+const targetPeriod = process.env.TARGET_PERIOD;
 
-if (!targetMonth || targetMonth < 1 || targetMonth > 12) {
-  console.error('No target month provided.');
+if (!targetPeriod) {
+  console.error('No target period provided.');
   process.exit(1);
 }
 
-// Call your main function with the targetMonth argument
-console.info(`Running script for target month: ${targetMonth}`);
-signInAndCreateReport(email, password, targetMonth);
+// Call your main function with the targetPeriod argument
+console.info(`Running script for period: ${targetPeriod}`);
+signInAndCreateReport(email, password, targetPeriod);
