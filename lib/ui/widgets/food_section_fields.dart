@@ -280,7 +280,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   List<Widget> _buildNumberOfPackages(int index) {
     return [
       SectionHeader(
-        text: context.l10n!.numberOfPackages,
+        title: Text(
+          context.l10n!.numberOfPackages,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
