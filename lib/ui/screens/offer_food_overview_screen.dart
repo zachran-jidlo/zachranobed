@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -189,11 +190,22 @@ Widget _offerFoodListSection(
   return OfferFoodOverviewSection(
     items: foodInfos
         .mapIndexed((index, food) {
+          // Set description only for non-packaged food, because packaged food
+          // has no boxes to show in description
+          String? description;
+          if (food.foodCategory?.type != FoodCategoryType.packaged) {
+            final boxes = food.numberOfBoxes ?? food.numberOfServings;
+            description = "${boxes}x ${food.foodBoxType?.name ?? ""}";
+          }
+
+          // Set count based on the number of servings or packages (for
+          // packaged food category)
+          final count = food.numberOfServings ?? food.numberOfPackages;
+
           return TrailingIconRow(
               title: food.dishName.toString(),
-              description:
-                  "${food.numberOfBoxes ?? food.numberOfServings}x ${food.foodBoxType?.name ?? ""}",
-              trailInfo: "${food.numberOfServings} ks",
+              description: description,
+              trailInfo: "$count ks",
               trailingIcon: Icons.edit,
               onTap: () {
                 context.router.navigate(OfferFoodDetailRoute(

@@ -3,14 +3,15 @@ import 'package:zachranobed/common/constants.dart';
 
 /// A stateless widget that represents a row with trailing info and icon.
 ///
-/// This row includes a title, description, trailing information, and an icon.
-/// It is designed to be clickable, triggering a callback function when tapped.
+/// This row includes a title, optional description, trailing information, and
+/// an icon. It is designed to be clickable, triggering a callback function when
+/// tapped.
 class TrailingIconRow extends StatelessWidget {
   /// The main title text displayed in the row.
   final String title;
 
-  /// The description text displayed in the row.
-  final String description;
+  /// The optional description text displayed in the row.
+  final String? description;
 
   /// The text displayed next to the icon at the trailing end.
   final String trailInfo;
@@ -32,6 +33,7 @@ class TrailingIconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -45,26 +47,19 @@ class TrailingIconRow extends StatelessWidget {
         child: ListTile(
           title: Text(
             title,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: textTheme.bodyLarge,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: Text(
-            description,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: ZOColors.onPrimaryLight,
-                ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+          subtitle: _buildSubtitle(context, textTheme, description),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 trailInfo,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: ZOColors.onPrimaryLight,
-                    ),
+                style: textTheme.bodyLarge?.copyWith(
+                  color: ZOColors.onPrimaryLight,
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -74,6 +69,22 @@ class TrailingIconRow extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget? _buildSubtitle(
+    BuildContext context,
+    TextTheme textTheme,
+    String? description,
+  ) {
+    if (description == null) return null;
+    return Text(
+      description,
+      style: textTheme.bodySmall?.copyWith(
+        color: ZOColors.onPrimaryLight,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

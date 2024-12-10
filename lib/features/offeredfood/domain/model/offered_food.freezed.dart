@@ -22,13 +22,14 @@ mixin _$OfferedFood {
   String get foodCategory => throw _privateConstructorUsedError;
   int? get foodTemperature => throw _privateConstructorUsedError;
   List<String> get allergens => throw _privateConstructorUsedError;
-  int get numberOfServings => throw _privateConstructorUsedError;
-  String get boxType => throw _privateConstructorUsedError;
+  int? get numberOfServings => throw _privateConstructorUsedError;
+  String? get boxType => throw _privateConstructorUsedError;
   FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
   FoodDateTime get consumeBy => throw _privateConstructorUsedError;
   String get donorId => throw _privateConstructorUsedError;
   String get recipientId => throw _privateConstructorUsedError;
-  int get numberOfBoxes => throw _privateConstructorUsedError;
+  int? get numberOfBoxes => throw _privateConstructorUsedError;
+  int? get numberOfPackages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OfferedFoodCopyWith<OfferedFood> get copyWith =>
@@ -48,13 +49,14 @@ abstract class $OfferedFoodCopyWith<$Res> {
       String foodCategory,
       int? foodTemperature,
       List<String> allergens,
-      int numberOfServings,
-      String boxType,
+      int? numberOfServings,
+      String? boxType,
       FoodDateTime? preparedAt,
       FoodDateTime consumeBy,
       String donorId,
       String recipientId,
-      int numberOfBoxes});
+      int? numberOfBoxes,
+      int? numberOfPackages});
 }
 
 /// @nodoc
@@ -76,13 +78,14 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
     Object? foodCategory = null,
     Object? foodTemperature = freezed,
     Object? allergens = null,
-    Object? numberOfServings = null,
-    Object? boxType = null,
+    Object? numberOfServings = freezed,
+    Object? boxType = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = null,
     Object? donorId = null,
     Object? recipientId = null,
-    Object? numberOfBoxes = null,
+    Object? numberOfBoxes = freezed,
+    Object? numberOfPackages = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -109,14 +112,14 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.allergens
           : allergens // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      numberOfServings: null == numberOfServings
+      numberOfServings: freezed == numberOfServings
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int,
-      boxType: null == boxType
+              as int?,
+      boxType: freezed == boxType
           ? _value.boxType
           : boxType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -133,10 +136,14 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
-      numberOfBoxes: null == numberOfBoxes
+      numberOfBoxes: freezed == numberOfBoxes
           ? _value.numberOfBoxes
           : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _value.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -156,13 +163,14 @@ abstract class _$$OfferedFoodImplCopyWith<$Res>
       String foodCategory,
       int? foodTemperature,
       List<String> allergens,
-      int numberOfServings,
-      String boxType,
+      int? numberOfServings,
+      String? boxType,
       FoodDateTime? preparedAt,
       FoodDateTime consumeBy,
       String donorId,
       String recipientId,
-      int numberOfBoxes});
+      int? numberOfBoxes,
+      int? numberOfPackages});
 }
 
 /// @nodoc
@@ -182,13 +190,14 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
     Object? foodCategory = null,
     Object? foodTemperature = freezed,
     Object? allergens = null,
-    Object? numberOfServings = null,
-    Object? boxType = null,
+    Object? numberOfServings = freezed,
+    Object? boxType = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = null,
     Object? donorId = null,
     Object? recipientId = null,
-    Object? numberOfBoxes = null,
+    Object? numberOfBoxes = freezed,
+    Object? numberOfPackages = freezed,
   }) {
     return _then(_$OfferedFoodImpl(
       id: null == id
@@ -215,14 +224,14 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
           ? _value._allergens
           : allergens // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      numberOfServings: null == numberOfServings
+      numberOfServings: freezed == numberOfServings
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int,
-      boxType: null == boxType
+              as int?,
+      boxType: freezed == boxType
           ? _value.boxType
           : boxType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -239,10 +248,14 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
-      numberOfBoxes: null == numberOfBoxes
+      numberOfBoxes: freezed == numberOfBoxes
           ? _value.numberOfBoxes
           : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _value.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -263,7 +276,8 @@ class _$OfferedFoodImpl implements _OfferedFood {
       required this.consumeBy,
       required this.donorId,
       required this.recipientId,
-      required this.numberOfBoxes})
+      required this.numberOfBoxes,
+      required this.numberOfPackages})
       : _allergens = allergens;
 
   @override
@@ -285,9 +299,9 @@ class _$OfferedFoodImpl implements _OfferedFood {
   }
 
   @override
-  final int numberOfServings;
+  final int? numberOfServings;
   @override
-  final String boxType;
+  final String? boxType;
   @override
   final FoodDateTime? preparedAt;
   @override
@@ -297,11 +311,13 @@ class _$OfferedFoodImpl implements _OfferedFood {
   @override
   final String recipientId;
   @override
-  final int numberOfBoxes;
+  final int? numberOfBoxes;
+  @override
+  final int? numberOfPackages;
 
   @override
   String toString() {
-    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes)';
+    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes, numberOfPackages: $numberOfPackages)';
   }
 
   @override
@@ -330,7 +346,9 @@ class _$OfferedFoodImpl implements _OfferedFood {
             (identical(other.recipientId, recipientId) ||
                 other.recipientId == recipientId) &&
             (identical(other.numberOfBoxes, numberOfBoxes) ||
-                other.numberOfBoxes == numberOfBoxes));
+                other.numberOfBoxes == numberOfBoxes) &&
+            (identical(other.numberOfPackages, numberOfPackages) ||
+                other.numberOfPackages == numberOfPackages));
   }
 
   @override
@@ -348,7 +366,8 @@ class _$OfferedFoodImpl implements _OfferedFood {
       consumeBy,
       donorId,
       recipientId,
-      numberOfBoxes);
+      numberOfBoxes,
+      numberOfPackages);
 
   @JsonKey(ignore: true)
   @override
@@ -365,13 +384,14 @@ abstract class _OfferedFood implements OfferedFood {
       required final String foodCategory,
       required final int? foodTemperature,
       required final List<String> allergens,
-      required final int numberOfServings,
-      required final String boxType,
+      required final int? numberOfServings,
+      required final String? boxType,
       required final FoodDateTime? preparedAt,
       required final FoodDateTime consumeBy,
       required final String donorId,
       required final String recipientId,
-      required final int numberOfBoxes}) = _$OfferedFoodImpl;
+      required final int? numberOfBoxes,
+      required final int? numberOfPackages}) = _$OfferedFoodImpl;
 
   @override
   String get id;
@@ -386,9 +406,9 @@ abstract class _OfferedFood implements OfferedFood {
   @override
   List<String> get allergens;
   @override
-  int get numberOfServings;
+  int? get numberOfServings;
   @override
-  String get boxType;
+  String? get boxType;
   @override
   FoodDateTime? get preparedAt;
   @override
@@ -398,7 +418,9 @@ abstract class _OfferedFood implements OfferedFood {
   @override
   String get recipientId;
   @override
-  int get numberOfBoxes;
+  int? get numberOfBoxes;
+  @override
+  int? get numberOfPackages;
   @override
   @JsonKey(ignore: true)
   _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
