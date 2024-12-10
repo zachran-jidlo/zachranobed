@@ -20,7 +20,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build web
-        run: flutter build web --release --no-tree-shake-icons --base-href "." --dart-define=FLUTTER_APP_FLAVOR=prod
+        run: flutter build web --release --no-tree-shake-icons --base-href "/" --dart-define=FLUTTER_APP_FLAVOR=prod
 
       - name: Publish to GitHub Pages
         uses: ./.github/actions/publish-web
