@@ -14,6 +14,21 @@ extension IterableUtils<T> on Iterable<T> {
   Iterable<T> filterNotNull() {
     return where((e) => e != null).cast();
   }
+
+  /// Creates a new iterable with chunks of elements of given [size].
+  Iterable<Iterable<T>> chunked(int size) sync* {
+    List<T> chunk = [];
+    for (var element in this) {
+      chunk.add(element);
+      if (chunk.length == size) {
+        yield chunk;
+        chunk = [];
+      }
+    }
+    if (chunk.isNotEmpty) {
+      yield chunk;
+    }
+  }
 }
 
 /// Extensions on Iterable with Widgets.

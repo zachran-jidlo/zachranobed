@@ -3,6 +3,9 @@
 This is a changelog for **ZachranObed** application.
 
 ## [1.4.0]
+### Fixed
+- **ZOB-275** Fix error when there are more than 30 meals in delivery.
+
 ### Added
 - **ZOB-278** Add web navigation drawer.
 
