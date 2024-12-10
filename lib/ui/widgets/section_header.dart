@@ -5,10 +5,13 @@ import 'package:zachranobed/common/constants.dart';
 ///
 /// This widget is typically used to visually separate sections of content
 /// and provide a title for each section. It can also include an optional
-/// action icon with an associated callback.
+/// subtitle and action icon with an associated callback.
 class SectionHeader extends StatelessWidget {
-  /// The text displayed in the header.
-  final String text;
+  /// The title displayed in the header.
+  final Widget title;
+
+  /// The subtitle displayed in the header.
+  final Widget? subtitle;
 
   /// An optional icon to display as an action.
   final Icon? actionIcon;
@@ -19,7 +22,8 @@ class SectionHeader extends StatelessWidget {
   /// Creates a [SectionHeader] widget.
   const SectionHeader({
     super.key,
-    required this.text,
+    required this.title,
+    this.subtitle,
     this.actionIcon,
     this.onActionPressed,
   });
@@ -38,9 +42,12 @@ class SectionHeader extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.titleMedium,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  title,
+                  subtitle ?? const SizedBox(),
+                ],
               ),
             ),
             _buildAction(actionIcon, onActionPressed),

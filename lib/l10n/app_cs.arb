@@ -13,6 +13,7 @@
     "invalidFieldFoodTemperatureTooHigh": "Teplota je příliš vysoká.",
     "invalidFieldPackages": "Zadejte počet kusů.",
     "invalidFieldBoxNumber": "Zadejte počet krabiček.",
+    "invalidFieldBoxNumberTooHigh": "Zadáno více krabiček, než je k dispozici",
     "invalidFieldBoxType": "Není vybraný typ krabičky.",
     "invalidFieldServings": "Zadejte počet porcí.",
     "invalidFieldPreparedAt": "Není vybraný datum výroby.",
@@ -71,7 +72,7 @@
     "preparedAt": "Datum výroby",
     "preparedAtOnPackaging": "Datum je uveden na obalu",
     "preparedAtTemplate": "Datum a čas výroby: {dateTime}",
-    "@hello": {
+    "@preparedAtTemplate": {
       "placeholders": {
         "dateTime": {
           "type": "String",
@@ -82,7 +83,7 @@
     "consumeBy": "Spotřebujte do",
     "consumeByOnPackaging": "Datum je uveden na obalu",
     "consumeByTemplate": "Datum a čas spotřeby: {dateTime}",
-    "@hello": {
+    "@consumeByTemplate": {
       "placeholders": {
         "dateTime": {
           "type": "String",
@@ -143,10 +144,23 @@
     "charity": "Charita",
     "canteen": "Jídelna",
     "numberOfBoxes": "Počet krabiček",
+    "totalCountOfBoxes": "Celkem krabiček: {quantity}",
+    "@totalCountOfBoxes": {
+      "placeholders": {
+        "quantity": {
+          "type": "num",
+          "example": "42"
+        }
+      }
+    },
     "sameNumberOfServingsAsBoxes": "Počet porcí a krabiček je stejný",
     "sentOn": "Odesláno dne",
     "shippingOfBoxes": "Vratka krabiček",
     "shippingOfBoxesToCanteen": "Vratka krabiček do jídelny",
+    "shippingOfBoxesEmptyTitle": "Vratku není možné zadat",
+    "shippingOfBoxesEmptyDescription": "V tuto chvíli není možné vratku krabiček do jídelny zadat, protože nejsou k dispozici žádné volné krabičky.",
+    "shippingOfBoxesEmptyAction": "Zpět na úvod",
+    "shippingOfBoxesEmptyFormMessage": "Nebyly vybrány žádné krabičky k vrácení.",
     "orderShipping": "Vrátit krabičky",
     "addAnotherBoxType": "Přidat další typ krabičky",
     "passwordReset": "Zapomenuté heslo",

@@ -84,7 +84,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   List<Widget> _buildFoodNamePart(int index) {
     return [
       SectionHeader(
-        text: context.l10n!.foodName,
+        title: Text(
+          context.l10n!.foodName,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       _buildTextField(
@@ -105,7 +108,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.allergens.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.allergens,
+        title: Text(
+          context.l10n!.allergens,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         actionIcon: const Icon(Icons.info_outline),
         onActionPressed: () => FoodAllergensBottomSheet.show(context),
       ),
@@ -129,7 +135,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.foodCategory.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.foodCategory,
+        title: Text(
+          context.l10n!.foodCategory,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       SingleSelectChips(
@@ -155,7 +164,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.temperature.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.foodTemperature,
+        title: Text(
+          context.l10n!.foodTemperature,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
@@ -182,7 +194,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.boxType.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.boxType,
+        title: Text(
+          context.l10n!.boxType,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       SingleSelectChips<FoodBoxType>(
@@ -205,7 +220,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   List<Widget> _buildNumberOfServingsPart(int index) {
     return [
       SectionHeader(
-        text: context.l10n!.numberOfServings,
+        title: Text(
+          context.l10n!.boxType,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
@@ -246,7 +264,7 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
               ),
               onValidation: widget.formValidationManager.wrapValidator(
                 FormFieldType.numberOfBoxes.createFormFieldKey(index),
-                FieldValidationUtils.getBoxNumberCounterValidator(context),
+                FieldValidationUtils.getBoxNumberValidator(context),
               ),
               initialValue: widget.foodSections[index].numberOfBoxes ?? 0,
               onChanged: (val) {
@@ -287,7 +305,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.preparedAt.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.preparedAt,
+        title: Text(
+          context.l10n!.preparedAt,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       FoodDateTimeChips(
@@ -312,7 +333,10 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     final formFieldKey = FormFieldType.consumeBy.createFormFieldKey(index);
     return [
       SectionHeader(
-        text: context.l10n!.consumeBy,
+        title: Text(
+          context.l10n!.consumeBy,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         actionIcon: const Icon(Icons.today_rounded),
         onActionPressed: () async {
           final now = DateTime.now();
