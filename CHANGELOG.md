@@ -11,6 +11,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-308** Add packaged food category.
 
 ### Fixed
+- **ZOB-321** Fix exception in counter.
 
 ### Changed
 - **ZOB-273** Adjust web layout for login screen.
