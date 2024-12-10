@@ -10,6 +10,7 @@ project 'Runner', {
   'Debug-prod' => :debug,
   'Release-dev' => :release,
   'Release-stage' => :release,
+  'Release-rc' => :release,
   'Release-prod' => :release,
   'Profile-dev' => :release,
   'Profile-stage' => :release,
