@@ -2,6 +2,17 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.5.0]
+### Fixed
+
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
 ## [1.4.0]
 ### Fixed
 - **ZOB-275** Fix error when there are more than 30 meals in delivery.
@@ -23,8 +34,6 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-291** Adjust web layout for app terms screen.
 - **ZOB-306** Update UI in box shipping form.
 - **ZOB-307** Update web metadata.
-
-### Removed
 
 ## [1.3.0]
 ### Added
