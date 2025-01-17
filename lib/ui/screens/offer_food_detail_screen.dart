@@ -8,7 +8,8 @@ import 'package:zachranobed/features/foodboxes/domain/repository/food_box_reposi
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/food_section_fields.dart';
+import 'package:zachranobed/ui/widgets/dialog.dart';
+import 'package:zachranobed/ui/widgets/food_info_fields.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
@@ -29,23 +30,18 @@ class OfferFoodDetailScreen extends StatefulWidget {
 }
 
 class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
-  late FoodInfo foodInfo;
-  late List<FoodInfo> allFoodInfos;
+  late FoodInfo _foodInfoPending;
+
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
-  late List<bool> _checkboxValues;
   final List<FoodBoxType> _foodBoxTypes = [];
 
   @override
   void initState() {
     super.initState();
-    foodInfo = widget.editedFoodInfo;
-    allFoodInfos = widget.allFoodInfos;
-    _checkboxValues = [
-      foodInfo.numberOfBoxes == foodInfo.numberOfServings ||
-          foodInfo.numberOfBoxes == null
-    ];
+
+    _foodInfoPending = widget.editedFoodInfo;
 
     _foodBoxRepository.getTypes(includeDisposable: true).then((value) {
       setState(() {
@@ -74,7 +70,6 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   Widget _offerFoodDetailScreenContent({
     required Axis actionButtonsAxis,
   }) {
-    final foodSections = <FoodInfo>[foodInfo];
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -99,11 +94,15 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    FoodSectionFields(
+                    FoodInfoFields(
                       formValidationManager: _formValidationManager,
-                      foodSections: foodSections,
-                      checkboxValues: _checkboxValues,
+                      foodInfo: _foodInfoPending,
                       boxTypes: _foodBoxTypes,
+                      onChanged: (food) {
+                        setState(() {
+                          _foodInfoPending = food;
+                        });
+                      },
                     ),
                     const SizedBox(height: GapSize.m),
                     Align(
@@ -115,24 +114,22 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                             : MainAxisAlignment.spaceBetween,
                         children: [
                           ZOButton(
+                            icon: Icons.check,
                             text: context.l10n!.offerFoodDetailSaveButton,
                             minimumSize: ZOButtonSize.large(
                               fullWidth: actionButtonsAxis == Axis.vertical,
                             ),
-                            onPressed: () {
-                              _onConfirmationButtonPressed(foodSections.first);
-                            },
+                            onPressed: _onConfirmationButtonPressed,
                           ),
                           const SizedBox.square(dimension: GapSize.xs),
                           ZOButton(
-                            text: context.l10n!.cancel,
-                            type: ZOButtonType.cancel,
+                            icon: Icons.delete_outlined,
+                            text: context.l10n!.offerFoodDetailRemoveButton,
+                            type: ZOButtonType.tertiary,
                             minimumSize: ZOButtonSize.large(
                               fullWidth: actionButtonsAxis == Axis.vertical,
                             ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () => _onRemoveFoodPressed(false),
                           ),
                         ],
                       ),
@@ -148,25 +145,27 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     );
   }
 
-  void _onConfirmationButtonPressed(FoodInfo newFoodInfo) async {
+  void _onConfirmationButtonPressed() async {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    int index = allFoodInfos.indexWhere((element) => element.id == foodInfo.id);
+    final index = widget.allFoodInfos.indexWhere(
+      (element) => element.id == _foodInfoPending.id,
+    );
     if (index > -1) {
-      allFoodInfos[index] = newFoodInfo;
+      widget.allFoodInfos[index] = _foodInfoPending;
     }
 
     if (_formKey.currentState!.validate()) {
-      if (await allFoodInfos.verifyAvailableBoxCount(
-          context, _foodBoxRepository)) {
+      if (await widget.allFoodInfos
+          .verifyAvailableBoxCount(context, _foodBoxRepository)) {
         if (mounted) {
           Navigator.pop(context);
           context.router
-              .replace(OfferFoodOverviewRoute(foodInfos: allFoodInfos));
+              .replace(OfferFoodOverviewRoute(foodInfos: widget.allFoodInfos));
         }
       } else {
         if (mounted) {
@@ -185,5 +184,36 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
         _formValidationManager.scrollToFirstError();
       }
     }
+  }
+
+  void _onRemoveFoodPressed(bool removeConfirmed) {
+    if (!removeConfirmed) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ZODialog(
+            criticalConfirmStyle: true,
+            title: context.l10n!.offerFoodFormRemoveDialogTitle,
+            content: context.l10n!.offerFoodFormRemoveDialogContent,
+            confirmText: context.l10n!.offerFoodFormRemoveDialogConfirmAction,
+            cancelText: context.l10n!.commonCancel,
+            onConfirmPressed: () {
+              Navigator.of(context).pop(false);
+              _onRemoveFoodPressed(true);
+            },
+            onCancelPressed: () => Navigator.of(context).pop(false),
+          );
+        },
+      );
+      return;
+    }
+
+    widget.allFoodInfos.removeWhere(
+      (element) => element.id == _foodInfoPending.id,
+    );
+
+    Navigator.pop(context);
+    context.router
+        .replace(OfferFoodOverviewRoute(foodInfos: widget.allFoodInfos));
   }
 }

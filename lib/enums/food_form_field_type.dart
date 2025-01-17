@@ -13,10 +13,3 @@ enum FormFieldType {
   preparedAt,
   consumeBy,
 }
-
-/// Extension on [FormFieldType] to generate a unique key for each form field.
-extension FormFieldTypeExtension on FormFieldType {
-  String createFormFieldKey(int index) {
-    return "form$index-field${this.name.toUpperCase()}";
-  }
-}

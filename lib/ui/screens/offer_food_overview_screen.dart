@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
-import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -14,10 +12,11 @@ import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/empty_page.dart';
+import 'package:zachranobed/ui/widgets/food_info_row.dart';
 import 'package:zachranobed/ui/widgets/info_banner.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/ui/widgets/trailing_icon_row.dart';
 
 @RoutePage()
 class OfferFoodOverviewScreen extends StatefulWidget {
@@ -97,44 +96,92 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                   overflow: TextOverflow.clip,
                 ),
               ),
-              InfoBanner.text(
-                backgroundColor: ZOColors.amberTransparent,
-                message: context.l10n!.offerFoodOverviewBanner,
-              ),
-              const SizedBox(height: GapSize.m),
-              if (_isLoading)
-                const Center(child: CircularProgressIndicator())
-              else
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: WidgetStyle.padding,
-                  ),
-                  child: Column(
-                    children: [
-                      _offerFoodListSection(
-                        context,
-                        foodInfos: foodInfos,
-                        foodBoxTypes: _foodBoxTypes,
-                      ),
-                      const SizedBox(height: GapSize.m),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ZOButton(
-                          text: context.l10n!.offerFood,
-                          minimumSize: ZOButtonSize.large(
-                            fullWidth: useWideButton,
-                          ),
-                          onPressed: _onConfirmationButtonPressed,
-                        ),
-                      ),
-                      const SizedBox(height: GapSize.xs),
-                    ],
-                  ),
+              if (foodInfos.isEmpty)
+                _emptyScreenContent(useWideButton)
+              else ...[
+                InfoBanner.text(
+                  backgroundColor: ZOColors.amberTransparent,
+                  message: context.l10n!.offerFoodOverviewBanner,
                 ),
+                const SizedBox(height: GapSize.m),
+                if (_isLoading)
+                  const Center(child: CircularProgressIndicator())
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: WidgetStyle.padding,
+                    ),
+                    child: Column(
+                      children: [
+                        _offerFoodListSection(
+                          context,
+                          foodInfos: foodInfos,
+                          foodBoxTypes: _foodBoxTypes,
+                        ),
+                        const SizedBox(height: GapSize.m),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ZOButton(
+                            text: context.l10n!.offerFood,
+                            minimumSize: ZOButtonSize.large(
+                              fullWidth: useWideButton,
+                            ),
+                            onPressed: _onConfirmationButtonPressed,
+                          ),
+                        ),
+                        const SizedBox(height: GapSize.xs),
+                      ],
+                    ),
+                  ),
+              ]
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _emptyScreenContent(bool useWideButton) {
+    return Column(
+      children: [
+        EmptyPage(
+          vectorImagePath: ZOStrings.overviewPath,
+          title: context.l10n!.offerFoodOverviewEmptyTitle,
+          description: context.l10n!.offerFoodOverviewEmptyDescription,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
+          child: Column(
+            children: [
+              ZOButton(
+                text: context.l10n!.offerFoodOverviewEmptyAction,
+                icon: Icons.add,
+                minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
+                onPressed: () {
+                  context.router.pushAndPopUntil(
+                    const HomeRoute(),
+                    predicate: (route) => false,
+                  );
+                  context.navigateTo(const OfferFoodRoute());
+                },
+              ),
+              const SizedBox(height: GapSize.xs),
+              ZOButton(
+                text: context.l10n!.commonClose,
+                type: ZOButtonType.textPrimary,
+                minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
+                onPressed: () {
+                  context.router.pushAndPopUntil(
+                    const HomeRoute(),
+                    predicate: (route) => false,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: GapSize.xl),
+      ],
     );
   }
 
@@ -187,51 +234,22 @@ Widget _offerFoodListSection(
   if (foodInfos.isEmpty) {
     return const SizedBox();
   }
-  return OfferFoodOverviewSection(
-    items: foodInfos
-        .mapIndexed((index, food) {
-          // Set description only for non-packaged food, because packaged food
-          // has no boxes to show in description
-          String? description;
-          if (food.foodCategory?.type != FoodCategoryType.packaged) {
-            final boxes = food.numberOfBoxes ?? food.numberOfServings;
-            description = "${boxes}x ${food.foodBoxType?.name ?? ""}";
-          }
-
-          // Set count based on the number of servings or packages (for
-          // packaged food category)
-          final count = food.numberOfServings ?? food.numberOfPackages;
-
-          return TrailingIconRow(
-              title: food.dishName.toString(),
-              description: description,
-              trailInfo: "$count ks",
-              trailingIcon: Icons.edit,
-              onTap: () {
-                context.router.navigate(OfferFoodDetailRoute(
-                    editedFoodInfo: food, allFoodInfos: foodInfos));
-              });
-        })
+  return Column(
+    children: foodInfos
+        .map(
+          (food) => FoodInfoRow(
+            foodInfo: food,
+            onPressed: () {
+              context.router.navigate(
+                OfferFoodDetailRoute(
+                  editedFoodInfo: food,
+                  allFoodInfos: foodInfos,
+                ),
+              );
+            },
+          ),
+        )
         .separated(const SizedBox(height: 8.0))
         .toList(),
   );
-}
-
-class OfferFoodOverviewSection extends StatelessWidget {
-  final List<Widget> items;
-
-  const OfferFoodOverviewSection({
-    super.key,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (var item in items) item,
-        const SizedBox(height: GapSize.m),
-      ],
-    );
-  }
 }
