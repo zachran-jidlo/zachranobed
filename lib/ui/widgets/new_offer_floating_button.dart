@@ -61,7 +61,7 @@ class NewOfferFloatingButton extends StatelessWidget {
           title: context.l10n!.newOfferDialogTitle,
           content: context.l10n!.newOfferDialogContent,
           confirmText: context.l10n!.wantToDonate,
-          cancelText: context.l10n!.cancel,
+          cancelText: context.l10n!.commonCancel,
           onConfirmPressed: () async {
             context.read<DeliveryNotifier>().updateDeliveryState(DeliveryState.accepted);
             if (context.mounted) {
@@ -88,7 +88,7 @@ class NewOfferFloatingButton extends StatelessWidget {
         builder: (context) => ZODialog(
           title: context.l10n!.newOfferDialogTitle,
           content: context.l10n!.cantOfferAnymoreDialogContent,
-          cancelText: context.l10n!.cancel,
+          cancelText: context.l10n!.commonCancel,
           onCancelPressed: () => Navigator.of(context).pop(false),
         ),
       ),

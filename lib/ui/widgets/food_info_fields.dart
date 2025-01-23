@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
@@ -15,396 +14,57 @@ import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_chips.dart';
 import 'package:zachranobed/ui/widgets/food_date_time_chips.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
-import 'package:zachranobed/ui/widgets/remove_section_button.dart';
 import 'package:zachranobed/ui/widgets/section_header.dart';
 import 'package:zachranobed/ui/widgets/single_select_chips.dart';
 import 'package:zachranobed/ui/widgets/text_field.dart';
 
-class FoodSectionFields extends StatefulWidget {
+class FoodInfoFields extends StatefulWidget {
+  final FoodInfo foodInfo;
+  final Function(FoodInfo) onChanged;
+
   final FormValidationManager formValidationManager;
-  final List<FoodInfo> foodSections;
-  final List<bool> checkboxValues;
   final List<FoodBoxType> boxTypes;
 
-  const FoodSectionFields({
+  const FoodInfoFields({
     super.key,
+    required this.foodInfo,
+    required this.onChanged,
     required this.formValidationManager,
-    required this.foodSections,
-    required this.checkboxValues,
     required this.boxTypes,
   });
 
   @override
-  State<FoodSectionFields> createState() => _FoodSectionFieldsState();
+  State<FoodInfoFields> createState() => _FoodInfoFieldsState();
 }
 
-class _FoodSectionFieldsState extends State<FoodSectionFields> {
+class _FoodInfoFieldsState extends State<FoodInfoFields> {
+  late bool _numberOfServingsMatchesNumberOfBoxes;
+
+  @override
+  void initState() {
+    super.initState();
+    _initInternalState();
+  }
+
+  @override
+  void didUpdateWidget(covariant FoodInfoFields oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Collapse boxes section when displaying a new FoodInfo
+    if (oldWidget.foodInfo.id != widget.foodInfo.id) {
+      setState(() {
+        _initInternalState();
+        widget.formValidationManager.dispose();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: widget.foodSections.length,
-      itemBuilder: (context, index) {
-        return _buildFoodSection(
-          widget.foodSections[index],
-          index,
-        );
-      },
-    );
-  }
-
-  Widget _buildTextField({
-    required int index,
-    required FormFieldType type,
-    required final String label,
-    required final String? Function(String?) onValidation,
-    final TextInputType? inputType,
-    final List<TextInputFormatter>? textInputFormatters,
-    final Function(String)? onChanged,
-    final String? initialValue,
-    final String? supportingText,
-  }) {
-    final formFieldKey = type.createFormFieldKey(index);
-    return ZOTextField(
-      label: label,
-      focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-      onValidation: widget.formValidationManager.wrapValidator(
-        formFieldKey,
-        onValidation,
-      ),
-      inputType: inputType,
-      textInputFormatters: textInputFormatters,
-      onChanged: onChanged,
-      initialValue: initialValue,
-      supportingText: supportingText,
-    );
-  }
-
-  List<Widget> _buildFoodNamePart(int index) {
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.foodName,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      _buildTextField(
-        index: index,
-        type: FormFieldType.foodName,
-        label: context.l10n!.foodName,
-        onValidation: FieldValidationUtils.getFoodNameValidator(context),
-        onChanged: (val) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(dishName: val);
-        },
-        initialValue: widget.foodSections[index].dishName,
-      ),
-    ];
-  }
-
-  List<Widget> _buildFoodAllergensPart(int index) {
-    final formFieldKey = FormFieldType.allergens.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.allergens,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        actionIcon: const Icon(Icons.info_outline),
-        onActionPressed: () => FoodAllergensBottomSheet.show(context),
-      ),
-      const SizedBox(height: GapSize.xs),
-      FoodAllergensChips(
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        selection: widget.foodSections[index].allergens ?? [],
-        onSelectionChanged: (allergens) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(allergens: allergens);
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getFoodAllergensValidator(context),
-        ),
-      ),
-    ];
-  }
-
-  List<Widget> _buildFoodCategoryPart(int index) {
-    final formFieldKey = FormFieldType.foodCategory.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.foodCategory,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      SingleSelectChips(
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: FoodCategory.createValues(context),
-        selection: widget.foodSections[index].foodCategory,
-        optionLabel: (e) => e.name,
-        onSelectionChanged: (value) {
-          setState(() {
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWithFoodCategory(value);
-          });
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getFoodCategoryValidator(context),
-        ),
-      )
-    ];
-  }
-
-  List<Widget> _buildTemperaturePart(int index) {
-    final formFieldKey = FormFieldType.temperature.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.foodTemperature,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
-        label: context.l10n!.foodTemperatureWithCelsius,
-        minValue: Constants.foodTemperatureMin,
-        maxValue: Constants.foodTemperatureMax,
-        noValueFallback: Constants.foodTemperatureInitial,
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getFoodTemperatureValidator(context),
-        ),
-        initialValue: widget.foodSections[index].foodTemperature ??
-            Constants.foodTemperatureInitial,
-        onChanged: (val) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(foodTemperature: val);
-        },
-      ),
-    ];
-  }
-
-  List<Widget> _buildBoxTypesPart(int index) {
-    final formFieldKey = FormFieldType.boxType.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.boxType,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      SingleSelectChips<FoodBoxType>(
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: widget.boxTypes,
-        selection: widget.foodSections[index].foodBoxType,
-        optionLabel: (e) => e.name,
-        onSelectionChanged: (value) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(foodBoxType: value);
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getBoxTypeValidator(context),
-        ),
-      )
-    ];
-  }
-
-  List<Widget> _buildNumberOfServingsPart(int index) {
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.boxType,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
-        label: context.l10n!.numberOfServings,
-        focusNode: widget.formValidationManager.getFocusNode(
-          FormFieldType.numberOfServings.createFormFieldKey(index),
-        ),
-        onValidation: widget.formValidationManager.wrapValidator(
-          FormFieldType.numberOfServings.createFormFieldKey(index),
-          FieldValidationUtils.getServingsValidator(context),
-        ),
-        initialValue: widget.foodSections[index].numberOfServings ?? 0,
-        onChanged: (val) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(numberOfServings: val);
-        },
-      ),
-      _buildGap(),
-      ZOCheckbox.plain(
-        isChecked: widget.checkboxValues[index],
-        onChanged: (bool? value) {
-          setState(() {
-            widget.checkboxValues[index] = value!;
-            widget.foodSections[index] =
-                widget.foodSections[index].copyWith(numberOfBoxes: null);
-          });
-        },
-        title: context.l10n!.sameNumberOfServingsAsBoxes,
-      ),
-      if (!widget.checkboxValues[index])
-        Column(
-          children: [
-            _buildGap(),
-            CounterField(
-              label: context.l10n!.numberOfBoxes,
-              focusNode: widget.formValidationManager.getFocusNode(
-                FormFieldType.numberOfBoxes.createFormFieldKey(index),
-              ),
-              onValidation: widget.formValidationManager.wrapValidator(
-                FormFieldType.numberOfBoxes.createFormFieldKey(index),
-                FieldValidationUtils.getBoxNumberValidator(context),
-              ),
-              initialValue: widget.foodSections[index].numberOfBoxes ?? 0,
-              onChanged: (val) {
-                widget.foodSections[index] =
-                    widget.foodSections[index].copyWith(numberOfBoxes: val);
-              },
-            ),
-          ],
-        )
-    ];
-  }
-
-  List<Widget> _buildNumberOfPackages(int index) {
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.numberOfPackages,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
-        label: context.l10n!.numberOfPackages,
-        focusNode: widget.formValidationManager.getFocusNode(
-          FormFieldType.numberOfPackages.createFormFieldKey(index),
-        ),
-        onValidation: widget.formValidationManager.wrapValidator(
-          FormFieldType.numberOfPackages.createFormFieldKey(index),
-          FieldValidationUtils.getPackagesValidator(context),
-        ),
-        initialValue: widget.foodSections[index].numberOfPackages ?? 0,
-        onChanged: (val) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(numberOfPackages: val);
-        },
-      ),
-    ];
-  }
-
-  List<Widget> _buildPreparedAtPart(int index) {
-    final formFieldKey = FormFieldType.preparedAt.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.preparedAt,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      FoodDateTimeChips(
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: FoodDateTimeOption.createPastOptions(context),
-        selection: widget.foodSections[index].preparedAt,
-        onSelectionChanged: (value) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(preparedAt: value);
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getPreparedAtValidator(context),
-        ),
-        formatSelectedDate: (e) => null,
-        hasTime: false,
-      ),
-    ];
-  }
-
-  List<Widget> _buildConsumeByPart(int index) {
-    final formFieldKey = FormFieldType.consumeBy.createFormFieldKey(index);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.consumeBy,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        actionIcon: const Icon(Icons.today_rounded),
-        onActionPressed: () async {
-          final now = DateTime.now();
-          final date = await DateTimePicker.pickDateTime(
-            context: context,
-            initial: widget.foodSections[index].consumeBy?.getDate() ??
-                _consumeByInitialTime(),
-            minimum: now,
-          );
-
-          if (date != null) {
-            setState(() {
-              final consumeBy = FoodDateTimeSpecified(date: date);
-              widget.foodSections[index] =
-                  widget.foodSections[index].copyWith(consumeBy: consumeBy);
-            });
-          }
-        },
-      ),
-      const SizedBox(height: GapSize.xs),
-      FoodDateTimeChips(
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: FoodDateTimeOption.createFutureOptions(context),
-        selection: widget.foodSections[index].consumeBy,
-        onSelectionChanged: (value) {
-          widget.foodSections[index] =
-              widget.foodSections[index].copyWith(consumeBy: value);
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getConsumeByValidator(context),
-        ),
-        formatSelectedDate: context.l10n!.consumeByTemplate,
-        initialTime: _consumeByInitialTime,
-      ),
-    ];
-  }
-
-  Widget _buildFoodSection(
-    FoodInfo offeredFood,
-    int index,
-  ) {
-    final foodType = widget.foodSections[index].foodCategory?.type;
+    const index = 0;
+    final foodType = widget.foodInfo.foodCategory?.type;
     return Column(
-      key: ValueKey(offeredFood),
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '${context.l10n!.dish} ${index + 1}',
-              style: const TextStyle(fontSize: FontSize.m),
-            ),
-            if (index != 0)
-              RemoveSectionButton(
-                onClick: () {
-                  setState(() {
-                    widget.foodSections.removeAt(index);
-                    widget.checkboxValues.removeAt(index);
-                  });
-                },
-              ),
-          ],
-        ),
-        _buildGap(),
         ..._buildFoodNamePart(index),
         _buildGap(),
         ..._buildFoodAllergensPart(index),
@@ -435,6 +95,305 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
     );
   }
 
+  void _initInternalState() {
+    _numberOfServingsMatchesNumberOfBoxes =
+        widget.foodInfo.numberOfBoxes == widget.foodInfo.numberOfServings ||
+            widget.foodInfo.numberOfBoxes == null;
+  }
+
+  List<Widget> _buildFoodNamePart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.foodName);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.foodName,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      ZOTextField(
+        key: ValueKey(formFieldKey),
+        label: context.l10n!.foodName,
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodNameValidator(context),
+        ),
+        onChanged: (val) {
+          widget.onChanged(widget.foodInfo.copyWith(dishName: val));
+        },
+        initialValue: widget.foodInfo.dishName,
+      )
+    ];
+  }
+
+  List<Widget> _buildFoodAllergensPart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.allergens);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.allergens,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        actionIcon: const Icon(Icons.info_outline),
+        onActionPressed: () => FoodAllergensBottomSheet.show(context),
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodAllergensChips(
+        key: ValueKey(formFieldKey),
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        selection: widget.foodInfo.allergens ?? [],
+        onSelectionChanged: (allergens) {
+          widget.onChanged(widget.foodInfo.copyWith(allergens: allergens));
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodAllergensValidator(context),
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> _buildFoodCategoryPart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.foodCategory);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.foodCategory,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      SingleSelectChips(
+        key: ValueKey(formFieldKey),
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodCategory.createValues(context),
+        selection: widget.foodInfo.foodCategory,
+        optionLabel: (e) => e.name,
+        onSelectionChanged: (value) {
+          widget.onChanged(widget.foodInfo.copyWithFoodCategory(value));
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodCategoryValidator(context),
+        ),
+      )
+    ];
+  }
+
+  List<Widget> _buildTemperaturePart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.temperature);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.foodTemperature,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        key: ValueKey(formFieldKey),
+        label: context.l10n!.foodTemperatureWithCelsius,
+        minValue: Constants.foodTemperatureMin,
+        maxValue: Constants.foodTemperatureMax,
+        noValueFallback: Constants.foodTemperatureInitial,
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getFoodTemperatureValidator(context),
+        ),
+        initialValue:
+            widget.foodInfo.foodTemperature ?? Constants.foodTemperatureInitial,
+        onChanged: (val) {
+          widget.onChanged(widget.foodInfo.copyWith(foodTemperature: val));
+        },
+      ),
+    ];
+  }
+
+  List<Widget> _buildBoxTypesPart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.boxType);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.boxType,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      SingleSelectChips<FoodBoxType>(
+        key: ValueKey(formFieldKey),
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: widget.boxTypes,
+        selection: widget.foodInfo.foodBoxType,
+        optionLabel: (e) => e.name,
+        onSelectionChanged: (value) {
+          widget.onChanged(widget.foodInfo.copyWith(foodBoxType: value));
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getBoxTypeValidator(context),
+        ),
+      )
+    ];
+  }
+
+  List<Widget> _buildNumberOfServingsPart(int index) {
+    final keyServings = _createFormFieldKey(FormFieldType.numberOfServings);
+    final keyBoxes = _createFormFieldKey(FormFieldType.numberOfBoxes);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.numberOfServings,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        key: ValueKey(keyServings),
+        label: context.l10n!.numberOfServings,
+        focusNode: widget.formValidationManager.getFocusNode(keyServings),
+        onValidation: widget.formValidationManager.wrapValidator(
+          keyServings,
+          FieldValidationUtils.getServingsValidator(context),
+        ),
+        initialValue: widget.foodInfo.numberOfServings ?? 0,
+        onChanged: (val) {
+          widget.onChanged(widget.foodInfo.copyWith(numberOfServings: val));
+        },
+      ),
+      _buildGap(),
+      ZOCheckbox.plain(
+        isChecked: _numberOfServingsMatchesNumberOfBoxes,
+        onChanged: (bool? value) {
+          setState(() {
+            _numberOfServingsMatchesNumberOfBoxes = value!;
+            widget.onChanged(widget.foodInfo.copyWith(numberOfBoxes: null));
+          });
+        },
+        title: context.l10n!.sameNumberOfServingsAsBoxes,
+      ),
+      if (!_numberOfServingsMatchesNumberOfBoxes)
+        Column(
+          children: [
+            _buildGap(),
+            CounterField(
+              key: ValueKey(keyBoxes),
+              label: context.l10n!.numberOfBoxes,
+              focusNode: widget.formValidationManager.getFocusNode(keyBoxes),
+              onValidation: widget.formValidationManager.wrapValidator(
+                keyBoxes,
+                FieldValidationUtils.getBoxNumberValidator(context),
+              ),
+              initialValue: widget.foodInfo.numberOfBoxes ?? 0,
+              onChanged: (val) {
+                widget.onChanged(widget.foodInfo.copyWith(numberOfBoxes: val));
+              },
+            ),
+          ],
+        )
+    ];
+  }
+
+  List<Widget> _buildNumberOfPackages(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.numberOfPackages);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.numberOfPackages,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      CounterField(
+        key: ValueKey(formFieldKey),
+        label: context.l10n!.numberOfPackages,
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getPackagesValidator(context),
+        ),
+        initialValue: widget.foodInfo.numberOfPackages ?? 0,
+        onChanged: (val) {
+          widget.onChanged(widget.foodInfo.copyWith(numberOfPackages: val));
+        },
+      ),
+    ];
+  }
+
+  List<Widget> _buildPreparedAtPart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.preparedAt);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.preparedAt,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodDateTimeChips(
+        key: ValueKey(formFieldKey),
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodDateTimeOption.createPastOptions(context),
+        selection: widget.foodInfo.preparedAt,
+        onSelectionChanged: (value) {
+          widget.onChanged(widget.foodInfo.copyWith(preparedAt: value));
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getPreparedAtValidator(context),
+        ),
+        formatSelectedDate: (e) => null,
+        hasTime: false,
+      ),
+    ];
+  }
+
+  List<Widget> _buildConsumeByPart(int index) {
+    final formFieldKey = _createFormFieldKey(FormFieldType.consumeBy);
+    return [
+      SectionHeader(
+        title: Text(
+          context.l10n!.consumeBy,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        actionIcon: const Icon(Icons.today_rounded),
+        onActionPressed: () async {
+          final now = DateTime.now();
+          final date = await DateTimePicker.pickDateTime(
+            context: context,
+            initial:
+                widget.foodInfo.consumeBy?.getDate() ?? _consumeByInitialTime(),
+            minimum: now,
+          );
+
+          if (date != null) {
+            final consumeBy = FoodDateTimeSpecified(date: date);
+            widget.onChanged(widget.foodInfo.copyWith(consumeBy: consumeBy));
+          }
+        },
+      ),
+      const SizedBox(height: GapSize.xs),
+      FoodDateTimeChips(
+        // Use a compound key, so that state is correctly updated when value set
+        // from [DateTimePicker.pickDateTime] above
+        key: ValueKey("$formFieldKey-${widget.foodInfo.consumeBy.hashCode}"),
+        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
+        options: FoodDateTimeOption.createFutureOptions(context),
+        selection: widget.foodInfo.consumeBy,
+        onSelectionChanged: (value) {
+          widget.onChanged(widget.foodInfo.copyWith(consumeBy: value));
+        },
+        onValidation: widget.formValidationManager.wrapValidator(
+          formFieldKey,
+          FieldValidationUtils.getConsumeByValidator(context),
+        ),
+        formatSelectedDate: context.l10n!.consumeByTemplate,
+        initialTime: _consumeByInitialTime,
+      ),
+    ];
+  }
+
   Widget _buildGap() {
     return const SizedBox(height: GapSize.xl);
   }
@@ -442,5 +401,9 @@ class _FoodSectionFieldsState extends State<FoodSectionFields> {
   DateTime _consumeByInitialTime() {
     const offset = Duration(minutes: Constants.foodConsumeByMinutesOffset);
     return DateTime.now().add(offset);
+  }
+
+  String _createFormFieldKey(FormFieldType type) {
+    return "food${widget.foodInfo.id}-field${type.name.toUpperCase()}";
   }
 }

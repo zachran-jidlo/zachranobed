@@ -19,6 +19,9 @@ class TrailingIconRow extends StatelessWidget {
   /// The icon displayed at the trailing end.
   final IconData trailingIcon;
 
+  /// The background color of the row.
+  final Color? background;
+
   /// The function to be called when the row is tapped.
   final VoidCallback? onTap;
 
@@ -28,6 +31,7 @@ class TrailingIconRow extends StatelessWidget {
     required this.description,
     required this.trailInfo,
     required this.trailingIcon,
+    this.background,
     this.onTap,
   });
 
@@ -38,6 +42,7 @@ class TrailingIconRow extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          color: background,
           border: Border.all(
             color: ZOColors.borderColor,
             width: 1,

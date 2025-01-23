@@ -6,6 +6,7 @@ class ZOButton extends StatelessWidget {
   final VoidCallback onPressed;
   final ZOButtonType type;
   final IconData? icon;
+  final IconAlignment? iconAlignment;
   final Size? minimumSize;
 
   const ZOButton({
@@ -14,6 +15,7 @@ class ZOButton extends StatelessWidget {
     required this.onPressed,
     this.type = ZOButtonType.primary,
     this.icon,
+    this.iconAlignment,
     this.minimumSize = ZOButtonSize.largeMatchParent,
   });
 
@@ -26,20 +28,64 @@ class ZOButton extends StatelessWidget {
       shape: const StadiumBorder(),
       textStyle: const TextStyle(fontSize: FontSize.xs),
       elevation: 0.0,
+      side: BorderSide(width: 1, color: type.outlineColor),
     );
 
+    if (type.outlineColor != Colors.transparent) {
+      if (icon != null) {
+        return OutlinedButton.icon(
+          style: style,
+          onPressed: onPressed,
+          icon: Icon(
+            icon,
+            size: 18.0,
+          ),
+          iconAlignment: iconAlignment ?? IconAlignment.start,
+          label: Text(text),
+        );
+      } else {
+        return OutlinedButton(
+          style: style,
+          onPressed: onPressed,
+          child: Text(text),
+        );
+      }
+    }
+
+    if (type.backgroundColor != Colors.transparent) {
+      if (icon != null) {
+        return ElevatedButton.icon(
+          style: style,
+          onPressed: onPressed,
+          icon: Icon(
+            icon,
+            size: 18.0,
+          ),
+          iconAlignment: iconAlignment ?? IconAlignment.start,
+          label: Text(text),
+        );
+      } else {
+        return ElevatedButton(
+          style: style,
+          onPressed: onPressed,
+          child: Text(text),
+        );
+      }
+    }
+
     if (icon != null) {
-      return ElevatedButton.icon(
+      return TextButton.icon(
         style: style,
         onPressed: onPressed,
         icon: Icon(
           icon,
           size: 18.0,
         ),
+        iconAlignment: iconAlignment ?? IconAlignment.start,
         label: Text(text),
       );
     } else {
-      return ElevatedButton(
+      return TextButton(
         style: style,
         onPressed: onPressed,
         child: Text(text),
@@ -49,16 +95,22 @@ class ZOButton extends StatelessWidget {
 }
 
 enum ZOButtonType {
-  primary(ZOColors.primary, ZOColors.onPrimary),
-  secondary(ZOColors.secondary, ZOColors.onSecondary),
-  tertiary(Colors.white, ZOColors.onPrimaryLight),
-  success(ZOColors.success, ZOColors.onSuccess),
-  cancel(Colors.white, ZOColors.primary);
+  primary(ZOColors.primary, ZOColors.onPrimary, Colors.transparent),
+  secondary(ZOColors.secondary, ZOColors.onSecondary, Colors.transparent),
+  tertiary(Colors.transparent, ZOColors.primary, ZOColors.outline),
+  success(ZOColors.success, ZOColors.onSuccess, Colors.transparent),
+  text(Colors.transparent, ZOColors.onPrimaryLight, Colors.transparent),
+  textPrimary(Colors.transparent, ZOColors.primary, Colors.transparent);
 
-  const ZOButtonType(this.backgroundColor, this.foregroundColor);
+  const ZOButtonType(
+    this.backgroundColor,
+    this.foregroundColor,
+    this.outlineColor,
+  );
 
   final Color backgroundColor;
   final Color foregroundColor;
+  final Color outlineColor;
 }
 
 /// Defines default size of a [ZOButton].

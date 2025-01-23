@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 6),
                   ZOButton(
                     text: context.l10n!.forgotPassword,
-                    type: ZOButtonType.tertiary,
+                    type: ZOButtonType.text,
                     onPressed: () {
                       context.router.push(const ForgotPasswordRoute());
                     },

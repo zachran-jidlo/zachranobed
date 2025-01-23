@@ -53,11 +53,13 @@ class FormValidationManager {
     }
 
     // Ensure the first field with an error is visible.
-    Scrollable.ensureVisible(
-      fieldContext,
-      alignment: scrollAlignment,
-      duration: scrollDuration,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Scrollable.ensureVisible(
+        fieldContext,
+        alignment: scrollAlignment,
+        duration: scrollDuration,
+      );
+    });
   }
 
   /// Disposes of all FocusNodes to free up resources.
@@ -65,6 +67,7 @@ class FormValidationManager {
     for (var s in _fieldStates.entries) {
       s.value.focusNode.dispose();
     }
+    _fieldStates.clear();
   }
 }
 

@@ -6,6 +6,7 @@ class ZODialog extends StatelessWidget {
   final String content;
   final String? confirmText;
   final String cancelText;
+  final bool criticalConfirmStyle;
   final VoidCallback? onConfirmPressed;
   final VoidCallback onCancelPressed;
 
@@ -17,6 +18,7 @@ class ZODialog extends StatelessWidget {
     required this.cancelText,
     this.onConfirmPressed,
     required this.onCancelPressed,
+    this.criticalConfirmStyle = false,
   });
 
   @override
@@ -32,12 +34,18 @@ class ZODialog extends StatelessWidget {
             ? TextButton(
                 onPressed: onConfirmPressed,
                 style: TextButton.styleFrom(
-                  backgroundColor: ZOColors.secondary,
+                  backgroundColor: criticalConfirmStyle
+                      ? ZOColors.primary
+                      : ZOColors.secondary,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 child: Text(
                   confirmText!,
-                  style: const TextStyle(color: ZOColors.onSecondary),
+                  style: TextStyle(
+                    color: criticalConfirmStyle
+                        ? ZOColors.onPrimary
+                        : ZOColors.onSecondary,
+                  ),
                 ),
               )
             : const SizedBox(),
