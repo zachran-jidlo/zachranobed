@@ -7,6 +7,7 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
+import 'package:zachranobed/ui/model/food_allergen.dart';
 import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/counter_field.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
@@ -136,7 +137,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         actionIcon: const Icon(Icons.info_outline),
-        onActionPressed: () => FoodAllergensBottomSheet.show(context),
+        onActionPressed: () {
+          FoodAllergensBottomSheet.show(context, FoodAllergen.all(context));
+        },
       ),
       const SizedBox(height: GapSize.xs),
       FoodAllergensChips(

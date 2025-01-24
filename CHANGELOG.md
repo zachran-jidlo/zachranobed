@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Added
+- **ZOB-326** Add a tooltip for allergens.
 
 ### Fixed
 
