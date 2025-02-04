@@ -10,6 +10,7 @@ import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/mapper/app_configuration_mapper.dart';
 import 'package:zachranobed/features/appTerms/di/app_terms_dependency_container.dart';
 import 'package:zachranobed/features/foodboxes/di/food_box_dependency_container.dart';
+import 'package:zachranobed/features/forceupdate/domain/di/force_update_dependency_container.dart';
 import 'package:zachranobed/features/login/di/login_dependency_container.dart';
 import 'package:zachranobed/features/menu/di/menu_dependency_container.dart';
 import 'package:zachranobed/features/offeredfood/di/offered_food_dependency_container.dart';
@@ -36,6 +37,7 @@ void main() async {
   OfferedFoodDependencyContainer.setup();
   MenuDependencyContainer.setup();
   ActivePairDependencyContainer.setup();
+  ForceUpdateDependencyContainer.setup();
 
   ZOLogger.init();
 

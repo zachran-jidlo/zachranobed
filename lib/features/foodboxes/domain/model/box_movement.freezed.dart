@@ -20,7 +20,9 @@ mixin _$BoxMovement {
   int get count => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BoxMovementCopyWith<BoxMovement> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$BoxMovementCopyWithImpl<$Res, $Val extends BoxMovement>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$BoxMovementImplCopyWithImpl<$Res>
       _$BoxMovementImpl _value, $Res Function(_$BoxMovementImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,7 +148,9 @@ class _$BoxMovementImpl implements _BoxMovement {
   @override
   int get hashCode => Object.hash(runtimeType, type, count, date);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
@@ -161,8 +169,11 @@ abstract class _BoxMovement implements BoxMovement {
   int get count;
   @override
   DateTime get date;
+
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,5 +1,5 @@
+import 'package:zachranobed/features/appConfiguration/domain/usecase/get_last_app_terms_version_use_case.dart';
 import 'package:zachranobed/services/auth_service.dart';
-import 'package:zachranobed/features/appConfiguration/data/get_last_app_terms_version_use_case.dart';
 
 class CheckIfAppTermsShouldBeShownUseCase {
   // TODO: - Do not use AuthService directly - it should be contained in repository
@@ -8,12 +8,11 @@ class CheckIfAppTermsShouldBeShownUseCase {
   final GetLastAppTermsVersionUseCase _getLastAppTermsVersionUseCase;
 
   CheckIfAppTermsShouldBeShownUseCase(
-      this.authService,
-      this._getLastAppTermsVersionUseCase
-  );
+      this.authService, this._getLastAppTermsVersionUseCase);
 
   Future<bool> invoke() async {
-    final lastAppTermsVersion = await _getLastAppTermsVersionUseCase.getLastAppTerms();
+    final lastAppTermsVersion =
+        await _getLastAppTermsVersionUseCase.getLastAppTerms();
     final userData = await authService.getUserData();
     final lastAcceptedVersion = userData?.lastAcceptedAppTermsVersion;
 

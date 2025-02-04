@@ -22,7 +22,9 @@ mixin _$EntityPairsSummary {
   /// A list of other available pairs.
   List<EntityPair> get otherPairs => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntityPairsSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EntityPairsSummaryCopyWith<EntityPairsSummary> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +48,8 @@ class _$EntityPairsSummaryCopyWithImpl<$Res, $Val extends EntityPairsSummary>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EntityPairsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,6 +88,8 @@ class __$$$EntityPairsSummaryImplCopyWithImpl<$Res>
       $Res Function(_$$EntityPairsSummaryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EntityPairsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,7 +150,9 @@ class _$$EntityPairsSummaryImpl implements $EntityPairsSummary {
   int get hashCode => Object.hash(
       runtimeType, active, const DeepCollectionEquality().hash(_otherPairs));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntityPairsSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$$EntityPairsSummaryImplCopyWith<_$$EntityPairsSummaryImpl> get copyWith =>
@@ -157,16 +165,18 @@ abstract class $EntityPairsSummary implements EntityPairsSummary {
       {required final EntityPair active,
       required final List<EntityPair> otherPairs}) = _$$EntityPairsSummaryImpl;
 
-  @override
-
   /// The currently active pair.
-  EntityPair get active;
   @override
+  EntityPair get active;
 
   /// A list of other available pairs.
-  List<EntityPair> get otherPairs;
   @override
-  @JsonKey(ignore: true)
+  List<EntityPair> get otherPairs;
+
+  /// Create a copy of EntityPairsSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$$EntityPairsSummaryImplCopyWith<_$$EntityPairsSummaryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,4 +1,5 @@
 {
+    "applicationName": "Zachraň oběd",
     "commonClose": "Zavřít",
     "commonBack": "Zpět",
     "commonCancel": "Zrušit",
@@ -221,5 +222,10 @@
     "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
     "activePairCanteenTitle": "Jídelna",
-    "activePairContactsCanteenLabel": "(aktivní jídelna)"
+    "activePairContactsCanteenLabel": "(aktivní jídelna)",
+
+    "forceUpdateScreenTitle": "Nová verze aplikace",
+    "forceUpdateScreenDescriptionStart": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci ",
+    "forceUpdateScreenDescriptionEnd": " na nejnovější verzi.",
+    "forceUpdateAction": "Aktualizovat aplikaci"
 }

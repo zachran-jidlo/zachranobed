@@ -23,7 +23,9 @@ mixin _$Delivery {
   DeliveryType get type => throw _privateConstructorUsedError;
   CarrierType get carrierType => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DeliveryCopyWith<Delivery> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +54,8 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -116,6 +120,8 @@ class __$$DeliveryImplCopyWithImpl<$Res>
       _$DeliveryImpl _value, $Res Function(_$DeliveryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -204,7 +210,9 @@ class _$DeliveryImpl extends _Delivery {
   int get hashCode => Object.hash(
       runtimeType, id, donorId, recipientId, state, type, carrierType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
@@ -233,8 +241,11 @@ abstract class _Delivery extends Delivery {
   DeliveryType get type;
   @override
   CarrierType get carrierType;
+
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

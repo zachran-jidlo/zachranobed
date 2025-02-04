@@ -20,7 +20,9 @@ mixin _$EntityContacts {
   bool get active => throw _privateConstructorUsedError;
   List<Contact> get contacts => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EntityContactsCopyWith<EntityContacts> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$EntityContactsCopyWithImpl<$Res, $Val extends EntityContacts>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
       _$$EntityContactsImpl _value, $Res Function(_$$EntityContactsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,7 +157,9 @@ class _$$EntityContactsImpl implements $EntityContacts {
   int get hashCode => Object.hash(runtimeType, name, active,
       const DeepCollectionEquality().hash(_contacts));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$$EntityContactsImplCopyWith<_$$EntityContactsImpl> get copyWith =>
@@ -171,8 +179,11 @@ abstract class $EntityContacts implements EntityContacts {
   bool get active;
   @override
   List<Contact> get contacts;
+
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$$EntityContactsImplCopyWith<_$$EntityContactsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

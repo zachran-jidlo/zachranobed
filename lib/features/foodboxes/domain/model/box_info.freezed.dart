@@ -19,7 +19,9 @@ mixin _$BoxInfo {
   String? get foodBoxId => throw _privateConstructorUsedError;
   int? get numberOfBoxes => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BoxInfoCopyWith<BoxInfo> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -41,6 +43,8 @@ class _$BoxInfoCopyWithImpl<$Res, $Val extends BoxInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -78,6 +82,8 @@ class __$$BoxInfoImplCopyWithImpl<$Res>
       _$BoxInfoImpl _value, $Res Function(_$BoxInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -126,7 +132,9 @@ class _$BoxInfoImpl implements _BoxInfo {
   @override
   int get hashCode => Object.hash(runtimeType, foodBoxId, numberOfBoxes);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BoxInfoImplCopyWith<_$BoxInfoImpl> get copyWith =>
@@ -141,8 +149,11 @@ abstract class _BoxInfo implements BoxInfo {
   String? get foodBoxId;
   @override
   int? get numberOfBoxes;
+
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BoxInfoImplCopyWith<_$BoxInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

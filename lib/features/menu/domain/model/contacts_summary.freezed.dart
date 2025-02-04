@@ -20,7 +20,9 @@ mixin _$ContactsSummary {
   List<Contact> get deliveryContacts => throw _privateConstructorUsedError;
   List<Contact> get organisationContacts => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ContactsSummaryCopyWith<ContactsSummary> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +49,8 @@ class _$ContactsSummaryCopyWithImpl<$Res, $Val extends ContactsSummary>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,6 +97,8 @@ class __$$$ContactsSummaryImplCopyWithImpl<$Res>
       $Res Function(_$$ContactsSummaryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -178,7 +184,9 @@ class _$$ContactsSummaryImpl implements $ContactsSummary {
       const DeepCollectionEquality().hash(_deliveryContacts),
       const DeepCollectionEquality().hash(_organisationContacts));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$$ContactsSummaryImplCopyWith<_$$ContactsSummaryImpl> get copyWith =>
@@ -199,8 +207,11 @@ abstract class $ContactsSummary implements ContactsSummary {
   List<Contact> get deliveryContacts;
   @override
   List<Contact> get organisationContacts;
+
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$$ContactsSummaryImplCopyWith<_$$ContactsSummaryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

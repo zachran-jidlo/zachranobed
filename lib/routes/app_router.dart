@@ -59,5 +59,8 @@ class AppRouter extends $AppRouter {
           page: ChangeActivePairRoute.page,
           guards: [AuthGuard()],
         ),
+        MaterialRoute(
+          page: ForceUpdateRoute.page,
+        ),
       ];
 }
