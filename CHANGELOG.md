@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-292** Update form layout.
 
 ### Removed
+- **ZOB-209** Remove time from detail footer.
 
 ## [1.4.0]
 ### Fixed

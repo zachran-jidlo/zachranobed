@@ -116,9 +116,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 const SizedBox(height: GapSize.xs),
                 SupportingText(
                   text: '${context.l10n!.donatedOn}'
-                      ' ${DateFormat('d.M.y').format(offeredFood.date)}'
-                      ' ${context.l10n!.atTime}'
-                      ' ${DateFormat('HH:mm').format(offeredFood.date)}.',
+                      ' ${DateFormat('d.M.y').format(offeredFood.date)}.',
                 ),
                 const SizedBox(height: GapSize.xs),
                 ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
