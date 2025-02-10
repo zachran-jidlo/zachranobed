@@ -4,7 +4,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
@@ -54,7 +54,7 @@ class OverviewScreen extends StatelessWidget {
                 _buildActiveCanteen(context),
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
-                BoxDataTable(user: user),
+                BoxSummary(user: user),
                 const SizedBox(height: GapSize.m),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),

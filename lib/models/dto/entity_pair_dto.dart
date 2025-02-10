@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
+import 'package:zachranobed/models/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/models/dto/time_window_dto.dart';
 
 /*
@@ -15,6 +16,7 @@ class EntityPairDto {
   final String carrierId;
   final List<TimeWindowDto> pickupTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
+  final FoodBoxesCheckupSummaryDto? foodboxesCheckup;
 
   EntityPairDto({
     required this.donorId,
@@ -22,6 +24,7 @@ class EntityPairDto {
     required this.carrierId,
     required this.pickupTimeWindows,
     required this.foodboxes,
+    required this.foodboxesCheckup,
   });
 
   factory EntityPairDto.fromJson(Map<String, dynamic> json) =>

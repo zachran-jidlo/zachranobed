@@ -1,4 +1,5 @@
 import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/models/food_boxes_checkup.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 import 'entity_pair.dart';
@@ -44,5 +45,10 @@ class Canteen extends UserData {
       hasMultiplePairs: hasMultiplePairs,
       activePair: activePair,
     );
+  }
+
+  @override
+  FoodBoxesCheckup getFoodBoxesCheckup() {
+    return activePair.donorFoodBoxesCheckup;
   }
 }

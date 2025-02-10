@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/models/entity_pair.dart';
+import 'package:zachranobed/models/food_boxes_checkup.dart';
 
 abstract class UserData extends ChangeNotifier {
   final String entityId;
@@ -37,4 +38,7 @@ abstract class UserData extends ChangeNotifier {
 
   /// Creates a copy of this [UserData] object with a replaced [activePair].
   UserData copyWith({required EntityPair activePair});
+
+  /// Return a relevant [FoodBoxesCheckup] for current user.
+  FoodBoxesCheckup getFoodBoxesCheckup();
 }

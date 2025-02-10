@@ -1,61 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
-import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 class BoxDataTable extends StatelessWidget {
-  final UserData user;
+  final Iterable<FoodBoxStatistics> boxes;
+  final bool alertColors;
 
-  const BoxDataTable({super.key, required this.user});
+  const BoxDataTable({
+    super.key,
+    required this.boxes,
+    required this.alertColors,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final repository = GetIt.I<FoodBoxRepository>();
-
-    return StreamBuilder<Iterable<FoodBoxStatistics>>(
-      stream: repository.observeStatistics(user),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final boxes = snapshot.data!;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.l10n!.boxStatisticsHeader,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8.0),
-              _table(context, boxes),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return Center(child: Text('${snapshot.error}'));
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
-  }
-
-  /// Creates a table widget containing statistics of food boxes.
-  ///
-  /// The [FittedBox] ensures the table is scaled down if it exceeds the width
-  /// constraint on smaller screen sizes. [LayoutBuilder] with
-  /// [ConstrainedBox] are used to propagate all available width as a minimum
-  /// width for the table content, so that on larger screen sizes the first
-  /// column could occupy all remaining width.
-  Widget _table(BuildContext context, Iterable<FoodBoxStatistics> boxes) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: ZOColors.borderColor),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
+      decoration: alertColors
+          ? BoxDecoration(
+              color: ZOColors.secondary,
+              border: Border.all(width: 1, color: ZOColors.primary),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            )
+          : BoxDecoration(
+              border: Border.all(width: 1, color: ZOColors.borderColor),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: LayoutBuilder(
           builder: (context, constraints) {
+            /// The [FittedBox] ensures the table is scaled down if it exceeds the width
+            /// constraint on smaller screen sizes. [LayoutBuilder] with
+            /// [ConstrainedBox] are used to propagate all available width as a minimum
+            /// width for the table content, so that on larger screen sizes the first
+            /// column could occupy all remaining width.
             return FittedBox(
               fit: BoxFit.scaleDown,
               child: ConstrainedBox(

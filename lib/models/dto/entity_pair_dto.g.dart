@@ -17,6 +17,10 @@ EntityPairDto _$EntityPairDtoFromJson(Map<String, dynamic> json) =>
       foodboxes: (json['foodboxes'] as List<dynamic>)
           .map((e) => FoodBoxPairDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      foodboxesCheckup: json['foodboxesCheckup'] == null
+          ? null
+          : FoodBoxesCheckupSummaryDto.fromJson(
+              json['foodboxesCheckup'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$EntityPairDtoToJson(EntityPairDto instance) =>
@@ -26,4 +30,5 @@ Map<String, dynamic> _$EntityPairDtoToJson(EntityPairDto instance) =>
       'carrierId': instance.carrierId,
       'pickupTimeWindows': instance.pickupTimeWindows,
       'foodboxes': instance.foodboxes,
+      'foodboxesCheckup': instance.foodboxesCheckup,
     };

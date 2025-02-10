@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Added
 - **ZOB-318** Add ForceUpdate screen functionality.
+- **ZOB-324** Add food boxes checkup flow.
 - **ZOB-326** Add a tooltip for allergens.
 
 ### Fixed

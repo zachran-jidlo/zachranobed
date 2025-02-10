@@ -154,7 +154,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   bool _isPasswordError(FirebaseAuthException e) {
     // TODO: Encapsulate this error codes in AuthService
-    debugPrint("___ $e");
     return e.code == 'wrong-password' || e.code == 'invalid-credential';
   }
 }

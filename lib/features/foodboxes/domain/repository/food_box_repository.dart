@@ -37,7 +37,23 @@ abstract class FoodBoxRepository {
     required List<BoxInfo> boxInfo,
   });
 
+  /// Returns a count of food boxes movements of the given [user].
   Future<int> getMovementBoxesCount({
+    required UserData user,
+  });
+
+  /// Delays a food boxes checkup for the given [user].
+  Future<bool> delayFoodBoxesCheckup({
+    required UserData user,
+  });
+
+  /// Reports a mismatch in a food boxes checkup for the given [user].
+  Future<bool> reportFoodBoxesMismatch({
+    required UserData user,
+  });
+
+  /// Verifies a food boxes checkup for the given [user].
+  Future<bool> verifyFoodBoxesCheckup({
     required UserData user,
   });
 }

@@ -151,29 +151,31 @@ class _HomeScreenState extends State<HomeScreen>
         );
       },
       mobile: (context) {
-        return Scaffold(
-          body: _homeScreenContent(),
-          bottomNavigationBar: SizedBox(
-            height: 90.0,
-            child: Material(
-              color: ZOColors.primaryLight,
-              child: TabBar(
-                controller: _tabController,
-                splashFactory: NoSplash.splashFactory,
-                overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                    (Set<WidgetState> states) {
-                  return states.contains(WidgetState.focused)
-                      ? null
-                      : Colors.transparent;
-                }),
-                unselectedLabelColor: ZOColors.onPrimaryLight,
-                indicatorColor: Colors.transparent,
-                tabs: _tabs.map((data) {
-                  return Tab(
-                    icon: data.icon(context),
-                    child: data.label(context),
-                  );
-                }).toList(),
+        return ScaffoldMessenger(
+          child: Scaffold(
+            body: _homeScreenContent(),
+            bottomNavigationBar: SizedBox(
+              height: 90.0,
+              child: Material(
+                color: ZOColors.primaryLight,
+                child: TabBar(
+                  controller: _tabController,
+                  splashFactory: NoSplash.splashFactory,
+                  overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                      (Set<WidgetState> states) {
+                    return states.contains(WidgetState.focused)
+                        ? null
+                        : Colors.transparent;
+                  }),
+                  unselectedLabelColor: ZOColors.onPrimaryLight,
+                  indicatorColor: Colors.transparent,
+                  tabs: _tabs.map((data) {
+                    return Tab(
+                      icon: data.icon(context),
+                      child: data.label(context),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
