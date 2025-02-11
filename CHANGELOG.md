@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Added
 - **ZOB-318** Add ForceUpdate screen functionality.
+- **ZOB-326** Add a tooltip for allergens.
 
 ### Fixed
 
@@ -14,6 +15,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-292** Update form layout.
 
 ### Removed
+- **ZOB-209** Remove time from detail footer.
 
 ## [1.4.0]
 ### Fixed
