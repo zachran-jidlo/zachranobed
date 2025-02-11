@@ -1,12 +1,11 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/ui/model/food_allergen.dart';
 
 /// A utility class for displaying a bottom sheet with a list of food allergens.
 class FoodAllergensBottomSheet {
-
   /// Private constructor to prevent instantiation.
   FoodAllergensBottomSheet._();
 
@@ -14,27 +13,13 @@ class FoodAllergensBottomSheet {
   ///
   /// The bottom sheet is scrollable and displays the allergens with their
   /// corresponding numbers.
-  static void show(BuildContext context) {
-    final items = [
-      context.l10n!.allergen01,
-      context.l10n!.allergen02,
-      context.l10n!.allergen03,
-      context.l10n!.allergen04,
-      context.l10n!.allergen05,
-      context.l10n!.allergen06,
-      context.l10n!.allergen07,
-      context.l10n!.allergen08,
-      context.l10n!.allergen09,
-      context.l10n!.allergen10,
-      context.l10n!.allergen11,
-      context.l10n!.allergen12,
-      context.l10n!.allergen13,
-      context.l10n!.allergen14,
-    ];
-
-    final itemWidgets = items.mapIndexed((index, allergenName) {
+  static void show(
+    BuildContext context,
+    List<FoodAllergen> allergens,
+  ) {
+    final itemWidgets = allergens.map((allergen) {
       return Text(
-        "${index + 1}. $allergenName",
+        "${allergen.number}. ${allergen.text}",
         style: Theme.of(context).textTheme.bodyLarge,
       );
     }).separated(

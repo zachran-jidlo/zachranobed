@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/ui/model/food_allergen.dart';
 import 'package:zachranobed/ui/widgets/assist_chip.dart';
 import 'package:zachranobed/ui/widgets/form_field_error.dart';
+import 'package:zachranobed/ui/widgets/tooltip.dart';
 
 /// A widget that displays a set of chips representing food allergens.
 ///
@@ -17,9 +19,6 @@ import 'package:zachranobed/ui/widgets/form_field_error.dart';
 class FoodAllergensChips extends StatelessWidget {
   /// A constant representing the absence of allergens.
   static const _noAllergensNumber = "0";
-
-  /// A list of allergen numbers.
-  static final _allergensList = List.generate(14, (i) => "${i + 1}");
 
   /// The currently selected allergens.
   final List<String> selection;
@@ -44,6 +43,7 @@ class FoodAllergensChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final allergens = FoodAllergen.all(context);
     return FormField<List<String>>(
       initialValue: selection,
       validator: onValidation,
@@ -59,14 +59,18 @@ class FoodAllergensChips extends StatelessWidget {
                   spacing: GapSize.xs,
                   runSpacing: GapSize.xs,
                   children: [
-                    ..._allergensList.map(
-                      (number) {
-                        return AssistChip(
-                          text: number,
-                          selected: state.value!.contains(number),
-                          onPressed: () {
-                            _onRegularAllergenPressed(state, number);
-                          },
+                    ...allergens.map(
+                      (allergen) {
+                        final number = allergen.number.toString();
+                        return ZOTooltip(
+                          message: allergen.text,
+                          child: AssistChip(
+                            text: number,
+                            selected: state.value!.contains(number),
+                            onPressed: () {
+                              _onRegularAllergenPressed(state, number);
+                            },
+                          ),
                         );
                       },
                     ),

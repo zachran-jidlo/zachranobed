@@ -51,9 +51,7 @@ class BoxMovementDetailScreen extends StatelessWidget {
                 const SizedBox(height: GapSize.xs),
                 SupportingText(
                   text: '${context.l10n!.sentOn}'
-                      ' ${DateFormat('d.M.y').format(boxMovement.date)}'
-                      ' ${context.l10n!.atTime}'
-                      ' ${DateFormat('HH:mm').format(boxMovement.date)}.',
+                      ' ${DateFormat('d.M.y').format(boxMovement.date)}.',
                 ),
                 const SizedBox(height: GapSize.xs),
                 ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
