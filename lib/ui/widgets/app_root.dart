@@ -33,19 +33,20 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   void initState() {
     super.initState();
 
-    _checkApplicationVersionUpgrade();
-    _checkAppTerms();
+    _applicationStartCheck();
   }
 
   @override
   void onResume() {
-    _checkApplicationVersionUpgrade();
-    _checkAppTerms();
+    _applicationStartCheck();
   }
 
-  void _checkApplicationVersionUpgrade() {
+  void _applicationStartCheck() {
     _checkIfUpgradeAppShouldBeShownUseCase.invoke().then((result) => {
-          if (result == true) {_appRouter.replace(const ForceUpdateRoute())}
+          if (result == true)
+            {_appRouter.replace(const ForceUpdateRoute())}
+          else
+            {_checkAppTerms()}
         });
   }
 

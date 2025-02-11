@@ -1,9 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/common/prefs/app_preferences.dart';
-import 'package:zachranobed/features/appConfiguration/domain/repository/app_configuration_repository.dart';
 import 'package:zachranobed/features/appConfiguration/domain/usecase/get_last_app_terms_version_use_case.dart';
-import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/services/auth_service.dart';
 
 class CommonDependencyContainer {
