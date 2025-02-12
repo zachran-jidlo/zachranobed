@@ -21,6 +21,12 @@ class FoodBoxesCheckup {
       : status = FoodBoxesCheckupStatus.ok,
         checkAt = DateTime.now(),
         verifiedAt = null;
+
+  /// Determines whether a checkup is currently needed.
+  bool isCheckupNeeded() {
+    final now = DateTime.now();
+    return status == FoodBoxesCheckupStatus.ok && now.isAfter(checkAt) || status == FoodBoxesCheckupStatus.delayed;
+  }
 }
 
 /// Represents the possible statuses of a food boxes checkup.

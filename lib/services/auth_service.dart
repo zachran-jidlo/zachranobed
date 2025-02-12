@@ -121,10 +121,11 @@ class AuthService {
       return null;
     }
 
-    final activePair = await _resolveActivePair(
+    final pairsInfo = await _resolvePairsInfo(
       userEntityId: entity.id,
       pairs: pairs,
     );
+    final activePair = pairsInfo.activePair;
     if (activePair == null) {
       ZOLogger.logMessage("Unable to get canteen data, no active "
           "pair is found");
@@ -139,7 +140,7 @@ class AuthService {
       organization: entity.organization,
       lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
       activePair: activePair,
-      hasMultiplePairs: pairs.length > 1,
+      allPairs: pairsInfo.allPairs,
     );
   }
 
@@ -152,10 +153,11 @@ class AuthService {
       return null;
     }
 
-    final activePair = await _resolveActivePair(
+    final pairsInfo = await _resolvePairsInfo(
       userEntityId: entity.id,
       pairs: pairs,
     );
+    final activePair = pairsInfo.activePair;
     if (activePair == null) {
       ZOLogger.logMessage("Unable to get charity data, no active "
           "pair is found");
@@ -170,11 +172,11 @@ class AuthService {
       organization: entity.organization,
       lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
       activePair: activePair,
-      hasMultiplePairs: pairs.length > 1,
+      allPairs: pairsInfo.allPairs,
     );
   }
 
-  Future<EntityPair?> _resolveActivePair({
+  Future<_PairsInfo> _resolvePairsInfo({
     required String userEntityId,
     required List<EntityPairDto> pairs,
   }) async {
@@ -185,11 +187,22 @@ class AuthService {
 
     final savedActivePair = await _appPreferences.getActivePair();
     final activePair = entityPairs.firstWhereOrNull(
-      (pair) =>
-          pair.donorId == savedActivePair?.donorId &&
-          pair.recipientId == savedActivePair?.recipientId,
+      (pair) => pair.donorId == savedActivePair?.donorId && pair.recipientId == savedActivePair?.recipientId,
     );
 
-    return activePair ?? entityPairs.firstOrNull;
+    return _PairsInfo(
+      activePair: activePair ?? entityPairs.firstOrNull,
+      allPairs: entityPairs,
+    );
   }
+}
+
+class _PairsInfo {
+  final EntityPair? activePair;
+  final List<EntityPair> allPairs;
+
+  _PairsInfo({
+    required this.activePair,
+    required this.allPairs,
+  });
 }

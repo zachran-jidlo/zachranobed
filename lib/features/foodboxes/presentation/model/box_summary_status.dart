@@ -13,7 +13,7 @@ import 'package:zachranobed/models/user_data.dart';
 sealed class BoxSummaryStatus {
   /// Gets the status of the food box checkup for a given [user].
   static BoxSummaryStatus getStatus(UserData user) {
-    final checkup = user.getFoodBoxesCheckup();
+    final checkup = user.getFoodBoxesCheckup(user.activePair);
     final now = DateTime.now();
 
     BoxSummaryStatus status;
@@ -32,7 +32,7 @@ sealed class BoxSummaryStatus {
       case FoodBoxesCheckupStatus.delayed:
         final delayedUntil = checkup.checkAt.add(const Duration(days: Constants.foodBoxesCheckupMaxDelay));
         if (delayedUntil.isAfter(now)) {
-          status = Delayed(duration: now.difference(checkup.checkAt));
+          status = Delayed(duration: delayedUntil.difference(now));
         } else {
           status = CheckNeeded(isDelayAvailable: false);
         }

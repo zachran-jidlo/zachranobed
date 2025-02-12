@@ -11,7 +11,7 @@ class Charity extends UserData {
     required super.organization,
     required super.lastAcceptedAppTermsVersion,
     required super.activePair,
-    required super.hasMultiplePairs,
+    required super.allPairs,
   });
 
   @override
@@ -23,13 +23,11 @@ class Charity extends UserData {
       establishmentId: establishmentId,
       organization: organization,
       lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
-      hasMultiplePairs: hasMultiplePairs,
+      allPairs: allPairs,
       activePair: activePair,
     );
   }
 
   @override
-  FoodBoxesCheckup getFoodBoxesCheckup() {
-    return activePair.recipientFoodBoxesCheckup;
-  }
+  FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair) => pair.recipientFoodBoxesCheckup;
 }

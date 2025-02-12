@@ -13,7 +13,7 @@ class Canteen extends UserData {
     required super.organization,
     required super.lastAcceptedAppTermsVersion,
     required super.activePair,
-    required super.hasMultiplePairs,
+    required super.allPairs,
   });
 
   /// Checks if the current time is within the pickup range for a [Canteen].
@@ -42,13 +42,11 @@ class Canteen extends UserData {
       establishmentId: establishmentId,
       organization: organization,
       lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
-      hasMultiplePairs: hasMultiplePairs,
+      allPairs: allPairs,
       activePair: activePair,
     );
   }
 
   @override
-  FoodBoxesCheckup getFoodBoxesCheckup() {
-    return activePair.donorFoodBoxesCheckup;
-  }
+  FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair) => pair.donorFoodBoxesCheckup;
 }

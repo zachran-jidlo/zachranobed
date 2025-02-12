@@ -241,7 +241,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       recipientId: user.activePair.recipientId,
       status: FoodBoxesCheckupStatus.delayed.toDto(),
       target: _getFoodBoxesCheckupTarget(user),
-      checkAt: user.getFoodBoxesCheckup().checkAt,
+      checkAt: user.getFoodBoxesCheckup(user.activePair).checkAt,
     );
   }
 
@@ -254,7 +254,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       recipientId: user.activePair.recipientId,
       status: FoodBoxesCheckupStatus.mismatch.toDto(),
       target: _getFoodBoxesCheckupTarget(user),
-      checkAt: user.getFoodBoxesCheckup().checkAt,
+      checkAt: user.getFoodBoxesCheckup(user.activePair).checkAt,
     );
   }
 

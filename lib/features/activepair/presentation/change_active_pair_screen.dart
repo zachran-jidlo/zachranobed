@@ -12,6 +12,7 @@ import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
+import 'package:zachranobed/ui/widgets/indicator.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of available pairs and allows to change it.
@@ -93,15 +94,19 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
               return CardRow(
                 title: pair.donorEstablishmentName,
                 action: (context) {
-                  return ZOButton(
-                    text: context.l10n!.activePairCardSelectAction,
-                    type: ZOButtonType.secondary,
-                    minimumSize: ZOButtonSize.tiny(),
-                    onPressed: () {
-                      _changeActivePair.invoke(pair.donorId, pair.recipientId);
-                      HelperService.updateActivePair(context, pair);
-                      Navigator.pop(context);
-                    },
+                  return Indicator(
+                    // TODO: Show donor's checkup when adding multi-recipient support in ZOB-322
+                    isVisible: pair.recipientFoodBoxesCheckup.isCheckupNeeded(),
+                    child: ZOButton(
+                      text: context.l10n!.activePairCardSelectAction,
+                      type: ZOButtonType.secondary,
+                      minimumSize: ZOButtonSize.tiny(),
+                      onPressed: () {
+                        _changeActivePair.invoke(pair.donorId, pair.recipientId);
+                        HelperService.updateActivePair(context, pair);
+                        Navigator.pop(context);
+                      },
+                    ),
                   );
                 },
               );

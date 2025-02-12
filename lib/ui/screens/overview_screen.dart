@@ -12,10 +12,10 @@ import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
+import 'package:zachranobed/ui/widgets/delivery_info_banner.dart';
+import 'package:zachranobed/ui/widgets/indicator.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
-
-import '../widgets/delivery_info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
@@ -88,13 +88,16 @@ class OverviewScreen extends StatelessWidget {
             if (!user.hasMultiplePairs) {
               return const SizedBox();
             }
-            return ZOButton(
-              text: context.l10n!.activePairCardChangeAction,
-              type: ZOButtonType.secondary,
-              minimumSize: ZOButtonSize.tiny(),
-              onPressed: () {
-                context.router.push(const ChangeActivePairRoute());
-              },
+            return Indicator(
+              isVisible: user.isAnyNonActiveCheckupNeeded,
+              child: ZOButton(
+                text: context.l10n!.activePairCardChangeAction,
+                type: ZOButtonType.secondary,
+                minimumSize: ZOButtonSize.tiny(),
+                onPressed: () {
+                  context.router.push(const ChangeActivePairRoute());
+                },
+              ),
             );
           },
         ),

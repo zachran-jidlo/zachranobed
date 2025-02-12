@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/utils/future_utils.dart';
-import 'package:zachranobed/common/utils/network_utils.dart';
 import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
@@ -103,15 +102,14 @@ class EntityPairService {
       return false;
     }
 
-    if (!await NetworkUtils.isConnected()) {
-      return false;
-    }
-
-    return reference.update({
-      'foodboxesCheckup.$target.status': status.toJson(),
-      'foodboxesCheckup.$target.checkAt': const TimestampConverter().toJson(checkAt),
-      'foodboxesCheckup.$target.lastChange': FoodBoxesCheckupLastChangeDto.user.toJson(),
-    }).toSuccess();
+    return _updateWithTransaction(
+      reference,
+      {
+        'foodboxesCheckup.$target.status': status.toJson(),
+        'foodboxesCheckup.$target.checkAt': const TimestampConverter().toJson(checkAt),
+        'foodboxesCheckup.$target.lastChange': FoodBoxesCheckupLastChangeDto.user.toJson(),
+      },
+    );
   }
 
   /// Sets a food boxes checkup as verified and updates the "next check" timestamp for entity pair based on the
@@ -129,10 +127,6 @@ class EntityPairService {
       return false;
     }
 
-    if (!await NetworkUtils.isConnected()) {
-      return false;
-    }
-
     final dto = FoodBoxesCheckupDto(
       status: FoodBoxesCheckupStatusDto.ok,
       checkAt: nextCheckAt,
@@ -140,7 +134,7 @@ class EntityPairService {
       lastChange: FoodBoxesCheckupLastChangeDto.user,
     );
 
-    return reference.update({'foodboxesCheckup.$target': dto.toJson()}).toSuccess();
+    return _updateWithTransaction(reference, {'foodboxesCheckup.$target': dto.toJson()});
   }
 
   /// Moves food boxes from [donorId] to [recipientId]. This method should be
@@ -219,5 +213,16 @@ class EntityPairService {
     }
 
     return null;
+  }
+
+  /// Updates a Firestore document within a transaction, ensuring atomicity. If the user is offline, the operation
+  /// will fail and return an error immediately.
+  Future<bool> _updateWithTransaction(DocumentReference<dynamic> reference, Map<String, dynamic> data) {
+    return FirebaseFirestore.instance.runTransaction(
+      (transaction) async {
+        transaction.update(reference, data);
+      },
+      maxAttempts: 1,
+    ).toSuccess();
   }
 }
