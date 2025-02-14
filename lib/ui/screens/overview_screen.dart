@@ -9,6 +9,7 @@ import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.d
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
@@ -36,9 +37,7 @@ class OverviewScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: HelperService.getCurrentUser(context) is Canteen
-          ? NewOfferFloatingButton()
-          : const NewShippingOfBoxesFloatingButton(),
+      floatingActionButton: _floatingActionButton(context),
       body: CustomScrollView(
         slivers: [
           DeliveryInfoBanner(user: user!),
@@ -64,6 +63,23 @@ class OverviewScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _floatingActionButton(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return const SizedBox();
+    }
+
+    // When food boxes checkup is needed and cannot be delayed floating action button should not be accessible
+    final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+    if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
+      return const SizedBox();
+    }
+
+    return user is Canteen
+        ? const NewOfferFloatingButton()
+        : const NewShippingOfBoxesFloatingButton();
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {

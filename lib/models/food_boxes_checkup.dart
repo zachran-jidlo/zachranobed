@@ -1,3 +1,6 @@
+import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/models/food_boxes_checkup_state.dart';
+
 /// Represents the checkup state of food boxes.
 class FoodBoxesCheckup {
   /// The current status of the food boxes checkup.
@@ -24,8 +27,40 @@ class FoodBoxesCheckup {
 
   /// Determines whether a checkup is currently needed.
   bool isCheckupNeeded() {
+    final state = getState();
+    return state is FoodBoxesCheckupCheckNeeded || state is FoodBoxesCheckupDelayed;
+  }
+
+  /// Gets the status of the food box checkup for a given [user].
+  FoodBoxesCheckupState getState() {
     final now = DateTime.now();
-    return status == FoodBoxesCheckupStatus.ok && now.isAfter(checkAt) || status == FoodBoxesCheckupStatus.delayed;
+
+    FoodBoxesCheckupState state;
+    switch (status) {
+      case FoodBoxesCheckupStatus.ok:
+        if (checkAt.isAfter(now)) {
+          final verifiedUntil = verifiedAt?.add(const Duration(days: Constants.foodBoxesVerifiedThreshold));
+          final isVerified = verifiedUntil?.isAfter(now) ?? false;
+          state = FoodBoxesCheckupAllGood(isVerified: isVerified);
+        } else {
+          final delayedUntil = checkAt.add(const Duration(days: Constants.foodBoxesCheckupMaxDelay));
+          final isDelayAvailable = delayedUntil.isAfter(now);
+          state = FoodBoxesCheckupCheckNeeded(isDelayAvailable: isDelayAvailable);
+        }
+
+      case FoodBoxesCheckupStatus.delayed:
+        final delayedUntil = checkAt.add(const Duration(days: Constants.foodBoxesCheckupMaxDelay));
+        if (delayedUntil.isAfter(now)) {
+          state = FoodBoxesCheckupDelayed(duration: delayedUntil.difference(now));
+        } else {
+          state = FoodBoxesCheckupCheckNeeded(isDelayAvailable: false);
+        }
+
+      case FoodBoxesCheckupStatus.mismatch:
+        state = FoodBoxesCheckupMismatch();
+    }
+
+    return state;
   }
 }
 

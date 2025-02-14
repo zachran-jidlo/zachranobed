@@ -6,11 +6,13 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.
 class BoxDataTable extends StatelessWidget {
   final Iterable<FoodBoxStatistics> boxes;
   final bool alertColors;
+  final List<BoxDataTableColumn> focusedColumns;
 
   const BoxDataTable({
     super.key,
     required this.boxes,
     required this.alertColors,
+    this.focusedColumns = BoxDataTableColumn.values,
   });
 
   @override
@@ -60,25 +62,33 @@ class BoxDataTable extends StatelessWidget {
       },
       children: [
         TableRow(children: [
-          _header(context.l10n!.box),
-          _header(context.l10n!.total),
-          _header(context.l10n!.charity),
-          _header(context.l10n!.canteen),
+          _header(context, BoxDataTableColumn.name),
+          _header(context, BoxDataTableColumn.total),
+          _header(context, BoxDataTableColumn.charity),
+          _header(context, BoxDataTableColumn.canteen),
         ]),
         ...boxes.map((box) {
           return TableRow(children: [
-            _cell(box.type.name),
-            _cell(box.totalQuantity.toString()),
-            _cell(box.quantityAtCharity.toString()),
-            _cell(box.quantityAtCanteen.toString()),
+            _value(box, BoxDataTableColumn.name),
+            _value(box, BoxDataTableColumn.total),
+            _value(box, BoxDataTableColumn.charity),
+            _value(box, BoxDataTableColumn.canteen),
           ]);
         }).toList()
       ],
     );
   }
 
-  Widget _header(String text) {
-    return _cell(text, style: const TextStyle(fontWeight: FontWeight.bold));
+  Widget _header(BuildContext context, BoxDataTableColumn column) {
+    final text = column.header(context);
+    final color = _getColumnColor(column);
+    return _cell(text, style: TextStyle(fontWeight: FontWeight.bold, color: color));
+  }
+
+  Widget _value(FoodBoxStatistics box, BoxDataTableColumn column) {
+    final text = column.value(box);
+    final color = _getColumnColor(column);
+    return _cell(text, style: TextStyle(color: color));
   }
 
   Widget _cell(String text, {TextStyle? style}) {
@@ -89,5 +99,46 @@ class BoxDataTable extends StatelessWidget {
         style: style,
       ),
     );
+  }
+
+  Color _getColumnColor(BoxDataTableColumn column) {
+    final focused = focusedColumns.contains(column);
+    return focused ? Colors.black : ZOColors.outline;
+  }
+}
+
+/// Enumeration of available columns in [BoxDataTable].
+enum BoxDataTableColumn {
+  name,
+  total,
+  charity,
+  canteen;
+
+  /// Returns a header for the column.
+  String header(BuildContext context) {
+    switch (this) {
+      case BoxDataTableColumn.name:
+        return context.l10n!.box;
+      case BoxDataTableColumn.total:
+        return context.l10n!.total;
+      case BoxDataTableColumn.charity:
+        return context.l10n!.charity;
+      case BoxDataTableColumn.canteen:
+        return context.l10n!.canteen;
+    }
+  }
+
+  /// Returns a value for the column for the given box statistics.
+  String value(FoodBoxStatistics box) {
+    switch (this) {
+      case BoxDataTableColumn.name:
+        return box.type.name;
+      case BoxDataTableColumn.total:
+        return box.totalQuantity.toString();
+      case BoxDataTableColumn.charity:
+        return box.quantityAtCharity.toString();
+      case BoxDataTableColumn.canteen:
+        return box.quantityAtCanteen.toString();
+    }
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary_card.dart';
-import 'package:zachranobed/features/foodboxes/presentation/model/box_summary_status.dart';
+import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/content_with_loading.dart';
 
@@ -12,8 +12,8 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
   /// Whether the widget is in a loading state.
   final bool isLoading;
 
-  /// The status of the food boxes checkup.
-  final CheckNeeded status;
+  /// The state of the food boxes checkup.
+  final FoodBoxesCheckupCheckNeeded state;
 
   /// The callback function that is called when the user taps on the "Delay" button.
   final VoidCallback onDelayPressed;
@@ -25,7 +25,7 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
   const BoxSummaryCheckNeeded({
     super.key,
     required this.isLoading,
-    required this.status,
+    required this.state,
     required this.onDelayPressed,
     required this.onCheckPressed,
   });
@@ -51,7 +51,7 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
                         style: textTheme.titleMedium,
                       ),
                       Text(
-                        status.isDelayAvailable
+                        state.isDelayAvailable
                             ? context.l10n!.foodBoxesCheckupNeededCardDefaultDescription
                             : context.l10n!.foodBoxesCheckupNeededCardMandatoryDescription,
                         style: textTheme.bodyMedium,
@@ -65,7 +65,7 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (status.isDelayAvailable) ...[
+                if (state.isDelayAvailable) ...[
                   ZOButton(
                     text: context.l10n!.foodBoxesCheckupNeededCardDelayAction,
                     onPressed: onDelayPressed,
