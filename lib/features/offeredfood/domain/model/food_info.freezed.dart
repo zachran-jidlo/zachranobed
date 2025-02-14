@@ -28,7 +28,9 @@ mixin _$FoodInfo {
   FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
   FoodDateTime? get consumeBy => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FoodInfoCopyWith<FoodInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +64,8 @@ class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -156,6 +160,8 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
       _$FoodInfoImpl _value, $Res Function(_$FoodInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -317,7 +323,9 @@ class _$FoodInfoImpl implements _FoodInfo {
       preparedAt,
       consumeBy);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>
@@ -339,8 +347,8 @@ abstract class _FoodInfo implements FoodInfo {
       final FoodDateTime? consumeBy}) = _$FoodInfoImpl;
 
   @override
-  String get id;
-  @override // The UUID identifier
+  String get id; // The UUID identifier
+  @override
   String? get dishName;
   @override
   List<String>? get allergens;
@@ -360,8 +368,11 @@ abstract class _FoodInfo implements FoodInfo {
   FoodDateTime? get preparedAt;
   @override
   FoodDateTime? get consumeBy;
+
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

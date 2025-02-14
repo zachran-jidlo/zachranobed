@@ -31,7 +31,9 @@ mixin _$OfferedFood {
   int? get numberOfBoxes => throw _privateConstructorUsedError;
   int? get numberOfPackages => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OfferedFoodCopyWith<OfferedFood> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -69,6 +71,8 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,6 +185,8 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
       _$OfferedFoodImpl _value, $Res Function(_$OfferedFoodImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -369,7 +375,9 @@ class _$OfferedFoodImpl implements _OfferedFood {
       numberOfBoxes,
       numberOfPackages);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
@@ -421,8 +429,11 @@ abstract class _OfferedFood implements OfferedFood {
   int? get numberOfBoxes;
   @override
   int? get numberOfPackages;
+
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

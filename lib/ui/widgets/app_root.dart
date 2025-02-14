@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
+import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
@@ -15,6 +16,8 @@ import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 
 class AppRoot extends StatefulWidget {
+  const AppRoot({super.key});
+
   @override
   _AppRootState createState() => _AppRootState();
 }
@@ -23,24 +26,35 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
   final _checkIfAppTermsShouldBeShownUseCase =
       GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfUpgradeAppShouldBeShownUseCase =
+      GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
 
   @override
   void initState() {
     super.initState();
 
-    _checkAppTerms();
+    _applicationStartCheck();
   }
 
   @override
   void onResume() {
-    _checkAppTerms();
+    _applicationStartCheck();
+  }
+
+  void _applicationStartCheck() {
+    _checkIfUpgradeAppShouldBeShownUseCase.invoke().then((result) => {
+          if (result == true)
+            {_appRouter.replace(const ForceUpdateRoute())}
+          else
+            {_checkAppTerms()}
+        });
   }
 
   void _checkAppTerms() {
     _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
           // If should be shown, replace current route with app terms.
           // Otherwise do nothing - no action from the user is required.
-          if (result == true) {_appRouter.replace(AppTermsRoute())}
+          if (result == true) {_appRouter.replace(const AppTermsRoute())}
         });
   }
 
