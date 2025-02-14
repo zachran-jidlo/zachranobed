@@ -10,6 +10,9 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
   /// Whether the widget is in a loading state.
   final bool isLoading;
 
+  /// The widget with food boxes data in the table.
+  final Widget boxTable;
+
   /// The state of the delayed checkup.
   final FoodBoxesCheckupDelayed state;
 
@@ -20,6 +23,7 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
   const BoxSummaryCheckDelayed({
     super.key,
     required this.isLoading,
+    required this.boxTable,
     required this.state,
     required this.onPressed,
   });
@@ -36,40 +40,46 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
     } else {
       time = "< ${context.l10n!.commonHoursCount(1)}";
     }
-    return BoxSummaryCard(
-      onPressed: onPressed,
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            ZOStrings.iconFoodBoxAlert,
-            width: 24,
-            height: 24,
-          ),
-          const SizedBox(width: 16.0),
-          Expanded(
-            child: Text(
-              context.l10n!.foodBoxesCheckupDelayedCardDescription,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: ZOColors.surfaceVariant,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 8.0,
+    return Column(
+      children: [
+        BoxSummaryCard(
+          onPressed: onPressed,
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                ZOStrings.iconFoodBoxAlert,
+                width: 24,
+                height: 24,
               ),
-              child: Text(
-                time,
-                style: Theme.of(context).textTheme.bodySmall,
+              const SizedBox(width: 16.0),
+              Expanded(
+                child: Text(
+                  context.l10n!.foodBoxesCheckupDelayedCardDescription,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ),
-            ),
-          )
-        ],
-      ),
+              Container(
+                decoration: BoxDecoration(
+                  color: ZOColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                    horizontal: 8.0,
+                  ),
+                  child: Text(
+                    time,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        boxTable,
+      ],
     );
   }
 }

@@ -122,6 +122,7 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
       case FoodBoxesCheckupDelayed():
         return BoxSummaryCheckDelayed(
           isLoading: _isLoading,
+          boxTable: _boxTable(boxes: boxes),
           state: state,
           onPressed: _onCheckPressed,
         );
