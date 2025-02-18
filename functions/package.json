@@ -5,7 +5,7 @@
     "lint:fix": "eslint --fix .",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --only functions",
+    "serve": "npm run build && firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/ --export-on-exit functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -16,9 +16,9 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^12.4.0",
-    "firebase-functions": "^6.0.0",
-    "firebase-tools": "^13.17.0"
+    "firebase-admin": "^13.1.0",
+    "firebase-functions": "^6.3.2",
+    "firebase-tools": "^13.31.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",

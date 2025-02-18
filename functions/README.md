@@ -97,6 +97,8 @@ If you want to use exported Firestore DB from previous steps you can use followi
 firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/ --export-on-exit functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/
 ```
 
+Also to run the emulator easier you can use `npm run serve` which compiles functions and starts the emulator with seed data.
+
 ## Deploy functions to cloud
 
 To deploy Firebase Function to a selected environment you need to run following command in `functions` directory. Do not delete non-existing functions in sourcecode. There are funtions that are needed by Rowy or other connected services.
