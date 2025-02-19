@@ -304,13 +304,18 @@ exports.boxesMismatchNotification = onDocumentUpdated(
       return;
     }
 
-    const oldDonorStatus = oldValue.foodboxesCheckup.donor.status;
-    const oldRecipeintStatus = oldValue.foodboxesCheckup.recipient.status;
-    const newDonorStatus = newValue.foodboxesCheckup.donor.status;
-    const newRecipeintStatus = newValue.foodboxesCheckup.recipient.status;
+    const oldDonorStatus = oldValue.foodboxesCheckup.donor?.status;
+    const oldRecipeintStatus = oldValue.foodboxesCheckup.recipient?.status;
+    const newDonorStatus = newValue.foodboxesCheckup.donor?.status;
+    const newRecipeintStatus = newValue.foodboxesCheckup.recipient?.status;
 
     // DONOR
-    if (newDonorStatus === "MISMATCH" && oldDonorStatus !== "MISMATCH") {
+    if (
+      newDonorStatus &&
+      oldDonorStatus &&
+      newDonorStatus === "MISMATCH" &&
+      oldDonorStatus !== "MISMATCH"
+    ) {
       console.info("Donor status is MISMATCH");
 
       await constructEmailAndSendEmail(newValue.donorId, newValue, true);
@@ -318,6 +323,8 @@ exports.boxesMismatchNotification = onDocumentUpdated(
 
     // RECIPIENT
     if (
+      newRecipeintStatus &&
+      oldRecipeintStatus &&
       newRecipeintStatus === "MISMATCH" &&
       oldRecipeintStatus !== "MISMATCH"
     ) {
