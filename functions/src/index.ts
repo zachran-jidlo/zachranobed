@@ -318,7 +318,7 @@ exports.boxesMismatchNotification = onDocumentUpdated(
     ) {
       console.info("Donor status is MISMATCH");
 
-      await constructEmailAndSendEmail(newValue.donorId, newValue, true);
+      await constructAndSendEmail(newValue.donorId, newValue, true);
     }
 
     // RECIPIENT
@@ -330,12 +330,12 @@ exports.boxesMismatchNotification = onDocumentUpdated(
     ) {
       console.info("Recipient status is MISMATCH");
 
-      await constructEmailAndSendEmail(newValue.recipientId, newValue, false);
+      await constructAndSendEmail(newValue.recipientId, newValue, false);
     }
   }
 );
 
-async function constructEmailAndSendEmail(
+async function constructAndSendEmail(
   entityId: string,
   entityPair: admin.firestore.DocumentData,
   isDonor: boolean
