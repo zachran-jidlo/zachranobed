@@ -350,7 +350,7 @@ async function constructEmailAndSendEmail(
   const foodboxesHtml = await constructFoodboxesCount(entityPair);
 
   const email = {
-    to: "jiri.zoudun@etnetera.cz",
+    to: ["jiri.zoudun@etnetera.cz", "oleksandr.balan@etnetera.cz"],
     message: {
       subject: "Nesoulad při kontrole krabiček",
       html: `
@@ -367,9 +367,9 @@ v rámci pravidelné kontroly stavu krabiček byl zjištěn nesoulad u těchto s
 Aktuální stav krabiček:
 ${foodboxesHtml}
 
-<a href="https://rowy.app/p/zachran-obed/table/entityPairs">Zobrazit v aplikaci Rowy</a>
+<p><a href="https://rowy.app/p/zachran-obed/table/entityPairs">Zobrazit v aplikaci Rowy</a></p>
 
-Prosím o prověření této situace a případné kroky k jejímu vyřešení.
+<p>Prosím o prověření této situace a případné kroky k jejímu vyřešení.</p>
 
 <p>
 Děkujeme,
