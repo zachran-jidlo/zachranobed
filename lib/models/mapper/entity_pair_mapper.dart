@@ -2,7 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';
 import 'package:zachranobed/models/dto/entity_pair_dto.dart';
+import 'package:zachranobed/models/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/models/entity_pair.dart';
+import 'package:zachranobed/models/food_boxes_checkup.dart';
+import 'package:zachranobed/models/mapper/food_boxes_checkup_mapper.dart';
 
 /// DTO to domain mapper for [EntityPair].
 extension EntityPairMapper on EntityPairDto {
@@ -28,7 +31,13 @@ extension EntityPairMapper on EntityPairDto {
       carrierId: carrierId,
       pickupTimeStart: window.start,
       pickupTimeEnd: window.end,
+      donorFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.donor),
+      recipientFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.recipient),
     );
+  }
+
+  FoodBoxesCheckup _getCheckup(FoodBoxesCheckupDto? dto) {
+    return dto?.toDomain() ?? FoodBoxesCheckup.createDefault();
   }
 }
 

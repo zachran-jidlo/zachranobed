@@ -1,4 +1,5 @@
 import 'package:zachranobed/models/entity_pair.dart';
+import 'package:zachranobed/models/food_boxes_checkup.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 class Charity extends UserData {
@@ -10,7 +11,7 @@ class Charity extends UserData {
     required super.organization,
     required super.lastAcceptedAppTermsVersion,
     required super.activePair,
-    required super.hasMultiplePairs,
+    required super.allPairs,
   });
 
   @override
@@ -22,8 +23,11 @@ class Charity extends UserData {
       establishmentId: establishmentId,
       organization: organization,
       lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
-      hasMultiplePairs: hasMultiplePairs,
+      allPairs: allPairs,
       activePair: activePair,
     );
   }
+
+  @override
+  FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair) => pair.recipientFoodBoxesCheckup;
 }

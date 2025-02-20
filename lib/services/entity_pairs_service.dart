@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/utils/future_utils.dart';
+import 'package:zachranobed/converters/timestamp_converter.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/dto/entity_pair_dto.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
+import 'package:zachranobed/models/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/models/user_data.dart';
 
 class EntityPairService {
@@ -85,6 +87,56 @@ class EntityPairService {
     });
   }
 
+  /// Updates a food boxes checkup [status] and "next check" timestamp for entity pair based on the provided [donorId]
+  /// and [recipientId]. The [target] parameter defines a path (could be either "donor" or "recipient").
+  Future<bool> updateFoodBoxesCheckupStatus({
+    required String donorId,
+    required String recipientId,
+    required FoodBoxesCheckupStatusDto status,
+    required DateTime checkAt,
+    required String target,
+  }) async {
+    // Get reference to current document
+    final reference = await _getPairDocument(donorId, recipientId);
+    if (reference == null) {
+      return false;
+    }
+
+    return _updateWithTransaction(
+      reference,
+      {
+        'foodboxesCheckup.$target.status': status.toJson(),
+        'foodboxesCheckup.$target.checkAt': const TimestampConverter().toJson(checkAt),
+        'foodboxesCheckup.$target.lastChange': FoodBoxesCheckupLastChangeDto.user.toJson(),
+      },
+    );
+  }
+
+  /// Sets a food boxes checkup as verified and updates the "next check" timestamp for entity pair based on the
+  /// provided [donorId] and [recipientId]. The [target] parameter defines a path (could be either "donor" or
+  /// "recipient").
+  Future<bool> verifyFoodBoxesCheckup({
+    required String donorId,
+    required String recipientId,
+    required DateTime nextCheckAt,
+    required String target,
+  }) async {
+    // Get reference to current document
+    final reference = await _getPairDocument(donorId, recipientId);
+    if (reference == null) {
+      return false;
+    }
+
+    final dto = FoodBoxesCheckupDto(
+      status: FoodBoxesCheckupStatusDto.ok,
+      checkAt: nextCheckAt,
+      verifiedAt: DateTime.now(),
+      lastChange: FoodBoxesCheckupLastChangeDto.user,
+    );
+
+    return _updateWithTransaction(reference, {'foodboxesCheckup.$target': dto.toJson()});
+  }
+
   /// Moves food boxes from [donorId] to [recipientId]. This method should be
   /// called when canteen donates a food, and as a result food boxes statistics
   /// should be updated. The [changeMap] contains a map with newly added
@@ -140,8 +192,7 @@ class EntityPairService {
     });
 
     // Update 'foodboxes' list with a new value
-    return reference
-        .update({'foodboxes': newFoodBoxes.map((e) => e.toJson())}).toSuccess();
+    return reference.update({'foodboxes': newFoodBoxes.map((e) => e.toJson())}).toSuccess();
   }
 
   Future<DocumentReference<EntityPairDto>?> _getPairDocument(
@@ -162,5 +213,16 @@ class EntityPairService {
     }
 
     return null;
+  }
+
+  /// Updates a Firestore document within a transaction, ensuring atomicity. If the user is offline, the operation
+  /// will fail and return an error immediately.
+  Future<bool> _updateWithTransaction(DocumentReference<dynamic> reference, Map<String, dynamic> data) {
+    return FirebaseFirestore.instance.runTransaction(
+      (transaction) async {
+        transaction.update(reference, data);
+      },
+      maxAttempts: 1,
+    ).toSuccess();
   }
 }

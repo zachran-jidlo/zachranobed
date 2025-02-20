@@ -4,18 +4,19 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/foodboxes/presentation/widget/box_data_table.dart';
+import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
+import 'package:zachranobed/ui/widgets/delivery_info_banner.dart';
+import 'package:zachranobed/ui/widgets/indicator.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
-
-import '../widgets/delivery_info_banner.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
@@ -36,9 +37,7 @@ class OverviewScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: HelperService.getCurrentUser(context) is Canteen
-          ? NewOfferFloatingButton()
-          : const NewShippingOfBoxesFloatingButton(),
+      floatingActionButton: _floatingActionButton(context),
       body: CustomScrollView(
         slivers: [
           DeliveryInfoBanner(user: user!),
@@ -54,7 +53,7 @@ class OverviewScreen extends StatelessWidget {
                 _buildActiveCanteen(context),
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
-                BoxDataTable(user: user),
+                BoxSummary(user: user),
                 const SizedBox(height: GapSize.m),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),
@@ -64,6 +63,23 @@ class OverviewScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _floatingActionButton(BuildContext context) {
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return const SizedBox();
+    }
+
+    // When food boxes checkup is needed and cannot be delayed floating action button should not be accessible
+    final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+    if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
+      return const SizedBox();
+    }
+
+    return user is Canteen
+        ? const NewOfferFloatingButton()
+        : const NewShippingOfBoxesFloatingButton();
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {
@@ -88,13 +104,16 @@ class OverviewScreen extends StatelessWidget {
             if (!user.hasMultiplePairs) {
               return const SizedBox();
             }
-            return ZOButton(
-              text: context.l10n!.activePairCardChangeAction,
-              type: ZOButtonType.secondary,
-              minimumSize: ZOButtonSize.tiny(),
-              onPressed: () {
-                context.router.push(const ChangeActivePairRoute());
-              },
+            return Indicator(
+              isVisible: user.isAnyNonActiveCheckupNeeded,
+              child: ZOButton(
+                text: context.l10n!.activePairCardChangeAction,
+                type: ZOButtonType.secondary,
+                minimumSize: ZOButtonSize.tiny(),
+                onPressed: () {
+                  context.router.push(const ChangeActivePairRoute());
+                },
+              ),
             );
           },
         ),

@@ -3,6 +3,24 @@
     "commonClose": "Zavřít",
     "commonBack": "Zpět",
     "commonCancel": "Zrušit",
+    "commonDaysCount" : "{count, plural, zero{0 dní} one{1 den} few{{count} dny} other{{count} dní}}",
+    "@commonDaysCount" : {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "42"
+            }
+        }
+    },
+    "commonHoursCount" : "{count, plural, zero{0 hodin} one{1 hodina} few{{count} hodiny} other{{count} hodin}}",
+    "@commonHoursCount" : {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "42"
+            }
+        }
+    },
     "emailAddress": "E-mailová adresa",
     "password": "Heslo",
     "signIn": "Přihlásit se",
@@ -226,5 +244,19 @@
     "forceUpdateScreenTitle": "Nová verze aplikace",
     "forceUpdateScreenDescriptionStart": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci ",
     "forceUpdateScreenDescriptionEnd": " na nejnovější verzi.",
-    "forceUpdateAction": "Aktualizovat aplikaci"
+    "forceUpdateAction": "Aktualizovat aplikaci",
+
+    "foodBoxesCheckupErrorMessage": "Při ukládání došlo k neočekávané chybě, zkuste akci provést znovu.",
+    "foodBoxesCheckupSuccessMessage": "Děkujeme za spolupráci ",
+    "foodBoxesCheckupVerifiedLabel": "Zkontrolováno",
+    "foodBoxesCheckupNeededCardTitle": "Kontrola krabiček",
+    "foodBoxesCheckupNeededCardDefaultDescription": "Je čas na pravidelnou kontrolu stavu krabiček.",
+    "foodBoxesCheckupNeededCardMandatoryDescription": "Pro další práci s aplikací je zapotřebí provést pravidelnou kontrolu krabiček.",
+    "foodBoxesCheckupNeededCardDelayAction": "Později",
+    "foodBoxesCheckupNeededCardCheckAction": "Zkontrolovat",
+    "foodBoxesCheckupDelayedCardDescription": "Pravidelná kontrola krabiček",
+    "foodBoxesCheckupInProgressDescription": "Zkontroluje stav jednotlivých typů krabiček zda jejich počty souhlasí.",
+    "foodBoxesCheckupInProgressMatchesAction": "Vše souhlasí",
+    "foodBoxesCheckupInProgressMismatchesAction": "Nesouhlasí",
+    "foodBoxesCheckupMismatchDescription": "U stavu krabiček je evidován nesoulad počtu jednotlivých typů. Tým Zachraň oběd byl kontaktován a brzy se vám ozve a vyřeší nápravu."
 }

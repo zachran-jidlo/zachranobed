@@ -5,6 +5,7 @@ class ZOColors {
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
+  static const surfaceVariant = Color.fromRGBO(245, 221, 219, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
   static const onBackgroundSecondary = Color.fromRGBO(0, 0, 0, 0.5);
@@ -23,6 +24,9 @@ class ZOColors {
   static const onSuccess = Color.fromRGBO(255, 255, 255, 1);
   static const amberTransparent = Color.fromRGBO(255, 182, 0, 0.4);
   static const assistChipSelectedBackground = Color.fromRGBO(73, 69, 79, 0.12);
+  static const staticBadgeBackground = Color.fromRGBO(19, 161, 4, 1);
+  static const staticBadgeBorder = Color.fromRGBO(12, 128, 0, 1);
+  static const staticBadgeOnBackground = Colors.white;
 }
 
 class ZOStrings {
@@ -42,6 +46,7 @@ class ZOStrings {
   static const certificationCheckPath = 'assets/certification_check.svg';
   static const genericErrorPath = 'assets/generic-error.svg';
   static const iconFoodBox = 'assets/ic_food_box.svg';
+  static const iconFoodBoxAlert = 'assets/ic_food_box_alert.svg';
   static const forceUpdatePath = 'assets/human_rotate_phone.svg';
 }
 
@@ -59,6 +64,10 @@ class Constants {
   static const foodTemperatureMin = 50;
   static const foodTemperatureMax = 100;
   static const foodTemperatureInitial = 68;
+
+  // ZOB-324 Food boxes checkup related constants (in days)
+  static const foodBoxesCheckupMaxDelay = 4;
+  static const foodBoxesVerifiedThreshold = 3;
 }
 
 /// A class that defines layout constants.

@@ -50,6 +50,19 @@ class DateTimeUtils {
     return formatter.format(DateTime.now());
   }
 
+  /// Calculates the timestamp for the next food boxes check. This function determines the first Friday of the next
+  /// month at 7:00 AM UTC.
+  static DateTime getNextFoodBoxesCheckDateTime() {
+    final now = DateTime.now();
+    final firstDayOfNextMonth = DateTime(now.year, now.month + 1, 1);
+
+    // Adjust to the first Friday
+    final dayOffset = (5 - firstDayOfNextMonth.weekday + 7) % 7;
+    final nextMonthFriday = firstDayOfNextMonth.add(Duration(days: dayOffset));
+
+    return DateTime.utc(nextMonthFriday.year, nextMonthFriday.month, nextMonthFriday.day, 7, 0, 0);
+  }
+
   /// Returns a [String] with current time in 'HH:mm' format.
   String formatDateTime(DateTime dateTime, String format) {
     final DateFormat formatter = DateFormat(format);

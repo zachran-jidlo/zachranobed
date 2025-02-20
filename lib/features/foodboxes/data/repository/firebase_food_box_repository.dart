@@ -7,10 +7,14 @@ import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/models/canteen.dart';
+import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
 import 'package:zachranobed/models/dto/food_box_type_dto.dart';
+import 'package:zachranobed/models/food_boxes_checkup.dart';
+import 'package:zachranobed/models/mapper/food_boxes_checkup_mapper.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
@@ -228,6 +232,44 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     });
   }
 
+  @override
+  Future<bool> delayFoodBoxesCheckup({
+    required UserData user,
+  }) {
+    return _entityPairService.updateFoodBoxesCheckupStatus(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      status: FoodBoxesCheckupStatus.delayed.toDto(),
+      target: _getFoodBoxesCheckupTarget(user),
+      checkAt: user.getFoodBoxesCheckup(user.activePair).checkAt,
+    );
+  }
+
+  @override
+  Future<bool> reportFoodBoxesMismatch({
+    required UserData user,
+  }) {
+    return _entityPairService.updateFoodBoxesCheckupStatus(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      status: FoodBoxesCheckupStatus.mismatch.toDto(),
+      target: _getFoodBoxesCheckupTarget(user),
+      checkAt: user.getFoodBoxesCheckup(user.activePair).checkAt,
+    );
+  }
+
+  @override
+  Future<bool> verifyFoodBoxesCheckup({
+    required UserData user,
+  }) {
+    return _entityPairService.verifyFoodBoxesCheckup(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      target: _getFoodBoxesCheckupTarget(user),
+      nextCheckAt: DateTimeUtils.getNextFoodBoxesCheckDateTime(),
+    );
+  }
+
   /// Get sort order for the [FoodBoxType].
   /// Reusable box should go first, and IKEA boxes should follow.
   int _getSortOrder(FoodBoxType type) {
@@ -251,18 +293,26 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   bool _shouldUseNegativeBoxCount(String entityId, DeliveryDto delivery) {
     // We need to flip a sign when current user is a charity and delivery type
     // is "sending boxes".
-    if (delivery.type == DeliveryTypeDto.boxDelivery &&
-        entityId == delivery.recipientId) {
+    if (delivery.type == DeliveryTypeDto.boxDelivery && entityId == delivery.recipientId) {
       return true;
     }
 
     // Also we need to flip a sign when current user is a canteen and delivery
     // type is "sending food".
-    if (delivery.type == DeliveryTypeDto.foodDelivery &&
-        entityId == delivery.donorId) {
+    if (delivery.type == DeliveryTypeDto.foodDelivery && entityId == delivery.donorId) {
       return true;
     }
 
     return false;
+  }
+
+  String _getFoodBoxesCheckupTarget(UserData user) {
+    if (user is Canteen) {
+      return "donor";
+    }
+    if (user is Charity) {
+      return "recipient";
+    }
+    throw Exception("Invalid user: $user");
   }
 }
