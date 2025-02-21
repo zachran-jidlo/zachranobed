@@ -20,6 +20,7 @@ mixin _$OfferedFood {
   DateTime get date => throw _privateConstructorUsedError;
   String get dishName => throw _privateConstructorUsedError;
   String get foodCategory => throw _privateConstructorUsedError;
+  FoodCategoryType? get foodCategoryType => throw _privateConstructorUsedError;
   int? get foodTemperature => throw _privateConstructorUsedError;
   List<String> get allergens => throw _privateConstructorUsedError;
   int? get numberOfServings => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $OfferedFoodCopyWith<$Res> {
       DateTime date,
       String dishName,
       String foodCategory,
+      FoodCategoryType? foodCategoryType,
       int? foodTemperature,
       List<String> allergens,
       int? numberOfServings,
@@ -80,6 +82,7 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
     Object? date = null,
     Object? dishName = null,
     Object? foodCategory = null,
+    Object? foodCategoryType = freezed,
     Object? foodTemperature = freezed,
     Object? allergens = null,
     Object? numberOfServings = freezed,
@@ -108,6 +111,10 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.foodCategory
           : foodCategory // ignore: cast_nullable_to_non_nullable
               as String,
+      foodCategoryType: freezed == foodCategoryType
+          ? _value.foodCategoryType
+          : foodCategoryType // ignore: cast_nullable_to_non_nullable
+              as FoodCategoryType?,
       foodTemperature: freezed == foodTemperature
           ? _value.foodTemperature
           : foodTemperature // ignore: cast_nullable_to_non_nullable
@@ -165,6 +172,7 @@ abstract class _$$OfferedFoodImplCopyWith<$Res>
       DateTime date,
       String dishName,
       String foodCategory,
+      FoodCategoryType? foodCategoryType,
       int? foodTemperature,
       List<String> allergens,
       int? numberOfServings,
@@ -194,6 +202,7 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
     Object? date = null,
     Object? dishName = null,
     Object? foodCategory = null,
+    Object? foodCategoryType = freezed,
     Object? foodTemperature = freezed,
     Object? allergens = null,
     Object? numberOfServings = freezed,
@@ -222,6 +231,10 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
           ? _value.foodCategory
           : foodCategory // ignore: cast_nullable_to_non_nullable
               as String,
+      foodCategoryType: freezed == foodCategoryType
+          ? _value.foodCategoryType
+          : foodCategoryType // ignore: cast_nullable_to_non_nullable
+              as FoodCategoryType?,
       foodTemperature: freezed == foodTemperature
           ? _value.foodTemperature
           : foodTemperature // ignore: cast_nullable_to_non_nullable
@@ -274,6 +287,7 @@ class _$OfferedFoodImpl implements _OfferedFood {
       required this.date,
       required this.dishName,
       required this.foodCategory,
+      required this.foodCategoryType,
       required this.foodTemperature,
       required final List<String> allergens,
       required this.numberOfServings,
@@ -294,6 +308,8 @@ class _$OfferedFoodImpl implements _OfferedFood {
   final String dishName;
   @override
   final String foodCategory;
+  @override
+  final FoodCategoryType? foodCategoryType;
   @override
   final int? foodTemperature;
   final List<String> _allergens;
@@ -323,7 +339,7 @@ class _$OfferedFoodImpl implements _OfferedFood {
 
   @override
   String toString() {
-    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes, numberOfPackages: $numberOfPackages)';
+    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes, numberOfPackages: $numberOfPackages)';
   }
 
   @override
@@ -337,6 +353,8 @@ class _$OfferedFoodImpl implements _OfferedFood {
                 other.dishName == dishName) &&
             (identical(other.foodCategory, foodCategory) ||
                 other.foodCategory == foodCategory) &&
+            (identical(other.foodCategoryType, foodCategoryType) ||
+                other.foodCategoryType == foodCategoryType) &&
             (identical(other.foodTemperature, foodTemperature) ||
                 other.foodTemperature == foodTemperature) &&
             const DeepCollectionEquality()
@@ -364,6 +382,7 @@ class _$OfferedFoodImpl implements _OfferedFood {
       date,
       dishName,
       foodCategory,
+      foodCategoryType,
       foodTemperature,
       const DeepCollectionEquality().hash(_allergens),
       numberOfServings,
@@ -390,6 +409,7 @@ abstract class _OfferedFood implements OfferedFood {
       required final DateTime date,
       required final String dishName,
       required final String foodCategory,
+      required final FoodCategoryType? foodCategoryType,
       required final int? foodTemperature,
       required final List<String> allergens,
       required final int? numberOfServings,
@@ -409,6 +429,8 @@ abstract class _OfferedFood implements OfferedFood {
   String get dishName;
   @override
   String get foodCategory;
+  @override
+  FoodCategoryType? get foodCategoryType;
   @override
   int? get foodTemperature;
   @override
