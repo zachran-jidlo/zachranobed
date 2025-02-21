@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-174** Update date picker to only show calendar view.
 - **ZOB-292** Update form layout.
 
 ### Removed

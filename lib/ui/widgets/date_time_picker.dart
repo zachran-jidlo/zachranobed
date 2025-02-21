@@ -49,6 +49,7 @@ class DateTimePicker {
     return showDatePicker(
       context: context,
       initialDate: initial,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       firstDate: minimum ?? DateTime(DateTime.now().year),
       lastDate: DateTime(2100),
     );
