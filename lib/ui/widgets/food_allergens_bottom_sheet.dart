@@ -37,28 +37,38 @@ class FoodAllergensBottomSheet {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      constraints: const BoxConstraints.tightFor(width: 640.0),
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 1.0,
+          initialChildSize: 0.5,
           minChildSize: 0.5,
           expand: false,
+          snap: true,
+          snapSizes: const [0.5, 1.0],
           builder: (_, controller) {
-            return SingleChildScrollView(
-              controller: controller,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.l10n!.allergensList,
-                      style: Theme.of(context).textTheme.titleLarge,
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  controller: controller,
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.l10n!.allergensList,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 28),
+                          ...itemWidgets,
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 28),
-                    ...itemWidgets,
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           },
         );

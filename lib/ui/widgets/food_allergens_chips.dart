@@ -43,7 +43,7 @@ class FoodAllergensChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allergens = FoodAllergen.all(context);
+    final allergens = FoodAllergen.all(context, false);
     return FormField<List<String>>(
       initialValue: selection,
       validator: onValidation,
