@@ -15,8 +15,9 @@ class FoodAllergensBottomSheet {
   /// corresponding numbers.
   static void show(
     BuildContext context,
-    List<FoodAllergen> allergens,
-  ) {
+    List<FoodAllergen> allergens, {
+    bool fullHeight = false,
+  }) {
     final itemWidgets = allergens.map((allergen) {
       return Text(
         "${allergen.number}. ${allergen.text}",
@@ -40,7 +41,7 @@ class FoodAllergensBottomSheet {
       constraints: const BoxConstraints.tightFor(width: 640.0),
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.5,
+          initialChildSize: fullHeight ? 1.0 : 0.5,
           minChildSize: 0.5,
           expand: false,
           snap: true,

@@ -139,7 +139,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         actionIcon: const Icon(Icons.info_outline),
         onActionPressed: () {
           final allergens = FoodAllergen.all(context, false);
-          FoodAllergensBottomSheet.show(context, allergens);
+          FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
         },
       ),
       const SizedBox(height: GapSize.xs),
