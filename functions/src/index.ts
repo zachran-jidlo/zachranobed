@@ -310,12 +310,7 @@ exports.boxesMismatchNotification = onDocumentUpdated(
     const newRecipeintStatus = newValue.foodboxesCheckup.recipient?.status;
 
     // DONOR
-    if (
-      newDonorStatus &&
-      oldDonorStatus &&
-      newDonorStatus === "MISMATCH" &&
-      oldDonorStatus !== "MISMATCH"
-    ) {
+    if (newDonorStatus === "MISMATCH" && oldDonorStatus !== "MISMATCH") {
       console.info("Donor status is MISMATCH");
 
       await constructAndSendEmail(newValue.donorId, newValue, true);
@@ -323,8 +318,6 @@ exports.boxesMismatchNotification = onDocumentUpdated(
 
     // RECIPIENT
     if (
-      newRecipeintStatus &&
-      oldRecipeintStatus &&
       newRecipeintStatus === "MISMATCH" &&
       oldRecipeintStatus !== "MISMATCH"
     ) {
@@ -350,7 +343,7 @@ async function constructAndSendEmail(
   const foodboxesHtml = await constructFoodboxesCount(entityPair);
 
   const email = {
-    to: ["jiri.zoudun@etnetera.cz", "oleksandr.balan@etnetera.cz"],
+    to: [" marek.vimr@zachranjidlo.cz", "aplikace.zo@zachranjidlo.cz"],
     message: {
       subject: "Nesoulad při kontrole krabiček",
       html: `
