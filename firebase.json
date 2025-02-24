@@ -17,7 +17,9 @@
   ],
   "emulators": {
     "functions": {
-      "port": 5001
+      "port": 5001,
+      "source": "functions",
+      "runtime": "nodejs20"
     },
     "firestore": {
       "port": 8080
