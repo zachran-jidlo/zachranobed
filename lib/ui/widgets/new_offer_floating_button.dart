@@ -38,7 +38,7 @@ class NewOfferFloatingButton extends StatelessWidget {
 
   Widget _buildNewOfferButton(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () => context.router.push(const OfferFoodRoute()),
+      onPressed: () => context.router.push(const OfferFoodInitialRoute()),
       elevation: 0,
       shape: const StadiumBorder(),
       backgroundColor: ZOColors.primaryLight,

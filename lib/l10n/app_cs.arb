@@ -217,9 +217,6 @@
         }
       }
     },
-    "offerFoodFormFoodInfoHeader": "Zadané pokrmy",
-    "offerFoodFormFoodInfoExpandAction": "Zobrazit vše",
-    "offerFoodFormFoodInfoCollapseAction": "Zobrazit méně",
     "offerFoodFormRemoveAction": "Smazat pokrm",
     "offerFoodFormEditDialogTitle": "Zahodit pokrm?",
     "offerFoodFormEditDialogContent": "Obsah rozpracovaného pokrmu bude vymazán. Opravdu chcete připravovaný pokrm zahodit?",
@@ -227,14 +224,20 @@
     "offerFoodFormRemoveDialogTitle": "Smazat pokrm?",
     "offerFoodFormRemoveDialogContent": "Opravdu chcete zadaný pokrm smazat z nabídky darovaných jídel? ",
     "offerFoodFormRemoveDialogConfirmAction": "Smazat pokrm",
+
     "offerFoodOverviewScreenTitle": "Shrnutí",
     "offerFoodOverviewBanner": "Zkontrolujte si prosím počet krabiček a porcí.",
     "offerFoodOverviewEmptyTitle": "V seznamu nejsou žádné zadané pokrmy",
     "offerFoodOverviewEmptyDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
     "offerFoodOverviewEmptyAction": "Zadat pokrmy",
-    "offerFoodDetailScreenTitle": "Úprava zadaného pokrmu",
+    "offerFoodOverviewAddAction": "Přidat další pokrm",
+
+    "offerFoodDetailAddScreenTitle": "Nabídka zbylých pokrmů",
+    "offerFoodDetailEditScreenTitle": "Úprava zadaného pokrmu",
+    "offerFoodDetailContinueButton": "Pokračovat",
     "offerFoodDetailSaveButton": "Uložit změny",
     "offerFoodDetailRemoveButton": "Smazat pokrm",
+
     "activePairCardCanteenLabel": "Aktivní jídelna",
     "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
