@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Added
+- **ZOB-211** Add allergens info bottom sheet on the detail screen.
 - **ZOB-318** Add ForceUpdate screen functionality.
 - **ZOB-324** Add food boxes checkup flow.
 - **ZOB-326** Add a tooltip for allergens.
@@ -13,7 +14,8 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
-- **ZOB-292** Update form layout and flow.
+- **ZOB-174** Update date picker to only show calendar view.
+- **ZOB-292** Update form layout.
 
 ### Removed
 - **ZOB-209** Remove time from detail footer.

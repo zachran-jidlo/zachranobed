@@ -5,6 +5,8 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
+import 'package:zachranobed/ui/model/food_allergen.dart';
+import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
 import 'package:zachranobed/ui/widgets/supporting_text.dart';
@@ -40,10 +42,25 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: GapSize.m),
-                ZOTextField(
-                  label: context.l10n!.allergens,
-                  initialValue: offeredFood.allergens.join(", "),
-                  readOnly: true,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ZOTextField(
+                        label: context.l10n!.allergens,
+                        initialValue: offeredFood.allergens.join(", "),
+                        readOnly: true,
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.info_outline),
+                      onPressed: () {
+                        _showAllergens(context, offeredFood.allergens);
+                      },
+                      color: ZOColors.primary,
+                    )
+                  ],
                 ),
                 _buildGap(),
                 ZOTextField(
@@ -145,5 +162,11 @@ class DonatedFoodDetailScreen extends StatelessWidget {
       case FoodDateTimeOnPackaging():
         return dateOnPackaging;
     }
+  }
+
+  void _showAllergens(BuildContext context, List<String> allergens) {
+    final allergenNumbers = offeredFood.allergens.map((it) => int.parse(it));
+    final allergens = FoodAllergen.all(context, true).where((it) => allergenNumbers.contains(it.number));
+    FoodAllergensBottomSheet.show(context, allergens.toList());
   }
 }

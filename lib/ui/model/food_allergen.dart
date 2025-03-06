@@ -16,8 +16,16 @@ class FoodAllergen {
   });
 
   /// Creates a list of [FoodAllergen] instances with localized texts.
-  static List<FoodAllergen> all(BuildContext context) {
+  static List<FoodAllergen> all(
+    BuildContext context,
+    bool includeZero,
+  ) {
     return [
+      if (includeZero)
+        FoodAllergen(
+          number: 0,
+          text: context.l10n!.allergensNotPresent,
+        ),
       FoodAllergen(
         number: 1,
         text: context.l10n!.allergen01,
