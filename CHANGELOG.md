@@ -16,6 +16,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-174** Update date picker to only show calendar view.
 - **ZOB-292** Update form layout.
+- **ZOB-337** Change copy of the packaged food category.
 
 ### Removed
 - **ZOB-209** Remove time from detail footer.

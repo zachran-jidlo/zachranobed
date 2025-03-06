@@ -1,7 +1,9 @@
 import 'package:auto_route/annotations.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
@@ -65,7 +67,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 _buildGap(),
                 ZOTextField(
                   label: context.l10n!.foodCategory,
-                  initialValue: offeredFood.foodCategory,
+                  initialValue: _getFoodCategoryFromType(context) ?? offeredFood.foodCategory,
                   readOnly: true,
                 ),
                 _buildGap(),
@@ -162,6 +164,16 @@ class DonatedFoodDetailScreen extends StatelessWidget {
       case FoodDateTimeOnPackaging():
         return dateOnPackaging;
     }
+  }
+
+  /// Gets the food category name from the offered food's type to keep it up-to-date with application strings.
+  String? _getFoodCategoryFromType(BuildContext context) {
+    if (offeredFood.foodCategoryType == null) {
+      return null;
+    }
+    final categories = FoodCategory.createValues(context);
+    final category = categories.firstWhereOrNull((category) => category.type == offeredFood.foodCategoryType);
+    return category?.name;
   }
 
   void _showAllergens(BuildContext context, List<String> allergens) {

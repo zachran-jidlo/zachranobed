@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /*
@@ -14,6 +15,7 @@ class OfferedFood with _$OfferedFood {
     required DateTime date,
     required String dishName,
     required String foodCategory,
+    required FoodCategoryType? foodCategoryType,
     required int? foodTemperature,
     required List<String> allergens,
     required int? numberOfServings,

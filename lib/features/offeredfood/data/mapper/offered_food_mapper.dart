@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
@@ -22,6 +23,7 @@ extension OfferedFoodMapper on MealDetailDto {
       date: delivery.deliveryDate,
       dishName: name,
       foodCategory: foodCategory,
+      foodCategoryType: _getFoodCategoryType(foodCategoryType),
       foodTemperature: meal.foodTemperature,
       allergens: allergens,
       numberOfServings: meal.count,
@@ -42,4 +44,7 @@ extension OfferedFoodMapper on MealDetailDto {
       return FoodDateTimeOnPackaging();
     }
   }
+
+  FoodCategoryType? _getFoodCategoryType(String? foodCategoryTypeName) =>
+      FoodCategoryType.values.firstWhereOrNull((element) => element.name == foodCategoryTypeName);
 }
