@@ -14,10 +14,6 @@ class AppRouter extends $AppRouter {
         MaterialRoute(page: LoginRoute.page),
         MaterialRoute(page: ForgotPasswordRoute.page),
         MaterialRoute(
-          page: OfferFoodRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
           page: MenuRoute.page,
           guards: [AuthGuard()],
         ),
@@ -52,7 +48,15 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
-          page: OfferFoodDetailRoute.page,
+          page: OfferFoodInitialRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
+          page: OfferFoodAddNewRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
+          page: OfferFoodEditExistingRoute.page,
           guards: [AuthGuard()],
         ),
         MaterialRoute(

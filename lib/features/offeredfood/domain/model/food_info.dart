@@ -99,6 +99,20 @@ extension FoodInfoExtension on FoodInfo {
       foodBoxType: newFoodBoxType,
     );
   }
+
+  /// Checks if at least one field is filled in the [FoodInfo] object.
+  bool isSomethingFilled() {
+    return dishName != null ||
+        allergens != null ||
+        foodCategory != null ||
+        foodTemperature != null ||
+        numberOfPackages != null ||
+        numberOfServings != null ||
+        numberOfBoxes != null ||
+        foodBoxType != null ||
+        preparedAt != null ||
+        consumeBy != null;
+  }
 }
 
 extension FoodInfoListExtension on List<FoodInfo> {
