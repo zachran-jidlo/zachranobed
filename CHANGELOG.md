@@ -2,6 +2,15 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.6.0]
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
 ## [1.5.0]
 ### Added
 - **ZOB-211** Add allergens info bottom sheet on the detail screen.
