@@ -3,15 +3,11 @@
 This is a changelog for **ZachranObed** application.
 
 ## [1.5.0]
-### Fixed
-
 ### Added
 - **ZOB-211** Add allergens info bottom sheet on the detail screen.
 - **ZOB-318** Add ForceUpdate screen functionality.
 - **ZOB-324** Add food boxes checkup flow.
 - **ZOB-326** Add a tooltip for allergens.
-
-### Fixed
 
 ### Changed
 - **ZOB-174** Update date picker to only show calendar view.
@@ -22,14 +18,12 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-209** Remove time from detail footer.
 
 ## [1.4.0]
-### Fixed
-- **ZOB-275** Fix error when there are more than 30 meals in delivery.
-
 ### Added
 - **ZOB-278** Add web navigation drawer.
 - **ZOB-308** Add packaged food category.
 
 ### Fixed
+- **ZOB-275** Fix error when there are more than 30 meals in delivery.
 - **ZOB-321** Fix exception in counter.
 
 ### Changed
