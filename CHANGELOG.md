@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.6.0]
 ### Added
+- **ZOB-338** Add new features to deliveries report.
 
 ### Fixed
 
