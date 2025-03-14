@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-330** Migrate from AppCenter to Firebase App Distribution
 
 ### Removed
 
