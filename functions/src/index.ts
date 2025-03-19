@@ -304,10 +304,10 @@ exports.boxesMismatchNotification = onDocumentUpdated(
       return;
     }
 
-    const oldDonorStatus = oldValue.foodboxesCheckup.donor?.status;
-    const oldRecipeintStatus = oldValue.foodboxesCheckup.recipient?.status;
-    const newDonorStatus = newValue.foodboxesCheckup.donor?.status;
-    const newRecipeintStatus = newValue.foodboxesCheckup.recipient?.status;
+    const oldDonorStatus = oldValue?.foodboxesCheckup?.donor?.status;
+    const oldRecipientStatus = oldValue?.foodboxesCheckup?.recipient?.status;
+    const newDonorStatus = newValue?.foodboxesCheckup?.donor?.status;
+    const newRecipientStatus = newValue?.foodboxesCheckup?.recipient?.status;
 
     // DONOR
     if (newDonorStatus === "MISMATCH" && oldDonorStatus !== "MISMATCH") {
@@ -318,8 +318,8 @@ exports.boxesMismatchNotification = onDocumentUpdated(
 
     // RECIPIENT
     if (
-      newRecipeintStatus === "MISMATCH" &&
-      oldRecipeintStatus !== "MISMATCH"
+      newRecipientStatus === "MISMATCH" &&
+      oldRecipientStatus !== "MISMATCH"
     ) {
       console.info("Recipient status is MISMATCH");
 
