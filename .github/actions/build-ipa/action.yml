@@ -54,6 +54,7 @@ runs:
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
     - name: Select Xcode version
+      shell: bash
       run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
     # Builds a release IPA for the given flavor.
