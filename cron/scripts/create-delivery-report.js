@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, startAt, endAt, deleteDoc } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, deleteDoc } = require('firebase/firestore');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
 
 // ******
@@ -33,7 +33,7 @@ const timeout = setTimeout(() => {
 // Functions
 // *********
 
-async function signInAndCreateReport(email, password, targetPeriod) {
+async function signInAndCreateReport(email, password, startDate, endDate, donorId, recipientId) {
   try {
     // Sign in the user
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -44,7 +44,7 @@ async function signInAndCreateReport(email, password, targetPeriod) {
     console.info('Cleared reports collection');
 
     // Fetch and process documents
-    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", targetPeriod);
+    const processedDocuments = await fetchAndProcessDocuments("deliveries", "reports", startDate, endDate, donorId, recipientId);
     console.info(`Fetched ${processedDocuments.length} delivery documents`);
 
     // Clear timeout on successful execution
@@ -70,37 +70,36 @@ async function clearCollection(collectionName) {
   }
 }
 
-async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, targetPeriod) {
+async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, startDate, endDate, donorId, recipientId) {
   try {
-    const [year, month] = targetPeriod.split('-').map(Number);
-    const startDate = new Date(year, (month || 1) - 1, 1);
-    const endDate = new Date(year, (month || 12), 0, 23, 59, 59);
-
     console.info(`Fetching deliveries for period ${startDate.toISOString()} - ${endDate.toISOString()}`);
 
-    const collectionRef = collection(db, fromCollectionName);
-    const filteredQuery = query(
-      collectionRef,
+    let filters = [
       where('deliveryDate', '>=', startDate),
       where('deliveryDate', '<', endDate)
-    );
+    ];
+    if (donorId) {
+      filters.push(where('donorId', '==', donorId));
+    }
+    if (recipientId) {
+      filters.push(where('recipientId', '==', recipientId));
+    }
+
+    const collectionRef = collection(db, fromCollectionName);
+    const filteredQuery = query(collectionRef, ...filters);
     const snapshot = await getDocs(filteredQuery);
 
     const processedDocuments = [];
 
     for (const docSnapshot of snapshot.docs) {
       const data = docSnapshot.data();
-
-      if (
-        data.type === 'FOOD_DELIVERY' &&
-        data.meals &&
-        data.meals.length > 0
-      ) {
+      if (data.type === 'FOOD_DELIVERY' && data.meals?.length) {
         for (const meal of data.meals) {
           const mealDetails = await getMealDetails(meal.mealId);
           const mealDocument = {
             deliveryDate: data.deliveryDate,
             donorId: data.donorId,
+            recipientId: data.recipientId,
             mealCount: meal.count,
             mealName: mealDetails.name,
             foodCategory: mealDetails.foodCategory
@@ -150,12 +149,26 @@ async function getMealDetails(mealId) {
 
 // Take period string from environment
 const targetPeriod = process.env.TARGET_PERIOD;
+const startDate = process.env.START_DATE;
+const endDate = process.env.END_DATE;
+const donorId = process.env.DONOR_ID;
+const recipientId = process.env.RECIPIENT_ID;
 
-if (!targetPeriod) {
-  console.error('No target period provided.');
-  process.exit(1);
+// If TARGET_PERIOD is provided, it takes precedence over START_DATE and END_DATE
+let start, end;
+if (targetPeriod) {
+  const [year, month] = targetPeriod.split('-').map(Number);
+  start = new Date(year, (month || 1) - 1, 1);
+  end = new Date(year, (month || 12), 0, 23, 59, 59);
+} else {
+  if (startDate) {
+    const [year, month, day] = startDate.split('-').map(Number);
+    start = new Date(year, month - 1, day);
+  }
+  if (endDate) {
+    const [year, month, day] = endDate.split('-').map(Number);
+    end = new Date(year, month - 1, day, 23, 59, 59);
+  }
 }
 
-// Call your main function with the targetPeriod argument
-console.info(`Running script for period: ${targetPeriod}`);
-signInAndCreateReport(email, password, targetPeriod);
+signInAndCreateReport(email, password, start, end, donorId, recipientId);
