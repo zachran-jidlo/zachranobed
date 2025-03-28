@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-340** Change offer food flow process.
 
 ### Removed
 

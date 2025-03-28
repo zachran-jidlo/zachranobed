@@ -36,7 +36,6 @@
     "invalidFieldPackages": "Zadejte počet kusů.",
     "invalidFieldBoxNumber": "Zadejte počet krabiček.",
     "invalidFieldBoxNumberTooHigh": "Zadáno více krabiček, než je k dispozici",
-    "invalidFieldBoxType": "Není vybraný typ krabičky.",
     "invalidFieldServings": "Zadejte počet porcí.",
     "invalidFieldPreparedAt": "Není vybraný datum výroby.",
     "invalidFieldPreparedAtDateInPast": "Zvolte datum spotřeby v minulosti.",
@@ -172,7 +171,6 @@
         }
       }
     },
-    "sameNumberOfServingsAsBoxes": "Počet porcí a krabiček je stejný",
     "sentOn": "Odesláno dne",
     "shippingOfBoxes": "Vratka krabiček",
     "shippingOfBoxesToCanteen": "Vratka krabiček do jídelny",
@@ -230,7 +228,16 @@
     "offerFoodOverviewEmptyTitle": "V seznamu nejsou žádné zadané pokrmy",
     "offerFoodOverviewEmptyDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
     "offerFoodOverviewEmptyAction": "Zadat pokrmy",
-    "offerFoodOverviewAddAction": "Přidat další pokrm",
+    "offerFoodOverviewSectionFoodInfoAddAction": "Přidat pokrm",
+    "offerFoodOverviewSectionFoodInfoTitle": "Pokrmy a porce",
+    "offerFoodOverviewSectionBoxInfoAddAction": "Přidat krabičky",
+    "offerFoodOverviewSectionBoxInfoEditAction": "Upravit",
+    "offerFoodOverviewSectionBoxInfoTitle": "Počet vratných krabiček",
+    "offerFoodOverviewSectionBoxInfoDescription": "Pro darování pokrmů zadejte počet krabiček, ve kterých budou pokrmy darovány.",
+    "offerFoodOverviewSectionBoxInfoEmpty": "Pokrmy darovány bez vratných krabiček",
+
+    "offerFoodBoxInfoScreenTitle": "Počet vratných krabiček",
+    "offerFoodBoxInfoSaveAction": "Uložit",
 
     "offerFoodDetailAddScreenTitle": "Nabídka zbylých pokrmů",
     "offerFoodDetailEditScreenTitle": "Úprava zadaného pokrmu",

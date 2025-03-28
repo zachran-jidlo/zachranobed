@@ -95,22 +95,6 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                   ),
                   _buildGap(),
                 ],
-                if (offeredFood.numberOfBoxes != null) ...[
-                  ZOTextField(
-                    label: context.l10n!.numberOfBoxes,
-                    initialValue: offeredFood.numberOfBoxes.toString(),
-                    readOnly: true,
-                  ),
-                  _buildGap(),
-                ],
-                if (offeredFood.numberOfBoxes != null) ...[
-                  ZOTextField(
-                    label: context.l10n!.boxType,
-                    initialValue: offeredFood.boxType,
-                    readOnly: true,
-                  ),
-                  _buildGap(),
-                ],
                 if (offeredFood.preparedAt != null) ...[
                   ZOTextField(
                     label: context.l10n!.preparedAt,

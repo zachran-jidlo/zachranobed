@@ -23,8 +23,6 @@ mixin _$FoodInfo {
   int? get foodTemperature => throw _privateConstructorUsedError;
   int? get numberOfPackages => throw _privateConstructorUsedError;
   int? get numberOfServings => throw _privateConstructorUsedError;
-  int? get numberOfBoxes => throw _privateConstructorUsedError;
-  FoodBoxType? get foodBoxType => throw _privateConstructorUsedError;
   FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
   FoodDateTime? get consumeBy => throw _privateConstructorUsedError;
 
@@ -48,8 +46,6 @@ abstract class $FoodInfoCopyWith<$Res> {
       int? foodTemperature,
       int? numberOfPackages,
       int? numberOfServings,
-      int? numberOfBoxes,
-      FoodBoxType? foodBoxType,
       FoodDateTime? preparedAt,
       FoodDateTime? consumeBy});
 }
@@ -76,8 +72,6 @@ class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
     Object? foodTemperature = freezed,
     Object? numberOfPackages = freezed,
     Object? numberOfServings = freezed,
-    Object? numberOfBoxes = freezed,
-    Object? foodBoxType = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = freezed,
   }) {
@@ -110,14 +104,6 @@ class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      foodBoxType: freezed == foodBoxType
-          ? _value.foodBoxType
-          : foodBoxType // ignore: cast_nullable_to_non_nullable
-              as FoodBoxType?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -146,8 +132,6 @@ abstract class _$$FoodInfoImplCopyWith<$Res>
       int? foodTemperature,
       int? numberOfPackages,
       int? numberOfServings,
-      int? numberOfBoxes,
-      FoodBoxType? foodBoxType,
       FoodDateTime? preparedAt,
       FoodDateTime? consumeBy});
 }
@@ -172,8 +156,6 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
     Object? foodTemperature = freezed,
     Object? numberOfPackages = freezed,
     Object? numberOfServings = freezed,
-    Object? numberOfBoxes = freezed,
-    Object? foodBoxType = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = freezed,
   }) {
@@ -206,14 +188,6 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      foodBoxType: freezed == foodBoxType
-          ? _value.foodBoxType
-          : foodBoxType // ignore: cast_nullable_to_non_nullable
-              as FoodBoxType?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -237,8 +211,6 @@ class _$FoodInfoImpl implements _FoodInfo {
       this.foodTemperature,
       this.numberOfPackages,
       this.numberOfServings,
-      this.numberOfBoxes,
-      this.foodBoxType,
       this.preparedAt,
       this.consumeBy})
       : _allergens = allergens;
@@ -267,17 +239,13 @@ class _$FoodInfoImpl implements _FoodInfo {
   @override
   final int? numberOfServings;
   @override
-  final int? numberOfBoxes;
-  @override
-  final FoodBoxType? foodBoxType;
-  @override
   final FoodDateTime? preparedAt;
   @override
   final FoodDateTime? consumeBy;
 
   @override
   String toString() {
-    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, numberOfBoxes: $numberOfBoxes, foodBoxType: $foodBoxType, preparedAt: $preparedAt, consumeBy: $consumeBy)';
+    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, preparedAt: $preparedAt, consumeBy: $consumeBy)';
   }
 
   @override
@@ -298,10 +266,6 @@ class _$FoodInfoImpl implements _FoodInfo {
                 other.numberOfPackages == numberOfPackages) &&
             (identical(other.numberOfServings, numberOfServings) ||
                 other.numberOfServings == numberOfServings) &&
-            (identical(other.numberOfBoxes, numberOfBoxes) ||
-                other.numberOfBoxes == numberOfBoxes) &&
-            (identical(other.foodBoxType, foodBoxType) ||
-                other.foodBoxType == foodBoxType) &&
             (identical(other.preparedAt, preparedAt) ||
                 other.preparedAt == preparedAt) &&
             (identical(other.consumeBy, consumeBy) ||
@@ -318,8 +282,6 @@ class _$FoodInfoImpl implements _FoodInfo {
       foodTemperature,
       numberOfPackages,
       numberOfServings,
-      numberOfBoxes,
-      foodBoxType,
       preparedAt,
       consumeBy);
 
@@ -341,8 +303,6 @@ abstract class _FoodInfo implements FoodInfo {
       final int? foodTemperature,
       final int? numberOfPackages,
       final int? numberOfServings,
-      final int? numberOfBoxes,
-      final FoodBoxType? foodBoxType,
       final FoodDateTime? preparedAt,
       final FoodDateTime? consumeBy}) = _$FoodInfoImpl;
 
@@ -360,10 +320,6 @@ abstract class _FoodInfo implements FoodInfo {
   int? get numberOfPackages;
   @override
   int? get numberOfServings;
-  @override
-  int? get numberOfBoxes;
-  @override
-  FoodBoxType? get foodBoxType;
   @override
   FoodDateTime? get preparedAt;
   @override
