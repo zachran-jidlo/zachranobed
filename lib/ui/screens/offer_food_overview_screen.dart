@@ -436,6 +436,7 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader(context),
         const SizedBox(height: GapSize.xs),
