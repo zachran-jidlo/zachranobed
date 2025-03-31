@@ -9,6 +9,7 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
+import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/food_box_counter.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
@@ -99,7 +100,12 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
                 } else if (snapshot.hasError || snapshot.data == null) {
                   return _error(context);
                 } else {
-                  return _form(snapshot.requireData, useWideButton);
+                  final hasSomeBoxes = snapshot.requireData.any((box) => box.quantityAtCanteen > 0);
+                  if (!hasSomeBoxes) {
+                    return _empty(context);
+                  } else {
+                    return _form(snapshot.requireData, useWideButton);
+                  }
                 }
               },
             ),
@@ -121,6 +127,27 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
         children: [
           ErrorContent(
             onRetryPressed: _loadStatistics,
+          ),
+          const SizedBox(height: GapSize.xs),
+        ],
+      ),
+    );
+  }
+
+  /// Builds an empty screen content.
+  Widget _empty(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          EmptyPage(
+            vectorImagePath: ZOStrings.boxEmptyPath,
+            title: context.l10n!.offerFoodBoxInfoEmptyTitle,
+            description: context.l10n!.offerFoodBoxInfoEmptyDescription,
+          ),
+          ZOButton(
+            text: context.l10n!.commonBack,
+            minimumSize: ZOButtonSize.tiny(),
+            onPressed: () => context.router.maybePop(),
           ),
           const SizedBox(height: GapSize.xs),
         ],

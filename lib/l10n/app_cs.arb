@@ -243,6 +243,8 @@
 
     "offerFoodBoxInfoScreenTitle": "Počet vratných krabiček",
     "offerFoodBoxInfoSaveAction": "Uložit",
+    "offerFoodBoxInfoEmptyTitle": "Není možné zadat vratné krabičky",
+    "offerFoodBoxInfoEmptyDescription": "V tuto chvíli u sebe nemáte žádné vratné krabičky",
 
     "offerFoodDetailAddScreenTitle": "Nabídka zbylých pokrmů",
     "offerFoodDetailEditScreenTitle": "Úprava zadaného pokrmu",
