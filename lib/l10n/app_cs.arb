@@ -235,6 +235,11 @@
     "offerFoodOverviewSectionBoxInfoTitle": "Počet vratných krabiček",
     "offerFoodOverviewSectionBoxInfoDescription": "Pro darování pokrmů zadejte počet krabiček, ve kterých budou pokrmy darovány.",
     "offerFoodOverviewSectionBoxInfoEmpty": "Pokrmy darovány bez vratných krabiček",
+    "offerFoodOverviewUpdateBoxesDialogTitle": "Upravit počty krabiček?",
+    "offerFoodOverviewUpdateBoxesDialogConfirmAction": "Upravit",
+    "offerFoodOverviewUpdateBoxesRemoveDialogContent": "Byl odebrán pokrm. Chcete upravit počet vratných krabiček?",
+    "offerFoodOverviewUpdateBoxesEditDialogContent": "Byl upraven pokrm. Chcete upravit počet vratných krabiček?",
+    "offerFoodOverviewUpdateBoxesAddDialogContent": "Byl úspěšně přidán další pokrm. Chcete upravit počet vratných krabiček?",
 
     "offerFoodBoxInfoScreenTitle": "Počet vratných krabiček",
     "offerFoodBoxInfoSaveAction": "Uložit",

@@ -108,15 +108,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                       OfferFoodOverviewFoodSection(
                         foodInfos: _foodInfos,
                         onAddPressed: _onAddNewFoodPressed,
-                        onEditPressed: (food) async {
-                          final result = await context.router.push(
-                            OfferFoodEditExistingRoute(foodInfo: food),
-                          );
-                          _handleDetailResult(
-                            oldFoodInfo: food,
-                            result: result as OfferFoodDetailResult?,
-                          );
-                        },
+                        onEditPressed: _onEditFoodPressed,
                       ),
                       const SizedBox(height: GapSize.xl),
                       OfferFoodOverviewBoxSection(
@@ -215,6 +207,16 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     );
   }
 
+  void _onEditFoodPressed(FoodInfo food) async {
+    final result = await context.router.push(
+      OfferFoodEditExistingRoute(foodInfo: food),
+    );
+    _handleDetailResult(
+      oldFoodInfo: food,
+      result: result as OfferFoodDetailResult?,
+    );
+  }
+
   void _onEditBoxesPressed() async {
     final result = await context.router.push(
       OfferFoodBoxesRoute(
@@ -293,6 +295,8 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       setState(() {
         _foodInfos.remove(oldFoodInfo);
       });
+
+      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesRemoveDialogContent);
     }
     // Replace an existing food item with a new one
     else if (oldFoodInfo != null && result is OfferFoodDetailResultSaveItem) {
@@ -300,13 +304,40 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
         final index = _foodInfos.indexWhere((item) => item.id == result.foodInfo.id);
         _foodInfos[index] = result.foodInfo;
       });
+
+      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesEditDialogContent);
     }
     // Add a new food item
     else if (oldFoodInfo == null && result is OfferFoodDetailResultSaveItem) {
       setState(() {
         _foodInfos.add(result.foodInfo);
       });
+
+      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesAddDialogContent);
     }
+  }
+
+  /// If boxes were already added, we need to show dialog that offers to update boxes.
+  void _showUpdateBoxesDialogIfNeeded(String message) {
+    if (_boxInfos.isEmpty) {
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => ZODialog(
+        criticalConfirmStyle: true,
+        title: context.l10n!.offerFoodOverviewUpdateBoxesDialogTitle,
+        content: message,
+        confirmText: context.l10n!.offerFoodOverviewUpdateBoxesDialogConfirmAction,
+        cancelText: context.l10n!.commonCancel,
+        onConfirmPressed: () {
+          context.router.maybePop();
+          _onEditBoxesPressed();
+        },
+        onCancelPressed: () => context.router.maybePop(),
+      ),
+    );
   }
 }
 
