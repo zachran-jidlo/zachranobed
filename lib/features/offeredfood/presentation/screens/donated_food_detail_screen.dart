@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -44,26 +45,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: GapSize.m),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ZOTextField(
-                        label: context.l10n!.allergens,
-                        initialValue: offeredFood.allergens.join(", "),
-                        readOnly: true,
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.info_outline),
-                      onPressed: () {
-                        _showAllergens(context, offeredFood.allergens);
-                      },
-                      color: ZOColors.primary,
-                    )
-                  ],
-                ),
+                _buildAllergens(context),
                 _buildGap(),
                 ZOTextField(
                   label: context.l10n!.foodCategory,
@@ -136,6 +118,45 @@ class DonatedFoodDetailScreen extends StatelessWidget {
     return const SizedBox(height: GapSize.m);
   }
 
+  Widget _buildAllergens(BuildContext context) {
+    // Return only text widget if there are no allergens
+    if (listEquals(offeredFood.allergens, [FoodAllergen.noAllergensNumber])) {
+      return ZOTextField(
+        label: context.l10n!.allergens,
+        initialValue: context.l10n!.allergensNotPresent,
+        readOnly: true,
+      );
+    }
+
+    // Return only text widget if there are allergens on packaging
+    if (listEquals(offeredFood.allergens, [FoodAllergen.onPackageNumber])) {
+      return ZOTextField(
+        label: context.l10n!.allergens,
+        initialValue: context.l10n!.allergensListedOnPackage,
+        readOnly: true,
+      );
+    }
+
+    return Row(
+      children: [
+        Expanded(
+          child: ZOTextField(
+            label: context.l10n!.allergens,
+            initialValue: offeredFood.allergens.join(", "),
+            readOnly: true,
+          ),
+        ),
+        const SizedBox(width: 8.0),
+        IconButton(
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.info_outline),
+          onPressed: () => _showAllergens(context, offeredFood.allergens),
+          color: ZOColors.primary,
+        )
+      ],
+    );
+  }
+
   String _formatFoodDateTime({
     required FoodDateTime date,
     required String dateOnPackaging,
@@ -162,7 +183,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
 
   void _showAllergens(BuildContext context, List<String> allergens) {
     final allergenNumbers = offeredFood.allergens.map((it) => int.parse(it));
-    final allergens = FoodAllergen.all(context, true).where((it) => allergenNumbers.contains(it.number));
+    final allergens = FoodAllergen.all(context).where((it) => allergenNumbers.contains(it.number));
     FoodAllergensBottomSheet.show(context, allergens.toList());
   }
 }

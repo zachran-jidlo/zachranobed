@@ -107,7 +107,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         action: SectionHeaderIcon(
           icon: const Icon(Icons.info_outline),
           onPressed: () {
-            final allergens = FoodAllergen.all(context, false);
+            final allergens = FoodAllergen.all(context);
             FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
           },
         ),

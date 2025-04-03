@@ -69,6 +69,8 @@
     "allergens": "Alergeny",
     "allergensList": "Seznam alergenů",
     "allergensNotPresent": "Bez alergenů",
+    "allergensOnPackage": "Viz obal",
+    "allergensListedOnPackage": "Alergeny uvedeny na obalu",
     "allergen01": "Obiloviny obsahující lepek",
     "allergen02": "Korýši",
     "allergen03": "Vejce a výrobky z nich",
