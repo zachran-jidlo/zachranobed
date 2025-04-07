@@ -24,13 +24,11 @@ mixin _$OfferedFood {
   int? get foodTemperature => throw _privateConstructorUsedError;
   List<String> get allergens => throw _privateConstructorUsedError;
   int? get numberOfServings => throw _privateConstructorUsedError;
-  String? get boxType => throw _privateConstructorUsedError;
+  int? get numberOfPackages => throw _privateConstructorUsedError;
   FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
   FoodDateTime get consumeBy => throw _privateConstructorUsedError;
   String get donorId => throw _privateConstructorUsedError;
   String get recipientId => throw _privateConstructorUsedError;
-  int? get numberOfBoxes => throw _privateConstructorUsedError;
-  int? get numberOfPackages => throw _privateConstructorUsedError;
 
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.
@@ -54,13 +52,11 @@ abstract class $OfferedFoodCopyWith<$Res> {
       int? foodTemperature,
       List<String> allergens,
       int? numberOfServings,
-      String? boxType,
+      int? numberOfPackages,
       FoodDateTime? preparedAt,
       FoodDateTime consumeBy,
       String donorId,
-      String recipientId,
-      int? numberOfBoxes,
-      int? numberOfPackages});
+      String recipientId});
 }
 
 /// @nodoc
@@ -86,13 +82,11 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
     Object? foodTemperature = freezed,
     Object? allergens = null,
     Object? numberOfServings = freezed,
-    Object? boxType = freezed,
+    Object? numberOfPackages = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = null,
     Object? donorId = null,
     Object? recipientId = null,
-    Object? numberOfBoxes = freezed,
-    Object? numberOfPackages = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -127,10 +121,10 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      boxType: freezed == boxType
-          ? _value.boxType
-          : boxType // ignore: cast_nullable_to_non_nullable
-              as String?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _value.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -147,14 +141,6 @@ class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
@@ -176,13 +162,11 @@ abstract class _$$OfferedFoodImplCopyWith<$Res>
       int? foodTemperature,
       List<String> allergens,
       int? numberOfServings,
-      String? boxType,
+      int? numberOfPackages,
       FoodDateTime? preparedAt,
       FoodDateTime consumeBy,
       String donorId,
-      String recipientId,
-      int? numberOfBoxes,
-      int? numberOfPackages});
+      String recipientId});
 }
 
 /// @nodoc
@@ -206,13 +190,11 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
     Object? foodTemperature = freezed,
     Object? allergens = null,
     Object? numberOfServings = freezed,
-    Object? boxType = freezed,
+    Object? numberOfPackages = freezed,
     Object? preparedAt = freezed,
     Object? consumeBy = null,
     Object? donorId = null,
     Object? recipientId = null,
-    Object? numberOfBoxes = freezed,
-    Object? numberOfPackages = freezed,
   }) {
     return _then(_$OfferedFoodImpl(
       id: null == id
@@ -247,10 +229,10 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
           ? _value.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
-      boxType: freezed == boxType
-          ? _value.boxType
-          : boxType // ignore: cast_nullable_to_non_nullable
-              as String?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _value.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
       preparedAt: freezed == preparedAt
           ? _value.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
@@ -267,14 +249,6 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
           ? _value.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -291,13 +265,11 @@ class _$OfferedFoodImpl implements _OfferedFood {
       required this.foodTemperature,
       required final List<String> allergens,
       required this.numberOfServings,
-      required this.boxType,
+      required this.numberOfPackages,
       required this.preparedAt,
       required this.consumeBy,
       required this.donorId,
-      required this.recipientId,
-      required this.numberOfBoxes,
-      required this.numberOfPackages})
+      required this.recipientId})
       : _allergens = allergens;
 
   @override
@@ -323,7 +295,7 @@ class _$OfferedFoodImpl implements _OfferedFood {
   @override
   final int? numberOfServings;
   @override
-  final String? boxType;
+  final int? numberOfPackages;
   @override
   final FoodDateTime? preparedAt;
   @override
@@ -332,14 +304,10 @@ class _$OfferedFoodImpl implements _OfferedFood {
   final String donorId;
   @override
   final String recipientId;
-  @override
-  final int? numberOfBoxes;
-  @override
-  final int? numberOfPackages;
 
   @override
   String toString() {
-    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, boxType: $boxType, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId, numberOfBoxes: $numberOfBoxes, numberOfPackages: $numberOfPackages)';
+    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, numberOfPackages: $numberOfPackages, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId)';
   }
 
   @override
@@ -361,18 +329,15 @@ class _$OfferedFoodImpl implements _OfferedFood {
                 .equals(other._allergens, _allergens) &&
             (identical(other.numberOfServings, numberOfServings) ||
                 other.numberOfServings == numberOfServings) &&
-            (identical(other.boxType, boxType) || other.boxType == boxType) &&
+            (identical(other.numberOfPackages, numberOfPackages) ||
+                other.numberOfPackages == numberOfPackages) &&
             (identical(other.preparedAt, preparedAt) ||
                 other.preparedAt == preparedAt) &&
             (identical(other.consumeBy, consumeBy) ||
                 other.consumeBy == consumeBy) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
             (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId) &&
-            (identical(other.numberOfBoxes, numberOfBoxes) ||
-                other.numberOfBoxes == numberOfBoxes) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages));
+                other.recipientId == recipientId));
   }
 
   @override
@@ -386,13 +351,11 @@ class _$OfferedFoodImpl implements _OfferedFood {
       foodTemperature,
       const DeepCollectionEquality().hash(_allergens),
       numberOfServings,
-      boxType,
+      numberOfPackages,
       preparedAt,
       consumeBy,
       donorId,
-      recipientId,
-      numberOfBoxes,
-      numberOfPackages);
+      recipientId);
 
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.
@@ -413,13 +376,11 @@ abstract class _OfferedFood implements OfferedFood {
       required final int? foodTemperature,
       required final List<String> allergens,
       required final int? numberOfServings,
-      required final String? boxType,
+      required final int? numberOfPackages,
       required final FoodDateTime? preparedAt,
       required final FoodDateTime consumeBy,
       required final String donorId,
-      required final String recipientId,
-      required final int? numberOfBoxes,
-      required final int? numberOfPackages}) = _$OfferedFoodImpl;
+      required final String recipientId}) = _$OfferedFoodImpl;
 
   @override
   String get id;
@@ -438,7 +399,7 @@ abstract class _OfferedFood implements OfferedFood {
   @override
   int? get numberOfServings;
   @override
-  String? get boxType;
+  int? get numberOfPackages;
   @override
   FoodDateTime? get preparedAt;
   @override
@@ -447,10 +408,6 @@ abstract class _OfferedFood implements OfferedFood {
   String get donorId;
   @override
   String get recipientId;
-  @override
-  int? get numberOfBoxes;
-  @override
-  int? get numberOfPackages;
 
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.

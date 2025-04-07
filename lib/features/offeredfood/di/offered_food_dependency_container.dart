@@ -15,7 +15,6 @@ class OfferedFoodDependencyContainer {
       FirebaseOfferedFoodRepository(
         GetIt.I<DeliveryService>(),
         GetIt.I<MealService>(),
-        GetIt.I<FoodBoxService>(),
         GetIt.I<EntityPairService>(),
       ),
     );

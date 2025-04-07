@@ -13,19 +13,19 @@ class SectionHeader extends StatelessWidget {
   /// The subtitle displayed in the header.
   final Widget? subtitle;
 
-  /// An optional icon to display as an action.
-  final Icon? actionIcon;
+  /// An optional widget representing the action.
+  final Widget? action;
 
-  /// The callback function triggered when the action icon is pressed.
-  final VoidCallback? onActionPressed;
+  /// The flag which determines whether to use bottom padding.
+  final bool useBottomPadding;
 
   /// Creates a [SectionHeader] widget.
   const SectionHeader({
     super.key,
     required this.title,
     this.subtitle,
-    this.actionIcon,
-    this.onActionPressed,
+    this.action,
+    this.useBottomPadding = true,
   });
 
   @override
@@ -38,7 +38,7 @@ class SectionHeader extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: GapSize.xs),
+        padding: EdgeInsets.only(bottom: useBottomPadding ? GapSize.xs : 0),
         child: Row(
           children: [
             Expanded(
@@ -50,18 +50,26 @@ class SectionHeader extends StatelessWidget {
                 ],
               ),
             ),
-            _buildAction(actionIcon, onActionPressed),
+            action ?? const SizedBox(),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildAction(Icon? icon, VoidCallback? onPressed) {
-    if (icon == null || onPressed == null) {
-      return const SizedBox();
-    }
+class SectionHeaderIcon extends StatelessWidget {
+  final Icon icon;
+  final VoidCallback onPressed;
 
+  const SectionHeaderIcon({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         const SizedBox(width: GapSize.xs),

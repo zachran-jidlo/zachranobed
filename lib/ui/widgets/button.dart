@@ -8,6 +8,7 @@ class ZOButton extends StatelessWidget {
   final IconData? icon;
   final IconAlignment? iconAlignment;
   final Size? minimumSize;
+  final bool enabled;
 
   const ZOButton({
     super.key,
@@ -17,6 +18,7 @@ class ZOButton extends StatelessWidget {
     this.icon,
     this.iconAlignment,
     this.minimumSize = ZOButtonSize.largeMatchParent,
+    this.enabled = true,
   });
 
   @override
@@ -35,7 +37,7 @@ class ZOButton extends StatelessWidget {
       if (icon != null) {
         return OutlinedButton.icon(
           style: style,
-          onPressed: onPressed,
+          onPressed: enabled ? onPressed : null,
           icon: Icon(
             icon,
             size: 18.0,
@@ -46,7 +48,7 @@ class ZOButton extends StatelessWidget {
       } else {
         return OutlinedButton(
           style: style,
-          onPressed: onPressed,
+          onPressed: enabled ? onPressed : null,
           child: Text(text),
         );
       }
@@ -56,7 +58,7 @@ class ZOButton extends StatelessWidget {
       if (icon != null) {
         return ElevatedButton.icon(
           style: style,
-          onPressed: onPressed,
+          onPressed: enabled ? onPressed : null,
           icon: Icon(
             icon,
             size: 18.0,
@@ -67,7 +69,7 @@ class ZOButton extends StatelessWidget {
       } else {
         return ElevatedButton(
           style: style,
-          onPressed: onPressed,
+          onPressed: enabled ? onPressed : null,
           child: Text(text),
         );
       }
@@ -76,7 +78,7 @@ class ZOButton extends StatelessWidget {
     if (icon != null) {
       return TextButton.icon(
         style: style,
-        onPressed: onPressed,
+        onPressed: enabled ? onPressed : null,
         icon: Icon(
           icon,
           size: 18.0,
@@ -87,7 +89,7 @@ class ZOButton extends StatelessWidget {
     } else {
       return TextButton(
         style: style,
-        onPressed: onPressed,
+        onPressed: enabled ? onPressed : null,
         child: Text(text),
       );
     }

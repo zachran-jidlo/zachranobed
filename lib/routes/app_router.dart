@@ -60,6 +60,10 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: OfferFoodBoxesRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: ChangeActivePairRoute.page,
           guards: [AuthGuard()],
         ),

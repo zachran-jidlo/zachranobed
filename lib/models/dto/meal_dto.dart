@@ -17,8 +17,6 @@ class MealDto {
   final DateTime? preparedAt;
   @TimestampConverter()
   final DateTime? consumeBy;
-  final String? foodBoxId;
-  final int? foodBoxCount;
   final int? foodTemperature;
 
   MealDto({
@@ -27,8 +25,6 @@ class MealDto {
     required this.packagesCount,
     required this.preparedAt,
     required this.consumeBy,
-    required this.foodBoxId,
-    required this.foodBoxCount,
     required this.foodTemperature,
   });
 

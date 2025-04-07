@@ -4,9 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       target_period:
-        description: 'Target period. Can be a month (YYYY-MM), or a full year (YYYY).'
-        required: true
-        default: '2024-01'
+        description: 'Target period. Can be a month (YYYY-MM), or a full year (YYYY). Provide either target period or start & end dates, not both.'
+      start_date:
+        description: 'Start date in YYYY-MM-DD format.'
+      end_date:
+        description: 'End date in YYYY-MM-DD format.'
+      donor_id:
+        description: 'Donor ID to filter deliveries by. If not provided, all deliveries will be processed.'
+      recipient_id:
+        description: 'Recipient ID to filter deliveries by. If not provided, all deliveries will be processed.'
 
 jobs:
   modify-firestore:
@@ -14,12 +20,41 @@ jobs:
     timeout-minutes: 15  # Set a timeout of 15 minutes
 
     steps:
+    - name: Validate input consistency
+      run: |
+        if [[ -n "${{ github.event.inputs.target_period }}" && ( -n "${{ github.event.inputs.start_date }}" || -n "${{ github.event.inputs.end_date }}" ) ]]; then
+          echo "Provide either target period or start & end dates, not both."
+          exit 1
+        fi
+        
+        if [[ -z "${{ github.event.inputs.target_period }}" && ( -z "${{ github.event.inputs.start_date }}" || -z "${{ github.event.inputs.end_date }}" ) ]]; then
+          echo "Provide either target period or start & end dates, not both."
+          exit 1
+        fi
+
     - name: Validate target period
+      if: ${{ github.event.inputs.target_period != '' }}
       run: |
         if [[ ! "${{ github.event.inputs.target_period }}" =~ ^[0-9]{4}(-(0[1-9]|1[0-2]))?$ ]]; then
           echo "Invalid target period format. Must be YYYY or YYYY-MM."
           exit 1
         fi
+
+    - name: Validate start date & end date
+      if: ${{ github.event.inputs.start_date != '' || github.event.inputs.end_date != '' }}
+      run: |
+        for date in "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"; do
+          if [[ -n "$date" && ! "$date" =~ ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$ ]]; then
+            echo "Invalid date format for $date. Must be YYYY-MM-DD."
+            exit 1
+          fi
+        
+          # Check if the date is real
+          if ! date -d "$date" "+%Y-%m-%d" &>/dev/null; then
+            echo "Invalid date: $date does not exist."
+            exit 1
+          fi
+        done
 
     - name: Set timezone
       uses: szenius/set-timezone@v2.0
@@ -44,6 +79,10 @@ jobs:
         node cron/scripts/create-delivery-report.js
       env:
         TARGET_PERIOD: ${{ github.event.inputs.target_period }}
+        START_DATE: ${{ github.event.inputs.start_date }}
+        END_DATE: ${{ github.event.inputs.end_date }}
+        DONOR_ID: ${{ github.event.inputs.donor_id }}
+        RECIPIENT_ID: ${{ github.event.inputs.recipient_id }}
         FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
         FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
         FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}

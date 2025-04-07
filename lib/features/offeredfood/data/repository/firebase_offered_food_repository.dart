@@ -1,18 +1,17 @@
 import 'package:uuid/uuid.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/offered_food_mapper.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/dto/delivery_dto.dart';
 import 'package:zachranobed/models/dto/meal_detail_dto.dart';
 import 'package:zachranobed/models/dto/meal_dto.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/food_box_service.dart';
 import 'package:zachranobed/services/meal_service.dart';
 
 /// Implementation of the [OfferedFoodRepository] via Firebase services.
@@ -25,13 +24,11 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
   final DeliveryService _deliveryService;
   final MealService _mealService;
-  final FoodBoxService _foodBoxService;
   final EntityPairService _entityPairService;
 
   FirebaseOfferedFoodRepository(
     this._deliveryService,
     this._mealService,
-    this._foodBoxService,
     this._entityPairService,
   );
 
@@ -55,8 +52,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
     final pickupDuration = Duration(minutes: delivery.getConfirmationTime());
     final canDonateUntil = time.subtract(pickupDuration);
-    if (delivery.state == DeliveryState.prepared &&
-        DateTime.now().isAfter(canDonateUntil)) {
+    if (delivery.state == DeliveryState.prepared && DateTime.now().isAfter(canDonateUntil)) {
       return false;
     }
 
@@ -99,8 +95,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     DateTime? from,
     DateTime? to,
   }) async* {
-    final boxTypes = await _foodBoxService.getAll();
-    final boxTypeMap = {for (final e in boxTypes) e.id: e.name};
     final deliveries = _deliveryService.observeDeliveries(
       donorId: user.activePair.donorId,
       recipientId: user.activePair.recipientId,
@@ -125,12 +119,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
           if (detail == null) {
             return null;
           }
-          final boxType = boxTypeMap[meal.foodBoxId];
-          return detail.toDomain(
-            delivery,
-            meal,
-            boxType,
-          );
+          return detail.toDomain(delivery, meal);
         });
       }));
       // Flatten a list of lists in single list
@@ -148,6 +137,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   Future<bool> createOffer({
     required Delivery delivery,
     required List<FoodInfo> foodInfo,
+    required List<BoxInfo> boxInfo,
   }) async {
     const uuid = Uuid();
     final List<MealDetailDto> mealDetails = [];
@@ -166,8 +156,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
         ),
       );
 
-      final boxId = element.foodBoxType?.id;
-      final boxCount = element.numberOfBoxes ?? element.numberOfServings;
       meals.add(
         MealDto(
           mealId: id,
@@ -175,12 +163,14 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
           packagesCount: element.numberOfPackages,
           preparedAt: element.preparedAt?.getDate(),
           consumeBy: element.consumeBy?.getDate(),
-          foodBoxId: boxId,
-          foodBoxCount: boxCount,
           foodTemperature: element.foodTemperature,
         ),
       );
+    }
 
+    for (final element in boxInfo) {
+      final boxId = element.foodBoxId;
+      final boxCount = element.numberOfBoxes;
       if (boxId != null && boxCount != null) {
         changeBoxesMap[boxId] = (changeBoxesMap[boxId] ?? 0) + boxCount;
       }
@@ -190,7 +180,7 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       return false;
     }
 
-    if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals)) {
+    if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals, changeBoxesMap)) {
       return false;
     }
 

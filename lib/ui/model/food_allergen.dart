@@ -3,6 +3,13 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 /// Represents a food allergen with its number and localized text.
 class FoodAllergen {
+
+  /// A constant representing the absence of allergens.
+  static const noAllergensNumber = "0";
+
+  /// A constant representing that meal allergens are listed on the packaging.
+  static const onPackageNumber = "-1";
+
   /// The number associated with the allergen.
   final int number;
 
@@ -16,16 +23,8 @@ class FoodAllergen {
   });
 
   /// Creates a list of [FoodAllergen] instances with localized texts.
-  static List<FoodAllergen> all(
-    BuildContext context,
-    bool includeZero,
-  ) {
+  static List<FoodAllergen> all(BuildContext context) {
     return [
-      if (includeZero)
-        FoodAllergen(
-          number: 0,
-          text: context.l10n!.allergensNotPresent,
-        ),
       FoodAllergen(
         number: 1,
         text: context.l10n!.allergen01,

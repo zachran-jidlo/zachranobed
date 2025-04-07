@@ -1,10 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
-import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -12,7 +9,6 @@ import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_info_fields.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
-import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 /// Represents the initial screen for offering food.
 ///
@@ -25,7 +21,6 @@ class OfferFoodInitialScreen extends OfferFoodDetailScreen {
       : super(
           key: key,
           foodInfo: null,
-          allFoodInfos: const [],
           returnResult: false,
           screenMode: OfferFoodDetailScreenMode.add,
         );
@@ -37,12 +32,11 @@ class OfferFoodInitialScreen extends OfferFoodDetailScreen {
 /// returns a result of type [OfferFoodDetailResultSaveItem] containing the newly added food info.
 @RoutePage()
 class OfferFoodAddNewScreen extends OfferFoodDetailScreen {
-  /// Creates a new [OfferFoodDetailScreen] with the given [allFoodInfos].
-  const OfferFoodAddNewScreen({Key? key, required List<FoodInfo> allFoodInfos})
+  /// Creates a new [OfferFoodDetailScreen].
+  const OfferFoodAddNewScreen({Key? key})
       : super(
           key: key,
           foodInfo: null,
-          allFoodInfos: allFoodInfos,
           returnResult: true,
           screenMode: OfferFoodDetailScreenMode.add,
         );
@@ -50,12 +44,11 @@ class OfferFoodAddNewScreen extends OfferFoodDetailScreen {
 
 @RoutePage()
 class OfferFoodEditExistingScreen extends OfferFoodDetailScreen {
-  /// Creates a new [OfferFoodDetailScreen] with the given params.
-  const OfferFoodEditExistingScreen({Key? key, required FoodInfo foodInfo, required List<FoodInfo> allFoodInfos})
+  /// Creates a new [OfferFoodDetailScreen] with the given [foodInfo].
+  const OfferFoodEditExistingScreen({Key? key, required FoodInfo foodInfo})
       : super(
           key: key,
           foodInfo: foodInfo,
-          allFoodInfos: allFoodInfos,
           returnResult: true,
           screenMode: OfferFoodDetailScreenMode.edit,
         );
@@ -88,14 +81,12 @@ class OfferFoodDetailResultRemoveItem extends OfferFoodDetailResult {}
 
 class OfferFoodDetailScreen extends StatefulWidget {
   final FoodInfo? foodInfo;
-  final List<FoodInfo> allFoodInfos;
   final bool returnResult;
   final OfferFoodDetailScreenMode screenMode;
 
   const OfferFoodDetailScreen({
     super.key,
     required this.foodInfo,
-    required this.allFoodInfos,
     required this.returnResult,
     required this.screenMode,
   });
@@ -107,23 +98,14 @@ class OfferFoodDetailScreen extends StatefulWidget {
 class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   late FoodInfo _foodInfoPending;
 
-  final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
-  final List<FoodBoxType> _foodBoxTypes = [];
 
   @override
   void initState() {
     super.initState();
 
     _foodInfoPending = widget.foodInfo ?? FoodInfo.withUuid();
-
-    _foodBoxRepository.getTypes(includeDisposable: true).then((value) {
-      setState(() {
-        _foodBoxTypes.clear();
-        _foodBoxTypes.addAll(value);
-      });
-    });
   }
 
   @override
@@ -185,7 +167,6 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                       FoodInfoFields(
                         formValidationManager: _formValidationManager,
                         foodInfo: _foodInfoPending,
-                        boxTypes: _foodBoxTypes,
                         onChanged: (food) {
                           setState(() {
                             _foodInfoPending = food;
@@ -285,26 +266,13 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     );
 
     if (_formKey.currentState!.validate()) {
-      if (await _getNewFoodInfos().verifyAvailableBoxCount(context, _foodBoxRepository)) {
-        if (mounted) {
-          // Remove dialog and return result
-          context.router.popForced();
-          if (widget.returnResult) {
-            context.router.popForced(OfferFoodDetailResultSaveItem(_foodInfoPending));
-          } else {
-            context.router.replace(OfferFoodOverviewRoute(initialFoodInfos: [_foodInfoPending]));
-          }
-        }
-      } else {
-        if (mounted) {
-          // Remove dialog and show snackbar
-          context.router.popForced();
-          ScaffoldMessenger.of(context).showSnackBar(
-            ZOTemporarySnackBar(
-              backgroundColor: Colors.red,
-              message: context.l10n!.boxCountError,
-            ),
-          );
+      if (mounted) {
+        // Remove dialog and return result
+        context.router.popForced();
+        if (widget.returnResult) {
+          context.router.popForced(OfferFoodDetailResultSaveItem(_foodInfoPending));
+        } else {
+          context.router.replace(OfferFoodOverviewRoute(initialFoodInfos: [_foodInfoPending]));
         }
       }
     } else {
@@ -335,17 +303,6 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     if (mounted && confirmed) {
       context.router.popForced(OfferFoodDetailResultRemoveItem());
     }
-  }
-
-  List<FoodInfo> _getNewFoodInfos() {
-    final newFoodInfos = List<FoodInfo>.from(widget.allFoodInfos);
-    final index = newFoodInfos.indexWhere((foodInfo) => foodInfo.id == _foodInfoPending.id);
-    if (index >= 0) {
-      newFoodInfos[index] = _foodInfoPending;
-    } else {
-      newFoodInfos.add(_foodInfoPending);
-    }
-    return newFoodInfos;
   }
 
   void _showCancelConfirmationDialog() async {

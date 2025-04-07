@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /// Provides utility methods for field validation.
@@ -126,19 +125,6 @@ class FieldValidationUtils {
       }
       if (value > Constants.foodTemperatureMax) {
         return context.l10n!.invalidFieldFoodTemperatureTooHigh;
-      }
-      return null;
-    };
-  }
-
-  /// Returns a validator for box type field.
-  /// The validator checks if the value is set.
-  static String? Function(FoodBoxType?) getBoxTypeValidator(
-    BuildContext context,
-  ) {
-    return (value) {
-      if (value == null) {
-        return context.l10n!.invalidFieldBoxType;
       }
       return null;
     };

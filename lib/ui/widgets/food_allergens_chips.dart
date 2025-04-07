@@ -17,9 +17,6 @@ import 'package:zachranobed/ui/widgets/tooltip.dart';
 /// selected. Similarly when user selects any allergen, then the "no allergens"
 /// option is deselected.
 class FoodAllergensChips extends StatelessWidget {
-  /// A constant representing the absence of allergens.
-  static const _noAllergensNumber = "0";
-
   /// The currently selected allergens.
   final List<String> selection;
 
@@ -43,7 +40,7 @@ class FoodAllergensChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allergens = FoodAllergen.all(context, false);
+    final allergens = FoodAllergen.all(context);
     return FormField<List<String>>(
       initialValue: selection,
       validator: onValidation,
@@ -76,16 +73,18 @@ class FoodAllergensChips extends StatelessWidget {
                     ),
                     AssistChip(
                       text: context.l10n!.allergensNotPresent,
-                      selected: state.value!.contains(_noAllergensNumber),
-                      onPressed: () {
-                        _onNoAllergenPressed(state);
-                      },
+                      selected: state.value!.contains(FoodAllergen.noAllergensNumber),
+                      onPressed: () => _onSingleSelectPressed(state, FoodAllergen.noAllergensNumber),
+                    ),
+                    AssistChip(
+                      text: context.l10n!.allergensOnPackage,
+                      selected: state.value!.contains(FoodAllergen.onPackageNumber),
+                      onPressed: () => _onSingleSelectPressed(state, FoodAllergen.onPackageNumber),
                     ),
                   ],
                 ),
               ),
-              if (state.hasError)
-                FormFieldError(message: state.errorText ?? ""),
+              if (state.hasError) FormFieldError(message: state.errorText ?? ""),
             ],
           ),
         );
@@ -100,7 +99,8 @@ class FoodAllergensChips extends StatelessWidget {
   ) {
     final currentSelection = state.value ?? [];
     final newSelection = List<String>.from(currentSelection);
-    newSelection.remove(FoodAllergensChips._noAllergensNumber);
+    newSelection.remove(FoodAllergen.noAllergensNumber);
+    newSelection.remove(FoodAllergen.onPackageNumber);
     if (currentSelection.contains(number)) {
       newSelection.remove(number);
     } else {
@@ -110,14 +110,14 @@ class FoodAllergensChips extends StatelessWidget {
     onSelectionChanged(newSelection);
   }
 
-  /// Handles the press event for the "no allergens" chip.
-  void _onNoAllergenPressed(FormFieldState<List<String>> state) {
+  /// Handles the press event for the "no allergens" or "allergens on package" chips.
+  void _onSingleSelectPressed(FormFieldState<List<String>> state, String number) {
     final currentSelection = state.value ?? [];
     final List<String> newSelection;
-    if (currentSelection.contains(FoodAllergensChips._noAllergensNumber)) {
+    if (currentSelection.contains(number)) {
       newSelection = [];
     } else {
-      newSelection = [FoodAllergensChips._noAllergensNumber];
+      newSelection = [number];
     }
     state.didChange(newSelection);
     onSelectionChanged(newSelection);

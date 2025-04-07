@@ -144,7 +144,11 @@ class DeliveryService {
   /// Adds [meals] to the delivery with given [id]. Then recalculates foodboxes
   /// for the same delivery. Returns a future with true when operation succeeds
   /// and false otherwise.
-  Future<bool> addMealsAndBoxes(String id, Iterable<MealDto> meals) async {
+  Future<bool> addMealsAndBoxes(
+      String id,
+      Iterable<MealDto> meals,
+      Map<String, int> boxes,
+  ) async {
     final addMeals = await _collection.doc(id).update({
       'meals': FieldValue.arrayUnion(
         meals.map((e) => e.toJson()).toList(),
@@ -155,17 +159,11 @@ class DeliveryService {
       return false;
     }
 
+    // Get the existing delivery and merge the new food box data
     final delivery = await getDeliveryById(id);
-    final Map<String, int> foodBoxesCount = {};
-    for (final meal in (delivery?.meals ?? List<MealDto>.empty())) {
-      // Skip meals without foodBoxId or foodBoxCount (those are packaged meals)
-      final foodBoxId = meal.foodBoxId;
-      final foodBoxCount = meal.foodBoxCount;
-      if (foodBoxId == null || foodBoxCount == null) {
-        continue;
-      }
-      final acc = (foodBoxesCount[foodBoxId] ?? 0) + foodBoxCount;
-      foodBoxesCount[foodBoxId] = acc;
+    final foodBoxesCount = {for (final e in delivery?.foodBoxes ?? []) e.foodBoxId: e.count};
+    for (final box in boxes.entries) {
+      foodBoxesCount[box.key] = (foodBoxesCount[box.key] ?? 0) + box.value;
     }
 
     final foodBoxes = foodBoxesCount.entries.map(
