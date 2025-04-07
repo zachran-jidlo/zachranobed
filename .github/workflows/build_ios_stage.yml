@@ -1,5 +1,5 @@
 # This workflow is designed to automate the process of building a release IPA for the 'stage' flavor
-# of a Flutter application and distributing it to AppCenter.
+# of a Flutter application and distributing it to Firebase App Distribution.
 name: Build iOS Stage
 
 on:
@@ -37,11 +37,25 @@ jobs:
       - name: Upload artifacts
         uses: ./.github/actions/artifacts-ios
 
-      # Upload IPA to the AppCenter slot and distribute it with latest release notes.
-      - name: Distribute to AppCenter
+  # Use a new job, which runs on Linux, because Firebase App Distribution action does not support MacOS runner.
+  distribute:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkouts the repository.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Downloads iOS related artifacts.
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      # Upload IPA to the Firebase and distribute it with latest release notes.
+      - name: Distribute to Firebase App Distribution
         uses: ./.github/actions/distribute
         with:
-          token: ${{ secrets.APPCENTER_TOKEN }}
-          path: '"build/ios/ipa/Zachraň Oběd Stage.ipa"'
-          application: ${{ secrets.APPCENTER_IOS_STAGE_APP_NAME }}
-          groups: ${{ vars.APPCENTER_GROUPS }}
+          serviceCredentials: ${{ secrets.FIREBASE_APP_DISTRIBUTION_DEV_CREDENTIAL_FILE_CONTENT }}
+          path: 'ios-artifacts/build/ios/ipa/Zachraň Oběd Stage.ipa'
+          application: ${{ secrets.FIREBASE_APP_DISTRIBUTION_IOS_STAGE_APP_ID }}
+          groups: ${{ vars.FIREBASE_APP_DISTRIBUTION_GROUPS }}

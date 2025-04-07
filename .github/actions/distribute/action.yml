@@ -1,9 +1,9 @@
 name: 'Distribute'
-description: 'Distributes an application to AppCenter'
+description: 'Distributes an application to Firebase App Distribution'
 
 inputs:
-  token:
-    description: 'The AppCenter token'
+  serviceCredentials:
+    description: 'Content of Service Credentials private key JSON file'
     required: true
   path:
     description: 'The path to the file'
@@ -24,18 +24,12 @@ runs:
       shell: bash
       run: ./scripts/last_changelog_section.sh CHANGELOG.md > RELEASE_NOTES.md
 
-    # Installs AppCenter command line interface.
-    - name: Install AppCenter CLI
-      shell: bash
-      run: npm install -g appcenter-cli
-
     # Creates a new distribution with release notes created before.
-    - name: Upload a file to AppCenter
-      shell: bash
-      run: |
-        appcenter distribute release \
-          --token ${{ inputs.token }} \
-          --app ${{ inputs.application }} \
-          --file ${{ inputs.path }} \
-          --group ${{ inputs.groups }} \
-          --release-notes-file RELEASE_NOTES.md
+    - name: Upload a file to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ inputs.application }}
+        serviceCredentialsFileContent: ${{ inputs.serviceCredentials }}
+        groups: ${{ inputs.groups }}
+        file: ${{ inputs.path }}
+        releaseNotesFile: RELEASE_NOTES.md
