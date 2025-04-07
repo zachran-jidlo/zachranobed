@@ -4,7 +4,6 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
@@ -13,13 +12,12 @@ import 'package:zachranobed/features/foodboxes/domain/repository/food_box_reposi
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/counter_field.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
+import 'package:zachranobed/ui/widgets/food_box_counter.dart';
 import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
-import 'package:zachranobed/ui/widgets/section_header.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
@@ -27,12 +25,10 @@ class OrderShippingOfBoxesScreen extends StatefulWidget {
   const OrderShippingOfBoxesScreen({super.key});
 
   @override
-  State<OrderShippingOfBoxesScreen> createState() =>
-      _OrderShippingOfBoxesScreenState();
+  State<OrderShippingOfBoxesScreen> createState() => _OrderShippingOfBoxesScreenState();
 }
 
-class _OrderShippingOfBoxesScreenState
-    extends State<OrderShippingOfBoxesScreen> {
+class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen> {
   final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
 
   final _formKey = GlobalKey<FormState>();
@@ -185,11 +181,11 @@ class _OrderShippingOfBoxesScreenState
           key: _formKey,
           child: Column(
             children: <Widget>[
-              ...statistics
-                  .where((statistics) => statistics.quantityAtCharity > 0)
-                  .map((value) {
-                return _FoodBoxCounter(
-                  statistics: value,
+              ...statistics.where((statistics) => statistics.quantityAtCharity > 0).map((value) {
+                return FoodBoxCounter(
+                  type: value.type,
+                  initialValue: 0,
+                  maxQuantity: value.quantityAtCharity,
                   formValidationManager: _formValidationManager,
                   onChanged: (count) {
                     _boxesQuantity[value.type.id] = count;
@@ -234,8 +230,7 @@ class _OrderShippingOfBoxesScreenState
           context.router.replace(
             ThankYouRoute(
               isSuccess: isSuccess,
-              message:
-              context.l10n!.shippingOrderConfirmation,
+              message: context.l10n!.shippingOrderConfirmation,
             ),
           );
         }
@@ -299,62 +294,6 @@ class _OrderShippingOfBoxesScreenState
     return _foodBoxRepository.createBoxDelivery(
       user: user,
       boxInfo: boxes.values.toList(),
-    );
-  }
-}
-
-/// A widget that displays a counter for a specific type of food box.
-class _FoodBoxCounter extends StatelessWidget {
-  /// Statistics about available food box type and quantity.
-  final FoodBoxStatistics statistics;
-
-  /// Callback function triggered when the counter value changes.
-  final Function(int)? onChanged;
-
-  /// The form validation manager.
-  final FormValidationManager formValidationManager;
-
-  /// Creates a [_FoodBoxCounter] widget.
-  const _FoodBoxCounter({
-    Key? key,
-    required this.statistics,
-    required this.onChanged,
-    required this.formValidationManager,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        SectionHeader(
-          title: Text(
-            statistics.type.name,
-            style: textTheme.titleLarge,
-          ),
-          subtitle: Text(
-            context.l10n!.totalCountOfBoxes(statistics.quantityAtCharity),
-            style: textTheme.titleSmall
-                ?.copyWith(color: ZOColors.onBackgroundSecondary),
-          ),
-        ),
-        const SizedBox(height: GapSize.xs),
-        CounterField(
-          label: context.l10n!.numberOfBoxes,
-          focusNode: formValidationManager.getFocusNode(statistics.type.id),
-          onValidation: formValidationManager.wrapValidator(
-            statistics.type.id,
-            FieldValidationUtils.getBoxNumberValidator(
-              context,
-              allowZero: true,
-              max: statistics.quantityAtCharity,
-            ),
-          ),
-          initialValue: 0,
-          maxValue: statistics.quantityAtCharity,
-          onChanged: onChanged,
-        ),
-      ],
     );
   }
 }

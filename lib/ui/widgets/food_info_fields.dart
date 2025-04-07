@@ -4,11 +4,9 @@ import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/enums/food_form_field_type.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/model/food_allergen.dart';
-import 'package:zachranobed/ui/widgets/checkbox.dart';
 import 'package:zachranobed/ui/widgets/counter_field.dart';
 import 'package:zachranobed/ui/widgets/date_time_picker.dart';
 import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
@@ -24,14 +22,12 @@ class FoodInfoFields extends StatefulWidget {
   final Function(FoodInfo) onChanged;
 
   final FormValidationManager formValidationManager;
-  final List<FoodBoxType> boxTypes;
 
   const FoodInfoFields({
     super.key,
     required this.foodInfo,
     required this.onChanged,
     required this.formValidationManager,
-    required this.boxTypes,
   });
 
   @override
@@ -39,26 +35,6 @@ class FoodInfoFields extends StatefulWidget {
 }
 
 class _FoodInfoFieldsState extends State<FoodInfoFields> {
-  late bool _numberOfServingsMatchesNumberOfBoxes;
-
-  @override
-  void initState() {
-    super.initState();
-    _initInternalState();
-  }
-
-  @override
-  void didUpdateWidget(covariant FoodInfoFields oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    // Collapse boxes section when displaying a new FoodInfo
-    if (oldWidget.foodInfo.id != widget.foodInfo.id) {
-      setState(() {
-        _initInternalState();
-        widget.formValidationManager.dispose();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +57,6 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           _buildGap(),
         ],
         if (foodType != FoodCategoryType.packaged) ...[
-          ..._buildBoxTypesPart(index),
-          _buildGap(),
           ..._buildNumberOfServingsPart(index),
           _buildGap(),
         ],
@@ -94,12 +68,6 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         _buildGap(),
       ],
     );
-  }
-
-  void _initInternalState() {
-    _numberOfServingsMatchesNumberOfBoxes =
-        widget.foodInfo.numberOfBoxes == widget.foodInfo.numberOfServings ||
-            widget.foodInfo.numberOfBoxes == null;
   }
 
   List<Widget> _buildFoodNamePart(int index) {
@@ -136,11 +104,13 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           context.l10n!.allergens,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        actionIcon: const Icon(Icons.info_outline),
-        onActionPressed: () {
-          final allergens = FoodAllergen.all(context, false);
-          FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
-        },
+        action: SectionHeaderIcon(
+          icon: const Icon(Icons.info_outline),
+          onPressed: () {
+            final allergens = FoodAllergen.all(context);
+            FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
+          },
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       FoodAllergensChips(
@@ -206,8 +176,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           FieldValidationUtils.getFoodTemperatureValidator(context),
         ),
-        initialValue:
-            widget.foodInfo.foodTemperature ?? Constants.foodTemperatureInitial,
+        initialValue: widget.foodInfo.foodTemperature ?? Constants.foodTemperatureInitial,
         onChanged: (val) {
           widget.onChanged(widget.foodInfo.copyWith(foodTemperature: val));
         },
@@ -215,36 +184,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     ];
   }
 
-  List<Widget> _buildBoxTypesPart(int index) {
-    final formFieldKey = _createFormFieldKey(FormFieldType.boxType);
-    return [
-      SectionHeader(
-        title: Text(
-          context.l10n!.boxType,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      const SizedBox(height: GapSize.xs),
-      SingleSelectChips<FoodBoxType>(
-        key: ValueKey(formFieldKey),
-        focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: widget.boxTypes,
-        selection: widget.foodInfo.foodBoxType,
-        optionLabel: (e) => e.name,
-        onSelectionChanged: (value) {
-          widget.onChanged(widget.foodInfo.copyWith(foodBoxType: value));
-        },
-        onValidation: widget.formValidationManager.wrapValidator(
-          formFieldKey,
-          FieldValidationUtils.getBoxTypeValidator(context),
-        ),
-      )
-    ];
-  }
-
   List<Widget> _buildNumberOfServingsPart(int index) {
     final keyServings = _createFormFieldKey(FormFieldType.numberOfServings);
-    final keyBoxes = _createFormFieldKey(FormFieldType.numberOfBoxes);
     return [
       SectionHeader(
         title: Text(
@@ -266,36 +207,6 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           widget.onChanged(widget.foodInfo.copyWith(numberOfServings: val));
         },
       ),
-      _buildGap(),
-      ZOCheckbox.plain(
-        isChecked: _numberOfServingsMatchesNumberOfBoxes,
-        onChanged: (bool? value) {
-          setState(() {
-            _numberOfServingsMatchesNumberOfBoxes = value!;
-            widget.onChanged(widget.foodInfo.copyWith(numberOfBoxes: null));
-          });
-        },
-        title: context.l10n!.sameNumberOfServingsAsBoxes,
-      ),
-      if (!_numberOfServingsMatchesNumberOfBoxes)
-        Column(
-          children: [
-            _buildGap(),
-            CounterField(
-              key: ValueKey(keyBoxes),
-              label: context.l10n!.numberOfBoxes,
-              focusNode: widget.formValidationManager.getFocusNode(keyBoxes),
-              onValidation: widget.formValidationManager.wrapValidator(
-                keyBoxes,
-                FieldValidationUtils.getBoxNumberValidator(context),
-              ),
-              initialValue: widget.foodInfo.numberOfBoxes ?? 0,
-              onChanged: (val) {
-                widget.onChanged(widget.foodInfo.copyWith(numberOfBoxes: val));
-              },
-            ),
-          ],
-        )
     ];
   }
 
@@ -361,21 +272,22 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           context.l10n!.consumeBy,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        actionIcon: const Icon(Icons.today_rounded),
-        onActionPressed: () async {
-          final now = DateTime.now();
-          final date = await DateTimePicker.pickDateTime(
-            context: context,
-            initial:
-                widget.foodInfo.consumeBy?.getDate() ?? _consumeByInitialTime(),
-            minimum: now,
-          );
+        action: SectionHeaderIcon(
+          icon: const Icon(Icons.today_rounded),
+          onPressed: () async {
+            final now = DateTime.now();
+            final date = await DateTimePicker.pickDateTime(
+              context: context,
+              initial: widget.foodInfo.consumeBy?.getDate() ?? _consumeByInitialTime(),
+              minimum: now,
+            );
 
-          if (date != null) {
-            final consumeBy = FoodDateTimeSpecified(date: date);
-            widget.onChanged(widget.foodInfo.copyWith(consumeBy: consumeBy));
-          }
-        },
+            if (date != null) {
+              final consumeBy = FoodDateTimeSpecified(date: date);
+              widget.onChanged(widget.foodInfo.copyWith(consumeBy: consumeBy));
+            }
+          },
+        ),
       ),
       const SizedBox(height: GapSize.xs),
       FoodDateTimeChips(

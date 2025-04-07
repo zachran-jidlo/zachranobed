@@ -1,3 +1,4 @@
+import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/models/delivery.dart';
@@ -44,5 +45,6 @@ abstract class OfferedFoodRepository {
   Future<bool> createOffer({
     required Delivery delivery,
     required List<FoodInfo> foodInfo,
+    required List<BoxInfo> boxInfo,
   });
 }

@@ -14,8 +14,6 @@ MealDto _$MealDtoFromJson(Map<String, dynamic> json) => MealDto(
           json['preparedAt'], const TimestampConverter().fromJson),
       consumeBy: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['consumeBy'], const TimestampConverter().fromJson),
-      foodBoxId: json['foodBoxId'] as String?,
-      foodBoxCount: (json['foodBoxCount'] as num?)?.toInt(),
       foodTemperature: (json['foodTemperature'] as num?)?.toInt(),
     );
 
@@ -27,8 +25,6 @@ Map<String, dynamic> _$MealDtoToJson(MealDto instance) => <String, dynamic>{
           instance.preparedAt, const TimestampConverter().toJson),
       'consumeBy': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.consumeBy, const TimestampConverter().toJson),
-      'foodBoxId': instance.foodBoxId,
-      'foodBoxCount': instance.foodBoxCount,
       'foodTemperature': instance.foodTemperature,
     };
 

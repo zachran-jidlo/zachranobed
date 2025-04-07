@@ -9,7 +9,7 @@ import 'package:zachranobed/models/dto/meal_dto.dart';
 /// DTO to domain mapper for [OfferedFood].
 extension OfferedFoodMapper on MealDetailDto {
   /// Maps DTOs to domain representation.
-  OfferedFood toDomain(DeliveryDto delivery, MealDto meal, String? boxType) {
+  OfferedFood toDomain(DeliveryDto delivery, MealDto meal) {
     // The [preparedAt] field is set only for "cooled" meals, otherwise is set
     // to null. This is because the [preparedAt] field is only relevant for
     // cooled food categories.
@@ -27,12 +27,10 @@ extension OfferedFoodMapper on MealDetailDto {
       foodTemperature: meal.foodTemperature,
       allergens: allergens,
       numberOfServings: meal.count,
-      boxType: boxType,
       preparedAt: preparedAt,
       consumeBy: _getFoodDateTime(meal.consumeBy),
       donorId: delivery.donorId,
       recipientId: delivery.recipientId,
-      numberOfBoxes: meal.foodBoxCount,
       numberOfPackages: meal.packagesCount,
     );
   }

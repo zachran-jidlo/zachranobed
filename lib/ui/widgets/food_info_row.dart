@@ -29,21 +29,13 @@ class FoodInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Set description only for non-packaged food, because
-    // packaged food has no boxes to show in description
-    String? description;
-    if (foodInfo.foodCategory?.type != FoodCategoryType.packaged) {
-      final boxes = foodInfo.numberOfBoxes ?? foodInfo.numberOfServings;
-      description = "${boxes}x ${foodInfo.foodBoxType?.name ?? ""}";
-    }
-
     // Set count based on the number of servings or packages (for
     // packaged food category)
     final count = foodInfo.numberOfServings ?? foodInfo.numberOfPackages;
 
     return TrailingIconRow(
       title: foodInfo.dishName.toString(),
-      description: description,
+      description: null,
       trailInfo: context.l10n!.foodInfoCountTemplate(count ?? 0),
       trailingIcon: Icons.edit,
       background: background,

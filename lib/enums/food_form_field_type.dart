@@ -8,8 +8,6 @@ enum FormFieldType {
   temperature,
   numberOfPackages,
   numberOfServings,
-  numberOfBoxes,
-  boxType,
   preparedAt,
   consumeBy,
 }
