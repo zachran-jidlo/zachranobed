@@ -116,7 +116,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
               (box) => box.quantityAtCharity > 0,
             );
             if (!hasSomeBoxes) {
-              return _empty(context);
+              return _empty(context, useWideButton);
             }
             return _form(snapshot.requireData, useWideButton);
           },
@@ -145,7 +145,10 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   }
 
   /// Builds an empty screen content.
-  Widget _empty(BuildContext context) {
+  Widget _empty(
+    BuildContext context,
+    bool useWideButton,
+  ) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -154,14 +157,17 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
             title: context.l10n!.shippingOfBoxesEmptyTitle,
             description: context.l10n!.shippingOfBoxesEmptyDescription,
           ),
-          ZOButton(
-            text: context.l10n!.shippingOfBoxesEmptyAction,
-            minimumSize: ZOButtonSize.tiny(),
-            onPressed: () {
-              if (mounted) {
-                context.router.maybePop();
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
+            child: ZOButton(
+              text: context.l10n!.shippingOfBoxesEmptyAction,
+              minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
+              onPressed: () {
+                if (mounted) {
+                  context.router.maybePop();
+                }
+              },
+            ),
           ),
           const SizedBox(height: GapSize.xs),
         ],

@@ -123,9 +123,14 @@ class ZOButtonSize {
   /// The height of a medium button.
   static const _heightMedium = 40.0;
 
+  /// The minimum width of a button.
+  static const _minWidth = 180.0;
+
   static const largeWrapContent = Size(0.0, _heightLarge);
+  static const largeMinWidth = Size(_minWidth, _heightLarge);
   static const largeMatchParent = Size(double.infinity, _heightLarge);
   static const mediumWrapContent = Size(0.0, _heightMedium);
+  static const mediumMinWidth = Size(_minWidth, _heightMedium);
   static const mediumMatchParent = Size(double.infinity, _heightMedium);
 
   /// Private constructor to prevent instantiation.
@@ -136,7 +141,7 @@ class ZOButtonSize {
   /// The [fullWidth] parameter determines whether the button should match
   /// parent widget width.
   static Size? large({bool fullWidth = true}) {
-    return fullWidth ? largeMatchParent : largeWrapContent;
+    return fullWidth ? largeMatchParent : largeMinWidth;
   }
 
   /// Returns a size for medium button.
@@ -144,7 +149,7 @@ class ZOButtonSize {
   /// The [fullWidth] parameter determines whether the button should match
   /// parent widget width.
   static Size? medium({bool fullWidth = true}) {
-    return fullWidth ? mediumMatchParent : mediumWrapContent;
+    return fullWidth ? mediumMatchParent : mediumMinWidth;
   }
 
   /// Returns a size for tiny button. Tiny button has no minimal size, so
@@ -152,4 +157,17 @@ class ZOButtonSize {
   static Size? tiny() {
     return null;
   }
+}
+
+/// Defines the possible width behaviors for a [ZOButton].
+enum ZOButtonWidth {
+  /// The button's width will be determined by the size of its content.
+  wrapContent,
+
+  /// The button will have a minimum width (see [ZOButtonSize._minWidth]).
+  /// The content may cause it to be wider than this minimum.
+  minWidth,
+
+  /// The button will expand to fill the width of its parent container.
+  matchParent,
 }
