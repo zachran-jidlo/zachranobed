@@ -29,6 +29,9 @@ class EntityPair {
   /// The food boxes checkup state of the recipient.
   final FoodBoxesCheckup recipientFoodBoxesCheckup;
 
+  /// The confirmation time in minutes.
+  final int confirmationTime;
+
   /// Creates a new [EntityPair] instance.
   EntityPair({
     required this.donorId,
@@ -40,5 +43,6 @@ class EntityPair {
     required this.pickupTimeEnd,
     required this.donorFoodBoxesCheckup,
     required this.recipientFoodBoxesCheckup,
+    required this.confirmationTime,
   });
 }

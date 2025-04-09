@@ -21,7 +21,7 @@ mixin _$Delivery {
   String get recipientId => throw _privateConstructorUsedError;
   DeliveryState get state => throw _privateConstructorUsedError;
   DeliveryType get type => throw _privateConstructorUsedError;
-  CarrierType get carrierType => throw _privateConstructorUsedError;
+  int get confirmationTime => throw _privateConstructorUsedError;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +41,7 @@ abstract class $DeliveryCopyWith<$Res> {
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      CarrierType carrierType});
+      int confirmationTime});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
     Object? recipientId = null,
     Object? state = null,
     Object? type = null,
-    Object? carrierType = null,
+    Object? confirmationTime = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,10 +87,10 @@ class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as DeliveryType,
-      carrierType: null == carrierType
-          ? _value.carrierType
-          : carrierType // ignore: cast_nullable_to_non_nullable
-              as CarrierType,
+      confirmationTime: null == confirmationTime
+          ? _value.confirmationTime
+          : confirmationTime // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -109,7 +109,7 @@ abstract class _$$DeliveryImplCopyWith<$Res>
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      CarrierType carrierType});
+      int confirmationTime});
 }
 
 /// @nodoc
@@ -130,7 +130,7 @@ class __$$DeliveryImplCopyWithImpl<$Res>
     Object? recipientId = null,
     Object? state = null,
     Object? type = null,
-    Object? carrierType = null,
+    Object? confirmationTime = null,
   }) {
     return _then(_$DeliveryImpl(
       id: null == id
@@ -153,10 +153,10 @@ class __$$DeliveryImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as DeliveryType,
-      carrierType: null == carrierType
-          ? _value.carrierType
-          : carrierType // ignore: cast_nullable_to_non_nullable
-              as CarrierType,
+      confirmationTime: null == confirmationTime
+          ? _value.confirmationTime
+          : confirmationTime // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -170,7 +170,7 @@ class _$DeliveryImpl extends _Delivery {
       required this.recipientId,
       required this.state,
       required this.type,
-      required this.carrierType})
+      required this.confirmationTime})
       : super._();
 
   @override
@@ -184,11 +184,11 @@ class _$DeliveryImpl extends _Delivery {
   @override
   final DeliveryType type;
   @override
-  final CarrierType carrierType;
+  final int confirmationTime;
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, carrierType: $carrierType)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
   }
 
   @override
@@ -202,13 +202,13 @@ class _$DeliveryImpl extends _Delivery {
                 other.recipientId == recipientId) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.carrierType, carrierType) ||
-                other.carrierType == carrierType));
+            (identical(other.confirmationTime, confirmationTime) ||
+                other.confirmationTime == confirmationTime));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, donorId, recipientId, state, type, carrierType);
+      runtimeType, id, donorId, recipientId, state, type, confirmationTime);
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -226,7 +226,7 @@ abstract class _Delivery extends Delivery {
       required final String recipientId,
       required final DeliveryState state,
       required final DeliveryType type,
-      required final CarrierType carrierType}) = _$DeliveryImpl;
+      required final int confirmationTime}) = _$DeliveryImpl;
   const _Delivery._() : super._();
 
   @override
@@ -240,7 +240,7 @@ abstract class _Delivery extends Delivery {
   @override
   DeliveryType get type;
   @override
-  CarrierType get carrierType;
+  int get confirmationTime;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.

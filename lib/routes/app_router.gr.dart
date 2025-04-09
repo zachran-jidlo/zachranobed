@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i18;
+import 'package:flutter/foundation.dart' as _i21;
 import 'package:flutter/material.dart' as _i19;
 import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart'
     as _i3;
@@ -18,7 +19,7 @@ import 'package:zachranobed/features/debug/debug_screen.dart' as _i6;
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
     as _i20;
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart'
-    as _i22;
+    as _i23;
 import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_detail_screen.dart'
     as _i2;
 import 'package:zachranobed/features/forceupdate/presentation/force_update_screen.dart'
@@ -30,9 +31,9 @@ import 'package:zachranobed/features/menu/presentation/contacts_screen.dart'
 import 'package:zachranobed/features/menu/presentation/menu_screen.dart'
     as _i12;
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart'
-    as _i23;
+    as _i24;
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
-    as _i21;
+    as _i22;
 import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
     as _i7;
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i4;
@@ -306,8 +307,8 @@ class DebugRoute extends _i18.PageRouteInfo<void> {
 class DonatedFoodDetailRoute
     extends _i18.PageRouteInfo<DonatedFoodDetailRouteArgs> {
   DonatedFoodDetailRoute({
-    _i19.Key? key,
-    required _i21.OfferedFood offeredFood,
+    _i21.Key? key,
+    required _i22.OfferedFood offeredFood,
     List<_i18.PageRouteInfo>? children,
   }) : super(
           DonatedFoodDetailRoute.name,
@@ -330,9 +331,9 @@ class DonatedFoodDetailRouteArgs {
     required this.offeredFood,
   });
 
-  final _i19.Key? key;
+  final _i21.Key? key;
 
-  final _i21.OfferedFood offeredFood;
+  final _i22.OfferedFood offeredFood;
 
   @override
   String toString() {
@@ -429,7 +430,7 @@ class OfferFoodAddNewRoute extends _i18.PageRouteInfo<void> {
 class OfferFoodBoxesRoute extends _i18.PageRouteInfo<OfferFoodBoxesRouteArgs> {
   OfferFoodBoxesRoute({
     _i19.Key? key,
-    required Map<_i22.FoodBoxType, int> currentBoxesQuantity,
+    required Map<_i23.FoodBoxType, int> currentBoxesQuantity,
     List<_i18.PageRouteInfo>? children,
   }) : super(
           OfferFoodBoxesRoute.name,
@@ -454,7 +455,7 @@ class OfferFoodBoxesRouteArgs {
 
   final _i19.Key? key;
 
-  final Map<_i22.FoodBoxType, int> currentBoxesQuantity;
+  final Map<_i23.FoodBoxType, int> currentBoxesQuantity;
 
   @override
   String toString() {
@@ -468,7 +469,7 @@ class OfferFoodEditExistingRoute
     extends _i18.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i19.Key? key,
-    required _i23.FoodInfo foodInfo,
+    required _i24.FoodInfo foodInfo,
     List<_i18.PageRouteInfo>? children,
   }) : super(
           OfferFoodEditExistingRoute.name,
@@ -493,7 +494,7 @@ class OfferFoodEditExistingRouteArgs {
 
   final _i19.Key? key;
 
-  final _i23.FoodInfo foodInfo;
+  final _i24.FoodInfo foodInfo;
 
   @override
   String toString() {
@@ -521,7 +522,7 @@ class OfferFoodOverviewRoute
     extends _i18.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i19.Key? key,
-    required List<_i23.FoodInfo> initialFoodInfos,
+    required List<_i24.FoodInfo> initialFoodInfos,
     List<_i18.PageRouteInfo>? children,
   }) : super(
           OfferFoodOverviewRoute.name,
@@ -546,7 +547,7 @@ class OfferFoodOverviewRouteArgs {
 
   final _i19.Key? key;
 
-  final List<_i23.FoodInfo> initialFoodInfos;
+  final List<_i24.FoodInfo> initialFoodInfos;
 
   @override
   String toString() {

@@ -33,6 +33,7 @@ extension EntityPairMapper on EntityPairDto {
       pickupTimeEnd: window.end,
       donorFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.donor),
       recipientFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.recipient),
+      confirmationTime: confirmationTime,
     );
   }
 

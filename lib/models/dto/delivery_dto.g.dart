@@ -23,6 +23,7 @@ DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
           unknownValue: JsonKey.nullForUndefinedEnumValue),
       type: $enumDecodeNullable(_$DeliveryTypeDtoEnumMap, json['type'],
           unknownValue: JsonKey.nullForUndefinedEnumValue),
+      confirmationTime: (json['confirmationTime'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
@@ -36,6 +37,7 @@ Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
       'meals': instance.meals.map((e) => e.toJson()).toList(),
       'state': instance.state?.toJson(),
       'type': instance.type?.toJson(),
+      'confirmationTime': instance.confirmationTime,
     };
 
 const _$DeliveryStateDtoEnumMap = {

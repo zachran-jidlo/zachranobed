@@ -21,17 +21,8 @@ extension DeliveryMapper on DeliveryDto {
       recipientId: recipientId,
       state: deliveryState,
       type: deliveryType,
-      carrierType: _carrierType(),
+      confirmationTime: confirmationTime ?? 0,
     );
-  }
-
-  CarrierType _carrierType() {
-    switch (carrierId) {
-      case "personal":
-        return CarrierType.personal;
-      default:
-        return CarrierType.other;
-    }
   }
 }
 
