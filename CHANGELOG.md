@@ -11,6 +11,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-330** Migrate from AppCenter to Firebase App Distribution
 - **ZOB-340** Change offer food flow process.
+- **ZOB-346** Implement dynamic confirmation time for deliveries.
 
 ### Removed
 

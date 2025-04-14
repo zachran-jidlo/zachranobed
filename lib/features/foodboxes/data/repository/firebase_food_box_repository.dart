@@ -210,6 +210,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         meals: [],
         state: DeliveryStateDto.offered,
         type: DeliveryTypeDto.boxDelivery,
+        confirmationTime: user.activePair.confirmationTime,
       );
       return _deliveryService.createDelivery(newDelivery);
     } else {

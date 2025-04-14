@@ -17,6 +17,7 @@ class EntityPairDto {
   final List<TimeWindowDto> pickupTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
   final FoodBoxesCheckupSummaryDto? foodboxesCheckup;
+  final int confirmationTime;
 
   EntityPairDto({
     required this.donorId,
@@ -25,6 +26,7 @@ class EntityPairDto {
     required this.pickupTimeWindows,
     required this.foodboxes,
     required this.foodboxesCheckup,
+    required this.confirmationTime,
   });
 
   factory EntityPairDto.fromJson(Map<String, dynamic> json) =>

@@ -16,18 +16,8 @@ class Delivery with _$Delivery {
     required String recipientId,
     required DeliveryState state,
     required DeliveryType type,
-    required CarrierType carrierType,
+    required int confirmationTime,
   }) = _Delivery;
-
-  /// Returns the pickup confirmation time based on the carrier type.
-  int getConfirmationTime() {
-    switch (carrierType) {
-      case CarrierType.personal:
-        return Constants.pickupConfirmationTimePersonal;
-      case CarrierType.other:
-        return Constants.pickupConfirmationTimeDefault;
-    }
-  }
 }
 
 enum DeliveryState {
@@ -42,9 +32,4 @@ enum DeliveryState {
 enum DeliveryType {
   foodDelivery,
   boxDelivery,
-}
-
-enum CarrierType {
-  personal,
-  other,
 }

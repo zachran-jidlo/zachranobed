@@ -96,8 +96,8 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
     DateTime startTime = DateFormat('HH:mm:ss').parse(timeNow);
     DateTime endTime = DateFormat('HH:mm').parse(donateWithin);
 
-    final confirmationTime = widget.delivery.getConfirmationTime();
-    return endTime.difference(startTime) - Duration(minutes: confirmationTime);
+    final confirmationTime = Duration(minutes: widget.delivery.confirmationTime);
+    return endTime.difference(startTime) - confirmationTime;
   }
 
   @override
