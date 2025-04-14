@@ -319,7 +319,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
   /// If boxes were already added, we need to show dialog that offers to update boxes.
   void _showUpdateBoxesDialogIfNeeded(String message) {
-    if (_boxInfos.isEmpty) {
+    if (_boxInfos.isEmpty || _foodInfos.isEmpty) {
       return;
     }
 
@@ -381,7 +381,7 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
         text: context.l10n!.offerFoodOverviewSectionFoodInfoAddAction,
         icon: Icons.add,
         type: ZOButtonType.textPrimary,
-        minimumSize: ZOButtonSize.medium(fullWidth: false),
+        minimumSize: ZOButtonSize.mediumWrapContent,
         onPressed: onAddPressed,
       ),
     );
@@ -487,14 +487,14 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
               text: context.l10n!.offerFoodOverviewSectionBoxInfoAddAction,
               icon: Icons.add,
               type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.medium(fullWidth: false),
+              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             )
           : ZOButton(
               text: context.l10n!.offerFoodOverviewSectionBoxInfoEditAction,
               icon: Icons.edit,
               type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.medium(fullWidth: false),
+              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             ),
     );

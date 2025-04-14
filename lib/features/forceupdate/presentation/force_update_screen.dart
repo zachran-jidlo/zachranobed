@@ -13,63 +13,65 @@ class ForceUpdateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _forceUpdateScreenContent(context: context);
+    return ScreenScaffold(
+      web: (context) => _forceUpdateScreenContent(context: context, useWideButton: false,),
+      mobile: (context) => _forceUpdateScreenContent(context: context, useWideButton: true,),
+    );
   }
 
   Widget _forceUpdateScreenContent({
     required BuildContext context,
+    required bool useWideButton,
   }) {
-    return ScreenScaffold.universal(
-      child: Padding(
-        padding: const EdgeInsets.all(GapSize.xs),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              ZOStrings.forceUpdatePath,
-              height: 266,
-              fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.all(GapSize.xs),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            ZOStrings.forceUpdatePath,
+            height: 266,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: GapSize.xl),
+          Text(
+            context.l10n!.forceUpdateScreenTitle,
+            style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: GapSize.xs),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: context.l10n!.forceUpdateScreenDescriptionStart,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                TextSpan(
+                  text: context.l10n!.applicationName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: context.l10n!.forceUpdateScreenDescriptionEnd,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
             ),
-            const SizedBox(height: GapSize.xl),
-            Text(
-              context.l10n!.forceUpdateScreenTitle,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: GapSize.xs),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: context.l10n!.forceUpdateScreenDescriptionStart,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  TextSpan(
-                    text: context.l10n!.applicationName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: context.l10n!.forceUpdateScreenDescriptionEnd,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: GapSize.xl),
-            ZOButton(
-              text: context.l10n!.forceUpdateAction,
-              minimumSize: ZOButtonSize.large(),
-              onPressed: () async {
-                StoreUtils().openStore(context);
-              },
-            ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: GapSize.xl),
+          ZOButton(
+            text: context.l10n!.forceUpdateAction,
+            minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
+            onPressed: () async {
+              StoreUtils().openStore(context);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -102,7 +102,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
                 } else {
                   final hasSomeBoxes = snapshot.requireData.any((box) => box.quantityAtCanteen > 0);
                   if (!hasSomeBoxes) {
-                    return _empty(context);
+                    return _empty(context, useWideButton);
                   } else {
                     return _form(snapshot.requireData, useWideButton);
                   }
@@ -135,7 +135,10 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
   }
 
   /// Builds an empty screen content.
-  Widget _empty(BuildContext context) {
+  Widget _empty(
+    BuildContext context,
+    bool useWideButton,
+  ) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -144,10 +147,13 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
             title: context.l10n!.offerFoodBoxInfoEmptyTitle,
             description: context.l10n!.offerFoodBoxInfoEmptyDescription,
           ),
-          ZOButton(
-            text: context.l10n!.commonBack,
-            minimumSize: ZOButtonSize.tiny(),
-            onPressed: () => context.router.maybePop(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
+            child: ZOButton(
+              text: context.l10n!.commonBack,
+              minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
+              onPressed: () => context.router.maybePop(),
+            ),
           ),
           const SizedBox(height: GapSize.xs),
         ],
