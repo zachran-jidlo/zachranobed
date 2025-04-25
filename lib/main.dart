@@ -13,6 +13,7 @@ import 'package:zachranobed/features/foodboxes/di/food_box_dependency_container.
 import 'package:zachranobed/features/forceupdate/domain/di/force_update_dependency_container.dart';
 import 'package:zachranobed/features/login/di/login_dependency_container.dart';
 import 'package:zachranobed/features/menu/di/menu_dependency_container.dart';
+import 'package:zachranobed/features/notifications/di/notifications_dependency_container.dart';
 import 'package:zachranobed/features/offeredfood/di/offered_food_dependency_container.dart';
 import 'package:zachranobed/firebase/firebase_options.dart';
 import 'package:zachranobed/firebase/notifications.dart';
@@ -38,6 +39,7 @@ void main() async {
   MenuDependencyContainer.setup();
   ActivePairDependencyContainer.setup();
   ForceUpdateDependencyContainer.setup();
+  NotificationsDependencyContainer.setup();
 
   ZOLogger.init();
 

@@ -17,6 +17,7 @@ import 'package:zachranobed/ui/widgets/delivery_info_banner.dart';
 import 'package:zachranobed/ui/widgets/indicator.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
+import 'package:zachranobed/ui/widgets/notification_icon_button.dart';
 
 class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
@@ -29,6 +30,12 @@ class OverviewScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.l10n!.overview),
         actions: [
+          NotificationIconButton(
+          user: user,
+            onPressed: () {
+              // TODO ZOB-343 Open new screen
+            },
+          ),
           IconButton(
             onPressed: () {
               context.router.push(const MenuRoute());
@@ -77,9 +84,7 @@ class OverviewScreen extends StatelessWidget {
       return const SizedBox();
     }
 
-    return user is Canteen
-        ? const NewOfferFloatingButton()
-        : const NewShippingOfBoxesFloatingButton();
+    return user is Canteen ? const NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
   }
 
   Widget _buildDonatedFoodList(BuildContext context) {
