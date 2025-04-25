@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -101,7 +102,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await _changePassword();
+                        final entityId = HelperService.getCurrentUser(context)?.entityId;
+                        await _changePassword(entityId);
                       }
                     },
                   ),
@@ -114,7 +116,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Future<void> _changePassword() async {
+  Future<void> _changePassword(String? entityId) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -126,7 +128,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
       await authService.changePassword(_newPasswordController.text);
 
-      await authService.signOut();
+      await authService.signOut(entityId);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-313** Remove FCM token after user signs out.
 
 ### Removed
 
