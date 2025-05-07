@@ -23,4 +23,13 @@ class FirebaseNotificationsRepository implements NotificationsRepository {
     );
     return stream.map((notifications) => notifications.map((e) => e.toDomain()).toList());
   }
+
+  @override
+  Future<void> markAllAsRead({
+    required UserData user,
+  }) {
+    return _entityNotificationService.markAllAsRead(
+      entityId: user.entityId,
+    );
+  }
 }

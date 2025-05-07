@@ -6,6 +6,7 @@ class ZOColors {
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
   static const surfaceVariant = Color.fromRGBO(245, 221, 219, 1);
+  static const onSurface = Color.fromRGBO(32, 26, 25, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
   static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
   static const onBackgroundSecondary = Color.fromRGBO(0, 0, 0, 0.5);
@@ -48,6 +49,7 @@ class ZOStrings {
   static const iconFoodBox = 'assets/ic_food_box.svg';
   static const iconFoodBoxAlert = 'assets/ic_food_box_alert.svg';
   static const forceUpdatePath = 'assets/human_rotate_phone.svg';
+  static const notificationsEmptyPath = 'assets/notifications-empty.svg';
 }
 
 class Constants {

@@ -162,8 +162,7 @@ class FoodDateTimeChips extends StatelessWidget {
       return const SizedBox();
     }
 
-    final dateTime =
-        DateTimeUtils().formatDateTime(selectedDate.date, "d.M.yyyy HH:mm");
+    final dateTime = DateTimeUtils.formatDateTime(selectedDate.date, "d.M.yyyy HH:mm");
     final labelText = formatSelectedDate(dateTime);
     if (labelText == null) {
       return const SizedBox();

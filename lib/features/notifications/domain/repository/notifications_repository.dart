@@ -9,4 +9,9 @@ abstract class NotificationsRepository {
     required UserData user,
     bool? read,
   });
+
+  /// Marks all unread notifications as read for the given [user].
+  Future<void> markAllAsRead({
+    required UserData user,
+  });
 }

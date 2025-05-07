@@ -22,7 +22,8 @@ class EntityNotificationService {
     );
   }
 
-  /// Observes a list of [NotificationDto] objects for the given [entityId].
+  /// Observes a list of [NotificationDto] objects for the given [entityId]. Takes only the notifications that
+  /// are not older than 7 days.
   ///
   /// This method returns a stream that emits a list of notifications. If [read]
   /// is provided, it filters the notifications based on the read status.
@@ -30,7 +31,10 @@ class EntityNotificationService {
     required String entityId,
     bool? read,
   }) {
-    Query<NotificationDto> query = getCollection(entityId);
+    final threshold = DateTime.now().subtract(const Duration(days: 7));
+    Query<NotificationDto> query = getCollection(entityId)
+        .orderBy('timestamp', descending: true)
+        .where('timestamp', isGreaterThanOrEqualTo: threshold);
 
     if (read != null) {
       // Add a where clause to filter notifications by read status if provided.
@@ -42,5 +46,24 @@ class EntityNotificationService {
         return snapshot.docs.map((e) => e.data()).toList();
       },
     );
+  }
+
+  /// Marks all unread notifications as read for the given [entityId].
+  Future<void> markAllAsRead({
+    required String entityId,
+  }) async {
+    final collection = getCollection(entityId);
+
+    final querySnapshot = await collection.where('read', isEqualTo: false).get();
+    final docs = querySnapshot.docs;
+
+    if (docs.isEmpty) return;
+
+    final batch = FirebaseFirestore.instance.batch();
+    for (final doc in docs) {
+      batch.update(doc.reference, {'read': true});
+    }
+
+    await batch.commit();
   }
 }

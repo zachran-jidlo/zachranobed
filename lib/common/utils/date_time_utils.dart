@@ -2,17 +2,17 @@ import 'package:intl/intl.dart';
 
 /// Date-time related utility functions.
 class DateTimeUtils {
+  /// Private constructor to prevent instantiation.
+  DateTimeUtils._();
+
   /// Returns date of start of the week (monday) for the given [date].
-  static DateTime getWeekStart(DateTime date) =>
-      DateTime(date.year, date.month, date.day - (date.weekday - 1));
+  static DateTime getWeekStart(DateTime date) => DateTime(date.year, date.month, date.day - (date.weekday - 1));
 
   /// Returns date of previous week for the given [date].
-  static DateTime getPreviousWeek(DateTime date) =>
-      DateTime(date.year, date.month, date.day - 7);
+  static DateTime getPreviousWeek(DateTime date) => DateTime(date.year, date.month, date.day - 7);
 
   /// Returns date of next week for the given [date].
-  static DateTime getNextWeek(DateTime date) =>
-      DateTime(date.year, date.month, date.day + 7);
+  static DateTime getNextWeek(DateTime date) => DateTime(date.year, date.month, date.day + 7);
 
   /// Returns a [String] representing the date range for a week specified by
   /// [week] formatted as:
@@ -64,8 +64,14 @@ class DateTimeUtils {
   }
 
   /// Returns a [String] with current time in 'HH:mm' format.
-  String formatDateTime(DateTime dateTime, String format) {
+  static String formatDateTime(DateTime dateTime, String format) {
     final DateFormat formatter = DateFormat(format);
     return formatter.format(dateTime);
+  }
+
+  /// Returns `true` if the given [date] is the same as today's date.
+  static bool isToday(DateTime date) {
+    final now = DateTime.now();
+    return date.year == now.year && date.month == now.month && date.day == now.day;
   }
 }

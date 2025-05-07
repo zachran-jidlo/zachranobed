@@ -21,6 +21,7 @@
             }
         }
     },
+    "commonToday": "Dnes",
     "emailAddress": "E-mailová adresa",
     "password": "Heslo",
     "signIn": "Přihlásit se",
@@ -277,5 +278,9 @@
     "foodBoxesCheckupInProgressDescription": "Zkontroluje stav jednotlivých typů krabiček zda jejich počty souhlasí.",
     "foodBoxesCheckupInProgressMatchesAction": "Vše souhlasí",
     "foodBoxesCheckupInProgressMismatchesAction": "Nesouhlasí",
-    "foodBoxesCheckupMismatchDescription": "U stavu krabiček je evidován nesoulad počtu jednotlivých typů. Tým Zachraň oběd byl kontaktován a brzy se vám ozve a vyřeší nápravu."
+    "foodBoxesCheckupMismatchDescription": "U stavu krabiček je evidován nesoulad počtu jednotlivých typů. Tým Zachraň oběd byl kontaktován a brzy se vám ozve a vyřeší nápravu.",
+
+    "notificationsTitle": "Notifikace",
+    "notificationsLast7DaysTitle": "Posledních 7 dní",
+    "notificationsEmptyTitle": "V tuto chvíli tu nejsou žádné notifikace."
 }

@@ -31,9 +31,9 @@ class OverviewScreen extends StatelessWidget {
         title: Text(context.l10n!.overview),
         actions: [
           NotificationIconButton(
-          user: user,
+            user: user,
             onPressed: () {
-              // TODO ZOB-343 Open new screen
+              context.router.push(const NotificationsRoute());
             },
           ),
           IconButton(
