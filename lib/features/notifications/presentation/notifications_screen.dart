@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -119,20 +117,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         otherNotifications.add(notification);
       }
     }
-
+    final showHeaders = todayNotifications.isNotEmpty && otherNotifications.isNotEmpty;
     return CustomScrollView(
       slivers: [
-        if (todayNotifications.isNotEmpty) ...[
+        if (showHeaders)
           _sectionHeader(
             context.l10n!.commonToday,
             hasTopPadding: false,
           ),
-          _notificationsSection(todayNotifications),
+        _notificationsSection(todayNotifications),
+        if (showHeaders)
           _sectionHeader(
             context.l10n!.notificationsLast7DaysTitle,
             hasTopPadding: true,
           ),
-        ],
         _notificationsSection(otherNotifications),
       ],
     );
