@@ -25,8 +25,6 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  StreamSubscription<List<domain.Notification>>? _subscription;
-
   final _observeNotifications = GetIt.I<ObserveNotificationsUseCase>();
   final _markAsReadAllNotifications = GetIt.I<MarkAsReadAllNotificationsUseCase>();
 
@@ -43,8 +41,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     final user = HelperService.watchCurrentUser(context);
-    return ScreenScaffold.universal(
-      child: Scaffold(
+    return ScreenScaffold.universalBuilder(
+      builder: (context) => Scaffold(
         appBar: AppBar(),
         body: Column(
           children: [
@@ -177,7 +175,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 class _NotificationRow extends StatelessWidget {
   final domain.Notification notification;
 
-  const _NotificationRow({super.key, required this.notification});
+  const _NotificationRow({required this.notification});
 
   @override
   Widget build(BuildContext context) {

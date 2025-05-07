@@ -35,6 +35,14 @@ class ScreenScaffold extends StatelessWidget {
     required Widget child,
   }) : this(key: key, web: (context) => child, mobile: (context) => child);
 
+  /// Creates a new [ScreenScaffold] widget with the same content for web and
+  /// mobile. This constructor is useful when you want to display the same
+  /// content for both layouts.
+  const ScreenScaffold.universalBuilder({
+    Key? key,
+    required WidgetBuilder builder,
+  }) : this(key: key, web: builder, mobile: builder);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
