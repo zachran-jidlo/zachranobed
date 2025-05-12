@@ -5,13 +5,13 @@ import 'package:zachranobed/common/constants.dart';
 class EmptyPage extends StatelessWidget {
   final String vectorImagePath;
   final String title;
-  final String description;
+  final String? description;
 
   const EmptyPage({
     super.key,
     required this.vectorImagePath,
     required this.title,
-    required this.description,
+    this.description,
   });
 
   @override
@@ -34,11 +34,12 @@ class EmptyPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: GapSize.xs),
-            Text(
-              description,
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.center,
-            ),
+            if (description != null)
+              Text(
+                description!,
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
           ],
         ),
       ),
