@@ -156,7 +156,8 @@ class _MenuScreenState extends State<MenuScreen> {
                 icon: Icons.logout,
                 minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
                 onPressed: () async {
-                  await authService.signOut();
+                  final entityId = HelperService.getCurrentUser(context)?.entityId;
+                  await authService.signOut(entityId);
                   if (mounted) {
                     context.router.replaceAll([const LoginRoute()]);
                   }

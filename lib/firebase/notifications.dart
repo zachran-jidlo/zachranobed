@@ -117,7 +117,7 @@ class Notifications {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
     }
-    _entityService.saveFCMToken(user.entityId, fCMToken);
+    _entityService.updateFCMToken(user.entityId, fCMToken);
   }
 
   /// Listens to token refresh events and saves the new token to the database.
@@ -128,7 +128,7 @@ class Notifications {
         ZOLogger.logMessage("User is not logged in, nothing to update");
         return;
       }
-      _entityService.saveFCMToken(user.entityId, token);
+      _entityService.updateFCMToken(user.entityId, token);
     });
   }
 }

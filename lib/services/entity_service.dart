@@ -5,8 +5,7 @@ import 'package:zachranobed/common/utils/firestore_utils.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';
 
 class EntityService {
-  final _collection =
-      FirebaseFirestore.instance.collection('entities').withConverter(
+  final _collection = FirebaseFirestore.instance.collection('entities').withConverter(
     fromFirestore: (snapshot, _) {
       final json = snapshot.data() ?? {};
       json['id'] = snapshot.id;
@@ -37,19 +36,17 @@ class EntityService {
   }
 
   /// Fetches a list of [EntityDto] objects for the given entity IDs.
-  Future<List<EntityDto>> fetchEntities(List<String> ids) =>
-      _collection.fetchMultipleDocs(ids);
+  Future<List<EntityDto>> fetchEntities(List<String> ids) => _collection.fetchMultipleDocs(ids);
 
   Future<void> saveAppTermsVersion(String entityId, int version) async {
-    return _collection
-        .doc(entityId)
-        .update({'lastAcceptedAppTermsVersion': version});
+    return _collection.doc(entityId).update({'lastAcceptedAppTermsVersion': version});
   }
 
   /// Stores the given FCM [token] to the entity with ID [entityId] in in the
   /// entities collection. It either updates the FCM token for this device
-  /// or creates a new one for this device's ID.
-  Future<void> saveFCMToken(String entityId, String? token) async {
+  /// or creates a new one for this device's ID. If [token] is `null`,
+  /// the FCM token for this device is removed.
+  Future<void> updateFCMToken(String entityId, String? token) async {
     final deviceId = await DeviceUtils.getId();
     if (deviceId == null) {
       ZOLogger.logMessage("Unable to retrieve device ID");
@@ -63,6 +60,17 @@ class EntityService {
       value = FieldValue.delete();
     }
 
-    return _collection.doc(entityId).update({'fcmTokens.$deviceId': value});
+    // Atomically updates the FCM token of a device under the 'fcmTokens' field of the given entity.
+    // If the user is offline, the operation will fail and return an error immediately.
+    return FirebaseFirestore.instance.runTransaction(
+      (transaction) async {
+        final entityRef = _collection.doc(entityId);
+        transaction.update(
+          entityRef,
+          {'fcmTokens.$deviceId': value},
+        );
+      },
+      maxAttempts: 1,
+    );
   }
 }

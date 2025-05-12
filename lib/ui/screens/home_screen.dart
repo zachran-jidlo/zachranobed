@@ -199,7 +199,8 @@ class _HomeScreenState extends State<HomeScreen>
                   text: context.l10n!.signOut,
                   minimumSize: ZOButtonSize.tiny(),
                   onPressed: () async {
-                    await authService.signOut();
+                    final entityId = HelperService.getCurrentUser(context)?.entityId;
+                    await authService.signOut(entityId);
                     if (context.mounted) {
                       context.router.replaceAll([const LoginRoute()]);
                     }

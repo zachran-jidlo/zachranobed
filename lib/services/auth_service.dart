@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/prefs/app_preferences.dart';
@@ -85,8 +86,15 @@ class AuthService {
     }
   }
 
-  /// Signs out the current user.
-  Future<void> signOut() async {
+  /// Signs out the current user with the given [entityId].
+  Future<void> signOut(String? entityId) async {
+    if (entityId != null) {
+      try {
+        await _entityService.updateFCMToken(entityId, null);
+      } on Exception catch (e) {
+        ZOLogger.logException(e, "Unable to update FCM token, user is probably offline");
+      }
+    }
     await _auth.signOut();
     await _appPreferences.clear();
     FirebaseHelper.setUserIdentifier(null);
