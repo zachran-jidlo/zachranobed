@@ -2,18 +2,17 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.6.1]
+### Fixed
+
 ## [1.6.0]
 ### Added
 - **ZOB-338** Add new features to deliveries report.
-
-### Fixed
 
 ### Changed
 - **ZOB-330** Migrate from AppCenter to Firebase App Distribution
 - **ZOB-340** Change offer food flow process.
 - **ZOB-346** Implement dynamic confirmation time for deliveries.
-
-### Removed
 
 ## [1.5.0]
 ### Added
