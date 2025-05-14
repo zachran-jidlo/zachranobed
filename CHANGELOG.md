@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.6.1]
 ### Fixed
+- **ZOB-350** Fix delivery banner logic when food boxes checkup is needed.
 
 ## [1.6.0]
 ### Added
