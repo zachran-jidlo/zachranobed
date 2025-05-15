@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -25,47 +24,38 @@ class BoxSummary extends StatefulWidget {
   /// The user data to display the summary for.
   final UserData user;
 
+  /// The current state of the food boxes checkup.
+  final FoodBoxesCheckupState state;
+
+  /// Refreshes the state of the food boxes checkup.
+  final VoidCallback refreshState;
+
+  /// Sets the state of the food boxes checkup to in-progress.
+  final VoidCallback setInProgress;
+
   /// Creates a [BoxSummary] widget.
   const BoxSummary({
     super.key,
     required this.user,
+    required this.state,
+    required this.refreshState,
+    required this.setInProgress,
   });
 
   @override
   State<BoxSummary> createState() => _BoxSummaryState();
 }
 
-class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
+class _BoxSummaryState extends State<BoxSummary> {
   late FoodBoxRepository _repository;
 
   bool _isLoading = false;
-  FoodBoxesCheckupState _state = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
   void initState() {
     super.initState();
-    _refreshState();
 
     _repository = GetIt.I<FoodBoxRepository>();
-  }
-
-  @override
-  void didUpdateWidget(covariant BoxSummary oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _refreshState();
-  }
-
-  @override
-  void onResume() {
-    super.onResume();
-    _refreshState();
-  }
-
-  /// Refreshes the state of the food boxes checkup.
-  void _refreshState() {
-    setState(() {
-      _state = widget.user.getFoodBoxesCheckup(widget.user.activePair).getState();
-    });
   }
 
   @override
@@ -78,12 +68,13 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BoxSummaryHeader(
-                isVerified: _state is FoodBoxesCheckupAllGood && (_state as FoodBoxesCheckupAllGood).isVerified,
+                isVerified:
+                    widget.state is FoodBoxesCheckupAllGood && (widget.state as FoodBoxesCheckupAllGood).isVerified,
               ),
               const SizedBox(height: 8.0),
               _content(
                 context: context,
-                state: _state,
+                state: widget.state,
                 boxes: snapshot.data!,
               ),
             ],
@@ -109,7 +100,7 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
         return BoxSummaryCheckNeeded(
           isLoading: _isLoading,
           state: state,
-          onCheckPressed: _onCheckPressed,
+          onCheckPressed: widget.setInProgress,
           onDelayPressed: _onDelayPressed,
         );
       case FoodBoxesCheckupCheckInProgress():
@@ -124,7 +115,7 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
           isLoading: _isLoading,
           boxTable: _boxTable(boxes: boxes),
           state: state,
-          onPressed: _onCheckPressed,
+          onPressed: widget.setInProgress,
         );
       case FoodBoxesCheckupMismatch():
         return BoxSummaryMismatch(
@@ -157,13 +148,6 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
       focusedColumns = BoxDataTableColumn.values;
     }
     return BoxDataTable(boxes: boxes, alertColors: alertColors, focusedColumns: focusedColumns);
-  }
-
-  /// Handles the "Check" button press by starting the check-in progress.
-  void _onCheckPressed() {
-    setState(() {
-      _state = FoodBoxesCheckupCheckInProgress();
-    });
   }
 
   /// Handles the "Delay" button press by delaying the food box checkup. After the state is updated in Firebase,
@@ -216,7 +200,7 @@ class _BoxSummaryState extends State<BoxSummary> with LifecycleWatcher {
     if (context.mounted) {
       if (success) {
         await HelperService.loadUserInfo(context);
-        _refreshState();
+        widget.refreshState();
         onSuccess?.call();
       } else {
         ScaffoldMessenger.of(context).clearSnackBars();
