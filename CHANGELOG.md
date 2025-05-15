@@ -13,6 +13,10 @@ This is a changelog for **ZachranObed** application.
 
 ### Removed
 
+## [1.6.1]
+### Fixed
+- **ZOB-350** Fix delivery banner logic when food boxes checkup is needed.
+
 ## [1.6.0]
 ### Added
 - **ZOB-338** Add new features to deliveries report.

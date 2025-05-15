@@ -278,9 +278,13 @@
     "foodBoxesCheckupInProgressDescription": "Zkontroluje stav jednotlivých typů krabiček zda jejich počty souhlasí.",
     "foodBoxesCheckupInProgressMatchesAction": "Vše souhlasí",
     "foodBoxesCheckupInProgressMismatchesAction": "Nesouhlasí",
-    "foodBoxesCheckupMismatchDescription": "U stavu krabiček je evidován nesoulad počtu jednotlivých typů. Tým Zachraň oběd byl kontaktován a brzy se vám ozve a vyřeší nápravu.",
 
     "notificationsTitle": "Notifikace",
     "notificationsLast7DaysTitle": "Posledních 7 dní",
-    "notificationsEmptyTitle": "V tuto chvíli tu nejsou žádné notifikace."
+    "notificationsEmptyTitle": "V tuto chvíli tu nejsou žádné notifikace.",
+    "foodBoxesCheckupMismatchDescription": "U stavu krabiček je evidován nesoulad počtu jednotlivých typů. Tým Zachraň oběd byl kontaktován a brzy se vám ozve a vyřeší nápravu.",
+
+    "foodBoxesCheckupDialogTitle": "Nelze darovat",
+    "foodBoxesCheckupDialogContent": "Abyste mohli darovat pokrmy, musíte nejdříve provést kontrolu stavu vratných krabiček. ",
+    "foodBoxesCheckupDialogConfirmAction": "Zkontrolovat"
 }
