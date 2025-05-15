@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
@@ -19,8 +20,33 @@ import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 import 'package:zachranobed/ui/widgets/notification_icon_button.dart';
 
-class OverviewScreen extends StatelessWidget {
+class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
+
+  @override
+  State<OverviewScreen> createState() => _OverviewScreenState();
+}
+
+class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
+  FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshBoxesCheckupState();
+  }
+
+  @override
+  void didUpdateWidget(covariant OverviewScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _refreshBoxesCheckupState();
+  }
+
+  @override
+  void onResume() {
+    super.onResume();
+    _refreshBoxesCheckupState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +73,10 @@ class OverviewScreen extends StatelessWidget {
       floatingActionButton: _floatingActionButton(context),
       body: CustomScrollView(
         slivers: [
-          DeliveryInfoBanner(user: user!),
+          DeliveryInfoBanner(
+            user: user!,
+            showFoodBoxesCheckup: _setBoxesCheckupInProgress,
+          ),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPadding(
             padding: const EdgeInsets.only(
@@ -60,7 +89,12 @@ class OverviewScreen extends StatelessWidget {
                 _buildActiveCanteen(context),
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
-                BoxSummary(user: user),
+                BoxSummary(
+                  user: user,
+                  state: _boxesCheckupState,
+                  refreshState: _refreshBoxesCheckupState,
+                  setInProgress: _setBoxesCheckupInProgress,
+                ),
                 const SizedBox(height: GapSize.m),
                 _buildDonatedFoodList(context),
                 const SizedBox(height: GapSize.xs),
@@ -70,6 +104,23 @@ class OverviewScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Refreshes the state of the food boxes checkup.
+  void _refreshBoxesCheckupState() {
+    setState(() {
+      final user = HelperService.getCurrentUser(context);
+      if (user != null) {
+        _boxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+      }
+    });
+  }
+
+  /// Sets the state of the food boxes checkup to in-progress.
+  void _setBoxesCheckupInProgress() {
+    setState(() {
+      _boxesCheckupState = FoodBoxesCheckupCheckInProgress();
+    });
   }
 
   Widget _floatingActionButton(BuildContext context) {

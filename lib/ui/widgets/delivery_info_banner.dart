@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
@@ -5,8 +6,10 @@ import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
+import 'package:zachranobed/ui/widgets/dialog.dart';
 
 import 'button.dart';
 import 'donation_countdown_timer.dart';
@@ -20,10 +23,12 @@ import 'info_banner.dart';
 /// The widget requires a [UserData] object as a parameter, which represents the current user.
 class DeliveryInfoBanner extends StatelessWidget {
   final UserData user;
+  final VoidCallback showFoodBoxesCheckup;
 
   const DeliveryInfoBanner({
     super.key,
     required this.user,
+    required this.showFoodBoxesCheckup,
   });
 
   @override
@@ -93,13 +98,34 @@ class DeliveryInfoBanner extends StatelessWidget {
           text: context.l10n!.wantToDonate,
           minimumSize: ZOButtonSize.tiny(),
           type: ZOButtonType.success,
-          onPressed: () {
-            context
-                .read<DeliveryNotifier>()
-                .updateDeliveryState(DeliveryState.accepted);
-          },
+          onPressed: () => _onAcceptedPressed(context),
         ),
       ),
     );
+  }
+
+  void _onAcceptedPressed(BuildContext context) {
+    final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+    if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
+      showDialog(
+        context: context,
+        builder: (context) => ZODialog(
+          criticalConfirmStyle: true,
+          title: context.l10n!.foodBoxesCheckupDialogTitle,
+          content: context.l10n!.foodBoxesCheckupDialogContent,
+          confirmText: context.l10n!.foodBoxesCheckupDialogConfirmAction,
+          cancelText: context.l10n!.commonCancel,
+          onConfirmPressed: () {
+            context.router.maybePop();
+            showFoodBoxesCheckup();
+          },
+          onCancelPressed: () => context.router.maybePop(),
+        ),
+      );
+      return;
+    }
+    context
+        .read<DeliveryNotifier>()
+        .updateDeliveryState(DeliveryState.accepted);
   }
 }
