@@ -1,6 +1,9 @@
 name: Deliveries report
 
 on:
+  schedule:
+    # At 08:00 on first day of each month
+    - cron: '0 8 1 * *'
   workflow_dispatch:
     inputs:
       target_period:
@@ -20,7 +23,18 @@ jobs:
     timeout-minutes: 15  # Set a timeout of 15 minutes
 
     steps:
+      - name: Set previous month as TARGET_PERIOD for scheduled run
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            TARGET_PERIOD=$(date -d "$(date +%Y-%m-01) -1 month" +%Y-%m)
+            echo "Setting a target period to $TARGET_PERIOD."
+            echo "TARGET_PERIOD=$TARGET_PERIOD" >> $GITHUB_ENV
+          else
+            echo "TARGET_PERIOD=${{ github.event.inputs.target_period }}" >> $GITHUB_ENV
+          fi
+
       - name: Validate input consistency
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           if [[ -n "${{ github.event.inputs.target_period }}" && ( -n "${{ github.event.inputs.start_date }}" || -n "${{ github.event.inputs.end_date }}" ) ]]; then
             echo "Provide either target period or start & end dates, not both."
@@ -33,7 +47,7 @@ jobs:
           fi
 
       - name: Validate target period
-        if: ${{ github.event.inputs.target_period != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_period != '' }}
         run: |
           if [[ ! "${{ github.event.inputs.target_period }}" =~ ^[0-9]{4}(-(0[1-9]|1[0-2]))?$ ]]; then
             echo "Invalid target period format. Must be YYYY or YYYY-MM."
@@ -41,7 +55,7 @@ jobs:
           fi
 
       - name: Validate start date & end date
-        if: ${{ github.event.inputs.start_date != '' || github.event.inputs.end_date != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.start_date != '' || github.event.inputs.end_date != '') }}
         run: |
           for date in "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"; do
             if [[ -n "$date" && ! "$date" =~ ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$ ]]; then
@@ -78,7 +92,7 @@ jobs:
         run: |
           node cron/scripts/create-delivery-report.js
         env:
-          TARGET_PERIOD: ${{ github.event.inputs.target_period }}
+          TARGET_PERIOD: ${{ env.TARGET_PERIOD }}
           START_DATE: ${{ github.event.inputs.start_date }}
           END_DATE: ${{ github.event.inputs.end_date }}
           DONOR_ID: ${{ github.event.inputs.donor_id }}
