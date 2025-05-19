@@ -27,6 +27,7 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
+  final GlobalKey _boxSummaryKey = GlobalKey();
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
@@ -83,6 +84,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
                 BoxSummary(
+                  key: _boxSummaryKey,
                   user: user,
                   state: _boxesCheckupState,
                   refreshState: _refreshBoxesCheckupState,
@@ -113,6 +115,17 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   void _setBoxesCheckupInProgress() {
     setState(() {
       _boxesCheckupState = FoodBoxesCheckupCheckInProgress();
+    });
+
+    // Delay to ensure layout is complete before scrolling to the box summary
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final boxSummaryContext = _boxSummaryKey.currentContext;
+      if (boxSummaryContext != null) {
+        Scrollable.ensureVisible(
+          boxSummaryContext,
+          duration: const Duration(milliseconds: 250),
+        );
+      }
     });
   }
 
