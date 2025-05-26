@@ -355,7 +355,7 @@ exports.notifyCanteenAboutBoxShippmentV2 = onDocumentCreated(
               body,
               "DONOR_BOX_DELIVERY",
               donorId,
-              undefined
+              delivery.recipientId
             );
           } else {
             console.error("Entity not found for donorId:", donorId);
