@@ -56,16 +56,23 @@ async function createNotification(
     .collection("notifications")
     .doc();
 
-  await notificationRef.set({
-    id: notificationRef.id,
-    title,
-    message,
-    timestamp: admin.firestore.FieldValue.serverTimestamp(),
-    read: false,
-    donorId: donorId || null,
-    recipientId: recipientId || null,
-    type,
-  });
+  await notificationRef
+    .set({
+      id: notificationRef.id,
+      title,
+      message,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      read: false,
+      donorId: donorId || null,
+      recipientId: recipientId || null,
+      type,
+    })
+    .then(() => {
+      console.info("Notification successfully saved!");
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+    });
 }
 
 /**
