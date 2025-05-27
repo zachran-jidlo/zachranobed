@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Project specific descriptions and tasks
+globs: 
+---
+# Project
+
+## Description
+
+- Project defines Firebase Functions that are deployed on NodeJS v20
+- Project uses Typescript as a main language
+
+## Structure
+
+- Project consist of a single .ts file in src folder
+
+## Dependencies
+- Project uses NodeJS v20. Use only compatible functions
+- Project depends on Firebse libraries with following versions. Use only compatible functions.
+  - "firebase-admin": "^13.1.0",
+  - "firebase-functions": "^6.3.2",
+  - "firebase-tools": "^13.31.1"
