@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
 
@@ -44,8 +44,8 @@ class Notifications {
 
     await _localNotifications.initialize(settings);
 
-    final platform = _localNotifications.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final platform =
+        _localNotifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     await platform?.createNotificationChannel(_androidChannel);
   }
 
@@ -55,8 +55,7 @@ class Notifications {
   /// for handling background messages and incoming messages. In the foreground,
   /// it displays local notifications based on the received FCM messages.
   Future initPushNotifications() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -91,9 +90,10 @@ class Notifications {
   /// Prompts the user for notification permissions, then initializes both push
   /// notifications and local notifications by calling the corresponding
   /// initialization methods.
+  ///
+  /// If the platform is not supported, this method does nothing.
   Future<void> initNotifications() async {
-    if (kIsWeb) {
-      // Disable notifications for web
+    if (!RunningPlatform.isMobile()) {
       return;
     }
 
@@ -105,7 +105,7 @@ class Notifications {
 
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
-    if (Platform.isIOS) {
+    if (RunningPlatform.isIOS()) {
       await _firebaseMessaging.getAPNSToken();
     }
 

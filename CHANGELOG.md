@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-343** Add notifications screen.
 
 ### Fixed
+- **ZOB-352** Fix logout behavior on Web.
 
 ### Changed
 - **ZOB-313** Remove FCM token after user signs out.
