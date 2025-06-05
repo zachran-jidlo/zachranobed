@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
@@ -8,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
+import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
@@ -24,10 +22,8 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
-  final _checkIfAppTermsShouldBeShownUseCase =
-      GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
-  final _checkIfUpgradeAppShouldBeShownUseCase =
-      GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
+  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfUpgradeAppShouldBeShownUseCase = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
 
   @override
   void initState() {
@@ -42,12 +38,13 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   }
 
   void _applicationStartCheck() {
-    _checkIfUpgradeAppShouldBeShownUseCase.invoke().then((result) => {
-          if (result == true)
-            {_appRouter.replace(const ForceUpdateRoute())}
-          else
-            {_checkAppTerms()}
-        });
+    _checkIfUpgradeAppShouldBeShownUseCase.invoke().then((result) {
+      if (result == true) {
+        _appRouter.replace(const ForceUpdateRoute());
+      } else {
+        _checkAppTerms();
+      }
+    });
   }
 
   void _checkAppTerms() {
@@ -93,7 +90,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
             splashColor: Colors.transparent,
             appBarTheme: AppBarTheme(
               // Center title only for iOS platform
-              centerTitle: !kIsWeb && Platform.isIOS,
+              centerTitle: RunningPlatform.isIOS(),
               scrolledUnderElevation: 0,
             ),
             bottomSheetTheme: const BottomSheetThemeData(

@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/utils/platform_utils.dart';
 
 /// A widget that displays a different child depending on the platform and
 /// screen size.
@@ -27,7 +27,7 @@ class AdaptiveContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    if (kIsWeb && width > LayoutStyle.webBreakpoint) {
+    if (RunningPlatform.isWeb() && width > LayoutStyle.webBreakpoint) {
       return web(context);
     } else {
       return mobile(context);

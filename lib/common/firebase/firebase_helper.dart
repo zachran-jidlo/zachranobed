@@ -1,5 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:zachranobed/common/utils/platform_utils.dart';
 
 /// Helper class for Firebase Crashlytics integration in Flutter.
 class FirebaseHelper {
@@ -36,6 +37,6 @@ class FirebaseHelper {
   ///
   /// See: https://github.com/firebase/firebase-js-sdk/issues/710
   static bool isCrashlyticsSupported() {
-    return !kIsWeb;
+    return RunningPlatform.isMobile();
   }
 }
