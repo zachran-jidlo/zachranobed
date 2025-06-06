@@ -16,7 +16,17 @@ globs:
 
 ## Structure
 
-- Project consist of a single .ts file in src folder
+- Main source code is organized in `src/` directory with the following structure:
+  - `src/index.ts` - Main entry point that exports all Firebase Functions
+  - `src/functions/` - Individual Firebase Function implementations
+  - `src/services/` - Business logic services (e.g., notification service)
+  - `src/utils/` - Utility functions (email, date utilities)
+  - `src/models/` - TypeScript interfaces and types
+  - `src/config/` - Configuration files (Firebase config)
+- `lib/` - Compiled JavaScript output from TypeScript build
+- `build/` - Build artifacts directory
+- `seed/` - Database seeding scripts
+- `features/` - Feature documentation and specifications
 
 ## Dependencies
 - Project uses NodeJS v20. Use only compatible functions
