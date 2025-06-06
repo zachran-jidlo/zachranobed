@@ -1,6 +1,6 @@
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
-import { db } from "../config/firebase";
-import { sendNotificationsAndCleanup } from "../services/notificationService";
+import { db } from "../../config/firebase";
+import { sendNotificationsAndCleanup } from "../../services/notificationService";
 
 /**
  * Is triggered when a document is created in the "deliveries" collection.

@@ -1,7 +1,7 @@
 import { onDocumentUpdated } from "firebase-functions/v2/firestore";
-import { db } from "../config/firebase";
-import { sendNotificationsAndCleanup } from "../services/notificationService";
-import { FoodBox } from "../models/FoodBox";
+import { db } from "../../config/firebase";
+import { sendNotificationsAndCleanup } from "../../services/notificationService";
+import { FoodBox } from "../../models/FoodBox";
 
 /**
  * Function triggered when there is an update in the "entityPairs" collection in foodboxes list.

@@ -1,7 +1,7 @@
 // Import functions
-import { notifyCharityAboutDonationV2 } from "./functions/foodDeliveryFunction";
-import { notifyCanteenAboutBoxShippmentV2 } from "./functions/boxReturnFunction";
-import { notifyCharityAboutLackOfBoxesAtCanteenV2 } from "./functions/lackOfBoxesFunction";
+import { notifyCharityAboutDonationV2 } from "./functions/notifications/foodDeliveryFunction";
+import { notifyCanteenAboutBoxShippmentV2 } from "./functions/notifications/boxReturnFunction";
+import { notifyCharityAboutLackOfBoxesAtCanteenV2 } from "./functions/notifications/lackOfBoxesFunction";
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
 
