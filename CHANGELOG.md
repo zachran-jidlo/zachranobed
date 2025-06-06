@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-313** Remove FCM token after user signs out.
 
 ### Removed
+- **ZOB-357** Remove `carrierId` property from delivery DTO.
 
 ## [1.6.1]
 ### Fixed
