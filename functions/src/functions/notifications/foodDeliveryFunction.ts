@@ -1,7 +1,7 @@
 import { onDocumentUpdated } from "firebase-functions/v2/firestore";
-import { db } from "../config/firebase";
-import { sendNotificationsAndCleanup } from "../services/notificationService";
-import { isToday } from "../utils/dateUtils";
+import { db } from "../../config/firebase";
+import { sendNotificationsAndCleanup } from "../../services/notificationService";
+import { isToday } from "../../utils/dateUtils";
 
 /**
  * Function triggered when a document in the "deliveries" collection is updated.

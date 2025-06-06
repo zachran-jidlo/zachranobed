@@ -11,13 +11,13 @@ export async function constructAndSendEmail(
 
   if (!entity) {
     console.error(`Entity ${entity} does not exist`);
-    return Promise.reject();
+    return Promise.reject(new Error(`Entity not found: ${entityId}`));
   }
 
   const foodboxesHtml = await constructFoodboxesCount(entityPair);
 
   const email = {
-    to: [" marek.vimr@zachranjidlo.cz", "aplikace.zo@zachranjidlo.cz"],
+    to: ["marek.vimr@zachranjidlo.cz", "aplikace.zo@zachranjidlo.cz"],
     message: {
       subject: "Nesoulad při kontrole krabiček",
       html: `

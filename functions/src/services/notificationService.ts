@@ -103,7 +103,7 @@ export async function sendNotificationsAndCleanup(
     };
   });
 
-  console.log(messages);
+  console.info("Generated push notification messages:", messages);
   // TODO: There is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
   const response = await admin.messaging().sendEach(messages);
   console.info(
