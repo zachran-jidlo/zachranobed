@@ -5,6 +5,7 @@ import { notifyCharityAboutLackOfBoxesAtCanteenV2 } from "./functions/notificati
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
 
+
 // Export for Firebase Functions (CommonJS style)
 exports.notifyCharityAboutDonationV2 = notifyCharityAboutDonationV2;
 exports.notifyCanteenAboutBoxShippmentV2 = notifyCanteenAboutBoxShippmentV2;
