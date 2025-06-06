@@ -11,6 +11,7 @@ import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';
 import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/contact_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
@@ -38,20 +39,19 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: FutureBuilder(
-          future: _contactsFuture,
-          builder:
-              (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return _loading();
-            } else if (snapshot.hasError || snapshot.data == null) {
-              return _error(context);
-            }
-            return _contacts(snapshot.data!);
-          },
-        ),
+      appBar: ZOAppBar(
+        title: context.l10n!.contactsTitle,
+      ),
+      child: FutureBuilder(
+        future: _contactsFuture,
+        builder: (BuildContext context, AsyncSnapshot<ContactsSummary> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _loading();
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return _error(context);
+          }
+          return _contacts(snapshot.data!);
+        },
       ),
     );
   }
@@ -76,20 +76,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       padding: const EdgeInsets.symmetric(
         horizontal: WidgetStyle.padding,
       ),
-      child: Column(
-        children: [
-          Row(
-            children: <Widget>[
-              Text(
-                context.l10n!.contactsTitle,
-                style: const TextStyle(fontSize: FontSize.l),
-              ),
-            ],
-          ),
-          const SizedBox(height: GapSize.s),
-          child,
-        ],
-      ),
+      child: child,
     );
 
     if (scrollable) {
@@ -139,8 +126,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       label: (_) => _buildLabel(label, labelSuffix),
       menuItems: contacts
           .mapIndexed((index, e) {
-            final contactName =
-                e.position != null ? "${e.name} - ${e.position}" : e.name;
+            final contactName = e.position != null ? "${e.name} - ${e.position}" : e.name;
 
             return ContactRow(
               isPreferred: markFirstAsPreferred && index == 0,

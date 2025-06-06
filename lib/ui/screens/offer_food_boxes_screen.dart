@@ -8,6 +8,7 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
@@ -67,6 +68,9 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.offerFoodBoxInfoScreenTitle,
+      ),
       web: (context) => _offerFoodBoxesScreenContent(useWideButton: false),
       mobile: (context) => _offerFoodBoxesScreenContent(useWideButton: true),
     );
@@ -79,39 +83,22 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
   Widget _offerFoodBoxesScreenContent({
     required bool useWideButton,
   }) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(WidgetStyle.padding),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              context.l10n!.offerFoodBoxInfoScreenTitle,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: _statisticsFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _loading();
-                } else if (snapshot.hasError || snapshot.data == null) {
-                  return _error(context);
-                } else {
-                  final hasSomeBoxes = snapshot.requireData.any((box) => box.quantityAtCanteen > 0);
-                  if (!hasSomeBoxes) {
-                    return _empty(context, useWideButton);
-                  } else {
-                    return _form(snapshot.requireData, useWideButton);
-                  }
-                }
-              },
-            ),
-          )
-        ],
-      ),
+    return FutureBuilder(
+      future: _statisticsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _loading();
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return _error(context);
+        } else {
+          final hasSomeBoxes = snapshot.requireData.any((box) => box.quantityAtCanteen > 0);
+          if (!hasSomeBoxes) {
+            return _empty(context, useWideButton);
+          } else {
+            return _form(snapshot.requireData, useWideButton);
+          }
+        }
+      },
     );
   }
 

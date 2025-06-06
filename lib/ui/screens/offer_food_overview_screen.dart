@@ -14,6 +14,7 @@ import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/screens/offer_food_detail_screen.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
@@ -57,6 +58,9 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.offerFoodOverviewScreenTitle,
+      ),
       web: (context) => _offerFoodOverviewScreenContent(useWideButton: false),
       mobile: (context) => _offerFoodOverviewScreenContent(useWideButton: true),
     );
@@ -76,71 +80,58 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
           _showCancelConfirmationDialog();
         }
       },
-      child: Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(WidgetStyle.padding),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  context.l10n!.offerFoodOverviewScreenTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.clip,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (_foodInfos.isEmpty)
+              _emptyScreenContent(useWideButton)
+            else ...[
+              InfoBanner.text(
+                backgroundColor: ZOColors.amberTransparent,
+                message: context.l10n!.offerFoodOverviewBanner,
+              ),
+              const SizedBox(height: GapSize.m),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: WidgetStyle.padding,
+                ),
+                child: Column(
+                  children: [
+                    OfferFoodOverviewFoodSection(
+                      foodInfos: _foodInfos,
+                      onAddPressed: _onAddNewFoodPressed,
+                      onEditPressed: _onEditFoodPressed,
+                    ),
+                    const SizedBox(height: GapSize.xl),
+                    OfferFoodOverviewBoxSection(
+                      boxInfos: _boxInfos,
+                      onEditPressed: _onEditBoxesPressed,
+                      isEmptyConfirmed: _isEmptyConfirmed,
+                      onEmptyConfirmedChanged: (value) {
+                        setState(() {
+                          _isEmptyConfirmed = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: GapSize.xxl),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: ZOButton(
+                        text: context.l10n!.offerFood,
+                        icon: Icons.check,
+                        enabled: _isEmptyConfirmed || _boxInfos.isNotEmpty,
+                        minimumSize: ZOButtonSize.large(
+                          fullWidth: useWideButton,
+                        ),
+                        onPressed: _onConfirmationButtonPressed,
+                      ),
+                    ),
+                    const SizedBox(height: GapSize.xs),
+                  ],
                 ),
               ),
-              if (_foodInfos.isEmpty)
-                _emptyScreenContent(useWideButton)
-              else ...[
-                InfoBanner.text(
-                  backgroundColor: ZOColors.amberTransparent,
-                  message: context.l10n!.offerFoodOverviewBanner,
-                ),
-                const SizedBox(height: GapSize.m),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: WidgetStyle.padding,
-                  ),
-                  child: Column(
-                    children: [
-                      OfferFoodOverviewFoodSection(
-                        foodInfos: _foodInfos,
-                        onAddPressed: _onAddNewFoodPressed,
-                        onEditPressed: _onEditFoodPressed,
-                      ),
-                      const SizedBox(height: GapSize.xl),
-                      OfferFoodOverviewBoxSection(
-                        boxInfos: _boxInfos,
-                        onEditPressed: _onEditBoxesPressed,
-                        isEmptyConfirmed: _isEmptyConfirmed,
-                        onEmptyConfirmedChanged: (value) {
-                          setState(() {
-                            _isEmptyConfirmed = value;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: GapSize.xxl),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ZOButton(
-                          text: context.l10n!.offerFood,
-                          icon: Icons.check,
-                          enabled: _isEmptyConfirmed || _boxInfos.isNotEmpty,
-                          minimumSize: ZOButtonSize.large(
-                            fullWidth: useWideButton,
-                          ),
-                          onPressed: _onConfirmationButtonPressed,
-                        ),
-                      ),
-                      const SizedBox(height: GapSize.xs),
-                    ],
-                  ),
-                ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );

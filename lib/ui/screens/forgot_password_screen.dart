@@ -7,6 +7,7 @@ import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
@@ -36,6 +37,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.passwordReset,
+      ),
       web: (context) => _forgotPasswordScreenContent(useWideButton: false),
       mobile: (context) => _forgotPasswordScreenContent(useWideButton: true),
     );
@@ -48,50 +52,45 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget _forgotPasswordScreenContent({
     required bool useWideButton,
   }) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n!.passwordReset),
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.padding,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: GapSize.xxs),
-                Text(
-                    context.l10n!.passwordResetExplanation,
-                  style: Theme.of(context).textTheme.bodyLarge,
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.padding,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: GapSize.xxs),
+              Text(
+                context.l10n!.passwordResetExplanation,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: GapSize.xl),
+              ZOTextField(
+                label: context.l10n!.emailAddress,
+                inputType: TextInputType.emailAddress,
+                disableAutocorrect: true,
+                controller: _emailController,
+                onValidation: FieldValidationUtils.getEmailValidator(
+                  context,
                 ),
-                const SizedBox(height: GapSize.xl),
-                ZOTextField(
-                  label: context.l10n!.emailAddress,
-                  inputType: TextInputType.emailAddress,
-                  disableAutocorrect: true,
-                  controller: _emailController,
-                  onValidation: FieldValidationUtils.getEmailValidator(
-                    context,
-                  ),
+              ),
+              const SizedBox(height: GapSize.xl),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ZOButton(
+                  text: context.l10n!.resetPassword,
+                  icon: Icons.email_outlined,
+                  minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await _resetPassword();
+                    }
+                  },
                 ),
-                const SizedBox(height: GapSize.xl),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ZOButton(
-                    text: context.l10n!.resetPassword,
-                    icon: Icons.email_outlined,
-                    minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await _resetPassword();
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

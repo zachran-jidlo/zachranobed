@@ -11,6 +11,7 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
@@ -80,6 +81,9 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.shippingOfBoxesToCanteen,
+      ),
       web: (context) => _orderBoxShippingScreenContent(useWideButton: false),
       mobile: (context) => _orderBoxShippingScreenContent(useWideButton: true),
     );
@@ -94,33 +98,22 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   }) {
     return WillPopScope(
       onWillPop: _showConfirmationDialog,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              context.l10n!.shippingOfBoxesToCanteen,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          ),
-        ),
-        body: FutureBuilder(
-          future: _statisticsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return _loading();
-            } else if (snapshot.hasError || snapshot.data == null) {
-              return _error(context);
-            }
-            final hasSomeBoxes = snapshot.requireData.any(
-              (box) => box.quantityAtCharity > 0,
-            );
-            if (!hasSomeBoxes) {
-              return _empty(context, useWideButton);
-            }
-            return _form(snapshot.requireData, useWideButton);
-          },
-        ),
+      child: FutureBuilder(
+        future: _statisticsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _loading();
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return _error(context);
+          }
+          final hasSomeBoxes = snapshot.requireData.any(
+            (box) => box.quantityAtCharity > 0,
+          );
+          if (!hasSomeBoxes) {
+            return _empty(context, useWideButton);
+          }
+          return _form(snapshot.requireData, useWideButton);
+        },
       ),
     );
   }

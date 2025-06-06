@@ -10,6 +10,7 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
 import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
@@ -26,8 +27,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  final _checkIfDevtoolsAreEnabledUseCase =
-      GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
   String _appVersion = '-';
 
   @override
@@ -47,6 +47,16 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.profileScreenTitle,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
       web: (context) => _menuScreenContent(useWideButton: false),
       mobile: (context) => _menuScreenContent(useWideButton: true),
     );
@@ -61,111 +71,96 @@ class _MenuScreenState extends State<MenuScreen> {
   }) {
     final authService = GetIt.I<AuthService>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n!.profileScreenTitle),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.padding,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MenuUserInfo(user: HelperService.getCurrentUser(context)!),
-              const SizedBox(height: 8.0),
-              MenuItem(
-                leadingIcon: Icons.call_outlined,
-                text: context.l10n!.contactsMenuLabel,
-                onPressed: () => context.router.push(const ContactsRoute()),
-              ),
-              const SizedBox(height: GapSize.m),
-              MenuSection.simple(
-                label: context.l10n!.settings,
-                menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.password,
-                    text: context.l10n!.changePassword,
-                    onPressed: () =>
-                        context.router.push(const ChangePasswordRoute()),
-                  )
-                ],
-              ),
-              MenuSection.simple(
-                label: context.l10n!.saveLunch,
-                menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.textsms_outlined,
-                    text: context.l10n!.feedback,
-                    onPressed: () async {
-                      await _openEmailClient(context);
-                    },
-                  ),
-                  const SizedBox(height: 8.0),
-                  MenuItem(
-                    leadingIcon: Icons.language,
-                    text: context.l10n!.about,
-                    onPressed: () async {
-                      await _openUrlInBrowser(ZOStrings.zobWebHomepage);
-                    },
-                  ),
-                  const SizedBox(height: 8.0),
-                  MenuItem(
-                    leadingIcon: Icons.volunteer_activism_outlined,
-                    text: context.l10n!.sponsors,
-                    onPressed: () async {
-                      await _openUrlInBrowser(ZOStrings.sponsors);
-                    },
-                  ),
-                ],
-              ),
-              MenuSection.simple(
-                label: context.l10n!.more,
-                menuItems: [
-                  MenuItem(
-                    leadingIcon: Icons.security,
-                    text: context.l10n!.privacyProtection,
-                    onPressed: () async =>
-                    await _openUrlInBrowser(ZOStrings.appPrivacy),
-                  ),
-                  const SizedBox(height: 8.0),
-                  MenuItem(
-                    leadingIcon: Icons.text_snippet_outlined,
-                    text: context.l10n!.termsOfUse,
-                    onPressed: () async =>
-                    await _openUrlInBrowser(ZOStrings.appTerms),
-                  ),
-                  const SizedBox(height: 8.0),
-                  MenuItem(
-                    text: context.l10n!.version,
-                    secondaryText: _appVersion,
-                    onPressed: showDebugScreenIfPossible,
-                  ),
-                ],
-              ),
-              MenuButton(
-                text: context.l10n!.signOut,
-                icon: Icons.logout,
-                minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
-                onPressed: () async {
-                  final entityId = HelperService.getCurrentUser(context)?.entityId;
-                  await authService.signOut(entityId);
-                  if (mounted) {
-                    context.router.replaceAll([const LoginRoute()]);
-                  }
-                },
-              ),
-              const SizedBox(height: GapSize.xxl),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: WidgetStyle.padding,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MenuUserInfo(user: HelperService.getCurrentUser(context)!),
+            const SizedBox(height: 8.0),
+            MenuItem(
+              leadingIcon: Icons.call_outlined,
+              text: context.l10n!.contactsMenuLabel,
+              onPressed: () => context.router.push(const ContactsRoute()),
+            ),
+            const SizedBox(height: GapSize.m),
+            MenuSection.simple(
+              label: context.l10n!.settings,
+              menuItems: [
+                MenuItem(
+                  leadingIcon: Icons.password,
+                  text: context.l10n!.changePassword,
+                  onPressed: () => context.router.push(const ChangePasswordRoute()),
+                )
+              ],
+            ),
+            MenuSection.simple(
+              label: context.l10n!.saveLunch,
+              menuItems: [
+                MenuItem(
+                  leadingIcon: Icons.textsms_outlined,
+                  text: context.l10n!.feedback,
+                  onPressed: () async {
+                    await _openEmailClient(context);
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                MenuItem(
+                  leadingIcon: Icons.language,
+                  text: context.l10n!.about,
+                  onPressed: () async {
+                    await _openUrlInBrowser(ZOStrings.zobWebHomepage);
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                MenuItem(
+                  leadingIcon: Icons.volunteer_activism_outlined,
+                  text: context.l10n!.sponsors,
+                  onPressed: () async {
+                    await _openUrlInBrowser(ZOStrings.sponsors);
+                  },
+                ),
+              ],
+            ),
+            MenuSection.simple(
+              label: context.l10n!.more,
+              menuItems: [
+                MenuItem(
+                  leadingIcon: Icons.security,
+                  text: context.l10n!.privacyProtection,
+                  onPressed: () async => await _openUrlInBrowser(ZOStrings.appPrivacy),
+                ),
+                const SizedBox(height: 8.0),
+                MenuItem(
+                  leadingIcon: Icons.text_snippet_outlined,
+                  text: context.l10n!.termsOfUse,
+                  onPressed: () async => await _openUrlInBrowser(ZOStrings.appTerms),
+                ),
+                const SizedBox(height: 8.0),
+                MenuItem(
+                  text: context.l10n!.version,
+                  secondaryText: _appVersion,
+                  onPressed: showDebugScreenIfPossible,
+                ),
+              ],
+            ),
+            MenuButton(
+              text: context.l10n!.signOut,
+              icon: Icons.logout,
+              minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
+              onPressed: () async {
+                final entityId = HelperService.getCurrentUser(context)?.entityId;
+                await authService.signOut(entityId);
+                if (mounted) {
+                  context.router.replaceAll([const LoginRoute()]);
+                }
+              },
+            ),
+            const SizedBox(height: GapSize.xxl),
+          ],
         ),
       ),
     );
