@@ -204,7 +204,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         id: id,
         donorId: donorId,
         recipientId: recipientId,
-        carrierId: user.activePair.carrierId,
         deliveryDate: DateTime.now(),
         foodBoxes: foodBoxes.toList(),
         meals: [],
