@@ -8,6 +8,7 @@ import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart' as domain;
 import 'package:zachranobed/features/notifications/domain/usecase/mark_as_read_all_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/observe_notifications_use_case.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
@@ -40,45 +41,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
-      builder: (context) => Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: WidgetStyle.padding,
-                right: WidgetStyle.padding,
-                bottom: WidgetStyle.padding,
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                context.l10n!.notificationsTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            Expanded(
-              child: StreamBuilder<List<domain.Notification>>(
-                stream: user != null ? _observeNotifications.invoke(user) : null,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return _loading();
-                  }
-                  if (snapshot.hasError) {
-                    return _error(context);
-                  }
-                  final data = snapshot.data;
-                  if (data == null || data.isEmpty) {
-                    return _empty(context);
-                  }
-                  return _notifications(data);
-                },
-              ),
-            ),
-          ],
-        ),
+      appBar: ZOAppBar(
+        title: context.l10n!.notificationsTitle,
       ),
+      builder: (context) {
+        return StreamBuilder<List<domain.Notification>>(
+          stream: user != null ? _observeNotifications.invoke(user) : null,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _loading();
+            }
+            if (snapshot.hasError) {
+              return _error(context);
+            }
+            final data = snapshot.data;
+            if (data == null || data.isEmpty) {
+              return _empty(context);
+            }
+            return _notifications(data);
+          },
+        );
+      },
     );
   }
 

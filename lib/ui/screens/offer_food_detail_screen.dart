@@ -4,6 +4,7 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 import 'package:zachranobed/ui/widgets/food_info_fields.dart';
@@ -117,6 +118,9 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: _getScreenTitle(),
+      ),
       web: (context) => _offerFoodDetailScreenContent(
         actionButtonsAxis: Axis.horizontal,
       ),
@@ -140,47 +144,29 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
           _showCancelConfirmationDialog();
         }
       },
-      child: Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(WidgetStyle.padding),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  _getScreenTitle(),
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.clip,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.padding,
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                FoodInfoFields(
+                  formValidationManager: _formValidationManager,
+                  foodInfo: _foodInfoPending,
+                  onChanged: (food) {
+                    setState(() {
+                      _foodInfoPending = food;
+                    });
+                  },
                 ),
-              ),
-              const SizedBox(height: GapSize.m),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: WidgetStyle.padding,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      FoodInfoFields(
-                        formValidationManager: _formValidationManager,
-                        foodInfo: _foodInfoPending,
-                        onChanged: (food) {
-                          setState(() {
-                            _foodInfoPending = food;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: GapSize.m),
-                      _bottomActionsButtons(actionButtonsAxis: actionButtonsAxis),
-                      const SizedBox(height: GapSize.l),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                const SizedBox(height: GapSize.m),
+                _bottomActionsButtons(actionButtonsAxis: actionButtonsAxis),
+                const SizedBox(height: GapSize.l),
+              ],
+            ),
           ),
         ),
       ),

@@ -11,6 +11,9 @@ class ScreenScaffold extends StatelessWidget {
   /// Whether to automatically center the web layout.
   final bool centerWebLayout;
 
+  /// Optional app bar to display above the screen content.
+  final Widget? appBar;
+
   /// The child to display on the web when the screen width is greater than
   /// [LayoutStyle.webBreakpoint].
   final WidgetBuilder web;
@@ -24,6 +27,7 @@ class ScreenScaffold extends StatelessWidget {
     super.key,
     required this.web,
     required this.mobile,
+    this.appBar,
     this.centerWebLayout = true,
   });
 
@@ -33,7 +37,8 @@ class ScreenScaffold extends StatelessWidget {
   ScreenScaffold.universal({
     Key? key,
     required Widget child,
-  }) : this(key: key, web: (context) => child, mobile: (context) => child);
+    Widget? appBar,
+  }) : this(key: key, appBar: appBar, web: (context) => child, mobile: (context) => child);
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and
   /// mobile. This constructor is useful when you want to display the same
@@ -41,27 +46,40 @@ class ScreenScaffold extends StatelessWidget {
   const ScreenScaffold.universalBuilder({
     Key? key,
     required WidgetBuilder builder,
-  }) : this(key: key, web: builder, mobile: builder);
+    Widget? appBar,
+  }) : this(key: key, appBar: appBar, web: builder, mobile: builder);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: AdaptiveContent(
-          web: centerWebLayout ? _webCentered : web,
-          mobile: mobile,
+          web: (context) {
+            final webContent = _buildContent(context, web);
+            return centerWebLayout ? _buildCentered(webContent) : webContent;
+          },
+          mobile: (context) => _buildContent(context, mobile),
         ),
       ),
     );
   }
 
-  /// Builds the centered web layout. This method centers the web layout within
-  /// a [SizedBox] with a width of [LayoutStyle.webBreakpoint].
-  Widget _webCentered(BuildContext context) {
+  Widget _buildContent(BuildContext context, WidgetBuilder body) {
+    return Column(
+      children: [
+        if (appBar != null) appBar!,
+        Expanded(
+          child: body(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCentered(Widget child) {
     return Center(
       child: SizedBox(
         width: LayoutStyle.webBreakpoint.toDouble(),
-        child: web(context),
+        child: child,
       ),
     );
   }

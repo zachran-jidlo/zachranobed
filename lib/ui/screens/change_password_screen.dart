@@ -8,6 +8,7 @@ import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/password_text_field.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
@@ -26,8 +27,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmNewPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmNewPasswordController = TextEditingController();
 
   final authService = GetIt.I<AuthService>();
 
@@ -42,6 +42,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      appBar: ZOAppBar(
+        title: context.l10n!.changePassword,
+      ),
       web: (context) => _changePasswordScreenContent(useWideButton: false),
       mobile: (context) => _changePasswordScreenContent(useWideButton: true),
     );
@@ -54,62 +57,56 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget _changePasswordScreenContent({
     required bool useWideButton,
   }) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n!.changePassword),
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.padding,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: GapSize.xxs),
-                ZOPasswordTextField(
-                  text: context.l10n!.currentPassword,
-                  controller: _oldPasswordController,
-                  onValidation: FieldValidationUtils.getPasswordValidator(
-                    context,
-                  ),
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: WidgetStyle.padding,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: GapSize.xxs),
+              ZOPasswordTextField(
+                text: context.l10n!.currentPassword,
+                controller: _oldPasswordController,
+                onValidation: FieldValidationUtils.getPasswordValidator(
+                  context,
                 ),
-                const SizedBox(height: GapSize.m),
-                ZOPasswordTextField(
-                  text: context.l10n!.newPassword,
-                  controller: _newPasswordController,
-                  onValidation: FieldValidationUtils.getNewPasswordValidator(
-                    context,
-                  ),
+              ),
+              const SizedBox(height: GapSize.m),
+              ZOPasswordTextField(
+                text: context.l10n!.newPassword,
+                controller: _newPasswordController,
+                onValidation: FieldValidationUtils.getNewPasswordValidator(
+                  context,
                 ),
-                const SizedBox(height: GapSize.m),
-                ZOPasswordTextField(
-                  text: context.l10n!.repeatNewPassword,
-                  controller: _confirmNewPasswordController,
-                  onValidation:
-                  FieldValidationUtils.getRepeatNewPasswordValidator(
-                    context,
-                    _newPasswordController,
-                  ),
+              ),
+              const SizedBox(height: GapSize.m),
+              ZOPasswordTextField(
+                text: context.l10n!.repeatNewPassword,
+                controller: _confirmNewPasswordController,
+                onValidation: FieldValidationUtils.getRepeatNewPasswordValidator(
+                  context,
+                  _newPasswordController,
                 ),
-                const SizedBox(height: GapSize.m),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ZOButton(
-                    text: context.l10n!.savePassword,
-                    icon: Icons.check,
-                    minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final entityId = HelperService.getCurrentUser(context)?.entityId;
-                        await _changePassword(entityId);
-                      }
-                    },
-                  ),
+              ),
+              const SizedBox(height: GapSize.m),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ZOButton(
+                  text: context.l10n!.savePassword,
+                  icon: Icons.check,
+                  minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final entityId = HelperService.getCurrentUser(context)?.entityId;
+                      await _changePassword(entityId);
+                    }
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -145,9 +142,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
-            message: _isPasswordError(e)
-                ? context.l10n!.invalidCurrentPasswordError
-                : context.l10n!.somethingWentWrongError,
+            message:
+                _isPasswordError(e) ? context.l10n!.invalidCurrentPasswordError : context.l10n!.somethingWentWrongError,
           ),
         );
       }

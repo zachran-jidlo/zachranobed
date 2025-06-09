@@ -9,6 +9,7 @@ import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summar
 import 'package:zachranobed/features/activepair/domain/usecase/change_active_pair_use_case.dart';
 import 'package:zachranobed/features/activepair/domain/usecase/get_entity_pairs_summary_use_case.dart';
 import 'package:zachranobed/models/charity.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
 import 'package:zachranobed/ui/widgets/error_content.dart';
@@ -25,8 +26,7 @@ class ChangeActivePairScreen extends StatefulWidget {
   const ChangeActivePairScreen({super.key});
 
   @override
-  State<ChangeActivePairScreen> createState() =>
-      _ChangeActiveCanteenScreenState();
+  State<ChangeActivePairScreen> createState() => _ChangeActiveCanteenScreenState();
 }
 
 class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
@@ -44,28 +44,26 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.l10n!.activePairCanteenTitle),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        ),
-        body: FutureBuilder(
-          future: _entityPairsSummaryFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return _loading();
-            } else if (snapshot.hasError || snapshot.data == null) {
-              return _error(context);
-            }
-            return _entityPairs(snapshot.data!);
-          },
-        ),
+      appBar: ZOAppBar(
+        title: context.l10n!.activePairCanteenTitle,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+      child: FutureBuilder(
+        future: _entityPairsSummaryFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _loading();
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return _error(context);
+          }
+          return _entityPairs(snapshot.data!);
+        },
       ),
     );
   }

@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.7.0]
 ### Added
+- **ZOB-285** Add and use centralized component for app bar.
 - **ZOB-343** Add notifications screen.
 
 ### Fixed

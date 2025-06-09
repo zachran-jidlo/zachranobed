@@ -12,6 +12,7 @@ import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';
 import 'package:zachranobed/ui/widgets/delivery_info_banner.dart';
@@ -19,6 +20,7 @@ import 'package:zachranobed/ui/widgets/indicator.dart';
 import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
 import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
 import 'package:zachranobed/ui/widgets/notification_icon_button.dart';
+import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -52,10 +54,9 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   @override
   Widget build(BuildContext context) {
     final user = HelperService.watchCurrentUser(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n!.overview),
+    return ScreenScaffold.universalBuilder(
+      appBar: ZOAppBar(
+        title: context.l10n!.overview,
         actions: [
           NotificationIconButton(
             user: user,
@@ -71,6 +72,13 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
           ),
         ],
       ),
+      builder: _buildContent,
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    final user = HelperService.watchCurrentUser(context);
+    return Scaffold(
       floatingActionButton: _floatingActionButton(context),
       body: CustomScrollView(
         slivers: [
