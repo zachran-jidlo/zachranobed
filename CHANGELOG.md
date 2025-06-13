@@ -2,6 +2,15 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.8.0]
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
 ## [1.7.0]
 ### Added
 - **ZOB-285** Add and use centralized component for app bar.
