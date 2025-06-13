@@ -34,8 +34,8 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _refreshBoxesCheckupState();
   }
 
