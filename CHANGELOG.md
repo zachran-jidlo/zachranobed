@@ -18,6 +18,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Fixed
 - **ZOB-352** Fix logout behavior on Web.
+- **ZOB-361** Refresh boxes when switching entity pair.
 
 ### Changed
 - **ZOB-313** Remove FCM token after user signs out.
