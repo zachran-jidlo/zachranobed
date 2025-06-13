@@ -143,7 +143,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget _loading() {
     return _screen(
       scrollable: false,
-      child: const Expanded(child: Center(child: CircularProgressIndicator())),
+      child: const Center(child: CircularProgressIndicator()),
     );
   }
 
