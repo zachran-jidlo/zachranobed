@@ -4,7 +4,7 @@ import { notifyCanteenAboutBoxShippmentV2 } from "./functions/notifications/boxR
 import { notifyCharityAboutLackOfBoxesAtCanteenV2 } from "./functions/notifications/lackOfBoxesFunction";
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
-
+import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 
 // Export for Firebase Functions (CommonJS style)
 exports.notifyCharityAboutDonationV2 = notifyCharityAboutDonationV2;
@@ -14,3 +14,4 @@ exports.notifyCharityAboutLackOfBoxesAtCanteenV2 =
 exports.boxesMismatchNotification = boxesMismatchNotification;
 
 exports.scheduledFunctionCrontab = scheduledFunctionCrontab;
+exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
