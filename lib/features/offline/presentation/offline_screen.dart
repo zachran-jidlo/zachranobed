@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/empty_page.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen displayed when the application detects that there is no internet connectivity.
@@ -18,25 +18,36 @@ class OfflineScreen extends StatelessWidget {
     return ScreenScaffold.universal(
       child: Center(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              EmptyPage(
-                vectorImagePath: ZOStrings.genericErrorPath,
-                title: context.l10n!.offlineScreenTitle,
-                description: context.l10n!.offlineScreenDescription,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
-                child: ZOButton(
+          child: Padding(
+            padding: const EdgeInsets.all(GapSize.xl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  ZOStrings.offlineErrorPath,
+                ),
+                const SizedBox(height: GapSize.xl),
+                Text(
+                  context.l10n!.offlineScreenTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: GapSize.xs),
+                Text(
+                  context.l10n!.offlineScreenDescription,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: GapSize.xl),
+                ZOButton(
                   text: context.l10n!.offlineScreenCloseApp,
                   minimumSize: ZOButtonSize.medium(),
                   onPressed: () {
                     SystemNavigator.pop();
                   },
                 ),
-              ),
-              const SizedBox(height: GapSize.xs),
-            ],
+              ],
+            ),
           ),
         ),
       ),

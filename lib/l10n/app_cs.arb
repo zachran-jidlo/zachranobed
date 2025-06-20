@@ -288,7 +288,7 @@
     "foodBoxesCheckupDialogContent": "Abyste mohli darovat pokrmy, musíte nejdříve provést kontrolu stavu vratných krabiček. ",
     "foodBoxesCheckupDialogConfirmAction": "Zkontrolovat",
 
-    "offlineScreenTitle": "Jste offline",
-    "offlineScreenDescription": "Pro používání aplikace je vyžadováno internetové připojení.",
+    "offlineScreenTitle": "Jste bez připojení k internetu!",
+    "offlineScreenDescription": "Pro plnohodnotné využití všech funkcí aplikace je zapotřebí internetové připojení.",
     "offlineScreenCloseApp": "Zavřít aplikaci"
 }
