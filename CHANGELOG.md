@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 
 ### Changed
+- **ZOB-364** Update Flutter SDK version, Android target & compile SDK and iOS minimum deployment target.
 
 ### Removed
 
