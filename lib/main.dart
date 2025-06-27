@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:zachranobed/common/di/common_dependency_container.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
+import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/features/activepair/di/active_pair_dependency_container.dart';
 import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
 import 'package:zachranobed/features/appConfiguration/mapper/app_configuration_mapper.dart';
@@ -20,11 +20,12 @@ import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/services/di/services_dependency_container.dart';
 import 'package:zachranobed/ui/widgets/app_root.dart';
 
-
 void main() async {
+  const webAppFlavor = String.fromEnvironment('WEB_APP_FLAVOR');
+  const flavor = webAppFlavor != '' ? webAppFlavor : appFlavor;
   AppConfiguration.instance.set(
-      AppConfigurationMapper.mapBuildConfiguration(appFlavor),
-      AppConfigurationMapper.mapApiConfiguration(appFlavor),
+    AppConfigurationMapper.mapBuildConfiguration(flavor),
+    AppConfigurationMapper.mapApiConfiguration(flavor),
   );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
