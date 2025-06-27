@@ -8,6 +8,7 @@ import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/features/offline/presentation/connectivity_wrapper.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.dart';
@@ -104,6 +105,20 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               width: LayoutStyle.navigationDrawerSize.toDouble(),
             ),
           ),
+          builder: (context, child) {
+            if (child == null) {
+              return const SizedBox();
+            }
+
+            // On mobile platforms, wrap the app content with ConnectivityWrapper widget to handle offline scenarios
+            if (RunningPlatform.isMobile()) {
+              return ConnectivityWrapper(
+                child: child,
+              );
+            } else {
+              return child;
+            }
+          },
         );
       },
     );

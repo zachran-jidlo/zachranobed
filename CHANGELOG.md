@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [1.8.0]
 ### Added
+- **ZOB-51** Add a generic offline detection and screen.
 
 ### Fixed
 
