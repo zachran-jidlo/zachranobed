@@ -6,8 +6,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
  */
 part 'box_info.freezed.dart';
 
-@Freezed()
-class BoxInfo with _$BoxInfo {
+@freezed
+abstract class BoxInfo with _$BoxInfo {
   const factory BoxInfo({
     String? foodBoxId,
     int? numberOfBoxes,

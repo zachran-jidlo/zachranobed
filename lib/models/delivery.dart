@@ -7,8 +7,8 @@ import 'package:zachranobed/common/constants.dart';
  */
 part 'delivery.freezed.dart';
 
-@Freezed()
-class Delivery with _$Delivery {
+@freezed
+abstract class Delivery with _$Delivery {
   const Delivery._();
   const factory Delivery({
     required String id,

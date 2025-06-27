@@ -3,7 +3,7 @@ import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/routes/guards/auth_guard.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   List<MaterialRoute> get routes => [
         MaterialRoute(

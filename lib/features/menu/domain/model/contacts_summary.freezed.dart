@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,79 +10,53 @@ part of 'contacts_summary.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ContactsSummary {
-  List<EntityContacts> get targets => throw _privateConstructorUsedError;
-  List<Contact> get deliveryContacts => throw _privateConstructorUsedError;
-  List<Contact> get organisationContacts => throw _privateConstructorUsedError;
+  List<EntityContacts> get targets;
+  List<Contact> get deliveryContacts;
+  List<Contact> get organisationContacts;
 
   /// Create a copy of ContactsSummary
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ContactsSummaryCopyWith<ContactsSummary> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ContactsSummaryCopyWith<$Res> {
-  factory $ContactsSummaryCopyWith(
-          ContactsSummary value, $Res Function(ContactsSummary) then) =
-      _$ContactsSummaryCopyWithImpl<$Res, ContactsSummary>;
-  @useResult
-  $Res call(
-      {List<EntityContacts> targets,
-      List<Contact> deliveryContacts,
-      List<Contact> organisationContacts});
-}
-
-/// @nodoc
-class _$ContactsSummaryCopyWithImpl<$Res, $Val extends ContactsSummary>
-    implements $ContactsSummaryCopyWith<$Res> {
-  _$ContactsSummaryCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ContactsSummary
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ContactsSummaryCopyWith<ContactsSummary> get copyWith =>
+      _$ContactsSummaryCopyWithImpl<ContactsSummary>(
+          this as ContactsSummary, _$identity);
+
   @override
-  $Res call({
-    Object? targets = null,
-    Object? deliveryContacts = null,
-    Object? organisationContacts = null,
-  }) {
-    return _then(_value.copyWith(
-      targets: null == targets
-          ? _value.targets
-          : targets // ignore: cast_nullable_to_non_nullable
-              as List<EntityContacts>,
-      deliveryContacts: null == deliveryContacts
-          ? _value.deliveryContacts
-          : deliveryContacts // ignore: cast_nullable_to_non_nullable
-              as List<Contact>,
-      organisationContacts: null == organisationContacts
-          ? _value.organisationContacts
-          : organisationContacts // ignore: cast_nullable_to_non_nullable
-              as List<Contact>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ContactsSummary &&
+            const DeepCollectionEquality().equals(other.targets, targets) &&
+            const DeepCollectionEquality()
+                .equals(other.deliveryContacts, deliveryContacts) &&
+            const DeepCollectionEquality()
+                .equals(other.organisationContacts, organisationContacts));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(targets),
+      const DeepCollectionEquality().hash(deliveryContacts),
+      const DeepCollectionEquality().hash(organisationContacts));
+
+  @override
+  String toString() {
+    return 'ContactsSummary(targets: $targets, deliveryContacts: $deliveryContacts, organisationContacts: $organisationContacts)';
   }
 }
 
 /// @nodoc
-abstract class _$$$ContactsSummaryImplCopyWith<$Res>
-    implements $ContactsSummaryCopyWith<$Res> {
-  factory _$$$ContactsSummaryImplCopyWith(_$$ContactsSummaryImpl value,
-          $Res Function(_$$ContactsSummaryImpl) then) =
-      __$$$ContactsSummaryImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ContactsSummaryCopyWith<$Res> {
+  factory $ContactsSummaryCopyWith(
+          ContactsSummary value, $Res Function(ContactsSummary) _then) =
+      _$ContactsSummaryCopyWithImpl;
   @useResult
   $Res call(
       {List<EntityContacts> targets,
@@ -90,12 +65,12 @@ abstract class _$$$ContactsSummaryImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$$ContactsSummaryImplCopyWithImpl<$Res>
-    extends _$ContactsSummaryCopyWithImpl<$Res, _$$ContactsSummaryImpl>
-    implements _$$$ContactsSummaryImplCopyWith<$Res> {
-  __$$$ContactsSummaryImplCopyWithImpl(_$$ContactsSummaryImpl _value,
-      $Res Function(_$$ContactsSummaryImpl) _then)
-      : super(_value, _then);
+class _$ContactsSummaryCopyWithImpl<$Res>
+    implements $ContactsSummaryCopyWith<$Res> {
+  _$ContactsSummaryCopyWithImpl(this._self, this._then);
+
+  final ContactsSummary _self;
+  final $Res Function(ContactsSummary) _then;
 
   /// Create a copy of ContactsSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -106,17 +81,17 @@ class __$$$ContactsSummaryImplCopyWithImpl<$Res>
     Object? deliveryContacts = null,
     Object? organisationContacts = null,
   }) {
-    return _then(_$$ContactsSummaryImpl(
+    return _then(_self.copyWith(
       targets: null == targets
-          ? _value._targets
+          ? _self.targets
           : targets // ignore: cast_nullable_to_non_nullable
               as List<EntityContacts>,
       deliveryContacts: null == deliveryContacts
-          ? _value._deliveryContacts
+          ? _self.deliveryContacts
           : deliveryContacts // ignore: cast_nullable_to_non_nullable
               as List<Contact>,
       organisationContacts: null == organisationContacts
-          ? _value._organisationContacts
+          ? _self.organisationContacts
           : organisationContacts // ignore: cast_nullable_to_non_nullable
               as List<Contact>,
     ));
@@ -125,8 +100,8 @@ class __$$$ContactsSummaryImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$ContactsSummaryImpl implements $ContactsSummary {
-  const _$$ContactsSummaryImpl(
+class $ContactsSummary implements ContactsSummary {
+  const $ContactsSummary(
       {required final List<EntityContacts> targets,
       required final List<Contact> deliveryContacts,
       required final List<Contact> organisationContacts})
@@ -160,16 +135,19 @@ class _$$ContactsSummaryImpl implements $ContactsSummary {
     return EqualUnmodifiableListView(_organisationContacts);
   }
 
+  /// Create a copy of ContactsSummary
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ContactsSummary(targets: $targets, deliveryContacts: $deliveryContacts, organisationContacts: $organisationContacts)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $$ContactsSummaryCopyWith<$ContactsSummary> get copyWith =>
+      _$$ContactsSummaryCopyWithImpl<$ContactsSummary>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$$ContactsSummaryImpl &&
+            other is $ContactsSummary &&
             const DeepCollectionEquality().equals(other._targets, _targets) &&
             const DeepCollectionEquality()
                 .equals(other._deliveryContacts, _deliveryContacts) &&
@@ -184,34 +162,58 @@ class _$$ContactsSummaryImpl implements $ContactsSummary {
       const DeepCollectionEquality().hash(_deliveryContacts),
       const DeepCollectionEquality().hash(_organisationContacts));
 
+  @override
+  String toString() {
+    return 'ContactsSummary(targets: $targets, deliveryContacts: $deliveryContacts, organisationContacts: $organisationContacts)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $$ContactsSummaryCopyWith<$Res>
+    implements $ContactsSummaryCopyWith<$Res> {
+  factory $$ContactsSummaryCopyWith(
+          $ContactsSummary value, $Res Function($ContactsSummary) _then) =
+      _$$ContactsSummaryCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<EntityContacts> targets,
+      List<Contact> deliveryContacts,
+      List<Contact> organisationContacts});
+}
+
+/// @nodoc
+class _$$ContactsSummaryCopyWithImpl<$Res>
+    implements $$ContactsSummaryCopyWith<$Res> {
+  _$$ContactsSummaryCopyWithImpl(this._self, this._then);
+
+  final $ContactsSummary _self;
+  final $Res Function($ContactsSummary) _then;
+
   /// Create a copy of ContactsSummary
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$$ContactsSummaryImplCopyWith<_$$ContactsSummaryImpl> get copyWith =>
-      __$$$ContactsSummaryImplCopyWithImpl<_$$ContactsSummaryImpl>(
-          this, _$identity);
+  $Res call({
+    Object? targets = null,
+    Object? deliveryContacts = null,
+    Object? organisationContacts = null,
+  }) {
+    return _then($ContactsSummary(
+      targets: null == targets
+          ? _self._targets
+          : targets // ignore: cast_nullable_to_non_nullable
+              as List<EntityContacts>,
+      deliveryContacts: null == deliveryContacts
+          ? _self._deliveryContacts
+          : deliveryContacts // ignore: cast_nullable_to_non_nullable
+              as List<Contact>,
+      organisationContacts: null == organisationContacts
+          ? _self._organisationContacts
+          : organisationContacts // ignore: cast_nullable_to_non_nullable
+              as List<Contact>,
+    ));
+  }
 }
 
-abstract class $ContactsSummary implements ContactsSummary {
-  const factory $ContactsSummary(
-          {required final List<EntityContacts> targets,
-          required final List<Contact> deliveryContacts,
-          required final List<Contact> organisationContacts}) =
-      _$$ContactsSummaryImpl;
-
-  @override
-  List<EntityContacts> get targets;
-  @override
-  List<Contact> get deliveryContacts;
-  @override
-  List<Contact> get organisationContacts;
-
-  /// Create a copy of ContactsSummary
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$$ContactsSummaryImplCopyWith<_$$ContactsSummaryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
