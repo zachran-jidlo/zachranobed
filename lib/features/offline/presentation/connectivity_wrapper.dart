@@ -49,14 +49,14 @@ class _ConnectivityWrapperState extends State<ConnectivityWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: AnimatedCrossFade(
-        duration: const Duration(milliseconds: 300),
-        firstChild: const OfflineScreen(),
-        secondChild: widget.child,
-        crossFadeState: _isOffline ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      ),
+    return Stack(
+      children: <Widget>[
+        widget.child,
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: _isOffline ? const OfflineScreen(key: ValueKey('Offline')) : const SizedBox(key: ValueKey('Online')),
+        ),
+      ],
     );
   }
 }
