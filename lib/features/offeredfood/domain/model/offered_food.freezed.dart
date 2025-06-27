@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,149 +10,89 @@ part of 'offered_food.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OfferedFood {
-  String get id => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
-  String get dishName => throw _privateConstructorUsedError;
-  String get foodCategory => throw _privateConstructorUsedError;
-  FoodCategoryType? get foodCategoryType => throw _privateConstructorUsedError;
-  int? get foodTemperature => throw _privateConstructorUsedError;
-  List<String> get allergens => throw _privateConstructorUsedError;
-  int? get numberOfServings => throw _privateConstructorUsedError;
-  int? get numberOfPackages => throw _privateConstructorUsedError;
-  FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
-  FoodDateTime get consumeBy => throw _privateConstructorUsedError;
-  String get donorId => throw _privateConstructorUsedError;
-  String get recipientId => throw _privateConstructorUsedError;
+  String get id;
+  DateTime get date;
+  String get dishName;
+  String get foodCategory;
+  FoodCategoryType? get foodCategoryType;
+  int? get foodTemperature;
+  List<String> get allergens;
+  int? get numberOfServings;
+  int? get numberOfPackages;
+  FoodDateTime? get preparedAt;
+  FoodDateTime get consumeBy;
+  String get donorId;
+  String get recipientId;
 
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $OfferedFoodCopyWith<OfferedFood> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $OfferedFoodCopyWith<$Res> {
-  factory $OfferedFoodCopyWith(
-          OfferedFood value, $Res Function(OfferedFood) then) =
-      _$OfferedFoodCopyWithImpl<$Res, OfferedFood>;
-  @useResult
-  $Res call(
-      {String id,
-      DateTime date,
-      String dishName,
-      String foodCategory,
-      FoodCategoryType? foodCategoryType,
-      int? foodTemperature,
-      List<String> allergens,
-      int? numberOfServings,
-      int? numberOfPackages,
-      FoodDateTime? preparedAt,
-      FoodDateTime consumeBy,
-      String donorId,
-      String recipientId});
-}
-
-/// @nodoc
-class _$OfferedFoodCopyWithImpl<$Res, $Val extends OfferedFood>
-    implements $OfferedFoodCopyWith<$Res> {
-  _$OfferedFoodCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of OfferedFood
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $OfferedFoodCopyWith<OfferedFood> get copyWith =>
+      _$OfferedFoodCopyWithImpl<OfferedFood>(this as OfferedFood, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? date = null,
-    Object? dishName = null,
-    Object? foodCategory = null,
-    Object? foodCategoryType = freezed,
-    Object? foodTemperature = freezed,
-    Object? allergens = null,
-    Object? numberOfServings = freezed,
-    Object? numberOfPackages = freezed,
-    Object? preparedAt = freezed,
-    Object? consumeBy = null,
-    Object? donorId = null,
-    Object? recipientId = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dishName: null == dishName
-          ? _value.dishName
-          : dishName // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategory: null == foodCategory
-          ? _value.foodCategory
-          : foodCategory // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategoryType: freezed == foodCategoryType
-          ? _value.foodCategoryType
-          : foodCategoryType // ignore: cast_nullable_to_non_nullable
-              as FoodCategoryType?,
-      foodTemperature: freezed == foodTemperature
-          ? _value.foodTemperature
-          : foodTemperature // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allergens: null == allergens
-          ? _value.allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      numberOfServings: freezed == numberOfServings
-          ? _value.numberOfServings
-          : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
-      preparedAt: freezed == preparedAt
-          ? _value.preparedAt
-          : preparedAt // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime?,
-      consumeBy: null == consumeBy
-          ? _value.consumeBy
-          : consumeBy // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime,
-      donorId: null == donorId
-          ? _value.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _value.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is OfferedFood &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.dishName, dishName) ||
+                other.dishName == dishName) &&
+            (identical(other.foodCategory, foodCategory) ||
+                other.foodCategory == foodCategory) &&
+            (identical(other.foodCategoryType, foodCategoryType) ||
+                other.foodCategoryType == foodCategoryType) &&
+            (identical(other.foodTemperature, foodTemperature) ||
+                other.foodTemperature == foodTemperature) &&
+            const DeepCollectionEquality().equals(other.allergens, allergens) &&
+            (identical(other.numberOfServings, numberOfServings) ||
+                other.numberOfServings == numberOfServings) &&
+            (identical(other.numberOfPackages, numberOfPackages) ||
+                other.numberOfPackages == numberOfPackages) &&
+            (identical(other.preparedAt, preparedAt) ||
+                other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) ||
+                other.consumeBy == consumeBy) &&
+            (identical(other.donorId, donorId) || other.donorId == donorId) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      date,
+      dishName,
+      foodCategory,
+      foodCategoryType,
+      foodTemperature,
+      const DeepCollectionEquality().hash(allergens),
+      numberOfServings,
+      numberOfPackages,
+      preparedAt,
+      consumeBy,
+      donorId,
+      recipientId);
+
+  @override
+  String toString() {
+    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, numberOfPackages: $numberOfPackages, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId)';
   }
 }
 
 /// @nodoc
-abstract class _$$OfferedFoodImplCopyWith<$Res>
-    implements $OfferedFoodCopyWith<$Res> {
-  factory _$$OfferedFoodImplCopyWith(
-          _$OfferedFoodImpl value, $Res Function(_$OfferedFoodImpl) then) =
-      __$$OfferedFoodImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $OfferedFoodCopyWith<$Res> {
+  factory $OfferedFoodCopyWith(
+          OfferedFood value, $Res Function(OfferedFood) _then) =
+      _$OfferedFoodCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -170,12 +111,11 @@ abstract class _$$OfferedFoodImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$OfferedFoodImplCopyWithImpl<$Res>
-    extends _$OfferedFoodCopyWithImpl<$Res, _$OfferedFoodImpl>
-    implements _$$OfferedFoodImplCopyWith<$Res> {
-  __$$OfferedFoodImplCopyWithImpl(
-      _$OfferedFoodImpl _value, $Res Function(_$OfferedFoodImpl) _then)
-      : super(_value, _then);
+class _$OfferedFoodCopyWithImpl<$Res> implements $OfferedFoodCopyWith<$Res> {
+  _$OfferedFoodCopyWithImpl(this._self, this._then);
+
+  final OfferedFood _self;
+  final $Res Function(OfferedFood) _then;
 
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.
@@ -196,57 +136,57 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
     Object? donorId = null,
     Object? recipientId = null,
   }) {
-    return _then(_$OfferedFoodImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       date: null == date
-          ? _value.date
+          ? _self.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
       dishName: null == dishName
-          ? _value.dishName
+          ? _self.dishName
           : dishName // ignore: cast_nullable_to_non_nullable
               as String,
       foodCategory: null == foodCategory
-          ? _value.foodCategory
+          ? _self.foodCategory
           : foodCategory // ignore: cast_nullable_to_non_nullable
               as String,
       foodCategoryType: freezed == foodCategoryType
-          ? _value.foodCategoryType
+          ? _self.foodCategoryType
           : foodCategoryType // ignore: cast_nullable_to_non_nullable
               as FoodCategoryType?,
       foodTemperature: freezed == foodTemperature
-          ? _value.foodTemperature
+          ? _self.foodTemperature
           : foodTemperature // ignore: cast_nullable_to_non_nullable
               as int?,
       allergens: null == allergens
-          ? _value._allergens
+          ? _self.allergens
           : allergens // ignore: cast_nullable_to_non_nullable
               as List<String>,
       numberOfServings: freezed == numberOfServings
-          ? _value.numberOfServings
+          ? _self.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
       numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
+          ? _self.numberOfPackages
           : numberOfPackages // ignore: cast_nullable_to_non_nullable
               as int?,
       preparedAt: freezed == preparedAt
-          ? _value.preparedAt
+          ? _self.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
               as FoodDateTime?,
       consumeBy: null == consumeBy
-          ? _value.consumeBy
+          ? _self.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
               as FoodDateTime,
       donorId: null == donorId
-          ? _value.donorId
+          ? _self.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
               as String,
       recipientId: null == recipientId
-          ? _value.recipientId
+          ? _self.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -255,8 +195,8 @@ class __$$OfferedFoodImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OfferedFoodImpl implements _OfferedFood {
-  const _$OfferedFoodImpl(
+class _OfferedFood implements OfferedFood {
+  const _OfferedFood(
       {required this.id,
       required this.date,
       required this.dishName,
@@ -305,16 +245,19 @@ class _$OfferedFoodImpl implements _OfferedFood {
   @override
   final String recipientId;
 
+  /// Create a copy of OfferedFood
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, numberOfPackages: $numberOfPackages, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OfferedFoodCopyWith<_OfferedFood> get copyWith =>
+      __$OfferedFoodCopyWithImpl<_OfferedFood>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OfferedFoodImpl &&
+            other is _OfferedFood &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.dishName, dishName) ||
@@ -357,62 +300,117 @@ class _$OfferedFoodImpl implements _OfferedFood {
       donorId,
       recipientId);
 
+  @override
+  String toString() {
+    return 'OfferedFood(id: $id, date: $date, dishName: $dishName, foodCategory: $foodCategory, foodCategoryType: $foodCategoryType, foodTemperature: $foodTemperature, allergens: $allergens, numberOfServings: $numberOfServings, numberOfPackages: $numberOfPackages, preparedAt: $preparedAt, consumeBy: $consumeBy, donorId: $donorId, recipientId: $recipientId)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$OfferedFoodCopyWith<$Res>
+    implements $OfferedFoodCopyWith<$Res> {
+  factory _$OfferedFoodCopyWith(
+          _OfferedFood value, $Res Function(_OfferedFood) _then) =
+      __$OfferedFoodCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      DateTime date,
+      String dishName,
+      String foodCategory,
+      FoodCategoryType? foodCategoryType,
+      int? foodTemperature,
+      List<String> allergens,
+      int? numberOfServings,
+      int? numberOfPackages,
+      FoodDateTime? preparedAt,
+      FoodDateTime consumeBy,
+      String donorId,
+      String recipientId});
+}
+
+/// @nodoc
+class __$OfferedFoodCopyWithImpl<$Res> implements _$OfferedFoodCopyWith<$Res> {
+  __$OfferedFoodCopyWithImpl(this._self, this._then);
+
+  final _OfferedFood _self;
+  final $Res Function(_OfferedFood) _then;
+
   /// Create a copy of OfferedFood
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
-      __$$OfferedFoodImplCopyWithImpl<_$OfferedFoodImpl>(this, _$identity);
+  $Res call({
+    Object? id = null,
+    Object? date = null,
+    Object? dishName = null,
+    Object? foodCategory = null,
+    Object? foodCategoryType = freezed,
+    Object? foodTemperature = freezed,
+    Object? allergens = null,
+    Object? numberOfServings = freezed,
+    Object? numberOfPackages = freezed,
+    Object? preparedAt = freezed,
+    Object? consumeBy = null,
+    Object? donorId = null,
+    Object? recipientId = null,
+  }) {
+    return _then(_OfferedFood(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      date: null == date
+          ? _self.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      dishName: null == dishName
+          ? _self.dishName
+          : dishName // ignore: cast_nullable_to_non_nullable
+              as String,
+      foodCategory: null == foodCategory
+          ? _self.foodCategory
+          : foodCategory // ignore: cast_nullable_to_non_nullable
+              as String,
+      foodCategoryType: freezed == foodCategoryType
+          ? _self.foodCategoryType
+          : foodCategoryType // ignore: cast_nullable_to_non_nullable
+              as FoodCategoryType?,
+      foodTemperature: freezed == foodTemperature
+          ? _self.foodTemperature
+          : foodTemperature // ignore: cast_nullable_to_non_nullable
+              as int?,
+      allergens: null == allergens
+          ? _self._allergens
+          : allergens // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      numberOfServings: freezed == numberOfServings
+          ? _self.numberOfServings
+          : numberOfServings // ignore: cast_nullable_to_non_nullable
+              as int?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _self.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
+      preparedAt: freezed == preparedAt
+          ? _self.preparedAt
+          : preparedAt // ignore: cast_nullable_to_non_nullable
+              as FoodDateTime?,
+      consumeBy: null == consumeBy
+          ? _self.consumeBy
+          : consumeBy // ignore: cast_nullable_to_non_nullable
+              as FoodDateTime,
+      donorId: null == donorId
+          ? _self.donorId
+          : donorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _self.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class _OfferedFood implements OfferedFood {
-  const factory _OfferedFood(
-      {required final String id,
-      required final DateTime date,
-      required final String dishName,
-      required final String foodCategory,
-      required final FoodCategoryType? foodCategoryType,
-      required final int? foodTemperature,
-      required final List<String> allergens,
-      required final int? numberOfServings,
-      required final int? numberOfPackages,
-      required final FoodDateTime? preparedAt,
-      required final FoodDateTime consumeBy,
-      required final String donorId,
-      required final String recipientId}) = _$OfferedFoodImpl;
-
-  @override
-  String get id;
-  @override
-  DateTime get date;
-  @override
-  String get dishName;
-  @override
-  String get foodCategory;
-  @override
-  FoodCategoryType? get foodCategoryType;
-  @override
-  int? get foodTemperature;
-  @override
-  List<String> get allergens;
-  @override
-  int? get numberOfServings;
-  @override
-  int? get numberOfPackages;
-  @override
-  FoodDateTime? get preparedAt;
-  @override
-  FoodDateTime get consumeBy;
-  @override
-  String get donorId;
-  @override
-  String get recipientId;
-
-  /// Create a copy of OfferedFood
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OfferedFoodImplCopyWith<_$OfferedFoodImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

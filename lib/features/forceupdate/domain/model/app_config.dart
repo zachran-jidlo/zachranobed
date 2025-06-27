@@ -6,8 +6,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
  */
 part 'app_config.freezed.dart';
 
-@Freezed()
-class AppConfig with _$AppConfig {
+@freezed
+abstract class AppConfig with _$AppConfig {
   const factory AppConfig({
     required String minimumAppVersion,
   }) = $AppConfig;

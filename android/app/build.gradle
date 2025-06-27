@@ -32,8 +32,8 @@ def getKeystoreProperties(fileName) {
 android {
     namespace 'cz.zachranobed.app'
 
-    compileSdkVersion 34
-    ndkVersion '27.2.12479018'
+    compileSdkVersion 35
+    ndkVersion '29.0.13599879'
 
     compileOptions {
         // Version 10+ of the flutter_local_notifications plugin is now relies on desugaring to support scheduled
@@ -57,7 +57,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -109,5 +109,5 @@ dependencies {
     // Version 10+ of the flutter_local_notifications plugin is now relies on desugaring to support scheduled
     // notifications with backwards compatibility on older versions of Android.
     // https://pub.dev/packages/flutter_local_notifications#gradle-setup
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.2'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 }

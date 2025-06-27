@@ -7,8 +7,8 @@ import 'package:zachranobed/features/menu/domain/model/contact.dart';
  */
 part 'entity_contacts.freezed.dart';
 
-@Freezed()
-class EntityContacts with _$EntityContacts {
+@freezed
+abstract class EntityContacts with _$EntityContacts {
   const factory EntityContacts({
     required String name,
     required bool active,

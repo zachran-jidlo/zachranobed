@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,99 +10,54 @@ part of 'delivery.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Delivery {
-  String get id => throw _privateConstructorUsedError;
-  String get donorId => throw _privateConstructorUsedError;
-  String get recipientId => throw _privateConstructorUsedError;
-  DeliveryState get state => throw _privateConstructorUsedError;
-  DeliveryType get type => throw _privateConstructorUsedError;
-  int get confirmationTime => throw _privateConstructorUsedError;
+  String get id;
+  String get donorId;
+  String get recipientId;
+  DeliveryState get state;
+  DeliveryType get type;
+  int get confirmationTime;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DeliveryCopyWith<Delivery> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DeliveryCopyWith<$Res> {
-  factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) then) =
-      _$DeliveryCopyWithImpl<$Res, Delivery>;
-  @useResult
-  $Res call(
-      {String id,
-      String donorId,
-      String recipientId,
-      DeliveryState state,
-      DeliveryType type,
-      int confirmationTime});
-}
-
-/// @nodoc
-class _$DeliveryCopyWithImpl<$Res, $Val extends Delivery>
-    implements $DeliveryCopyWith<$Res> {
-  _$DeliveryCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Delivery
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $DeliveryCopyWith<Delivery> get copyWith =>
+      _$DeliveryCopyWithImpl<Delivery>(this as Delivery, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? donorId = null,
-    Object? recipientId = null,
-    Object? state = null,
-    Object? type = null,
-    Object? confirmationTime = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      donorId: null == donorId
-          ? _value.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _value.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      state: null == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as DeliveryState,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as DeliveryType,
-      confirmationTime: null == confirmationTime
-          ? _value.confirmationTime
-          : confirmationTime // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Delivery &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.donorId, donorId) || other.donorId == donorId) &&
+            (identical(other.recipientId, recipientId) ||
+                other.recipientId == recipientId) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.confirmationTime, confirmationTime) ||
+                other.confirmationTime == confirmationTime));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, donorId, recipientId, state, type, confirmationTime);
+
+  @override
+  String toString() {
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
   }
 }
 
 /// @nodoc
-abstract class _$$DeliveryImplCopyWith<$Res>
-    implements $DeliveryCopyWith<$Res> {
-  factory _$$DeliveryImplCopyWith(
-          _$DeliveryImpl value, $Res Function(_$DeliveryImpl) then) =
-      __$$DeliveryImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $DeliveryCopyWith<$Res> {
+  factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) _then) =
+      _$DeliveryCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -113,12 +69,11 @@ abstract class _$$DeliveryImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DeliveryImplCopyWithImpl<$Res>
-    extends _$DeliveryCopyWithImpl<$Res, _$DeliveryImpl>
-    implements _$$DeliveryImplCopyWith<$Res> {
-  __$$DeliveryImplCopyWithImpl(
-      _$DeliveryImpl _value, $Res Function(_$DeliveryImpl) _then)
-      : super(_value, _then);
+class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
+  _$DeliveryCopyWithImpl(this._self, this._then);
+
+  final Delivery _self;
+  final $Res Function(Delivery) _then;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -132,29 +87,29 @@ class __$$DeliveryImplCopyWithImpl<$Res>
     Object? type = null,
     Object? confirmationTime = null,
   }) {
-    return _then(_$DeliveryImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       donorId: null == donorId
-          ? _value.donorId
+          ? _self.donorId
           : donorId // ignore: cast_nullable_to_non_nullable
               as String,
       recipientId: null == recipientId
-          ? _value.recipientId
+          ? _self.recipientId
           : recipientId // ignore: cast_nullable_to_non_nullable
               as String,
       state: null == state
-          ? _value.state
+          ? _self.state
           : state // ignore: cast_nullable_to_non_nullable
               as DeliveryState,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as DeliveryType,
       confirmationTime: null == confirmationTime
-          ? _value.confirmationTime
+          ? _self.confirmationTime
           : confirmationTime // ignore: cast_nullable_to_non_nullable
               as int,
     ));
@@ -163,8 +118,8 @@ class __$$DeliveryImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DeliveryImpl extends _Delivery {
-  const _$DeliveryImpl(
+class _Delivery extends Delivery {
+  const _Delivery(
       {required this.id,
       required this.donorId,
       required this.recipientId,
@@ -186,16 +141,19 @@ class _$DeliveryImpl extends _Delivery {
   @override
   final int confirmationTime;
 
+  /// Create a copy of Delivery
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DeliveryCopyWith<_Delivery> get copyWith =>
+      __$DeliveryCopyWithImpl<_Delivery>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeliveryImpl &&
+            other is _Delivery &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
             (identical(other.recipientId, recipientId) ||
@@ -210,42 +168,74 @@ class _$DeliveryImpl extends _Delivery {
   int get hashCode => Object.hash(
       runtimeType, id, donorId, recipientId, state, type, confirmationTime);
 
+  @override
+  String toString() {
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$DeliveryCopyWith<$Res>
+    implements $DeliveryCopyWith<$Res> {
+  factory _$DeliveryCopyWith(_Delivery value, $Res Function(_Delivery) _then) =
+      __$DeliveryCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String donorId,
+      String recipientId,
+      DeliveryState state,
+      DeliveryType type,
+      int confirmationTime});
+}
+
+/// @nodoc
+class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
+  __$DeliveryCopyWithImpl(this._self, this._then);
+
+  final _Delivery _self;
+  final $Res Function(_Delivery) _then;
+
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
-      __$$DeliveryImplCopyWithImpl<_$DeliveryImpl>(this, _$identity);
+  $Res call({
+    Object? id = null,
+    Object? donorId = null,
+    Object? recipientId = null,
+    Object? state = null,
+    Object? type = null,
+    Object? confirmationTime = null,
+  }) {
+    return _then(_Delivery(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      donorId: null == donorId
+          ? _self.donorId
+          : donorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipientId: null == recipientId
+          ? _self.recipientId
+          : recipientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _self.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as DeliveryState,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as DeliveryType,
+      confirmationTime: null == confirmationTime
+          ? _self.confirmationTime
+          : confirmationTime // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
-abstract class _Delivery extends Delivery {
-  const factory _Delivery(
-      {required final String id,
-      required final String donorId,
-      required final String recipientId,
-      required final DeliveryState state,
-      required final DeliveryType type,
-      required final int confirmationTime}) = _$DeliveryImpl;
-  const _Delivery._() : super._();
-
-  @override
-  String get id;
-  @override
-  String get donorId;
-  @override
-  String get recipientId;
-  @override
-  DeliveryState get state;
-  @override
-  DeliveryType get type;
-  @override
-  int get confirmationTime;
-
-  /// Create a copy of Delivery
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeliveryImplCopyWith<_$DeliveryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

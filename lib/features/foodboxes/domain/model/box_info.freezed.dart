@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,120 +10,26 @@ part of 'box_info.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BoxInfo {
-  String? get foodBoxId => throw _privateConstructorUsedError;
-  int? get numberOfBoxes => throw _privateConstructorUsedError;
+  String? get foodBoxId;
+  int? get numberOfBoxes;
 
   /// Create a copy of BoxInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BoxInfoCopyWith<BoxInfo> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BoxInfoCopyWith<$Res> {
-  factory $BoxInfoCopyWith(BoxInfo value, $Res Function(BoxInfo) then) =
-      _$BoxInfoCopyWithImpl<$Res, BoxInfo>;
-  @useResult
-  $Res call({String? foodBoxId, int? numberOfBoxes});
-}
-
-/// @nodoc
-class _$BoxInfoCopyWithImpl<$Res, $Val extends BoxInfo>
-    implements $BoxInfoCopyWith<$Res> {
-  _$BoxInfoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BoxInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? foodBoxId = freezed,
-    Object? numberOfBoxes = freezed,
-  }) {
-    return _then(_value.copyWith(
-      foodBoxId: freezed == foodBoxId
-          ? _value.foodBoxId
-          : foodBoxId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$BoxInfoImplCopyWith<$Res> implements $BoxInfoCopyWith<$Res> {
-  factory _$$BoxInfoImplCopyWith(
-          _$BoxInfoImpl value, $Res Function(_$BoxInfoImpl) then) =
-      __$$BoxInfoImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String? foodBoxId, int? numberOfBoxes});
-}
-
-/// @nodoc
-class __$$BoxInfoImplCopyWithImpl<$Res>
-    extends _$BoxInfoCopyWithImpl<$Res, _$BoxInfoImpl>
-    implements _$$BoxInfoImplCopyWith<$Res> {
-  __$$BoxInfoImplCopyWithImpl(
-      _$BoxInfoImpl _value, $Res Function(_$BoxInfoImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BoxInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? foodBoxId = freezed,
-    Object? numberOfBoxes = freezed,
-  }) {
-    return _then(_$BoxInfoImpl(
-      foodBoxId: freezed == foodBoxId
-          ? _value.foodBoxId
-          : foodBoxId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      numberOfBoxes: freezed == numberOfBoxes
-          ? _value.numberOfBoxes
-          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$BoxInfoImpl implements _BoxInfo {
-  const _$BoxInfoImpl({this.foodBoxId, this.numberOfBoxes});
-
-  @override
-  final String? foodBoxId;
-  @override
-  final int? numberOfBoxes;
-
-  @override
-  String toString() {
-    return 'BoxInfo(foodBoxId: $foodBoxId, numberOfBoxes: $numberOfBoxes)';
-  }
+  $BoxInfoCopyWith<BoxInfo> get copyWith =>
+      _$BoxInfoCopyWithImpl<BoxInfo>(this as BoxInfo, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BoxInfoImpl &&
+            other is BoxInfo &&
             (identical(other.foodBoxId, foodBoxId) ||
                 other.foodBoxId == foodBoxId) &&
             (identical(other.numberOfBoxes, numberOfBoxes) ||
@@ -132,28 +39,121 @@ class _$BoxInfoImpl implements _BoxInfo {
   @override
   int get hashCode => Object.hash(runtimeType, foodBoxId, numberOfBoxes);
 
+  @override
+  String toString() {
+    return 'BoxInfo(foodBoxId: $foodBoxId, numberOfBoxes: $numberOfBoxes)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $BoxInfoCopyWith<$Res> {
+  factory $BoxInfoCopyWith(BoxInfo value, $Res Function(BoxInfo) _then) =
+      _$BoxInfoCopyWithImpl;
+  @useResult
+  $Res call({String? foodBoxId, int? numberOfBoxes});
+}
+
+/// @nodoc
+class _$BoxInfoCopyWithImpl<$Res> implements $BoxInfoCopyWith<$Res> {
+  _$BoxInfoCopyWithImpl(this._self, this._then);
+
+  final BoxInfo _self;
+  final $Res Function(BoxInfo) _then;
+
   /// Create a copy of BoxInfo
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? foodBoxId = freezed,
+    Object? numberOfBoxes = freezed,
+  }) {
+    return _then(_self.copyWith(
+      foodBoxId: freezed == foodBoxId
+          ? _self.foodBoxId
+          : foodBoxId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      numberOfBoxes: freezed == numberOfBoxes
+          ? _self.numberOfBoxes
+          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _BoxInfo implements BoxInfo {
+  const _BoxInfo({this.foodBoxId, this.numberOfBoxes});
+
+  @override
+  final String? foodBoxId;
+  @override
+  final int? numberOfBoxes;
+
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BoxInfoCopyWith<_BoxInfo> get copyWith =>
+      __$BoxInfoCopyWithImpl<_BoxInfo>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _BoxInfo &&
+            (identical(other.foodBoxId, foodBoxId) ||
+                other.foodBoxId == foodBoxId) &&
+            (identical(other.numberOfBoxes, numberOfBoxes) ||
+                other.numberOfBoxes == numberOfBoxes));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, foodBoxId, numberOfBoxes);
+
+  @override
+  String toString() {
+    return 'BoxInfo(foodBoxId: $foodBoxId, numberOfBoxes: $numberOfBoxes)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$BoxInfoCopyWith<$Res> implements $BoxInfoCopyWith<$Res> {
+  factory _$BoxInfoCopyWith(_BoxInfo value, $Res Function(_BoxInfo) _then) =
+      __$BoxInfoCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String? foodBoxId, int? numberOfBoxes});
+}
+
+/// @nodoc
+class __$BoxInfoCopyWithImpl<$Res> implements _$BoxInfoCopyWith<$Res> {
+  __$BoxInfoCopyWithImpl(this._self, this._then);
+
+  final _BoxInfo _self;
+  final $Res Function(_BoxInfo) _then;
+
+  /// Create a copy of BoxInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$BoxInfoImplCopyWith<_$BoxInfoImpl> get copyWith =>
-      __$$BoxInfoImplCopyWithImpl<_$BoxInfoImpl>(this, _$identity);
+  $Res call({
+    Object? foodBoxId = freezed,
+    Object? numberOfBoxes = freezed,
+  }) {
+    return _then(_BoxInfo(
+      foodBoxId: freezed == foodBoxId
+          ? _self.foodBoxId
+          : foodBoxId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      numberOfBoxes: freezed == numberOfBoxes
+          ? _self.numberOfBoxes
+          : numberOfBoxes // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
-abstract class _BoxInfo implements BoxInfo {
-  const factory _BoxInfo({final String? foodBoxId, final int? numberOfBoxes}) =
-      _$BoxInfoImpl;
-
-  @override
-  String? get foodBoxId;
-  @override
-  int? get numberOfBoxes;
-
-  /// Create a copy of BoxInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BoxInfoImplCopyWith<_$BoxInfoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

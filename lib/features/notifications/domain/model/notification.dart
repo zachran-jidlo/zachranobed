@@ -10,8 +10,8 @@ part 'notification.freezed.dart';
 ///
 /// This model includes basic notification metadata such as the title, message body,
 /// read status, and timestamp.
-@Freezed()
-class Notification with _$Notification {
+@freezed
+abstract class Notification with _$Notification {
   const factory Notification({
     required String id,
     required String title,

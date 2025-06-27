@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,101 +10,64 @@ part of 'notification.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Notification {
-  String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  DateTime get timestamp => throw _privateConstructorUsedError;
-  bool get read => throw _privateConstructorUsedError;
+  String get id;
+  String get title;
+  String get message;
+  DateTime get timestamp;
+  bool get read;
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $NotificationCopyWith<Notification> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificationCopyWith<$Res> {
-  factory $NotificationCopyWith(
-          Notification value, $Res Function(Notification) then) =
-      _$NotificationCopyWithImpl<$Res, Notification>;
-  @useResult
-  $Res call(
-      {String id, String title, String message, DateTime timestamp, bool read});
-}
-
-/// @nodoc
-class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
-    implements $NotificationCopyWith<$Res> {
-  _$NotificationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Notification
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $NotificationCopyWith<Notification> get copyWith =>
+      _$NotificationCopyWithImpl<Notification>(
+          this as Notification, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? message = null,
-    Object? timestamp = null,
-    Object? read = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      read: null == read
-          ? _value.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Notification &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.read, read) || other.read == read));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, message, timestamp, read);
+
+  @override
+  String toString() {
+    return 'Notification(id: $id, title: $title, message: $message, timestamp: $timestamp, read: $read)';
   }
 }
 
 /// @nodoc
-abstract class _$$$NotificationImplCopyWith<$Res>
-    implements $NotificationCopyWith<$Res> {
-  factory _$$$NotificationImplCopyWith(
-          _$$NotificationImpl value, $Res Function(_$$NotificationImpl) then) =
-      __$$$NotificationImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $NotificationCopyWith<$Res> {
+  factory $NotificationCopyWith(
+          Notification value, $Res Function(Notification) _then) =
+      _$NotificationCopyWithImpl;
   @useResult
   $Res call(
       {String id, String title, String message, DateTime timestamp, bool read});
 }
 
 /// @nodoc
-class __$$$NotificationImplCopyWithImpl<$Res>
-    extends _$NotificationCopyWithImpl<$Res, _$$NotificationImpl>
-    implements _$$$NotificationImplCopyWith<$Res> {
-  __$$$NotificationImplCopyWithImpl(
-      _$$NotificationImpl _value, $Res Function(_$$NotificationImpl) _then)
-      : super(_value, _then);
+class _$NotificationCopyWithImpl<$Res> implements $NotificationCopyWith<$Res> {
+  _$NotificationCopyWithImpl(this._self, this._then);
+
+  final Notification _self;
+  final $Res Function(Notification) _then;
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.
@@ -116,25 +80,25 @@ class __$$$NotificationImplCopyWithImpl<$Res>
     Object? timestamp = null,
     Object? read = null,
   }) {
-    return _then(_$$NotificationImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: null == timestamp
-          ? _value.timestamp
+          ? _self.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
       read: null == read
-          ? _value.read
+          ? _self.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
@@ -143,8 +107,8 @@ class __$$$NotificationImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$NotificationImpl implements $Notification {
-  const _$$NotificationImpl(
+class $Notification implements Notification {
+  const $Notification(
       {required this.id,
       required this.title,
       required this.message,
@@ -162,16 +126,19 @@ class _$$NotificationImpl implements $Notification {
   @override
   final bool read;
 
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Notification(id: $id, title: $title, message: $message, timestamp: $timestamp, read: $read)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $$NotificationCopyWith<$Notification> get copyWith =>
+      _$$NotificationCopyWithImpl<$Notification>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$$NotificationImpl &&
+            other is $Notification &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.message, message) || other.message == message) &&
@@ -184,38 +151,66 @@ class _$$NotificationImpl implements $Notification {
   int get hashCode =>
       Object.hash(runtimeType, id, title, message, timestamp, read);
 
+  @override
+  String toString() {
+    return 'Notification(id: $id, title: $title, message: $message, timestamp: $timestamp, read: $read)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $$NotificationCopyWith<$Res>
+    implements $NotificationCopyWith<$Res> {
+  factory $$NotificationCopyWith(
+          $Notification value, $Res Function($Notification) _then) =
+      _$$NotificationCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id, String title, String message, DateTime timestamp, bool read});
+}
+
+/// @nodoc
+class _$$NotificationCopyWithImpl<$Res>
+    implements $$NotificationCopyWith<$Res> {
+  _$$NotificationCopyWithImpl(this._self, this._then);
+
+  final $Notification _self;
+  final $Res Function($Notification) _then;
+
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$$NotificationImplCopyWith<_$$NotificationImpl> get copyWith =>
-      __$$$NotificationImplCopyWithImpl<_$$NotificationImpl>(this, _$identity);
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? message = null,
+    Object? timestamp = null,
+    Object? read = null,
+  }) {
+    return _then($Notification(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      read: null == read
+          ? _self.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
-abstract class $Notification implements Notification {
-  const factory $Notification(
-      {required final String id,
-      required final String title,
-      required final String message,
-      required final DateTime timestamp,
-      required final bool read}) = _$$NotificationImpl;
-
-  @override
-  String get id;
-  @override
-  String get title;
-  @override
-  String get message;
-  @override
-  DateTime get timestamp;
-  @override
-  bool get read;
-
-  /// Create a copy of Notification
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$$NotificationImplCopyWith<_$$NotificationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
