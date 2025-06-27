@@ -20,7 +20,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build web
-        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-stage/" --dart-define=FLUTTER_APP_FLAVOR=stage
+        run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-stage/" --dart-define=WEB_APP_FLAVOR=stage
 
       - name: Publish to GitHub Pages
         uses: ./.github/actions/publish-web
