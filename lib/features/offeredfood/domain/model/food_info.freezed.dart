@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,120 +10,74 @@ part of 'food_info.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FoodInfo {
-  String get id => throw _privateConstructorUsedError; // The UUID identifier
-  String? get dishName => throw _privateConstructorUsedError;
-  List<String>? get allergens => throw _privateConstructorUsedError;
-  FoodCategory? get foodCategory => throw _privateConstructorUsedError;
-  int? get foodTemperature => throw _privateConstructorUsedError;
-  int? get numberOfPackages => throw _privateConstructorUsedError;
-  int? get numberOfServings => throw _privateConstructorUsedError;
-  FoodDateTime? get preparedAt => throw _privateConstructorUsedError;
-  FoodDateTime? get consumeBy => throw _privateConstructorUsedError;
+  String get id; // The UUID identifier
+  String? get dishName;
+  List<String>? get allergens;
+  FoodCategory? get foodCategory;
+  int? get foodTemperature;
+  int? get numberOfPackages;
+  int? get numberOfServings;
+  FoodDateTime? get preparedAt;
+  FoodDateTime? get consumeBy;
 
   /// Create a copy of FoodInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FoodInfoCopyWith<FoodInfo> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FoodInfoCopyWith<$Res> {
-  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) then) =
-      _$FoodInfoCopyWithImpl<$Res, FoodInfo>;
-  @useResult
-  $Res call(
-      {String id,
-      String? dishName,
-      List<String>? allergens,
-      FoodCategory? foodCategory,
-      int? foodTemperature,
-      int? numberOfPackages,
-      int? numberOfServings,
-      FoodDateTime? preparedAt,
-      FoodDateTime? consumeBy});
-}
-
-/// @nodoc
-class _$FoodInfoCopyWithImpl<$Res, $Val extends FoodInfo>
-    implements $FoodInfoCopyWith<$Res> {
-  _$FoodInfoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of FoodInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $FoodInfoCopyWith<FoodInfo> get copyWith =>
+      _$FoodInfoCopyWithImpl<FoodInfo>(this as FoodInfo, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? dishName = freezed,
-    Object? allergens = freezed,
-    Object? foodCategory = freezed,
-    Object? foodTemperature = freezed,
-    Object? numberOfPackages = freezed,
-    Object? numberOfServings = freezed,
-    Object? preparedAt = freezed,
-    Object? consumeBy = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      dishName: freezed == dishName
-          ? _value.dishName
-          : dishName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      allergens: freezed == allergens
-          ? _value.allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      foodCategory: freezed == foodCategory
-          ? _value.foodCategory
-          : foodCategory // ignore: cast_nullable_to_non_nullable
-              as FoodCategory?,
-      foodTemperature: freezed == foodTemperature
-          ? _value.foodTemperature
-          : foodTemperature // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfServings: freezed == numberOfServings
-          ? _value.numberOfServings
-          : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int?,
-      preparedAt: freezed == preparedAt
-          ? _value.preparedAt
-          : preparedAt // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime?,
-      consumeBy: freezed == consumeBy
-          ? _value.consumeBy
-          : consumeBy // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is FoodInfo &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.dishName, dishName) ||
+                other.dishName == dishName) &&
+            const DeepCollectionEquality().equals(other.allergens, allergens) &&
+            (identical(other.foodCategory, foodCategory) ||
+                other.foodCategory == foodCategory) &&
+            (identical(other.foodTemperature, foodTemperature) ||
+                other.foodTemperature == foodTemperature) &&
+            (identical(other.numberOfPackages, numberOfPackages) ||
+                other.numberOfPackages == numberOfPackages) &&
+            (identical(other.numberOfServings, numberOfServings) ||
+                other.numberOfServings == numberOfServings) &&
+            (identical(other.preparedAt, preparedAt) ||
+                other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) ||
+                other.consumeBy == consumeBy));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      dishName,
+      const DeepCollectionEquality().hash(allergens),
+      foodCategory,
+      foodTemperature,
+      numberOfPackages,
+      numberOfServings,
+      preparedAt,
+      consumeBy);
+
+  @override
+  String toString() {
+    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, preparedAt: $preparedAt, consumeBy: $consumeBy)';
   }
 }
 
 /// @nodoc
-abstract class _$$FoodInfoImplCopyWith<$Res>
-    implements $FoodInfoCopyWith<$Res> {
-  factory _$$FoodInfoImplCopyWith(
-          _$FoodInfoImpl value, $Res Function(_$FoodInfoImpl) then) =
-      __$$FoodInfoImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $FoodInfoCopyWith<$Res> {
+  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) _then) =
+      _$FoodInfoCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -137,12 +92,11 @@ abstract class _$$FoodInfoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$FoodInfoImplCopyWithImpl<$Res>
-    extends _$FoodInfoCopyWithImpl<$Res, _$FoodInfoImpl>
-    implements _$$FoodInfoImplCopyWith<$Res> {
-  __$$FoodInfoImplCopyWithImpl(
-      _$FoodInfoImpl _value, $Res Function(_$FoodInfoImpl) _then)
-      : super(_value, _then);
+class _$FoodInfoCopyWithImpl<$Res> implements $FoodInfoCopyWith<$Res> {
+  _$FoodInfoCopyWithImpl(this._self, this._then);
+
+  final FoodInfo _self;
+  final $Res Function(FoodInfo) _then;
 
   /// Create a copy of FoodInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -159,41 +113,41 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
     Object? preparedAt = freezed,
     Object? consumeBy = freezed,
   }) {
-    return _then(_$FoodInfoImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       dishName: freezed == dishName
-          ? _value.dishName
+          ? _self.dishName
           : dishName // ignore: cast_nullable_to_non_nullable
               as String?,
       allergens: freezed == allergens
-          ? _value._allergens
+          ? _self.allergens
           : allergens // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       foodCategory: freezed == foodCategory
-          ? _value.foodCategory
+          ? _self.foodCategory
           : foodCategory // ignore: cast_nullable_to_non_nullable
               as FoodCategory?,
       foodTemperature: freezed == foodTemperature
-          ? _value.foodTemperature
+          ? _self.foodTemperature
           : foodTemperature // ignore: cast_nullable_to_non_nullable
               as int?,
       numberOfPackages: freezed == numberOfPackages
-          ? _value.numberOfPackages
+          ? _self.numberOfPackages
           : numberOfPackages // ignore: cast_nullable_to_non_nullable
               as int?,
       numberOfServings: freezed == numberOfServings
-          ? _value.numberOfServings
+          ? _self.numberOfServings
           : numberOfServings // ignore: cast_nullable_to_non_nullable
               as int?,
       preparedAt: freezed == preparedAt
-          ? _value.preparedAt
+          ? _self.preparedAt
           : preparedAt // ignore: cast_nullable_to_non_nullable
               as FoodDateTime?,
       consumeBy: freezed == consumeBy
-          ? _value.consumeBy
+          ? _self.consumeBy
           : consumeBy // ignore: cast_nullable_to_non_nullable
               as FoodDateTime?,
     ));
@@ -202,8 +156,8 @@ class __$$FoodInfoImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FoodInfoImpl implements _FoodInfo {
-  const _$FoodInfoImpl(
+class _FoodInfo implements FoodInfo {
+  const _FoodInfo(
       {required this.id,
       this.dishName,
       final List<String>? allergens,
@@ -243,16 +197,19 @@ class _$FoodInfoImpl implements _FoodInfo {
   @override
   final FoodDateTime? consumeBy;
 
+  /// Create a copy of FoodInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, preparedAt: $preparedAt, consumeBy: $consumeBy)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FoodInfoCopyWith<_FoodInfo> get copyWith =>
+      __$FoodInfoCopyWithImpl<_FoodInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FoodInfoImpl &&
+            other is _FoodInfo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.dishName, dishName) ||
                 other.dishName == dishName) &&
@@ -285,50 +242,92 @@ class _$FoodInfoImpl implements _FoodInfo {
       preparedAt,
       consumeBy);
 
+  @override
+  String toString() {
+    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, preparedAt: $preparedAt, consumeBy: $consumeBy)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FoodInfoCopyWith<$Res>
+    implements $FoodInfoCopyWith<$Res> {
+  factory _$FoodInfoCopyWith(_FoodInfo value, $Res Function(_FoodInfo) _then) =
+      __$FoodInfoCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String? dishName,
+      List<String>? allergens,
+      FoodCategory? foodCategory,
+      int? foodTemperature,
+      int? numberOfPackages,
+      int? numberOfServings,
+      FoodDateTime? preparedAt,
+      FoodDateTime? consumeBy});
+}
+
+/// @nodoc
+class __$FoodInfoCopyWithImpl<$Res> implements _$FoodInfoCopyWith<$Res> {
+  __$FoodInfoCopyWithImpl(this._self, this._then);
+
+  final _FoodInfo _self;
+  final $Res Function(_FoodInfo) _then;
+
   /// Create a copy of FoodInfo
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>
-      __$$FoodInfoImplCopyWithImpl<_$FoodInfoImpl>(this, _$identity);
+  $Res call({
+    Object? id = null,
+    Object? dishName = freezed,
+    Object? allergens = freezed,
+    Object? foodCategory = freezed,
+    Object? foodTemperature = freezed,
+    Object? numberOfPackages = freezed,
+    Object? numberOfServings = freezed,
+    Object? preparedAt = freezed,
+    Object? consumeBy = freezed,
+  }) {
+    return _then(_FoodInfo(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      dishName: freezed == dishName
+          ? _self.dishName
+          : dishName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      allergens: freezed == allergens
+          ? _self._allergens
+          : allergens // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      foodCategory: freezed == foodCategory
+          ? _self.foodCategory
+          : foodCategory // ignore: cast_nullable_to_non_nullable
+              as FoodCategory?,
+      foodTemperature: freezed == foodTemperature
+          ? _self.foodTemperature
+          : foodTemperature // ignore: cast_nullable_to_non_nullable
+              as int?,
+      numberOfPackages: freezed == numberOfPackages
+          ? _self.numberOfPackages
+          : numberOfPackages // ignore: cast_nullable_to_non_nullable
+              as int?,
+      numberOfServings: freezed == numberOfServings
+          ? _self.numberOfServings
+          : numberOfServings // ignore: cast_nullable_to_non_nullable
+              as int?,
+      preparedAt: freezed == preparedAt
+          ? _self.preparedAt
+          : preparedAt // ignore: cast_nullable_to_non_nullable
+              as FoodDateTime?,
+      consumeBy: freezed == consumeBy
+          ? _self.consumeBy
+          : consumeBy // ignore: cast_nullable_to_non_nullable
+              as FoodDateTime?,
+    ));
+  }
 }
 
-abstract class _FoodInfo implements FoodInfo {
-  const factory _FoodInfo(
-      {required final String id,
-      final String? dishName,
-      final List<String>? allergens,
-      final FoodCategory? foodCategory,
-      final int? foodTemperature,
-      final int? numberOfPackages,
-      final int? numberOfServings,
-      final FoodDateTime? preparedAt,
-      final FoodDateTime? consumeBy}) = _$FoodInfoImpl;
-
-  @override
-  String get id; // The UUID identifier
-  @override
-  String? get dishName;
-  @override
-  List<String>? get allergens;
-  @override
-  FoodCategory? get foodCategory;
-  @override
-  int? get foodTemperature;
-  @override
-  int? get numberOfPackages;
-  @override
-  int? get numberOfServings;
-  @override
-  FoodDateTime? get preparedAt;
-  @override
-  FoodDateTime? get consumeBy;
-
-  /// Create a copy of FoodInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FoodInfoImplCopyWith<_$FoodInfoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

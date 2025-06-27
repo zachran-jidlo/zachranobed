@@ -11,8 +11,8 @@ part 'entity_pairs_summary.freezed.dart';
 ///
 /// This class holds information about the currently active pair and other
 /// available pairs.
-@Freezed()
-class EntityPairsSummary with _$EntityPairsSummary {
+@freezed
+abstract class EntityPairsSummary with _$EntityPairsSummary {
   /// Creates a new [EntityPairsSummary] instance.
   const factory EntityPairsSummary({
     /// The currently active pair.

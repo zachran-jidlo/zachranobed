@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,74 +10,52 @@ part of 'app_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AppConfig {
-  String get minimumAppVersion => throw _privateConstructorUsedError;
+  String get minimumAppVersion;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AppConfigCopyWith<AppConfig> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AppConfigCopyWith<$Res> {
-  factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) then) =
-      _$AppConfigCopyWithImpl<$Res, AppConfig>;
-  @useResult
-  $Res call({String minimumAppVersion});
-}
-
-/// @nodoc
-class _$AppConfigCopyWithImpl<$Res, $Val extends AppConfig>
-    implements $AppConfigCopyWith<$Res> {
-  _$AppConfigCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AppConfig
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $AppConfigCopyWith<AppConfig> get copyWith =>
+      _$AppConfigCopyWithImpl<AppConfig>(this as AppConfig, _$identity);
+
   @override
-  $Res call({
-    Object? minimumAppVersion = null,
-  }) {
-    return _then(_value.copyWith(
-      minimumAppVersion: null == minimumAppVersion
-          ? _value.minimumAppVersion
-          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AppConfig &&
+            (identical(other.minimumAppVersion, minimumAppVersion) ||
+                other.minimumAppVersion == minimumAppVersion));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, minimumAppVersion);
+
+  @override
+  String toString() {
+    return 'AppConfig(minimumAppVersion: $minimumAppVersion)';
   }
 }
 
 /// @nodoc
-abstract class _$$$AppConfigImplCopyWith<$Res>
-    implements $AppConfigCopyWith<$Res> {
-  factory _$$$AppConfigImplCopyWith(
-          _$$AppConfigImpl value, $Res Function(_$$AppConfigImpl) then) =
-      __$$$AppConfigImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $AppConfigCopyWith<$Res> {
+  factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) _then) =
+      _$AppConfigCopyWithImpl;
   @useResult
   $Res call({String minimumAppVersion});
 }
 
 /// @nodoc
-class __$$$AppConfigImplCopyWithImpl<$Res>
-    extends _$AppConfigCopyWithImpl<$Res, _$$AppConfigImpl>
-    implements _$$$AppConfigImplCopyWith<$Res> {
-  __$$$AppConfigImplCopyWithImpl(
-      _$$AppConfigImpl _value, $Res Function(_$$AppConfigImpl) _then)
-      : super(_value, _then);
+class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
+  _$AppConfigCopyWithImpl(this._self, this._then);
+
+  final AppConfig _self;
+  final $Res Function(AppConfig) _then;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -85,9 +64,9 @@ class __$$$AppConfigImplCopyWithImpl<$Res>
   $Res call({
     Object? minimumAppVersion = null,
   }) {
-    return _then(_$$AppConfigImpl(
+    return _then(_self.copyWith(
       minimumAppVersion: null == minimumAppVersion
-          ? _value.minimumAppVersion
+          ? _self.minimumAppVersion
           : minimumAppVersion // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -96,22 +75,25 @@ class __$$$AppConfigImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$AppConfigImpl implements $AppConfig {
-  const _$$AppConfigImpl({required this.minimumAppVersion});
+class $AppConfig implements AppConfig {
+  const $AppConfig({required this.minimumAppVersion});
 
   @override
   final String minimumAppVersion;
 
+  /// Create a copy of AppConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'AppConfig(minimumAppVersion: $minimumAppVersion)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $$AppConfigCopyWith<$AppConfig> get copyWith =>
+      _$$AppConfigCopyWithImpl<$AppConfig>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$$AppConfigImpl &&
+            other is $AppConfig &&
             (identical(other.minimumAppVersion, minimumAppVersion) ||
                 other.minimumAppVersion == minimumAppVersion));
   }
@@ -119,26 +101,44 @@ class _$$AppConfigImpl implements $AppConfig {
   @override
   int get hashCode => Object.hash(runtimeType, minimumAppVersion);
 
+  @override
+  String toString() {
+    return 'AppConfig(minimumAppVersion: $minimumAppVersion)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $$AppConfigCopyWith<$Res>
+    implements $AppConfigCopyWith<$Res> {
+  factory $$AppConfigCopyWith(
+          $AppConfig value, $Res Function($AppConfig) _then) =
+      _$$AppConfigCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String minimumAppVersion});
+}
+
+/// @nodoc
+class _$$AppConfigCopyWithImpl<$Res> implements $$AppConfigCopyWith<$Res> {
+  _$$AppConfigCopyWithImpl(this._self, this._then);
+
+  final $AppConfig _self;
+  final $Res Function($AppConfig) _then;
+
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$$AppConfigImplCopyWith<_$$AppConfigImpl> get copyWith =>
-      __$$$AppConfigImplCopyWithImpl<_$$AppConfigImpl>(this, _$identity);
+  $Res call({
+    Object? minimumAppVersion = null,
+  }) {
+    return _then($AppConfig(
+      minimumAppVersion: null == minimumAppVersion
+          ? _self.minimumAppVersion
+          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class $AppConfig implements AppConfig {
-  const factory $AppConfig({required final String minimumAppVersion}) =
-      _$$AppConfigImpl;
-
-  @override
-  String get minimumAppVersion;
-
-  /// Create a copy of AppConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$$AppConfigImplCopyWith<_$$AppConfigImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

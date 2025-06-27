@@ -9,8 +9,8 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dar
  */
 part 'food_info.freezed.dart';
 
-@Freezed()
-class FoodInfo with _$FoodInfo {
+@freezed
+abstract class FoodInfo with _$FoodInfo {
   const factory FoodInfo({
     required String id, // The UUID identifier
     String? dishName,
