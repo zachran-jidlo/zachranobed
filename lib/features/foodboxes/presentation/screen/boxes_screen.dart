@@ -44,6 +44,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
         title: context.l10n!.boxes,
+        automaticallyImplyLeading: false,
       ),
       child: FutureBuilder<int>(
         future: _boxMovementCountFuture,

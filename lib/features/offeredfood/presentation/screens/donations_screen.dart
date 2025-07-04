@@ -42,6 +42,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
         title: context.l10n!.food,
+        automaticallyImplyLeading: false,
       ),
       child: FutureBuilder<int>(
         future: _mealsCountFuture,
