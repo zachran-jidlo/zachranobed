@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-51** Add a generic offline detection and screen.
 
 ### Fixed
+- **ZOB-363** Disable leading button on overview.
 
 ### Changed
 - **ZOB-364** Update Flutter SDK version, Android target & compile SDK and iOS minimum deployment target.

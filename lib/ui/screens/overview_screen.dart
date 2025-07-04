@@ -57,6 +57,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     return ScreenScaffold.universalBuilder(
       appBar: ZOAppBar(
         title: context.l10n!.overview,
+        automaticallyImplyLeading: false,
         actions: [
           NotificationIconButton(
             user: user,
