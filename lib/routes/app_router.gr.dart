@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -9,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i19;
+import 'package:collection/collection.dart' as _i25;
 import 'package:flutter/foundation.dart' as _i22;
 import 'package:flutter/material.dart' as _i20;
 import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart'
@@ -33,7 +35,7 @@ import 'package:zachranobed/features/menu/presentation/menu_screen.dart'
 import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart'
     as _i13;
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart'
-    as _i25;
+    as _i26;
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
     as _i23;
 import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
@@ -48,171 +50,20 @@ import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
     as _i17;
 import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i18;
 
-abstract class $AppRouter extends _i19.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i19.PageFactory> pagesMap = {
-    AppTermsRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i1.AppTermsScreen(),
-      );
-    },
-    BoxMovementDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<BoxMovementDetailRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i2.BoxMovementDetailScreen(
-          key: args.key,
-          boxMovement: args.boxMovement,
-        ),
-      );
-    },
-    ChangeActivePairRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.ChangeActivePairScreen(),
-      );
-    },
-    ChangePasswordRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.ChangePasswordScreen(),
-      );
-    },
-    ContactsRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.ContactsScreen(),
-      );
-    },
-    DebugRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.DebugScreen(),
-      );
-    },
-    DonatedFoodDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<DonatedFoodDetailRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i7.DonatedFoodDetailScreen(
-          key: args.key,
-          offeredFood: args.offeredFood,
-        ),
-      );
-    },
-    ForceUpdateRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.ForceUpdateScreen(),
-      );
-    },
-    ForgotPasswordRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.ForgotPasswordScreen(),
-      );
-    },
-    HomeRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i10.HomeScreen(),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i11.LoginScreen(),
-      );
-    },
-    MenuRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i12.MenuScreen(),
-      );
-    },
-    NotificationsRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i13.NotificationsScreen(),
-      );
-    },
-    OfferFoodAddNewRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i14.OfferFoodAddNewScreen(),
-      );
-    },
-    OfferFoodBoxesRoute.name: (routeData) {
-      final args = routeData.argsAs<OfferFoodBoxesRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i15.OfferFoodBoxesScreen(
-          key: args.key,
-          currentBoxesQuantity: args.currentBoxesQuantity,
-        ),
-      );
-    },
-    OfferFoodEditExistingRoute.name: (routeData) {
-      final args = routeData.argsAs<OfferFoodEditExistingRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i14.OfferFoodEditExistingScreen(
-          key: args.key,
-          foodInfo: args.foodInfo,
-        ),
-      );
-    },
-    OfferFoodInitialRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i14.OfferFoodInitialScreen(),
-      );
-    },
-    OfferFoodOverviewRoute.name: (routeData) {
-      final args = routeData.argsAs<OfferFoodOverviewRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i16.OfferFoodOverviewScreen(
-          key: args.key,
-          initialFoodInfos: args.initialFoodInfos,
-        ),
-      );
-    },
-    OrderShippingOfBoxesRoute.name: (routeData) {
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i17.OrderShippingOfBoxesScreen(),
-      );
-    },
-    ThankYouRoute.name: (routeData) {
-      final args = routeData.argsAs<ThankYouRouteArgs>();
-      return _i19.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i18.ThankYouScreen(
-          key: args.key,
-          isSuccess: args.isSuccess,
-          message: args.message,
-        ),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.AppTermsScreen]
 class AppTermsRoute extends _i19.PageRouteInfo<void> {
   const AppTermsRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          AppTermsRoute.name,
-          initialChildren: children,
-        );
+      : super(AppTermsRoute.name, initialChildren: children);
 
   static const String name = 'AppTermsRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.AppTermsScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -225,24 +76,26 @@ class BoxMovementDetailRoute
     List<_i19.PageRouteInfo>? children,
   }) : super(
           BoxMovementDetailRoute.name,
-          args: BoxMovementDetailRouteArgs(
-            key: key,
-            boxMovement: boxMovement,
-          ),
+          args: BoxMovementDetailRouteArgs(key: key, boxMovement: boxMovement),
           initialChildren: children,
         );
 
   static const String name = 'BoxMovementDetailRoute';
 
-  static const _i19.PageInfo<BoxMovementDetailRouteArgs> page =
-      _i19.PageInfo<BoxMovementDetailRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<BoxMovementDetailRouteArgs>();
+      return _i2.BoxMovementDetailScreen(
+        key: args.key,
+        boxMovement: args.boxMovement,
+      );
+    },
+  );
 }
 
 class BoxMovementDetailRouteArgs {
-  const BoxMovementDetailRouteArgs({
-    this.key,
-    required this.boxMovement,
-  });
+  const BoxMovementDetailRouteArgs({this.key, required this.boxMovement});
 
   final _i20.Key? key;
 
@@ -252,62 +105,80 @@ class BoxMovementDetailRouteArgs {
   String toString() {
     return 'BoxMovementDetailRouteArgs{key: $key, boxMovement: $boxMovement}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! BoxMovementDetailRouteArgs) return false;
+    return key == other.key && boxMovement == other.boxMovement;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ boxMovement.hashCode;
 }
 
 /// generated route for
 /// [_i3.ChangeActivePairScreen]
 class ChangeActivePairRoute extends _i19.PageRouteInfo<void> {
   const ChangeActivePairRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          ChangeActivePairRoute.name,
-          initialChildren: children,
-        );
+      : super(ChangeActivePairRoute.name, initialChildren: children);
 
   static const String name = 'ChangeActivePairRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.ChangeActivePairScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i4.ChangePasswordScreen]
 class ChangePasswordRoute extends _i19.PageRouteInfo<void> {
   const ChangePasswordRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          ChangePasswordRoute.name,
-          initialChildren: children,
-        );
+      : super(ChangePasswordRoute.name, initialChildren: children);
 
   static const String name = 'ChangePasswordRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.ChangePasswordScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i5.ContactsScreen]
 class ContactsRoute extends _i19.PageRouteInfo<void> {
   const ContactsRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          ContactsRoute.name,
-          initialChildren: children,
-        );
+      : super(ContactsRoute.name, initialChildren: children);
 
   static const String name = 'ContactsRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.ContactsScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i6.DebugScreen]
 class DebugRoute extends _i19.PageRouteInfo<void> {
   const DebugRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          DebugRoute.name,
-          initialChildren: children,
-        );
+      : super(DebugRoute.name, initialChildren: children);
 
   static const String name = 'DebugRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.DebugScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -320,24 +191,26 @@ class DonatedFoodDetailRoute
     List<_i19.PageRouteInfo>? children,
   }) : super(
           DonatedFoodDetailRoute.name,
-          args: DonatedFoodDetailRouteArgs(
-            key: key,
-            offeredFood: offeredFood,
-          ),
+          args: DonatedFoodDetailRouteArgs(key: key, offeredFood: offeredFood),
           initialChildren: children,
         );
 
   static const String name = 'DonatedFoodDetailRoute';
 
-  static const _i19.PageInfo<DonatedFoodDetailRouteArgs> page =
-      _i19.PageInfo<DonatedFoodDetailRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DonatedFoodDetailRouteArgs>();
+      return _i7.DonatedFoodDetailScreen(
+        key: args.key,
+        offeredFood: args.offeredFood,
+      );
+    },
+  );
 }
 
 class DonatedFoodDetailRouteArgs {
-  const DonatedFoodDetailRouteArgs({
-    this.key,
-    required this.offeredFood,
-  });
+  const DonatedFoodDetailRouteArgs({this.key, required this.offeredFood});
 
   final _i22.Key? key;
 
@@ -347,104 +220,128 @@ class DonatedFoodDetailRouteArgs {
   String toString() {
     return 'DonatedFoodDetailRouteArgs{key: $key, offeredFood: $offeredFood}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! DonatedFoodDetailRouteArgs) return false;
+    return key == other.key && offeredFood == other.offeredFood;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ offeredFood.hashCode;
 }
 
 /// generated route for
 /// [_i8.ForceUpdateScreen]
 class ForceUpdateRoute extends _i19.PageRouteInfo<void> {
   const ForceUpdateRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          ForceUpdateRoute.name,
-          initialChildren: children,
-        );
+      : super(ForceUpdateRoute.name, initialChildren: children);
 
   static const String name = 'ForceUpdateRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.ForceUpdateScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i9.ForgotPasswordScreen]
 class ForgotPasswordRoute extends _i19.PageRouteInfo<void> {
   const ForgotPasswordRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          ForgotPasswordRoute.name,
-          initialChildren: children,
-        );
+      : super(ForgotPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i9.ForgotPasswordScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i10.HomeScreen]
 class HomeRoute extends _i19.PageRouteInfo<void> {
   const HomeRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
+      : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i10.HomeScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i11.LoginScreen]
 class LoginRoute extends _i19.PageRouteInfo<void> {
   const LoginRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          LoginRoute.name,
-          initialChildren: children,
-        );
+      : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i11.LoginScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i12.MenuScreen]
 class MenuRoute extends _i19.PageRouteInfo<void> {
   const MenuRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          MenuRoute.name,
-          initialChildren: children,
-        );
+      : super(MenuRoute.name, initialChildren: children);
 
   static const String name = 'MenuRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i12.MenuScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i13.NotificationsScreen]
 class NotificationsRoute extends _i19.PageRouteInfo<void> {
   const NotificationsRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          NotificationsRoute.name,
-          initialChildren: children,
-        );
+      : super(NotificationsRoute.name, initialChildren: children);
 
   static const String name = 'NotificationsRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i13.NotificationsScreen();
+    },
+  );
 }
 
 /// generated route for
 /// [_i14.OfferFoodAddNewScreen]
 class OfferFoodAddNewRoute extends _i19.PageRouteInfo<void> {
   const OfferFoodAddNewRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          OfferFoodAddNewRoute.name,
-          initialChildren: children,
-        );
+      : super(OfferFoodAddNewRoute.name, initialChildren: children);
 
   static const String name = 'OfferFoodAddNewRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i14.OfferFoodAddNewScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -465,15 +362,20 @@ class OfferFoodBoxesRoute extends _i19.PageRouteInfo<OfferFoodBoxesRouteArgs> {
 
   static const String name = 'OfferFoodBoxesRoute';
 
-  static const _i19.PageInfo<OfferFoodBoxesRouteArgs> page =
-      _i19.PageInfo<OfferFoodBoxesRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OfferFoodBoxesRouteArgs>();
+      return _i15.OfferFoodBoxesScreen(
+        key: args.key,
+        currentBoxesQuantity: args.currentBoxesQuantity,
+      );
+    },
+  );
 }
 
 class OfferFoodBoxesRouteArgs {
-  const OfferFoodBoxesRouteArgs({
-    this.key,
-    required this.currentBoxesQuantity,
-  });
+  const OfferFoodBoxesRouteArgs({this.key, required this.currentBoxesQuantity});
 
   final _i20.Key? key;
 
@@ -483,6 +385,21 @@ class OfferFoodBoxesRouteArgs {
   String toString() {
     return 'OfferFoodBoxesRouteArgs{key: $key, currentBoxesQuantity: $currentBoxesQuantity}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OfferFoodBoxesRouteArgs) return false;
+    return key == other.key &&
+        const _i25.MapEquality().equals(
+          currentBoxesQuantity,
+          other.currentBoxesQuantity,
+        );
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ const _i25.MapEquality().hash(currentBoxesQuantity);
 }
 
 /// generated route for
@@ -491,51 +408,65 @@ class OfferFoodEditExistingRoute
     extends _i19.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i20.Key? key,
-    required _i25.FoodInfo foodInfo,
+    required _i26.FoodInfo foodInfo,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           OfferFoodEditExistingRoute.name,
-          args: OfferFoodEditExistingRouteArgs(
-            key: key,
-            foodInfo: foodInfo,
-          ),
+          args: OfferFoodEditExistingRouteArgs(key: key, foodInfo: foodInfo),
           initialChildren: children,
         );
 
   static const String name = 'OfferFoodEditExistingRoute';
 
-  static const _i19.PageInfo<OfferFoodEditExistingRouteArgs> page =
-      _i19.PageInfo<OfferFoodEditExistingRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OfferFoodEditExistingRouteArgs>();
+      return _i14.OfferFoodEditExistingScreen(
+        key: args.key,
+        foodInfo: args.foodInfo,
+      );
+    },
+  );
 }
 
 class OfferFoodEditExistingRouteArgs {
-  const OfferFoodEditExistingRouteArgs({
-    this.key,
-    required this.foodInfo,
-  });
+  const OfferFoodEditExistingRouteArgs({this.key, required this.foodInfo});
 
   final _i20.Key? key;
 
-  final _i25.FoodInfo foodInfo;
+  final _i26.FoodInfo foodInfo;
 
   @override
   String toString() {
     return 'OfferFoodEditExistingRouteArgs{key: $key, foodInfo: $foodInfo}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OfferFoodEditExistingRouteArgs) return false;
+    return key == other.key && foodInfo == other.foodInfo;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ foodInfo.hashCode;
 }
 
 /// generated route for
 /// [_i14.OfferFoodInitialScreen]
 class OfferFoodInitialRoute extends _i19.PageRouteInfo<void> {
   const OfferFoodInitialRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          OfferFoodInitialRoute.name,
-          initialChildren: children,
-        );
+      : super(OfferFoodInitialRoute.name, initialChildren: children);
 
   static const String name = 'OfferFoodInitialRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i14.OfferFoodInitialScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -544,7 +475,7 @@ class OfferFoodOverviewRoute
     extends _i19.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i20.Key? key,
-    required List<_i25.FoodInfo> initialFoodInfos,
+    required List<_i26.FoodInfo> initialFoodInfos,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           OfferFoodOverviewRoute.name,
@@ -557,38 +488,60 @@ class OfferFoodOverviewRoute
 
   static const String name = 'OfferFoodOverviewRoute';
 
-  static const _i19.PageInfo<OfferFoodOverviewRouteArgs> page =
-      _i19.PageInfo<OfferFoodOverviewRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OfferFoodOverviewRouteArgs>();
+      return _i16.OfferFoodOverviewScreen(
+        key: args.key,
+        initialFoodInfos: args.initialFoodInfos,
+      );
+    },
+  );
 }
 
 class OfferFoodOverviewRouteArgs {
-  const OfferFoodOverviewRouteArgs({
-    this.key,
-    required this.initialFoodInfos,
-  });
+  const OfferFoodOverviewRouteArgs({this.key, required this.initialFoodInfos});
 
   final _i20.Key? key;
 
-  final List<_i25.FoodInfo> initialFoodInfos;
+  final List<_i26.FoodInfo> initialFoodInfos;
 
   @override
   String toString() {
     return 'OfferFoodOverviewRouteArgs{key: $key, initialFoodInfos: $initialFoodInfos}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! OfferFoodOverviewRouteArgs) return false;
+    return key == other.key &&
+        const _i25.ListEquality().equals(
+          initialFoodInfos,
+          other.initialFoodInfos,
+        );
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ const _i25.ListEquality().hash(initialFoodInfos);
 }
 
 /// generated route for
 /// [_i17.OrderShippingOfBoxesScreen]
 class OrderShippingOfBoxesRoute extends _i19.PageRouteInfo<void> {
   const OrderShippingOfBoxesRoute({List<_i19.PageRouteInfo>? children})
-      : super(
-          OrderShippingOfBoxesRoute.name,
-          initialChildren: children,
-        );
+      : super(OrderShippingOfBoxesRoute.name, initialChildren: children);
 
   static const String name = 'OrderShippingOfBoxesRoute';
 
-  static const _i19.PageInfo<void> page = _i19.PageInfo<void>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      return const _i17.OrderShippingOfBoxesScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -611,8 +564,17 @@ class ThankYouRoute extends _i19.PageRouteInfo<ThankYouRouteArgs> {
 
   static const String name = 'ThankYouRoute';
 
-  static const _i19.PageInfo<ThankYouRouteArgs> page =
-      _i19.PageInfo<ThankYouRouteArgs>(name);
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ThankYouRouteArgs>();
+      return _i18.ThankYouScreen(
+        key: args.key,
+        isSuccess: args.isSuccess,
+        message: args.message,
+      );
+    },
+  );
 }
 
 class ThankYouRouteArgs {
@@ -632,4 +594,16 @@ class ThankYouRouteArgs {
   String toString() {
     return 'ThankYouRouteArgs{key: $key, isSuccess: $isSuccess, message: $message}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ThankYouRouteArgs) return false;
+    return key == other.key &&
+        isSuccess == other.isSuccess &&
+        message == other.message;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ isSuccess.hashCode ^ message.hashCode;
 }

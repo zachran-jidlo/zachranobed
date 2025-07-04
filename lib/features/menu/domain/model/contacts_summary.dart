@@ -8,8 +8,8 @@ import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
  */
 part 'contacts_summary.freezed.dart';
 
-@Freezed()
-class ContactsSummary with _$ContactsSummary {
+@freezed
+abstract class ContactsSummary with _$ContactsSummary {
   const factory ContactsSummary({
     required List<EntityContacts> targets,
     required List<Contact> deliveryContacts,

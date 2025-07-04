@@ -8,8 +8,8 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dar
  */
 part 'offered_food.freezed.dart';
 
-@Freezed()
-class OfferedFood with _$OfferedFood {
+@freezed
+abstract class OfferedFood with _$OfferedFood {
   const factory OfferedFood({
     required String id,
     required DateTime date,

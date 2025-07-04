@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,87 +10,59 @@ part of 'entity_contacts.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$EntityContacts {
-  String get name => throw _privateConstructorUsedError;
-  bool get active => throw _privateConstructorUsedError;
-  List<Contact> get contacts => throw _privateConstructorUsedError;
+  String get name;
+  bool get active;
+  List<Contact> get contacts;
 
   /// Create a copy of EntityContacts
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $EntityContactsCopyWith<EntityContacts> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $EntityContactsCopyWith<$Res> {
-  factory $EntityContactsCopyWith(
-          EntityContacts value, $Res Function(EntityContacts) then) =
-      _$EntityContactsCopyWithImpl<$Res, EntityContacts>;
-  @useResult
-  $Res call({String name, bool active, List<Contact> contacts});
-}
-
-/// @nodoc
-class _$EntityContactsCopyWithImpl<$Res, $Val extends EntityContacts>
-    implements $EntityContactsCopyWith<$Res> {
-  _$EntityContactsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of EntityContacts
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $EntityContactsCopyWith<EntityContacts> get copyWith =>
+      _$EntityContactsCopyWithImpl<EntityContacts>(
+          this as EntityContacts, _$identity);
+
   @override
-  $Res call({
-    Object? name = null,
-    Object? active = null,
-    Object? contacts = null,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
-          ? _value.active
-          : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      contacts: null == contacts
-          ? _value.contacts
-          : contacts // ignore: cast_nullable_to_non_nullable
-              as List<Contact>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EntityContacts &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.active, active) || other.active == active) &&
+            const DeepCollectionEquality().equals(other.contacts, contacts));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, name, active, const DeepCollectionEquality().hash(contacts));
+
+  @override
+  String toString() {
+    return 'EntityContacts(name: $name, active: $active, contacts: $contacts)';
   }
 }
 
 /// @nodoc
-abstract class _$$$EntityContactsImplCopyWith<$Res>
-    implements $EntityContactsCopyWith<$Res> {
-  factory _$$$EntityContactsImplCopyWith(_$$EntityContactsImpl value,
-          $Res Function(_$$EntityContactsImpl) then) =
-      __$$$EntityContactsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $EntityContactsCopyWith<$Res> {
+  factory $EntityContactsCopyWith(
+          EntityContacts value, $Res Function(EntityContacts) _then) =
+      _$EntityContactsCopyWithImpl;
   @useResult
   $Res call({String name, bool active, List<Contact> contacts});
 }
 
 /// @nodoc
-class __$$$EntityContactsImplCopyWithImpl<$Res>
-    extends _$EntityContactsCopyWithImpl<$Res, _$$EntityContactsImpl>
-    implements _$$$EntityContactsImplCopyWith<$Res> {
-  __$$$EntityContactsImplCopyWithImpl(
-      _$$EntityContactsImpl _value, $Res Function(_$$EntityContactsImpl) _then)
-      : super(_value, _then);
+class _$EntityContactsCopyWithImpl<$Res>
+    implements $EntityContactsCopyWith<$Res> {
+  _$EntityContactsCopyWithImpl(this._self, this._then);
+
+  final EntityContacts _self;
+  final $Res Function(EntityContacts) _then;
 
   /// Create a copy of EntityContacts
   /// with the given fields replaced by the non-null parameter values.
@@ -100,17 +73,17 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
     Object? active = null,
     Object? contacts = null,
   }) {
-    return _then(_$$EntityContactsImpl(
+    return _then(_self.copyWith(
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       active: null == active
-          ? _value.active
+          ? _self.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
       contacts: null == contacts
-          ? _value._contacts
+          ? _self.contacts
           : contacts // ignore: cast_nullable_to_non_nullable
               as List<Contact>,
     ));
@@ -119,8 +92,8 @@ class __$$$EntityContactsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$$EntityContactsImpl implements $EntityContacts {
-  const _$$EntityContactsImpl(
+class $EntityContacts implements EntityContacts {
+  const $EntityContacts(
       {required this.name,
       required this.active,
       required final List<Contact> contacts})
@@ -138,16 +111,19 @@ class _$$EntityContactsImpl implements $EntityContacts {
     return EqualUnmodifiableListView(_contacts);
   }
 
+  /// Create a copy of EntityContacts
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'EntityContacts(name: $name, active: $active, contacts: $contacts)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $$EntityContactsCopyWith<$EntityContacts> get copyWith =>
+      _$$EntityContactsCopyWithImpl<$EntityContacts>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$$EntityContactsImpl &&
+            other is $EntityContacts &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.active, active) || other.active == active) &&
             const DeepCollectionEquality().equals(other._contacts, _contacts));
@@ -157,33 +133,55 @@ class _$$EntityContactsImpl implements $EntityContacts {
   int get hashCode => Object.hash(runtimeType, name, active,
       const DeepCollectionEquality().hash(_contacts));
 
+  @override
+  String toString() {
+    return 'EntityContacts(name: $name, active: $active, contacts: $contacts)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $$EntityContactsCopyWith<$Res>
+    implements $EntityContactsCopyWith<$Res> {
+  factory $$EntityContactsCopyWith(
+          $EntityContacts value, $Res Function($EntityContacts) _then) =
+      _$$EntityContactsCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String name, bool active, List<Contact> contacts});
+}
+
+/// @nodoc
+class _$$EntityContactsCopyWithImpl<$Res>
+    implements $$EntityContactsCopyWith<$Res> {
+  _$$EntityContactsCopyWithImpl(this._self, this._then);
+
+  final $EntityContacts _self;
+  final $Res Function($EntityContacts) _then;
+
   /// Create a copy of EntityContacts
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$$EntityContactsImplCopyWith<_$$EntityContactsImpl> get copyWith =>
-      __$$$EntityContactsImplCopyWithImpl<_$$EntityContactsImpl>(
-          this, _$identity);
+  $Res call({
+    Object? name = null,
+    Object? active = null,
+    Object? contacts = null,
+  }) {
+    return _then($EntityContacts(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      active: null == active
+          ? _self.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
+      contacts: null == contacts
+          ? _self._contacts
+          : contacts // ignore: cast_nullable_to_non_nullable
+              as List<Contact>,
+    ));
+  }
 }
 
-abstract class $EntityContacts implements EntityContacts {
-  const factory $EntityContacts(
-      {required final String name,
-      required final bool active,
-      required final List<Contact> contacts}) = _$$EntityContactsImpl;
-
-  @override
-  String get name;
-  @override
-  bool get active;
-  @override
-  List<Contact> get contacts;
-
-  /// Create a copy of EntityContacts
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$$EntityContactsImplCopyWith<_$$EntityContactsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

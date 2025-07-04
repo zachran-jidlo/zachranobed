@@ -7,8 +7,8 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
  */
 part 'box_movement.freezed.dart';
 
-@Freezed()
-class BoxMovement with _$BoxMovement {
+@freezed
+abstract class BoxMovement with _$BoxMovement {
   const factory BoxMovement({
     required FoodBoxType type,
     required int count,

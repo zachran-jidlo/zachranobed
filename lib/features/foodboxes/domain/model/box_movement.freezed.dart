@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,87 +10,56 @@ part of 'box_movement.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BoxMovement {
-  FoodBoxType get type => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
+  FoodBoxType get type;
+  int get count;
+  DateTime get date;
 
   /// Create a copy of BoxMovement
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BoxMovementCopyWith<BoxMovement> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BoxMovementCopyWith<$Res> {
-  factory $BoxMovementCopyWith(
-          BoxMovement value, $Res Function(BoxMovement) then) =
-      _$BoxMovementCopyWithImpl<$Res, BoxMovement>;
-  @useResult
-  $Res call({FoodBoxType type, int count, DateTime date});
-}
-
-/// @nodoc
-class _$BoxMovementCopyWithImpl<$Res, $Val extends BoxMovement>
-    implements $BoxMovementCopyWith<$Res> {
-  _$BoxMovementCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BoxMovement
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $BoxMovementCopyWith<BoxMovement> get copyWith =>
+      _$BoxMovementCopyWithImpl<BoxMovement>(this as BoxMovement, _$identity);
+
   @override
-  $Res call({
-    Object? type = null,
-    Object? count = null,
-    Object? date = null,
-  }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as FoodBoxType,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BoxMovement &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.date, date) || other.date == date));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, type, count, date);
+
+  @override
+  String toString() {
+    return 'BoxMovement(type: $type, count: $count, date: $date)';
   }
 }
 
 /// @nodoc
-abstract class _$$BoxMovementImplCopyWith<$Res>
-    implements $BoxMovementCopyWith<$Res> {
-  factory _$$BoxMovementImplCopyWith(
-          _$BoxMovementImpl value, $Res Function(_$BoxMovementImpl) then) =
-      __$$BoxMovementImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $BoxMovementCopyWith<$Res> {
+  factory $BoxMovementCopyWith(
+          BoxMovement value, $Res Function(BoxMovement) _then) =
+      _$BoxMovementCopyWithImpl;
   @useResult
   $Res call({FoodBoxType type, int count, DateTime date});
 }
 
 /// @nodoc
-class __$$BoxMovementImplCopyWithImpl<$Res>
-    extends _$BoxMovementCopyWithImpl<$Res, _$BoxMovementImpl>
-    implements _$$BoxMovementImplCopyWith<$Res> {
-  __$$BoxMovementImplCopyWithImpl(
-      _$BoxMovementImpl _value, $Res Function(_$BoxMovementImpl) _then)
-      : super(_value, _then);
+class _$BoxMovementCopyWithImpl<$Res> implements $BoxMovementCopyWith<$Res> {
+  _$BoxMovementCopyWithImpl(this._self, this._then);
+
+  final BoxMovement _self;
+  final $Res Function(BoxMovement) _then;
 
   /// Create a copy of BoxMovement
   /// with the given fields replaced by the non-null parameter values.
@@ -100,17 +70,17 @@ class __$$BoxMovementImplCopyWithImpl<$Res>
     Object? count = null,
     Object? date = null,
   }) {
-    return _then(_$BoxMovementImpl(
+    return _then(_self.copyWith(
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as FoodBoxType,
       count: null == count
-          ? _value.count
+          ? _self.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
       date: null == date
-          ? _value.date
+          ? _self.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
@@ -119,8 +89,8 @@ class __$$BoxMovementImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BoxMovementImpl implements _BoxMovement {
-  const _$BoxMovementImpl(
+class _BoxMovement implements BoxMovement {
+  const _BoxMovement(
       {required this.type, required this.count, required this.date});
 
   @override
@@ -130,16 +100,19 @@ class _$BoxMovementImpl implements _BoxMovement {
   @override
   final DateTime date;
 
+  /// Create a copy of BoxMovement
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BoxMovement(type: $type, count: $count, date: $date)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BoxMovementCopyWith<_BoxMovement> get copyWith =>
+      __$BoxMovementCopyWithImpl<_BoxMovement>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BoxMovementImpl &&
+            other is _BoxMovement &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.date, date) || other.date == date));
@@ -148,32 +121,54 @@ class _$BoxMovementImpl implements _BoxMovement {
   @override
   int get hashCode => Object.hash(runtimeType, type, count, date);
 
+  @override
+  String toString() {
+    return 'BoxMovement(type: $type, count: $count, date: $date)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$BoxMovementCopyWith<$Res>
+    implements $BoxMovementCopyWith<$Res> {
+  factory _$BoxMovementCopyWith(
+          _BoxMovement value, $Res Function(_BoxMovement) _then) =
+      __$BoxMovementCopyWithImpl;
+  @override
+  @useResult
+  $Res call({FoodBoxType type, int count, DateTime date});
+}
+
+/// @nodoc
+class __$BoxMovementCopyWithImpl<$Res> implements _$BoxMovementCopyWith<$Res> {
+  __$BoxMovementCopyWithImpl(this._self, this._then);
+
+  final _BoxMovement _self;
+  final $Res Function(_BoxMovement) _then;
+
   /// Create a copy of BoxMovement
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
-      __$$BoxMovementImplCopyWithImpl<_$BoxMovementImpl>(this, _$identity);
+  $Res call({
+    Object? type = null,
+    Object? count = null,
+    Object? date = null,
+  }) {
+    return _then(_BoxMovement(
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as FoodBoxType,
+      count: null == count
+          ? _self.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      date: null == date
+          ? _self.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
 }
 
-abstract class _BoxMovement implements BoxMovement {
-  const factory _BoxMovement(
-      {required final FoodBoxType type,
-      required final int count,
-      required final DateTime date}) = _$BoxMovementImpl;
-
-  @override
-  FoodBoxType get type;
-  @override
-  int get count;
-  @override
-  DateTime get date;
-
-  /// Create a copy of BoxMovement
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BoxMovementImplCopyWith<_$BoxMovementImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
