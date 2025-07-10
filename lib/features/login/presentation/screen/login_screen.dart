@@ -4,7 +4,8 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
+import 'package:zachranobed/common/domain/model/app_terms_status.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
@@ -29,10 +30,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
-  final _checkIfDevtoolsAreEnabledUseCase =
-      GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-  final _checkIfAppTermsShouldBeShownUseCase =
-      GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -221,14 +220,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _continueToLoggedInContext() async {
-    final result = await _checkIfAppTermsShouldBeShownUseCase.invoke();
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      // Invalid user, should not happen
+      return;
+    }
+
+    final status = await _getAppTermsStatusUseCase.invoke(user);
 
     if (!mounted) {
       return;
     }
 
-    if (result == true) {
-      context.router.replace(const AppTermsRoute());
+    if (status != AppTermsStatus.accepted) {
+      context.router.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
     } else {
       context.router.replace(const HomeRoute());
     }
