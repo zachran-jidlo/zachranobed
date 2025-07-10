@@ -52,18 +52,55 @@ import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i18;
 
 /// generated route for
 /// [_i1.AppTermsScreen]
-class AppTermsRoute extends _i19.PageRouteInfo<void> {
-  const AppTermsRoute({List<_i19.PageRouteInfo>? children})
-      : super(AppTermsRoute.name, initialChildren: children);
+class AppTermsRoute extends _i19.PageRouteInfo<AppTermsRouteArgs> {
+  AppTermsRoute({
+    _i20.Key? key,
+    required bool hasNoAcceptedVersion,
+    List<_i19.PageRouteInfo>? children,
+  }) : super(
+          AppTermsRoute.name,
+          args: AppTermsRouteArgs(
+            key: key,
+            hasNoAcceptedVersion: hasNoAcceptedVersion,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'AppTermsRoute';
 
   static _i19.PageInfo page = _i19.PageInfo(
     name,
     builder: (data) {
-      return const _i1.AppTermsScreen();
+      final args = data.argsAs<AppTermsRouteArgs>();
+      return _i1.AppTermsScreen(
+        key: args.key,
+        hasNoAcceptedVersion: args.hasNoAcceptedVersion,
+      );
     },
   );
+}
+
+class AppTermsRouteArgs {
+  const AppTermsRouteArgs({this.key, required this.hasNoAcceptedVersion});
+
+  final _i20.Key? key;
+
+  final bool hasNoAcceptedVersion;
+
+  @override
+  String toString() {
+    return 'AppTermsRouteArgs{key: $key, hasNoAcceptedVersion: $hasNoAcceptedVersion}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! AppTermsRouteArgs) return false;
+    return key == other.key && hasNoAcceptedVersion == other.hasNoAcceptedVersion;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ hasNoAcceptedVersion.hashCode;
 }
 
 /// generated route for
