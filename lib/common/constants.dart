@@ -34,7 +34,7 @@ class ZOStrings {
   static const zjUrl = 'https://zachranobed.cz';
   static const zjEmail = 'aplikace.zo@zachranjidlo.cz';
   static const zobWebHomepage = 'https://zachranobed.cz';
-  static const appTerms = 'https://zachranobed.cz/wp-content/uploads/2024/07/Podminky-zapojeni-do-projektu-Zachran-obed.pdf';
+  static const appTerms = 'https://zachranobed.cz/wp-content/uploads/2025/07/Podminky_Zachran-jidlo_v.1.1.pdf';
   static const appPrivacy = 'https://docs.google.com/document/d/1NhEGlrN4TgS49HviLkhcF4zCBU3i8w3ITkVQJhtMz-Q/edit';
   static const sponsors = 'https://zachranobed.cz/';
 
@@ -44,7 +44,8 @@ class ZOStrings {
   static const chefEmptyPath = 'assets/chef-empty.svg';
   static const boxEmptyPath = 'assets/box-empty.svg';
   static const overviewPath = 'assets/overview.svg';
-  static const certificationCheckPath = 'assets/certification_check.svg';
+  static const appTermsNotAcceptedPath = 'assets/app-terms-not-accepted.svg';
+  static const appTermsNewVersionPath = 'assets/app-terms-new-version.svg';
   static const genericErrorPath = 'assets/generic-error.svg';
   static const offlineErrorPath = 'assets/offline-error.svg';
   static const iconFoodBox = 'assets/ic_food_box.svg';
