@@ -110,14 +110,9 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               return const SizedBox();
             }
 
-            // On mobile platforms, wrap the app content with ConnectivityWrapper widget to handle offline scenarios
-            if (RunningPlatform.isMobile()) {
-              return ConnectivityWrapper(
-                child: child,
-              );
-            } else {
-              return child;
-            }
+            return ConnectivityWrapper(
+              child: child,
+            );
           },
         );
       },
