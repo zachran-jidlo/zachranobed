@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [1.8.0]
 ### Added
 - **ZOB-51** Add a generic offline detection and screen.
+- **ZOB-365** Add new terms and conditions screen.
 
 ### Fixed
 - **ZOB-363** Disable leading button on overview.

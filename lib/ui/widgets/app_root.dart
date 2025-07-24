@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/common/domain/check_if_app_terms_should_be_shown_usecase.dart';
+import 'package:zachranobed/common/domain/model/app_terms_status.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
@@ -13,6 +14,7 @@ import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/services/auth_service.dart';
 
 class AppRoot extends StatefulWidget {
   const AppRoot({super.key});
@@ -23,8 +25,9 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
-  final _checkIfAppTermsShouldBeShownUseCase = GetIt.I<CheckIfAppTermsShouldBeShownUseCase>();
+  final _authService = GetIt.I<AuthService>();
   final _checkIfUpgradeAppShouldBeShownUseCase = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
+  final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
 
   @override
   void initState() {
@@ -38,22 +41,26 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     _applicationStartCheck();
   }
 
-  void _applicationStartCheck() {
-    _checkIfUpgradeAppShouldBeShownUseCase.invoke().then((result) {
-      if (result == true) {
-        _appRouter.replace(const ForceUpdateRoute());
-      } else {
-        _checkAppTerms();
-      }
-    });
+  void _applicationStartCheck() async {
+    final shouldShow = await _checkIfUpgradeAppShouldBeShownUseCase.invoke();
+    if (shouldShow) {
+      _appRouter.replace(const ForceUpdateRoute());
+    }
+
+    _checkAppTerms();
   }
 
-  void _checkAppTerms() {
-    _checkIfAppTermsShouldBeShownUseCase.invoke().then((result) => {
-          // If should be shown, replace current route with app terms.
-          // Otherwise do nothing - no action from the user is required.
-          if (result == true) {_appRouter.replace(const AppTermsRoute())}
-        });
+  void _checkAppTerms() async {
+    final user = await _authService.getUserData();
+    if (user == null) {
+      // User is not logged in, do not check app terms
+      return;
+    }
+
+    final status = await _getAppTermsStatusUseCase.invoke(user);
+    if (status != AppTermsStatus.accepted) {
+      _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
+    }
   }
 
   @override
