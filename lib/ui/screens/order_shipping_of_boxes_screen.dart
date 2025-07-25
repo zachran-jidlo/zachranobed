@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
@@ -59,23 +61,23 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
     });
   }
 
-  Future<bool> _showConfirmationDialog() async {
-    final isFilled = _boxesQuantity.values.any((value) => value > 0);
-    if (isFilled) {
-      return (await showDialog(
-            context: context,
-            builder: (context) => ZODialog(
-              title: context.l10n!.cancelShippingOfBoxes,
-              content: context.l10n!.cancelShippingOfBoxesDialogContent,
-              confirmText: context.l10n!.confirmCancel,
-              cancelText: context.l10n!.continueTheOffer,
-              onConfirmPressed: () => Navigator.of(context).pop(true),
-              onCancelPressed: () => Navigator.of(context).pop(false),
-            ),
-          )) ??
-          false;
+  void _showCancelConfirmationDialog() async {
+    final confirmed = await showDialog(
+      context: context,
+      builder: (context) => ZODialog(
+        criticalConfirmStyle: true,
+        title: context.l10n!.cancelShippingOfBoxes,
+        content: context.l10n!.cancelShippingOfBoxesDialogContent,
+        confirmText: context.l10n!.confirmCancel,
+        cancelText: context.l10n!.continueTheOffer,
+        onConfirmPressed: () => context.router.maybePop(true),
+        onCancelPressed: () => context.router.maybePop(false),
+      ),
+    );
+
+    if (mounted && confirmed) {
+      context.router.pop();
     }
-    return true;
   }
 
   @override
@@ -96,8 +98,13 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   Widget _orderBoxShippingScreenContent({
     required bool useWideButton,
   }) {
-    return WillPopScope(
-      onWillPop: _showConfirmationDialog,
+    return PopScope(
+      canPop: _boxesQuantity.values.none((value) => value > 0),
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          _showCancelConfirmationDialog();
+        }
+      },
       child: FutureBuilder(
         future: _statisticsFuture,
         builder: (context, snapshot) {
@@ -146,7 +153,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
       child: Column(
         children: [
           EmptyPage(
-            vectorImagePath: ZOStrings.boxEmptyPath,
+            vectorImagePath: ImageAssets.imageEmptyBox,
             title: context.l10n!.shippingOfBoxesEmptyTitle,
             description: context.l10n!.shippingOfBoxesEmptyDescription,
           ),
@@ -187,7 +194,9 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
                   maxQuantity: value.quantityAtCharity,
                   formValidationManager: _formValidationManager,
                   onChanged: (count) {
-                    _boxesQuantity[value.type.id] = count;
+                    setState(() {
+                      _boxesQuantity[value.type.id] = count;
+                    });
                   },
                 );
               }).separated(

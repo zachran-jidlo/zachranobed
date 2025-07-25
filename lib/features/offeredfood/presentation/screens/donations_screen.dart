@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
@@ -123,7 +124,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
   Widget _buildEmptyPage(BuildContext context) {
     return SingleChildScrollView(
       child: EmptyPage(
-        vectorImagePath: ZOStrings.chefEmptyPath,
+        vectorImagePath: ImageAssets.imageEmptyChef,
         title: context.l10n!.donationsEmptyTitle,
         description: context.l10n!.donationsEmptyDescription,
       ),

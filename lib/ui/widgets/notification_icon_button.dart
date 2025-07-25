@@ -18,10 +18,10 @@ class NotificationIconButton extends StatelessWidget {
 
   /// Creates a [NotificationIconButton] widget.
   NotificationIconButton({
-    Key? key,
+    super.key,
     required this.user,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

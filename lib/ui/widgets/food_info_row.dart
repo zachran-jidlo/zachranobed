@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/ui/widgets/trailing_icon_row.dart';

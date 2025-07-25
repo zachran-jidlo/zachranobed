@@ -7,6 +7,7 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: GestureDetector(
                 onLongPress: showDebugScreenIfPossible,
                 child: Image.asset(
-                  ZOStrings.foodImageBackgroundPath,
+                  ImageAssets.imageFoodBackgroundDimmed,
                   fit: BoxFit.cover,
                   alignment: Alignment.centerLeft,
                   height: double.infinity,
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: <Widget>[
           const SizedBox(height: GapSize.xl),
-          SvgPicture.asset(ZOStrings.zoLogoPath, width: 270, height: 46),
+          SvgPicture.asset(ImageAssets.imageLogo, width: 270, height: 46),
           _formImageContent(showImageInForm),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -170,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
           onLongPress: showDebugScreenIfPossible,
           child: Image.asset(
             width: double.infinity,
-            ZOStrings.foodImagePath,
+            ImageAssets.imageFoodBackground,
             fit: BoxFit.fitWidth,
           ),
         ),
