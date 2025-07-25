@@ -4,6 +4,7 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
@@ -146,7 +147,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
       child: Column(
         children: [
           EmptyPage(
-            vectorImagePath: ZOStrings.boxEmptyPath,
+            vectorImagePath: ImageAssets.imageEmptyBox,
             title: context.l10n!.shippingOfBoxesEmptyTitle,
             description: context.l10n!.shippingOfBoxesEmptyDescription,
           ),

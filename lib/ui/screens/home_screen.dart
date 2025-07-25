@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen>
     ),
     _TabScreenData(
       label: (context) => Text(context.l10n!.boxes),
-      icon: (context) => const SvgIcon(resource: ZOStrings.iconFoodBox),
+      icon: (context) => const SvgIcon(resource: ImageAssets.iconFoodBox),
       content: (context) => const BoxesScreen(),
     )
   ];
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen>
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 42, 40, 52),
-                  child: SvgPicture.asset(ZOStrings.zoLogoPath, width: 180),
+                  child: SvgPicture.asset(ImageAssets.imageLogo, width: 180),
                 ),
                 ..._tabs.map(
                   (data) {

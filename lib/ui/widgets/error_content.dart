@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/empty_page.dart';
@@ -17,7 +17,7 @@ class ErrorContent extends StatelessWidget {
     return Column(
       children: [
         EmptyPage(
-          vectorImagePath: ZOStrings.genericErrorPath,
+          vectorImagePath: ImageAssets.imageErrorGeneric,
           title: context.l10n!.commonGenericErrorTitle,
           description: context.l10n!.commonGenericErrorDescription,
         ),
