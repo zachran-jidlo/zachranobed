@@ -11,9 +11,12 @@ import 'package:zachranobed/services/entity_service.dart';
 import '../common/constants.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  print('Title: ${message.notification?.title}');
-  print('Body: ${message.notification?.body}');
-  print('Data: ${message.data}');
+  ZOLogger.logMessage('''
+    Handling background notification message.
+    Title: ${message.notification?.title}
+    Body: ${message.notification?.body}
+    Data: ${message.data}
+  ''');
 }
 
 class Notifications {

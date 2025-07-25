@@ -21,7 +21,7 @@ class FormValidationManager {
       _fieldStates.putIfAbsent(key, () => _FormFieldValidationState(key));
 
   /// Returns the [FocusNode] associated with the given field key.
-  FocusNode getFocusNode(key) {
+  FocusNode getFocusNode(String key) {
     return _getState(key).focusNode;
   }
 

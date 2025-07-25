@@ -199,7 +199,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
         // Use initial list of food boxes to maintain correct order and remove types where the quantity is zero
         final resultMap = {for (var item in statistics) item.type: _boxesQuantity[item.type] ?? 0};
         resultMap.removeWhere((key, value) => value <= 0);
-        context.router.popForced(resultMap);
+        context.router.pop(resultMap);
       }
     } else {
       _formValidationManager.scrollToFirstError();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
 
-double _CARD_SIDE = 154.0;
+double _cardSide = 154.0;
 
 class ZOCard extends StatelessWidget {
   final Future measuredValue;
@@ -18,8 +18,8 @@ class ZOCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: _CARD_SIDE,
-      height: _CARD_SIDE,
+      width: _cardSide,
+      height: _cardSide,
       decoration: BoxDecoration(
         color: ZOColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
