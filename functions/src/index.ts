@@ -12,6 +12,13 @@ exports.notifyCanteenAboutBoxShippmentV2 = notifyCanteenAboutBoxShippmentV2;
 exports.notifyCharityAboutLackOfBoxesAtCanteenV2 =
   notifyCharityAboutLackOfBoxesAtCanteenV2;
 exports.boxesMismatchNotification = boxesMismatchNotification;
-
-exports.scheduledFunctionCrontab = scheduledFunctionCrontab;
 exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
+
+// Only export the scheduled function for the specific project
+const currentProjectId =
+  process.env.GCLOUD_PROJECT || process.env.FIREBASE_PROJECT_ID;
+const allowedProjectId = "zachran-obed"; // Replace with your target project ID
+
+if (currentProjectId === allowedProjectId) {
+  exports.scheduledFunctionCrontab = scheduledFunctionCrontab;
+}
