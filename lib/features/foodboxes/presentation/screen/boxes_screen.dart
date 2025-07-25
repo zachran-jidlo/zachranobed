@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -129,7 +130,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
       child: Column(
         children: [
           EmptyPage(
-            vectorImagePath: ZOStrings.boxEmptyPath,
+            vectorImagePath: ImageAssets.imageEmptyBox,
             title: context.l10n!.boxesEmptyTitle,
             description: context.l10n!.boxesEmptyDescription,
           ),

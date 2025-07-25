@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
