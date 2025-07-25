@@ -14,10 +14,10 @@ class CounterButton extends StatelessWidget {
 
   /// Creates a new [CounterButton] instance.
   const CounterButton({
-    Key? key,
+    super.key,
     required this.type,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

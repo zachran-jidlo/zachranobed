@@ -15,13 +15,13 @@ class DonatedFoodList extends StatelessWidget {
   final _repository = GetIt.I<OfferedFoodRepository>();
 
   DonatedFoodList({
-    Key? key,
+    super.key,
     this.itemsLimit,
     this.deliveredFrom,
     this.deliveredTo,
     this.alwaysShowTitle = true,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

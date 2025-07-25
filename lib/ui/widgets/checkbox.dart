@@ -6,11 +6,11 @@ class ZOCheckbox extends StatefulWidget {
   final Widget titleWidget;
 
   const ZOCheckbox({
-    Key? key,
+    super.key,
     required this.isChecked,
     required this.onChanged,
     required this.titleWidget,
-  }) : super(key: key);
+  });
 
   factory ZOCheckbox.plain({
     Key? key,
@@ -27,11 +27,11 @@ class ZOCheckbox extends StatefulWidget {
   }
 
   const ZOCheckbox.rich({
-    Key? key,
+    super.key,
     required this.isChecked,
     required this.onChanged,
     required this.titleWidget,
-  }) : super(key: key);
+  });
 
   @override
   State<ZOCheckbox> createState() => _ZOCheckboxState();

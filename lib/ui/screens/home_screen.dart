@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen>
                   onPressed: () async {
                     final entityId = HelperService.getCurrentUser(context)?.entityId;
                     await authService.signOut(entityId);
-                    if (context.mounted) {
+                    if (mounted) {
                       context.router.replaceAll([const LoginRoute()]);
                     }
                   },

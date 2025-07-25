@@ -74,7 +74,7 @@ class BoxDataTable extends StatelessWidget {
             _value(box, BoxDataTableColumn.charity),
             _value(box, BoxDataTableColumn.canteen),
           ]);
-        }).toList()
+        })
       ],
     );
   }

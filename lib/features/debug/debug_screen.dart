@@ -8,7 +8,7 @@ import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 @RoutePage()
 class DebugScreen extends StatelessWidget {
-  const DebugScreen({Key? key}) : super(key: key);
+  const DebugScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -76,7 +76,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }) {
     return PopScope(
       canPop: _foodInfos.isEmpty,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           _showCancelConfirmationDialog();
         }
@@ -274,7 +274,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     );
 
     if (mounted && confirmed == true) {
-      context.router.popForced();
+      context.router.pop();
     }
   }
 

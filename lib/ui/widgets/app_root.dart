@@ -20,7 +20,7 @@ class AppRoot extends StatefulWidget {
   const AppRoot({super.key});
 
   @override
-  _AppRootState createState() => _AppRootState();
+  State<AppRoot> createState() => _AppRootState();
 }
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
@@ -88,7 +88,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               onPrimary: ZOColors.onPrimary,
               secondary: ZOColors.primaryLight,
               onSecondary: ZOColors.onPrimaryLight,
-              background: Colors.white,
+              surface: Colors.white,
               surfaceTint: Colors.white,
               primaryContainer: ZOColors.secondary,
             ),
