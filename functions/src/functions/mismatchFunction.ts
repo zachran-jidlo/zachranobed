@@ -2,8 +2,10 @@ import { onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { constructAndSendEmail } from "../utils/emailUtils";
 
 export const boxesMismatchNotification = onDocumentUpdated(
-  "entityPairs/{entityPairId}",
+  "entityPairs/{id}",
   async (event) => {
+    console.info("boxesMismatchNotification triggered");
+
     // Check if data exists and the specific field 'foodboxesCheckup' has been updated
     if (!event.data) {
       console.error("No data associated with the event");
