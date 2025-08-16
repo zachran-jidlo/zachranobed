@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
@@ -12,9 +11,12 @@ import 'package:zachranobed/services/entity_service.dart';
 import '../common/constants.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  print('Title: ${message.notification?.title}');
-  print('Body: ${message.notification?.body}');
-  print('Data: ${message.data}');
+  ZOLogger.logMessage('''
+    Handling background notification message.
+    Title: ${message.notification?.title}
+    Body: ${message.notification?.body}
+    Data: ${message.data}
+  ''');
 }
 
 class Notifications {

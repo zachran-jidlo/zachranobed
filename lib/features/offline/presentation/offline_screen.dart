@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -25,7 +26,7 @@ class OfflineScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  ZOStrings.offlineErrorPath,
+                  ImageAssets.imageErrorOffline,
                 ),
                 const SizedBox(height: GapSize.xl),
                 Text(

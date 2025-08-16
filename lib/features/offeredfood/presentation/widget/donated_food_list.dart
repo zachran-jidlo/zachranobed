@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
@@ -16,13 +15,13 @@ class DonatedFoodList extends StatelessWidget {
   final _repository = GetIt.I<OfferedFoodRepository>();
 
   DonatedFoodList({
-    Key? key,
+    super.key,
     this.itemsLimit,
     this.deliveredFrom,
     this.deliveredTo,
     this.alwaysShowTitle = true,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

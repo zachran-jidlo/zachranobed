@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
@@ -130,7 +131,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
       child: Column(
         children: [
           EmptyPage(
-            vectorImagePath: ZOStrings.boxEmptyPath,
+            vectorImagePath: ImageAssets.imageEmptyBox,
             title: context.l10n!.offerFoodBoxInfoEmptyTitle,
             description: context.l10n!.offerFoodBoxInfoEmptyDescription,
           ),
@@ -198,7 +199,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
         // Use initial list of food boxes to maintain correct order and remove types where the quantity is zero
         final resultMap = {for (var item in statistics) item.type: _boxesQuantity[item.type] ?? 0};
         resultMap.removeWhere((key, value) => value <= 0);
-        context.router.popForced(resultMap);
+        context.router.pop(resultMap);
       }
     } else {
       _formValidationManager.scrollToFirstError();

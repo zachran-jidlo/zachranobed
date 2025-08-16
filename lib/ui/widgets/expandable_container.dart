@@ -33,7 +33,7 @@ class ExpandableContainer extends StatelessWidget {
 
   /// Creates a [ExpandableContainer] widget.
   const ExpandableContainer({
-    Key? key,
+    super.key,
     required this.isExpandable,
     required this.isExpanded,
     required this.onExpandedChanged,
@@ -41,7 +41,7 @@ class ExpandableContainer extends StatelessWidget {
     required this.labelCollapse,
     required this.child,
     this.collapsedHeight,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

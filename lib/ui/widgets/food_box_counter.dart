@@ -25,13 +25,13 @@ class FoodBoxCounter extends StatelessWidget {
   final FormValidationManager formValidationManager;
 
   const FoodBoxCounter({
-    Key? key,
+    super.key,
     required this.type,
     required this.maxQuantity,
     required this.initialValue,
     required this.onChanged,
     required this.formValidationManager,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
