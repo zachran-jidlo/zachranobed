@@ -44,7 +44,7 @@ There are two Firebase projects configured.
 
 **BEWARE**
 
-> **Note:** `functions/src/index.ts` contains the service account ID in `setGlobalOptions`. This account is for the PROD environment. You can change the account to the DEV one if needed.
+> **Note:** `functions/src/config/firebase.ts` contains the service account ID in `setGlobalOptions`. This account is for the PROD environment. You can change the account to the DEV one if needed.
 
 - PROD: firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com
 - DEV: firebase-adminsdk-ju14s@zachran-obed-dev.iam.gserviceaccount.com
