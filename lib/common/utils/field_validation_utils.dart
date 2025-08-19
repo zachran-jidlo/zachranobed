@@ -233,8 +233,4 @@ class FieldValidationUtils {
   static bool _isFilled(String? value) {
     return value != null && value.isNotEmpty;
   }
-
-  static bool _isNumber(String? value) {
-    return value != null && int.tryParse(value) != null;
-  }
 }

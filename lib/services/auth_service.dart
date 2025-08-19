@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/prefs/app_preferences.dart';

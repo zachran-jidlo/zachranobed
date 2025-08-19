@@ -3,7 +3,6 @@ import 'package:zachranobed/features/offeredfood/data/repository/firebase_offere
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/services/delivery_service.dart';
 import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/food_box_service.dart';
 import 'package:zachranobed/services/meal_service.dart';
 
 /// DI setup for offered food feature.

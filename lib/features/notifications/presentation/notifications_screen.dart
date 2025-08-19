@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart' as domain;
@@ -83,7 +84,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       child: Padding(
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: EmptyPage(
-          vectorImagePath: ZOStrings.notificationsEmptyPath,
+          vectorImagePath: ImageAssets.imageEmptyNotifications,
           title: context.l10n!.notificationsEmptyTitle,
         ),
       ),

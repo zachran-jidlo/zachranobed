@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
@@ -88,7 +89,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
     if (widget.hasNoAcceptedVersion) {
       return [
         SvgPicture.asset(
-          ZOStrings.appTermsNotAcceptedPath,
+          ImageAssets.imageAppTermsNotAccepted,
         ),
         const SizedBox(height: GapSize.xl),
         Text(
@@ -105,7 +106,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
     } else {
       return [
         SvgPicture.asset(
-          ZOStrings.appTermsNewVersionPath,
+          ImageAssets.imageAppTermsNewVersion,
         ),
         const SizedBox(height: GapSize.xl),
         Text(

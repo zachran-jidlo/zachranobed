@@ -18,9 +18,8 @@ import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 @RoutePage()
 class OfferFoodInitialScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen].
-  const OfferFoodInitialScreen({Key? key})
+  const OfferFoodInitialScreen({super.key})
       : super(
-          key: key,
           foodInfo: null,
           returnResult: false,
           screenMode: OfferFoodDetailScreenMode.add,
@@ -34,9 +33,8 @@ class OfferFoodInitialScreen extends OfferFoodDetailScreen {
 @RoutePage()
 class OfferFoodAddNewScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen].
-  const OfferFoodAddNewScreen({Key? key})
+  const OfferFoodAddNewScreen({super.key})
       : super(
-          key: key,
           foodInfo: null,
           returnResult: true,
           screenMode: OfferFoodDetailScreenMode.add,
@@ -46,9 +44,8 @@ class OfferFoodAddNewScreen extends OfferFoodDetailScreen {
 @RoutePage()
 class OfferFoodEditExistingScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen] with the given [foodInfo].
-  const OfferFoodEditExistingScreen({Key? key, required FoodInfo foodInfo})
+  const OfferFoodEditExistingScreen({super.key, required FoodInfo foodInfo})
       : super(
-          key: key,
           foodInfo: foodInfo,
           returnResult: true,
           screenMode: OfferFoodDetailScreenMode.edit,
@@ -139,7 +136,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   }) {
     return PopScope(
       canPop: !_foodInfoPending.isSomethingFilled() || widget.foodInfo == _foodInfoPending,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           _showCancelConfirmationDialog();
         }
@@ -254,9 +251,9 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     if (_formKey.currentState!.validate()) {
       if (mounted) {
         // Remove dialog and return result
-        context.router.popForced();
+        context.router.pop();
         if (widget.returnResult) {
-          context.router.popForced(OfferFoodDetailResultSaveItem(_foodInfoPending));
+          context.router.pop(OfferFoodDetailResultSaveItem(_foodInfoPending));
         } else {
           context.router.replace(OfferFoodOverviewRoute(initialFoodInfos: [_foodInfoPending]));
         }
@@ -264,7 +261,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     } else {
       if (mounted) {
         // Remove dialog and scroll to error
-        context.router.popForced();
+        context.router.pop();
         _formValidationManager.scrollToFirstError();
       }
     }
@@ -287,7 +284,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     );
 
     if (mounted && confirmed) {
-      context.router.popForced(OfferFoodDetailResultRemoveItem());
+      context.router.pop(OfferFoodDetailResultRemoveItem());
     }
   }
 
@@ -306,7 +303,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     );
 
     if (mounted && confirmed) {
-      context.router.popForced();
+      context.router.pop();
     }
   }
 }
