@@ -39,7 +39,7 @@ class CounterField extends StatefulWidget {
 
   /// Creates a new [CounterField] instance.
   const CounterField({
-    Key? key,
+    super.key,
     required this.label,
     required this.initialValue,
     this.minValue = 0,
@@ -49,7 +49,7 @@ class CounterField extends StatefulWidget {
     this.onChanged,
     this.supportingText,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   @override
   State<CounterField> createState() => _CounterFieldState();

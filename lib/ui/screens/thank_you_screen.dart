@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -33,7 +34,7 @@ class ThankYouScreen extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Image.asset(
-          ZOStrings.foodImageBackgroundPath,
+          ImageAssets.imageFoodBackgroundDimmed,
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
@@ -55,7 +56,7 @@ class ThankYouScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 80.0),
                     SvgPicture.asset(
-                      ZOStrings.zoLogoPath,
+                      ImageAssets.imageLogo,
                       width: 270,
                       height: 46,
                     ),
@@ -79,7 +80,7 @@ class ThankYouScreen extends StatelessWidget {
             children: [
               Image.asset(
                 width: double.infinity,
-                ZOStrings.foodImagePath,
+                ImageAssets.imageFoodBackground,
                 fit: BoxFit.fitWidth,
               ),
               Expanded(
@@ -92,7 +93,7 @@ class ThankYouScreen extends StatelessWidget {
                 ),
               ),
               SvgPicture.asset(
-                ZOStrings.zoLogoPath,
+                ImageAssets.imageLogo,
                 width: 158,
                 height: 28,
               ),

@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
@@ -75,7 +76,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }) {
     return PopScope(
       canPop: _foodInfos.isEmpty,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           _showCancelConfirmationDialog();
         }
@@ -141,7 +142,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     return Column(
       children: [
         EmptyPage(
-          vectorImagePath: ZOStrings.overviewPath,
+          vectorImagePath: ImageAssets.imageEmptyOverview,
           title: context.l10n!.offerFoodOverviewEmptyTitle,
           description: context.l10n!.offerFoodOverviewEmptyDescription,
         ),
@@ -273,7 +274,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     );
 
     if (mounted && confirmed == true) {
-      context.router.popForced();
+      context.router.pop();
     }
   }
 

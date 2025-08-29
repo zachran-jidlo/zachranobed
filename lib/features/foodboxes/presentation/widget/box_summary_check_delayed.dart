@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary_card.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
@@ -47,7 +48,7 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
           child: Row(
             children: [
               SvgPicture.asset(
-                ZOStrings.iconFoodBoxAlert,
+                ImageAssets.iconFoodBoxAlert,
                 width: 24,
                 height: 24,
               ),
