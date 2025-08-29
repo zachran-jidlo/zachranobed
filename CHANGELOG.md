@@ -2,6 +2,15 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [1.9.0]
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
 ## [1.8.0]
 ### Added
 - **ZOB-51** Add a generic offline detection and screen.
@@ -12,8 +21,6 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-364** Update Flutter SDK version, Android target & compile SDK and iOS minimum deployment target.
-
-### Removed
 
 ## [1.7.0]
 ### Added
