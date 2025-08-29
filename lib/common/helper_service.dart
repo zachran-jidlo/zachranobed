@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/models/entity_pair.dart';
 import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
-import 'package:zachranobed/services/auth_service.dart';
 
 class HelperService {
   /// Returns a [UserData] representing the current user's data if available,
@@ -41,18 +41,18 @@ class HelperService {
     return context.watch<DeliveryNotifier>().canDonate(user);
   }
 
-  /// Retrieves user information using the [AuthService] and sets the user data
+  /// Retrieves user information using the [GetUserDataUseCase] and sets the user data
   /// in the [UserNotifier]. If the user has a `canteen` role, it calculates
   /// the date of today's delivery and uses it to fetch the corresponding
   /// delivery object which is then set in the [DeliveryNotifier]. If no
   /// delivery exists for current user or the user doesn't have the `canteen`
   /// role, it creates a dummy delivery.
   static Future<void> loadUserInfo(BuildContext context) async {
-    final authService = GetIt.I<AuthService>();
+    final getUserData = GetIt.I<GetUserDataUseCase>();
     final userNotifier = context.read<UserNotifier>();
     final deliveryNotifier = context.read<DeliveryNotifier>();
 
-    final user = await authService.getUserData();
+    final user = await getUserData.invoke();
 
     if (context.mounted) {
       userNotifier.user = user;

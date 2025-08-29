@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zachranobed/models/dto/appconfig_dto.dart';
+import 'package:zachranobed/models/dto/app_config_dto.dart';
+import 'package:zachranobed/models/dto/app_terms_config_dto.dart';
 import 'package:zachranobed/models/dto/configuration_contacts_dto.dart';
 
 class ConfigurationService {
-  final _contactsDocument = FirebaseFirestore.instance
+  final _contactsDocument = FirebaseFirestore.instance //
       .collection('appConfiguration')
       .doc('contacts')
       .withConverter(
@@ -14,13 +15,24 @@ class ConfigurationService {
         toFirestore: (value, options) => value.toJson(),
       );
 
-  final _appConfigDocument = FirebaseFirestore.instance
+  final _appConfigDocument = FirebaseFirestore.instance //
       .collection('appConfiguration')
       .doc('app-config')
       .withConverter(
         fromFirestore: (snapshot, _) {
           final json = snapshot.data() ?? {};
           return AppConfigDto.fromJson(json);
+        },
+        toFirestore: (value, options) => value.toJson(),
+      );
+
+  final _appTermsConfigDocument = FirebaseFirestore.instance //
+      .collection('appConfiguration')
+      .doc('app-terms')
+      .withConverter(
+        fromFirestore: (snapshot, _) {
+          final json = snapshot.data() ?? {};
+          return AppTermsConfigDto.fromJson(json);
         },
         toFirestore: (value, options) => value.toJson(),
       );
@@ -32,6 +44,11 @@ class ConfigurationService {
 
   Future<AppConfigDto?> fetchAppConfig() async {
     final snapshot = await _appConfigDocument.get();
+    return snapshot.data();
+  }
+
+  Future<AppTermsConfigDto?> fetchAppTermsConfig() async {
+    final snapshot = await _appTermsConfigDocument.get();
     return snapshot.data();
   }
 }

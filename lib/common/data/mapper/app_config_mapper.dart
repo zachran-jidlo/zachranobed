@@ -1,5 +1,5 @@
-import 'package:zachranobed/features/forceupdate/domain/model/app_config.dart';
-import 'package:zachranobed/models/dto/appconfig_dto.dart';
+import 'package:zachranobed/common/domain/model/app_config.dart';
+import 'package:zachranobed/models/dto/app_config_dto.dart';
 
 /// DTO to domain mapper for [AppConfig].
 extension AppConfigMapper on AppConfigDto {
