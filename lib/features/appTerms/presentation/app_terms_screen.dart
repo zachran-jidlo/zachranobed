@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
@@ -124,7 +125,12 @@ class _AppTermsScreen extends State<AppTermsScreen> {
   }
 
   void _setNewestAcceptedAppTerms() async {
-    await _setNewestAcceptedAppTermsUseCase.invoke();
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return;
+    }
+
+    await _setNewestAcceptedAppTermsUseCase.invoke(user);
     if (mounted) {
       context.router.replace(const HomeRoute());
     }

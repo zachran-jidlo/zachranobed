@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
@@ -14,7 +15,6 @@ import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/routes/app_router.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/services/auth_service.dart';
 
 class AppRoot extends StatefulWidget {
   const AppRoot({super.key});
@@ -25,9 +25,9 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
-  final _authService = GetIt.I<AuthService>();
-  final _checkIfUpgradeAppShouldBeShownUseCase = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
-  final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
+  final _getUserData = GetIt.I<GetUserDataUseCase>();
+  final _checkIfUpgradeAppShouldBeShown = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
+  final _getAppTermsStatus = GetIt.I<GetAppTermsStatusUseCase>();
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   }
 
   void _applicationStartCheck() async {
-    final shouldShow = await _checkIfUpgradeAppShouldBeShownUseCase.invoke();
+    final shouldShow = await _checkIfUpgradeAppShouldBeShown.invoke();
     if (shouldShow) {
       _appRouter.replace(const ForceUpdateRoute());
     }
@@ -51,13 +51,13 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   }
 
   void _checkAppTerms() async {
-    final user = await _authService.getUserData();
+    final user = await _getUserData.invoke();
     if (user == null) {
       // User is not logged in, do not check app terms
       return;
     }
 
-    final status = await _getAppTermsStatusUseCase.invoke(user);
+    final status = await _getAppTermsStatus.invoke(user);
     if (status != AppTermsStatus.accepted) {
       _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
     }

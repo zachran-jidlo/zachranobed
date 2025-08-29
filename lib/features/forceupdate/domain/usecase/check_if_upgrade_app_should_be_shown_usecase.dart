@@ -2,7 +2,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/device_utils.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
-import 'package:zachranobed/features/appConfiguration/domain/repository/app_configuration_repository.dart';
+import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
 
 /// Use case to check if upgrade app should be shown.
 class CheckIfUpgradeAppShouldBeShownUseCase {

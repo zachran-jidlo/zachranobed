@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
 /*
- * Command to rebuild the contact_dto.g.dart file:
+ * Command to rebuild the g.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
-part 'appconfig_dto.g.dart';
+part 'app_config_dto.g.dart';
 
 @JsonSerializable()
 class AppConfigDto {
