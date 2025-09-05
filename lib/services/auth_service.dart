@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
-import 'package:zachranobed/common/prefs/app_preferences.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/dto/entity_dto.dart';

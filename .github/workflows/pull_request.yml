@@ -1,0 +1,55 @@
+# This workflow runs on pushes and pull requests to the `develop` branch.
+# It has two jobs:
+# 1. build → Builds the Flutter project
+# 2. lint  → Runs static analysis with `dart run custom_lint` and fails on issues
+name: Pull Request Checks
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+# Cancel older runs for the same PR if a new commit is pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkouts the repository with entire commit history, which is needed to calculate the
+      # correct build version code in 'Setup environment' step.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setups Java, Flutter and correct version code before build.
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      # Builds a debug APK for the 'dev' flavor.
+      - name: Build Android APK
+        run: flutter build apk --debug --flavor dev
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkouts the repository with entire commit history, which is needed to calculate the
+      # correct build version code in 'Setup environment' step.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setups Java, Flutter and correct version code before build.
+      - name: Setup environment
+        uses: ./.github/actions/setup
+
+      # Run custom lint with project rules
+      - name: Run custom lint
+        run: dart run custom_lint

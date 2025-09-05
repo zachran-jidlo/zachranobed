@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/platform_utils.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/entity_service.dart';
-
-import '../common/constants.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   ZOLogger.logMessage('''

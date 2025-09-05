@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
 import 'package:zachranobed/features/foodboxes/data/mapper/food_box_mapper.dart';
-import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';

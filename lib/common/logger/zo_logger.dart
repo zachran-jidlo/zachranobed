@@ -2,8 +2,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
-import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 
 /// `ZOLogger` is a utility class for logging messages and exceptions.
 /// It supports both console logging with enhanced readability via PrettyPrinter

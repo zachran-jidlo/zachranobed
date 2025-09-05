@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/prefs/app_preferences.dart';
+import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/features/activepair/data/repository/firebase_entity_pairs_repository.dart';
 import 'package:zachranobed/features/activepair/domain/repository/entity_pairs_repository.dart';
 import 'package:zachranobed/features/activepair/domain/usecase/change_active_pair_use_case.dart';

@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:zachranobed/common/di/common_dependency_container.dart';
+import 'package:zachranobed/common/domain/model/project_configuration.dart';
 import 'package:zachranobed/common/firebase/firebase_helper.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/features/activepair/di/active_pair_dependency_container.dart';
-import 'package:zachranobed/features/appConfiguration/app_configuration.dart';
-import 'package:zachranobed/features/appConfiguration/mapper/app_configuration_mapper.dart';
 import 'package:zachranobed/features/appTerms/di/app_terms_dependency_container.dart';
 import 'package:zachranobed/features/foodboxes/di/food_box_dependency_container.dart';
 import 'package:zachranobed/features/forceupdate/domain/di/force_update_dependency_container.dart';
@@ -23,9 +22,9 @@ import 'package:zachranobed/ui/widgets/app_root.dart';
 void main() async {
   const webAppFlavor = String.fromEnvironment('WEB_APP_FLAVOR');
   const flavor = webAppFlavor != '' ? webAppFlavor : appFlavor;
-  AppConfiguration.instance.set(
-    AppConfigurationMapper.mapBuildConfiguration(flavor),
-    AppConfigurationMapper.mapApiConfiguration(flavor),
+  ProjectConfiguration.instance.set(
+    ProjectConfigurationMapper.mapBuildConfiguration(flavor),
+    ProjectConfigurationMapper.mapApiConfiguration(flavor),
   );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
