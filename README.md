@@ -60,6 +60,28 @@ Listed in `pubspec.yaml`:
 - `flutter_local_notifications` – For local notifications
 - `intl` & `flutter_localizations` – Localization support
 
+## Architecture
+
+> ⚠️ **Work in Progress (WIP)** – the architecture is still evolving.
+
+This project follows a **feature-based architecture** combined with **Clean Architecture principles** inside each feature. The goal is to keep the codebase modular, testable, and scalable.
+
+### 📂 Directory Structure
+
+```
+lib/
+├── common/                # Shared utilities, widgets, themes, etc.
+├── features/              # Features directory
+│   └── <feature_name>/    # Each feature is isolated
+│       ├── domain/        # Models, repositories (interfaces), use cases
+│       ├── data/          # Repository implementations, services, DTOs, mappers
+│       ├── presentation/  # UI layer (screens, widgets, state management)
+│       └── di/            # Dependency injection setup for this feature
+└── main.dart              # App entry point
+```
+
+![Architecture](docs/images/image_docs_architecture.png)
+
 ## 🛠 CI/CD (GitHub Actions)
 
 The project uses GitHub Actions for CI/CD to automatically build and deliver new versions of mobile apps to Firebase App Distribution and deploy new version of the web. Environment variables and secrets (e.g., Firebase tokens) are stored securely using **GitHub Secrets**.
@@ -73,4 +95,4 @@ Built with 💙 using [Flutter](https://flutter.dev) and [Firebase](https://fire
 
 ---
 
-*README updated on July 3, 2025.*
+*README updated on September 5, 2025.*
