@@ -3,12 +3,12 @@ import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 import 'package:lint_arch/rule/utils/arch_utils.dart';
 
-/// Rule that checks dependencies between Clean Architecture layers.
-class InvalidFeatureLayerDependencyRule extends DartLintRule {
-  InvalidFeatureLayerDependencyRule() : super(code: _code);
+/// Rule that checks dependencies between Clean Architecture layers in common directory.
+class InvalidCommonLayerDependencyRule extends DartLintRule {
+  InvalidCommonLayerDependencyRule() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'invalid_feature_layer_dependency',
+    name: 'invalid_common_layer_dependency',
     problemMessage: 'Invalid import between Clean Architecture layers.',
     correctionMessage: 'Check Clean Architecture rules: domain → none, data → domain, presentation → domain, di → all.',
     errorSeverity: ErrorSeverity.ERROR,
@@ -22,25 +22,25 @@ class InvalidFeatureLayerDependencyRule extends DartLintRule {
   ) {
     final filePath = resolver.source.fullName;
 
-    // Match: lib/features/<feature>/<layer>/...
-    final featurePattern = RegExp(r'features/([^/]+)/([^/]+)/');
-    final match = featurePattern.firstMatch(filePath);
+    // Match: lib/common/<layer>/...
+    final commonPattern = RegExp(r'common/([^/]+)/');
+    final match = commonPattern.firstMatch(filePath);
 
     if (match == null) return;
 
-    final currentLayer = match.group(2);
+    final currentLayer = match.group(1);
 
     context.registry.addImportDirective((node) {
       final importUri = node.uri.stringValue;
       if (importUri == null || !importUri.startsWith('package:')) return;
 
       final importPath = importUri.replaceFirst('package:', '');
-      final importedMatch = featurePattern.firstMatch(importPath);
+      final importedMatch = commonPattern.firstMatch(importPath);
 
       // Ignore if not importing another layer
       if (importedMatch == null) return;
 
-      final importedLayer = importedMatch.group(2);
+      final importedLayer = importedMatch.group(1);
 
       if (!ArchUtils.isLayerAllowed(currentLayer, importedLayer)) {
         reporter.atNode(node, _code);
