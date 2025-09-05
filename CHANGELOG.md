@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-368** Reorganize image assets and remove unused code.
+- **ZOB-371** Add custom lint rules to support architecture.
 
 ### Removed
 
