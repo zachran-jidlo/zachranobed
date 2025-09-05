@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
+import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
-import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/offeredfood/data/mapper/offered_food_mapper.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';

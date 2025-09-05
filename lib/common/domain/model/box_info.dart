@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 /*
- * Command to rebuild the box_info.g.dart file:
+ * Command to rebuild the freezed.dart file:
  * flutter packages pub run build_runner build --delete-conflicting-outputs
  */
 part 'box_info.freezed.dart';

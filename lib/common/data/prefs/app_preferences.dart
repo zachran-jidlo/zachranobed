@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zachranobed/common/prefs/entity_pair_struct.dart';
+import 'package:zachranobed/common/data/prefs/entity_pair_struct.dart';
 
 /// A wrapper around [SharedPreferences] for managing application preferences.
 class AppPreferences {

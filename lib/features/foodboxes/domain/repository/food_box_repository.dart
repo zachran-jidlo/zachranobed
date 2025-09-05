@@ -1,4 +1,4 @@
-import 'package:zachranobed/features/foodboxes/domain/model/box_info.dart';
+import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';

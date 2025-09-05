@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:zachranobed/common/prefs/app_preferences.dart';
-import 'package:zachranobed/common/prefs/entity_pair_struct.dart';
+import 'package:zachranobed/common/data/prefs/app_preferences.dart';
+import 'package:zachranobed/common/data/prefs/entity_pair_struct.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/repository/entity_pairs_repository.dart';
 import 'package:zachranobed/models/mapper/entity_pair_mapper.dart';
@@ -48,18 +48,14 @@ class FirebaseEntityPairsRepository implements EntityPairsRepository {
     );
 
     final activePair = entityPairs.firstWhere(
-      (pair) =>
-          pair.donorId == user.activePair.donorId &&
-          pair.recipientId == user.activePair.recipientId,
+      (pair) => pair.donorId == user.activePair.donorId && pair.recipientId == user.activePair.recipientId,
     );
 
     return EntityPairsSummary(
       active: activePair,
       otherPairs: entityPairs
           .whereNot(
-            (pair) =>
-                pair.donorId == activePair.donorId &&
-                pair.recipientId == activePair.recipientId,
+            (pair) => pair.donorId == activePair.donorId && pair.recipientId == activePair.recipientId,
           )
           .toList(),
     );

@@ -5,13 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
+import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/logger/zo_logger.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/login/domain/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -22,7 +22,6 @@ import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
-
   const LoginScreen({super.key});
 
   @override
@@ -201,8 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         await HelperService.loadUserInfo(context);
 
-        ZOLogger.logMessage(
-            "Přihlášen uživatel: ${HelperService.getCurrentUser(_formKey.currentContext!)?.debugInfo}");
+        ZOLogger.logMessage("Přihlášen uživatel: ${HelperService.getCurrentUser(_formKey.currentContext!)?.debugInfo}");
 
         _continueToLoggedInContext();
       }

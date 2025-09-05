@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/repository/firebase_app_configuration_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_user_repository.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
-import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
-import 'package:zachranobed/common/prefs/app_preferences.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
+import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/configuration_service.dart';
 
