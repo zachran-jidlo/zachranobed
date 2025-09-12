@@ -4,6 +4,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
@@ -11,7 +12,6 @@ import 'package:zachranobed/features/offeredfood/presentation/widget/donated_foo
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/app_bar.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/card_row.dart';

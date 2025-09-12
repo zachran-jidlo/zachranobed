@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
-import 'package:zachranobed/routes/app_router.dart';
+import 'package:zachranobed/common/presentation/router/app_router.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/services/carrier_service.dart';
 import 'package:zachranobed/services/configuration_service.dart';

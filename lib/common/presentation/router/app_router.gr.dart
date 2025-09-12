@@ -13,41 +13,27 @@ import 'package:auto_route/auto_route.dart' as _i19;
 import 'package:collection/collection.dart' as _i25;
 import 'package:flutter/foundation.dart' as _i22;
 import 'package:flutter/material.dart' as _i20;
-import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart'
-    as _i3;
-import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart'
-    as _i1;
+import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart' as _i3;
+import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart' as _i1;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i6;
-import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart'
-    as _i21;
-import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart'
-    as _i24;
-import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_detail_screen.dart'
-    as _i2;
-import 'package:zachranobed/features/forceupdate/presentation/force_update_screen.dart'
-    as _i8;
-import 'package:zachranobed/features/login/presentation/screen/login_screen.dart'
-    as _i11;
-import 'package:zachranobed/features/menu/presentation/contacts_screen.dart'
-    as _i5;
-import 'package:zachranobed/features/menu/presentation/menu_screen.dart'
-    as _i12;
-import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart'
-    as _i13;
-import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart'
-    as _i26;
-import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart'
-    as _i23;
-import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart'
-    as _i7;
+import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart' as _i21;
+import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart' as _i24;
+import 'package:zachranobed/features/foodboxes/presentation/screen/box_movement_detail_screen.dart' as _i2;
+import 'package:zachranobed/features/forceupdate/presentation/force_update_screen.dart' as _i8;
+import 'package:zachranobed/features/login/presentation/screen/login_screen.dart' as _i11;
+import 'package:zachranobed/features/menu/presentation/contacts_screen.dart' as _i5;
+import 'package:zachranobed/features/menu/presentation/menu_screen.dart' as _i12;
+import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart' as _i13;
+import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart' as _i26;
+import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart' as _i23;
+import 'package:zachranobed/features/offeredfood/presentation/screens/donated_food_detail_screen.dart' as _i7;
 import 'package:zachranobed/ui/screens/change_password_screen.dart' as _i4;
 import 'package:zachranobed/ui/screens/forgot_password_screen.dart' as _i9;
 import 'package:zachranobed/ui/screens/home_screen.dart' as _i10;
 import 'package:zachranobed/ui/screens/offer_food_boxes_screen.dart' as _i15;
 import 'package:zachranobed/ui/screens/offer_food_detail_screen.dart' as _i14;
 import 'package:zachranobed/ui/screens/offer_food_overview_screen.dart' as _i16;
-import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart'
-    as _i17;
+import 'package:zachranobed/ui/screens/order_shipping_of_boxes_screen.dart' as _i17;
 import 'package:zachranobed/ui/screens/thank_you_screen.dart' as _i18;
 
 /// generated route for
@@ -105,8 +91,7 @@ class AppTermsRouteArgs {
 
 /// generated route for
 /// [_i2.BoxMovementDetailScreen]
-class BoxMovementDetailRoute
-    extends _i19.PageRouteInfo<BoxMovementDetailRouteArgs> {
+class BoxMovementDetailRoute extends _i19.PageRouteInfo<BoxMovementDetailRouteArgs> {
   BoxMovementDetailRoute({
     _i20.Key? key,
     required _i21.BoxMovement boxMovement,
@@ -189,8 +174,7 @@ class ChangePasswordRoute extends _i19.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.ContactsScreen]
 class ContactsRoute extends _i19.PageRouteInfo<void> {
-  const ContactsRoute({List<_i19.PageRouteInfo>? children})
-      : super(ContactsRoute.name, initialChildren: children);
+  const ContactsRoute({List<_i19.PageRouteInfo>? children}) : super(ContactsRoute.name, initialChildren: children);
 
   static const String name = 'ContactsRoute';
 
@@ -205,8 +189,7 @@ class ContactsRoute extends _i19.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.DebugScreen]
 class DebugRoute extends _i19.PageRouteInfo<void> {
-  const DebugRoute({List<_i19.PageRouteInfo>? children})
-      : super(DebugRoute.name, initialChildren: children);
+  const DebugRoute({List<_i19.PageRouteInfo>? children}) : super(DebugRoute.name, initialChildren: children);
 
   static const String name = 'DebugRoute';
 
@@ -220,8 +203,7 @@ class DebugRoute extends _i19.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.DonatedFoodDetailScreen]
-class DonatedFoodDetailRoute
-    extends _i19.PageRouteInfo<DonatedFoodDetailRouteArgs> {
+class DonatedFoodDetailRoute extends _i19.PageRouteInfo<DonatedFoodDetailRouteArgs> {
   DonatedFoodDetailRoute({
     _i22.Key? key,
     required _i23.OfferedFood offeredFood,
@@ -304,8 +286,7 @@ class ForgotPasswordRoute extends _i19.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.HomeScreen]
 class HomeRoute extends _i19.PageRouteInfo<void> {
-  const HomeRoute({List<_i19.PageRouteInfo>? children})
-      : super(HomeRoute.name, initialChildren: children);
+  const HomeRoute({List<_i19.PageRouteInfo>? children}) : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -320,8 +301,7 @@ class HomeRoute extends _i19.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.LoginScreen]
 class LoginRoute extends _i19.PageRouteInfo<void> {
-  const LoginRoute({List<_i19.PageRouteInfo>? children})
-      : super(LoginRoute.name, initialChildren: children);
+  const LoginRoute({List<_i19.PageRouteInfo>? children}) : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -336,8 +316,7 @@ class LoginRoute extends _i19.PageRouteInfo<void> {
 /// generated route for
 /// [_i12.MenuScreen]
 class MenuRoute extends _i19.PageRouteInfo<void> {
-  const MenuRoute({List<_i19.PageRouteInfo>? children})
-      : super(MenuRoute.name, initialChildren: children);
+  const MenuRoute({List<_i19.PageRouteInfo>? children}) : super(MenuRoute.name, initialChildren: children);
 
   static const String name = 'MenuRoute';
 
@@ -435,14 +414,12 @@ class OfferFoodBoxesRouteArgs {
   }
 
   @override
-  int get hashCode =>
-      key.hashCode ^ const _i25.MapEquality().hash(currentBoxesQuantity);
+  int get hashCode => key.hashCode ^ const _i25.MapEquality().hash(currentBoxesQuantity);
 }
 
 /// generated route for
 /// [_i14.OfferFoodEditExistingScreen]
-class OfferFoodEditExistingRoute
-    extends _i19.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
+class OfferFoodEditExistingRoute extends _i19.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i20.Key? key,
     required _i26.FoodInfo foodInfo,
@@ -508,8 +485,7 @@ class OfferFoodInitialRoute extends _i19.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i16.OfferFoodOverviewScreen]
-class OfferFoodOverviewRoute
-    extends _i19.PageRouteInfo<OfferFoodOverviewRouteArgs> {
+class OfferFoodOverviewRoute extends _i19.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i20.Key? key,
     required List<_i26.FoodInfo> initialFoodInfos,
@@ -561,8 +537,7 @@ class OfferFoodOverviewRouteArgs {
   }
 
   @override
-  int get hashCode =>
-      key.hashCode ^ const _i25.ListEquality().hash(initialFoodInfos);
+  int get hashCode => key.hashCode ^ const _i25.ListEquality().hash(initialFoodInfos);
 }
 
 /// generated route for
@@ -636,9 +611,7 @@ class ThankYouRouteArgs {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! ThankYouRouteArgs) return false;
-    return key == other.key &&
-        isSuccess == other.isSuccess &&
-        message == other.message;
+    return key == other.key && isSuccess == other.isSuccess && message == other.message;
   }
 
   @override
