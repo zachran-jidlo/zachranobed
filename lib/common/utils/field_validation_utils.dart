@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 
 /// Provides utility methods for field validation.
 class FieldValidationUtils {
@@ -171,40 +170,6 @@ class FieldValidationUtils {
     return (value) {
       if (value == null || value <= 0) {
         return context.l10n!.invalidFieldPackages;
-      }
-      return null;
-    };
-  }
-
-  /// Returns a validator for consume by field.
-  /// The validator checks if the value is set and date is not in the past.
-  static String? Function(FoodDateTime?) getConsumeByValidator(
-    BuildContext context,
-  ) {
-    return (value) {
-      if (value == null) {
-        return context.l10n!.invalidFieldConsumeBy;
-      }
-      final now = DateTime.now();
-      if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
-        return context.l10n!.invalidFieldConsumeByDateInPast;
-      }
-      return null;
-    };
-  }
-
-  /// Returns a validator for prepared at field.
-  /// The validator checks if the value is set and date is not in the future.
-  static String? Function(FoodDateTime?) getPreparedAtValidator(
-    BuildContext context,
-  ) {
-    return (value) {
-      if (value == null) {
-        return context.l10n!.invalidFieldPreparedAt;
-      }
-      final now = DateTime.now();
-      if (value is FoodDateTimeSpecified && value.date.isAfter(now)) {
-        return context.l10n!.invalidFieldPreparedAtDateInPast;
       }
       return null;
     };

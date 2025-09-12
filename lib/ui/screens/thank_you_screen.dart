@@ -4,8 +4,8 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/image_assets.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
@@ -50,8 +50,7 @@ class ThankYouScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: GapSize.xxl),
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: GapSize.l),
+                      padding: const EdgeInsets.symmetric(horizontal: GapSize.l),
                       child: _screenContent(context, useWideButton: false),
                     ),
                     const SizedBox(height: 80.0),

@@ -35,7 +35,6 @@ class FoodInfoFields extends StatefulWidget {
 }
 
 class _FoodInfoFieldsState extends State<FoodInfoFields> {
-
   @override
   Widget build(BuildContext context) {
     const index = 0;
@@ -256,7 +255,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         },
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
-          FieldValidationUtils.getPreparedAtValidator(context),
+          getPreparedAtValidator(context),
         ),
         formatSelectedDate: (e) => null,
         hasTime: false,
@@ -302,7 +301,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         },
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
-          FieldValidationUtils.getConsumeByValidator(context),
+          getConsumeByValidator(context),
         ),
         formatSelectedDate: context.l10n!.consumeByTemplate,
         initialTime: _consumeByInitialTime,
@@ -321,5 +320,39 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
 
   String _createFormFieldKey(FormFieldType type) {
     return "food${widget.foodInfo.id}-field${type.name.toUpperCase()}";
+  }
+
+  /// Returns a validator for consume by field.
+  /// The validator checks if the value is set and date is not in the past.
+  static String? Function(FoodDateTime?) getConsumeByValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.invalidFieldConsumeBy;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
+        return context.l10n!.invalidFieldConsumeByDateInPast;
+      }
+      return null;
+    };
+  }
+
+  /// Returns a validator for prepared at field.
+  /// The validator checks if the value is set and date is not in the future.
+  static String? Function(FoodDateTime?) getPreparedAtValidator(
+    BuildContext context,
+  ) {
+    return (value) {
+      if (value == null) {
+        return context.l10n!.invalidFieldPreparedAt;
+      }
+      final now = DateTime.now();
+      if (value is FoodDateTimeSpecified && value.date.isAfter(now)) {
+        return context.l10n!.invalidFieldPreparedAtDateInPast;
+      }
+      return null;
+    };
   }
 }

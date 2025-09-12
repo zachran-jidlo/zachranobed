@@ -2,9 +2,12 @@
 
 ## 📝 Description
 
-Zachraň oběd is a non-profit platform that connects canteens, restaurants and other food providers with charities and shelters to donate surplus cooked meals that would otherwise go to waste.
+Zachraň oběd is a non-profit platform that connects canteens, restaurants and other food providers with charities and
+shelters to donate surplus cooked meals that would otherwise go to waste.
 
-The goal is to prevent food waste by redistributing safe, freshly prepared meals to people in need. The platform ensures compliance with hygiene and legal standards and supports both public institutions (like school cafeterias or hospitals) and private donors.
+The goal is to prevent food waste by redistributing safe, freshly prepared meals to people in need. The platform ensures
+compliance with hygiene and legal standards and supports both public institutions (like school cafeterias or hospitals)
+and private donors.
 
 Key Highlights:
 
@@ -64,19 +67,32 @@ Listed in `pubspec.yaml`:
 
 > ⚠️ **Work in Progress (WIP)** – the architecture is still evolving.
 
-This project follows a **feature-based architecture** combined with **Clean Architecture principles** inside each feature. The goal is to keep the codebase modular, testable, and scalable.
+This project follows a **feature-based architecture** combined with **Clean Architecture principles** inside each
+feature. The goal is to keep the codebase modular, testable, and scalable.
 
 ### 📂 Directory Structure
 
 ```
 lib/
-├── common/                # Shared utilities, widgets, themes, etc.
-├── features/              # Features directory
+├── app/                   # Application wide components
+│   ├── domain/            # Models, repositories (interfaces), use cases
+│   ├── data/              # Repository implementations, services, DTOs, mappers
+│   ├── presentation/      # Application UI widgets, screens
+│   └── di/                # Application dependency injection setup
+│
+├── feature/               # Features directory
 │   └── <feature_name>/    # Each feature is isolated
 │       ├── domain/        # Models, repositories (interfaces), use cases
 │       ├── data/          # Repository implementations, services, DTOs, mappers
 │       ├── presentation/  # UI layer (screens, widgets, state management)
 │       └── di/            # Dependency injection setup for this feature
+│
+├── common/                # Shared components
+│   ├── domain/            # Shared models, repositories (interfaces), use cases
+│   ├── data/              # Shared repository implementations, services, DTOs, mappers
+│   ├── presentation/      # Shared UI widgets, styles, colors
+│   └── di/                # Injection setup for common components
+│
 └── main.dart              # App entry point
 ```
 
@@ -84,7 +100,9 @@ lib/
 
 ## 🛠 CI/CD (GitHub Actions)
 
-The project uses GitHub Actions for CI/CD to automatically build and deliver new versions of mobile apps to Firebase App Distribution and deploy new version of the web. Environment variables and secrets (e.g., Firebase tokens) are stored securely using **GitHub Secrets**.
+The project uses GitHub Actions for CI/CD to automatically build and deliver new versions of mobile apps to Firebase App
+Distribution and deploy new version of the web. Environment variables and secrets (e.g., Firebase tokens) are stored
+securely using **GitHub Secrets**.
 
 ## 📞 Contact & Acknowledgements
 

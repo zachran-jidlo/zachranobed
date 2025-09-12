@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
-import 'package:zachranobed/routes/guards/auth_guard.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/router/auth_guard.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {

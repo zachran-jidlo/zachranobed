@@ -7,12 +7,12 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/services/auth_service.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
@@ -27,8 +27,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with LifecycleWatcher, SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTickerProviderStateMixin {
   /// The data for the tabs.
   final _tabs = [
     _TabScreenData(
@@ -143,9 +142,7 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             Expanded(
               child: Center(
-                child: SizedBox(
-                    width: LayoutStyle.webBreakpoint.toDouble(),
-                    child: _homeScreenContent()),
+                child: SizedBox(width: LayoutStyle.webBreakpoint.toDouble(), child: _homeScreenContent()),
               ),
             ),
           ],
@@ -162,11 +159,8 @@ class _HomeScreenState extends State<HomeScreen>
                 child: TabBar(
                   controller: _tabController,
                   splashFactory: NoSplash.splashFactory,
-                  overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                      (Set<WidgetState> states) {
-                    return states.contains(WidgetState.focused)
-                        ? null
-                        : Colors.transparent;
+                  overlayColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                    return states.contains(WidgetState.focused) ? null : Colors.transparent;
                   }),
                   unselectedLabelColor: ZOColors.onPrimaryLight,
                   indicatorColor: Colors.transparent,

@@ -4,11 +4,11 @@ import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
 import 'package:zachranobed/ui/widgets/dialog.dart';
 
 class NewOfferFloatingButton extends StatelessWidget {

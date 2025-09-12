@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:zachranobed/routes/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 
 class AuthGuard extends AutoRouteGuard {
   /// Determines whether the user is authenticated during the navigation.
