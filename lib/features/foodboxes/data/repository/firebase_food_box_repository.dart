@@ -1,4 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_pair_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_type_dto.dart';
+import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
+import 'package:zachranobed/common/data/service/delivery_service.dart';
+import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
+import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/utils/date_time_utils.dart';
 import 'package:zachranobed/common/utils/iterable_utils.dart';
@@ -9,16 +17,8 @@ import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/models/dto/delivery_dto.dart';
-import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
-import 'package:zachranobed/models/dto/food_box_pair_dto.dart';
-import 'package:zachranobed/models/dto/food_box_type_dto.dart';
 import 'package:zachranobed/models/food_boxes_checkup.dart';
-import 'package:zachranobed/models/mapper/food_boxes_checkup_mapper.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/delivery_service.dart';
-import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/food_box_service.dart';
 
 /// Implementation of the [FoodBoxRepository] via Firebase services.
 class FirebaseFoodBoxRepository implements FoodBoxRepository {

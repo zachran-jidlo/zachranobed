@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/dto/delivery_dto.dart';
 
 /// DTO to domain mapper for [Delivery].
 extension DeliveryMapper on DeliveryDto {

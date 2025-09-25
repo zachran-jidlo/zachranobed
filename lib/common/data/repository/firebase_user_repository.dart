@@ -1,6 +1,6 @@
+import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/auth_service.dart';
 
 /// Implementation of the [UserRepository] via Firebase services.
 class FirebaseUserRepository implements UserRepository {

@@ -1,9 +1,9 @@
 import 'package:zachranobed/common/data/mapper/app_config_mapper.dart';
 import 'package:zachranobed/common/data/mapper/app_terms_config_mapper.dart';
+import 'package:zachranobed/common/data/service/configuration_service.dart';
 import 'package:zachranobed/common/domain/model/app_config.dart';
 import 'package:zachranobed/common/domain/model/app_terms_config.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
-import 'package:zachranobed/services/configuration_service.dart';
 
 class FirebaseAppConfigurationRepository implements AppConfigurationRepository {
   final ConfigurationService _configurationService;

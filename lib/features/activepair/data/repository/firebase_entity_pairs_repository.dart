@@ -1,12 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/prefs/entity_pair_struct.dart';
+import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
+import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/repository/entity_pairs_repository.dart';
-import 'package:zachranobed/models/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/entity_service.dart';
 
 /// Implementation of the [EntityPairsRepository] via Firebase services.
 class FirebaseEntityPairsRepository implements EntityPairsRepository {

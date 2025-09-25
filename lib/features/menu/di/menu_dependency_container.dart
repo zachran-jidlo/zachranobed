@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/data/service/carrier_service.dart';
+import 'package:zachranobed/common/data/service/configuration_service.dart';
+import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
+import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/features/menu/data/repository/firebase_contacts_repository.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';
-import 'package:zachranobed/services/carrier_service.dart';
-import 'package:zachranobed/services/configuration_service.dart';
-import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/entity_service.dart';
 
 class MenuDependencyContainer {
   const MenuDependencyContainer._();

@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/data/service/entity_notification_service.dart';
 import 'package:zachranobed/features/notifications/data/repository/firebase_notifications_repository.dart';
 import 'package:zachranobed/features/notifications/domain/repository/notifications_repository.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/mark_as_read_all_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/observe_notifications_use_case.dart';
-import 'package:zachranobed/services/entity_notification_service.dart';
 
 class NotificationsDependencyContainer {
   const NotificationsDependencyContainer._();
