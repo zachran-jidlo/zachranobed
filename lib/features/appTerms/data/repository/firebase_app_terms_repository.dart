@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/features/appTerms/domain/repository/app_terms_repository.dart';
-import 'package:zachranobed/services/entity_service.dart';
 
 /// Implementation of the [AppTermsRepository] via Firebase services.
 class FirebaseAppTermsRepository implements AppTermsRepository {

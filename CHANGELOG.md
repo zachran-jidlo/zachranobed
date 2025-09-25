@@ -11,6 +11,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-160** Refactor auth service usage, move some shared components to common folder.
 - **ZOB-368** Reorganize image assets and remove unused code.
 - **ZOB-371** Add custom lint rules to support architecture.
+- **ZOB-378** Move DTOs and services.
 
 ### Removed
 

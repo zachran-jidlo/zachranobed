@@ -1,16 +1,16 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
+import 'package:zachranobed/common/data/service/carrier_service.dart';
+import 'package:zachranobed/common/data/service/configuration_service.dart';
+import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
+import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/utils/generic_utils.dart';
 import 'package:zachranobed/features/menu/data/mapper/contacts_mapper.dart';
 import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
-import 'package:zachranobed/models/dto/entity_pair_dto.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/carrier_service.dart';
-import 'package:zachranobed/services/configuration_service.dart';
-import 'package:zachranobed/services/entity_pairs_service.dart';
-import 'package:zachranobed/services/entity_service.dart';
 
 /// Implementation of the [ContactsRepository] via Firebase services.
 class FirebaseContactsRepository implements ContactsRepository {
@@ -52,9 +52,7 @@ class FirebaseContactsRepository implements ContactsRepository {
     String entityId,
     List<EntityPairDto> pairs,
   ) {
-    return pairs
-        .map((e) => entityId == e.recipientId ? e.donorId : e.recipientId)
-        .toList();
+    return pairs.map((e) => entityId == e.recipientId ? e.donorId : e.recipientId).toList();
   }
 
   /// Retrieves a list of [EntityContacts] of given entity IDs.
@@ -88,11 +86,7 @@ class FirebaseContactsRepository implements ContactsRepository {
     // Get a set of carrier IDs to exclude duplicates
     final carrierIds = pairs.map((e) => e.carrierId).toSet().toList();
     return _carrierService.fetchCarriers(carrierIds).then((carriers) {
-      return carriers
-          .map((e) => e.contacts ?? [])
-          .flattened
-          .map((e) => e.toDomain())
-          .toList();
+      return carriers.map((e) => e.contacts ?? []).flattened.map((e) => e.toDomain()).toList();
     });
   }
 

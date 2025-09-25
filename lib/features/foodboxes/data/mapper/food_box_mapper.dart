@@ -1,8 +1,8 @@
+import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_type_dto.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/box_movement.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
-import 'package:zachranobed/models/dto/delivery_dto.dart';
-import 'package:zachranobed/models/dto/food_box_delivery_dto.dart';
-import 'package:zachranobed/models/dto/food_box_type_dto.dart';
 
 /// DTO to domain mapper for [FoodBoxType].
 extension FoodBoxTypeMapper on FoodBoxTypeDto {

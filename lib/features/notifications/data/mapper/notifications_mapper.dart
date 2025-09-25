@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/data/dto/notification_dto.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart';
-import 'package:zachranobed/models/dto/notification_dto.dart';
 
 /// DTO to domain mapper for [Notification].
 extension NotificationsMapper on NotificationDto {

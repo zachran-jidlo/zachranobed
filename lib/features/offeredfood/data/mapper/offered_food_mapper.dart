@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/meal_detail_dto.dart';
+import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
-import 'package:zachranobed/models/dto/delivery_dto.dart';
-import 'package:zachranobed/models/dto/meal_detail_dto.dart';
-import 'package:zachranobed/models/dto/meal_dto.dart';
 
 /// DTO to domain mapper for [OfferedFood].
 extension OfferedFoodMapper on MealDetailDto {

@@ -1,8 +1,8 @@
+import 'package:zachranobed/common/data/service/entity_notification_service.dart';
 import 'package:zachranobed/features/notifications/data/mapper/notifications_mapper.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart';
 import 'package:zachranobed/features/notifications/domain/repository/notifications_repository.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/services/entity_notification_service.dart';
 
 /// Implementation of the [NotificationsRepository] via Firebase services.
 class FirebaseNotificationsRepository implements NotificationsRepository {
