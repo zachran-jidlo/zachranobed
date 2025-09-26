@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -14,7 +15,6 @@ import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 /// A widget that displays a summary of the user's food box status and supports monthly food boxes checkup.
 ///

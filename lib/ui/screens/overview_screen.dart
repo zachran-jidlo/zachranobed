@@ -1,26 +1,28 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/card_row.dart';
+import 'package:zachranobed/common/presentation/widget/delivery_info_banner.dart';
+import 'package:zachranobed/common/presentation/widget/indicator.dart';
+import 'package:zachranobed/common/presentation/widget/new_offer_floating_button.dart';
+import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_floating_button.dart';
+import 'package:zachranobed/common/presentation/widget/notification_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary.dart';
+import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/offeredfood/presentation/widget/donated_food_list.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/charity.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/card_row.dart';
-import 'package:zachranobed/ui/widgets/delivery_info_banner.dart';
-import 'package:zachranobed/ui/widgets/indicator.dart';
-import 'package:zachranobed/ui/widgets/new_offer_floating_button.dart';
-import 'package:zachranobed/ui/widgets/new_shipping_of_boxes_floating_button.dart';
-import 'package:zachranobed/ui/widgets/notification_icon_button.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -31,6 +33,7 @@ class OverviewScreen extends StatefulWidget {
 
 class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   final GlobalKey _boxSummaryKey = GlobalKey();
+  final _hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
@@ -60,7 +63,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         automaticallyImplyLeading: false,
         actions: [
           NotificationIconButton(
-            user: user,
+            hasAnyUnreadNotifications: user != null ? _hasAnyUnreadNotifications.invoke(user) : Stream.value(false),
             onPressed: () {
               context.router.push(const NotificationsRoute());
             },

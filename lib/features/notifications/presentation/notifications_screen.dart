@@ -2,17 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
-import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/empty_page.dart';
+import 'package:zachranobed/common/presentation/widget/error_content.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart' as domain;
 import 'package:zachranobed/features/notifications/domain/usecase/mark_as_read_all_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/observe_notifications_use_case.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/empty_page.dart';
-import 'package:zachranobed/ui/widgets/error_content.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of notifications.
 @RoutePage()
