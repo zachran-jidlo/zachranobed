@@ -4,17 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/model/food_allergen.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/food_allergens_bottom_sheet.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/persistent_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/supporting_text.dart';
+import 'package:zachranobed/common/presentation/widget/text_field.dart';
 import 'package:zachranobed/enums/food_category.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/offered_food.dart';
-import 'package:zachranobed/ui/model/food_allergen.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/food_allergens_bottom_sheet.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
-import 'package:zachranobed/ui/widgets/snackbar/persistent_snackbar.dart';
-import 'package:zachranobed/ui/widgets/supporting_text.dart';
-import 'package:zachranobed/ui/widgets/text_field.dart';
 
 @RoutePage()
 class DonatedFoodDetailScreen extends StatelessWidget {

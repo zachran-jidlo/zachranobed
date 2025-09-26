@@ -4,17 +4,17 @@ import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/card_row.dart';
+import 'package:zachranobed/common/presentation/widget/error_content.dart';
+import 'package:zachranobed/common/presentation/widget/indicator.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/usecase/change_active_pair_use_case.dart';
 import 'package:zachranobed/features/activepair/domain/usecase/get_entity_pairs_summary_use_case.dart';
 import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/card_row.dart';
-import 'package:zachranobed/ui/widgets/error_content.dart';
-import 'package:zachranobed/ui/widgets/indicator.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that displays a list of available pairs and allows to change it.
 ///

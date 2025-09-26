@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/models/canteen.dart';
 import 'package:zachranobed/models/delivery.dart';
@@ -33,9 +33,7 @@ class DeliveryNotifier extends ChangeNotifier {
   /// The [canteen] parameter must not be null.
   void observeDelivery(Canteen canteen) {
     _streamSubscription?.cancel();
-    _streamSubscription = _repository
-        .observeCurrentDelivery(user: canteen)
-        .listen((delivery) async {
+    _streamSubscription = _repository.observeCurrentDelivery(user: canteen).listen((delivery) async {
       _delivery = delivery;
       notifyListeners();
     });

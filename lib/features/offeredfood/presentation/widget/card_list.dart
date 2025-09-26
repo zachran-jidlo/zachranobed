@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/widget/card.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/models/user_data.dart';
-import 'package:zachranobed/ui/widgets/card.dart';
 
 class CardList extends StatelessWidget {
   final UserData user;
@@ -22,8 +22,7 @@ class CardList extends StatelessWidget {
           children: [
             Expanded(
               child: ZOCard(
-                measuredValue:
-                    repository.getSavedMealsCount(user: user),
+                measuredValue: repository.getSavedMealsCount(user: user),
                 metricsText: context.l10n!.savedLunches,
                 periodText: context.l10n!.total,
               ),

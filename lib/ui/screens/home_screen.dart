@@ -7,17 +7,17 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
-import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/svg_icon.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/screen/boxes_screen.dart';
 import 'package:zachranobed/features/offeredfood/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 import 'package:zachranobed/notifiers/user_notifier.dart';
 import 'package:zachranobed/ui/screens/overview_screen.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
-import 'package:zachranobed/ui/widgets/svg_icon.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {

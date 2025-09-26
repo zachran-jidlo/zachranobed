@@ -8,11 +8,11 @@ import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/checkbox.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/checkbox.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// A screen that informs the user about application terms and conditions that need to be accepted.
 @RoutePage()

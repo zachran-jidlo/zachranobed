@@ -1,4 +1,4 @@
-import 'package:zachranobed/common/utils/date_time_utils.dart';
+import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/models/food_boxes_checkup.dart';
 import 'package:zachranobed/models/user_data.dart';
 
@@ -24,8 +24,7 @@ class Canteen extends UserData {
   /// Returns `true` if the current time is within the pickup range, `false` otherwise.
   bool isCurrentTimeWithinPickupRange() {
     DateTime now = DateTime.now();
-    DateTime timeWithin =
-        DateTimeUtils.getDateTimeOfCurrentDelivery(pickUpWithin);
+    DateTime timeWithin = DateTimeUtils.getDateTimeOfCurrentDelivery(pickUpWithin);
     return now.isBefore(timeWithin);
   }
 

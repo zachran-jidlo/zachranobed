@@ -8,6 +8,15 @@ import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/dialog.dart';
+import 'package:zachranobed/common/presentation/widget/empty_page.dart';
+import 'package:zachranobed/common/presentation/widget/food_info_row.dart';
+import 'package:zachranobed/common/presentation/widget/info_banner.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/section_header.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/foodboxes/domain/repository/food_box_repository.dart';
@@ -15,15 +24,6 @@ import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/ui/screens/offer_food_detail_screen.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/dialog.dart';
-import 'package:zachranobed/ui/widgets/empty_page.dart';
-import 'package:zachranobed/ui/widgets/food_info_row.dart';
-import 'package:zachranobed/ui/widgets/info_banner.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
-import 'package:zachranobed/ui/widgets/section_header.dart';
-import 'package:zachranobed/ui/widgets/snackbar/temporary_snackbar.dart';
 
 @RoutePage()
 class OfferFoodOverviewScreen extends StatefulWidget {

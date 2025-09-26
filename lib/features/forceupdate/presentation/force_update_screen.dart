@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/utils/store_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 @RoutePage()
 class ForceUpdateScreen extends StatelessWidget {
@@ -15,8 +15,14 @@ class ForceUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
-      web: (context) => _forceUpdateScreenContent(context: context, useWideButton: false,),
-      mobile: (context) => _forceUpdateScreenContent(context: context, useWideButton: true,),
+      web: (context) => _forceUpdateScreenContent(
+        context: context,
+        useWideButton: false,
+      ),
+      mobile: (context) => _forceUpdateScreenContent(
+        context: context,
+        useWideButton: true,
+      ),
     );
   }
 
@@ -51,10 +57,7 @@ class ForceUpdateScreen extends StatelessWidget {
                 ),
                 TextSpan(
                   text: context.l10n!.applicationName,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
                   text: context.l10n!.forceUpdateScreenDescriptionEnd,

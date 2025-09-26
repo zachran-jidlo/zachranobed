@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/content_with_loading.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/foodboxes/presentation/widget/box_summary_card.dart';
 import 'package:zachranobed/models/food_boxes_checkup_state.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/content_with_loading.dart';
 
 /// A card that displays the information that user should perform a food boxes checkup.
 class BoxSummaryCheckNeeded extends StatelessWidget {

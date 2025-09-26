@@ -4,19 +4,19 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
-import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
-import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/domain/utils/zo_logger.dart';
-import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/data/utils/device_utils.dart';
+import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
+import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/menu/menu_button.dart';
+import 'package:zachranobed/common/presentation/widget/menu/menu_item.dart';
+import 'package:zachranobed/common/presentation/widget/menu/menu_section.dart';
+import 'package:zachranobed/common/presentation/widget/menu/menu_user_info.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/menu/menu_button.dart';
-import 'package:zachranobed/ui/widgets/menu/menu_item.dart';
-import 'package:zachranobed/ui/widgets/menu/menu_section.dart';
-import 'package:zachranobed/ui/widgets/menu/menu_user_info.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 @RoutePage()
 class MenuScreen extends StatefulWidget {

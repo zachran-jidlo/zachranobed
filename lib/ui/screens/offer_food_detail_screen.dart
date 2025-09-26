@@ -2,14 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/widget/app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/dialog.dart';
+import 'package:zachranobed/common/presentation/widget/food_info_fields.dart';
+import 'package:zachranobed/common/presentation/widget/form/form_validation_manager.dart';
+import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/offeredfood/domain/model/food_info.dart';
-import 'package:zachranobed/ui/widgets/app_bar.dart';
-import 'package:zachranobed/ui/widgets/button.dart';
-import 'package:zachranobed/ui/widgets/dialog.dart';
-import 'package:zachranobed/ui/widgets/food_info_fields.dart';
-import 'package:zachranobed/ui/widgets/form/form_validation_manager.dart';
-import 'package:zachranobed/ui/widgets/screen_scaffold.dart';
 
 /// Represents the initial screen for offering food.
 ///
