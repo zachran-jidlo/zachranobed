@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/carrier_dto.dart';
-import 'package:zachranobed/common/utils/firestore_utils.dart';
+import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 
 class CarrierService {
   final _collection = FirebaseFirestore.instance //

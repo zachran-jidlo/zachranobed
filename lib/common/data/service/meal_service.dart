@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/meal_detail_dto.dart';
-import 'package:zachranobed/common/utils/firestore_utils.dart';
-import 'package:zachranobed/common/utils/future_utils.dart';
+import 'package:zachranobed/common/data/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
 class MealService {
   final _collection = FirebaseFirestore.instance.collection('meals').withConverter(

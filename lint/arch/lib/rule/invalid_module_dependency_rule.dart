@@ -24,8 +24,6 @@ class InvalidModuleDependencyRule extends DartLintRule {
 
     if (match == null) return;
 
-    print(filePath);
-
     final currentModule = match.group(1);
 
     context.registry.addImportDirective((node) {

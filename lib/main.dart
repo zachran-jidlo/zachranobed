@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:zachranobed/app/data/logger/zo_logger_initializer.dart';
 import 'package:zachranobed/app/di/app_dependency_container.dart';
 import 'package:zachranobed/app/presentation/app_root.dart';
 import 'package:zachranobed/common/domain/model/project_configuration.dart';
-import 'package:zachranobed/common/firebase/firebase_helper.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/data/utils/firebase_helper.dart';
 import 'package:zachranobed/firebase/firebase_options.dart';
 import 'package:zachranobed/firebase/notifications.dart';
 
@@ -23,7 +23,7 @@ void main() async {
   // DI Setup
   AppDependencyContainer.setup();
 
-  ZOLogger.init();
+  ZoLoggerInitializer.init();
 
   await Notifications().initNotifications();
 

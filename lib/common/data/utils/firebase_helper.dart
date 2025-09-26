@@ -1,6 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:zachranobed/common/utils/platform_utils.dart';
+import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 
 /// Helper class for Firebase Crashlytics integration in Flutter.
 class FirebaseHelper {

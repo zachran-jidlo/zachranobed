@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 
 /// Extensions on Query class.
 extension QueryUtils<T> on Query<T> {

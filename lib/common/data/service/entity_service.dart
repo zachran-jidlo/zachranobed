@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/entity_dto.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
-import 'package:zachranobed/common/utils/device_utils.dart';
-import 'package:zachranobed/common/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
+import 'package:zachranobed/common/data/utils/device_utils.dart';
+import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 
 class EntityService {
   final _collection = FirebaseFirestore.instance.collection('entities').withConverter(

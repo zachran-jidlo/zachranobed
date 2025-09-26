@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/image_assets.dart';
-import 'package:zachranobed/common/utils/platform_utils.dart';
+import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/ui/widgets/button.dart';
 import 'package:zachranobed/ui/widgets/screen_scaffold.dart';

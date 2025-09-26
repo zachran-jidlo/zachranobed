@@ -10,7 +10,7 @@ import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
-import 'package:zachranobed/common/logger/zo_logger.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/utils/field_validation_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';

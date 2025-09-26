@@ -1,7 +1,7 @@
 import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:zachranobed/common/utils/platform_utils.dart';
+import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 
 /// Device related utility functions.
 class DeviceUtils {

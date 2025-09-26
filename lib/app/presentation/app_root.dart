@@ -8,7 +8,7 @@ import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/common/lifecycle/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
-import 'package:zachranobed/common/utils/platform_utils.dart';
+import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offeredfood/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/offline/presentation/connectivity_wrapper.dart';
