@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
-import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
 import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/usecase/change_active_pair_use_case.dart';

@@ -3,7 +3,7 @@ import 'package:zachranobed/common/data/dto/entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
-import 'package:zachranobed/common/utils/iterable_utils.dart';
+import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/models/entity_pair.dart';
 import 'package:zachranobed/models/food_boxes_checkup.dart';
 

@@ -3,8 +3,8 @@ import 'package:collection/collection.dart';
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
-import 'package:zachranobed/common/utils/firestore_utils.dart';
-import 'package:zachranobed/common/utils/future_utils.dart';
+import 'package:zachranobed/common/data/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
 class DeliveryService {
   /// Valid states for delivery items in history.
