@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A widget that displays a different child depending on the platform and
 /// screen size.

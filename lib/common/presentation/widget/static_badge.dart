@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A static badge widget that displays an icon and text within a styled
 /// container.

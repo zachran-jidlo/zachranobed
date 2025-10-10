@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/trailing_icon_row.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 
 /// A widget that displays a single [FoodInfo] object as a row.

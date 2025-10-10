@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// Represents a food allergen with its number and localized text.
 class FoodAllergen {

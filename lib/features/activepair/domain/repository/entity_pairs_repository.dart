@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to manage entity pairs information.
 abstract class EntityPairsRepository {

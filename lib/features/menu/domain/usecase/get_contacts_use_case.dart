@@ -1,6 +1,6 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// A use case for retrieving contact information.
 class GetContactsUseCase {

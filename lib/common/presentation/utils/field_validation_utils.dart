@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/enums/food_category.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
+import 'package:zachranobed/common/presentation/model/food_category.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// Provides utility methods for field validation.
 class FieldValidationUtils {

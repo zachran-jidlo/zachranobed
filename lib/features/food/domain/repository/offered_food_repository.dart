@@ -1,8 +1,8 @@
 import 'package:zachranobed/common/domain/model/box_info.dart';
+import 'package:zachranobed/common/domain/model/delivery.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
-import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {

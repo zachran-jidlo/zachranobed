@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to fetch notifications information.
 abstract class NotificationsRepository {

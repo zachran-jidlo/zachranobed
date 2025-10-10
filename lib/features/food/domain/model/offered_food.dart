@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:zachranobed/enums/food_category.dart';
+import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 
 /*

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 
 class MenuButton extends StatelessWidget {

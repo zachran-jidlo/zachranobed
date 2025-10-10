@@ -25,7 +25,7 @@ class AvoidRelativeImports extends DartLintRule {
       if (importUri == null) return;
 
       // Relative imports start with ./ or ../
-      if (importUri.startsWith('.')) {
+      if (!importUri.startsWith('package') && !importUri.startsWith('dart')) {
         reporter.atNode(node, _code);
       }
     }

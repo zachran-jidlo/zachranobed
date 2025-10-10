@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/image_assets.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/features/food/presentation/widget/box_summary_card.dart';
-import 'package:zachranobed/models/food_boxes_checkup_state.dart';
 
 /// A card that displays the information that food boxes checkup was delayed.
 class BoxSummaryCheckDelayed extends StatelessWidget {

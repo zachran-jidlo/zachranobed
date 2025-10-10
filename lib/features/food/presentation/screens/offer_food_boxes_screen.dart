@@ -1,21 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/empty_page.dart';
 import 'package:zachranobed/common/presentation/widget/error_content.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_box_counter.dart';
-import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
+import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_box_counter.dart';
 
 /// Screen for setting food boxes in food offer flow.
 @RoutePage()

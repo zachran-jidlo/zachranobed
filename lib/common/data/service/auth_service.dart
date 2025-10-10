@@ -7,11 +7,11 @@ import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/data/utils/firebase_helper.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/entity_pair.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/models/entity_pair.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

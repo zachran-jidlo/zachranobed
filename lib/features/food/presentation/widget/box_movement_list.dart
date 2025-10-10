@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/food/presentation/widget/box_movement_list_tile.dart';

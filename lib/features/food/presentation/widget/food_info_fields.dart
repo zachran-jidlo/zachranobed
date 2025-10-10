@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
+import 'package:zachranobed/common/presentation/model/food_category.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/date_time_picker.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_date_time_chips.dart';
-import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 import 'package:zachranobed/common/presentation/widget/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/single_select_chips.dart';
 import 'package:zachranobed/common/presentation/widget/text_field.dart';
-import 'package:zachranobed/enums/food_category.dart';
-import 'package:zachranobed/enums/food_form_field_type.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
+import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
+import 'package:zachranobed/features/food/presentation/model/food_form_field_type.dart';
+import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_date_time_chips.dart';
 
 class FoodInfoFields extends StatefulWidget {
   final FoodInfo foodInfo;

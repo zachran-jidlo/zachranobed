@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// Represents the type of a food category.
 enum FoodCategoryType {

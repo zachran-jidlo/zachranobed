@@ -5,14 +5,14 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
+import 'package:zachranobed/common/domain/model/delivery.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/features/food/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/food/data/mapper/offered_food_mapper.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
-import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Implementation of the [OfferedFoodRepository] via Firebase services.
 class FirebaseOfferedFoodRepository implements OfferedFoodRepository {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/content_with_loading.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 /// A widget that displays information about a food box checkup that is currently in progress.
 class BoxSummaryCheckInProgress extends StatelessWidget {

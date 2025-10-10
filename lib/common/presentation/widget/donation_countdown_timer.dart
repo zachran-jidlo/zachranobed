@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/delivery.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 class DonationCountdownTimer extends StatefulWidget {

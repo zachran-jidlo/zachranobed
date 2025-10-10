@@ -2,13 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/utils/device_utils.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/menu/menu_button.dart';
@@ -16,7 +18,6 @@ import 'package:zachranobed/common/presentation/widget/menu/menu_item.dart';
 import 'package:zachranobed/common/presentation/widget/menu/menu_section.dart';
 import 'package:zachranobed/common/presentation/widget/menu/menu_user_info.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 @RoutePage()
 class MenuScreen extends StatefulWidget {
@@ -112,7 +113,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   leadingIcon: Icons.language,
                   text: context.l10n!.about,
                   onPressed: () async {
-                    await _openUrlInBrowser(ZOStrings.zobWebHomepage);
+                    await _openUrlInBrowser(Constants.urlHomepage);
                   },
                 ),
                 const SizedBox(height: 8.0),
@@ -120,7 +121,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   leadingIcon: Icons.volunteer_activism_outlined,
                   text: context.l10n!.sponsors,
                   onPressed: () async {
-                    await _openUrlInBrowser(ZOStrings.sponsors);
+                    await _openUrlInBrowser(Constants.urlSponsors);
                   },
                 ),
               ],
@@ -131,13 +132,13 @@ class _MenuScreenState extends State<MenuScreen> {
                 MenuItem(
                   leadingIcon: Icons.security,
                   text: context.l10n!.privacyProtection,
-                  onPressed: () async => await _openUrlInBrowser(ZOStrings.appPrivacy),
+                  onPressed: () async => await _openUrlInBrowser(Constants.urlAppPrivacy),
                 ),
                 const SizedBox(height: 8.0),
                 MenuItem(
                   leadingIcon: Icons.text_snippet_outlined,
                   text: context.l10n!.termsOfUse,
-                  onPressed: () async => await _openUrlInBrowser(ZOStrings.appTerms),
+                  onPressed: () async => await _openUrlInBrowser(Constants.urlAppTerms),
                 ),
                 const SizedBox(height: 8.0),
                 MenuItem(
@@ -167,7 +168,7 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Future<void> _openEmailClient(BuildContext context) async {
-    final email = Uri.encodeComponent(ZOStrings.zjEmail);
+    final email = Uri.encodeComponent(Constants.emailFeedback);
     final subject = Uri.encodeComponent(context.l10n!.feedbackSubject);
     final mail = Uri.parse('mailto:$email?subject=$subject');
     await launchUrl(mail);

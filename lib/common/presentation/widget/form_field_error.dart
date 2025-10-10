@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A widget that displays an error message for a form field.
 class FormFieldError extends StatelessWidget {

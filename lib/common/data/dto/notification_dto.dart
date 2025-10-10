@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/converters/timestamp_converter.dart';
+import 'package:zachranobed/common/data/utils/timestamp_converter.dart';
 
 /*
  * Command to rebuild the notification_dto.g.dart file:

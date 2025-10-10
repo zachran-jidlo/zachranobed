@@ -2,20 +2,20 @@ import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/contact_row.dart';
 import 'package:zachranobed/common/presentation/widget/error_content.dart';
 import 'package:zachranobed/common/presentation/widget/menu/menu_section.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';
-import 'package:zachranobed/models/charity.dart';
 
 /// A screen that displays a list of contacts.
 @RoutePage()

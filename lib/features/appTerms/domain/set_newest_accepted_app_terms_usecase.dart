@@ -1,7 +1,7 @@
-import 'package:zachranobed/common/domain/utils/zo_logger.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/features/appTerms/domain/repository/app_terms_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 class SetNewestAcceptedAppTermsUseCase {
   final AppTermsRepository _appTermsRepository;

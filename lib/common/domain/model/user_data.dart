@@ -1,9 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:zachranobed/models/entity_pair.dart';
-import 'package:zachranobed/models/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/entity_pair.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 
-abstract class UserData extends ChangeNotifier {
+abstract class UserData {
   final String entityId;
   final String email;
   final String establishmentName;

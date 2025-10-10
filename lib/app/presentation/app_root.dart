@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
@@ -9,6 +8,7 @@ import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offline/presentation/connectivity_wrapper.dart';

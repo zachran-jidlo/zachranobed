@@ -8,6 +8,10 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/features/food/data/mapper/food_box_mapper.dart';
@@ -15,10 +19,6 @@ import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/models/food_boxes_checkup.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Implementation of the [FoodBoxRepository] via Firebase services.
 class FirebaseFoodBoxRepository implements FoodBoxRepository {

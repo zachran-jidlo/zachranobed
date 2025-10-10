@@ -1,5 +1,5 @@
-import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/models/food_boxes_checkup_state.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
 
 /// Represents the checkup state of food boxes.
 class FoodBoxesCheckup {
