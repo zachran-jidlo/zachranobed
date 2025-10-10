@@ -1,3 +1,4 @@
+/// A utility class containing app-wide constant values.
 class Constants {
   Constants._();
 
