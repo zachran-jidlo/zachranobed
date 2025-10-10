@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// A widget that displays information about a food box checkup mismatch. This widget shows a description about the
 /// mismatch and displays the food box data in a table.

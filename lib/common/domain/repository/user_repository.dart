@@ -1,4 +1,4 @@
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 
 /// Repository to manage user data operations.
 abstract class UserRepository {

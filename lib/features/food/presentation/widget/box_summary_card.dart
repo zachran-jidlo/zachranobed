@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A customizable card widget designed to display summary information with an optional tap action.
 ///

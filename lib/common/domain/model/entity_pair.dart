@@ -1,4 +1,4 @@
-import 'package:zachranobed/models/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 
 /// Represents an entity pair between donor and recipient (canteen and charity).
 class EntityPair {

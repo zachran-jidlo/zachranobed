@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/card_row.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 /// A widget that displays contact information, including name, optional phone
 /// number, and whether the contact is a preferred contact. If contact can be

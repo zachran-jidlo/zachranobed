@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 class ZODropdown extends StatefulWidget {
   final String hintText;

@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Use case to get the current user's data.
 class GetUserDataUseCase {

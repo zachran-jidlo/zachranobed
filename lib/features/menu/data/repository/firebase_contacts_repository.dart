@@ -4,13 +4,13 @@ import 'package:zachranobed/common/data/service/carrier_service.dart';
 import 'package:zachranobed/common/data/service/configuration_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
-import 'package:zachranobed/common/utils/generic_utils.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/domain/utils/generic_utils.dart';
 import 'package:zachranobed/features/menu/data/mapper/contacts_mapper.dart';
 import 'package:zachranobed/features/menu/domain/model/contact.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/repository/contacts_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Implementation of the [ContactsRepository] via Firebase services.
 class FirebaseContactsRepository implements ContactsRepository {

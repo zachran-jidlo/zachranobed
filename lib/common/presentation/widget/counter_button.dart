@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A button used to increment or decrement a counter. The button's appearance
 /// is determined by the [type] property.

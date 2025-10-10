@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 class MenuUserInfo extends StatelessWidget {
   final UserData user;

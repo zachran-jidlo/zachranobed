@@ -1,5 +1,5 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/notifications/domain/repository/notifications_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// A use case to mark all unread notifications as read for the given [user].
 class MarkAsReadAllNotificationsUseCase {

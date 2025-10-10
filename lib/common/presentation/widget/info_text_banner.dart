@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A stateless widget that displays a banner with an informational text message.
 /// * [message] (required) - The text message to display in the banner.

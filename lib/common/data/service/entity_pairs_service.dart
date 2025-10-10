@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
+import 'package:zachranobed/common/data/utils/timestamp_converter.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
-import 'package:zachranobed/converters/timestamp_converter.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/charity.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 class EntityPairService {
   final _collection = FirebaseFirestore.instance.collection('entityPairs').withConverter(

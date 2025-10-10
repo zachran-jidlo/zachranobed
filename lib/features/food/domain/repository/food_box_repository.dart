@@ -1,8 +1,8 @@
 import 'package:zachranobed/common/domain/model/box_info.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// Repository to manage food boxes information
 abstract class FoodBoxRepository {

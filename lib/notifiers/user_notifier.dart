@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/models/user_data.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 
 class UserNotifier extends ChangeNotifier {
   UserData? _user;

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:zachranobed/models/entity_pair.dart';
+import 'package:zachranobed/common/domain/model/entity_pair.dart';
 
 /*
  * Command to rebuild the entity_pairs_summary.freezed.dart file:

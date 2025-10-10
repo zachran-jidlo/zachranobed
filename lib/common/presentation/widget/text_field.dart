@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/supporting_text.dart';
 
 class ZOTextField extends StatefulWidget {

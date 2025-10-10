@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/image_assets.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/empty_page.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 
 /// A widget that displays an error message with an optional retry button.
 class ErrorContent extends StatelessWidget {

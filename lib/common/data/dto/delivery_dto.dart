@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
-import 'package:zachranobed/converters/timestamp_converter.dart';
+import 'package:zachranobed/common/data/utils/timestamp_converter.dart';
 
 /*
  * Command to rebuild the delivery_dto.g.dart file:

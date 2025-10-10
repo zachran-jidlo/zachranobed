@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/delivery.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/dialog.dart';
 import 'package:zachranobed/common/presentation/widget/donation_countdown_timer.dart';
 import 'package:zachranobed/common/presentation/widget/info_banner.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
-import 'package:zachranobed/models/canteen.dart';
-import 'package:zachranobed/models/delivery.dart';
-import 'package:zachranobed/models/food_boxes_checkup_state.dart';
-import 'package:zachranobed/models/user_data.dart';
 import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 /// A widget that displays an information banner based on the current user and delivery state.

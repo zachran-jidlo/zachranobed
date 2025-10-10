@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/common/constants.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/helper_service.dart';
 import 'package:zachranobed/common/image_assets.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/checkbox.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/extensions/build_context_extensions.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 
 /// A screen that informs the user about application terms and conditions that need to be accepted.
@@ -65,7 +66,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
-                            await _openUrlInBrowser(ZOStrings.appTerms);
+                            await _openUrlInBrowser(Constants.urlAppTerms);
                           },
                       ),
                     ],

@@ -1,6 +1,6 @@
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/repository/entity_pairs_repository.dart';
-import 'package:zachranobed/models/user_data.dart';
 
 /// A use case for retrieving entity pairs summary information.
 class GetEntityPairsSummaryUseCase {

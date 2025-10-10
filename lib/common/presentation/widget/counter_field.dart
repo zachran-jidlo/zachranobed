@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/domain/utils/math_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/counter_button.dart';
 import 'package:zachranobed/common/presentation/widget/text_field.dart';
 

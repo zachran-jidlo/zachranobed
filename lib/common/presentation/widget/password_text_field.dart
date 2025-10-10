@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
-import 'package:zachranobed/common/constants.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 class ZOPasswordTextField extends StatefulWidget {
   final String text;

@@ -1,5 +1,5 @@
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
-import 'package:zachranobed/models/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 
 /// DTO to domain mapper for [FoodBoxesCheckup].
 extension FoodBoxesCheckupMapper on FoodBoxesCheckupDto {
