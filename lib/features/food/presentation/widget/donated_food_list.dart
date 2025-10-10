@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:zachranobed/common/helper_service.dart';
+import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/food/presentation/widget/donated_food_list_tile.dart';
