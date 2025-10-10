@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-371** Add custom lint rules to support architecture.
 - **ZOB-378** Move DTOs and services.
 - **ZOB-379** Move common UI widgets.
+- **ZOB-380** Merge "foodboxes" and "offeredfood" to one feature, move screens do correct features.
 
 ### Removed
 
