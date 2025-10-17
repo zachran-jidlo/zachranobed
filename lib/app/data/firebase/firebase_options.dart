@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:zachranobed/app/data//firebase/firebase_options_stage.dart' as stage;
+import 'package:zachranobed/app/data/firebase/firebase_options_dev.dart' as dev;
+import 'package:zachranobed/app/data/firebase/firebase_options_prod.dart' as prod;
 import 'package:zachranobed/common/domain/model/project_configuration.dart';
-import 'package:zachranobed/firebase/firebase_options_dev.dart' as dev;
-import 'package:zachranobed/firebase/firebase_options_prod.dart' as prod;
-import 'package:zachranobed/firebase/firebase_options_stage.dart' as stage;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///

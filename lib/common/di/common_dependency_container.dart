@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/repository/firebase_app_configuration_repository.dart';
+import 'package:zachranobed/common/data/repository/firebase_delivery_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_user_repository.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/service/carrier_service.dart';
@@ -12,6 +13,7 @@ import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
+import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
@@ -23,6 +25,7 @@ class CommonDependencyContainer {
 
   static void setup() {
     _setupAppTermsComponents();
+    _setupDeliveryComponents();
     _setupUserComponents();
     _setupAppConfigurationComponents();
     _setupAppPreferencesComponents();
@@ -40,6 +43,14 @@ class CommonDependencyContainer {
     GetIt.I.registerFactory<GetLastAppTermsVersionUseCase>(
       () => GetLastAppTermsVersionUseCase(
         GetIt.I<AppConfigurationRepository>(),
+      ),
+    );
+  }
+
+  static void _setupDeliveryComponents() {
+    GetIt.I.registerFactory<DeliveryRepository>(
+      () => FirebaseDeliveryRepository(
+        GetIt.I<DeliveryService>(),
       ),
     );
   }

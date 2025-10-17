@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -7,7 +8,6 @@ import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   ZOLogger.logMessage('''
@@ -55,7 +55,7 @@ class Notifications {
   /// Sets foreground notification presentation options and registers callbacks
   /// for handling background messages and incoming messages. In the foreground,
   /// it displays local notifications based on the received FCM messages.
-  Future initPushNotifications() async {
+  Future initPushNotifications(Color notificationIconColor) async {
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
@@ -77,7 +77,7 @@ class Notifications {
             _androidChannel.name,
             channelDescription: _androidChannel.description,
             icon: '@drawable/ic_notification',
-            color: ZOColors.primary,
+            color: notificationIconColor,
           ),
         ),
         payload: jsonEncode(message.toMap()),
@@ -93,14 +93,14 @@ class Notifications {
   /// initialization methods.
   ///
   /// If the platform is not supported, this method does nothing.
-  Future<void> initNotifications() async {
+  Future<void> initNotifications(Color notificationIconColor) async {
     if (!RunningPlatform.isMobile()) {
       return;
     }
 
     await _firebaseMessaging.requestPermission();
 
-    initPushNotifications();
+    initPushNotifications(notificationIconColor);
     initLocalNotifications();
   }
 

@@ -7,8 +7,8 @@ import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
-import 'package:zachranobed/features/food/data/mapper/delivery_mapper.dart';
 import 'package:zachranobed/features/food/data/mapper/offered_food_mapper.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
@@ -16,59 +16,17 @@ import 'package:zachranobed/features/food/domain/repository/offered_food_reposit
 
 /// Implementation of the [OfferedFoodRepository] via Firebase services.
 class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
-  final List<DeliveryState> closedStates = [
-    DeliveryState.inDelivery,
-    DeliveryState.delivered,
-    DeliveryState.notUsed,
-  ];
-
   final DeliveryService _deliveryService;
   final MealService _mealService;
   final EntityPairService _entityPairService;
+  final DeliveryRepository _deliveryRepository;
 
   FirebaseOfferedFoodRepository(
     this._deliveryService,
     this._mealService,
     this._entityPairService,
+    this._deliveryRepository,
   );
-
-  @override
-  Stream<Delivery?> observeCurrentDelivery({
-    required UserData user,
-  }) {
-    return _deliveryService
-        .observeDelivery(
-          donorId: user.activePair.donorId,
-          recipientId: user.activePair.recipientId,
-        )
-        .map((event) => event?.toDomain());
-  }
-
-  @override
-  bool canDonateFood({required Delivery delivery, required DateTime time}) {
-    if (closedStates.contains(delivery.state)) {
-      return false;
-    }
-
-    final pickupDuration = Duration(minutes: delivery.confirmationTime);
-    final canDonateUntil = time.subtract(pickupDuration);
-    if (delivery.state == DeliveryState.prepared && DateTime.now().isAfter(canDonateUntil)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  @override
-  Future<bool> updateDeliveryState({
-    required Delivery delivery,
-    required DeliveryState state,
-  }) {
-    return _deliveryService.updateDeliveryState(
-      delivery.id,
-      state.toDto(),
-    );
-  }
 
   @override
   Future<int> getSavedMealsCount({
@@ -194,8 +152,11 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       return false;
     }
 
-    const state = DeliveryState.offered;
-    if (!await updateDeliveryState(delivery: delivery, state: state)) {
+    final updateStateSuccess = await _deliveryRepository.updateDeliveryState(
+      delivery: delivery,
+      state: DeliveryState.offered,
+    );
+    if (!updateStateSuccess) {
       return false;
     }
 

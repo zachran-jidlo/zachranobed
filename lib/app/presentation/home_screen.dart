@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/overview_screen.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
+import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -16,8 +17,7 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/svg_icon.dart';
 import 'package:zachranobed/features/food/presentation/screens/boxes_screen.dart';
 import 'package:zachranobed/features/food/presentation/screens/donations_screen.dart';
-import 'package:zachranobed/firebase/notifications.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
+import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -28,6 +28,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTickerProviderStateMixin {
+  final _updateNotificationsTokenUseCase = GetIt.I<UpdateNotificationsTokenUseCase>();
+
   /// The data for the tabs.
   final _tabs = [
     _TabScreenData(
@@ -74,9 +76,8 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
       if (context.read<UserNotifier>().user == null) {
         await HelperService.loadUserInfo(context);
       }
-      final notifications = Notifications();
-      notifications.listenToTokenRefresh();
-      await notifications.getFCMToken();
+
+      _updateNotificationsTokenUseCase.invoke();
     });
 
     // Show logout button after 20 seconds if user is not loaded
