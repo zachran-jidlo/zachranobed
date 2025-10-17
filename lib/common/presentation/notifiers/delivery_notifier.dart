@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
-import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
-  final OfferedFoodRepository _repository;
+  final DeliveryRepository _repository;
   Delivery? _delivery;
 
   DeliveryNotifier(this._repository);

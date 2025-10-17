@@ -3,6 +3,7 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
+import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/features/food/data/repository/firebase_food_box_repository.dart';
 import 'package:zachranobed/features/food/data/repository/firebase_offered_food_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
@@ -26,6 +27,7 @@ class FoodDependencyContainer {
         GetIt.I<DeliveryService>(),
         GetIt.I<MealService>(),
         GetIt.I<EntityPairService>(),
+        GetIt.I<DeliveryRepository>(),
       ),
     );
   }

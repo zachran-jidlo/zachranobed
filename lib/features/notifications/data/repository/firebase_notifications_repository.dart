@@ -1,5 +1,6 @@
 import 'package:zachranobed/common/data/service/entity_notification_service.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/features/notifications/data/firebase/notifications.dart';
 import 'package:zachranobed/features/notifications/data/mapper/notifications_mapper.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart';
 import 'package:zachranobed/features/notifications/domain/repository/notifications_repository.dart';
@@ -31,5 +32,12 @@ class FirebaseNotificationsRepository implements NotificationsRepository {
     return _entityNotificationService.markAllAsRead(
       entityId: user.entityId,
     );
+  }
+
+  @override
+  Future<void> updateNotificationsToken() async {
+    final notifications = Notifications();
+    notifications.listenToTokenRefresh();
+    await notifications.getFCMToken();
   }
 }

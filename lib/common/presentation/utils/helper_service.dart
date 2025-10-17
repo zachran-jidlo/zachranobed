@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
-import 'package:zachranobed/notifiers/user_notifier.dart';
+import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
+import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 
 class HelperService {
   /// Returns a [UserData] representing the current user's data if available,

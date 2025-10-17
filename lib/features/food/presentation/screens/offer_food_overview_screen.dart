@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
+import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -23,7 +24,6 @@ import 'package:zachranobed/features/food/domain/repository/food_box_repository.
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_info_row.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 @RoutePage()
 class OfferFoodOverviewScreen extends StatefulWidget {

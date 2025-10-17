@@ -14,4 +14,7 @@ abstract class NotificationsRepository {
   Future<void> markAllAsRead({
     required UserData user,
   });
+
+  /// Updates notifications token.
+  Future<void> updateNotificationsToken();
 }

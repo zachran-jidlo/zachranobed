@@ -6,24 +6,6 @@ import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-  /// Observes the current delivery for a given [user].
-  Stream<Delivery?> observeCurrentDelivery({
-    required UserData user,
-  });
-
-  /// Checks if canteen could donate to the given [delivery]. The [time]
-  /// parameter contains the start of the canteen's pickup window.
-  bool canDonateFood({
-    required Delivery delivery,
-    required DateTime time,
-  });
-
-  /// Updates the state of a [delivery] with the provided [state].
-  Future<void> updateDeliveryState({
-    required Delivery delivery,
-    required DeliveryState state,
-  });
-
   /// Returns a [Future] that completes with an [int] representing the total
   /// count of saved meals for the specified [timePeriod] and [user].
   Future<int> getSavedMealsCount({

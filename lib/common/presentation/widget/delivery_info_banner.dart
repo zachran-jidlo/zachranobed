@@ -5,6 +5,7 @@ import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
@@ -12,7 +13,6 @@ import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/dialog.dart';
 import 'package:zachranobed/common/presentation/widget/donation_countdown_timer.dart';
 import 'package:zachranobed/common/presentation/widget/info_banner.dart';
-import 'package:zachranobed/notifiers/delivery_notifier.dart';
 
 /// A widget that displays an information banner based on the current user and delivery state.
 ///
