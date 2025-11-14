@@ -6,12 +6,13 @@ import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
+import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 
 @RoutePage()
 class ComponentsScreen extends StatelessWidget {
@@ -379,9 +380,12 @@ class _ProgressComponents extends StatefulWidget {
 }
 
 class _ProgressComponentsState extends State<_ProgressComponents> {
-  int _currentStep = 0;
+  int _currentStep = 2;
   bool _isCurrentStepActive = true;
   bool _isProgressComplete = false;
+
+  int _currentProgress = 5;
+  final int _maxProgress = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -443,6 +447,36 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
                   },
                   icon: Icons.remove,
                   enabled: _currentStep > 0 || !_isCurrentStepActive,
+                ),
+              ],
+            ),
+            const SizedBox(width: 16.0),
+            Text(
+              'Progress: ${_currentProgress.toDouble() / _maxProgress * 100}%',
+            ),
+            UiProgressBar(
+              progress: _currentProgress.toDouble() / _maxProgress,
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconFillButton(
+                  onPressed: () {
+                    setState(() {
+                      _currentProgress += 1;
+                    });
+                  },
+                  icon: Icons.add,
+                  enabled: _currentProgress < _maxProgress,
+                ),
+                UiIconOutlineButton(
+                  onPressed: () {
+                    setState(() {
+                      _currentProgress -= 1;
+                    });
+                  },
+                  icon: Icons.remove,
+                  enabled: _currentProgress > 0,
                 ),
               ],
             ),
