@@ -6,9 +6,10 @@ import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
-import 'package:zachranobed/common/presentation/widget/button/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 
@@ -35,6 +36,8 @@ class ComponentsScreen extends StatelessWidget {
           _IconButtonComponents(),
           _Header.h1("Navigation"),
           _NavigationComponents(),
+          _Header.h1("Progress"),
+          _ProgressComponents(),
         ],
       ),
     );
@@ -359,9 +362,89 @@ class _NavigationComponents extends StatelessWidget implements TickerProvider  {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16.0,
           children: [
-            UINavBar(
+            UiNavBar(
               controller: TabController(length: items.length, vsync: this),
               items: items,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProgressComponents extends StatefulWidget {
+  @override
+  State<_ProgressComponents> createState() => _ProgressComponentsState();
+}
+
+class _ProgressComponentsState extends State<_ProgressComponents> {
+  int _currentStep = 0;
+  bool _isCurrentStepActive = true;
+  bool _isProgressComplete = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            Text(
+              'Current step: ${_currentStep + 1}' +
+                  '\nCurrent step active: $_isCurrentStepActive' +
+                  '\nProgress complete: $_isProgressComplete',
+            ),
+            UiProgressStepper(
+              currentStep: _currentStep,
+              isCurrentStepActive: _isCurrentStepActive,
+              isProgressComplete: _isProgressComplete,
+              icons: [
+                Icons.today_rounded,
+                Icons.food_bank_rounded,
+                Icons.shopping_bag_rounded,
+                Icons.moped_rounded,
+                Icons.check_circle_rounded,
+              ],
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconFillButton(
+                  onPressed: () {
+                    setState(() {
+                      if (!_isCurrentStepActive) {
+                        _isCurrentStepActive = true;
+                      } else if (_currentStep < 4) {
+                        _currentStep += 1;
+                        _isCurrentStepActive = false;
+                      } else {
+                        _isProgressComplete = true;
+                      }
+                    });
+                  },
+                  icon: Icons.add,
+                  enabled: !_isProgressComplete,
+                ),
+                UiIconOutlineButton(
+                  onPressed: () {
+                    setState(() {
+                      if (_isProgressComplete) {
+                        _isProgressComplete = false;
+                      } else if (_isCurrentStepActive) {
+                        _isCurrentStepActive = false;
+                      } else {
+                        _currentStep -= 1;
+                        _isCurrentStepActive = true;
+                      }
+                    });
+                  },
+                  icon: Icons.remove,
+                  enabled: _currentStep > 0 || !_isCurrentStepActive,
+                ),
+              ],
             ),
           ],
         ),

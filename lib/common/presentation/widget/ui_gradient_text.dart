@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
 
 /// A widget that displays a [text] with a [gradient] applied to it.
 class UiGradientText extends StatelessWidget {
@@ -23,10 +24,8 @@ class UiGradientText extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasUnderline = style.decoration == TextDecoration.underline;
 
-    return ShaderMask(
-      shaderCallback: (bounds) => gradient.createShader(
-        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-      ),
+    return UiGradientShaderMask(
+      gradient: gradient,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [

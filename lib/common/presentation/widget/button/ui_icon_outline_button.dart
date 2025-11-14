@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
 
 /// An outlined icon button widget.
 class UiIconOutlineButton extends StatefulWidget {
@@ -53,9 +54,9 @@ class _UiIconOutlineButtonState extends State<UiIconOutlineButton> {
       child: Stack(
         children: [
           Positioned.fill(
-            child: ShaderMask(
-              shaderCallback: (bounds) => getShader(bounds, foregroundColor, foregroundGradient),
-              blendMode: BlendMode.srcIn,
+            child: UiGradientShaderMask(
+              color: foregroundColor,
+              gradient: foregroundGradient,
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black, width: 1.0),
@@ -70,9 +71,9 @@ class _UiIconOutlineButtonState extends State<UiIconOutlineButton> {
             onHover: (isHovering) {
               setState(() => _isHovering = isHovering);
             },
-            icon: ShaderMask(
-              shaderCallback: (bounds) => getShader(bounds, foregroundColor, foregroundGradient),
-              blendMode: BlendMode.srcIn,
+            icon: UiGradientShaderMask(
+              color: foregroundColor,
+              gradient: foregroundGradient,
               child: Icon(
                 widget.icon,
                 color: Colors.black,
@@ -82,19 +83,5 @@ class _UiIconOutlineButtonState extends State<UiIconOutlineButton> {
         ],
       ),
     );
-  }
-
-  Shader getShader(Rect bounds, Color? color, Gradient? gradient) {
-    if (gradient != null) {
-      return gradient.createShader(bounds);
-    } else if (color != null) {
-      return LinearGradient(
-        colors: [color, color],
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      ).createShader(bounds);
-    } else {
-      throw Exception('No gradient or color provided');
-    }
   }
 }

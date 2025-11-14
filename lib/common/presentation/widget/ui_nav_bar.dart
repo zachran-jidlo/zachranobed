@@ -17,15 +17,15 @@ class UINavBarItem {
 }
 
 /// A custom navigation bar built on top of [TabBar].
-class UINavBar extends StatelessWidget {
+class UiNavBar extends StatelessWidget {
   /// Controller that manages the active tab index.
   final TabController controller;
 
   /// The list of navigation items to be displayed.
   final List<UINavBarItem> items;
 
-  /// Creates a [UINavBar] widget.
-  const UINavBar({
+  /// Creates a [UiNavBar] widget.
+  const UiNavBar({
     super.key,
     required this.controller,
     required this.items,
