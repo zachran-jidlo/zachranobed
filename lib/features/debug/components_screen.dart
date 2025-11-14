@@ -12,6 +12,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 
 @RoutePage()
@@ -39,6 +40,8 @@ class ComponentsScreen extends StatelessWidget {
           _NavigationComponents(),
           _Header.h1("Progress"),
           _ProgressComponents(),
+          _Header.h1("Chips"),
+          _ChipComponents(),
         ],
       ),
     );
@@ -477,6 +480,54 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
                   },
                   icon: Icons.remove,
                   enabled: _currentProgress > 0,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChipComponents extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          spacing: 16.0,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 16.0,
+              children: [
+                UiChip(
+                  text: "Dnes",
+                  onPressed: () {},
+                ),
+                UiChip(
+                  text: "Dnes",
+                  onPressed: () {},
+                  enabled: false,
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 16.0,
+              children: [
+                UiChip(
+                  text: "Dnes",
+                  onPressed: () {},
+                  selected: true,
+                ),
+                UiChip(
+                  text: "Dnes",
+                  onPressed: () {},
+                  enabled: false,
+                  selected: true,
                 ),
               ],
             ),
