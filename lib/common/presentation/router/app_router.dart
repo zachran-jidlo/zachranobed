@@ -46,6 +46,7 @@ class AppRouter extends RootStackRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(page: DebugRoute.page),
+        MaterialRoute(page: ComponentsRoute.page),
         MaterialRoute(page: AppTermsRoute.page),
         MaterialRoute(
           page: OfferFoodOverviewRoute.page,

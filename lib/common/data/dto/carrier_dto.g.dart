@@ -7,10 +7,12 @@ part of 'carrier_dto.dart';
 // **************************************************************************
 
 CarrierDto _$CarrierDtoFromJson(Map<String, dynamic> json) => CarrierDto(
-      contacts:
-          (json['contacts'] as List<dynamic>?)?.map((e) => ContactDto.fromJson(e as Map<String, dynamic>)).toList(),
+      contacts: (json['contacts'] as List<dynamic>?)
+          ?.map((e) => ContactDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$CarrierDtoToJson(CarrierDto instance) => <String, dynamic>{
+Map<String, dynamic> _$CarrierDtoToJson(CarrierDto instance) =>
+    <String, dynamic>{
       'contacts': instance.contacts,
     };

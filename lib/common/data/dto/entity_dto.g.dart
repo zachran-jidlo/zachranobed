@@ -15,9 +15,11 @@ EntityDto _$EntityDtoFromJson(Map<String, dynamic> json) => EntityDto(
       responsiblePerson: json['responsiblePerson'] as String,
       responsiblePersonPosition: json['responsiblePersonPosition'] as String?,
       phone: json['phone'] as String?,
-      entityType: $enumDecodeNullable(_$EntityTypeDtoEnumMap, json['entityType'],
+      entityType: $enumDecodeNullable(
+          _$EntityTypeDtoEnumMap, json['entityType'],
           unknownValue: JsonKey.nullForUndefinedEnumValue),
-      lastAcceptedAppTermsVersion: (json['lastAcceptedAppTermsVersion'] as num?)?.toInt(),
+      lastAcceptedAppTermsVersion:
+          (json['lastAcceptedAppTermsVersion'] as num?)?.toInt(),
       additionalContacts: (json['additionalContacts'] as List<dynamic>?)
           ?.map((e) => ContactDto.fromJson(e as Map<String, dynamic>))
           .toList(),

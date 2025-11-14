@@ -12,7 +12,8 @@ ContactDto _$ContactDtoFromJson(Map<String, dynamic> json) => ContactDto(
       phoneNumber: json['phoneNumber'] as String?,
     );
 
-Map<String, dynamic> _$ContactDtoToJson(ContactDto instance) => <String, dynamic>{
+Map<String, dynamic> _$ContactDtoToJson(ContactDto instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'position': instance.position,
       'phoneNumber': instance.phoneNumber,
