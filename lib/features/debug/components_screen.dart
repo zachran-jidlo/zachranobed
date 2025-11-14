@@ -1,10 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
@@ -31,6 +33,8 @@ class ComponentsScreen extends StatelessWidget {
           _OutlineButtonComponents(),
           _Header.h2("Icon buttons"),
           _IconButtonComponents(),
+          _Header.h1("Navigation"),
+          _NavigationComponents(),
         ],
       ),
     );
@@ -324,6 +328,40 @@ class _IconButtonComponents extends StatelessWidget {
                   enabled: false,
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NavigationComponents extends StatelessWidget implements TickerProvider  {
+
+  static const List<UINavBarItem> items = [
+    UINavBarItem(icon: Icons.home_rounded, label: 'Přehled'),
+    UINavBarItem(icon: Icons.menu_book, label: 'Nápověda'),
+    UINavBarItem(icon: Icons.bar_chart_rounded, label: 'Statistiky'),
+    UINavBarItem(icon: Icons.notifications, label: 'Notifikace'),
+  ];
+
+  @override
+  Ticker createTicker(TickerCallback onTick) {
+    return Ticker(onTick);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UINavBar(
+              controller: TabController(length: items.length, vsync: this),
+              items: items,
             ),
           ],
         ),
