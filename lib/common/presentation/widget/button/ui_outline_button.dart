@@ -42,8 +42,9 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
 
   @override
   Widget build(BuildContext context) {
-    final style = TextButton.styleFrom(
+    final style = OutlinedButton.styleFrom(
       backgroundColor: context.uiColors.transparent,
+      side: BorderSide(style: BorderStyle.none),
       shape: StadiumBorder(),
       minimumSize: widget.size,
       elevation: 0.0,
@@ -73,7 +74,7 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
             ),
           ),
         ),
-        TextButton.icon(
+        OutlinedButton.icon(
           style: style,
           onPressed: widget.enabled ? widget.onPressed : null,
           onHover: (isHovering) {
