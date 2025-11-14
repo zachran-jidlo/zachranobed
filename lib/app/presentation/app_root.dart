@@ -112,6 +112,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               shape: const Border(),
               width: LayoutStyle.navigationDrawerSize.toDouble(),
             ),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             extensions: [
               UiColors.light,
             ],

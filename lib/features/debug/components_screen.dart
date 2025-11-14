@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
@@ -23,10 +25,12 @@ class ComponentsScreen extends StatelessWidget {
           _Header.h1("Buttons"),
           _Header.h2("Text buttons"),
           _TextButtonComponents(),
-          _Header.h1("Primary buttons"),
+          _Header.h2("Primary buttons"),
           _PrimaryButtonComponents(),
-          _Header.h1("Outline buttons"),
+          _Header.h2("Outline buttons"),
           _OutlineButtonComponents(),
+          _Header.h2("Icon buttons"),
+          _IconButtonComponents(),
         ],
       ),
     );
@@ -275,6 +279,51 @@ class _PrimaryButtonComponents extends StatelessWidget {
               icon: Icons.sync,
               enabled: false,
               size: UiButtonSize.large(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _IconButtonComponents extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconFillButton(
+                  onPressed: () {},
+                  icon: Icons.add,
+                ),
+                UiIconFillButton(
+                  onPressed: () {},
+                  icon: Icons.add,
+                  enabled: false,
+                ),
+              ],
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconOutlineButton(
+                  onPressed: () {},
+                  icon: Icons.remove,
+                ),
+                UiIconOutlineButton(
+                  onPressed: () {},
+                  icon: Icons.remove,
+                  enabled: false,
+                ),
+              ],
             ),
           ],
         ),

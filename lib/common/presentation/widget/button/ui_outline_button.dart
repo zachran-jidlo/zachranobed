@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_text.dart';
 
 /// An outlined button widget.
-class UiOutlineButton extends StatelessWidget {
+class UiOutlineButton extends StatefulWidget {
   /// The text to display on the button.
   final String text;
 
@@ -33,48 +34,107 @@ class UiOutlineButton extends StatelessWidget {
   });
 
   @override
+  State<UiOutlineButton> createState() => _UiOutlineButtonState();
+}
+
+class _UiOutlineButtonState extends State<UiOutlineButton> {
+  bool _isHovering = false;
+
+  @override
   Widget build(BuildContext context) {
-    final style = OutlinedButton.styleFrom(
+    final style = TextButton.styleFrom(
       backgroundColor: context.uiColors.transparent,
       shape: StadiumBorder(),
-      minimumSize: size,
+      minimumSize: widget.size,
       elevation: 0.0,
-    ).copyWith(
-      side: WidgetStateProperty.resolveWith<BorderSide>(
-        (states) {
-          if (states.contains(WidgetState.disabled)) {
-            return BorderSide(color: context.uiColors.inactive);
-          }
-          return BorderSide(color: context.uiColors.primary);
-        },
-      ),
-      foregroundColor: WidgetStateProperty.resolveWith<Color>(
-        (states) {
-          if (states.contains(WidgetState.disabled)) {
-            return context.uiColors.inactive;
-          }
-          return context.uiColors.primary;
-        },
-      ),
     );
 
-    return OutlinedButton.icon(
-      style: style,
-      onPressed: enabled ? onPressed : null,
-      icon: _icon(),
-      iconAlignment: iconAlignment,
-      label: Text(text),
+    Gradient? foregroundGradient;
+    Color? foregroundColor;
+    if (!widget.enabled) {
+      foregroundColor = context.uiColors.inactive;
+    } else if (_isHovering) {
+      foregroundGradient = context.uiColors.primaryGradientDark;
+    } else {
+      foregroundGradient = context.uiColors.primaryGradient;
+    }
+
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: ShaderMask(
+            shaderCallback: (bounds) => getShader(bounds, foregroundColor, foregroundGradient),
+            blendMode: BlendMode.srcIn,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1.0),
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+        ),
+        TextButton.icon(
+          style: style,
+          onPressed: widget.enabled ? widget.onPressed : null,
+          onHover: (isHovering) {
+            setState(() => _isHovering = isHovering);
+          },
+          icon: _icon(),
+          iconAlignment: widget.iconAlignment,
+          label: _label(foregroundColor, foregroundGradient),
+        ),
+      ],
     );
   }
 
   Widget? _icon() {
-    if (icon == null) {
+    if (widget.icon == null) {
       return null;
     }
 
+    Color color = context.uiColors.primary;
+    if (!widget.enabled) {
+      color = context.uiColors.inactive;
+    }
+
     return Icon(
-      icon,
+      widget.icon,
       size: 18.0,
+      color: color,
     );
+  }
+
+  Widget _label(Color? color, Gradient? gradient) {
+    final style = context.textTheme.labelLarge ?? const TextStyle();
+    if (color != null) {
+      return Text(
+        widget.text,
+        style: style.copyWith(color: color),
+      );
+    }
+
+    if (gradient != null) {
+      return UiGradientText(
+        text: widget.text,
+        gradient: gradient,
+        style: style,
+      );
+    }
+
+    throw Exception('No gradient or color provided');
+  }
+
+  Shader getShader(Rect bounds, Color? color, Gradient? gradient) {
+    if (color != null) {
+      return LinearGradient(
+        colors: [color, color],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ).createShader(bounds);
+    } else if (gradient != null) {
+      return gradient.createShader(bounds);
+    } else {
+      throw Exception('No gradient or color provided');
+    }
   }
 }

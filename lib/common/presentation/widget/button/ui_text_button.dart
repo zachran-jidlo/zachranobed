@@ -86,9 +86,14 @@ class _UiTextButtonState extends State<UiTextButton> {
       );
     }
 
+    Gradient? gradient = context.uiColors.primaryGradient;
+    if (_isHovering) {
+      gradient =  context.uiColors.primaryGradientDark;
+    }
+
     return UiGradientText(
       text: widget.text,
-      gradient: context.uiColors.primaryGradient,
+      gradient: gradient,
       style: style,
     );
   }
