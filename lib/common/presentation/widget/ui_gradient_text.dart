@@ -40,7 +40,6 @@ class UiGradientText extends StatelessWidget {
           ),
           if (hasUnderline)
             Positioned(
-              width: null,
               left: 0,
               right: 0,
               child: Container(

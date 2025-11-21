@@ -35,7 +35,7 @@ class UiChip extends StatelessWidget {
 
   ButtonStyle _resolveStyle(BuildContext context) {
     final baseStyle = TextButton.styleFrom(
-      minimumSize: Size(0, 0),
+      minimumSize: const Size(0, 0),
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
         vertical: 6.0,

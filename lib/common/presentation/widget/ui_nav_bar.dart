@@ -40,7 +40,7 @@ class UiNavBar extends StatelessWidget {
         child: TabBar(
           controller: controller,
           splashBorderRadius: BorderRadius.circular(24.0),
-          labelPadding: EdgeInsets.all(4.0),
+          labelPadding: const EdgeInsets.all(4.0),
           labelStyle: context.textTheme.bodySmall,
           labelColor: context.uiColors.primary,
           unselectedLabelColor: context.uiColors.textSecondary,
@@ -48,7 +48,7 @@ class UiNavBar extends StatelessWidget {
           tabs: items.map((item) {
             return Tab(
               icon: Icon(item.icon),
-              iconMargin: EdgeInsets.only(bottom: 8.0),
+              iconMargin: const EdgeInsets.only(bottom: 8.0),
               child: Text(item.label),
             );
           }).toList(),

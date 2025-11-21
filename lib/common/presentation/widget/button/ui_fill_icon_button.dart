@@ -34,7 +34,7 @@ class _UiIconFillButtonState extends State<UiIconFillButton> {
       disabledForegroundColor: context.uiColors.surfaceWhite,
       backgroundColor: context.uiColors.transparent,
       shadowColor: context.uiColors.transparent,
-      minimumSize: Size(40.0, 40.0),
+      minimumSize: const Size(40.0, 40.0),
       shape: const CircleBorder(),
       elevation: 0.0,
     );

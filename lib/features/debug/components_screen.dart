@@ -1,6 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
@@ -27,21 +26,21 @@ class ComponentsScreen extends StatelessWidget {
       ),
       child: CustomScrollView(
         slivers: [
-          _Header.h1("Buttons"),
-          _Header.h2("Text buttons"),
-          _TextButtonComponents(),
-          _Header.h2("Primary buttons"),
-          _PrimaryButtonComponents(),
-          _Header.h2("Outline buttons"),
-          _OutlineButtonComponents(),
-          _Header.h2("Icon buttons"),
-          _IconButtonComponents(),
-          _Header.h1("Navigation"),
-          _NavigationComponents(),
-          _Header.h1("Progress"),
+          const _Header.h1("Buttons"),
+          const _Header.h2("Text buttons"),
+          const _TextButtonComponents(),
+          const _Header.h2("Primary buttons"),
+          const _PrimaryButtonComponents(),
+          const _Header.h2("Outline buttons"),
+          const _OutlineButtonComponents(),
+          const _Header.h2("Icon buttons"),
+          const _IconButtonComponents(),
+          const _Header.h1("Navigation"),
+          const _NavigationComponents(),
+          const _Header.h1("Progress"),
           _ProgressComponents(),
-          _Header.h1("Chips"),
-          _ChipComponents(),
+          const _Header.h1("Chips"),
+          const _ChipComponents(),
         ],
       ),
     );
@@ -95,6 +94,8 @@ class _Header extends StatelessWidget {
 }
 
 class _TextButtonComponents extends StatelessWidget {
+  const _TextButtonComponents();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -163,6 +164,8 @@ class _TextButtonComponents extends StatelessWidget {
 }
 
 class _OutlineButtonComponents extends StatelessWidget {
+  const _OutlineButtonComponents();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -231,6 +234,8 @@ class _OutlineButtonComponents extends StatelessWidget {
 }
 
 class _PrimaryButtonComponents extends StatelessWidget {
+  const _PrimaryButtonComponents();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -299,6 +304,8 @@ class _PrimaryButtonComponents extends StatelessWidget {
 }
 
 class _IconButtonComponents extends StatelessWidget {
+  const _IconButtonComponents();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -343,8 +350,15 @@ class _IconButtonComponents extends StatelessWidget {
   }
 }
 
-class _NavigationComponents extends StatelessWidget implements TickerProvider  {
+class _NavigationComponents extends StatefulWidget {
+  const _NavigationComponents();
 
+  @override
+  State<_NavigationComponents> createState() => _NavigationComponentsState();
+}
+
+class _NavigationComponentsState extends State<_NavigationComponents>
+    with SingleTickerProviderStateMixin {
   static const List<UINavBarItem> items = [
     UINavBarItem(icon: Icons.home_rounded, label: 'Přehled'),
     UINavBarItem(icon: Icons.menu_book, label: 'Nápověda'),
@@ -352,9 +366,18 @@ class _NavigationComponents extends StatelessWidget implements TickerProvider  {
     UINavBarItem(icon: Icons.notifications, label: 'Notifikace'),
   ];
 
+  late TabController _controller;
+
   @override
-  Ticker createTicker(TickerCallback onTick) {
-    return Ticker(onTick);
+  void initState() {
+    super.initState();
+    _controller = TabController(length: items.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -367,7 +390,7 @@ class _NavigationComponents extends StatelessWidget implements TickerProvider  {
           spacing: 16.0,
           children: [
             UiNavBar(
-              controller: TabController(length: items.length, vsync: this),
+              controller: _controller,
               items: items,
             ),
           ],
@@ -449,11 +472,11 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
                     });
                   },
                   icon: Icons.remove,
-                  enabled: _currentStep > 0 || !_isCurrentStepActive,
+                  enabled: _currentStep > 0 || _isCurrentStepActive,
                 ),
               ],
             ),
-            const SizedBox(width: 16.0),
+            const SizedBox(height: 16.0),
             Text(
               'Progress: ${_currentProgress.toDouble() / _maxProgress * 100}%',
             ),
@@ -491,6 +514,8 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
 }
 
 class _ChipComponents extends StatelessWidget {
+  const _ChipComponents();
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(

@@ -35,7 +35,7 @@ class _UiIconOutlineButtonState extends State<UiIconOutlineButton> {
       hoverColor: context.uiColors.primary.withValues(alpha: 0.1),
       highlightColor: context.uiColors.primary.withValues(alpha: 0.2),
       shape: const CircleBorder(),
-      minimumSize: Size(40.0, 40.0),
+      minimumSize: const Size(40.0, 40.0),
       elevation: 0.0,
     );
 

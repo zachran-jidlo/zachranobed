@@ -86,7 +86,6 @@ class UiColors extends ThemeExtension<UiColors> {
     Color? success,
     Color? warning,
     Color? error,
-    Color? info,
     Color? inactive,
     Color? transparent,
   }) {

@@ -45,8 +45,8 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
   Widget build(BuildContext context) {
     final style = OutlinedButton.styleFrom(
       backgroundColor: context.uiColors.transparent,
-      side: BorderSide(style: BorderStyle.none),
-      shape: StadiumBorder(),
+      side: const BorderSide(style: BorderStyle.none),
+      shape: const StadiumBorder(),
       minimumSize: widget.size,
       elevation: 0.0,
     );

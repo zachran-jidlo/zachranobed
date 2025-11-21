@@ -26,7 +26,7 @@ class UiProgressBar extends StatelessWidget {
               width: constraints.maxWidth * progress,
               decoration: BoxDecoration(
                 gradient: context.uiColors.primaryGradient,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: const BorderRadius.all(Radius.circular(2)),
               ),
             ),
           ),
