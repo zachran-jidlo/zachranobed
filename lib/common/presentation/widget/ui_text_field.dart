@@ -187,6 +187,13 @@ class _UiTextFieldState extends State<UiTextField> {
 
   String? _wrapValidator(String? value) {
     final error = widget.onValidation?.call(value);
+
+    // The addPostFrameCallback is required because the validator is called during the build phase. Calling setState
+    // directly during build would cause:
+    // "setState() or markNeedsBuild() called during build" error.
+    //
+    // By deferring setState to the next frame, we avoid this issue while still updating the _validationError state
+    // for the supporting text display.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && _validationError != error) {
         setState(() {
