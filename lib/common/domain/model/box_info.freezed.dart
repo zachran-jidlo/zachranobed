@@ -16,22 +16,24 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BoxInfo {
   String? get foodBoxId;
-
   int? get numberOfBoxes;
 
   /// Create a copy of BoxInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BoxInfoCopyWith<BoxInfo> get copyWith => _$BoxInfoCopyWithImpl<BoxInfo>(this as BoxInfo, _$identity);
+  $BoxInfoCopyWith<BoxInfo> get copyWith =>
+      _$BoxInfoCopyWithImpl<BoxInfo>(this as BoxInfo, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BoxInfo &&
-            (identical(other.foodBoxId, foodBoxId) || other.foodBoxId == foodBoxId) &&
-            (identical(other.numberOfBoxes, numberOfBoxes) || other.numberOfBoxes == numberOfBoxes));
+            (identical(other.foodBoxId, foodBoxId) ||
+                other.foodBoxId == foodBoxId) &&
+            (identical(other.numberOfBoxes, numberOfBoxes) ||
+                other.numberOfBoxes == numberOfBoxes));
   }
 
   @override
@@ -45,8 +47,8 @@ mixin _$BoxInfo {
 
 /// @nodoc
 abstract mixin class $BoxInfoCopyWith<$Res> {
-  factory $BoxInfoCopyWith(BoxInfo value, $Res Function(BoxInfo) _then) = _$BoxInfoCopyWithImpl;
-
+  factory $BoxInfoCopyWith(BoxInfo value, $Res Function(BoxInfo) _then) =
+      _$BoxInfoCopyWithImpl;
   @useResult
   $Res call({String? foodBoxId, int? numberOfBoxes});
 }
@@ -94,15 +96,18 @@ class _BoxInfo implements BoxInfo {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BoxInfoCopyWith<_BoxInfo> get copyWith => __$BoxInfoCopyWithImpl<_BoxInfo>(this, _$identity);
+  _$BoxInfoCopyWith<_BoxInfo> get copyWith =>
+      __$BoxInfoCopyWithImpl<_BoxInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BoxInfo &&
-            (identical(other.foodBoxId, foodBoxId) || other.foodBoxId == foodBoxId) &&
-            (identical(other.numberOfBoxes, numberOfBoxes) || other.numberOfBoxes == numberOfBoxes));
+            (identical(other.foodBoxId, foodBoxId) ||
+                other.foodBoxId == foodBoxId) &&
+            (identical(other.numberOfBoxes, numberOfBoxes) ||
+                other.numberOfBoxes == numberOfBoxes));
   }
 
   @override
@@ -116,8 +121,8 @@ class _BoxInfo implements BoxInfo {
 
 /// @nodoc
 abstract mixin class _$BoxInfoCopyWith<$Res> implements $BoxInfoCopyWith<$Res> {
-  factory _$BoxInfoCopyWith(_BoxInfo value, $Res Function(_BoxInfo) _then) = __$BoxInfoCopyWithImpl;
-
+  factory _$BoxInfoCopyWith(_BoxInfo value, $Res Function(_BoxInfo) _then) =
+      __$BoxInfoCopyWithImpl;
   @override
   @useResult
   $Res call({String? foodBoxId, int? numberOfBoxes});
