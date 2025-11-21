@@ -49,7 +49,11 @@ class UiNavBar extends StatelessWidget {
             return Tab(
               icon: Icon(item.icon),
               iconMargin: const EdgeInsets.only(bottom: 8.0),
-              child: Text(item.label),
+              child: Text(
+                item.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             );
           }).toList(),
         ),

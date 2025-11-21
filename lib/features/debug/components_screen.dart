@@ -13,6 +13,7 @@ import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
@@ -45,6 +46,8 @@ class ComponentsScreen extends StatelessWidget {
           const _ChipComponents(),
           const _Header.h1("Text fields"),
           _TextFieldComponents(),
+          const _Header.h1("Food box tiles"),
+          const _FoodBoxTileComponents(),
         ],
       ),
     );
@@ -688,6 +691,93 @@ class _TextFieldComponentsState extends State<_TextFieldComponents> {
               labelText: 'Label',
               supportingText: 'disableAutocorrect: true',
               disableAutocorrect: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FoodBoxTileComponents extends StatelessWidget {
+  const _FoodBoxTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            // Small size - two in a row
+            Row(
+              spacing: 16.0,
+              children: [
+                Expanded(
+                  child: UiFoodBoxTile(
+                    title: 'REkrabička',
+                    stats: [
+                      UiFoodBoxTileStat(value: 16, label: 'K dispozici'),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: UiFoodBoxTile(
+                    title: 'IKEA velká',
+                    stats: [
+                      UiFoodBoxTileStat(value: 24, label: 'K dispozici'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Full size - Jídelna type
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Charita type
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Charita'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Selected state (Jídelna)
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              isSelected: true,
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Selected state (Charita)
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              isSelected: true,
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Charita'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
             ),
           ],
         ),
