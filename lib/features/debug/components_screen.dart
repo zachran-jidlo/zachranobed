@@ -5,6 +5,7 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
@@ -15,6 +16,7 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
 @RoutePage()
@@ -48,6 +50,8 @@ class ComponentsScreen extends StatelessWidget {
           _TextFieldComponents(),
           const _Header.h1("Food box tiles"),
           const _FoodBoxTileComponents(),
+          const _Header.h1("Notification tiles"),
+          const _NotificationTileComponents(),
         ],
       ),
     );
@@ -346,6 +350,34 @@ class _IconButtonComponents extends StatelessWidget {
                 UiIconOutlineButton(
                   onPressed: () {},
                   icon: Icons.remove,
+                  enabled: false,
+                ),
+              ],
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconButton.gradient(
+                  onPressed: () {},
+                  icon: Icons.favorite,
+                ),
+                UiIconButton.gradient(
+                  onPressed: () {},
+                  icon: Icons.favorite,
+                  enabled: false,
+                ),
+              ],
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconButton.solid(
+                  onPressed: () {},
+                  icon: Icons.close,
+                ),
+                UiIconButton.solid(
+                  onPressed: () {},
+                  icon: Icons.close,
                   enabled: false,
                 ),
               ],
@@ -778,6 +810,50 @@ class _FoodBoxTileComponents extends StatelessWidget {
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
                 UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotificationTileComponents extends StatelessWidget {
+  const _NotificationTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiNotificationTile(
+              title: 'Kontrola krabiček',
+              description: 'Je potřeba provést pravidelnou kontrolu vratných krabiček.',
+              icon: Icons.warning_rounded,
+              trailing: UiIconButton.solid(
+                icon: Icons.close,
+                onPressed: () {},
+              ),
+              actions: [
+                UiOutlineButton(
+                  text: 'Zkontrolovat',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                )
+              ],
+            ),
+            UiNotificationTile(
+              title: 'Nahlášen nesoulad',
+              icon: Icons.warning_rounded,
+              iconColor: context.uiColors.warning,
+              trailing: UiIconButton.gradient(
+                icon: Icons.info_outline,
+                onPressed: () {},
+              ),
             ),
           ],
         ),
