@@ -12,6 +12,7 @@ class UiColors extends ThemeExtension<UiColors> {
   final Color surfaceWhite;
 
   final Color textPrimary;
+  final Color textPrimaryInverse;
   final Color textSecondary;
 
   final Color success;
@@ -32,6 +33,7 @@ class UiColors extends ThemeExtension<UiColors> {
     required this.surfaceGrayDark,
     required this.surfaceWhite,
     required this.textPrimary,
+    required this.textPrimaryInverse,
     required this.textSecondary,
     required this.success,
     required this.warning,
@@ -64,6 +66,7 @@ class UiColors extends ThemeExtension<UiColors> {
     surfaceGrayDark: Color(0xFFE0E0E0),
     surfaceWhite: Color(0xFFFFFFFF),
     textPrimary: Color(0xFF333333),
+    textPrimaryInverse: Color(0xFFFFFFFF),
     textSecondary: Color(0xFF858585),
     success: Color(0xFF009F08),
     warning: Color(0xFFF56905),
@@ -82,6 +85,7 @@ class UiColors extends ThemeExtension<UiColors> {
     Color? surfaceGrayDark,
     Color? surfaceWhite,
     Color? textPrimary,
+    Color? textPrimaryInverse,
     Color? textSecondary,
     Color? success,
     Color? warning,
@@ -98,6 +102,7 @@ class UiColors extends ThemeExtension<UiColors> {
       surfaceGrayDark: surfaceGrayDark ?? this.surfaceGrayDark,
       surfaceWhite: surfaceWhite ?? this.surfaceWhite,
       textPrimary: textPrimary ?? this.textPrimary,
+      textPrimaryInverse: textPrimaryInverse ?? this.textPrimaryInverse,
       textSecondary: textSecondary ?? this.textSecondary,
       success: success ?? this.success,
       warning: warning ?? this.warning,
@@ -120,6 +125,7 @@ class UiColors extends ThemeExtension<UiColors> {
       surfaceGrayDark: Color.lerp(surfaceGrayDark, other.surfaceGrayDark, t)!,
       surfaceWhite: Color.lerp(surfaceWhite, other.surfaceWhite, t)!,
       textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
+      textPrimaryInverse: Color.lerp(textPrimaryInverse, other.textPrimaryInverse, t)!,
       textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
       success: Color.lerp(success, other.success, t)!,
       warning: Color.lerp(warning, other.warning, t)!,

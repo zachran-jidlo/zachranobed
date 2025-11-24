@@ -93,6 +93,9 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               surfaceTint: Colors.white,
               primaryContainer: ZOColors.secondary,
             ),
+            textTheme: Typography.material2021().black.copyWith(
+              titleLarge: TextStyle(fontSize: 22, height: 1.27, fontWeight: FontWeight.w700),
+            ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.standard,
             highlightColor: Colors.transparent,

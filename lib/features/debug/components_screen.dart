@@ -1,9 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
@@ -12,7 +14,10 @@ import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
 @RoutePage()
 class ComponentsScreen extends StatelessWidget {
@@ -41,6 +46,12 @@ class ComponentsScreen extends StatelessWidget {
           _ProgressComponents(),
           const _Header.h1("Chips"),
           const _ChipComponents(),
+          const _Header.h1("Text fields"),
+          _TextFieldComponents(),
+          const _Header.h1("Food box tiles"),
+          const _FoodBoxTileComponents(),
+          const _Header.h1("Notification tiles"),
+          const _NotificationTileComponents(),
         ],
       ),
     );
@@ -343,6 +354,34 @@ class _IconButtonComponents extends StatelessWidget {
                 ),
               ],
             ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconButton.gradient(
+                  onPressed: () {},
+                  icon: Icons.favorite,
+                ),
+                UiIconButton.gradient(
+                  onPressed: () {},
+                  icon: Icons.favorite,
+                  enabled: false,
+                ),
+              ],
+            ),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIconButton.solid(
+                  onPressed: () {},
+                  icon: Icons.close,
+                ),
+                UiIconButton.solid(
+                  onPressed: () {},
+                  icon: Icons.close,
+                  enabled: false,
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -555,6 +594,266 @@ class _ChipComponents extends StatelessWidget {
                   selected: true,
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TextFieldComponents extends StatefulWidget {
+  @override
+  State<_TextFieldComponents> createState() => _TextFieldComponentsState();
+}
+
+class _TextFieldComponentsState extends State<_TextFieldComponents> {
+  final _controller1 = TextEditingController();
+  final _controller2 = TextEditingController();
+  final _controller3 = TextEditingController();
+  final _controller4 = TextEditingController(text: 'Input text');
+  final _controller5 = TextEditingController(text: 'Input text');
+  final _controller6 = TextEditingController(text: 'Error text');
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
+    _controller4.dispose();
+    _controller5.dispose();
+    _controller6.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.uiColors.surfaceGray,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 32.0,
+          children: [
+            UiTextField(
+              controller: _controller1,
+              hintText: 'Basic',
+            ),
+            UiTextField(
+              controller: _controller2,
+              hintText: 'With label',
+              labelText: 'Label',
+            ),
+            UiTextField(
+              controller: _controller3,
+              hintText: 'With label and supporting text',
+              labelText: 'Label',
+              supportingText: 'Supporting text',
+            ),
+            UiTextField(
+              controller: _controller4,
+              labelText: 'Label',
+              supportingText: 'With trailing button',
+              trailingIcon: Icons.cancel,
+              onTrailingIconPressed: () {
+                _controller4.clear();
+              },
+            ),
+            UiTextField(
+              controller: _controller5,
+              labelText: 'Label',
+              supportingText: 'With leading button',
+              leadingIcon: Icons.search,
+              trailingIcon: Icons.cancel,
+              onTrailingIconPressed: () {
+                _controller5.clear();
+              },
+            ),
+            UiTextField(
+              controller: _controller6,
+              labelText: 'Label',
+              errorText: 'Error message',
+              trailingIcon: Icons.error,
+            ),
+            const UiTextField(
+              labelText: 'Label',
+              hintText: 'Input text',
+              supportingText: 'enabled: false',
+              enabled: false,
+            ),
+            Form(
+              key: _formKey,
+              child: UiTextField(
+                labelText: 'Label',
+                hintText: 'Enter at least 3 characters',
+                supportingText: 'Validates on form submit',
+                onValidation: (value) {
+                  if (value == null || value.length < 3) {
+                    return 'Minimum 3 characters required';
+                  }
+                  return null;
+                },
+                trailingIcon: Icons.check_circle_rounded,
+                onTrailingIconPressed: () {
+                  _formKey.currentState?.validate();
+                },
+              ),
+            ),
+            UiTextField(
+              labelText: 'Label',
+              hintText: 'Enter numbers',
+              supportingText: 'Numbers only',
+              textInputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              keyboardType: TextInputType.number,
+            ),
+            const UiTextField(
+              labelText: 'Label',
+              initialValue: 'Cannot edit this',
+              supportingText: 'readOnly: true',
+              readOnly: true,
+            ),
+            const UiTextField(
+              labelText: 'Label',
+              supportingText: 'disableAutocorrect: true',
+              disableAutocorrect: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FoodBoxTileComponents extends StatelessWidget {
+  const _FoodBoxTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            // Small size - two in a row
+            Row(
+              spacing: 16.0,
+              children: [
+                Expanded(
+                  child: UiFoodBoxTile(
+                    title: 'REkrabička',
+                    stats: [
+                      UiFoodBoxTileStat(value: 16, label: 'K dispozici'),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: UiFoodBoxTile(
+                    title: 'IKEA velká',
+                    stats: [
+                      UiFoodBoxTileStat(value: 24, label: 'K dispozici'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Full size - Jídelna type
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Charita type
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Charita'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Selected state (Jídelna)
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              isSelected: true,
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+            // Full size - Selected state (Charita)
+            UiFoodBoxTile(
+              title: 'REkrabička',
+              size: UiFoodBoxTileSize.full,
+              totalLabel: 'Celkem 34 ks',
+              isSelected: true,
+              stats: [
+                UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
+                UiFoodBoxTileStat(value: 18, label: 'Charita'),
+                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotificationTileComponents extends StatelessWidget {
+  const _NotificationTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiNotificationTile(
+              title: 'Kontrola krabiček',
+              description: 'Je potřeba provést pravidelnou kontrolu vratných krabiček.',
+              icon: Icons.warning_rounded,
+              trailing: UiIconButton.solid(
+                icon: Icons.close,
+                onPressed: () {},
+              ),
+              actions: [
+                UiOutlineButton(
+                  text: 'Zkontrolovat',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                )
+              ],
+            ),
+            UiNotificationTile(
+              title: 'Nahlášen nesoulad',
+              icon: Icons.warning_rounded,
+              iconColor: context.uiColors.warning,
+              trailing: UiIconButton.gradient(
+                icon: Icons.info_outline,
+                onPressed: () {},
+              ),
             ),
           ],
         ),

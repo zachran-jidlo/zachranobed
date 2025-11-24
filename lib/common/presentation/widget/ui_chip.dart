@@ -74,7 +74,7 @@ class UiChip extends StatelessWidget {
           if (states.contains(WidgetState.disabled)) {
             return context.uiColors.textSecondary;
           }
-          return context.uiColors.surfaceWhite;
+          return context.uiColors.textPrimaryInverse;
         }),
         side: WidgetStateProperty.resolveWith<BorderSide>((states) {
           if (states.contains(WidgetState.disabled)) {
