@@ -126,12 +126,8 @@ class UiNotificationTile extends StatelessWidget {
         bottom: 16,
       ),
       child: Column(
-        children: [
-          for (int i = 0; i < actions.length; i++) ...[
-            if (i > 0) const SizedBox(width: 8),
-            actions[i],
-          ],
-        ],
+        spacing: 8.0,
+        children: actions,
       ),
     );
   }

@@ -34,12 +34,12 @@ class UiIconButton extends StatefulWidget {
   /// Creates an icon button with solid color.
   ///
   /// If [color] is not provided, defaults to [UiColors.textPrimary].
+  /// Hover color is automatically derived from the icon color.
   const UiIconButton.solid({
     super.key,
     required this.onPressed,
     required this.icon,
     Color? color,
-    Color? hoverColor,
     this.enabled = true,
   })  : _color = color,
         _isGradient = false;
