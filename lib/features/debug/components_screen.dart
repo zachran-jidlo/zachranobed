@@ -14,6 +14,7 @@ import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
@@ -50,6 +51,8 @@ class ComponentsScreen extends StatelessWidget {
           _TextFieldComponents(),
           const _Header.h1("Food box tiles"),
           const _FoodBoxTileComponents(),
+          const _Header.h1("Food box return tiles"),
+          const _FoodBoxReturnTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
         ],
@@ -810,6 +813,56 @@ class _FoodBoxTileComponents extends StatelessWidget {
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
                 UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FoodBoxReturnTileComponents extends StatelessWidget {
+  const _FoodBoxReturnTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiFoodBoxReturnTile(
+              title: 'Charita zadala vratku krabiček',
+              subtitle: 'Krabičky na cestě k vám',
+              count: 15,
+              progress: 0.2,
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Dnes vám budou doručeny vratné krabičky',
+              subtitle: 'Krabičky na cestě k vám',
+              count: 15,
+              progress: 0.8,
+              action: UiOutlineButton(
+                text: 'Přijmout krabičky',
+                onPressed: () {},
+              ),
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Krabičky na cestě k vám',
+              subtitle: 'Celkem',
+              count: 15,
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Krabičky na cestě k vám',
+              subtitle: 'Celkem',
+              count: 15,
+              action: UiPrimaryButton(
+                text: 'Potvrdit doručení',
+                onPressed: () {},
+                icon: Icons.check,
+              ),
             ),
           ],
         ),

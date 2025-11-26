@@ -95,6 +95,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
             ),
             textTheme: Typography.material2021().black.copyWith(
               titleLarge: TextStyle(fontSize: 22, height: 1.27, fontWeight: FontWeight.w700),
+              headlineLarge: TextStyle(fontSize: 32, height: 40.0 / 32.0, fontWeight: FontWeight.w700),
+              headlineMedium: TextStyle(fontSize: 28, height: 36.0 / 28.0, fontWeight: FontWeight.w400),
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.standard,
