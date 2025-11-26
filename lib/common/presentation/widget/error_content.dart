@@ -17,12 +17,12 @@ class ErrorContent extends StatelessWidget {
       children: [
         EmptyPage(
           vectorImagePath: ImageAssets.imageErrorGeneric,
-          title: context.l10n!.commonGenericErrorTitle,
-          description: context.l10n!.commonGenericErrorDescription,
+          title: context.l10n.commonGenericErrorTitle,
+          description: context.l10n.commonGenericErrorDescription,
         ),
         if (onRetryPressed != null)
           ZOButton(
-            text: context.l10n!.commonGenericErrorRetryAction,
+            text: context.l10n.commonGenericErrorRetryAction,
             onPressed: () => onRetryPressed?.call(),
           ),
       ],

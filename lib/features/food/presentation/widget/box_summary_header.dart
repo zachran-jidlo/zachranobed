@@ -19,7 +19,7 @@ class BoxSummaryHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            context.l10n!.boxStatisticsHeader,
+            context.l10n.boxStatisticsHeader,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -27,7 +27,7 @@ class BoxSummaryHeader extends StatelessWidget {
           opacity: isVerified ? 1 : 0,
           duration: const Duration(milliseconds: 300),
           child: StaticBadge(
-            text: context.l10n!.foodBoxesCheckupVerifiedLabel,
+            text: context.l10n.foodBoxesCheckupVerifiedLabel,
             icon: Icons.check,
           ),
         ),

@@ -35,11 +35,11 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
     final hours = state.duration.inHours;
     final String time;
     if (days > 0) {
-      time = context.l10n!.commonDaysCount(days);
+      time = context.l10n.commonDaysCount(days);
     } else if (hours > 0) {
-      time = context.l10n!.commonHoursCount(hours);
+      time = context.l10n.commonHoursCount(hours);
     } else {
-      time = "< ${context.l10n!.commonHoursCount(1)}";
+      time = "< ${context.l10n.commonHoursCount(1)}";
     }
     return Column(
       children: [
@@ -55,7 +55,7 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: Text(
-                  context.l10n!.foodBoxesCheckupDelayedCardDescription,
+                  context.l10n.foodBoxesCheckupDelayedCardDescription,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),

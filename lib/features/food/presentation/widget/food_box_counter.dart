@@ -44,13 +44,13 @@ class FoodBoxCounter extends StatelessWidget {
             style: textTheme.titleLarge,
           ),
           subtitle: Text(
-            context.l10n!.totalCountOfBoxes(maxQuantity),
+            context.l10n.totalCountOfBoxes(maxQuantity),
             style: textTheme.titleSmall?.copyWith(color: ZOColors.onBackgroundSecondary),
           ),
         ),
         const SizedBox(height: GapSize.xs),
         CounterField(
-          label: context.l10n!.numberOfBoxes,
+          label: context.l10n.numberOfBoxes,
           focusNode: formValidationManager.getFocusNode(type.id),
           onValidation: formValidationManager.wrapValidator(
             type.id,

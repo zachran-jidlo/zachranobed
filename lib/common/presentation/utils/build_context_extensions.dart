@@ -6,7 +6,9 @@ import 'package:zachranobed/l10n/app_localizations.dart';
 extension AppLocalizationsX on BuildContext {
   /// Returns the [AppLocalizations] instance associated with the current
   /// [BuildContext].
-  AppLocalizations? get l10n => AppLocalizations.of(this);
+  ///
+  /// Throws if localizations are not properly configured.
+  AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
 
 /// An extension on [BuildContext] that provides convenient access to various  theme-related properties from the

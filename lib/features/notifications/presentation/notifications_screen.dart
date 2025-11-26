@@ -43,7 +43,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
       appBar: ZOAppBar(
-        title: context.l10n!.notificationsTitle,
+        title: context.l10n.notificationsTitle,
       ),
       builder: (context) {
         return StreamBuilder<List<domain.Notification>>(
@@ -85,7 +85,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: EmptyPage(
           vectorImagePath: ImageAssets.imageEmptyNotifications,
-          title: context.l10n!.notificationsEmptyTitle,
+          title: context.l10n.notificationsEmptyTitle,
         ),
       ),
     );
@@ -106,13 +106,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       slivers: [
         if (showHeaders)
           _sectionHeader(
-            context.l10n!.commonToday,
+            context.l10n.commonToday,
             hasTopPadding: false,
           ),
         _notificationsSection(todayNotifications),
         if (showHeaders)
           _sectionHeader(
-            context.l10n!.notificationsLast7DaysTitle,
+            context.l10n.notificationsLast7DaysTitle,
             hasTopPadding: true,
           ),
         _notificationsSection(otherNotifications),
@@ -196,7 +196,7 @@ class _NotificationRow extends StatelessWidget {
       fontStyle: FontStyle.italic,
     );
     final date = DateTimeUtils.isToday(notification.timestamp)
-        ? context.l10n!.commonToday
+        ? context.l10n.commonToday
         : DateTimeUtils.formatDateTime(notification.timestamp, "d. M. yyyy");
     final time = DateTimeUtils.formatDateTime(notification.timestamp, "HH:mm");
 

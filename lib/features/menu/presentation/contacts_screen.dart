@@ -40,7 +40,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
-        title: context.l10n!.contactsTitle,
+        title: context.l10n.contactsTitle,
       ),
       child: FutureBuilder(
         future: _contactsFuture,
@@ -100,11 +100,11 @@ class _ContactsScreenState extends State<ContactsScreen> {
             );
           }),
           _menuSection(
-            label: context.l10n!.contactsDeliveryHeader,
+            label: context.l10n.contactsDeliveryHeader,
             contacts: summary.deliveryContacts,
           ),
           _menuSection(
-            label: context.l10n!.contactsOrganisationHeader,
+            label: context.l10n.contactsOrganisationHeader,
             contacts: summary.organisationContacts,
           ),
         ],
@@ -169,7 +169,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       return "";
     }
 
-    return context.l10n!.activePairContactsCanteenLabel;
+    return context.l10n.activePairContactsCanteenLabel;
   }
 
   Widget _buildLabel(String label, String labelSuffix) {

@@ -38,14 +38,14 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               _buildAllergens(context),
               _buildGap(),
               ZOTextField(
-                label: context.l10n!.foodCategory,
+                label: context.l10n.foodCategory,
                 initialValue: _getFoodCategoryFromType(context) ?? offeredFood.foodCategory,
                 readOnly: true,
               ),
               _buildGap(),
               if (offeredFood.foodTemperature != null) ...[
                 ZOTextField(
-                  label: context.l10n!.foodTemperatureWithCelsius,
+                  label: context.l10n.foodTemperatureWithCelsius,
                   initialValue: offeredFood.foodTemperature?.toString(),
                   readOnly: true,
                 ),
@@ -53,7 +53,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ],
               if (offeredFood.numberOfPackages != null) ...[
                 ZOTextField(
-                  label: context.l10n!.numberOfPackages,
+                  label: context.l10n.numberOfPackages,
                   initialValue: offeredFood.numberOfPackages.toString(),
                   readOnly: true,
                 ),
@@ -61,7 +61,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ],
               if (offeredFood.numberOfServings != null) ...[
                 ZOTextField(
-                  label: context.l10n!.numberOfServings,
+                  label: context.l10n.numberOfServings,
                   initialValue: offeredFood.numberOfServings.toString(),
                   readOnly: true,
                 ),
@@ -69,10 +69,10 @@ class DonatedFoodDetailScreen extends StatelessWidget {
               ],
               if (offeredFood.preparedAt != null) ...[
                 ZOTextField(
-                  label: context.l10n!.preparedAt,
+                  label: context.l10n.preparedAt,
                   initialValue: _formatFoodDateTime(
                     date: offeredFood.preparedAt!,
-                    dateOnPackaging: context.l10n!.preparedAtOnPackaging,
+                    dateOnPackaging: context.l10n.preparedAtOnPackaging,
                     withTime: false,
                   ),
                   readOnly: true,
@@ -80,21 +80,21 @@ class DonatedFoodDetailScreen extends StatelessWidget {
                 _buildGap(),
               ],
               ZOTextField(
-                label: context.l10n!.consumeBy,
+                label: context.l10n.consumeBy,
                 initialValue: _formatFoodDateTime(
                   date: offeredFood.consumeBy,
-                  dateOnPackaging: context.l10n!.consumeByOnPackaging,
+                  dateOnPackaging: context.l10n.consumeByOnPackaging,
                   withTime: true,
                 ),
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
               SupportingText(
-                text: '${context.l10n!.donatedOn}'
+                text: '${context.l10n.donatedOn}'
                     ' ${DateFormat('d.M.y').format(offeredFood.date)}.',
               ),
               const SizedBox(height: GapSize.xs),
-              ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
+              ZOPersistentSnackBar(message: context.l10n.formCantBeEdited),
               const SizedBox(height: GapSize.m),
             ],
           ),
@@ -111,8 +111,8 @@ class DonatedFoodDetailScreen extends StatelessWidget {
     // Return only text widget if there are no allergens
     if (listEquals(offeredFood.allergens, [FoodAllergen.noAllergensNumber])) {
       return ZOTextField(
-        label: context.l10n!.allergens,
-        initialValue: context.l10n!.allergensNotPresent,
+        label: context.l10n.allergens,
+        initialValue: context.l10n.allergensNotPresent,
         readOnly: true,
       );
     }
@@ -120,8 +120,8 @@ class DonatedFoodDetailScreen extends StatelessWidget {
     // Return only text widget if there are allergens on packaging
     if (listEquals(offeredFood.allergens, [FoodAllergen.onPackageNumber])) {
       return ZOTextField(
-        label: context.l10n!.allergens,
-        initialValue: context.l10n!.allergensListedOnPackage,
+        label: context.l10n.allergens,
+        initialValue: context.l10n.allergensListedOnPackage,
         readOnly: true,
       );
     }
@@ -130,7 +130,7 @@ class DonatedFoodDetailScreen extends StatelessWidget {
       children: [
         Expanded(
           child: ZOTextField(
-            label: context.l10n!.allergens,
+            label: context.l10n.allergens,
             initialValue: offeredFood.allergens.join(", "),
             readOnly: true,
           ),

@@ -37,7 +37,7 @@ class BoxSummaryCheckInProgress extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              context.l10n!.foodBoxesCheckupInProgressDescription,
+              context.l10n.foodBoxesCheckupInProgressDescription,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: ZOColors.onCardBackground),
             ),
           ),
@@ -48,14 +48,14 @@ class BoxSummaryCheckInProgress extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ZOButton(
-                text: context.l10n!.foodBoxesCheckupInProgressMismatchesAction,
+                text: context.l10n.foodBoxesCheckupInProgressMismatchesAction,
                 onPressed: onMismatchesPressed,
                 type: ZOButtonType.tertiary,
                 minimumSize: ZOButtonSize.mediumWrapContent,
               ),
               const SizedBox(width: 16.0),
               ZOButton(
-                text: context.l10n!.foodBoxesCheckupInProgressMatchesAction,
+                text: context.l10n.foodBoxesCheckupInProgressMatchesAction,
                 onPressed: onMatchesPressed,
                 type: ZOButtonType.primary,
                 minimumSize: ZOButtonSize.mediumWrapContent,

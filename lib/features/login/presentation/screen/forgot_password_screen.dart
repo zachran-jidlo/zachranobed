@@ -38,7 +38,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.passwordReset,
+        title: context.l10n.passwordReset,
       ),
       web: (context) => _forgotPasswordScreenContent(useWideButton: false),
       mobile: (context) => _forgotPasswordScreenContent(useWideButton: true),
@@ -63,12 +63,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               const SizedBox(height: GapSize.xxs),
               Text(
-                context.l10n!.passwordResetExplanation,
+                context.l10n.passwordResetExplanation,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: GapSize.xl),
               ZOTextField(
-                label: context.l10n!.emailAddress,
+                label: context.l10n.emailAddress,
                 inputType: TextInputType.emailAddress,
                 disableAutocorrect: true,
                 controller: _emailController,
@@ -80,7 +80,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: ZOButton(
-                  text: context.l10n!.resetPassword,
+                  text: context.l10n.resetPassword,
                   icon: Icons.email_outlined,
                   minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
                   onPressed: () async {
@@ -109,7 +109,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(message: context.l10n!.passwordResetConfirmation),
+          ZOTemporarySnackBar(message: context.l10n.passwordResetConfirmation),
         );
 
         context.router.replaceAll([const LoginRoute()]);
@@ -121,10 +121,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
             message: e.code == 'invalid-email'
-                ? context.l10n!.invalidFieldEmail
+                ? context.l10n.invalidFieldEmail
                 : e.code == 'user-not-found'
-                    ? context.l10n!.userNotFoundError
-                    : context.l10n!.somethingWentWrongError,
+                    ? context.l10n.userNotFoundError
+                    : context.l10n.somethingWentWrongError,
           ),
         );
       }

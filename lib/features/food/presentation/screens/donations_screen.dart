@@ -42,7 +42,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
-        title: context.l10n!.food,
+        title: context.l10n.food,
         automaticallyImplyLeading: false,
       ),
       child: FutureBuilder<int>(
@@ -79,13 +79,13 @@ class _DonationsScreenState extends State<DonationsScreen> {
           sliver: MultiSliver(
             children: [
               DonatedFoodList(
-                title: context.l10n!.thisWeek,
+                title: context.l10n.thisWeek,
                 deliveredFrom: _thisWeekStart,
                 deliveredTo: DateTimeUtils.getNextWeek(_thisWeekStart),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
               DonatedFoodList(
-                title: context.l10n!.lastWeek,
+                title: context.l10n.lastWeek,
                 deliveredFrom: _previousWeekStart,
                 deliveredTo: DateTimeUtils.getNextWeek(_previousWeekStart),
               ),
@@ -106,7 +106,7 @@ class _DonationsScreenState extends State<DonationsScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
               SliverToBoxAdapter(
                 child: ZOButton(
-                  text: context.l10n!.loadMore,
+                  text: context.l10n.loadMore,
                   icon: Icons.expand_more,
                   minimumSize: ZOButtonSize.medium(),
                   type: ZOButtonType.secondary,
@@ -125,8 +125,8 @@ class _DonationsScreenState extends State<DonationsScreen> {
     return SingleChildScrollView(
       child: EmptyPage(
         vectorImagePath: ImageAssets.imageEmptyChef,
-        title: context.l10n!.donationsEmptyTitle,
-        description: context.l10n!.donationsEmptyDescription,
+        title: context.l10n.donationsEmptyTitle,
+        description: context.l10n.donationsEmptyDescription,
       ),
     );
   }

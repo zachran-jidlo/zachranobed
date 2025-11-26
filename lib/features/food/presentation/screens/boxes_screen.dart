@@ -44,7 +44,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
-        title: context.l10n!.boxes,
+        title: context.l10n.boxes,
         automaticallyImplyLeading: false,
       ),
       child: FutureBuilder<int>(
@@ -83,13 +83,13 @@ class _BoxesScreenState extends State<BoxesScreen> {
           sliver: MultiSliver(
             children: [
               BoxMovementList(
-                title: context.l10n!.thisWeek,
+                title: context.l10n.thisWeek,
                 deliveredFrom: _thisWeekStart,
                 deliveredTo: DateTimeUtils.getNextWeek(_thisWeekStart),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
               BoxMovementList(
-                title: context.l10n!.lastWeek,
+                title: context.l10n.lastWeek,
                 deliveredFrom: _previousWeekStart,
                 deliveredTo: DateTimeUtils.getNextWeek(_previousWeekStart),
               ),
@@ -110,7 +110,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: GapSize.xs)),
               SliverToBoxAdapter(
                 child: ZOButton(
-                  text: context.l10n!.loadMore,
+                  text: context.l10n.loadMore,
                   icon: Icons.expand_more,
                   minimumSize: ZOButtonSize.medium(),
                   type: ZOButtonType.secondary,
@@ -131,14 +131,14 @@ class _BoxesScreenState extends State<BoxesScreen> {
         children: [
           EmptyPage(
             vectorImagePath: ImageAssets.imageEmptyBox,
-            title: context.l10n!.boxesEmptyTitle,
-            description: context.l10n!.boxesEmptyDescription,
+            title: context.l10n.boxesEmptyTitle,
+            description: context.l10n.boxesEmptyDescription,
           ),
           if (HelperService.getCurrentUser(context) is Charity)
             Column(
               children: [
                 ZOButton(
-                  text: context.l10n!.orderShipping,
+                  text: context.l10n.orderShipping,
                   minimumSize: ZOButtonSize.tiny(),
                   onPressed: () {
                     context.router.push(const OrderShippingOfBoxesRoute());

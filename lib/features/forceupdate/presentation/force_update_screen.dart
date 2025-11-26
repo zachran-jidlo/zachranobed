@@ -43,7 +43,7 @@ class ForceUpdateScreen extends StatelessWidget {
           ),
           const SizedBox(height: GapSize.xl),
           Text(
-            context.l10n!.forceUpdateScreenTitle,
+            context.l10n.forceUpdateScreenTitle,
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
@@ -52,15 +52,15 @@ class ForceUpdateScreen extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: context.l10n!.forceUpdateScreenDescriptionStart,
+                  text: context.l10n.forceUpdateScreenDescriptionStart,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 TextSpan(
-                  text: context.l10n!.applicationName,
+                  text: context.l10n.applicationName,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
-                  text: context.l10n!.forceUpdateScreenDescriptionEnd,
+                  text: context.l10n.forceUpdateScreenDescriptionEnd,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -69,7 +69,7 @@ class ForceUpdateScreen extends StatelessWidget {
           ),
           const SizedBox(height: GapSize.xl),
           ZOButton(
-            text: context.l10n!.forceUpdateAction,
+            text: context.l10n.forceUpdateAction,
             minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
             onPressed: () async {
               StoreUtils().openStore(context);

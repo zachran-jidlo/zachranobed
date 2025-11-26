@@ -19,7 +19,7 @@ class BoxSummaryMismatch extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.l10n!.foodBoxesCheckupMismatchDescription,
+          context.l10n.foodBoxesCheckupMismatchDescription,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 16.0),

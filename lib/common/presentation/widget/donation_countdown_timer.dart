@@ -105,7 +105,7 @@ class _DonationCountdownTimerState extends State<DonationCountdownTimer>
     return Text.rich(
       textAlign: widget.textAlign,
       TextSpan(
-        text: '${context.l10n!.youCanDonate} ',
+        text: '${context.l10n.youCanDonate} ',
         style: const TextStyle(
           color: ZOColors.onPrimaryLight,
           fontSize: FontSize.s,

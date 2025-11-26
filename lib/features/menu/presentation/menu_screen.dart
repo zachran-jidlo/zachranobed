@@ -49,7 +49,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.profileScreenTitle,
+        title: context.l10n.profileScreenTitle,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -84,26 +84,26 @@ class _MenuScreenState extends State<MenuScreen> {
             const SizedBox(height: 8.0),
             MenuItem(
               leadingIcon: Icons.call_outlined,
-              text: context.l10n!.contactsMenuLabel,
+              text: context.l10n.contactsMenuLabel,
               onPressed: () => context.router.push(const ContactsRoute()),
             ),
             const SizedBox(height: GapSize.m),
             MenuSection.simple(
-              label: context.l10n!.settings,
+              label: context.l10n.settings,
               menuItems: [
                 MenuItem(
                   leadingIcon: Icons.password,
-                  text: context.l10n!.changePassword,
+                  text: context.l10n.changePassword,
                   onPressed: () => context.router.push(const ChangePasswordRoute()),
                 )
               ],
             ),
             MenuSection.simple(
-              label: context.l10n!.saveLunch,
+              label: context.l10n.saveLunch,
               menuItems: [
                 MenuItem(
                   leadingIcon: Icons.textsms_outlined,
-                  text: context.l10n!.feedback,
+                  text: context.l10n.feedback,
                   onPressed: () async {
                     await _openEmailClient(context);
                   },
@@ -111,7 +111,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 const SizedBox(height: 8.0),
                 MenuItem(
                   leadingIcon: Icons.language,
-                  text: context.l10n!.about,
+                  text: context.l10n.about,
                   onPressed: () async {
                     await _openUrlInBrowser(Constants.urlHomepage);
                   },
@@ -119,7 +119,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 const SizedBox(height: 8.0),
                 MenuItem(
                   leadingIcon: Icons.volunteer_activism_outlined,
-                  text: context.l10n!.sponsors,
+                  text: context.l10n.sponsors,
                   onPressed: () async {
                     await _openUrlInBrowser(Constants.urlSponsors);
                   },
@@ -127,29 +127,29 @@ class _MenuScreenState extends State<MenuScreen> {
               ],
             ),
             MenuSection.simple(
-              label: context.l10n!.more,
+              label: context.l10n.more,
               menuItems: [
                 MenuItem(
                   leadingIcon: Icons.security,
-                  text: context.l10n!.privacyProtection,
+                  text: context.l10n.privacyProtection,
                   onPressed: () async => await _openUrlInBrowser(Constants.urlAppPrivacy),
                 ),
                 const SizedBox(height: 8.0),
                 MenuItem(
                   leadingIcon: Icons.text_snippet_outlined,
-                  text: context.l10n!.termsOfUse,
+                  text: context.l10n.termsOfUse,
                   onPressed: () async => await _openUrlInBrowser(Constants.urlAppTerms),
                 ),
                 const SizedBox(height: 8.0),
                 MenuItem(
-                  text: context.l10n!.version,
+                  text: context.l10n.version,
                   secondaryText: _appVersion,
                   onPressed: showDebugScreenIfPossible,
                 ),
               ],
             ),
             MenuButton(
-              text: context.l10n!.signOut,
+              text: context.l10n.signOut,
               icon: Icons.logout,
               minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
               onPressed: () async {
@@ -169,7 +169,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Future<void> _openEmailClient(BuildContext context) async {
     final email = Uri.encodeComponent(Constants.emailFeedback);
-    final subject = Uri.encodeComponent(context.l10n!.feedbackSubject);
+    final subject = Uri.encodeComponent(context.l10n.feedbackSubject);
     final mail = Uri.parse('mailto:$email?subject=$subject');
     await launchUrl(mail);
   }

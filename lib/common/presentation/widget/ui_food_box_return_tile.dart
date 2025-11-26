@@ -111,7 +111,7 @@ class UiFoodBoxReturnTile extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: context.l10n!.commonCountShort,
+            text: context.l10n.commonCountShort,
             style: context.textTheme.headlineMedium?.copyWith(
               color: context.uiColors.textPrimary,
             ),

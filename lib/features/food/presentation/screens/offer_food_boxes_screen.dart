@@ -70,7 +70,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.offerFoodBoxInfoScreenTitle,
+        title: context.l10n.offerFoodBoxInfoScreenTitle,
       ),
       web: (context) => _offerFoodBoxesScreenContent(useWideButton: false),
       mobile: (context) => _offerFoodBoxesScreenContent(useWideButton: true),
@@ -132,13 +132,13 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
         children: [
           EmptyPage(
             vectorImagePath: ImageAssets.imageEmptyBox,
-            title: context.l10n!.offerFoodBoxInfoEmptyTitle,
-            description: context.l10n!.offerFoodBoxInfoEmptyDescription,
+            title: context.l10n.offerFoodBoxInfoEmptyTitle,
+            description: context.l10n.offerFoodBoxInfoEmptyDescription,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
             child: ZOButton(
-              text: context.l10n!.commonBack,
+              text: context.l10n.commonBack,
               minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
               onPressed: () => context.router.maybePop(),
             ),
@@ -178,7 +178,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: ZOButton(
-                  text: context.l10n!.offerFoodBoxInfoSaveAction,
+                  text: context.l10n.offerFoodBoxInfoSaveAction,
                   minimumSize: ZOButtonSize.large(
                     fullWidth: useWideButton,
                   ),

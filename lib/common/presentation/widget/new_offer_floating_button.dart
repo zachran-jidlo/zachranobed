@@ -43,7 +43,7 @@ class NewOfferFloatingButton extends StatelessWidget {
       shape: const StadiumBorder(),
       backgroundColor: ZOColors.primaryLight,
       label: Text(
-        context.l10n!.newOffer,
+        context.l10n.newOffer,
         style: const TextStyle(color: ZOColors.primary),
       ),
       icon: const Icon(
@@ -58,10 +58,10 @@ class NewOfferFloatingButton extends StatelessWidget {
       onPressed: () => showDialog(
         context: context,
         builder: (context) => ZODialog(
-          title: context.l10n!.newOfferDialogTitle,
-          content: context.l10n!.newOfferDialogContent,
-          confirmText: context.l10n!.wantToDonate,
-          cancelText: context.l10n!.commonCancel,
+          title: context.l10n.newOfferDialogTitle,
+          content: context.l10n.newOfferDialogContent,
+          confirmText: context.l10n.wantToDonate,
+          cancelText: context.l10n.commonCancel,
           onConfirmPressed: () async {
             context.read<DeliveryNotifier>().updateDeliveryState(DeliveryState.accepted);
             if (context.mounted) {
@@ -86,9 +86,9 @@ class NewOfferFloatingButton extends StatelessWidget {
       onPressed: () => showDialog(
         context: context,
         builder: (context) => ZODialog(
-          title: context.l10n!.newOfferDialogTitle,
-          content: context.l10n!.cantOfferAnymoreDialogContent,
-          cancelText: context.l10n!.commonCancel,
+          title: context.l10n.newOfferDialogTitle,
+          content: context.l10n.cantOfferAnymoreDialogContent,
+          cancelText: context.l10n.commonCancel,
           onCancelPressed: () => Navigator.of(context).pop(false),
         ),
       ),

@@ -30,20 +30,20 @@ class OfflineScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: GapSize.xl),
                 Text(
-                  context.l10n!.offlineScreenTitle,
+                  context.l10n.offlineScreenTitle,
                   style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: GapSize.xs),
                 Text(
-                  context.l10n!.offlineScreenDescription,
+                  context.l10n.offlineScreenDescription,
                   style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 if (RunningPlatform.isAndroid()) ...[
                   const SizedBox(height: GapSize.xl),
                   ZOButton(
-                    text: context.l10n!.offlineScreenCloseApp,
+                    text: context.l10n.offlineScreenCloseApp,
                     minimumSize: ZOButtonSize.medium(),
                     onPressed: () {
                       SystemNavigator.pop();

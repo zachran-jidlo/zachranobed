@@ -66,10 +66,10 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
       context: context,
       builder: (context) => ZODialog(
         criticalConfirmStyle: true,
-        title: context.l10n!.cancelShippingOfBoxes,
-        content: context.l10n!.cancelShippingOfBoxesDialogContent,
-        confirmText: context.l10n!.confirmCancel,
-        cancelText: context.l10n!.continueTheOffer,
+        title: context.l10n.cancelShippingOfBoxes,
+        content: context.l10n.cancelShippingOfBoxesDialogContent,
+        confirmText: context.l10n.confirmCancel,
+        cancelText: context.l10n.continueTheOffer,
         onConfirmPressed: () => context.router.maybePop(true),
         onCancelPressed: () => context.router.maybePop(false),
       ),
@@ -84,7 +84,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.shippingOfBoxesToCanteen,
+        title: context.l10n.shippingOfBoxesToCanteen,
       ),
       web: (context) => _orderBoxShippingScreenContent(useWideButton: false),
       mobile: (context) => _orderBoxShippingScreenContent(useWideButton: true),
@@ -154,13 +154,13 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
         children: [
           EmptyPage(
             vectorImagePath: ImageAssets.imageEmptyBox,
-            title: context.l10n!.shippingOfBoxesEmptyTitle,
-            description: context.l10n!.shippingOfBoxesEmptyDescription,
+            title: context.l10n.shippingOfBoxesEmptyTitle,
+            description: context.l10n.shippingOfBoxesEmptyDescription,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
             child: ZOButton(
-              text: context.l10n!.shippingOfBoxesEmptyAction,
+              text: context.l10n.shippingOfBoxesEmptyAction,
               minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
               onPressed: () {
                 if (mounted) {
@@ -206,7 +206,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
               Align(
                 alignment: Alignment.centerLeft,
                 child: ZOButton(
-                  text: context.l10n!.orderShipping,
+                  text: context.l10n.orderShipping,
                   icon: MaterialSymbols.check,
                   minimumSize: ZOButtonSize.large(
                     fullWidth: useWideButton,
@@ -228,7 +228,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             ZOTemporarySnackBar(
-              message: context.l10n!.shippingOfBoxesEmptyFormMessage,
+              message: context.l10n.shippingOfBoxesEmptyFormMessage,
             ),
           );
         }
@@ -238,7 +238,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
           context.router.replace(
             ThankYouRoute(
               isSuccess: isSuccess,
-              message: context.l10n!.shippingOrderConfirmation,
+              message: context.l10n.shippingOrderConfirmation,
             ),
           );
         }
@@ -247,7 +247,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
           ScaffoldMessenger.of(context).showSnackBar(
             ZOTemporarySnackBar(
               backgroundColor: Colors.red,
-              message: context.l10n!.boxCountError,
+              message: context.l10n.boxCountError,
             ),
           );
         }

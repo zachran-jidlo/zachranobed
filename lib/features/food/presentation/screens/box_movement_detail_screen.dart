@@ -34,17 +34,17 @@ class BoxMovementDetailScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ZOTextField(
-                label: context.l10n!.numberOfBoxes,
+                label: context.l10n.numberOfBoxes,
                 initialValue: '$countPrefix${boxMovement.count}',
                 readOnly: true,
               ),
               const SizedBox(height: GapSize.xs),
               SupportingText(
-                text: '${context.l10n!.sentOn}'
+                text: '${context.l10n.sentOn}'
                     ' ${DateFormat('d.M.y').format(boxMovement.date)}.',
               ),
               const SizedBox(height: GapSize.xs),
-              ZOPersistentSnackBar(message: context.l10n!.formCantBeEdited),
+              ZOPersistentSnackBar(message: context.l10n.formCantBeEdited),
               const SizedBox(height: GapSize.m),
             ],
           ),

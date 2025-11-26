@@ -118,13 +118,13 @@ enum BoxDataTableColumn {
   String header(BuildContext context) {
     switch (this) {
       case BoxDataTableColumn.name:
-        return context.l10n!.box;
+        return context.l10n.box;
       case BoxDataTableColumn.total:
-        return context.l10n!.total;
+        return context.l10n.total;
       case BoxDataTableColumn.charity:
-        return context.l10n!.charity;
+        return context.l10n.charity;
       case BoxDataTableColumn.canteen:
-        return context.l10n!.canteen;
+        return context.l10n.canteen;
     }
   }
 

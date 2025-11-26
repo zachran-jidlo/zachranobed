@@ -168,7 +168,7 @@ class _BoxSummaryState extends State<BoxSummary> {
       onSuccess: () {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(message: context.l10n!.foodBoxesCheckupSuccessMessage),
+          ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupSuccessMessage),
         );
       },
     );
@@ -205,7 +205,7 @@ class _BoxSummaryState extends State<BoxSummary> {
       } else {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(message: context.l10n!.foodBoxesCheckupErrorMessage),
+          ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupErrorMessage),
         );
       }
     }

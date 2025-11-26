@@ -57,10 +57,10 @@ class _AppTermsScreen extends State<AppTermsScreen> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: context.l10n!.appTermsCheckboxLabelPlain,
+                        text: context.l10n.appTermsCheckboxLabelPlain,
                       ),
                       TextSpan(
-                        text: context.l10n!.appTermsCheckboxLabelUnderlined,
+                        text: context.l10n.appTermsCheckboxLabelUnderlined,
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
                         ),
@@ -76,7 +76,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
               ),
               const SizedBox(height: GapSize.l),
               ZOButton(
-                text: context.l10n!.appTermsConfirm,
+                text: context.l10n.appTermsConfirm,
                 onPressed: _setNewestAcceptedAppTerms,
                 enabled: _areTermsAccepted,
               ),
@@ -95,12 +95,12 @@ class _AppTermsScreen extends State<AppTermsScreen> {
         ),
         const SizedBox(height: GapSize.xl),
         Text(
-          context.l10n!.appTermsTitle,
+          context.l10n.appTermsTitle,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: GapSize.xs),
         Text(
-          context.l10n!.appTermsSubtitle,
+          context.l10n.appTermsSubtitle,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
@@ -112,12 +112,12 @@ class _AppTermsScreen extends State<AppTermsScreen> {
         ),
         const SizedBox(height: GapSize.xl),
         Text(
-          context.l10n!.appTermsNewVersionTitle,
+          context.l10n.appTermsNewVersionTitle,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: GapSize.xs),
         Text(
-          context.l10n!.appTermsNewVersionSubtitle,
+          context.l10n.appTermsNewVersionSubtitle,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyLarge,
         ),

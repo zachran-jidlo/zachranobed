@@ -59,7 +59,7 @@ class FoodAllergensBottomSheet {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            context.l10n!.allergensList,
+                            context.l10n.allergensList,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(height: 28),

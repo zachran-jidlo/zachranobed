@@ -23,8 +23,8 @@ class CardList extends StatelessWidget {
             Expanded(
               child: ZOCard(
                 measuredValue: repository.getSavedMealsCount(user: user),
-                metricsText: context.l10n!.savedLunches,
-                periodText: context.l10n!.total,
+                metricsText: context.l10n.savedLunches,
+                periodText: context.l10n.total,
               ),
             ),
             const SizedBox(width: GapSize.xxs),
@@ -34,8 +34,8 @@ class CardList extends StatelessWidget {
                   user: user,
                   timePeriod: 30,
                 ),
-                metricsText: context.l10n!.savedLunches,
-                periodText: context.l10n!.lastThirtyDays,
+                metricsText: context.l10n.savedLunches,
+                periodText: context.l10n.lastThirtyDays,
               ),
             ),
           ],

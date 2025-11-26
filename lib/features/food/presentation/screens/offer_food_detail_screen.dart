@@ -173,9 +173,9 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   String _getScreenTitle() {
     switch (widget.screenMode) {
       case OfferFoodDetailScreenMode.add:
-        return context.l10n!.offerFoodDetailAddScreenTitle;
+        return context.l10n.offerFoodDetailAddScreenTitle;
       case OfferFoodDetailScreenMode.edit:
-        return context.l10n!.offerFoodDetailEditScreenTitle;
+        return context.l10n.offerFoodDetailEditScreenTitle;
     }
   }
 
@@ -216,7 +216,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   Widget _removeButton({required bool large, required bool fullWidth}) {
     return ZOButton(
       icon: Icons.delete_outlined,
-      text: context.l10n!.offerFoodDetailRemoveButton,
+      text: context.l10n.offerFoodDetailRemoveButton,
       type: ZOButtonType.tertiary,
       minimumSize: large ? ZOButtonSize.large(fullWidth: fullWidth) : ZOButtonSize.medium(fullWidth: fullWidth),
       onPressed: () => _onRemoveFoodPressed(false),
@@ -227,14 +227,14 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
     switch (widget.screenMode) {
       case OfferFoodDetailScreenMode.add:
         return ZOButton(
-          text: context.l10n!.offerFoodDetailContinueButton,
+          text: context.l10n.offerFoodDetailContinueButton,
           minimumSize: ZOButtonSize.large(fullWidth: fullWidth),
           onPressed: _onConfirmationButtonPressed,
         );
       case OfferFoodDetailScreenMode.edit:
         return ZOButton(
           icon: Icons.check,
-          text: context.l10n!.offerFoodDetailSaveButton,
+          text: context.l10n.offerFoodDetailSaveButton,
           minimumSize: ZOButtonSize.large(fullWidth: fullWidth),
           onPressed: _onConfirmationButtonPressed,
         );
@@ -273,10 +273,10 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
       builder: (context) {
         return ZODialog(
           criticalConfirmStyle: true,
-          title: context.l10n!.offerFoodFormRemoveDialogTitle,
-          content: context.l10n!.offerFoodFormRemoveDialogContent,
-          confirmText: context.l10n!.offerFoodFormRemoveDialogConfirmAction,
-          cancelText: context.l10n!.commonCancel,
+          title: context.l10n.offerFoodFormRemoveDialogTitle,
+          content: context.l10n.offerFoodFormRemoveDialogContent,
+          confirmText: context.l10n.offerFoodFormRemoveDialogConfirmAction,
+          cancelText: context.l10n.commonCancel,
           onConfirmPressed: () => context.router.maybePop(true),
           onCancelPressed: () => context.router.maybePop(false),
         );
@@ -293,10 +293,10 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
       context: context,
       builder: (context) => ZODialog(
         criticalConfirmStyle: true,
-        title: context.l10n!.cancelOffer,
-        content: context.l10n!.cancelOfferDialogContent,
-        confirmText: context.l10n!.confirmCancel,
-        cancelText: context.l10n!.continueTheOffer,
+        title: context.l10n.cancelOffer,
+        content: context.l10n.cancelOfferDialogContent,
+        confirmText: context.l10n.confirmCancel,
+        cancelText: context.l10n.continueTheOffer,
         onConfirmPressed: () => Navigator.of(context).maybePop(true),
         onCancelPressed: () => context.router.maybePop(false),
       ),

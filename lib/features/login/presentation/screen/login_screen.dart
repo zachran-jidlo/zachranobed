@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: <Widget>[
                   ZOTextField(
-                    label: context.l10n!.emailAddress,
+                    label: context.l10n.emailAddress,
                     inputType: TextInputType.emailAddress,
                     disableAutocorrect: true,
                     controller: _emailController,
@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: GapSize.m),
                   ZOPasswordTextField(
-                    text: context.l10n!.password,
+                    text: context.l10n.password,
                     controller: _passwordController,
                     // Add more bottom padding to scroll above a snackbar
                     scrollPadding: const EdgeInsets.only(
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: GapSize.l),
                   ZOButton(
-                    text: context.l10n!.signIn,
+                    text: context.l10n.signIn,
                     icon: MaterialSymbols.login,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 6),
                   ZOButton(
-                    text: context.l10n!.forgotPassword,
+                    text: context.l10n.forgotPassword,
                     type: ZOButtonType.text,
                     onPressed: () {
                       context.router.push(const ForgotPasswordRoute());
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
-            message: context.l10n!.wrongCredentialsError,
+            message: context.l10n.wrongCredentialsError,
           ),
         );
       }

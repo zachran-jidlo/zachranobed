@@ -45,7 +45,7 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
       appBar: ZOAppBar(
-        title: context.l10n!.activePairCanteenTitle,
+        title: context.l10n.activePairCanteenTitle,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -84,7 +84,7 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
         child: Column(
           children: [
             CardRow(
-              label: context.l10n!.activePairCardCanteenLabel,
+              label: context.l10n.activePairCardCanteenLabel,
               title: summary.active.donorEstablishmentName,
             ),
             const SizedBox(height: 8.0),
@@ -96,7 +96,7 @@ class _ChangeActiveCanteenScreenState extends State<ChangeActivePairScreen> {
                     // TODO: Show donor's checkup when adding multi-recipient support in ZOB-322
                     isVisible: pair.recipientFoodBoxesCheckup.isCheckupNeeded(),
                     child: ZOButton(
-                      text: context.l10n!.activePairCardSelectAction,
+                      text: context.l10n.activePairCardSelectAction,
                       type: ZOButtonType.secondary,
                       minimumSize: ZOButtonSize.tiny(),
                       onPressed: () {
