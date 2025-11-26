@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 ///
 /// All text style getters return a non-null [TextStyle], defaulting to an empty [TextStyle]
 /// if the corresponding style in the theme is null.
-class NonNullableTextTheme {
+class UiTextStyles {
   final TextTheme _theme;
 
-  const NonNullableTextTheme(this._theme);
+  const UiTextStyles(this._theme);
 
   TextStyle get displayLarge => _theme.displayLarge ?? const TextStyle();
   TextStyle get displayMedium => _theme.displayMedium ?? const TextStyle();
