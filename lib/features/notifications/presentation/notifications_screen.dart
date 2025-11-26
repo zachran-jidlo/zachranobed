@@ -131,7 +131,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
     );
@@ -161,7 +161,6 @@ class _NotificationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -177,21 +176,20 @@ class _NotificationRow extends StatelessWidget {
             _timeHeader(context),
             Text(
               notification.title,
-              style: textTheme.bodyLarge?.copyWith(color: ZOColors.onSurface),
+              style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onSurface),
             ),
           ],
         ),
         subtitle: Text(
           notification.message,
-          style: textTheme.bodyMedium?.copyWith(color: ZOColors.onPrimaryLight),
+          style: context.textStyles.bodyMedium.copyWith(color: ZOColors.onPrimaryLight),
         ),
       ),
     );
   }
 
   Widget _timeHeader(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final textStyle = textTheme.bodyMedium?.copyWith(
+    final textStyle = context.textStyles.bodyMedium.copyWith(
       color: ZOColors.onPrimaryLight,
       fontStyle: FontStyle.italic,
     );

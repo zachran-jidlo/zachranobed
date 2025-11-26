@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A stateless widget that represents a row with trailing info and icon.
@@ -37,7 +38,6 @@ class TrailingIconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -52,17 +52,17 @@ class TrailingIconRow extends StatelessWidget {
         child: ListTile(
           title: Text(
             title,
-            style: textTheme.bodyLarge,
+            style: context.textStyles.bodyLarge,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: _buildSubtitle(context, textTheme, description),
+          subtitle: _buildSubtitle(context, description),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 trailInfo,
-                style: textTheme.bodyLarge?.copyWith(
+                style: context.textStyles.bodyLarge.copyWith(
                   color: ZOColors.onPrimaryLight,
                 ),
                 maxLines: 1,
@@ -79,13 +79,12 @@ class TrailingIconRow extends StatelessWidget {
 
   Widget? _buildSubtitle(
     BuildContext context,
-    TextTheme textTheme,
     String? description,
   ) {
     if (description == null) return null;
     return Text(
       description,
-      style: textTheme.bodySmall?.copyWith(
+      style: context.textStyles.bodySmall.copyWith(
         color: ZOColors.onPrimaryLight,
       ),
       maxLines: 1,

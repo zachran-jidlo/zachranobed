@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A widget that displays an error message for a form field.
@@ -14,12 +15,13 @@ class FormFieldError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.only(top: GapSize.xs),
       child: Text(
         message,
-        style: textTheme.bodySmall?.copyWith(color: ZOColors.primary),
+        style: context.textStyles.bodySmall.copyWith(
+          color: ZOColors.primary,
+        ),
       ),
     );
   }

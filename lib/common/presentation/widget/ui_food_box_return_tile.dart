@@ -87,14 +87,14 @@ class UiFoodBoxReturnTile extends StatelessWidget {
     return UiGradientText(
       text: title,
       gradient: context.uiColors.primaryGradient,
-      style: context.textTheme.bodyMedium ?? const TextStyle(),
+      style: context.textStyles.bodyMedium,
     );
   }
 
   Widget _buildSubtitle(BuildContext context) {
     return Text(
       subtitle,
-      style: context.textTheme.labelSmall?.copyWith(
+      style: context.textStyles.labelSmall.copyWith(
         color: context.uiColors.textSecondary,
       ),
     );
@@ -106,13 +106,13 @@ class UiFoodBoxReturnTile extends StatelessWidget {
         children: [
           TextSpan(
             text: '$count ',
-            style: context.textTheme.headlineLarge?.copyWith(
+            style: context.textStyles.headlineLarge.copyWith(
               color: context.uiColors.textPrimary,
             ),
           ),
           TextSpan(
             text: context.l10n.commonCountShort,
-            style: context.textTheme.headlineMedium?.copyWith(
+            style: context.textStyles.headlineMedium.copyWith(
               color: context.uiColors.textPrimary,
             ),
           ),

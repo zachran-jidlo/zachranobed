@@ -367,7 +367,7 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
       useBottomPadding: false,
       title: Text(
         context.l10n.offerFoodOverviewSectionFoodInfoTitle,
-        style: Theme.of(context).textTheme.titleMedium,
+        style: context.textStyles.titleMedium,
       ),
       action: ZOButton(
         text: context.l10n.offerFoodOverviewSectionFoodInfoAddAction,
@@ -472,7 +472,7 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
       useBottomPadding: false,
       title: Text(
         context.l10n.offerFoodOverviewSectionBoxInfoTitle,
-        style: Theme.of(context).textTheme.titleMedium,
+        style: context.textStyles.titleMedium,
       ),
       action: boxInfos.isEmpty
           ? ZOButton(
@@ -507,13 +507,13 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
               return ListTile(
                 title: Text(
                   e.key.name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: context.textStyles.bodyLarge,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 trailing: Text(
                   context.l10n.foodInfoCountTemplate(e.value),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: ZOColors.onPrimaryLight),
+                  style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onPrimaryLight),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

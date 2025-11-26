@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
@@ -49,7 +50,7 @@ class _ZODropdownState extends State<ZODropdown> {
             value: value,
             child: Text(
               value,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: context.textStyles.bodyLarge,
             ),
           );
         }).toList(),

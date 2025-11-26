@@ -21,7 +21,7 @@ class FoodAllergensBottomSheet {
     final itemWidgets = allergens.map((allergen) {
       return Text(
         "${allergen.number}. ${allergen.text}",
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: context.textStyles.bodyLarge,
       );
     }).separated(
       Padding(
@@ -60,7 +60,7 @@ class FoodAllergensBottomSheet {
                         children: [
                           Text(
                             context.l10n.allergensList,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: context.textStyles.titleLarge,
                           ),
                           const SizedBox(height: 28),
                           ...itemWidgets,

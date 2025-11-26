@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A static badge widget that displays an icon and text within a styled
@@ -21,7 +22,6 @@ class StaticBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.only(
         left: 4.0,
@@ -40,7 +40,7 @@ class StaticBadge extends StatelessWidget {
           const SizedBox(width: 8.0),
           Text(
             text,
-            style: textTheme.labelSmall?.copyWith(color: ZOColors.staticBadgeOnBackground),
+            style: context.textStyles.labelSmall.copyWith(color: ZOColors.staticBadgeOnBackground),
           )
         ],
       ),

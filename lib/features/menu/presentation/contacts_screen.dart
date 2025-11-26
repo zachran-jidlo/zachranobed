@@ -178,13 +178,13 @@ class _ContactsScreenState extends State<ContactsScreen> {
       suffix = [
         TextSpan(
           text: " $labelSuffix",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: context.textStyles.bodyLarge,
         ),
       ];
     }
 
     return Text.rich(
-      style: Theme.of(context).textTheme.titleMedium,
+      style: context.textStyles.titleMedium,
       TextSpan(
         text: label,
         children: suffix,

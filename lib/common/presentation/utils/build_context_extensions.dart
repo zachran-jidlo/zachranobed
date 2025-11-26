@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/non_nullable_text_theme.dart';
 import 'package:zachranobed/common/presentation/utils/ui_colors.dart';
 import 'package:zachranobed/l10n/app_localizations.dart';
 
@@ -19,4 +20,8 @@ extension AppThemeX on BuildContext {
 
   /// Returns the [TextTheme] from the current theme.
   TextTheme get textTheme => Theme.of(this).textTheme;
+
+  /// Returns a [NonNullableTextTheme] wrapper that provides non-nullable access
+  /// to text styles from the current theme.
+  NonNullableTextTheme get textStyles => NonNullableTextTheme(textTheme);
 }

@@ -107,7 +107,7 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
   }
 
   Widget _label(Color? color, Gradient? gradient) {
-    final style = context.textTheme.labelLarge ?? const TextStyle();
+    final style = context.textStyles.labelLarge;
     if (color != null) {
       return Text(
         widget.text,

@@ -98,11 +98,11 @@ class _Header extends StatelessWidget {
   TextStyle? _getStyle(BuildContext context) {
     switch (size) {
       case _HeaderSize.h1:
-        return context.textTheme.headlineLarge;
+        return context.textStyles.headlineLarge;
       case _HeaderSize.h2:
-        return context.textTheme.headlineMedium;
+        return context.textStyles.headlineMedium;
       case _HeaderSize.h3:
-        return context.textTheme.headlineSmall;
+        return context.textStyles.headlineSmall;
     }
   }
 }

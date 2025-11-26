@@ -56,7 +56,7 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
               Expanded(
                 child: Text(
                   context.l10n.foodBoxesCheckupDelayedCardDescription,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: context.textStyles.bodyMedium,
                 ),
               ),
               Container(
@@ -71,7 +71,7 @@ class BoxSummaryCheckDelayed extends StatelessWidget {
                   ),
                   child: Text(
                     time,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: context.textStyles.bodySmall,
                   ),
                 ),
               )

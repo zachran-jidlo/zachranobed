@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// A custom app bar widget for application.
 ///
@@ -47,7 +48,7 @@ class ZOAppBar extends StatelessWidget {
   Widget _buildTitle(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.headlineSmall,
+      style: context.textStyles.headlineSmall,
     );
   }
 }

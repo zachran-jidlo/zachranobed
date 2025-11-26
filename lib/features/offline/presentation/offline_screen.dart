@@ -31,13 +31,13 @@ class OfflineScreen extends StatelessWidget {
                 const SizedBox(height: GapSize.xl),
                 Text(
                   context.l10n.offlineScreenTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: context.textStyles.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: GapSize.xs),
                 Text(
                   context.l10n.offlineScreenDescription,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: context.textStyles.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 if (RunningPlatform.isAndroid()) ...[

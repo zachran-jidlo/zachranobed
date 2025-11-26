@@ -20,7 +20,7 @@ class BoxSummaryMismatch extends StatelessWidget {
       children: [
         Text(
           context.l10n.foodBoxesCheckupMismatchDescription,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: context.textStyles.bodySmall,
         ),
         const SizedBox(height: 16.0),
         boxTable,

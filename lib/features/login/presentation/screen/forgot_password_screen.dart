@@ -64,7 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: GapSize.xxs),
               Text(
                 context.l10n.passwordResetExplanation,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: context.textStyles.bodyLarge,
               ),
               const SizedBox(height: GapSize.xl),
               ZOTextField(

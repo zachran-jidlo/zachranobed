@@ -76,7 +76,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.foodName,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -102,7 +102,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.allergens,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
         action: SectionHeaderIcon(
           icon: const Icon(Icons.info_outline),
@@ -134,7 +134,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.foodCategory,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -161,7 +161,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.foodTemperature,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -190,7 +190,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.numberOfServings,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -216,7 +216,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.numberOfPackages,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -242,7 +242,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.preparedAt,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -270,7 +270,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SectionHeader(
         title: Text(
           context.l10n.consumeBy,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
         action: SectionHeaderIcon(
           icon: const Icon(Icons.today_rounded),

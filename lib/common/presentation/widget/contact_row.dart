@@ -59,18 +59,17 @@ class ContactRow extends StatelessWidget {
   }
 
   Widget _subtitleContent(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     if (phoneNumber != null) {
       return Text(
         phoneNumber ?? "",
-        style: textTheme.bodyMedium?.copyWith(
+        style: context.textStyles.bodyMedium.copyWith(
           color: ZOColors.onPrimaryLight,
         ),
       );
     } else {
       return Text(
         context.l10n.contactsNoPhoneLabel,
-        style: textTheme.bodyMedium?.copyWith(
+        style: context.textStyles.bodyMedium.copyWith(
           color: ZOColors.outline,
         ),
       );

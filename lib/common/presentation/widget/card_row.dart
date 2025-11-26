@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A widget that displays a row of information within a card-like container.
@@ -51,7 +52,6 @@ class CardRow extends StatelessWidget {
 
   /// Builds the content of the row, including the label, title, and subtitle.
   Widget _rowContent(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -60,7 +60,7 @@ class CardRow extends StatelessWidget {
             children: [
               Text(
                 label!,
-                style: textTheme.labelMedium?.copyWith(
+                style: context.textStyles.labelMedium.copyWith(
                   color: ZOColors.onPrimaryLight,
                 ),
               ),
@@ -69,7 +69,7 @@ class CardRow extends StatelessWidget {
           ),
         Text(
           title,
-          style: textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
         if (subtitle != null)
           Column(

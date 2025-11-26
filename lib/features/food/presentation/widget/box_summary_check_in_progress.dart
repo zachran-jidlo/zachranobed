@@ -38,7 +38,7 @@ class BoxSummaryCheckInProgress extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               context.l10n.foodBoxesCheckupInProgressDescription,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: ZOColors.onCardBackground),
+              style: context.textStyles.bodySmall.copyWith(color: ZOColors.onCardBackground),
             ),
           ),
         ),

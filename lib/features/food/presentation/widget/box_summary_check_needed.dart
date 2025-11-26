@@ -32,7 +32,6 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return ContentWithLoading(
       isLoading: isLoading,
       child: BoxSummaryCard(
@@ -48,13 +47,13 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
                     children: [
                       Text(
                         context.l10n.foodBoxesCheckupNeededCardTitle,
-                        style: textTheme.titleMedium,
+                        style: context.textStyles.titleMedium,
                       ),
                       Text(
                         state.isDelayAvailable
                             ? context.l10n.foodBoxesCheckupNeededCardDefaultDescription
                             : context.l10n.foodBoxesCheckupNeededCardMandatoryDescription,
-                        style: textTheme.bodyMedium,
+                        style: context.textStyles.bodyMedium,
                       ),
                     ],
                   ),

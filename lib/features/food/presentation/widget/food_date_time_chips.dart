@@ -166,12 +166,13 @@ class FoodDateTimeChips extends StatelessWidget {
       return const SizedBox();
     }
 
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.only(top: GapSize.xs),
       child: Text(
         labelText,
-        style: textTheme.bodyLarge?.copyWith(color: ZOColors.onPrimaryLight),
+        style: context.textStyles.bodyLarge.copyWith(
+          color: ZOColors.onPrimaryLight,
+        ),
       ),
     );
   }

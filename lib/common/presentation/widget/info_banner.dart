@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
@@ -25,10 +26,9 @@ class InfoBanner extends StatelessWidget {
           key: key,
           backgroundColor: backgroundColor,
           message: (context, textAlign) {
-            final theme = Theme.of(context).textTheme;
             return Text(
               message,
-              style: theme.bodyLarge?.copyWith(color: textColor),
+              style: context.textStyles.bodyLarge.copyWith(color: textColor),
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
               textAlign: textAlign,

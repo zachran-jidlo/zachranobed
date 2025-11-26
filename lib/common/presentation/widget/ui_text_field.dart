@@ -239,7 +239,7 @@ class _UiTextFieldState extends State<UiTextField> {
       onFieldSubmitted: widget.onFieldSubmitted,
       textCapitalization: widget.textCapitalization,
       cursorColor: context.uiColors.textPrimary,
-      style: context.textTheme.bodyMedium?.copyWith(
+      style: context.textStyles.bodyMedium.copyWith(
         color: widget.enabled ? context.uiColors.textPrimary : context.uiColors.inactive,
       ),
       decoration: InputDecoration(
@@ -247,13 +247,13 @@ class _UiTextFieldState extends State<UiTextField> {
         hintText: widget.hintText,
         filled: true,
         fillColor: context.uiColors.surfaceGray,
-        labelStyle: context.textTheme.bodyMedium?.copyWith(
+        labelStyle: context.textStyles.bodyMedium.copyWith(
           color: _labelColor(context),
         ),
-        floatingLabelStyle: context.textTheme.bodySmall?.copyWith(
+        floatingLabelStyle: context.textStyles.bodySmall.copyWith(
           color: _labelColor(context),
         ),
-        hintStyle: context.textTheme.bodyMedium?.copyWith(
+        hintStyle: context.textStyles.bodyMedium.copyWith(
           color: context.uiColors.textSecondary,
         ),
         // Hide default error text - we display it in supporting text
@@ -307,7 +307,7 @@ class _UiTextFieldState extends State<UiTextField> {
       padding: const EdgeInsets.only(top: 4.0),
       child: Text(
         text,
-        style: context.textTheme.bodySmall?.copyWith(
+        style: context.textStyles.bodySmall.copyWith(
           color: _hasError ? context.uiColors.error : context.uiColors.textSecondary,
         ),
       ),
