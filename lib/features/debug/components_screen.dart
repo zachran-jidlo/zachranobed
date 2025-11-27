@@ -134,15 +134,12 @@ class _IconComponents extends StatelessWidget {
               children: [
                 UiIcon(
                   spec: UiIconSpec.data(Icons.home),
-                  color: context.uiColors.primary,
                 ),
                 UiIcon(
                   spec: UiIconSpec.data(Icons.favorite),
-                  color: context.uiColors.primary,
                 ),
                 UiIcon(
                   spec: UiIconSpec.data(Icons.star),
-                  color: context.uiColors.primary,
                 ),
               ],
             ),
@@ -154,15 +151,12 @@ class _IconComponents extends StatelessWidget {
               children: [
                 UiIcon(
                   spec: UiIconSpec.svg(ImageAssets.iconDeliveryRun),
-                  color: context.uiColors.primary,
                 ),
                 UiIcon(
                   spec: UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
-                  color: context.uiColors.primary,
                 ),
                 UiIcon(
                   spec: UiIconSpec.svg(ImageAssets.iconAllergens),
-                  color: context.uiColors.primary,
                 ),
               ],
             ),
