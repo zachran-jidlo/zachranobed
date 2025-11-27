@@ -10,6 +10,9 @@ import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_bu
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_countdown_label.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
@@ -55,6 +58,8 @@ class ComponentsScreen extends StatelessWidget {
           const _FoodBoxReturnTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
+          const _Header.h1("Donation status cards"),
+          const _DonationStatusCardComponents(),
         ],
       ),
     );
@@ -906,6 +911,182 @@ class _NotificationTileComponents extends StatelessWidget {
               trailing: UiIconButton.gradient(
                 icon: Icons.info_outline,
                 onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DonationStatusCardComponents extends StatelessWidget {
+  const _DonationStatusCardComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              statusSection: Text(
+                'Dnes není pro tuto charitu den darování',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textSecondary,
+                ),
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 1,
+                isCurrentStepActive: false,
+                isProgressComplete: false,
+                icons: const [
+                  Icons.today_rounded,
+                  Icons.food_bank_rounded,
+                  Icons.shopping_bag_rounded,
+                  Icons.moped_rounded,
+                  Icons.check_circle_rounded,
+                ],
+              ),
+              statusSection: Text(
+                'Dnes je den darování.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionInfo: UiDonationCountdownLabel(
+                duration: const Duration(hours: 2, minutes: 39, seconds: 23),
+                label: 'Zbývá pro potvrzení darování',
+              ),
+              actionButton: UiPrimaryButton(
+                text: 'Darovat pokrmy',
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 2,
+                isCurrentStepActive: false,
+                isProgressComplete: false,
+                icons: const [
+                  Icons.today_rounded,
+                  Icons.food_bank_rounded,
+                  Icons.shopping_bag_rounded,
+                  Icons.moped_rounded,
+                  Icons.check_circle_rounded,
+                ],
+              ),
+              statusSection: Text(
+                'Přeprava potvrzena a kurýr je na cestě.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionInfo: UiDonationTimeRangeLabel(
+                startTime: const TimeOfDay(hour: 14, minute: 0),
+                endTime: const TimeOfDay(hour: 14, minute: 30),
+                label: 'Čas vyzvednutí kurýrem',
+              ),
+              actionButton: UiOutlineButton(
+                text: 'Detail daru',
+                icon: Icons.receipt_long,
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 5,
+                isCurrentStepActive: true,
+                isProgressComplete: false,
+                icons: const [
+                  Icons.today_rounded,
+                  Icons.food_bank_rounded,
+                  Icons.shopping_bag_rounded,
+                  Icons.moped_rounded,
+                  Icons.check_circle_rounded,
+                ],
+              ),
+              statusSection: Text(
+                'Dar doručen do charity, čeká na přijetí daru.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionButton: UiOutlineButton(
+                text: 'Detail daru',
+                icon: Icons.receipt_long,
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 5,
+                isCurrentStepActive: true,
+                isProgressComplete: true,
+                icons: const [
+                  Icons.today_rounded,
+                  Icons.food_bank_rounded,
+                  Icons.shopping_bag_rounded,
+                  Icons.moped_rounded,
+                  Icons.check_circle_rounded,
+                ],
+              ),
+              statusSection: Text.rich(
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+                TextSpan(
+                  children: [
+                    TextSpan(text: 'Dnešní darování '),
+                    TextSpan(
+                      text: 'úspěšně dokončeno',
+                      style: context.textStyles.bodyMedium.copyWith(
+                        color: context.uiColors.success,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
