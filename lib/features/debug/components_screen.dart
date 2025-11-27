@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
@@ -19,6 +20,7 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
@@ -35,6 +37,8 @@ class ComponentsScreen extends StatelessWidget {
       ),
       child: CustomScrollView(
         slivers: [
+          const _Header.h1("Icons"),
+          const _IconComponents(),
           const _Header.h1("Buttons"),
           const _Header.h2("Text buttons"),
           const _TextButtonComponents(),
@@ -109,6 +113,63 @@ class _Header extends StatelessWidget {
       case _HeaderSize.h3:
         return context.textStyles.headlineSmall;
     }
+  }
+}
+
+class _IconComponents extends StatelessWidget {
+  const _IconComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Material icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.home),
+                  color: context.uiColors.primary,
+                ),
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.favorite),
+                  color: context.uiColors.primary,
+                ),
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.star),
+                  color: context.uiColors.primary,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Custom icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  color: context.uiColors.primary,
+                ),
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  color: context.uiColors.primary,
+                ),
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  color: context.uiColors.primary,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -478,12 +539,12 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
               currentStep: _currentStep,
               isCurrentStepActive: _isCurrentStepActive,
               isProgressComplete: _isProgressComplete,
-              icons: [
-                Icons.today_rounded,
-                Icons.food_bank_rounded,
-                Icons.shopping_bag_rounded,
-                Icons.moped_rounded,
-                Icons.check_circle_rounded,
+              icons: const [
+                UiIconSpec.data(Icons.today_rounded),
+                UiIconSpec.data(Icons.food_bank_rounded),
+                UiIconSpec.data(Icons.shopping_bag_rounded),
+                UiIconSpec.data(Icons.moped_rounded),
+                UiIconSpec.data(Icons.check_circle_rounded),
               ],
             ),
             Row(
@@ -960,11 +1021,11 @@ class _DonationStatusCardComponents extends StatelessWidget {
                 isCurrentStepActive: false,
                 isProgressComplete: false,
                 icons: const [
-                  Icons.today_rounded,
-                  Icons.food_bank_rounded,
-                  Icons.shopping_bag_rounded,
-                  Icons.moped_rounded,
-                  Icons.check_circle_rounded,
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
                 ],
               ),
               statusSection: Text(
@@ -995,11 +1056,11 @@ class _DonationStatusCardComponents extends StatelessWidget {
                 isCurrentStepActive: false,
                 isProgressComplete: false,
                 icons: const [
-                  Icons.today_rounded,
-                  Icons.food_bank_rounded,
-                  Icons.shopping_bag_rounded,
-                  Icons.moped_rounded,
-                  Icons.check_circle_rounded,
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
                 ],
               ),
               statusSection: Text(
@@ -1032,11 +1093,11 @@ class _DonationStatusCardComponents extends StatelessWidget {
                 isCurrentStepActive: true,
                 isProgressComplete: false,
                 icons: const [
-                  Icons.today_rounded,
-                  Icons.food_bank_rounded,
-                  Icons.shopping_bag_rounded,
-                  Icons.moped_rounded,
-                  Icons.check_circle_rounded,
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
                 ],
               ),
               statusSection: Text(
@@ -1064,11 +1125,11 @@ class _DonationStatusCardComponents extends StatelessWidget {
                 isCurrentStepActive: true,
                 isProgressComplete: true,
                 icons: const [
-                  Icons.today_rounded,
-                  Icons.food_bank_rounded,
-                  Icons.shopping_bag_rounded,
-                  Icons.moped_rounded,
-                  Icons.check_circle_rounded,
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
                 ],
               ),
               statusSection: Text.rich(

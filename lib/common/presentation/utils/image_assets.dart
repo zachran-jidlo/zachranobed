@@ -7,8 +7,16 @@ class ImageAssets {
   ImageAssets._();
 
   // Icons
+  static const iconAllergens = 'assets/ic_allergens.svg';
+  static const iconCold = 'assets/ic_cold.svg';
+  static const iconDeliveryAccept = 'assets/ic_delivery_accept.svg';
+  static const iconDeliveryRun = 'assets/ic_delivery_run.svg';
   static const iconFoodBox = 'assets/ic_food_box.svg';
   static const iconFoodBoxAlert = 'assets/ic_food_box_alert.svg';
+  static const iconHot = 'assets/ic_hot.svg';
+  static const iconHotCircled = 'assets/ic_hot_circled.svg';
+  static const iconPack = 'assets/ic_pack.svg';
+  static const iconRestore = 'assets/ic_restore.svg';
 
   // Images
   static const imageLogo = 'assets/image_zo_logo.svg';
