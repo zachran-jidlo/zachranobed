@@ -25,7 +25,7 @@ class UiDonationCountdownLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveTimeStyle = timeStyle ??
-        context.textStyles.displaySmall.copyWith(
+        context.textStyles.headlineHeavy.copyWith(
           color: context.uiColors.textPrimary,
           fontWeight: FontWeight.bold,
         );

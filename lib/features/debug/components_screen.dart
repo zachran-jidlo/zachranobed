@@ -466,10 +466,10 @@ class _NavigationComponents extends StatefulWidget {
 class _NavigationComponentsState extends State<_NavigationComponents>
     with SingleTickerProviderStateMixin {
   static const List<UINavBarItem> items = [
-    UINavBarItem(icon: Icons.home_rounded, label: 'Přehled'),
-    UINavBarItem(icon: Icons.menu_book, label: 'Nápověda'),
-    UINavBarItem(icon: Icons.bar_chart_rounded, label: 'Statistiky'),
-    UINavBarItem(icon: Icons.notifications, label: 'Notifikace'),
+    UINavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
+    UINavBarItem(icon: UiIconSpec.data(Icons.menu_book), label: 'Nápověda'),
+    UINavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
+    UINavBarItem(icon: UiIconSpec.data(Icons.notifications), label: 'Notifikace'),
   ];
 
   late TabController _controller;
@@ -971,6 +971,27 @@ class _NotificationTileComponents extends StatelessWidget {
                 icon: Icons.info_outline,
                 onPressed: () {},
               ),
+            ),
+            UiNotificationTile(
+              title: 'Kontrola krabiček',
+              description: 'Je potřeba provést pravidelnou kontrolu vratných krabiček.',
+              icon: Icons.warning_rounded,
+              trailing: UiIconButton.solid(
+                icon: Icons.close,
+                onPressed: () {},
+              ),
+              actions: [
+                UiOutlineButton(
+                  text: 'Později',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                ),
+                UiPrimaryButton(
+                  text: 'Zkontrolovat',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                ),
+              ],
             ),
           ],
         ),

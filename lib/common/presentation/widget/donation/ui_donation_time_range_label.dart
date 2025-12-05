@@ -29,7 +29,7 @@ class UiDonationTimeRangeLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveTimeStyle = timeStyle ??
-        context.textStyles.headlineLarge.copyWith(
+        context.textStyles.headlineHeavy.copyWith(
           color: context.uiColors.textPrimary,
         );
 

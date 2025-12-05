@@ -174,7 +174,7 @@ class _StatBox extends StatelessWidget {
             stat.value.toString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.textStyles.titleLarge.copyWith(
+            style: context.textStyles.titleHeavy.copyWith(
               color: isDimmed ? context.uiColors.textSecondary : context.uiColors.textPrimary,
             ),
           ),
