@@ -17,7 +17,9 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
@@ -60,6 +62,8 @@ class ComponentsScreen extends StatelessWidget {
           const _FoodBoxTileComponents(),
           const _Header.h1("Food box return tiles"),
           const _FoodBoxReturnTileComponents(),
+          const _Header.h1("Box counter tiles"),
+          _BoxCounterTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
           const _Header.h1("Donation status cards"),
@@ -966,6 +970,123 @@ class _NotificationTileComponents extends StatelessWidget {
               trailing: UiIconButton.gradient(
                 icon: Icons.info_outline,
                 onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BoxCounterTileComponents extends StatefulWidget {
+  @override
+  State<_BoxCounterTileComponents> createState() => _BoxCounterTileComponentsState();
+}
+
+class _BoxCounterTileComponentsState extends State<_BoxCounterTileComponents> {
+  int _donationValue = 3;
+  int _returnValue = 3;
+  int _checkValue = 8;
+  int _validationValue = 8;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Celkem krabiček: 30',
+              counterField: UiCounterField(
+                label: 'Počet krabiček',
+                value: _donationValue,
+                minValue: 0,
+                maxValue: 30,
+                onChanged: (value) {
+                  setState(() {
+                    _donationValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Zadaný počet: 2',
+              counterField: UiCounterField(
+                label: 'Skutečný počet',
+                value: _returnValue,
+                minValue: 0,
+                maxValue: 10,
+                onChanged: (value) {
+                  setState(() {
+                    _returnValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Evidovaný počet: 8',
+              counterField: UiCounterField(
+                label: 'Skutečný počet',
+                value: _checkValue,
+                minValue: 0,
+                maxValue: 20,
+                onChanged: (value) {
+                  setState(() {
+                    _checkValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička (disabled)',
+              subtitle: 'Celkem krabiček: 30',
+              counterField: UiCounterField(
+                label: 'Počet krabiček',
+                value: 3,
+                enabled: false,
+                onChanged: (value) {},
+              ),
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                spacing: 8.0,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  UiBoxCounterTile(
+                    title: 'REkrabička (max 100)',
+                    subtitle: 'Evidovaný počet: 8',
+                    counterField: UiCounterField(
+                      label: 'Skutečný počet',
+                      value: _validationValue,
+                      onChanged: (value) {
+                        setState(() {
+                          _validationValue = value;
+                        });
+                      },
+                      onValidation: (value) {
+                        if (value > 100) {
+                          return 'Maximum value is 100';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  UiOutlineButton(
+                    text: 'Validate',
+                    onPressed: () {
+                      _formKey.currentState?.validate();
+                    },
+                  )
+                ],
               ),
             ),
           ],
