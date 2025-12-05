@@ -23,6 +23,8 @@ import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
+import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
@@ -66,6 +68,8 @@ class ComponentsScreen extends StatelessWidget {
           _BoxCounterTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
+          const _Header.h1("Meal tiles"),
+          const _MealTileComponents(),
           const _Header.h1("Donation status cards"),
           const _DonationStatusCardComponents(),
         ],
@@ -1285,6 +1289,79 @@ class _DonationStatusCardComponents extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MealTileComponents extends StatelessWidget {
+  const _MealTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiMealTile(
+              title: 'Svíčková na smetaně',
+              quantityLabel: '15 porcí',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconHot),
+                  label: 'Teplý (68°C)',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: '1, 3, 9',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: '28.11.2024 16:32',
+                ),
+              ],
+            ),
+            UiMealTile(
+              title: 'Houskový knedlík',
+              quantityLabel: '8 porcí',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconCold),
+                  label: 'Chlazený',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: '1, 3, 9, 12',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: '28.11.2024 16:32',
+                ),
+              ],
+            ),
+            UiMealTile(
+              title: 'Šunková bageta',
+              quantityLabel: '10 ks',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconPack),
+                  label: 'Balený',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: 'Viz. obal',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: 'Viz. obal',
+                ),
+              ],
             ),
           ],
         ),
