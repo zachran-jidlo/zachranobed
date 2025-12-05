@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
@@ -10,11 +11,16 @@ import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_bu
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_countdown_label.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
+import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
@@ -31,6 +37,8 @@ class ComponentsScreen extends StatelessWidget {
       ),
       child: CustomScrollView(
         slivers: [
+          const _Header.h1("Icons"),
+          const _IconComponents(),
           const _Header.h1("Buttons"),
           const _Header.h2("Text buttons"),
           const _TextButtonComponents(),
@@ -50,8 +58,12 @@ class ComponentsScreen extends StatelessWidget {
           _TextFieldComponents(),
           const _Header.h1("Food box tiles"),
           const _FoodBoxTileComponents(),
+          const _Header.h1("Food box return tiles"),
+          const _FoodBoxReturnTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
+          const _Header.h1("Donation status cards"),
+          const _DonationStatusCardComponents(),
         ],
       ),
     );
@@ -95,12 +107,63 @@ class _Header extends StatelessWidget {
   TextStyle? _getStyle(BuildContext context) {
     switch (size) {
       case _HeaderSize.h1:
-        return context.textTheme.headlineLarge;
+        return context.textStyles.headlineLarge;
       case _HeaderSize.h2:
-        return context.textTheme.headlineMedium;
+        return context.textStyles.headlineMedium;
       case _HeaderSize.h3:
-        return context.textTheme.headlineSmall;
+        return context.textStyles.headlineSmall;
     }
+  }
+}
+
+class _IconComponents extends StatelessWidget {
+  const _IconComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Material icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.home),
+                ),
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.favorite),
+                ),
+                UiIcon(
+                  spec: UiIconSpec.data(Icons.star),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Custom icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                ),
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                ),
+                UiIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconAllergens),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -470,12 +533,12 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
               currentStep: _currentStep,
               isCurrentStepActive: _isCurrentStepActive,
               isProgressComplete: _isProgressComplete,
-              icons: [
-                Icons.today_rounded,
-                Icons.food_bank_rounded,
-                Icons.shopping_bag_rounded,
-                Icons.moped_rounded,
-                Icons.check_circle_rounded,
+              icons: const [
+                UiIconSpec.data(Icons.today_rounded),
+                UiIconSpec.data(Icons.food_bank_rounded),
+                UiIconSpec.data(Icons.shopping_bag_rounded),
+                UiIconSpec.data(Icons.moped_rounded),
+                UiIconSpec.data(Icons.check_circle_rounded),
               ],
             ),
             Row(
@@ -818,6 +881,56 @@ class _FoodBoxTileComponents extends StatelessWidget {
   }
 }
 
+class _FoodBoxReturnTileComponents extends StatelessWidget {
+  const _FoodBoxReturnTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiFoodBoxReturnTile(
+              title: 'Charita zadala vratku krabiček',
+              subtitle: 'Krabičky na cestě k vám',
+              count: 15,
+              progress: 0.2,
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Dnes vám budou doručeny vratné krabičky',
+              subtitle: 'Krabičky na cestě k vám',
+              count: 15,
+              progress: 0.8,
+              action: UiOutlineButton(
+                text: 'Přijmout krabičky',
+                onPressed: () {},
+              ),
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Krabičky na cestě k vám',
+              subtitle: 'Celkem',
+              count: 15,
+            ),
+            UiFoodBoxReturnTile(
+              title: 'Krabičky na cestě k vám',
+              subtitle: 'Celkem',
+              count: 15,
+              action: UiPrimaryButton(
+                text: 'Potvrdit doručení',
+                onPressed: () {},
+                icon: Icons.check,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _NotificationTileComponents extends StatelessWidget {
   const _NotificationTileComponents();
 
@@ -853,6 +966,182 @@ class _NotificationTileComponents extends StatelessWidget {
               trailing: UiIconButton.gradient(
                 icon: Icons.info_outline,
                 onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DonationStatusCardComponents extends StatelessWidget {
+  const _DonationStatusCardComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              statusSection: Text(
+                'Dnes není pro tuto charitu den darování',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textSecondary,
+                ),
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 1,
+                isCurrentStepActive: false,
+                isProgressComplete: false,
+                icons: const [
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
+                ],
+              ),
+              statusSection: Text(
+                'Dnes je den darování.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionInfo: UiDonationCountdownLabel(
+                duration: const Duration(hours: 2, minutes: 39, seconds: 23),
+                label: 'Zbývá pro potvrzení darování',
+              ),
+              actionButton: UiPrimaryButton(
+                text: 'Darovat pokrmy',
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 2,
+                isCurrentStepActive: false,
+                isProgressComplete: false,
+                icons: const [
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
+                ],
+              ),
+              statusSection: Text(
+                'Přeprava potvrzena a kurýr je na cestě.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionInfo: UiDonationTimeRangeLabel(
+                startTime: const TimeOfDay(hour: 14, minute: 0),
+                endTime: const TimeOfDay(hour: 14, minute: 30),
+                label: 'Čas vyzvednutí kurýrem',
+              ),
+              actionButton: UiOutlineButton(
+                text: 'Detail daru',
+                icon: Icons.receipt_long,
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 5,
+                isCurrentStepActive: true,
+                isProgressComplete: false,
+                icons: const [
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
+                ],
+              ),
+              statusSection: Text(
+                'Dar doručen do charity, čeká na přijetí daru.',
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+              ),
+              actionButton: UiOutlineButton(
+                text: 'Detail daru',
+                icon: Icons.receipt_long,
+                onPressed: () {},
+              ),
+            ),
+            UiDonationStatusCard(
+              label: 'Darujete pro charitu',
+              title: 'Most naděje, Praha 4',
+              headerAction: UiTextButton(
+                text: 'Změnit',
+                icon: Icons.sync,
+                onPressed: () {},
+              ),
+              progressBar: UiProgressStepper(
+                currentStep: 5,
+                isCurrentStepActive: true,
+                isProgressComplete: true,
+                icons: const [
+                  UiIconSpec.data(Icons.today_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
+                  UiIconSpec.data(Icons.food_bank_rounded),
+                  UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  UiIconSpec.data(Icons.check_circle_rounded),
+                ],
+              ),
+              statusSection: Text.rich(
+                style: context.textStyles.bodyMedium.copyWith(
+                  color: context.uiColors.textPrimary,
+                ),
+                TextSpan(
+                  children: [
+                    TextSpan(text: 'Dnešní darování '),
+                    TextSpan(
+                      text: 'úspěšně dokončeno',
+                      style: context.textStyles.bodyMedium.copyWith(
+                        color: context.uiColors.success,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

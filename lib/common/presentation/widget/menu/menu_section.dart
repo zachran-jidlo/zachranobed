@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 class MenuSection extends StatelessWidget {
@@ -36,7 +37,7 @@ class MenuSection extends StatelessWidget {
   static Widget _label(BuildContext context, String label) {
     return Text(
       label,
-      style: Theme.of(context).textTheme.titleMedium,
+      style: context.textStyles.titleMedium,
     );
   }
 }

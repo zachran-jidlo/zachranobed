@@ -94,7 +94,26 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               primaryContainer: ZOColors.secondary,
             ),
             textTheme: Typography.material2021().black.copyWith(
-              titleLarge: TextStyle(fontSize: 22, height: 1.27, fontWeight: FontWeight.w700),
+              // Display
+              displayLarge: const TextStyle(fontSize: 57, height: 64.0 / 57.0, fontWeight: FontWeight.w400),
+              displayMedium: const TextStyle(fontSize: 45, height: 52.0 / 45.0, fontWeight: FontWeight.w400),
+              displaySmall: const TextStyle(fontSize: 36, height: 44.0 / 36.0, fontWeight: FontWeight.w700),
+              // Headline
+              headlineLarge: const TextStyle(fontSize: 32, height: 40.0 / 32.0, fontWeight: FontWeight.w700),
+              headlineMedium: const TextStyle(fontSize: 28, height: 36.0 / 28.0, fontWeight: FontWeight.w400),
+              headlineSmall: const TextStyle(fontSize: 24, height: 32.0 / 24.0, fontWeight: FontWeight.w400),
+              // Title
+              titleLarge: const TextStyle(fontSize: 22, height: 28.0 / 22.0, fontWeight: FontWeight.w700),
+              titleMedium: const TextStyle(fontSize: 16, height: 24.0 / 16.0, fontWeight: FontWeight.w500),
+              titleSmall: const TextStyle(fontSize: 14, height: 20.0 / 14.0, fontWeight: FontWeight.w500),
+              // Body
+              bodyLarge: const TextStyle(fontSize: 16, height: 24.0 / 16.0, fontWeight: FontWeight.w400),
+              bodyMedium: const TextStyle(fontSize: 14, height: 20.0 / 14.0, fontWeight: FontWeight.w400),
+              bodySmall: const TextStyle(fontSize: 12, height: 16.0 / 12.0, fontWeight: FontWeight.w400),
+              // Label
+              labelLarge: const TextStyle(fontSize: 14, height: 20.0 / 14.0, fontWeight: FontWeight.w500),
+              labelMedium: const TextStyle(fontSize: 12, height: 16.0 / 12.0, fontWeight: FontWeight.w500),
+              labelSmall: const TextStyle(fontSize: 11, height: 16.0 / 11.0, fontWeight: FontWeight.w700),
             ),
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.standard,

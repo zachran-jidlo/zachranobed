@@ -59,7 +59,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
       appBar: ZOAppBar(
-        title: context.l10n!.overview,
+        title: context.l10n.overview,
         automaticallyImplyLeading: false,
         actions: [
           NotificationIconButton(
@@ -165,7 +165,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   Widget _buildDonatedFoodList(BuildContext context) {
     return DonatedFoodList(
-      title: context.l10n!.lastDonated,
+      title: context.l10n.lastDonated,
       itemsLimit: 5,
       alwaysShowTitle: false,
     );
@@ -179,7 +179,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     return Column(
       children: [
         CardRow(
-          label: context.l10n!.activePairCardCanteenLabel,
+          label: context.l10n.activePairCardCanteenLabel,
           title: user.activePair.donorEstablishmentName,
           action: (context) {
             if (!user.hasMultiplePairs) {
@@ -188,7 +188,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             return Indicator(
               isVisible: user.isAnyNonActiveCheckupNeeded,
               child: ZOButton(
-                text: context.l10n!.activePairCardChangeAction,
+                text: context.l10n.activePairCardChangeAction,
                 type: ZOButtonType.secondary,
                 minimumSize: ZOButtonSize.tiny(),
                 onPressed: () {

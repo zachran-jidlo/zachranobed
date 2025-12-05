@@ -116,13 +116,13 @@ class ThankYouScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          isSuccess ? message : context.l10n!.offerError,
+          isSuccess ? message : context.l10n.offerError,
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: FontSize.xl),
         ),
         const SizedBox(height: GapSize.xl),
         ZOButton(
-          text: context.l10n!.backToOverview,
+          text: context.l10n.backToOverview,
           icon: MaterialSymbols.home_outlined,
           minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
           onPressed: () {

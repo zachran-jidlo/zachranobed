@@ -48,7 +48,7 @@ class _UiPrimaryButtonState extends State<UiPrimaryButton> {
       shadowColor: context.uiColors.transparent,
       minimumSize: widget.size,
       shape: const StadiumBorder(),
-      textStyle: context.textTheme.labelLarge,
+      textStyle: context.textStyles.labelLarge,
       elevation: 0.0,
     );
 

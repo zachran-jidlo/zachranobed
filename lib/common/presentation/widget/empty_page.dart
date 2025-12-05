@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
@@ -30,14 +31,14 @@ class EmptyPage extends StatelessWidget {
             const SizedBox(height: GapSize.xl),
             Text(
               title,
-              style: Theme.of(context).textTheme.titleLarge,
+              style: context.textStyles.titleLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: GapSize.xs),
             if (description != null)
               Text(
                 description!,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: context.textStyles.bodyLarge,
                 textAlign: TextAlign.center,
               ),
           ],

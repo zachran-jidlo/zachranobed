@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
@@ -11,7 +12,6 @@ class DonatedFoodListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final String date = '${offeredFood.date.day.toString()}.${offeredFood.date.month.toString()}.';
 
     return Padding(
@@ -27,17 +27,17 @@ class DonatedFoodListTile extends StatelessWidget {
         child: ListTile(
           title: Text(
             offeredFood.dishName,
-            style: textTheme.bodyLarge,
+            style: context.textStyles.bodyLarge,
           ),
           subtitle: Text(
             date,
-            style: textTheme.bodySmall?.copyWith(
+            style: context.textStyles.bodySmall.copyWith(
               color: ZOColors.onPrimaryLight,
             ),
           ),
           trailing: Text(
             '${offeredFood.numberOfServings ?? offeredFood.numberOfPackages} ks',
-            style: textTheme.labelLarge?.copyWith(
+            style: context.textStyles.labelLarge.copyWith(
               color: ZOColors.onPrimaryLight,
             ),
           ),

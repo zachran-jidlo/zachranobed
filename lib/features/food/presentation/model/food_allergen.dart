@@ -26,59 +26,59 @@ class FoodAllergen {
     return [
       FoodAllergen(
         number: 1,
-        text: context.l10n!.allergen01,
+        text: context.l10n.allergen01,
       ),
       FoodAllergen(
         number: 2,
-        text: context.l10n!.allergen02,
+        text: context.l10n.allergen02,
       ),
       FoodAllergen(
         number: 3,
-        text: context.l10n!.allergen03,
+        text: context.l10n.allergen03,
       ),
       FoodAllergen(
         number: 4,
-        text: context.l10n!.allergen04,
+        text: context.l10n.allergen04,
       ),
       FoodAllergen(
         number: 5,
-        text: context.l10n!.allergen05,
+        text: context.l10n.allergen05,
       ),
       FoodAllergen(
         number: 6,
-        text: context.l10n!.allergen06,
+        text: context.l10n.allergen06,
       ),
       FoodAllergen(
         number: 7,
-        text: context.l10n!.allergen07,
+        text: context.l10n.allergen07,
       ),
       FoodAllergen(
         number: 8,
-        text: context.l10n!.allergen08,
+        text: context.l10n.allergen08,
       ),
       FoodAllergen(
         number: 9,
-        text: context.l10n!.allergen09,
+        text: context.l10n.allergen09,
       ),
       FoodAllergen(
         number: 10,
-        text: context.l10n!.allergen10,
+        text: context.l10n.allergen10,
       ),
       FoodAllergen(
         number: 11,
-        text: context.l10n!.allergen11,
+        text: context.l10n.allergen11,
       ),
       FoodAllergen(
         number: 12,
-        text: context.l10n!.allergen12,
+        text: context.l10n.allergen12,
       ),
       FoodAllergen(
         number: 13,
-        text: context.l10n!.allergen13,
+        text: context.l10n.allergen13,
       ),
       FoodAllergen(
         number: 14,
-        text: context.l10n!.allergen14,
+        text: context.l10n.allergen14,
       ),
     ];
   }

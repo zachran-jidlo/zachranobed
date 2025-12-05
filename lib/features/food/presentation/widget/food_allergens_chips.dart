@@ -72,12 +72,12 @@ class FoodAllergensChips extends StatelessWidget {
                       },
                     ),
                     AssistChip(
-                      text: context.l10n!.allergensNotPresent,
+                      text: context.l10n.allergensNotPresent,
                       selected: state.value!.contains(FoodAllergen.noAllergensNumber),
                       onPressed: () => _onSingleSelectPressed(state, FoodAllergen.noAllergensNumber),
                     ),
                     AssistChip(
-                      text: context.l10n!.allergensOnPackage,
+                      text: context.l10n.allergensOnPackage,
                       selected: state.value!.contains(FoodAllergen.onPackageNumber),
                       onPressed: () => _onSingleSelectPressed(state, FoodAllergen.onPackageNumber),
                     ),

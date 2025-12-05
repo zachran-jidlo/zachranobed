@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
@@ -69,7 +70,7 @@ class _ZOTextFieldState extends State<ZOTextField> {
           readOnly: widget.readOnly,
           autocorrect: !widget.disableAutocorrect,
           spellCheckConfiguration: widget.disableAutocorrect ? const SpellCheckConfiguration.disabled() : null,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: context.textStyles.bodyLarge,
         ),
         widget.supportingText != null
             ? Padding(

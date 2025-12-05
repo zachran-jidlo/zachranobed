@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
@@ -14,7 +15,7 @@ class BoxMovementListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.textStyles;
     final date = boxMovement.date;
     final formattedDate = '${date.day.toString()}.${date.month.toString()}.';
     final countPrefix = boxMovement.count > 0 ? '+' : '';
@@ -35,13 +36,13 @@ class BoxMovementListTile extends StatelessWidget {
           ),
           subtitle: Text(
             formattedDate,
-            style: textTheme.bodySmall?.copyWith(
+            style: textTheme.bodySmall.copyWith(
               color: ZOColors.onPrimaryLight,
             ),
           ),
           trailing: Text(
             '$countPrefix${boxMovement.count} ks',
-            style: textTheme.labelLarge?.copyWith(
+            style: textTheme.labelLarge.copyWith(
               color: ZOColors.onPrimaryLight,
             ),
           ),

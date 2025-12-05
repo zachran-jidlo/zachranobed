@@ -35,22 +35,23 @@ class FoodBoxCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
         SectionHeader(
           title: Text(
             type.name,
-            style: textTheme.titleLarge,
+            style: context.textStyles.titleLarge,
           ),
           subtitle: Text(
-            context.l10n!.totalCountOfBoxes(maxQuantity),
-            style: textTheme.titleSmall?.copyWith(color: ZOColors.onBackgroundSecondary),
+            context.l10n.totalCountOfBoxes(maxQuantity),
+            style: context.textStyles.titleSmall.copyWith(
+              color: ZOColors.onBackgroundSecondary,
+            ),
           ),
         ),
         const SizedBox(height: GapSize.xs),
         CounterField(
-          label: context.l10n!.numberOfBoxes,
+          label: context.l10n.numberOfBoxes,
           focusNode: formValidationManager.getFocusNode(type.id),
           onValidation: formValidationManager.wrapValidator(
             type.id,

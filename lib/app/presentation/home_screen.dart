@@ -33,17 +33,17 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   /// The data for the tabs.
   final _tabs = [
     _TabScreenData(
-      label: (context) => Text(context.l10n!.overview),
+      label: (context) => Text(context.l10n.overview),
       icon: (context) => const Icon(Icons.home_outlined),
       content: (context) => const OverviewScreen(),
     ),
     _TabScreenData(
-      label: (context) => Text(context.l10n!.food),
+      label: (context) => Text(context.l10n.food),
       icon: (context) => const Icon(Icons.fastfood_outlined),
       content: (context) => const DonationsScreen(),
     ),
     _TabScreenData(
-      label: (context) => Text(context.l10n!.boxes),
+      label: (context) => Text(context.l10n.boxes),
       icon: (context) => const SvgIcon(resource: ImageAssets.iconFoodBox),
       content: (context) => const BoxesScreen(),
     )
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
               Padding(
                 padding: const EdgeInsets.only(top: GapSize.m),
                 child: ZOButton(
-                  text: context.l10n!.signOut,
+                  text: context.l10n.signOut,
                   minimumSize: ZOButtonSize.tiny(),
                   onPressed: () async {
                     final entityId = HelperService.getCurrentUser(context)?.entityId;

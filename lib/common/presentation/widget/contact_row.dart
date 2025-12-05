@@ -33,7 +33,7 @@ class ContactRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardRow(
-      label: isPreferred ? context.l10n!.contactsPreferredLabel : null,
+      label: isPreferred ? context.l10n.contactsPreferredLabel : null,
       title: name,
       subtitle: _subtitleContent,
       action: _actionContent,
@@ -59,18 +59,17 @@ class ContactRow extends StatelessWidget {
   }
 
   Widget _subtitleContent(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     if (phoneNumber != null) {
       return Text(
         phoneNumber ?? "",
-        style: textTheme.bodyMedium?.copyWith(
+        style: context.textStyles.bodyMedium.copyWith(
           color: ZOColors.onPrimaryLight,
         ),
       );
     } else {
       return Text(
-        context.l10n!.contactsNoPhoneLabel,
-        style: textTheme.bodyMedium?.copyWith(
+        context.l10n.contactsNoPhoneLabel,
+        style: context.textStyles.bodyMedium.copyWith(
           color: ZOColors.outline,
         ),
       );

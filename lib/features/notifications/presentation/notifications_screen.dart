@@ -43,7 +43,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
       appBar: ZOAppBar(
-        title: context.l10n!.notificationsTitle,
+        title: context.l10n.notificationsTitle,
       ),
       builder: (context) {
         return StreamBuilder<List<domain.Notification>>(
@@ -85,7 +85,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: EmptyPage(
           vectorImagePath: ImageAssets.imageEmptyNotifications,
-          title: context.l10n!.notificationsEmptyTitle,
+          title: context.l10n.notificationsEmptyTitle,
         ),
       ),
     );
@@ -106,13 +106,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       slivers: [
         if (showHeaders)
           _sectionHeader(
-            context.l10n!.commonToday,
+            context.l10n.commonToday,
             hasTopPadding: false,
           ),
         _notificationsSection(todayNotifications),
         if (showHeaders)
           _sectionHeader(
-            context.l10n!.notificationsLast7DaysTitle,
+            context.l10n.notificationsLast7DaysTitle,
             hasTopPadding: true,
           ),
         _notificationsSection(otherNotifications),
@@ -131,7 +131,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.textStyles.titleMedium,
         ),
       ),
     );
@@ -161,7 +161,6 @@ class _NotificationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -177,26 +176,25 @@ class _NotificationRow extends StatelessWidget {
             _timeHeader(context),
             Text(
               notification.title,
-              style: textTheme.bodyLarge?.copyWith(color: ZOColors.onSurface),
+              style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onSurface),
             ),
           ],
         ),
         subtitle: Text(
           notification.message,
-          style: textTheme.bodyMedium?.copyWith(color: ZOColors.onPrimaryLight),
+          style: context.textStyles.bodyMedium.copyWith(color: ZOColors.onPrimaryLight),
         ),
       ),
     );
   }
 
   Widget _timeHeader(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final textStyle = textTheme.bodyMedium?.copyWith(
+    final textStyle = context.textStyles.bodyMedium.copyWith(
       color: ZOColors.onPrimaryLight,
       fontStyle: FontStyle.italic,
     );
     final date = DateTimeUtils.isToday(notification.timestamp)
-        ? context.l10n!.commonToday
+        ? context.l10n.commonToday
         : DateTimeUtils.formatDateTime(notification.timestamp, "d. M. yyyy");
     final time = DateTimeUtils.formatDateTime(notification.timestamp, "HH:mm");
 

@@ -21,11 +21,11 @@ class FieldValidationUtils {
   static String? Function(String?) getEmailValidator(BuildContext context) {
     return (value) {
       if (value == null || value.isEmpty) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n.requiredFieldError;
       }
 
       if (!emailRegExp.hasMatch(value)) {
-        return context.l10n!.invalidFieldEmail;
+        return context.l10n.invalidFieldEmail;
       }
       return null;
     };
@@ -36,7 +36,7 @@ class FieldValidationUtils {
   static String? Function(String?) getPasswordValidator(BuildContext context) {
     return (value) {
       if (!_isFilled(value)) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n.requiredFieldError;
       }
       return null;
     };
@@ -49,10 +49,10 @@ class FieldValidationUtils {
   ) {
     return (value) {
       if (value == null || value.isEmpty) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n.requiredFieldError;
       }
       if (!passwordRegExp.hasMatch(value)) {
-        return context.l10n!.passwordLengthError;
+        return context.l10n.passwordLengthError;
       }
       return null;
     };
@@ -66,10 +66,10 @@ class FieldValidationUtils {
   ) {
     return (value) {
       if (value == null || value.isEmpty) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n.requiredFieldError;
       }
       if (value != newPasswordController.text) {
-        return context.l10n!.passwordsDontMatchError;
+        return context.l10n.passwordsDontMatchError;
       }
       return null;
     };
@@ -80,7 +80,7 @@ class FieldValidationUtils {
   static String? Function(String?) getFoodNameValidator(BuildContext context) {
     return (value) {
       if (!_isFilled(value)) {
-        return context.l10n!.invalidFieldFoodName;
+        return context.l10n.invalidFieldFoodName;
       }
       return null;
     };
@@ -93,7 +93,7 @@ class FieldValidationUtils {
   ) {
     return (value) {
       if (value == null || value.isEmpty) {
-        return context.l10n!.invalidFieldFoodAllergens;
+        return context.l10n.invalidFieldFoodAllergens;
       }
       return null;
     };
@@ -106,7 +106,7 @@ class FieldValidationUtils {
   ) {
     return (value) {
       if (value == null) {
-        return context.l10n!.invalidFieldFoodCategory;
+        return context.l10n.invalidFieldFoodCategory;
       }
       return null;
     };
@@ -117,13 +117,13 @@ class FieldValidationUtils {
   static String? Function(int?) getFoodTemperatureValidator(BuildContext context) {
     return (value) {
       if (value == null) {
-        return context.l10n!.requiredFieldError;
+        return context.l10n.requiredFieldError;
       }
       if (value < Constants.foodTemperatureMin) {
-        return context.l10n!.invalidFieldFoodTemperatureTooLow;
+        return context.l10n.invalidFieldFoodTemperatureTooLow;
       }
       if (value > Constants.foodTemperatureMax) {
-        return context.l10n!.invalidFieldFoodTemperatureTooHigh;
+        return context.l10n.invalidFieldFoodTemperatureTooHigh;
       }
       return null;
     };
@@ -144,10 +144,10 @@ class FieldValidationUtils {
   }) {
     return (value) {
       if (max != null && (value == null || value > max)) {
-        return context.l10n!.invalidFieldBoxNumberTooHigh;
+        return context.l10n.invalidFieldBoxNumberTooHigh;
       }
       if (!allowZero && (value == null || value <= 0)) {
-        return context.l10n!.invalidFieldBoxNumber;
+        return context.l10n.invalidFieldBoxNumber;
       }
       return null;
     };
@@ -158,7 +158,7 @@ class FieldValidationUtils {
   static String? Function(int?) getServingsValidator(BuildContext context) {
     return (value) {
       if (value == null || value <= 0) {
-        return context.l10n!.invalidFieldServings;
+        return context.l10n.invalidFieldServings;
       }
       return null;
     };
@@ -169,7 +169,7 @@ class FieldValidationUtils {
   static String? Function(int?) getPackagesValidator(BuildContext context) {
     return (value) {
       if (value == null || value <= 0) {
-        return context.l10n!.invalidFieldPackages;
+        return context.l10n.invalidFieldPackages;
       }
       return null;
     };

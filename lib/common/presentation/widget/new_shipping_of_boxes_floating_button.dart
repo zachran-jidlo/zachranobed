@@ -16,7 +16,7 @@ class NewShippingOfBoxesFloatingButton extends StatelessWidget {
       shape: const StadiumBorder(),
       backgroundColor: ZOColors.primaryLight,
       label: Text(
-        context.l10n!.shippingOfBoxes,
+        context.l10n.shippingOfBoxes,
         style: const TextStyle(color: ZOColors.primary),
       ),
       icon: const Icon(

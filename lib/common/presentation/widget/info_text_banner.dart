@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A stateless widget that displays a banner with an informational text message.
@@ -26,9 +27,7 @@ class InfoTextBanner extends StatelessWidget {
         padding: const EdgeInsets.all(WidgetStyle.padding),
         child: Text(
           message,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: textColor,
-              ),
+          style: context.textStyles.bodyLarge.copyWith(color: textColor),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,

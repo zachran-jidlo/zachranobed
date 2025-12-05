@@ -60,7 +60,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.offerFoodOverviewScreenTitle,
+        title: context.l10n.offerFoodOverviewScreenTitle,
       ),
       web: (context) => _offerFoodOverviewScreenContent(useWideButton: false),
       mobile: (context) => _offerFoodOverviewScreenContent(useWideButton: true),
@@ -89,7 +89,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
             else ...[
               InfoBanner.text(
                 backgroundColor: ZOColors.amberTransparent,
-                message: context.l10n!.offerFoodOverviewBanner,
+                message: context.l10n.offerFoodOverviewBanner,
               ),
               const SizedBox(height: GapSize.m),
               Padding(
@@ -118,7 +118,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: ZOButton(
-                        text: context.l10n!.offerFood,
+                        text: context.l10n.offerFood,
                         icon: Icons.check,
                         enabled: _isEmptyConfirmed || _boxInfos.isNotEmpty,
                         minimumSize: ZOButtonSize.large(
@@ -143,22 +143,22 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       children: [
         EmptyPage(
           vectorImagePath: ImageAssets.imageEmptyOverview,
-          title: context.l10n!.offerFoodOverviewEmptyTitle,
-          description: context.l10n!.offerFoodOverviewEmptyDescription,
+          title: context.l10n.offerFoodOverviewEmptyTitle,
+          description: context.l10n.offerFoodOverviewEmptyDescription,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
           child: Column(
             children: [
               ZOButton(
-                text: context.l10n!.offerFoodOverviewEmptyAction,
+                text: context.l10n.offerFoodOverviewEmptyAction,
                 icon: Icons.add,
                 minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
                 onPressed: _onAddNewFoodPressed,
               ),
               const SizedBox(height: GapSize.xs),
               ZOButton(
-                text: context.l10n!.commonClose,
+                text: context.l10n.commonClose,
                 type: ZOButtonType.textPrimary,
                 minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
                 onPressed: () => context.router.maybePop(),
@@ -243,7 +243,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       if (mounted) {
         context.router.replace(ThankYouRoute(
           isSuccess: isSuccess,
-          message: context.l10n!.foodDonationConfirmation,
+          message: context.l10n.foodDonationConfirmation,
         ));
       }
     } else {
@@ -252,7 +252,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
-            message: context.l10n!.boxCountError,
+            message: context.l10n.boxCountError,
           ),
         );
       }
@@ -264,10 +264,10 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       context: context,
       builder: (context) => ZODialog(
         criticalConfirmStyle: true,
-        title: context.l10n!.cancelOffer,
-        content: context.l10n!.cancelOfferDialogContent,
-        confirmText: context.l10n!.confirmCancel,
-        cancelText: context.l10n!.continueTheOffer,
+        title: context.l10n.cancelOffer,
+        content: context.l10n.cancelOfferDialogContent,
+        confirmText: context.l10n.confirmCancel,
+        cancelText: context.l10n.continueTheOffer,
         onConfirmPressed: () => context.router.maybePop(true),
         onCancelPressed: () => context.router.maybePop(false),
       ),
@@ -288,7 +288,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
         _foodInfos.remove(oldFoodInfo);
       });
 
-      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesRemoveDialogContent);
+      _showUpdateBoxesDialogIfNeeded(context.l10n.offerFoodOverviewUpdateBoxesRemoveDialogContent);
     }
     // Replace an existing food item with a new one
     else if (oldFoodInfo != null && result is OfferFoodDetailResultSaveItem) {
@@ -297,7 +297,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
         _foodInfos[index] = result.foodInfo;
       });
 
-      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesEditDialogContent);
+      _showUpdateBoxesDialogIfNeeded(context.l10n.offerFoodOverviewUpdateBoxesEditDialogContent);
     }
     // Add a new food item
     else if (oldFoodInfo == null && result is OfferFoodDetailResultSaveItem) {
@@ -305,7 +305,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
         _foodInfos.add(result.foodInfo);
       });
 
-      _showUpdateBoxesDialogIfNeeded(context.l10n!.offerFoodOverviewUpdateBoxesAddDialogContent);
+      _showUpdateBoxesDialogIfNeeded(context.l10n.offerFoodOverviewUpdateBoxesAddDialogContent);
     }
   }
 
@@ -319,10 +319,10 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       context: context,
       builder: (context) => ZODialog(
         criticalConfirmStyle: true,
-        title: context.l10n!.offerFoodOverviewUpdateBoxesDialogTitle,
+        title: context.l10n.offerFoodOverviewUpdateBoxesDialogTitle,
         content: message,
-        confirmText: context.l10n!.offerFoodOverviewUpdateBoxesDialogConfirmAction,
-        cancelText: context.l10n!.commonCancel,
+        confirmText: context.l10n.offerFoodOverviewUpdateBoxesDialogConfirmAction,
+        cancelText: context.l10n.commonCancel,
         onConfirmPressed: () {
           context.router.maybePop();
           _onEditBoxesPressed();
@@ -366,11 +366,11 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
     return SectionHeader(
       useBottomPadding: false,
       title: Text(
-        context.l10n!.offerFoodOverviewSectionFoodInfoTitle,
-        style: Theme.of(context).textTheme.titleMedium,
+        context.l10n.offerFoodOverviewSectionFoodInfoTitle,
+        style: context.textStyles.titleMedium,
       ),
       action: ZOButton(
-        text: context.l10n!.offerFoodOverviewSectionFoodInfoAddAction,
+        text: context.l10n.offerFoodOverviewSectionFoodInfoAddAction,
         icon: Icons.add,
         type: ZOButtonType.textPrimary,
         minimumSize: ZOButtonSize.mediumWrapContent,
@@ -432,7 +432,7 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
       children: [
         _buildSectionHeader(context),
         const SizedBox(height: GapSize.xs),
-        Text(context.l10n!.offerFoodOverviewSectionBoxInfoDescription),
+        Text(context.l10n.offerFoodOverviewSectionBoxInfoDescription),
         const SizedBox(height: GapSize.xs),
         if (boxInfos.isEmpty) ...[
           _buildCheckbox(context)
@@ -461,7 +461,7 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
                   onChanged: (value) {
                     onEmptyConfirmedChanged(value ?? isEmptyConfirmed);
                   }),
-              Text(context.l10n!.offerFoodOverviewSectionBoxInfoEmpty)
+              Text(context.l10n.offerFoodOverviewSectionBoxInfoEmpty)
             ],
           ),
         ));
@@ -471,19 +471,19 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
     return SectionHeader(
       useBottomPadding: false,
       title: Text(
-        context.l10n!.offerFoodOverviewSectionBoxInfoTitle,
-        style: Theme.of(context).textTheme.titleMedium,
+        context.l10n.offerFoodOverviewSectionBoxInfoTitle,
+        style: context.textStyles.titleMedium,
       ),
       action: boxInfos.isEmpty
           ? ZOButton(
-              text: context.l10n!.offerFoodOverviewSectionBoxInfoAddAction,
+              text: context.l10n.offerFoodOverviewSectionBoxInfoAddAction,
               icon: Icons.add,
               type: ZOButtonType.textPrimary,
               minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             )
           : ZOButton(
-              text: context.l10n!.offerFoodOverviewSectionBoxInfoEditAction,
+              text: context.l10n.offerFoodOverviewSectionBoxInfoEditAction,
               icon: Icons.edit,
               type: ZOButtonType.textPrimary,
               minimumSize: ZOButtonSize.mediumWrapContent,
@@ -507,13 +507,13 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
               return ListTile(
                 title: Text(
                   e.key.name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: context.textStyles.bodyLarge,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 trailing: Text(
-                  context.l10n!.foodInfoCountTemplate(e.value),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: ZOColors.onPrimaryLight),
+                  context.l10n.foodInfoCountTemplate(e.value),
+                  style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onPrimaryLight),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -41,7 +41,7 @@ class UiNavBar extends StatelessWidget {
           controller: controller,
           splashBorderRadius: BorderRadius.circular(24.0),
           labelPadding: const EdgeInsets.all(4.0),
-          labelStyle: context.textTheme.bodySmall,
+          labelStyle: context.textStyles.bodySmall,
           labelColor: context.uiColors.primary,
           unselectedLabelColor: context.uiColors.textSecondary,
           indicatorColor: Colors.transparent,

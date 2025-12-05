@@ -85,7 +85,7 @@ class UiFoodBoxTile extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.textTheme.titleMedium?.copyWith(
+            style: context.textStyles.titleMedium.copyWith(
               color: context.uiColors.textPrimary,
             ),
           ),
@@ -95,7 +95,7 @@ class UiFoodBoxTile extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.textTheme.labelMedium?.copyWith(
+            style: context.textStyles.labelMedium.copyWith(
               color: context.uiColors.textSecondary,
             ),
           ),
@@ -174,7 +174,7 @@ class _StatBox extends StatelessWidget {
             stat.value.toString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.textTheme.titleLarge?.copyWith(
+            style: context.textStyles.titleLarge.copyWith(
               color: isDimmed ? context.uiColors.textSecondary : context.uiColors.textPrimary,
             ),
           ),
@@ -182,7 +182,7 @@ class _StatBox extends StatelessWidget {
             stat.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.textTheme.labelSmall?.copyWith(
+            style: context.textStyles.labelSmall.copyWith(
               color: context.uiColors.textSecondary,
             ),
           ),

@@ -35,7 +35,7 @@ class FoodInfoRow extends StatelessWidget {
     return TrailingIconRow(
       title: foodInfo.dishName.toString(),
       description: null,
-      trailInfo: context.l10n!.foodInfoCountTemplate(count ?? 0),
+      trailInfo: context.l10n.foodInfoCountTemplate(count ?? 0),
       trailingIcon: Icons.edit,
       background: background,
       onTap: onPressed,

@@ -43,7 +43,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       appBar: ZOAppBar(
-        title: context.l10n!.changePassword,
+        title: context.l10n.changePassword,
       ),
       web: (context) => _changePasswordScreenContent(useWideButton: false),
       mobile: (context) => _changePasswordScreenContent(useWideButton: true),
@@ -68,7 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             children: [
               const SizedBox(height: GapSize.xxs),
               ZOPasswordTextField(
-                text: context.l10n!.currentPassword,
+                text: context.l10n.currentPassword,
                 controller: _oldPasswordController,
                 onValidation: FieldValidationUtils.getPasswordValidator(
                   context,
@@ -76,7 +76,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               ),
               const SizedBox(height: GapSize.m),
               ZOPasswordTextField(
-                text: context.l10n!.newPassword,
+                text: context.l10n.newPassword,
                 controller: _newPasswordController,
                 onValidation: FieldValidationUtils.getNewPasswordValidator(
                   context,
@@ -84,7 +84,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               ),
               const SizedBox(height: GapSize.m),
               ZOPasswordTextField(
-                text: context.l10n!.repeatNewPassword,
+                text: context.l10n.repeatNewPassword,
                 controller: _confirmNewPasswordController,
                 onValidation: FieldValidationUtils.getRepeatNewPasswordValidator(
                   context,
@@ -95,7 +95,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: ZOButton(
-                  text: context.l10n!.savePassword,
+                  text: context.l10n.savePassword,
                   icon: Icons.check,
                   minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
                   onPressed: () async {
@@ -130,7 +130,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           ZOTemporarySnackBar(
-            message: context.l10n!.newPasswordSuccessfullySaved,
+            message: context.l10n.newPasswordSuccessfullySaved,
           ),
         );
 
@@ -143,7 +143,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ZOTemporarySnackBar(
             backgroundColor: Colors.red,
             message:
-                _isPasswordError(e) ? context.l10n!.invalidCurrentPasswordError : context.l10n!.somethingWentWrongError,
+                _isPasswordError(e) ? context.l10n.invalidCurrentPasswordError : context.l10n.somethingWentWrongError,
           ),
         );
       }

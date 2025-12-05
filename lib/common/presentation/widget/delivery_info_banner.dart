@@ -60,7 +60,7 @@ class DeliveryInfoBanner extends StatelessWidget {
           return Text.rich(
             textAlign: textAlign,
             TextSpan(
-              text: '${context.l10n!.courierWillCome} ',
+              text: '${context.l10n.courierWillCome} ',
               style: const TextStyle(
                 color: ZOColors.onPrimaryLight,
                 fontSize: FontSize.s,
@@ -92,7 +92,7 @@ class DeliveryInfoBanner extends StatelessWidget {
           );
         },
         button: ZOButton(
-          text: context.l10n!.wantToDonate,
+          text: context.l10n.wantToDonate,
           minimumSize: ZOButtonSize.tiny(),
           type: ZOButtonType.success,
           onPressed: () => _onAcceptedPressed(context),
@@ -108,10 +108,10 @@ class DeliveryInfoBanner extends StatelessWidget {
         context: context,
         builder: (context) => ZODialog(
           criticalConfirmStyle: true,
-          title: context.l10n!.foodBoxesCheckupDialogTitle,
-          content: context.l10n!.foodBoxesCheckupDialogContent,
-          confirmText: context.l10n!.foodBoxesCheckupDialogConfirmAction,
-          cancelText: context.l10n!.commonCancel,
+          title: context.l10n.foodBoxesCheckupDialogTitle,
+          content: context.l10n.foodBoxesCheckupDialogContent,
+          confirmText: context.l10n.foodBoxesCheckupDialogConfirmAction,
+          cancelText: context.l10n.commonCancel,
           onConfirmPressed: () {
             context.router.maybePop();
             showFoodBoxesCheckup();

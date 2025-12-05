@@ -32,7 +32,6 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return ContentWithLoading(
       isLoading: isLoading,
       child: BoxSummaryCard(
@@ -47,14 +46,14 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.l10n!.foodBoxesCheckupNeededCardTitle,
-                        style: textTheme.titleMedium,
+                        context.l10n.foodBoxesCheckupNeededCardTitle,
+                        style: context.textStyles.titleMedium,
                       ),
                       Text(
                         state.isDelayAvailable
-                            ? context.l10n!.foodBoxesCheckupNeededCardDefaultDescription
-                            : context.l10n!.foodBoxesCheckupNeededCardMandatoryDescription,
-                        style: textTheme.bodyMedium,
+                            ? context.l10n.foodBoxesCheckupNeededCardDefaultDescription
+                            : context.l10n.foodBoxesCheckupNeededCardMandatoryDescription,
+                        style: context.textStyles.bodyMedium,
                       ),
                     ],
                   ),
@@ -67,7 +66,7 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
               children: [
                 if (state.isDelayAvailable) ...[
                   ZOButton(
-                    text: context.l10n!.foodBoxesCheckupNeededCardDelayAction,
+                    text: context.l10n.foodBoxesCheckupNeededCardDelayAction,
                     onPressed: onDelayPressed,
                     type: ZOButtonType.textPrimary,
                     minimumSize: ZOButtonSize.mediumWrapContent,
@@ -75,7 +74,7 @@ class BoxSummaryCheckNeeded extends StatelessWidget {
                   const SizedBox(width: 16.0),
                 ],
                 ZOButton(
-                  text: context.l10n!.foodBoxesCheckupNeededCardCheckAction,
+                  text: context.l10n.foodBoxesCheckupNeededCardCheckAction,
                   onPressed: onCheckPressed,
                   type: ZOButtonType.primary,
                   minimumSize: ZOButtonSize.mediumWrapContent,

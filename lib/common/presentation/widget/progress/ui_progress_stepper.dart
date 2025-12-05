@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
 /// A widget that displays a progress stepper with icons and connecting bars. This stepper visually represents progress
 /// through multiple steps using icons and connecting lines.
 class UiProgressStepper extends StatelessWidget {
-  /// The list of icons to display for each step.
-  final List<IconData> icons;
+  /// The list of icon specifications to display for each step.
+  final List<UiIconSpec> icons;
 
   /// The index of the current step.
   final int currentStep;
@@ -82,8 +83,8 @@ class UiProgressStepper extends StatelessWidget {
     return UiGradientShaderMask(
       color: color,
       gradient: gradient,
-      child: Icon(
-        icons[index],
+      child: UiIcon(
+        spec: icons[index],
         color: Colors.black,
         size: 20,
       ),

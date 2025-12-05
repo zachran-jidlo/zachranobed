@@ -43,7 +43,7 @@ class UiChip extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
-      textStyle: context.textTheme.labelLarge,
+      textStyle: context.textStyles.labelLarge,
       shadowColor: Colors.black,
     );
 

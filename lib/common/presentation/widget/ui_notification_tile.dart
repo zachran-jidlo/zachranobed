@@ -78,7 +78,7 @@ class UiNotificationTile extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.titleMedium?.copyWith(
+              style: context.textStyles.titleMedium.copyWith(
                 color: context.uiColors.textPrimary,
               ),
             ),
@@ -107,7 +107,7 @@ class UiNotificationTile extends StatelessWidget {
       ),
       child: Text(
         description,
-        style: context.textTheme.bodyMedium?.copyWith(
+        style: context.textStyles.bodyMedium.copyWith(
           color: context.uiColors.textPrimary,
         ),
       ),

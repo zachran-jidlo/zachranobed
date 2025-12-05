@@ -166,12 +166,13 @@ class FoodDateTimeChips extends StatelessWidget {
       return const SizedBox();
     }
 
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.only(top: GapSize.xs),
       child: Text(
         labelText,
-        style: textTheme.bodyLarge?.copyWith(color: ZOColors.onPrimaryLight),
+        style: context.textStyles.bodyLarge.copyWith(
+          color: ZOColors.onPrimaryLight,
+        ),
       ),
     );
   }
@@ -196,19 +197,19 @@ class FoodDateTimeOption {
     final now = DateTime.now();
     return [
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelToday,
+        text: context.l10n.foodDateTimeLabelToday,
         date: FoodDateTimeSpecified(date: now),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelPlus1Day,
+        text: context.l10n.foodDateTimeLabelPlus1Day,
         date: FoodDateTimeSpecified(date: now.add(const Duration(days: 1))),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelPlus2Days,
+        text: context.l10n.foodDateTimeLabelPlus2Days,
         date: FoodDateTimeSpecified(date: now.add(const Duration(days: 2))),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelOnPackaging,
+        text: context.l10n.foodDateTimeLabelOnPackaging,
         date: FoodDateTimeOnPackaging(),
       ),
     ];
@@ -222,19 +223,19 @@ class FoodDateTimeOption {
     final now = DateTime.now();
     return [
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelToday,
+        text: context.l10n.foodDateTimeLabelToday,
         date: FoodDateTimeSpecified(date: now),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelMinus1Day,
+        text: context.l10n.foodDateTimeLabelMinus1Day,
         date: FoodDateTimeSpecified(date: now.add(const Duration(days: -1))),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelMinus2Days,
+        text: context.l10n.foodDateTimeLabelMinus2Days,
         date: FoodDateTimeSpecified(date: now.add(const Duration(days: -2))),
       ),
       FoodDateTimeOption(
-        text: context.l10n!.foodDateTimeLabelOnPackaging,
+        text: context.l10n.foodDateTimeLabelOnPackaging,
         date: FoodDateTimeOnPackaging(),
       ),
     ];

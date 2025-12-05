@@ -99,7 +99,7 @@ class _UiTextButtonState extends State<UiTextButton> {
   }
 
   TextStyle _resolveTextStyle() {
-    final style = context.textTheme.labelLarge ?? const TextStyle();
+    final style = context.textStyles.labelLarge;
 
     TextDecoration? decoration;
     if (_isHovering) {

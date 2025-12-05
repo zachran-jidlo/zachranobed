@@ -38,15 +38,15 @@ class FoodCategory {
   static List<FoodCategory> createValues(BuildContext context) {
     return [
       FoodCategory(
-        name: context.l10n!.foodCategoryWarm,
+        name: context.l10n.foodCategoryWarm,
         type: FoodCategoryType.warm,
       ),
       FoodCategory(
-        name: context.l10n!.foodCategoryCooled,
+        name: context.l10n.foodCategoryCooled,
         type: FoodCategoryType.cooled,
       ),
       FoodCategory(
-        name: context.l10n!.foodCategoryPackaged,
+        name: context.l10n.foodCategoryPackaged,
         type: FoodCategoryType.packaged,
       ),
     ];

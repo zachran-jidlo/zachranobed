@@ -75,14 +75,14 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.foodName,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.foodName,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
       ZOTextField(
         key: ValueKey(formFieldKey),
-        label: context.l10n!.foodName,
+        label: context.l10n.foodName,
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
@@ -101,8 +101,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.allergens,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.allergens,
+          style: context.textStyles.titleMedium,
         ),
         action: SectionHeaderIcon(
           icon: const Icon(Icons.info_outline),
@@ -133,8 +133,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.foodCategory,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.foodCategory,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -160,14 +160,14 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.foodTemperature,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.foodTemperature,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
         key: ValueKey(formFieldKey),
-        label: context.l10n!.foodTemperatureWithCelsius,
+        label: context.l10n.foodTemperatureWithCelsius,
         minValue: Constants.foodTemperatureMin,
         maxValue: Constants.foodTemperatureMax,
         noValueFallback: Constants.foodTemperatureInitial,
@@ -189,14 +189,14 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.numberOfServings,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.numberOfServings,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
         key: ValueKey(keyServings),
-        label: context.l10n!.numberOfServings,
+        label: context.l10n.numberOfServings,
         focusNode: widget.formValidationManager.getFocusNode(keyServings),
         onValidation: widget.formValidationManager.wrapValidator(
           keyServings,
@@ -215,14 +215,14 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.numberOfPackages,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.numberOfPackages,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
       CounterField(
         key: ValueKey(formFieldKey),
-        label: context.l10n!.numberOfPackages,
+        label: context.l10n.numberOfPackages,
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
@@ -241,8 +241,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.preparedAt,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.preparedAt,
+          style: context.textStyles.titleMedium,
         ),
       ),
       const SizedBox(height: GapSize.xs),
@@ -269,8 +269,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     return [
       SectionHeader(
         title: Text(
-          context.l10n!.consumeBy,
-          style: Theme.of(context).textTheme.titleMedium,
+          context.l10n.consumeBy,
+          style: context.textStyles.titleMedium,
         ),
         action: SectionHeaderIcon(
           icon: const Icon(Icons.today_rounded),
@@ -304,7 +304,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           getConsumeByValidator(context),
         ),
-        formatSelectedDate: context.l10n!.consumeByTemplate,
+        formatSelectedDate: context.l10n.consumeByTemplate,
         initialTime: _consumeByInitialTime,
       ),
     ];
@@ -330,11 +330,11 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
   ) {
     return (value) {
       if (value == null) {
-        return context.l10n!.invalidFieldConsumeBy;
+        return context.l10n.invalidFieldConsumeBy;
       }
       final now = DateTime.now();
       if (value is FoodDateTimeSpecified && value.date.isBefore(now)) {
-        return context.l10n!.invalidFieldConsumeByDateInPast;
+        return context.l10n.invalidFieldConsumeByDateInPast;
       }
       return null;
     };
@@ -347,11 +347,11 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
   ) {
     return (value) {
       if (value == null) {
-        return context.l10n!.invalidFieldPreparedAt;
+        return context.l10n.invalidFieldPreparedAt;
       }
       final now = DateTime.now();
       if (value is FoodDateTimeSpecified && value.date.isAfter(now)) {
-        return context.l10n!.invalidFieldPreparedAtDateInPast;
+        return context.l10n.invalidFieldPreparedAtDateInPast;
       }
       return null;
     };
