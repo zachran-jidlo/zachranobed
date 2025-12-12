@@ -22,7 +22,9 @@ import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
@@ -72,6 +74,8 @@ class ComponentsScreen extends StatelessWidget {
           const _NotificationTileComponents(),
           const _Header.h1("Meal tiles"),
           const _MealTileComponents(),
+          const _Header.h1("List tiles"),
+          const _ListTileComponents(),
           const _Header.h1("Donation status cards"),
           const _DonationStatusCardComponents(),
         ],
@@ -297,6 +301,29 @@ class _IconComponents extends StatelessWidget {
                 ),
                 UiIcon(
                   spec: UiIconSpec.svg(ImageAssets.iconAllergens),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Gradient icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiGradientIcon(
+                  spec: UiIconSpec.data(Icons.favorite),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
+                ),
+                UiGradientIcon(
+                  spec: UiIconSpec.data(Icons.star),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
+                ),
+                UiGradientIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
                 ),
               ],
             ),
@@ -1489,6 +1516,99 @@ class _MealTileComponents extends StatelessWidget {
                   label: 'Viz. obal',
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ListTileComponents extends StatelessWidget {
+  const _ListTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiListTile(
+              title: 'Title',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.edit),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              overline: 'Overline',
+              supportingText: 'Supporting text',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.edit),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              end: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 16.0,
+                children: [
+                  Text(
+                    '15 ks',
+                    style: context.textStyles.labelLarge,
+                  ),
+                  UiGradientIcon(
+                    spec: UiIconSpec.data(Icons.edit),
+                    gradient: context.uiColors.primaryGradient,
+                    size: 24,
+                  ),
+                ],
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              start: const Icon(Icons.phone_outlined, size: 24),
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.chevron_right),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              start: const Icon(Icons.phone_outlined, size: 24),
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.chevron_right),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
             ),
           ],
         ),

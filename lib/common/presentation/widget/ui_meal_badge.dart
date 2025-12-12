@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
 /// A badge widget for displaying meal metadata (type, allergens, expiry, etc.).
@@ -26,13 +26,10 @@ class UiMealBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 4.0,
       children: [
-        UiGradientShaderMask(
+        UiGradientIcon(
+          spec: icon,
+          size: 24,
           gradient: context.uiColors.primaryGradient,
-          child: UiIcon(
-            spec: icon,
-            size: 24,
-            color: Colors.black,
-          ),
         ),
         Text(
           label,

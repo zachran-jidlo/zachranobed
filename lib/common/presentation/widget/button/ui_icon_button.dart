@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
 /// An icon button widget with gradient or solid color support.
 ///
@@ -95,13 +96,10 @@ class _UiIconButtonState extends State<UiIconButton> {
         onHover: (isHovering) {
           setState(() => _isHovering = isHovering);
         },
-        icon: UiGradientShaderMask(
+        icon: UiGradientIcon(
+          spec: UiIconSpec.data(widget.icon),
           color: foregroundColor,
           gradient: foregroundGradient,
-          child: Icon(
-            widget.icon,
-            color: Colors.black,
-          ),
         ),
       ),
     );

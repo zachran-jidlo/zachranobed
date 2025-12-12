@@ -38,6 +38,7 @@ class UiMealTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return UiCard(
       padding: EdgeInsets.zero,
+      borderRadius: 8,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
