@@ -18,7 +18,9 @@ import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_change_pair_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_contact_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
@@ -76,6 +78,10 @@ class ComponentsScreen extends StatelessWidget {
           const _MealTileComponents(),
           const _Header.h1("List tiles"),
           const _ListTileComponents(),
+          const _Header.h1("Contact tiles"),
+          const _ContactTileComponents(),
+          const _Header.h1("Change pair tiles"),
+          const _ChangePairTileComponents(),
           const _Header.h1("Donation status cards"),
           const _DonationStatusCardComponents(),
         ],
@@ -1609,6 +1615,71 @@ class _ListTileComponents extends StatelessWidget {
                 size: 24,
               ),
               onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactTileComponents extends StatelessWidget {
+  const _ContactTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiContactTile(
+              name: 'Hana Novotná, pozice',
+              phoneNumber: '+420 XXX XXX XXX',
+              isPreferred: true,
+            ),
+            UiContactTile(
+              name: 'Hana Novotná, pozice',
+              phoneNumber: '+420 XXX XXX XXX',
+            ),
+            UiContactTile(
+              name: 'Kontakt bez telefonu',
+              phoneNumber: 'Telefonní číslo neuvedeno',
+              showCallButton: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChangePairTileComponents extends StatelessWidget {
+  const _ChangePairTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiChangePairTile(
+              name: 'Jídelna U Ospalé pandy',
+              activeLabel: 'Aktivní jídelna',
+            ),
+            UiChangePairTile(
+              name: 'Jídelna ZŠ Ječná',
+              onSelectPressed: () {},
+            ),
+            UiChangePairTile(
+              name: 'Jídelna s upozorněním',
+              onSelectPressed: () {},
+              showIndicator: true,
             ),
           ],
         ),
