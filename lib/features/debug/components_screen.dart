@@ -41,6 +41,8 @@ class ComponentsScreen extends StatelessWidget {
       ),
       child: CustomScrollView(
         slivers: [
+          const _Header.h1("Typography"),
+          const _TypographyComponents(),
           const _Header.h1("Icons"),
           const _IconComponents(),
           const _Header.h1("Buttons"),
@@ -121,6 +123,136 @@ class _Header extends StatelessWidget {
       case _HeaderSize.h3:
         return context.textStyles.headlineSmall;
     }
+  }
+}
+
+class _TypographyComponents extends StatelessWidget {
+  const _TypographyComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 24.0,
+          children: [
+            _TypographyRow(
+              label: 'Display Large',
+              details: 'Futura PT Medium 57/64 . 0',
+              style: context.textStyles.displayLarge,
+            ),
+            _TypographyRow(
+              label: 'Display Medium',
+              details: 'Futura PT Medium 45/52 . 0',
+              style: context.textStyles.displayMedium,
+            ),
+            _TypographyRow(
+              label: 'Display Small',
+              details: 'Futura PT 36/44 . 0',
+              style: context.textStyles.displaySmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Headline Heavy',
+              details: 'Futura PT Bold 32/40 . 0',
+              style: context.textStyles.headlineHeavy,
+            ),
+            _TypographyRow(
+              label: 'Headline Large',
+              details: 'Futura PT 32/40 . 0',
+              style: context.textStyles.headlineLarge,
+            ),
+            _TypographyRow(
+              label: 'Headline Medium',
+              details: 'Futura PT 28/36 . 0',
+              style: context.textStyles.headlineMedium,
+            ),
+            _TypographyRow(
+              label: 'Headline Small',
+              details: 'Futura PT 24/32 . 0',
+              style: context.textStyles.headlineSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Title Heavy',
+              details: 'Futura PT Bold 22/28 . 0',
+              style: context.textStyles.titleHeavy,
+            ),
+            _TypographyRow(
+              label: 'Title Large',
+              details: 'Futura PT 22/28 . 0',
+              style: context.textStyles.titleLarge,
+            ),
+            _TypographyRow(
+              label: 'Title Medium',
+              details: 'Futura PT SemiBold 16/24 . +0.15',
+              style: context.textStyles.titleMedium,
+            ),
+            _TypographyRow(
+              label: 'Title Small',
+              details: 'Futura PT Medium 14/20 . +0.1',
+              style: context.textStyles.titleSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Label Large',
+              details: 'Plus Jakarta Sans Bold 14/20 . 0',
+              style: context.textStyles.labelLarge,
+            ),
+            _TypographyRow(
+              label: 'Label Medium',
+              details: 'Plus Jakarta Sans Medium 12/16 . 0',
+              style: context.textStyles.labelMedium,
+            ),
+            _TypographyRow(
+              label: 'Label Small',
+              details: 'Plus Jakarta Sans Medium 11/16 . 0',
+              style: context.textStyles.labelSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Body Large',
+              details: 'Plus Jakarta Sans 16/24 . +0.5',
+              style: context.textStyles.bodyLarge,
+            ),
+            _TypographyRow(
+              label: 'Body Medium',
+              details: 'Plus Jakarta Sans 14/20 . +0.25',
+              style: context.textStyles.bodyMedium,
+            ),
+            _TypographyRow(
+              label: 'Body Small',
+              details: 'Plus Jakarta Sans Medium 12/16 . +0.4',
+              style: context.textStyles.bodySmall,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TypographyRow extends StatelessWidget {
+  final String label;
+  final String details;
+  final TextStyle style;
+
+  const _TypographyRow({
+    required this.label,
+    required this.details,
+    required this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$label - $details",
+      style: style,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 }
 

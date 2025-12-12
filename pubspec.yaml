@@ -108,14 +108,15 @@ flutter:
     - assets/
 
   fonts:
-    - family: Montserrat
+    - family: FuturaMedium
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
-          weight: 400
-        - asset: fonts/Montserrat-Medium.ttf
-          weight: 500
-        - asset: fonts/Montserrat-Bold.ttf
-          weight: 700
+        - asset: fonts/Futura-Medium.ttf
+    - family: FuturaDemi
+      fonts:
+        - asset: fonts/Futura-Demi.ttf
+    - family: FuturaBold
+      fonts:
+        - asset: fonts/Futura-Bold.ttf
 
     - family: PlusJakartaSans
       fonts:
