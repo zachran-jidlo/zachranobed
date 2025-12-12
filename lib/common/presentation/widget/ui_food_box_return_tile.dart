@@ -100,22 +100,12 @@ class UiFoodBoxReturnTile extends StatelessWidget {
   }
 
   Widget _buildCount(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '$count ',
-            style: context.textStyles.headlineLarge.copyWith(
-              color: context.uiColors.textPrimary,
-            ),
-          ),
-          TextSpan(
-            text: context.l10n.commonCountShort,
-            style: context.textStyles.headlineMedium.copyWith(
-              color: context.uiColors.textPrimary,
-            ),
-          ),
-        ],
+    return FittedBox(
+      child: Text(
+        '$count ${context.l10n.commonCountShort}',
+        style: context.textStyles.headlineHeavy.copyWith(
+          color: context.uiColors.textPrimary,
+        ),
       ),
     );
   }

@@ -9,26 +9,18 @@ class UiDonationCountdownLabel extends StatelessWidget {
   /// The label text displayed below the countdown.
   final String label;
 
-  /// Optional text style for the countdown display.
-  ///
-  /// If not provided, defaults to [context.textStyles.displaySmall] with bold weight.
-  final TextStyle? timeStyle;
-
   /// Creates a [UiDonationCountdownLabel] widget.
   const UiDonationCountdownLabel({
     super.key,
     required this.duration,
     required this.label,
-    this.timeStyle,
   });
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTimeStyle = timeStyle ??
-        context.textStyles.displaySmall.copyWith(
-          color: context.uiColors.textPrimary,
-          fontWeight: FontWeight.bold,
-        );
+    final effectiveTimeStyle = context.textStyles.headlineHeavy.copyWith(
+      color: context.uiColors.textPrimary,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

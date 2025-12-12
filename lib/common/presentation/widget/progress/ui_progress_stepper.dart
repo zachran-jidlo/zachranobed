@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
@@ -80,14 +81,11 @@ class UiProgressStepper extends StatelessWidget {
       }
     }
 
-    return UiGradientShaderMask(
+    return UiGradientIcon(
+      spec: icons[index],
       color: color,
       gradient: gradient,
-      child: UiIcon(
-        spec: icons[index],
-        color: Colors.black,
-        size: 20,
-      ),
+      size: 20,
     );
   }
 

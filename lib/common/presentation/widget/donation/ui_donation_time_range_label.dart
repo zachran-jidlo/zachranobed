@@ -12,26 +12,19 @@ class UiDonationTimeRangeLabel extends StatelessWidget {
   /// The label text displayed below the time range.
   final String label;
 
-  /// Optional text style for the time display.
-  ///
-  /// If not provided, defaults to [context.textStyles.headlineLarge] with primary text color.
-  final TextStyle? timeStyle;
-
   /// Creates a [UiDonationTimeRangeLabel] widget.
   const UiDonationTimeRangeLabel({
     super.key,
     required this.startTime,
     required this.endTime,
     required this.label,
-    this.timeStyle,
   });
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTimeStyle = timeStyle ??
-        context.textStyles.headlineLarge.copyWith(
-          color: context.uiColors.textPrimary,
-        );
+    final effectiveTimeStyle = context.textStyles.headlineHeavy.copyWith(
+      color: context.uiColors.textPrimary,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +66,7 @@ class UiDonationTimeRangeLabel extends StatelessWidget {
     return WidgetSpan(
       alignment: PlaceholderAlignment.top,
       child: Transform.translate(
-        offset: const Offset(0, 2),
+        offset: const Offset(0, 3),
         child: Text(
           _formatMinute(minute),
           style: baseStyle.copyWith(

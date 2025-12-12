@@ -17,10 +17,18 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_change_pair_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_contact_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
+import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
@@ -37,6 +45,8 @@ class ComponentsScreen extends StatelessWidget {
       ),
       child: CustomScrollView(
         slivers: [
+          const _Header.h1("Typography"),
+          const _TypographyComponents(),
           const _Header.h1("Icons"),
           const _IconComponents(),
           const _Header.h1("Buttons"),
@@ -60,8 +70,18 @@ class ComponentsScreen extends StatelessWidget {
           const _FoodBoxTileComponents(),
           const _Header.h1("Food box return tiles"),
           const _FoodBoxReturnTileComponents(),
+          const _Header.h1("Box counter tiles"),
+          _BoxCounterTileComponents(),
           const _Header.h1("Notification tiles"),
           const _NotificationTileComponents(),
+          const _Header.h1("Meal tiles"),
+          const _MealTileComponents(),
+          const _Header.h1("List tiles"),
+          const _ListTileComponents(),
+          const _Header.h1("Contact tiles"),
+          const _ContactTileComponents(),
+          const _Header.h1("Change pair tiles"),
+          const _ChangePairTileComponents(),
           const _Header.h1("Donation status cards"),
           const _DonationStatusCardComponents(),
         ],
@@ -116,6 +136,136 @@ class _Header extends StatelessWidget {
   }
 }
 
+class _TypographyComponents extends StatelessWidget {
+  const _TypographyComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 24.0,
+          children: [
+            _TypographyRow(
+              label: 'Display Large',
+              details: 'Futura PT Medium 57/64 . 0',
+              style: context.textStyles.displayLarge,
+            ),
+            _TypographyRow(
+              label: 'Display Medium',
+              details: 'Futura PT Medium 45/52 . 0',
+              style: context.textStyles.displayMedium,
+            ),
+            _TypographyRow(
+              label: 'Display Small',
+              details: 'Futura PT 36/44 . 0',
+              style: context.textStyles.displaySmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Headline Heavy',
+              details: 'Futura PT Bold 32/40 . 0',
+              style: context.textStyles.headlineHeavy,
+            ),
+            _TypographyRow(
+              label: 'Headline Large',
+              details: 'Futura PT 32/40 . 0',
+              style: context.textStyles.headlineLarge,
+            ),
+            _TypographyRow(
+              label: 'Headline Medium',
+              details: 'Futura PT 28/36 . 0',
+              style: context.textStyles.headlineMedium,
+            ),
+            _TypographyRow(
+              label: 'Headline Small',
+              details: 'Futura PT 24/32 . 0',
+              style: context.textStyles.headlineSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Title Heavy',
+              details: 'Futura PT Bold 22/28 . 0',
+              style: context.textStyles.titleHeavy,
+            ),
+            _TypographyRow(
+              label: 'Title Large',
+              details: 'Futura PT 22/28 . 0',
+              style: context.textStyles.titleLarge,
+            ),
+            _TypographyRow(
+              label: 'Title Medium',
+              details: 'Futura PT SemiBold 16/24 . +0.15',
+              style: context.textStyles.titleMedium,
+            ),
+            _TypographyRow(
+              label: 'Title Small',
+              details: 'Futura PT Medium 14/20 . +0.1',
+              style: context.textStyles.titleSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Label Large',
+              details: 'Plus Jakarta Sans Bold 14/20 . 0',
+              style: context.textStyles.labelLarge,
+            ),
+            _TypographyRow(
+              label: 'Label Medium',
+              details: 'Plus Jakarta Sans Medium 12/16 . 0',
+              style: context.textStyles.labelMedium,
+            ),
+            _TypographyRow(
+              label: 'Label Small',
+              details: 'Plus Jakarta Sans Medium 11/16 . 0',
+              style: context.textStyles.labelSmall,
+            ),
+            const SizedBox(height: 8),
+            _TypographyRow(
+              label: 'Body Large',
+              details: 'Plus Jakarta Sans 16/24 . +0.5',
+              style: context.textStyles.bodyLarge,
+            ),
+            _TypographyRow(
+              label: 'Body Medium',
+              details: 'Plus Jakarta Sans 14/20 . +0.25',
+              style: context.textStyles.bodyMedium,
+            ),
+            _TypographyRow(
+              label: 'Body Small',
+              details: 'Plus Jakarta Sans Medium 12/16 . +0.4',
+              style: context.textStyles.bodySmall,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TypographyRow extends StatelessWidget {
+  final String label;
+  final String details;
+  final TextStyle style;
+
+  const _TypographyRow({
+    required this.label,
+    required this.details,
+    required this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$label - $details",
+      style: style,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
 class _IconComponents extends StatelessWidget {
   const _IconComponents();
 
@@ -157,6 +307,29 @@ class _IconComponents extends StatelessWidget {
                 ),
                 UiIcon(
                   spec: UiIconSpec.svg(ImageAssets.iconAllergens),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Gradient icons'),
+            const SizedBox(height: 4),
+            Row(
+              spacing: 16.0,
+              children: [
+                UiGradientIcon(
+                  spec: UiIconSpec.data(Icons.favorite),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
+                ),
+                UiGradientIcon(
+                  spec: UiIconSpec.data(Icons.star),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
+                ),
+                UiGradientIcon(
+                  spec: UiIconSpec.svg(ImageAssets.iconDeliveryRun),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
                 ),
               ],
             ),
@@ -462,10 +635,9 @@ class _NavigationComponents extends StatefulWidget {
 class _NavigationComponentsState extends State<_NavigationComponents>
     with SingleTickerProviderStateMixin {
   static const List<UINavBarItem> items = [
-    UINavBarItem(icon: Icons.home_rounded, label: 'Přehled'),
-    UINavBarItem(icon: Icons.menu_book, label: 'Nápověda'),
-    UINavBarItem(icon: Icons.bar_chart_rounded, label: 'Statistiky'),
-    UINavBarItem(icon: Icons.notifications, label: 'Notifikace'),
+    UINavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
+    UINavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
+    UINavBarItem(icon: UiIconSpec.data(Icons.notifications), label: 'Notifikace'),
   ];
 
   late TabController _controller;
@@ -836,7 +1008,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Charita type
@@ -847,7 +1018,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Selected state (Jídelna)
@@ -859,7 +1029,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Selected state (Charita)
@@ -871,7 +1040,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
           ],
@@ -966,6 +1134,144 @@ class _NotificationTileComponents extends StatelessWidget {
               trailing: UiIconButton.gradient(
                 icon: Icons.info_outline,
                 onPressed: () {},
+              ),
+            ),
+            UiNotificationTile(
+              title: 'Kontrola krabiček',
+              description: 'Je potřeba provést pravidelnou kontrolu vratných krabiček.',
+              icon: Icons.warning_rounded,
+              trailing: UiIconButton.solid(
+                icon: Icons.close,
+                onPressed: () {},
+              ),
+              actions: [
+                UiOutlineButton(
+                  text: 'Později',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                ),
+                UiPrimaryButton(
+                  text: 'Zkontrolovat',
+                  onPressed: () {},
+                  size: UiButtonSize.medium(),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BoxCounterTileComponents extends StatefulWidget {
+  @override
+  State<_BoxCounterTileComponents> createState() => _BoxCounterTileComponentsState();
+}
+
+class _BoxCounterTileComponentsState extends State<_BoxCounterTileComponents> {
+  int _donationValue = 3;
+  int _returnValue = 3;
+  int _checkValue = 8;
+  int _validationValue = 8;
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Celkem krabiček: 30',
+              counterField: UiCounterField(
+                label: 'Počet krabiček',
+                value: _donationValue,
+                minValue: 0,
+                maxValue: 30,
+                onChanged: (value) {
+                  setState(() {
+                    _donationValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Zadaný počet: 2',
+              counterField: UiCounterField(
+                label: 'Skutečný počet',
+                value: _returnValue,
+                minValue: 0,
+                maxValue: 10,
+                onChanged: (value) {
+                  setState(() {
+                    _returnValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička',
+              subtitle: 'Evidovaný počet: 8',
+              counterField: UiCounterField(
+                label: 'Skutečný počet',
+                value: _checkValue,
+                minValue: 0,
+                maxValue: 20,
+                onChanged: (value) {
+                  setState(() {
+                    _checkValue = value;
+                  });
+                },
+              ),
+            ),
+            UiBoxCounterTile(
+              title: 'REkrabička (disabled)',
+              subtitle: 'Celkem krabiček: 30',
+              counterField: UiCounterField(
+                label: 'Počet krabiček',
+                value: 3,
+                enabled: false,
+                onChanged: (value) {},
+              ),
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                spacing: 8.0,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  UiBoxCounterTile(
+                    title: 'REkrabička (max 100)',
+                    subtitle: 'Evidovaný počet: 8',
+                    counterField: UiCounterField(
+                      label: 'Skutečný počet',
+                      value: _validationValue,
+                      onChanged: (value) {
+                        setState(() {
+                          _validationValue = value;
+                        });
+                      },
+                      onValidation: (value) {
+                        if (value > 100) {
+                          return 'Maximum value is 100';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  UiOutlineButton(
+                    text: 'Validate',
+                    onPressed: () {
+                      _formKey.currentState?.validate();
+                    },
+                  )
+                ],
               ),
             ),
           ],
@@ -1143,6 +1449,237 @@ class _DonationStatusCardComponents extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MealTileComponents extends StatelessWidget {
+  const _MealTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiMealTile(
+              title: 'Svíčková na smetaně',
+              quantityLabel: '15 porcí',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconHot),
+                  label: 'Teplý (68°C)',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: '1, 3, 9',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: '28.11.2024 16:32',
+                ),
+              ],
+            ),
+            UiMealTile(
+              title: 'Houskový knedlík',
+              quantityLabel: '8 porcí',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconCold),
+                  label: 'Chlazený',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: '1, 3, 9, 12',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: '28.11.2024 16:32',
+                ),
+              ],
+            ),
+            UiMealTile(
+              title: 'Šunková bageta',
+              quantityLabel: '10 ks',
+              badges: [
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconPack),
+                  label: 'Balený',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.svg(ImageAssets.iconAllergens),
+                  label: 'Viz. obal',
+                ),
+                UiMealBadge(
+                  icon: UiIconSpec.data(Icons.calendar_today),
+                  label: 'Viz. obal',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ListTileComponents extends StatelessWidget {
+  const _ListTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiListTile(
+              title: 'Title',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.edit),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              overline: 'Overline',
+              supportingText: 'Supporting text',
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.edit),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              end: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 16.0,
+                children: [
+                  Text(
+                    '15 ks',
+                    style: context.textStyles.labelLarge,
+                  ),
+                  UiGradientIcon(
+                    spec: UiIconSpec.data(Icons.edit),
+                    gradient: context.uiColors.primaryGradient,
+                    size: 24,
+                  ),
+                ],
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              start: const Icon(Icons.phone_outlined, size: 24),
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.chevron_right),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+            UiListTile(
+              title: 'Title',
+              supportingText: 'Supporting text',
+              start: const Icon(Icons.phone_outlined, size: 24),
+              end: UiGradientIcon(
+                spec: UiIconSpec.data(Icons.chevron_right),
+                gradient: context.uiColors.primaryGradient,
+                size: 24,
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactTileComponents extends StatelessWidget {
+  const _ContactTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiContactTile(
+              name: 'Hana Novotná, pozice',
+              phoneNumber: '+420 XXX XXX XXX',
+              isPreferred: true,
+            ),
+            UiContactTile(
+              name: 'Hana Novotná, pozice',
+              phoneNumber: '+420 XXX XXX XXX',
+            ),
+            UiContactTile(
+              name: 'Kontakt bez telefonu',
+              phoneNumber: 'Telefonní číslo neuvedeno',
+              showCallButton: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChangePairTileComponents extends StatelessWidget {
+  const _ChangePairTileComponents();
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            UiChangePairTile(
+              name: 'Jídelna U Ospalé pandy',
+              activeLabel: 'Aktivní jídelna',
+            ),
+            UiChangePairTile(
+              name: 'Jídelna ZŠ Ječná',
+              onSelectPressed: () {},
+            ),
+            UiChangePairTile(
+              name: 'Jídelna s upozorněním',
+              onSelectPressed: () {},
+              showIndicator: true,
             ),
           ],
         ),

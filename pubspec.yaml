@@ -104,25 +104,25 @@ flutter:
   uses-material-design: true
   generate: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+  fonts:
+    # NOTE: Futura fonts are declared as separate families (FuturaMedium, FuturaBold)
+    # instead of using fontWeight because the TTF files both have weight metadata set to 400.
+    # Flutter cannot distinguish them by fontWeight alone, so we use separate family names.
+    - family: FuturaMedium
+      fonts:
+        - asset: fonts/Futura-Medium.ttf
+    - family: FuturaBold
+      fonts:
+        - asset: fonts/Futura-Bold.ttf
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  #fonts:
-  #  - family: CustomIcons
-  #    fonts:
-  #      - asset: fonts/CustomIcons.ttf
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+    - family: PlusJakartaSans
+      fonts:
+        - asset: fonts/PlusJakartaSans-Regular.ttf
+          weight: 400
+        - asset: fonts/PlusJakartaSans-Medium.ttf
+          weight: 500
+        - asset: fonts/PlusJakartaSans-Bold.ttf
+          weight: 700

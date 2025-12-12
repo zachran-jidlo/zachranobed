@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
 /// A model representing a single item in the navigation bar.
 class UINavBarItem {
   /// The icon displayed in the navigation bar item.
-  final IconData icon;
+  final UiIconSpec icon;
 
   /// The text label displayed below the icon.
   final String label;
@@ -47,7 +48,7 @@ class UiNavBar extends StatelessWidget {
           indicatorColor: Colors.transparent,
           tabs: items.map((item) {
             return Tab(
-              icon: Icon(item.icon),
+              icon: UiIcon(spec: item.icon),
               iconMargin: const EdgeInsets.only(bottom: 8.0),
               child: Text(
                 item.label,

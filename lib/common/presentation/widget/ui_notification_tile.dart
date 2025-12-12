@@ -125,9 +125,9 @@ class UiNotificationTile extends StatelessWidget {
         right: 16,
         bottom: 16,
       ),
-      child: Column(
+      child: Row(
         spacing: 8.0,
-        children: actions,
+        children: actions.map((action) => Expanded(child: action)).toList(),
       ),
     );
   }
