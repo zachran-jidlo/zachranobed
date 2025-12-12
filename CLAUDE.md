@@ -136,10 +136,83 @@ flutter pub run build_runner build --delete-conflicting-outputs
 6. Add screens with auto_route annotations
 7. Register routes in `AppRouter`
 
+## UI Design System
+
+### Design Principles
+
+The app uses a custom UI component library with `Ui` prefix (e.g., `UiPrimaryButton`, `UiTextField`). These components provide a consistent design language across the app.
+
+**Naming Convention**: All reusable UI components use the `Ui` prefix to distinguish them from feature-specific widgets.
+
+**Context Extensions**: Access theme properties via extension methods:
+- `context.uiColors` - Custom color palette from `UiColors` theme extension
+- `context.textStyles` - Typography system from `UiTextStyles` wrapper
+- `context.l10n` - Localization strings
+
+### Component Categories
+
+**Buttons** (`lib/common/presentation/widget/button/`):
+- `UiPrimaryButton` - Primary CTA with gradient background
+- `UiOutlineButton` - Secondary action with border
+- `UiTextButton` - Tertiary text-only action
+- `UiIconButton`, `UiFillIconButton`, `UiIconOutlineButton` - Icon-only variants
+- Button sizing via `UiButtonSize` (large: 50px, medium: 40px, tiny: no minimum)
+
+**Forms**:
+- `UiTextField` - Standard text input with label, hint, error, and icon support
+- `UiCounterField` - Numeric input with increment/decrement controls
+
+**Cards & Tiles**:
+- `UiCard` - Base container component
+- `UiChip` - Small labeled tags with icons
+- `UiFoodBoxTile` - Food box information display
+- `UiFoodBoxReturnTile` - Box return tracking
+- `UiBoxCounterTile` - Counter with label in tile format
+- `UiNotificationTile` - Notification list items
+- `UiMealTile`, `UiMealBadge` - Meal-related displays
+
+**Navigation & Progress**:
+- `UiNavBar` - Bottom navigation with custom styling
+- `UiProgressStepper` - Multi-step progress indicator
+- `UiProgressBar` - Linear progress display
+
+**Domain-Specific**:
+- `UiDonationStatusCard` - Donation status display
+- `UiDonationCountdownLabel` - Time remaining indicator
+- `UiDonationTimeRangeLabel` - Time range display
+- `UiIcon` - Standardized icon wrapper for SVG assets
+
+### Typography System
+
+Two font families with distinct roles:
+- **Montserrat** - Used for display, headline, and title text (headers, navigation)
+- **Plus Jakarta Sans** - Used for body and label text (content, buttons)
+
+Access via `context.textStyles` with Material Design 3 scale (displayLarge, headlineLarge, titleMedium, bodyLarge, labelLarge, etc.). Custom variants include `headlineHeavy` and `titleHeavy` for bold weights.
+
+### Color System
+
+Custom color palette via `UiColors` theme extension includes:
+- Primary colors with gradient variants
+- Surface colors (white, gray shades)
+- Text colors (primary, secondary, inverse)
+- Semantic colors (success, warning, error, inactive)
+
+Access via `context.uiColors.propertyName`.
+
+### Component Testing
+
+Interactive component gallery available at `lib/features/debug/components_screen.dart` - accessible via Debug menu in dev/stage builds to preview all UI components.
+
 ## Important Locations
 
 - **Router**: `lib/common/presentation/router/app_router.dart`
 - **DI Setup**: `lib/app/di/app_dependency_container.dart`
-- **Theme/Colors**: `lib/common/presentation/utils/ui_colors.dart`
+- **UI Colors**: `lib/common/presentation/utils/ui_colors.dart`
+- **Typography**: `lib/common/presentation/utils/ui_text_styles.dart`
+- **Context Extensions**: `lib/common/presentation/utils/build_context_extensions.dart`
+- **UI Components**: `lib/common/presentation/widget/ui_*.dart`
+- **Button Components**: `lib/common/presentation/widget/button/ui_*.dart`
+- **Component Gallery**: `lib/features/debug/components_screen.dart`
 - **Notifiers**: `lib/common/presentation/notifiers/`
 - **Firebase Services**: `lib/common/data/service/`
