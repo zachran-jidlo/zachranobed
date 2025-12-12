@@ -108,6 +108,9 @@ flutter:
     - assets/
 
   fonts:
+    # NOTE: Futura fonts are declared as separate families (FuturaMedium, FuturaBold)
+    # instead of using fontWeight because the TTF files both have weight metadata set to 400.
+    # Flutter cannot distinguish them by fontWeight alone, so we use separate family names.
     - family: FuturaMedium
       fonts:
         - asset: fonts/Futura-Medium.ttf

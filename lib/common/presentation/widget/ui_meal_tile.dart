@@ -59,7 +59,6 @@ class UiMealTile extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 0,
               children: [
                 if (overline != null) ...[
                   Text(

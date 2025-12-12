@@ -73,7 +73,7 @@ class UiChangePairTile extends StatelessWidget {
 
   Widget _buildSelectButton(BuildContext context, VoidCallback? onSelectPressed) {
     if (onSelectPressed == null) {
-      return SizedBox();
+      return const SizedBox.shrink();
     }
 
     return UiIndicator(
