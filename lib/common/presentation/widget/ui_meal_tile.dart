@@ -51,12 +51,7 @@ class UiMealTile extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 16,
-        right: 24,
-        top: 16,
-        bottom: 16,
-      ),
+      padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -75,7 +70,7 @@ class UiMealTile extends StatelessWidget {
                 ],
                 Text(
                   title,
-                  style: context.textStyles.bodyLarge.copyWith(
+                  style: context.textStyles.titleMedium.copyWith(
                     color: context.uiColors.textPrimary,
                   ),
                 ),

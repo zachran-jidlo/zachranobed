@@ -118,7 +118,7 @@ class UiTextStyles {
             fontSize: 14,
             height: 20.0 / 14.0,
             fontWeight: FontWeight.w700,
-            letterSpacing: 0,
+            letterSpacing: 0.4,
           ),
           labelMedium: const TextStyle(
             fontFamily: 'PlusJakartaSans',

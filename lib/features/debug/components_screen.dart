@@ -603,7 +603,6 @@ class _NavigationComponentsState extends State<_NavigationComponents>
     with SingleTickerProviderStateMixin {
   static const List<UINavBarItem> items = [
     UINavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
-    UINavBarItem(icon: UiIconSpec.data(Icons.menu_book), label: 'Nápověda'),
     UINavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
     UINavBarItem(icon: UiIconSpec.data(Icons.notifications), label: 'Notifikace'),
   ];
@@ -976,7 +975,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Charita type
@@ -987,7 +985,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Selected state (Jídelna)
@@ -999,7 +996,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Jídelna'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
             // Full size - Selected state (Charita)
@@ -1011,7 +1007,6 @@ class _FoodBoxTileComponents extends StatelessWidget {
               stats: [
                 UiFoodBoxTileStat(value: 8, label: 'K dispozici'),
                 UiFoodBoxTileStat(value: 18, label: 'Charita'),
-                UiFoodBoxTileStat(value: 8, label: 'Na cestě'),
               ],
             ),
           ],
