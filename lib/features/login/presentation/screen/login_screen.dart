@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return ScreenScaffold(
       centerWebLayout: false,
       resizeToAvoidBottomInset: false,
+      backgroundColor: context.uiColors.surfaceWhite,
       web: (context) => _buildWebLayout(),
       mobile: (context) => _buildMobileLayout(),
     );

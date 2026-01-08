@@ -6,12 +6,12 @@ import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/text_field.dart';
+import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
 @RoutePage()
 class ForgotPasswordScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
-      appBar: ZOAppBar(
+      appBar: UiAppBar(
         title: context.l10n.passwordReset,
       ),
       web: (context) => _forgotPasswordScreenContent(useWideButton: false),
@@ -53,45 +53,36 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     required bool useWideButton,
   }) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Form(
         key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.padding,
-          ),
-          child: Column(
-            children: [
-              const SizedBox(height: GapSize.xxs),
-              Text(
-                context.l10n.passwordResetExplanation,
-                style: context.textStyles.bodyLarge,
-              ),
-              const SizedBox(height: GapSize.xl),
-              ZOTextField(
-                label: context.l10n.emailAddress,
-                inputType: TextInputType.emailAddress,
-                disableAutocorrect: true,
-                controller: _emailController,
-                onValidation: FieldValidationUtils.getEmailValidator(
-                  context,
-                ),
-              ),
-              const SizedBox(height: GapSize.xl),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: ZOButton(
-                  text: context.l10n.resetPassword,
-                  icon: Icons.email_outlined,
-                  minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await _resetPassword();
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            Text(
+              context.l10n.passwordResetExplanation,
+              style: context.textStyles.bodyLarge,
+            ),
+            const SizedBox(height: 40),
+            UiTextField(
+              controller: _emailController,
+              labelText: context.l10n.emailAddress,
+              keyboardType: TextInputType.emailAddress,
+              disableAutocorrect: true,
+              onValidation: FieldValidationUtils.getEmailValidator(context),
+            ),
+            const SizedBox(height: 40),
+            UiPrimaryButton(
+              text: context.l10n.resetPassword,
+              size: UiButtonSize.medium(fullWidth: useWideButton),
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await _resetPassword();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

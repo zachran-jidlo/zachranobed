@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/adaptive_content.dart';
 
@@ -25,6 +26,9 @@ class ScreenScaffold extends StatelessWidget {
   /// Optional app bar to display above the screen content.
   final Widget? appBar;
 
+  /// The background color of the scaffold.
+  final Color? backgroundColor;
+
   /// The child to display on the web when the screen width is greater than
   /// [LayoutStyle.webBreakpoint].
   final WidgetBuilder web;
@@ -39,6 +43,7 @@ class ScreenScaffold extends StatelessWidget {
     required this.web,
     required this.mobile,
     this.appBar,
+    this.backgroundColor,
     this.centerWebLayout = true,
     this.resizeToAvoidBottomInset = true,
   });
@@ -50,7 +55,14 @@ class ScreenScaffold extends StatelessWidget {
     Key? key,
     required Widget child,
     Widget? appBar,
-  }) : this(key: key, appBar: appBar, web: (context) => child, mobile: (context) => child);
+    Color? backgroundColor,
+  }) : this(
+          key: key,
+          appBar: appBar,
+          backgroundColor: backgroundColor,
+          web: (context) => child,
+          mobile: (context) => child,
+        );
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and
   /// mobile. This constructor is useful when you want to display the same
@@ -59,11 +71,19 @@ class ScreenScaffold extends StatelessWidget {
     Key? key,
     required WidgetBuilder builder,
     Widget? appBar,
-  }) : this(key: key, appBar: appBar, web: builder, mobile: builder);
+    Color? backgroundColor,
+  }) : this(
+          key: key,
+          appBar: appBar,
+          backgroundColor: backgroundColor,
+          web: builder,
+          mobile: builder,
+        );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor ?? context.uiColors.surfaceGray,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       body: SafeArea(
         child: AdaptiveContent(
