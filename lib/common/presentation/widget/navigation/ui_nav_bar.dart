@@ -3,15 +3,15 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
 /// A model representing a single item in the navigation bar.
-class UINavBarItem {
+class UiNavBarItem {
   /// The icon displayed in the navigation bar item.
   final UiIconSpec icon;
 
   /// The text label displayed below the icon.
   final String label;
 
-  /// Creates a constant [UINavBarItem].
-  const UINavBarItem({
+  /// Creates a constant [UiNavBarItem].
+  const UiNavBarItem({
     required this.icon,
     required this.label,
   });
@@ -23,7 +23,7 @@ class UiNavBar extends StatelessWidget {
   final TabController controller;
 
   /// The list of navigation items to be displayed.
-  final List<UINavBarItem> items;
+  final List<UiNavBarItem> items;
 
   /// Creates a [UiNavBar] widget.
   const UiNavBar({

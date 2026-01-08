@@ -18,6 +18,7 @@ class ImageAssets {
   static const iconHotCircled = 'assets/ic_hot_circled.svg';
   static const iconPack = 'assets/ic_pack.svg';
   static const iconRestore = 'assets/ic_restore.svg';
+  static const iconCalendar = 'assets/ic_calendar.svg';
 
   // Images
   static const imageLogo = 'assets/image_zo_logo.svg';
