@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
@@ -17,6 +16,7 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_change_pair_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
@@ -42,7 +42,7 @@ class ComponentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
-      appBar: const ZOAppBar(
+      appBar: const UiAppBar(
         title: "Components screen",
       ),
       child: CustomScrollView(
