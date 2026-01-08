@@ -27,7 +27,7 @@ const password = process.env.FIREBASE_REPORT_USER_PASSWORD;
 const timeout = setTimeout(() => {
   console.error('Script timed out');
   process.exit(1);
-}, 10 * 60 * 1000); // 10 minutes
+}, 30 * 60 * 1000); // 30 minutes
 
 // *********
 // Functions
