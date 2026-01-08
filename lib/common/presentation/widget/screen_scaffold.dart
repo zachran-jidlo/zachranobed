@@ -11,6 +11,17 @@ class ScreenScaffold extends StatelessWidget {
   /// Whether to automatically center the web layout.
   final bool centerWebLayout;
 
+  /// If true the [body] and the scaffold's floating widgets should size
+  /// themselves to avoid the onscreen keyboard whose height is defined by the
+  /// ambient [MediaQuery]'s [MediaQueryData.viewInsets] `bottom` property.
+  ///
+  /// For example, if there is an onscreen keyboard displayed above the
+  /// scaffold, the body can be resized to avoid overlapping the keyboard, which
+  /// prevents widgets inside the body from being obscured by the keyboard.
+  ///
+  /// Defaults to true.
+  final bool resizeToAvoidBottomInset;
+
   /// Optional app bar to display above the screen content.
   final Widget? appBar;
 
@@ -29,6 +40,7 @@ class ScreenScaffold extends StatelessWidget {
     required this.mobile,
     this.appBar,
     this.centerWebLayout = true,
+    this.resizeToAvoidBottomInset = true,
   });
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and
@@ -52,6 +64,7 @@ class ScreenScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       body: SafeArea(
         child: AdaptiveContent(
           web: (context) {

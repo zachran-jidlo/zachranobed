@@ -32,6 +32,7 @@ import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
 @RoutePage()
@@ -1029,6 +1030,11 @@ class _TextFieldComponentsState extends State<_TextFieldComponents> {
               labelText: 'Label',
               supportingText: 'disableAutocorrect: true',
               disableAutocorrect: true,
+            ),
+            const UiPasswordTextField(
+              labelText: 'Password',
+              hintText: 'Enter password',
+              supportingText: 'Password field with visibility toggle',
             ),
           ],
         ),
