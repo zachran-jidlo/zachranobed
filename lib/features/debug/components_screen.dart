@@ -29,7 +29,8 @@ import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
@@ -60,6 +61,8 @@ class ComponentsScreen extends StatelessWidget {
           const _IconButtonComponents(),
           const _Header.h1("Navigation"),
           const _NavigationComponents(),
+          const _Header.h1("Navigation drawer items"),
+          const _NavigationDrawerItemComponents(),
           const _Header.h1("Progress"),
           _ProgressComponents(),
           const _Header.h1("Chips"),
@@ -634,10 +637,10 @@ class _NavigationComponents extends StatefulWidget {
 
 class _NavigationComponentsState extends State<_NavigationComponents>
     with SingleTickerProviderStateMixin {
-  static const List<UINavBarItem> items = [
-    UINavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
-    UINavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
-    UINavBarItem(icon: UiIconSpec.data(Icons.notifications), label: 'Notifikace'),
+  static const List<UiNavBarItem> items = [
+    UiNavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
+    UiNavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
+    UiNavBarItem(icon: UiIconSpec.data(Icons.notifications), label: 'Notifikace'),
   ];
 
   late TabController _controller;
@@ -666,6 +669,74 @@ class _NavigationComponentsState extends State<_NavigationComponents>
             UiNavBar(
               controller: _controller,
               items: items,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NavigationDrawerItemComponents extends StatefulWidget {
+  const _NavigationDrawerItemComponents();
+
+  @override
+  State<_NavigationDrawerItemComponents> createState() =>
+      _NavigationDrawerItemComponentsState();
+}
+
+class _NavigationDrawerItemComponentsState extends State<_NavigationDrawerItemComponents> {
+  int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.0,
+          children: [
+            SizedBox(
+              width: 220.0,
+              child: Column(
+                spacing: 8.0,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  UiNavigationDrawerItem(
+                    label: 'Přehled',
+                    icon: UiIconSpec.data(Icons.home_rounded),
+                    selected: _selectedIndex == 0,
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 0;
+                      });
+                    },
+                  ),
+                  UiNavigationDrawerItem(
+                    label: 'Historie',
+                    icon: UiIconSpec.svg(ImageAssets.iconHistory),
+                    selected: _selectedIndex == 1,
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 1;
+                      });
+                    },
+                  ),
+                  UiNavigationDrawerItem(
+                    label: 'Notifikace',
+                    icon: UiIconSpec.data(Icons.notifications),
+                    selected: _selectedIndex == 2,
+                    showIndicator: true,
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -1294,7 +1365,7 @@ class _DonationStatusCardComponents extends StatelessWidget {
           spacing: 16.0,
           children: [
             UiDonationStatusCard(
-              label: 'Darujete pro charitu',
+              label: 'Darujete charitě',
               title: 'Most naděje, Praha 4',
               headerAction: UiTextButton(
                 text: 'Změnit',
@@ -1309,7 +1380,7 @@ class _DonationStatusCardComponents extends StatelessWidget {
               ),
             ),
             UiDonationStatusCard(
-              label: 'Darujete pro charitu',
+              label: 'Darujete charitě',
               title: 'Most naděje, Praha 4',
               headerAction: UiTextButton(
                 text: 'Změnit',
@@ -1344,7 +1415,7 @@ class _DonationStatusCardComponents extends StatelessWidget {
               ),
             ),
             UiDonationStatusCard(
-              label: 'Darujete pro charitu',
+              label: 'Darujete charitě',
               title: 'Most naděje, Praha 4',
               headerAction: UiTextButton(
                 text: 'Změnit',
@@ -1381,7 +1452,7 @@ class _DonationStatusCardComponents extends StatelessWidget {
               ),
             ),
             UiDonationStatusCard(
-              label: 'Darujete pro charitu',
+              label: 'Darujete charitě',
               title: 'Most naděje, Praha 4',
               headerAction: UiTextButton(
                 text: 'Změnit',
@@ -1413,7 +1484,7 @@ class _DonationStatusCardComponents extends StatelessWidget {
               ),
             ),
             UiDonationStatusCard(
-              label: 'Darujete pro charitu',
+              label: 'Darujete charitě',
               title: 'Most naděje, Praha 4',
               headerAction: UiTextButton(
                 text: 'Změnit',
@@ -1482,7 +1553,7 @@ class _MealTileComponents extends StatelessWidget {
                   label: '1, 3, 9',
                 ),
                 UiMealBadge(
-                  icon: UiIconSpec.data(Icons.calendar_today),
+                  icon: UiIconSpec.svg(ImageAssets.iconCalendar),
                   label: '28.11.2024 16:32',
                 ),
               ],
@@ -1500,7 +1571,7 @@ class _MealTileComponents extends StatelessWidget {
                   label: '1, 3, 9, 12',
                 ),
                 UiMealBadge(
-                  icon: UiIconSpec.data(Icons.calendar_today),
+                  icon: UiIconSpec.svg(ImageAssets.iconCalendar),
                   label: '28.11.2024 16:32',
                 ),
               ],
@@ -1518,7 +1589,7 @@ class _MealTileComponents extends StatelessWidget {
                   label: 'Viz. obal',
                 ),
                 UiMealBadge(
-                  icon: UiIconSpec.data(Icons.calendar_today),
+                  icon: UiIconSpec.svg(ImageAssets.iconCalendar),
                   label: 'Viz. obal',
                 ),
               ],

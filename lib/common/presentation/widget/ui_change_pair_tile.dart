@@ -78,7 +78,6 @@ class UiChangePairTile extends StatelessWidget {
 
     return UiIndicator(
       isVisible: showIndicator,
-      offset: Offset(-12, -6),
       child: UiPrimaryButton(
         text: context.l10n.activePairCardSelectAction,
         onPressed: onSelectPressed,
