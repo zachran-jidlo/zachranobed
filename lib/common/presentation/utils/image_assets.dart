@@ -23,6 +23,7 @@ class ImageAssets {
   // Images
   static const imageLogo = 'assets/image_zo_logo.svg';
   static const imageFoodBackground = 'assets/image_food_background.png';
+  static const imageFoodBackgroundSquare = 'assets/image_food_background_square.png';
   static const imageFoodBackgroundDimmed = 'assets/image_food_background_dimmed.png';
   static const imageEmptyChef = 'assets/image_empty_chef.svg';
   static const imageEmptyBox = 'assets/image_empty_box.svg';

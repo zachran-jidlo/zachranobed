@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
@@ -13,12 +12,14 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
-import 'package:zachranobed/common/presentation/widget/password_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/text_field.dart';
+import 'package:zachranobed/common/presentation/widget/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -49,135 +50,160 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold(
       centerWebLayout: false,
-      web: (context) {
-        return Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onLongPress: showDebugScreenIfPossible,
-                child: Image.asset(
-                  ImageAssets.imageFoodBackgroundDimmed,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.centerLeft,
-                  height: double.infinity,
-                ),
-              ),
-            ),
-            Material(
-              elevation: 8,
-              child: SizedBox(
-                width: LayoutStyle.loginFormWidth.toDouble(),
-                child: Center(
-                  child: _loginScreenContent(
-                    showImageInForm: false,
-                    padding: const EdgeInsets.all(72.0),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-      mobile: (context) => _loginScreenContent(showImageInForm: true),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: context.uiColors.surfaceWhite,
+      web: (context) => _buildWebLayout(),
+      mobile: (context) => _buildMobileLayout(),
     );
   }
 
-  /// Builds the content of the login screen.
+  /// Builds the mobile layout with logo, background, and centered form card.
   ///
-  /// The [showImageInForm] flag determines whether to show the image
-  /// in the form.
-  /// The [padding] parameter specifies the padding to add around the content.
-  Widget _loginScreenContent({
-    required bool showImageInForm,
-    EdgeInsetsGeometry? padding,
-  }) {
-    return SingleChildScrollView(
-      padding: padding,
-      child: Column(
-        children: <Widget>[
-          const SizedBox(height: GapSize.xl),
-          SvgPicture.asset(ImageAssets.imageLogo, width: 270, height: 46),
-          _formImageContent(showImageInForm),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: WidgetStyle.padding,
-            ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  ZOTextField(
-                    label: context.l10n.emailAddress,
-                    inputType: TextInputType.emailAddress,
-                    disableAutocorrect: true,
-                    controller: _emailController,
-                    onValidation: FieldValidationUtils.getEmailValidator(
-                      context,
+  /// Uses a Stack with:
+  /// - Background layer: Logo + food image (fills entire screen)
+  /// - Foreground layer: Transparent Scaffold with centered form card
+  ///
+  /// The Scaffold is necessary for proper keyboard resize behavior
+  /// (resizeToAvoidBottomInset: true).
+  Widget _buildMobileLayout() {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Positioned.fill(
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              SvgPicture.asset(
+                ImageAssets.imageLogo,
+                width: 270,
+                height: 46,
+              ),
+              const SizedBox(height: 45),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(ImageAssets.imageFoodBackgroundSquare),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
                     ),
                   ),
-                  const SizedBox(height: GapSize.m),
-                  ZOPasswordTextField(
-                    text: context.l10n.password,
-                    controller: _passwordController,
-                    // Add more bottom padding to scroll above a snackbar
-                    scrollPadding: const EdgeInsets.only(
-                      left: 20,
-                      top: 20,
-                      right: 20,
-                      bottom: 128,
-                    ),
-                    onValidation: FieldValidationUtils.getPasswordValidator(
-                      context,
-                    ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset: true,
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
                   ),
-                  const SizedBox(height: GapSize.l),
-                  ZOButton(
-                    text: context.l10n.signIn,
-                    icon: MaterialSymbols.login,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await _logIn();
-                      }
-                    },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: _buildFormCard(),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 6),
-                  ZOButton(
-                    text: context.l10n.forgotPassword,
-                    type: ZOButtonType.text,
-                    onPressed: () {
-                      context.router.push(const ForgotPasswordRoute());
-                    },
-                  ),
-                  const SizedBox(height: 30),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Builds the web layout with full background and centered form card.
+  Widget _buildWebLayout() {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            ImageAssets.imageFoodBackgroundDimmed,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(0.0, 0.0),
+                radius: 0.8,
+                colors: [
+                  Colors.white.withValues(alpha: 1.0),
+                  Colors.white.withValues(alpha: 0.0),
                 ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 358),
+            child: _buildFormCard(),
+          ),
+        ),
+      ],
     );
   }
 
-  /// Builds the image content for the form.
-  ///
-  /// The [showImageInForm] parameter determines whether to show the image
-  /// in the form. If set to false returns only necessary padding.
-  Widget _formImageContent(bool showImageInForm) {
-    if (showImageInForm) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: GapSize.l),
-        child: GestureDetector(
-          onLongPress: showDebugScreenIfPossible,
-          child: Image.asset(
-            width: double.infinity,
-            ImageAssets.imageFoodBackground,
-            fit: BoxFit.fitWidth,
-          ),
+  /// Builds the form card with text fields and buttons.
+  Widget _buildFormCard() {
+    return UiCard(
+      color: context.uiColors.surfaceGray,
+      borderRadius: 16,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            UiTextField(
+              controller: _emailController,
+              labelText: context.l10n.emailAddress,
+              keyboardType: TextInputType.emailAddress,
+              disableAutocorrect: true,
+              onValidation: FieldValidationUtils.getEmailValidator(context),
+            ),
+            const SizedBox(height: 24),
+            UiPasswordTextField(
+              controller: _passwordController,
+              labelText: context.l10n.password,
+              onValidation: FieldValidationUtils.getPasswordValidator(context),
+            ),
+            const SizedBox(height: 32),
+            UiPrimaryButton(
+              text: context.l10n.signIn,
+              size: UiButtonSize.medium(),
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await _logIn();
+                }
+              },
+            ),
+            const SizedBox(height: 24),
+            GestureDetector(
+              onLongPress: showDebugScreenIfPossible,
+              child: UiTextButton(
+                text: context.l10n.forgotPassword,
+                size: UiButtonSize.medium(),
+                onPressed: () {
+                  context.router.push(const ForgotPasswordRoute());
+                },
+              ),
+            ),
+          ],
         ),
-      );
-    }
-
-    return const SizedBox(height: GapSize.xxl);
+      ),
+    );
   }
 
   void showDebugScreenIfPossible() {

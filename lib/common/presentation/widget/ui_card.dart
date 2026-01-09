@@ -15,6 +15,10 @@ class UiCard extends StatelessWidget {
   /// Optional press callback. When provided, the card becomes tappable with ripple effect.
   final VoidCallback? onPressed;
 
+  /// The background color of the card.
+  /// If not provided, defaults to [UiColors.surfaceWhite].
+  final Color? color;
+
   /// Creates a [UiCard] widget.
   const UiCard({
     super.key,
@@ -22,6 +26,7 @@ class UiCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = 12,
     this.onPressed,
+    this.color,
   });
 
   @override
@@ -43,7 +48,7 @@ class UiCard extends StatelessWidget {
         ],
       ),
       child: Material(
-        color: context.uiColors.surfaceWhite,
+        color: color ?? context.uiColors.surfaceWhite,
         borderRadius: BorderRadius.circular(borderRadius),
         clipBehavior: Clip.antiAlias,
         child: onPressed != null
