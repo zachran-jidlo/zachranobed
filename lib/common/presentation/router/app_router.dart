@@ -18,10 +18,6 @@ class AppRouter extends RootStackRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
-          page: NotificationsRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
           page: ContactsRoute.page,
           guards: [AuthGuard()],
         ),

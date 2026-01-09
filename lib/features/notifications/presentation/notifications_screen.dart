@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
@@ -15,7 +14,6 @@ import 'package:zachranobed/features/notifications/domain/usecase/mark_as_read_a
 import 'package:zachranobed/features/notifications/domain/usecase/observe_notifications_use_case.dart';
 
 /// A screen that displays a list of notifications.
-@RoutePage()
 class NotificationsScreen extends StatefulWidget {
   /// Creates a [NotificationsScreen].
   const NotificationsScreen({super.key});

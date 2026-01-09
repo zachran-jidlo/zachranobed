@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
@@ -17,12 +16,10 @@ import 'package:zachranobed/common/presentation/widget/delivery_info_banner.dart
 import 'package:zachranobed/common/presentation/widget/indicator.dart';
 import 'package:zachranobed/common/presentation/widget/new_offer_floating_button.dart';
 import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_floating_button.dart';
-import 'package:zachranobed/common/presentation/widget/notification_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/features/food/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/food/presentation/widget/card_list.dart';
 import 'package:zachranobed/features/food/presentation/widget/donated_food_list.dart';
-import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -33,7 +30,6 @@ class OverviewScreen extends StatefulWidget {
 
 class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   final GlobalKey _boxSummaryKey = GlobalKey();
-  final _hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
@@ -62,12 +58,13 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         title: context.l10n.overview,
         automaticallyImplyLeading: false,
         actions: [
-          NotificationIconButton(
-            hasAnyUnreadNotifications: user != null ? _hasAnyUnreadNotifications.invoke(user) : Stream.value(false),
-            onPressed: () {
-              context.router.push(const NotificationsRoute());
-            },
-          ),
+          // FIXME: Refactor in ZOB-384
+          // NotificationIconButton(
+          //   hasAnyUnreadNotifications: user != null ? _hasAnyUnreadNotifications.invoke(user) : Stream.value(false),
+          //   onPressed: () {
+          //     context.router.push(const NotificationsRoute());
+          //   },
+          // ),
           IconButton(
             onPressed: () {
               context.router.push(const MenuRoute());
