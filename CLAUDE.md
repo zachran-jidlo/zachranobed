@@ -184,6 +184,11 @@ The app uses a custom UI component library with `Ui` prefix (e.g., `UiPrimaryBut
 - `UiDonationTimeRangeLabel` - Time range display
 - `UiIcon` - Standardized icon wrapper for SVG assets
 
+**Pages** (`lib/common/presentation/widget/page/`):
+- `InfoPage` - Reusable base component for displaying informational states (empty states, errors, success messages) with image, title, description, and action buttons
+- `ErrorPage` - Specialized error state page with retry functionality (wraps InfoPage with localized error messages)
+- `LoadingPage` - Simple full-screen loading state with centered circular progress indicator
+
 ### Typography System
 
 Two font families with distinct roles:

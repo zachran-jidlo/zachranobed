@@ -4,11 +4,12 @@ import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/empty_page.dart';
-import 'package:zachranobed/common/presentation/widget/error_content.dart';
+import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
+import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart' as domain;
 import 'package:zachranobed/features/notifications/domain/usecase/mark_as_read_all_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/observe_notifications_use_case.dart';
@@ -40,7 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
-      appBar: ZOAppBar(
+      appBar: UiAppBar(
         title: context.l10n.notificationsTitle,
       ),
       builder: (context) {
@@ -48,44 +49,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           stream: user != null ? _observeNotifications.invoke(user) : null,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return _loading();
+              return LoadingPage();
             }
             if (snapshot.hasError) {
-              return _error(context);
+              return ErrorPage();
             }
             final data = snapshot.data;
             if (data == null || data.isEmpty) {
-              return _empty(context);
+              return InfoPage(
+                image: ImageAssets.imageEmptyNotifications,
+                title: context.l10n.notificationsEmptyTitle,
+              );
             }
             return _notifications(data);
           },
         );
       },
-    );
-  }
-
-  Widget _loading() {
-    return const Center(child: CircularProgressIndicator());
-  }
-
-  Widget _error(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(WidgetStyle.padding),
-        child: ErrorContent(onRetryPressed: null),
-      ),
-    );
-  }
-
-  Widget _empty(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(WidgetStyle.padding),
-        child: EmptyPage(
-          vectorImagePath: ImageAssets.imageEmptyNotifications,
-          title: context.l10n.notificationsEmptyTitle,
-        ),
-      ),
     );
   }
 
@@ -99,33 +78,40 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         otherNotifications.add(notification);
       }
     }
+
     final showHeaders = todayNotifications.isNotEmpty && otherNotifications.isNotEmpty;
     return CustomScrollView(
-      slivers: [
-        if (showHeaders)
-          _sectionHeader(
-            context.l10n.commonToday,
-            hasTopPadding: false,
-          ),
-        _notificationsSection(todayNotifications),
-        if (showHeaders)
-          _sectionHeader(
-            context.l10n.notificationsLast7DaysTitle,
-            hasTopPadding: true,
-          ),
-        _notificationsSection(otherNotifications),
-      ],
+      slivers: showHeaders
+          ? [
+              _sectionHeader(
+                context.l10n.commonToday,
+                topPadding: 16.0,
+              ),
+              _notificationsSection(todayNotifications),
+              _sectionHeader(
+                context.l10n.notificationsLast7DaysTitle,
+                topPadding: 8.0,
+              ),
+              _notificationsSection(otherNotifications),
+            ]
+          : [
+              SliverToBoxAdapter(
+                child: const SizedBox(height: 16.0),
+              ),
+              _notificationsSection(todayNotifications),
+              _notificationsSection(otherNotifications),
+            ],
     );
   }
 
-  Widget _sectionHeader(String text, {required bool hasTopPadding}) {
+  Widget _sectionHeader(String text, {required double topPadding}) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.only(
-          top: hasTopPadding ? 16.0 : 0.0,
+          top: topPadding,
           left: 16.0,
           right: 16.0,
-          bottom: 16.0,
+          bottom: 8.0,
         ),
         child: Text(
           text,
@@ -139,79 +125,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         childCount: notifications.length,
-        (context, index) => Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            bottom: 16.0,
-          ),
-          child: _NotificationRow(notification: notifications[index]),
-        ),
-      ),
-    );
-  }
-}
-
-class _NotificationRow extends StatelessWidget {
-  final domain.Notification notification;
-
-  const _NotificationRow({required this.notification});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: ZOColors.borderColor,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: ListTile(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _timeHeader(context),
-            Text(
-              notification.title,
-              style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onSurface),
+        (context, index) {
+          final notification = notifications[index];
+          return Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              bottom: 16.0,
             ),
-          ],
-        ),
-        subtitle: Text(
-          notification.message,
-          style: context.textStyles.bodyMedium.copyWith(color: ZOColors.onPrimaryLight),
-        ),
+            child: UiListTile(
+              overline: _timeHeader(context, notification),
+              title: notification.title,
+              supportingText: notification.message,
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _timeHeader(BuildContext context) {
-    final textStyle = context.textStyles.bodyMedium.copyWith(
-      color: ZOColors.onPrimaryLight,
-      fontStyle: FontStyle.italic,
-    );
+  String _timeHeader(BuildContext context, domain.Notification notification) {
     final date = DateTimeUtils.isToday(notification.timestamp)
         ? context.l10n.commonToday
         : DateTimeUtils.formatDateTime(notification.timestamp, "d. M. yyyy");
     final time = DateTimeUtils.formatDateTime(notification.timestamp, "HH:mm");
-
-    return Row(
-      children: [
-        Text(date, style: textStyle),
-        Padding(
-          padding: const EdgeInsets.all(4),
-          child: Container(
-            width: 6,
-            height: 6,
-            decoration: const BoxDecoration(
-              color: ZOColors.secondary,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-        Text(time, style: textStyle),
-      ],
-    );
+    return "$date $time";
   }
 }

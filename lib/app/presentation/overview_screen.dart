@@ -52,19 +52,11 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   @override
   Widget build(BuildContext context) {
-    final user = HelperService.watchCurrentUser(context);
     return ScreenScaffold.universalBuilder(
       appBar: ZOAppBar(
         title: context.l10n.overview,
         automaticallyImplyLeading: false,
         actions: [
-          // FIXME: Refactor in ZOB-384
-          // NotificationIconButton(
-          //   hasAnyUnreadNotifications: user != null ? _hasAnyUnreadNotifications.invoke(user) : Stream.value(false),
-          //   onPressed: () {
-          //     context.router.push(const NotificationsRoute());
-          //   },
-          // ),
           IconButton(
             onPressed: () {
               context.router.push(const MenuRoute());
