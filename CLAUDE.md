@@ -160,6 +160,7 @@ The app uses a custom UI component library with `Ui` prefix (e.g., `UiPrimaryBut
 
 **Forms**:
 - `UiTextField` - Standard text input with label, hint, error, and icon support
+- `UiPasswordTextField` - Password input with visibility toggle (wraps UiTextField)
 - `UiCounterField` - Numeric input with increment/decrement controls
 
 **Cards & Tiles**:
@@ -172,6 +173,7 @@ The app uses a custom UI component library with `Ui` prefix (e.g., `UiPrimaryBut
 - `UiMealTile`, `UiMealBadge` - Meal-related displays
 
 **Navigation & Progress**:
+- `UiAppBar` - Custom app bar following the design system
 - `UiNavBar` - Bottom navigation with custom styling
 - `UiProgressStepper` - Multi-step progress indicator
 - `UiProgressBar` - Linear progress display
@@ -199,6 +201,29 @@ Custom color palette via `UiColors` theme extension includes:
 - Semantic colors (success, warning, error, inactive)
 
 Access via `context.uiColors.propertyName`.
+
+### Spacing Guidelines
+
+**Standard Approach**: Use hard-coded spacing values directly (e.g., `const SizedBox(height: 40)`, `const EdgeInsets.symmetric(horizontal: 16.0)`). Do NOT reference `GapSize` or `FontSize` constants from `UiConstants`.
+
+**Rationale - Pros of Hard-coded Values**:
+- **Pixel-perfect Figma alignment**: Direct numeric values match design specs exactly without translation layer
+- **Explicit and readable**: Clear intent - `height: 24` is immediately understandable without looking up constant definitions
+- **Reduced indirection**: No need to memorize or look up what `GapSize.m` translates to in pixels
+- **Easier refactoring**: Changing spacing in one screen doesn't risk unintended side effects in unrelated screens
+- **Designer-developer alignment**: Numeric values in code directly match numeric values in Figma specifications
+
+**Examples**:
+```dart
+// ✅ Correct - Hard-coded values
+const SizedBox(height: 40),
+const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+const SizedBox(height: 12),
+
+// ❌ Avoid - GapSize constants
+const SizedBox(height: GapSize.xl),
+const EdgeInsets.all(GapSize.m),
+```
 
 ### Component Testing
 

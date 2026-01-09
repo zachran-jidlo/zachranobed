@@ -42,10 +42,10 @@ class ScreenScaffold extends StatelessWidget {
     super.key,
     required this.web,
     required this.mobile,
-    this.appBar,
-    this.backgroundColor,
     this.centerWebLayout = true,
     this.resizeToAvoidBottomInset = true,
+    this.appBar,
+    this.backgroundColor,
   });
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and

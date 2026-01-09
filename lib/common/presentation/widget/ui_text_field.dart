@@ -232,6 +232,7 @@ class _UiTextFieldState extends State<UiTextField> {
       readOnly: widget.readOnly,
       autocorrect: !widget.disableAutocorrect,
       spellCheckConfiguration: widget.disableAutocorrect ? const SpellCheckConfiguration.disabled() : null,
+      enableSuggestions: !widget.disableAutocorrect,
       onTapOutside: (event) => _focusNode.unfocus(),
       maxLines: widget.maxLines,
       minLines: widget.minLines,
