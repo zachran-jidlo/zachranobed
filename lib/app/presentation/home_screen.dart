@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -13,11 +14,13 @@ import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/svg_icon.dart';
-import 'package:zachranobed/features/food/presentation/screens/boxes_screen.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
 import 'package:zachranobed/features/food/presentation/screens/donations_screen.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
+import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -33,28 +36,25 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   /// The data for the tabs.
   final _tabs = [
     _TabScreenData(
-      label: (context) => Text(context.l10n.overview),
-      icon: (context) => const Icon(Icons.home_outlined),
+      label: (context) => context.l10n.navigationLabelOverview,
+      iconSpec: const UiIconSpec.data(Icons.home),
       content: (context) => const OverviewScreen(),
     ),
     _TabScreenData(
-      label: (context) => Text(context.l10n.food),
-      icon: (context) => const Icon(Icons.fastfood_outlined),
+      label: (context) => context.l10n.navigationLabelHistory,
+      iconSpec: const UiIconSpec.svg(ImageAssets.iconHistory),
       content: (context) => const DonationsScreen(),
     ),
     _TabScreenData(
-      label: (context) => Text(context.l10n.boxes),
-      icon: (context) => const SvgIcon(resource: ImageAssets.iconFoodBox),
-      content: (context) => const BoxesScreen(),
+      label: (context) => context.l10n.navigationLabelNotifications,
+      iconSpec: const UiIconSpec.data(Icons.notifications),
+      content: (context) => const NotificationsScreen(),
     )
   ];
 
   /// The controller, which is used to sync state between TabBar and
   /// NavigationDrawer.
   late TabController _tabController;
-
-  /// The index of the currently selected tab.
-  late int _selectedIndex;
 
   /// Whether to show the logout button.
   bool _showLogoutButton = false;
@@ -64,13 +64,6 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
     super.initState();
 
     _tabController = TabController(vsync: this, length: _tabs.length);
-    _selectedIndex = _tabController.index;
-
-    _tabController.addListener(() {
-      setState(() {
-        _selectedIndex = _tabController.index;
-      });
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (context.read<UserNotifier>().user == null) {
@@ -106,40 +99,39 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   Widget build(BuildContext context) {
     return ScreenScaffold(
       centerWebLayout: false,
+      backgroundColor: context.uiColors.surfaceWhite,
       web: (context) {
         return Row(
           children: [
-            NavigationDrawer(
-              indicatorColor: ZOColors.secondary,
-              onDestinationSelected: (i) {
-                _tabController.animateTo(i);
-              },
-              selectedIndex: _selectedIndex,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 42, 40, 52),
-                  child: SvgPicture.asset(ImageAssets.imageLogo, width: 180),
+            Material(
+              color: context.uiColors.surfaceWhite,
+              elevation: 12.0,
+              child: SizedBox(
+                width: LayoutStyle.navigationDrawerSize.toDouble(),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 42, 40, 40),
+                      child: SvgPicture.asset(ImageAssets.imageLogo, width: 180),
+                    ),
+                    ..._tabs.mapIndexed(
+                      (index, data) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: UiNavigationDrawerItem(
+                            icon: data.iconSpec,
+                            label: data.label(context),
+                            selected: index == _tabController.index,
+                            onPressed: () {
+                              _tabController.animateTo(index);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                ..._tabs.map(
-                  (data) {
-                    return NavigationDrawerDestination(
-                      label: DefaultTextStyle.merge(
-                        style: const TextStyle(
-                          color: ZOColors.onSecondary,
-                        ),
-                        child: data.label(context),
-                      ),
-                      icon: IconTheme.merge(
-                        data: const IconThemeData(
-                          size: 24.0,
-                          color: ZOColors.onSecondary,
-                        ),
-                        child: data.icon(context),
-                      ),
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
             Expanded(
               child: Center(
@@ -153,26 +145,14 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
         return ScaffoldMessenger(
           child: Scaffold(
             body: _homeScreenContent(),
-            bottomNavigationBar: SizedBox(
-              height: 90.0,
-              child: Material(
-                color: ZOColors.primaryLight,
-                child: TabBar(
-                  controller: _tabController,
-                  splashFactory: NoSplash.splashFactory,
-                  overlayColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
-                    return states.contains(WidgetState.focused) ? null : Colors.transparent;
-                  }),
-                  unselectedLabelColor: ZOColors.onPrimaryLight,
-                  indicatorColor: Colors.transparent,
-                  tabs: _tabs.map((data) {
-                    return Tab(
-                      icon: data.icon(context),
-                      child: data.label(context),
-                    );
-                  }).toList(),
-                ),
-              ),
+            bottomNavigationBar: UiNavBar(
+              controller: _tabController,
+              items: _tabs.map((data) {
+                return UiNavBarItem(
+                  icon: data.iconSpec,
+                  label: data.label(context),
+                );
+              }).toList(),
             ),
           ),
         );
@@ -216,21 +196,14 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   }
 }
 
-/// Wrapper class for a single screen.
 class _TabScreenData {
-  /// The builder for the label in TabBar or NavigationDrawer.
-  WidgetBuilder label;
+  final String Function(BuildContext) label;
+  final UiIconSpec iconSpec;
+  final WidgetBuilder content;
 
-  /// The builder for the icon in TabBar or NavigationDrawer.
-  WidgetBuilder icon;
-
-  /// The builder for the screen content.
-  WidgetBuilder content;
-
-  /// Creates a new [_TabScreenData] object.
   _TabScreenData({
     required this.label,
-    required this.icon,
+    required this.iconSpec,
     required this.content,
   });
 }
