@@ -29,6 +29,9 @@ class ScreenScaffold extends StatelessWidget {
   /// The background color of the scaffold.
   final Color? backgroundColor;
 
+  /// The color for system navigation bar.
+  final Color? systemNavigationBarColor;
+
   /// The child to display on the web when the screen width is greater than
   /// [LayoutStyle.webBreakpoint].
   final WidgetBuilder web;
@@ -46,6 +49,7 @@ class ScreenScaffold extends StatelessWidget {
     this.resizeToAvoidBottomInset = true,
     this.appBar,
     this.backgroundColor,
+    this.systemNavigationBarColor,
   });
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and
@@ -55,11 +59,9 @@ class ScreenScaffold extends StatelessWidget {
     Key? key,
     required Widget child,
     Widget? appBar,
-    Color? backgroundColor,
   }) : this(
           key: key,
           appBar: appBar,
-          backgroundColor: backgroundColor,
           web: (context) => child,
           mobile: (context) => child,
         );
@@ -71,29 +73,40 @@ class ScreenScaffold extends StatelessWidget {
     Key? key,
     required WidgetBuilder builder,
     Widget? appBar,
-    Color? backgroundColor,
   }) : this(
           key: key,
           appBar: appBar,
-          backgroundColor: backgroundColor,
           web: builder,
           mobile: builder,
         );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor ?? context.uiColors.surfaceGray,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      body: SafeArea(
-        child: AdaptiveContent(
-          web: (context) {
-            final webContent = _buildContent(context, web);
-            return centerWebLayout ? _buildCentered(webContent) : webContent;
-          },
-          mobile: (context) => _buildContent(context, mobile),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: backgroundColor ?? context.uiColors.surfaceGray,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          body: SafeArea(
+            child: AdaptiveContent(
+              web: (context) {
+                final webContent = _buildContent(context, web);
+                return centerWebLayout ? _buildCentered(webContent) : webContent;
+              },
+              mobile: (context) => _buildContent(context, mobile),
+            ),
+          ),
         ),
-      ),
+
+        // Paint the system navigation bar
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: MediaQuery.of(context).padding.bottom,
+            color: systemNavigationBarColor,
+          ),
+        ),
+      ],
     );
   }
 

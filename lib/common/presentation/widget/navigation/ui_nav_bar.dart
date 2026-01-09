@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
-
-/// A model representing a single item in the navigation bar.
-class UiNavBarItem {
-  /// The icon displayed in the navigation bar item.
-  final UiIconSpec icon;
-
-  /// The text label displayed below the icon.
-  final String label;
-
-  /// Creates a constant [UiNavBarItem].
-  const UiNavBarItem({
-    required this.icon,
-    required this.label,
-  });
-}
+import 'package:zachranobed/common/presentation/widget/ui_indicator.dart';
 
 /// A custom navigation bar built on top of [TabBar].
 class UiNavBar extends StatelessWidget {
@@ -23,7 +9,7 @@ class UiNavBar extends StatelessWidget {
   final TabController controller;
 
   /// The list of navigation items to be displayed.
-  final List<UiNavBarItem> items;
+  final List<Widget> items;
 
   /// Creates a [UiNavBar] widget.
   const UiNavBar({
@@ -46,18 +32,44 @@ class UiNavBar extends StatelessWidget {
           labelColor: context.uiColors.primary,
           unselectedLabelColor: context.uiColors.textSecondary,
           indicatorColor: Colors.transparent,
-          tabs: items.map((item) {
-            return Tab(
-              icon: UiIcon(spec: item.icon),
-              iconMargin: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                item.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            );
-          }).toList(),
+          tabs: items,
         ),
+      ),
+    );
+  }
+}
+
+/// A navigation bar item widget representing a single tab in the bottom navigation.
+class UiNavBarItem extends StatelessWidget {
+  /// The icon displayed in the navigation bar item.
+  final UiIconSpec icon;
+
+  /// The text label displayed below the icon.
+  final String label;
+
+  /// Whether to show an indicator badge on the icon.
+  final bool showIndicator;
+
+  /// Creates a [UiNavBarItem].
+  const UiNavBarItem({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.showIndicator = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      icon: UiIndicator(
+        isVisible: showIndicator,
+        child: UiIcon(spec: icon),
+      ),
+      iconMargin: const EdgeInsets.only(bottom: 8.0),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

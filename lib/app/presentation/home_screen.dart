@@ -19,6 +19,7 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
 import 'package:zachranobed/features/food/presentation/screens/donations_screen.dart';
+import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
 import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart';
 
@@ -49,12 +50,20 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
       label: (context) => context.l10n.navigationLabelNotifications,
       iconSpec: const UiIconSpec.data(Icons.notifications),
       content: (context) => const NotificationsScreen(),
+      showIndicator: (context) {
+        final user = HelperService.watchCurrentUser(context);
+        final hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
+        return user != null ? hasAnyUnreadNotifications.invoke(user) : Stream.value(false);
+      },
     )
   ];
 
   /// The controller, which is used to sync state between TabBar and
   /// NavigationDrawer.
   late TabController _tabController;
+
+  /// The index of the currently selected tab.
+  late int _selectedIndex;
 
   /// Whether to show the logout button.
   bool _showLogoutButton = false;
@@ -64,6 +73,13 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
     super.initState();
 
     _tabController = TabController(vsync: this, length: _tabs.length);
+    _selectedIndex = _tabController.index;
+
+    _tabController.addListener(() {
+      setState(() {
+        _selectedIndex = _tabController.index;
+      });
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (context.read<UserNotifier>().user == null) {
@@ -99,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   Widget build(BuildContext context) {
     return ScreenScaffold(
       centerWebLayout: false,
-      backgroundColor: context.uiColors.surfaceWhite,
+      systemNavigationBarColor: context.uiColors.surfaceWhite,
       web: (context) {
         return Row(
           children: [
@@ -118,12 +134,18 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
                       (index, data) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: UiNavigationDrawerItem(
-                            icon: data.iconSpec,
-                            label: data.label(context),
-                            selected: index == _tabController.index,
-                            onPressed: () {
-                              _tabController.animateTo(index);
+                          child: StreamBuilder(
+                            stream: data.showIndicator?.call(context),
+                            builder: (context, snapshot) {
+                              return UiNavigationDrawerItem(
+                                icon: data.iconSpec,
+                                label: data.label(context),
+                                selected: index == _selectedIndex,
+                                showIndicator: snapshot.data == true,
+                                onPressed: () {
+                                  _tabController.animateTo(index);
+                                },
+                              );
                             },
                           ),
                         );
@@ -148,9 +170,15 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
             bottomNavigationBar: UiNavBar(
               controller: _tabController,
               items: _tabs.map((data) {
-                return UiNavBarItem(
-                  icon: data.iconSpec,
-                  label: data.label(context),
+                return StreamBuilder(
+                  stream: data.showIndicator?.call(context),
+                  builder: (context, snapshot) {
+                    return UiNavBarItem(
+                      icon: data.iconSpec,
+                      label: data.label(context),
+                      showIndicator: snapshot.data == true,
+                    );
+                  },
                 );
               }).toList(),
             ),
@@ -200,10 +228,12 @@ class _TabScreenData {
   final String Function(BuildContext) label;
   final UiIconSpec iconSpec;
   final WidgetBuilder content;
+  final Stream<bool> Function(BuildContext)? showIndicator;
 
   _TabScreenData({
     required this.label,
     required this.iconSpec,
     required this.content,
+    this.showIndicator,
   });
 }
