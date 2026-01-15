@@ -135,7 +135,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
       appBar: UiAppBar(
-        title: context.l10n.food,
+        title: context.l10n.historyTitle,
         automaticallyImplyLeading: false,
       ),
       child: _buildBody(),

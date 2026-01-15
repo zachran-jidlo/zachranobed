@@ -72,11 +72,7 @@
     "navigationLabelNotifications": "Notifikace",
     "newOffer": "Darovat pokrmy",
     "overview": "Přehled",
-    "food": "Pokrmy",
-    "boxes": "Krabičky",
-    "loadMore": "Načíst další",
-    "thisWeek": "Tento týden",
-    "lastWeek": "Minulý týden",
+    "historyTitle": "Historie",
     "youCanDonate": "Darování můžete potvrdit ještě",
     "youCantDonateAnymore": "Dnes již nemůžete darovat",
     "courierWillCome": "Pokrmy budou vyzvednuty mezi",
@@ -118,7 +114,6 @@
     "boxType": "Typ krabičky",
     "box": "Typ krabičky",
     "preparedAt": "Datum výroby",
-    "preparedAtOnPackaging": "Datum je uveden na obalu",
     "preparedAtTemplate": "Datum a čas výroby: {dateTime}",
     "@preparedAtTemplate": {
       "placeholders": {
@@ -129,7 +124,6 @@
       }
     },
     "consumeBy": "Spotřebujte do",
-    "consumeByOnPackaging": "Datum je uveden na obalu",
     "consumeByTemplate": "Datum a čas spotřeby: {dateTime}",
     "@consumeByTemplate": {
       "placeholders": {
@@ -146,8 +140,6 @@
     "foodDateTimeLabelMinus2Days": "-2 dny",
     "foodDateTimeLabelOnPackaging": "Viz obal",
     "addAnotherFood": "Přidat další",
-    "formCantBeEdited": "Formulář po odeslání již není možné upravovat.",
-    "donatedOn": "Darováno dne",
     "foodDonationConfirmation": "Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.",
     "shippingOrderConfirmation": "Vratku krabiček do jídelny jste úspěšně objednali \u2764. Děkujeme, že pomáháte.",
     "offerError": "Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.",
@@ -198,7 +190,6 @@
         }
       }
     },
-    "sentOn": "Odesláno dne",
     "shippingOfBoxes": "Vratka krabiček",
     "shippingOfBoxesToCanteen": "Vratka krabiček do jídelny",
     "shippingOfBoxesEmptyTitle": "Vratku není možné zadat",
