@@ -23,7 +23,7 @@
     },
     "commonToday": "Dnes",
     "commonCountShort": "ks",
-    "commonServingsCount": "{count, plural, zero{0 porcí} one{1 porce} few{{count} porcí} other{{count} porcí}}",
+    "commonServingsCount": "{count, plural, zero{0 porcí} one{1 porce} few{{count} porce} other{{count} porcí}}",
     "@commonServingsCount" : {
         "placeholders": {
             "count": {
