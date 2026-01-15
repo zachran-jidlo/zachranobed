@@ -18,7 +18,7 @@ import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dar
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
-import 'package:zachranobed/features/food/presentation/screens/donations_screen.dart';
+import 'package:zachranobed/features/food/presentation/screens/history_screen.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
 import 'package:zachranobed/features/notifications/presentation/notifications_screen.dart';
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
     _TabScreenData(
       label: (context) => context.l10n.navigationLabelHistory,
       iconSpec: const UiIconSpec.svg(ImageAssets.iconHistory),
-      content: (context) => const DonationsScreen(),
+      content: (context) => const HistoryScreen(),
     ),
     _TabScreenData(
       label: (context) => context.l10n.navigationLabelNotifications,
