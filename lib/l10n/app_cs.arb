@@ -23,6 +23,15 @@
     },
     "commonToday": "Dnes",
     "commonCountShort": "ks",
+    "commonServingsCount": "{count, plural, zero{0 porcí} one{1 porce} few{{count} porcí} other{{count} porcí}}",
+    "@commonServingsCount" : {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "42"
+            }
+        }
+    },
     "emailAddress": "E-mailová adresa",
     "password": "Heslo",
     "signIn": "Přihlásit se",
@@ -47,6 +56,17 @@
     "foodCategoryWarm": "Teplý pokrm",
     "foodCategoryCooled": "Zchlazený pokrm",
     "foodCategoryPackaged": "Kusové potraviny",
+    "foodCategoryBadgeWarmTemplate": "Teplý ({temperature}°C)",
+    "@foodCategoryBadgeWarmTemplate": {
+      "placeholders": {
+        "temperature": {
+          "type": "int",
+          "example": "42"
+        }
+      }
+    },
+    "foodCategoryBadgeCooled": "Chlazený",
+    "foodCategoryBadgePackaged": "Balený",
     "navigationLabelOverview": "Přehled",
     "navigationLabelHistory": "Historie",
     "navigationLabelNotifications": "Notifikace",

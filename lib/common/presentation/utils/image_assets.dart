@@ -16,6 +16,7 @@ class ImageAssets {
   static const iconHistory = 'assets/ic_history.svg';
   static const iconHot = 'assets/ic_hot.svg';
   static const iconHotCircled = 'assets/ic_hot_circled.svg';
+  static const iconMeal = 'assets/ic_meal.svg';
   static const iconPack = 'assets/ic_pack.svg';
   static const iconRestore = 'assets/ic_restore.svg';
   static const iconCalendar = 'assets/ic_calendar.svg';
