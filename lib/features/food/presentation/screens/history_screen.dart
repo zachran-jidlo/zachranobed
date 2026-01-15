@@ -7,6 +7,7 @@ import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
@@ -20,6 +21,7 @@ import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
 
 /// A screen that displays the paginated history of offered food donations.
 ///
@@ -137,6 +139,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: UiAppBar(
         title: context.l10n.historyTitle,
         automaticallyImplyLeading: false,
+        actions: [
+          UiIconButton.gradient(
+            icon: Icons.info_outline,
+            onPressed: () {
+              final allergens = FoodAllergen.all(context);
+              FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
+            },
+          ),
+        ],
       ),
       child: _buildBody(),
     );
@@ -267,7 +278,7 @@ class _HistoryList extends StatelessWidget {
     if (listEquals(item.allergens, [FoodAllergen.noAllergensNumber])) {
       allergensLabel = context.l10n.allergensNotPresent;
     } else if (listEquals(item.allergens, [FoodAllergen.onPackageNumber])) {
-      allergensLabel = context.l10n.allergensListedOnPackage;
+      allergensLabel = context.l10n.allergensOnPackage;
     } else {
       allergensLabel = item.allergens.join(', ');
     }

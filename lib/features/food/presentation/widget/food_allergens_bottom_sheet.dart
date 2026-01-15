@@ -28,7 +28,7 @@ class FoodAllergensBottomSheet {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Container(
           width: double.infinity,
-          color: ZOColors.secondary,
+          color: context.uiColors.inactive,
           height: 1.0,
         ),
       ),
