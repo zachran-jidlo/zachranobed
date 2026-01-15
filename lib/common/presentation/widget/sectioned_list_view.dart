@@ -22,6 +22,14 @@ class SectionedListItem<T> extends SectionedListEntry<T> {
   const SectionedListItem(this.value);
 }
 
+/// Represents a content item in the list containing a static widget.
+class SectionedListItemWidget<T> extends SectionedListEntry<T> {
+  /// The widget associated with this item.
+  final Widget child;
+
+  const SectionedListItemWidget(this.child);
+}
+
 /// A scrollable list widget that displays a sequence of headers and items with automatic spacing.
 class SectionedListView<T> extends StatelessWidget {
   /// The list of entries to display.
@@ -64,6 +72,7 @@ class SectionedListView<T> extends StatelessWidget {
         final child = switch (entry) {
           SectionedListHeader() => _buildHeader(context, entry.header),
           SectionedListItem() => _buildItem(context, entry.value),
+          SectionedListItemWidget() => entry.child,
         };
 
         if (topPadding == 0) {
@@ -105,6 +114,10 @@ class SectionedListView<T> extends StatelessWidget {
     final previous = entries[index - 1];
 
     return switch ((previous, current)) {
+      // No extra padding for static widgets
+      (_, SectionedListItemWidget()) => 0.0,
+      (SectionedListItemWidget(), _) => 0.0,
+
       // Header is always 24 from the previous item
       (_, SectionedListHeader()) => 24.0,
 
