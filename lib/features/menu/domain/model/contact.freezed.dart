@@ -90,9 +90,10 @@ class _$ContactCopyWithImpl<$Res> implements $ContactCopyWith<$Res> {
 
 /// @nodoc
 
-class $Contact implements Contact {
+class $Contact extends Contact {
   const $Contact(
-      {required this.name, required this.position, required this.phoneNumber});
+      {required this.name, required this.position, required this.phoneNumber})
+      : super._();
 
   @override
   final String name;
