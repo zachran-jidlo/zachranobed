@@ -15,7 +15,6 @@ import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/features/food/data/mapper/food_box_mapper.dart';
-import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
@@ -86,43 +85,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       }).sorted((a, b) {
         return _getSortOrder(a.type).compareTo(_getSortOrder(b.type));
       });
-    });
-  }
-
-  @override
-  Stream<Iterable<BoxMovement>> observeHistory({
-    required UserData user,
-    required DateTime from,
-    required DateTime to,
-  }) async* {
-    // Prefetch types once before stream is started to not fetch them with
-    // every change in the stream.
-    final typesList = await getTypes();
-    final typesMap = {for (final v in typesList) v.id: v};
-    final deliveries = _deliveryService.observeDeliveries(
-      donorId: user.activePair.donorId,
-      recipientId: user.activePair.recipientId,
-      from: from,
-      to: to,
-    );
-
-    yield* deliveries.map((deliveries) {
-      final foodLists = deliveries.map((delivery) {
-        // Map food-boxes with types to the BoxMovement
-        return delivery.foodBoxes.mapNotNull((element) {
-          final type = typesMap[element.foodBoxId];
-          if (type == null) {
-            return null;
-          }
-          return element.toDomain(
-            delivery: delivery,
-            type: type,
-            isNegative: _shouldUseNegativeBoxCount(user.entityId, delivery),
-          );
-        });
-      });
-      // Flatten a list of lists in single list
-      return foodLists.expand((element) => element);
     });
   }
 
@@ -218,21 +180,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   }
 
   @override
-  Future<int> getMovementBoxesCount({required UserData user}) async {
-    final deliveries = await _deliveryService
-        .observeDeliveries(
-          donorId: user.activePair.donorId,
-          recipientId: user.activePair.recipientId,
-        )
-        .first;
-
-    return deliveries.fold<int>(0, (totalCount, delivery) {
-      final count = delivery.foodBoxes.fold(0, (acc, foodBox) => foodBox.count);
-      return totalCount + count;
-    });
-  }
-
-  @override
   Future<bool> delayFoodBoxesCheckup({
     required UserData user,
   }) {
@@ -286,24 +233,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         return 4;
     }
     return 5;
-  }
-
-  /// The box count is always a positive integer, thus in some cases we need
-  /// to "flip a sign" to display a direction (get vs. send).
-  bool _shouldUseNegativeBoxCount(String entityId, DeliveryDto delivery) {
-    // We need to flip a sign when current user is a charity and delivery type
-    // is "sending boxes".
-    if (delivery.type == DeliveryTypeDto.boxDelivery && entityId == delivery.recipientId) {
-      return true;
-    }
-
-    // Also we need to flip a sign when current user is a canteen and delivery
-    // type is "sending food".
-    if (delivery.type == DeliveryTypeDto.foodDelivery && entityId == delivery.donorId) {
-      return true;
-    }
-
-    return false;
   }
 
   String _getFoodBoxesCheckupTarget(UserData user) {

@@ -132,6 +132,28 @@ class DeliveryService {
     return query.snapshots().map((snapshot) => snapshot.docs.map((document) => document.data()));
   }
 
+  /// Fetches deliveries with pagination support using cursor-based pagination.
+  ///
+  /// Use [startAfterDeliveryDate] to fetch deliveries after the last delivery date from the previous page.
+  /// Specify [limit] to control page size.
+  Future<Iterable<DeliveryDto>> getDeliveriesPage({
+    required String donorId,
+    required String recipientId,
+    required DateTime? startAfterDeliveryDate,
+    required int limit,
+  }) async {
+    var query = _collection.orderBy('deliveryDate', descending: true).where(_hasEntity(donorId, recipientId));
+
+    if (startAfterDeliveryDate != null) {
+      query = query.where('deliveryDate', isLessThan: startAfterDeliveryDate);
+    }
+
+    query = query.limit(limit);
+
+    final snapshot = await query.get();
+    return snapshot.docs.map((doc) => doc.data());
+  }
+
   /// Adds [meals] to the delivery with given [id]. Then recalculates foodboxes
   /// for the same delivery. Returns a future with true when operation succeeds
   /// and false otherwise.

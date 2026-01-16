@@ -1,7 +1,4 @@
-import 'package:zachranobed/common/data/dto/delivery_dto.dart';
-import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_type_dto.dart';
-import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 
 /// DTO to domain mapper for [FoodBoxType].
@@ -11,22 +8,6 @@ extension FoodBoxTypeMapper on FoodBoxTypeDto {
     return FoodBoxType(
       id: id,
       name: name,
-    );
-  }
-}
-
-/// DTO to domain mapper for [BoxMovement].
-extension BoxMovementMapper on FoodBoxDeliveryDto {
-  /// Maps DTO to domain representation.
-  BoxMovement toDomain({
-    required DeliveryDto delivery,
-    required FoodBoxType type,
-    required bool isNegative,
-  }) {
-    return BoxMovement(
-      type: type,
-      count: isNegative ? -count : count,
-      date: delivery.deliveryDate,
     );
   }
 }

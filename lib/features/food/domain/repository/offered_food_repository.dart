@@ -21,6 +21,16 @@ abstract class OfferedFoodRepository {
     DateTime? to,
   });
 
+  /// Fetches a page of offered food history with pagination support.
+  ///
+  /// Use [startAfterDate] to fetch items after the last delivery date from the previous page.
+  /// Specify [limit] to control page size.
+  Future<Iterable<OfferedFood>> getHistoryPaginated({
+    required UserData user,
+    required int limit,
+    DateTime? startAfterDate,
+  });
+
   /// Creates a food offer to the given [delivery] and updates a [delivery]
   /// with a correct state. The [foodInfo] contains all necessary information
   /// about donated food.

@@ -19,7 +19,6 @@ import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_flo
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/features/food/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/food/presentation/widget/card_list.dart';
-import 'package:zachranobed/features/food/presentation/widget/donated_food_list.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -99,8 +98,6 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
                   setInProgress: _setBoxesCheckupInProgress,
                 ),
                 const SizedBox(height: GapSize.m),
-                _buildDonatedFoodList(context),
-                const SizedBox(height: GapSize.xs),
               ],
             ),
           ),
@@ -150,14 +147,6 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     }
 
     return user is Canteen ? const NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
-  }
-
-  Widget _buildDonatedFoodList(BuildContext context) {
-    return DonatedFoodList(
-      title: context.l10n.lastDonated,
-      itemsLimit: 5,
-      alwaysShowTitle: false,
-    );
   }
 
   Widget _buildActiveCanteen(BuildContext context) {

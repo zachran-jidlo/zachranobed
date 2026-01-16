@@ -1,4 +1,5 @@
 import 'package:uuid/uuid.dart';
+import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_detail_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/service/delivery_service.dart';
@@ -62,33 +63,50 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     );
 
     yield* deliveries.asyncMap((deliveries) async {
-      final foodLists = await Future.wait(deliveries.map((delivery) async {
-        // Get meal IDs and fetch meal details from MealService
-        final mealIds = delivery.meals.map((e) => e.mealId);
-        if (mealIds.isEmpty) {
-          return const Iterable<OfferedFood>.empty();
-        }
-
-        final details = await _mealService.getDetails(mealIds.toList());
-
-        // Map meal with details to the OfferedFood
-        return delivery.meals.mapNotNull((meal) {
-          final detail = details[meal.mealId];
-          if (detail == null) {
-            return null;
-          }
-          return detail.toDomain(delivery, meal);
-        });
-      }));
-      // Flatten a list of lists in single list
-      var food = foodLists.expand((element) => element);
-      if (limit != null) {
-        // As a delivery may have multiple meals, the "food" list may contain
-        // more items than requested, thus we should limit also after flattening
-        food = food.take(limit);
-      }
-      return food;
+      return _mapDeliveriesToOfferedFood(deliveries);
     });
+  }
+
+  @override
+  Future<Iterable<OfferedFood>> getHistoryPaginated({
+    required UserData user,
+    required int limit,
+    DateTime? startAfterDate,
+  }) async {
+    final deliveries = await _deliveryService.getDeliveriesPage(
+      donorId: user.activePair.donorId,
+      recipientId: user.activePair.recipientId,
+      startAfterDeliveryDate: startAfterDate,
+      limit: limit,
+    );
+
+    return _mapDeliveriesToOfferedFood(deliveries);
+  }
+
+  Future<Iterable<OfferedFood>> _mapDeliveriesToOfferedFood(
+    Iterable<DeliveryDto> deliveries,
+  ) async {
+    final foodLists = await Future.wait(deliveries.map((delivery) async {
+      // Get meal IDs and fetch meal details from MealService
+      final mealIds = delivery.meals.map((e) => e.mealId);
+      if (mealIds.isEmpty) {
+        return const Iterable<OfferedFood>.empty();
+      }
+
+      final details = await _mealService.getDetails(mealIds.toList());
+
+      // Map meal with details to the OfferedFood
+      return delivery.meals.mapNotNull<OfferedFood>((meal) {
+        final detail = details[meal.mealId];
+        if (detail == null) {
+          return null;
+        }
+        return detail.toDomain(delivery, meal);
+      });
+    }));
+
+    // Flatten a list of lists in single list
+    return foodLists.expand((element) => element);
   }
 
   @override

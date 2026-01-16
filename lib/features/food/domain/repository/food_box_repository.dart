@@ -1,6 +1,5 @@
 import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
-import 'package:zachranobed/features/food/domain/model/box_movement.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 
@@ -13,13 +12,6 @@ abstract class FoodBoxRepository {
 
   /// Return a stream with a list of food box statistics for the [user].
   Stream<Iterable<FoodBoxStatistics>> observeStatistics(UserData user);
-
-  /// Returns a stream with a list of box movements for the [user].
-  Stream<Iterable<BoxMovement>> observeHistory({
-    required UserData user,
-    required DateTime from,
-    required DateTime to,
-  });
 
   /// Checks if entity with the given [user] has at least [requiredBoxes]
   /// count. The [requiredBoxes] map contains keys with box IDs and values for
@@ -35,11 +27,6 @@ abstract class FoodBoxRepository {
   Future<bool> createBoxDelivery({
     required UserData user,
     required List<BoxInfo> boxInfo,
-  });
-
-  /// Returns a count of food boxes movements of the given [user].
-  Future<int> getMovementBoxesCount({
-    required UserData user,
   });
 
   /// Delays a food boxes checkup for the given [user].

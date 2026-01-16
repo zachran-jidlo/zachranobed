@@ -8,6 +8,7 @@ import 'package:zachranobed/features/food/data/repository/firebase_food_box_repo
 import 'package:zachranobed/features/food/data/repository/firebase_offered_food_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 
 /// DI setup for food feature.
 class FoodDependencyContainer {
@@ -28,6 +29,12 @@ class FoodDependencyContainer {
         GetIt.I<MealService>(),
         GetIt.I<EntityPairService>(),
         GetIt.I<DeliveryRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<GetHistoryPaginatedUseCase>(
+      () => GetHistoryPaginatedUseCase(
+        GetIt.I<OfferedFoodRepository>(),
       ),
     );
   }

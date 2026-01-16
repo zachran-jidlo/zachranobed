@@ -8,6 +8,7 @@ import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/sectioned_list_view.dart';
 import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
 import 'package:zachranobed/features/notifications/domain/model/notification.dart' as domain;
@@ -69,78 +70,35 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget _notifications(List<domain.Notification> notifications) {
-    final todayNotifications = <domain.Notification>[];
-    final otherNotifications = <domain.Notification>[];
+    final todayNotifications = <SectionedListItem<domain.Notification>>[];
+    final otherNotifications = <SectionedListItem<domain.Notification>>[];
     for (final notification in notifications) {
       if (DateTimeUtils.isToday(notification.timestamp)) {
-        todayNotifications.add(notification);
+        todayNotifications.add(SectionedListItem(notification));
       } else {
-        otherNotifications.add(notification);
+        otherNotifications.add(SectionedListItem(notification));
       }
     }
 
     final showHeaders = todayNotifications.isNotEmpty && otherNotifications.isNotEmpty;
-    return CustomScrollView(
-      slivers: showHeaders
-          ? [
-              _sectionHeader(
-                context.l10n.commonToday,
-                topPadding: 16.0,
-              ),
-              _notificationsSection(todayNotifications),
-              _sectionHeader(
-                context.l10n.notificationsLast7DaysTitle,
-                topPadding: 8.0,
-              ),
-              _notificationsSection(otherNotifications),
-            ]
-          : [
-              SliverToBoxAdapter(
-                child: const SizedBox(height: 16.0),
-              ),
-              _notificationsSection(todayNotifications),
-              _notificationsSection(otherNotifications),
-            ],
-    );
-  }
-
-  Widget _sectionHeader(String text, {required double topPadding}) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: topPadding,
-          left: 16.0,
-          right: 16.0,
-          bottom: 8.0,
-        ),
-        child: Text(
-          text,
-          style: context.textStyles.titleMedium,
-        ),
-      ),
-    );
-  }
-
-  Widget _notificationsSection(List<domain.Notification> notifications) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        childCount: notifications.length,
-        (context, index) {
-          final notification = notifications[index];
-          return Padding(
-            padding: const EdgeInsets.only(
-              left: 16.0,
-              right: 16.0,
-              bottom: 16.0,
-            ),
-            child: UiListTile(
-              overline: _timeHeader(context, notification),
-              title: notification.title,
-              supportingText: notification.message,
-            ),
-          );
-        },
-      ),
+    return SectionedListView<domain.Notification>.builder(
+      entries: [
+        if (showHeaders) ...[
+          SectionedListHeader(context.l10n.commonToday),
+        ],
+        ...todayNotifications,
+        if (showHeaders) ...[
+          SectionedListHeader(context.l10n.notificationsLast7DaysTitle),
+        ],
+        ...otherNotifications,
+      ],
+      itemBuilder: (context, notification) {
+        return UiListTile(
+          overline: _timeHeader(context, notification),
+          title: notification.title,
+          supportingText: notification.message,
+        );
+      },
     );
   }
 
