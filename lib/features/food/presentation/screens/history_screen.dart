@@ -42,6 +42,8 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  static const double _paginationScrollThreshold = 200;
+
   final _useCase = GetIt.I<GetHistoryPaginatedUseCase>();
   final _scrollController = ScrollController();
 
@@ -65,7 +67,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200 && _hasMore) {
+    final currentPosition = _scrollController.position.pixels;
+    final maxPosition = _scrollController.position.maxScrollExtent;
+    if (_hasMore && currentPosition >= maxPosition - _paginationScrollThreshold) {
       _loadData();
     }
   }
