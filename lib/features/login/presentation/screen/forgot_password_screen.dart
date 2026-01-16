@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
+import 'package:zachranobed/common/presentation/widget/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
@@ -36,55 +38,46 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenScaffold(
+    return ScreenScaffold.universalBuilder(
       appBar: UiAppBar(
         title: context.l10n.passwordReset,
       ),
-      web: (context) => _forgotPasswordScreenContent(useWideButton: false),
-      mobile: (context) => _forgotPasswordScreenContent(useWideButton: true),
-    );
-  }
-
-  /// Builds the content of the forgot password screen.
-  ///
-  /// The [useWideButton] parameter determines whether to stretch confirmation
-  /// button to screen width.
-  Widget _forgotPasswordScreenContent({
-    required bool useWideButton,
-  }) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            Text(
-              context.l10n.passwordResetExplanation,
-              style: context.textStyles.bodyLarge,
+      builder: (context) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                Text(
+                  context.l10n.passwordResetExplanation,
+                  style: context.textStyles.bodyLarge,
+                ),
+                const SizedBox(height: 40),
+                UiTextField(
+                  controller: _emailController,
+                  labelText: context.l10n.emailAddress,
+                  keyboardType: TextInputType.emailAddress,
+                  disableAutocorrect: true,
+                  onValidation: FieldValidationUtils.getEmailValidator(context),
+                ),
+                const SizedBox(height: 40),
+                UiPrimaryButton(
+                  text: context.l10n.resetPassword,
+                  size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await _resetPassword();
+                    }
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 40),
-            UiTextField(
-              controller: _emailController,
-              labelText: context.l10n.emailAddress,
-              keyboardType: TextInputType.emailAddress,
-              disableAutocorrect: true,
-              onValidation: FieldValidationUtils.getEmailValidator(context),
-            ),
-            const SizedBox(height: 40),
-            UiPrimaryButton(
-              text: context.l10n.resetPassword,
-              size: UiButtonSize.medium(fullWidth: useWideButton),
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  await _resetPassword();
-                }
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
@@ -37,32 +39,34 @@ class _AppTermsScreen extends State<AppTermsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenScaffold.universal(
-      child: switch (widget.hasNoAcceptedVersion) {
-        true => InfoPage(
-            image: ImageAssets.imageAppTermsNotAccepted,
-            title: context.l10n.appTermsTitle,
-            description: context.l10n.appTermsSubtitle,
-            paddingBeforeActions: 8.0,
-            actions: _buildActions(),
-          ),
-        false => InfoPage(
-            image: ImageAssets.imageAppTermsNewVersion,
-            title: context.l10n.appTermsNewVersionTitle,
-            description: context.l10n.appTermsNewVersionSubtitle,
-            paddingBeforeActions: 8.0,
-            actions: _buildActions(),
-          )
+    return ScreenScaffold.universalBuilder(
+      builder: (context) {
+        return switch (widget.hasNoAcceptedVersion) {
+          true => InfoPage(
+              image: ImageAssets.imageAppTermsNotAccepted,
+              title: context.l10n.appTermsTitle,
+              description: context.l10n.appTermsSubtitle,
+              paddingBeforeActions: 8.0,
+              actions: _buildActions(context),
+            ),
+          false => InfoPage(
+              image: ImageAssets.imageAppTermsNewVersion,
+              title: context.l10n.appTermsNewVersionTitle,
+              description: context.l10n.appTermsNewVersionSubtitle,
+              paddingBeforeActions: 8.0,
+              actions: _buildActions(context),
+            )
+        };
       },
     );
   }
 
-  List<Widget> _buildActions() {
+  List<Widget> _buildActions(BuildContext context) {
     return [
       _buildCheckbox(),
       const SizedBox(height: 32.0),
       UiPrimaryButton(
-        size: UiButtonSize.medium(),
+        size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
         text: context.l10n.appTermsConfirm,
         onPressed: _setNewestAcceptedAppTerms,
         enabled: _areTermsAccepted,
