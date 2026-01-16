@@ -15,6 +15,8 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 /// This screen is displayed when the current app version is below the minimum required version
 /// configured in the backend. It prevents users from accessing the app until they update to
 /// a newer version from the app store.
+///
+/// Uses [InfoPage.rich] with rich text formatting to emphasize the application name in bold.
 @RoutePage()
 class ForceUpdateScreen extends StatelessWidget {
   /// Creates a [ForceUpdateScreen].
@@ -24,7 +26,7 @@ class ForceUpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenScaffold.universalBuilder(
       builder: (context) {
-        return InfoPage.custom(
+        return InfoPage.rich(
           image: ImageAssets.imageForceUpdate,
           title: InfoPageContent.text(context.l10n.forceUpdateScreenTitle),
           description: InfoPageContent.widget(

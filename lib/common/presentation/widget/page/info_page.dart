@@ -63,14 +63,15 @@ class InfoPage extends StatelessWidget {
   })  : title = _TextContent(title),
         description = description != null ? _TextContent(description) : null;
 
-  /// Creates a [InfoPage] widget with custom content for title and description.
+  /// Creates a [InfoPage] widget with rich content for title and description.
   ///
   /// Use this constructor when you need custom styling beyond the default text styles.
+  /// Follows the Flutter convention of `Text` vs `Text.rich`.
   ///
   /// Examples:
   /// ```dart
   /// // Custom styled title
-  /// InfoPage.custom(
+  /// InfoPage.rich(
   ///   image: ImageAssets.example,
   ///   title: InfoPageContent.widget(
   ///     Text('Custom', style: TextStyle(color: Colors.red)),
@@ -78,7 +79,7 @@ class InfoPage extends StatelessWidget {
   /// )
   ///
   /// // Rich text description
-  /// InfoPage.custom(
+  /// InfoPage.rich(
   ///   image: ImageAssets.example,
   ///   title: InfoPageContent.text('Title'),
   ///   description: InfoPageContent.widget(
@@ -91,7 +92,7 @@ class InfoPage extends StatelessWidget {
   ///   ),
   /// )
   /// ```
-  const InfoPage.custom({
+  const InfoPage.rich({
     super.key,
     required this.image,
     required this.title,
