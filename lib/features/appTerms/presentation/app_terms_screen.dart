@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
@@ -9,10 +8,11 @@ import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
-import 'package:zachranobed/common/presentation/widget/checkbox.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_checkbox.dart';
 import 'package:zachranobed/features/appTerms/domain/set_newest_accepted_app_terms_usecase.dart';
 
 /// A screen that informs the user about application terms and conditions that need to be accepted.
@@ -38,91 +38,75 @@ class _AppTermsScreen extends State<AppTermsScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold.universal(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(GapSize.xl),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ..._header(),
-              const SizedBox(height: GapSize.m),
-              ZOCheckbox.rich(
-                isChecked: _areTermsAccepted,
-                onChanged: (bool? value) {
-                  setState(() {
-                    _areTermsAccepted = value ?? false;
-                  });
-                },
-                titleWidget: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: context.l10n.appTermsCheckboxLabelPlain,
-                      ),
-                      TextSpan(
-                        text: context.l10n.appTermsCheckboxLabelUnderlined,
-                        style: const TextStyle(
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            await _openUrlInBrowser(Constants.urlAppTerms);
-                          },
-                      ),
-                    ],
-                  ),
-                  style: context.textStyles.bodySmall,
-                ),
-              ),
-              const SizedBox(height: GapSize.l),
-              ZOButton(
-                text: context.l10n.appTermsConfirm,
-                onPressed: _setNewestAcceptedAppTerms,
-                enabled: _areTermsAccepted,
-              ),
-            ],
+      child: switch (widget.hasNoAcceptedVersion) {
+        true => InfoPage(
+            image: ImageAssets.imageAppTermsNotAccepted,
+            title: context.l10n.appTermsTitle,
+            description: context.l10n.appTermsSubtitle,
+            paddingBeforeActions: 8.0,
+            actions: _buildActions(),
           ),
-        ),
-      ),
+        false => InfoPage(
+            image: ImageAssets.imageAppTermsNewVersion,
+            title: context.l10n.appTermsNewVersionTitle,
+            description: context.l10n.appTermsNewVersionSubtitle,
+            paddingBeforeActions: 8.0,
+            actions: _buildActions(),
+          )
+      },
     );
   }
 
-  List<Widget> _header() {
-    if (widget.hasNoAcceptedVersion) {
-      return [
-        SvgPicture.asset(
-          ImageAssets.imageAppTermsNotAccepted,
+  List<Widget> _buildActions() {
+    return [
+      _buildCheckbox(),
+      const SizedBox(height: 32.0),
+      UiPrimaryButton(
+        size: UiButtonSize.medium(),
+        text: context.l10n.appTermsConfirm,
+        onPressed: _setNewestAcceptedAppTerms,
+        enabled: _areTermsAccepted,
+      ),
+    ];
+  }
+
+  Widget _buildCheckbox() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        UiCheckbox(
+          isChecked: _areTermsAccepted,
+          onChanged: (value) {
+            setState(() {
+              _areTermsAccepted = value;
+            });
+          },
         ),
-        const SizedBox(height: GapSize.xl),
-        Text(
-          context.l10n.appTermsTitle,
-          style: context.textStyles.titleLarge,
+        Flexible(
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: context.l10n.appTermsCheckboxLabelPlain,
+                  style: context.textStyles.bodySmall,
+                ),
+                TextSpan(
+                  text: context.l10n.appTermsCheckboxLabelUnderlined,
+                  style: context.textStyles.bodySmall.copyWith(
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      await _openUrlInBrowser(Constants.urlAppTerms);
+                    },
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: GapSize.xs),
-        Text(
-          context.l10n.appTermsSubtitle,
-          textAlign: TextAlign.center,
-          style: context.textStyles.bodyLarge,
-        ),
-      ];
-    } else {
-      return [
-        SvgPicture.asset(
-          ImageAssets.imageAppTermsNewVersion,
-        ),
-        const SizedBox(height: GapSize.xl),
-        Text(
-          context.l10n.appTermsNewVersionTitle,
-          style: context.textStyles.titleLarge,
-        ),
-        const SizedBox(height: GapSize.xs),
-        Text(
-          context.l10n.appTermsNewVersionSubtitle,
-          textAlign: TextAlign.center,
-          style: context.textStyles.bodyLarge,
-        ),
-      ];
-    }
+      ],
+    );
   }
 
   void _setNewestAcceptedAppTerms() async {

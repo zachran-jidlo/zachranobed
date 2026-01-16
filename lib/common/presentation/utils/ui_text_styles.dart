@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/ui_colors.dart';
 
 /// A wrapper class that provides non-nullable access to [TextStyle] properties from [TextTheme].
 ///
@@ -134,6 +135,10 @@ class UiTextStyles {
             fontWeight: FontWeight.w500,
             letterSpacing: 0,
           ),
+        )
+        .apply(
+          bodyColor: UiColors.light.textPrimary,
+          displayColor: UiColors.light.textPrimary,
         );
   }
 }
