@@ -137,6 +137,7 @@ class UiTextStyles {
           ),
         )
         .apply(
+          // Context is not available here, so we must hardcode UiColors.light
           bodyColor: UiColors.light.textPrimary,
           displayColor: UiColors.light.textPrimary,
         );
