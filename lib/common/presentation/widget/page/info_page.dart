@@ -22,6 +22,9 @@ class InfoPage extends StatelessWidget {
   /// Optional list of action widgets (typically buttons) displayed at the bottom.
   final List<Widget>? actions;
 
+  /// The amount of padding to add before the action widgets.
+  final double paddingBeforeActions;
+
   /// Creates a [InfoPage] widget.
   const InfoPage({
     super.key,
@@ -29,6 +32,7 @@ class InfoPage extends StatelessWidget {
     required this.title,
     this.description,
     this.actions,
+    this.paddingBeforeActions = 40.0,
   });
 
   @override
@@ -36,39 +40,40 @@ class InfoPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              image,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 40.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: context.textStyles.titleHeavy,
-                    textAlign: TextAlign.center,
-                  ),
-                  if (description != null) ...[
-                    const SizedBox(height: 16.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(image),
+              const SizedBox(height: 40.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                     Text(
-                      description!,
-                      style: context.textStyles.bodyLarge,
+                      title,
+                      style: context.textStyles.titleHeavy,
                       textAlign: TextAlign.center,
                     ),
+                    if (description != null) ...[
+                      const SizedBox(height: 16.0),
+                      Text(
+                        description!,
+                        style: context.textStyles.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                    if (actions != null) ...[
+                      SizedBox(height: paddingBeforeActions),
+                      ...actions!,
+                    ]
                   ],
-                  if (actions != null) ...[
-                    const SizedBox(height: 40.0),
-                    ...actions!,
-                  ]
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
