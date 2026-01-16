@@ -71,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.call_outlined),
                 title: context.l10n.contactsMenuLabel,
                 onPressed: () => context.router.push(const ContactsRoute()),
@@ -81,6 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SectionedListHeader(context.l10n.settings),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.password),
                 title: context.l10n.changePassword,
                 onPressed: () => context.router.push(const ChangePasswordRoute()),
@@ -91,6 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SectionedListHeader(context.l10n.saveLunch),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.textsms_outlined),
                 title: context.l10n.feedback,
                 onPressed: () => _openEmailClient(context),
@@ -98,6 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.language),
                 title: context.l10n.about,
                 onPressed: () => _openUrlInBrowser(Constants.urlHomepage),
@@ -108,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SectionedListHeader(context.l10n.more),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.security),
                 title: context.l10n.privacyProtection,
                 onPressed: () => _openUrlInBrowser(Constants.urlAppPrivacy),
@@ -115,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SectionedListItem(
               _buildListItem(
+                context,
                 icon: const UiIconSpec.data(Icons.text_snippet_outlined),
                 title: context.l10n.termsOfUse,
                 onPressed: () => _openUrlInBrowser(Constants.urlAppTerms),
@@ -163,7 +169,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   /// Builds a list item with an icon, title, gradient chevron, and onPressed callback.
-  Widget _buildListItem({
+  Widget _buildListItem(
+    BuildContext context, {
     required UiIconSpec icon,
     required String title,
     required VoidCallback onPressed,
