@@ -2,6 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
+/// Content for [InfoPage] title or description, supporting both simple text and custom widgets.
+sealed class InfoPageContent {
+  const InfoPageContent();
+
+  /// Creates simple text content.
+  const factory InfoPageContent.text(String text) = _TextContent;
+
+  /// Creates custom widget content for advanced styling.
+  ///
+  /// This allows you to provide a fully styled Text widget or Text.rich widget.
+  const factory InfoPageContent.widget(Widget widget) = _WidgetContent;
+}
+
+class _TextContent extends InfoPageContent {
+  final String text;
+
+  const _TextContent(this.text);
+}
+
+class _WidgetContent extends InfoPageContent {
+  final Widget widget;
+
+  const _WidgetContent(this.widget);
+}
+
 /// A reusable informational page widget displaying an image, title, optional description, and action buttons.
 ///
 /// This component is designed to display various informational states such as empty states, error messages,
@@ -13,11 +38,11 @@ class InfoPage extends StatelessWidget {
   /// The path to the SVG asset to display at the top of the page.
   final String image;
 
-  /// The main heading text displayed below the image.
-  final String title;
+  /// The main heading content displayed below the image.
+  final InfoPageContent title;
 
-  /// Optional descriptive text displayed below the title.
-  final String? description;
+  /// Optional descriptive content displayed below the title.
+  final InfoPageContent? description;
 
   /// Optional list of action widgets (typically buttons) displayed at the bottom.
   final List<Widget>? actions;
@@ -25,8 +50,49 @@ class InfoPage extends StatelessWidget {
   /// The amount of padding to add before the action widgets.
   final double paddingBeforeActions;
 
-  /// Creates a [InfoPage] widget.
-  const InfoPage({
+  /// Creates a [InfoPage] widget with simple text for title and description.
+  ///
+  /// This is the standard constructor for most use cases.
+  InfoPage({
+    super.key,
+    required this.image,
+    required String title,
+    String? description,
+    this.actions,
+    this.paddingBeforeActions = 40.0,
+  })  : title = _TextContent(title),
+        description = description != null ? _TextContent(description) : null;
+
+  /// Creates a [InfoPage] widget with rich content for title and description.
+  ///
+  /// Use this constructor when you need custom styling beyond the default text styles.
+  /// Follows the Flutter convention of `Text` vs `Text.rich`.
+  ///
+  /// Examples:
+  /// ```dart
+  /// // Custom styled title
+  /// InfoPage.rich(
+  ///   image: ImageAssets.example,
+  ///   title: InfoPageContent.widget(
+  ///     Text('Custom', style: TextStyle(color: Colors.red)),
+  ///   ),
+  /// )
+  ///
+  /// // Rich text description
+  /// InfoPage.rich(
+  ///   image: ImageAssets.example,
+  ///   title: InfoPageContent.text('Title'),
+  ///   description: InfoPageContent.widget(
+  ///     Text.rich(
+  ///       TextSpan(children: [
+  ///         TextSpan(text: 'Bold ', style: TextStyle(fontWeight: FontWeight.bold)),
+  ///         TextSpan(text: 'and normal'),
+  ///       ]),
+  ///     ),
+  ///   ),
+  /// )
+  /// ```
+  const InfoPage.rich({
     super.key,
     required this.image,
     required this.title,
@@ -52,17 +118,17 @@ class InfoPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      title,
+                    _buildTextContent(
+                      context,
+                      content: title,
                       style: context.textStyles.titleHeavy,
-                      textAlign: TextAlign.center,
                     ),
                     if (description != null) ...[
                       const SizedBox(height: 16.0),
-                      Text(
-                        description!,
+                      _buildTextContent(
+                        context,
+                        content: description,
                         style: context.textStyles.bodyLarge,
-                        textAlign: TextAlign.center,
                       ),
                     ],
                     if (actions != null) ...[
@@ -77,5 +143,21 @@ class InfoPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildTextContent(
+    BuildContext context, {
+    required InfoPageContent? content,
+    required TextStyle style,
+  }) {
+    return switch (content) {
+      _TextContent() => Text(
+          content.text,
+          style: style,
+          textAlign: TextAlign.center,
+        ),
+      _WidgetContent() => content.widget,
+      null => const SizedBox(),
+    };
   }
 }
