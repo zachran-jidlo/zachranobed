@@ -2,8 +2,9 @@
 
 This is a changelog for **ZachranObed** application.
 
-## [1.9.0]
+## [2.0.0]
 ### Added
+- **ZOB-381** Add new UI components and color definitions from new design system.
 
 ### Fixed
 
@@ -14,6 +15,13 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-378** Move DTOs and services.
 - **ZOB-379** Move common UI widgets.
 - **ZOB-380** Merge "foodboxes" and "offeredfood" to one feature, move screens do correct features.
+- **ZOB-382** Update login screens with new design.
+- **ZOB-383** Update application navigation bar and drawer with new design.
+- **ZOB-384** Update notification screen with new design.
+- **ZOB-386** Update history screen (legacy donations screen) with new design. Implement paging.
+- **ZOB-387** Update app terms screen with new design.
+- **ZOB-388** Update force update screen with new design.
+- **ZOB-389** Update profile and sub-profile screens with new design.
 
 ### Removed
 
