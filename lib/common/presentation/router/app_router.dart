@@ -14,7 +14,7 @@ class AppRouter extends RootStackRouter {
         MaterialRoute(page: LoginRoute.page),
         MaterialRoute(page: ForgotPasswordRoute.page),
         MaterialRoute(
-          page: MenuRoute.page,
+          page: ProfileRoute.page,
           guards: [AuthGuard()],
         ),
         MaterialRoute(
