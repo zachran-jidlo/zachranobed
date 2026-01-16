@@ -117,10 +117,18 @@ class InfoPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildTextContent(context, title),
+                    _buildTextContent(
+                      context,
+                      content: title,
+                      style: context.textStyles.titleHeavy,
+                    ),
                     if (description != null) ...[
                       const SizedBox(height: 16.0),
-                      _buildTextContent(context, description),
+                      _buildTextContent(
+                        context,
+                        content: description,
+                        style: context.textStyles.bodyLarge,
+                      ),
                     ],
                     if (actions != null) ...[
                       SizedBox(height: paddingBeforeActions),
@@ -136,11 +144,15 @@ class InfoPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTextContent(BuildContext context, InfoPageContent? content) {
+  Widget _buildTextContent(
+    BuildContext context, {
+    required InfoPageContent? content,
+    required TextStyle style,
+  }) {
     return switch (content) {
       _TextContent() => Text(
           content.text,
-          style: context.textStyles.bodyLarge,
+          style: style,
           textAlign: TextAlign.center,
         ),
       _WidgetContent() => content.widget,
