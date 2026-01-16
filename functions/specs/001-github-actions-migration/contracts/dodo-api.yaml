@@ -1,0 +1,322 @@
+openapi: 3.0.3
+info:
+  title: DODO Logistics API
+  description: |
+    External API contract for DODO last-mile delivery service.
+    Used by Zachraň oběd Cloud Functions to create delivery orders for meal donations.
+  version: 1.0.0
+  contact:
+    name: DODO API Support
+    url: https://www.dodo.cz
+
+servers:
+  - url: https://auth.dodo.cz
+    description: OAuth2 Authentication Server
+  - url: https://api.dodo.cz/v1
+    description: Orders API Server
+
+security:
+  - OAuth2:
+      - delivery:create
+
+paths:
+  /oauth/token:
+    post:
+      summary: Get OAuth2 Access Token
+      description: |
+        Obtain an access token using client credentials grant type.
+        Token is valid for the duration specified in `expires_in` (typically 3600 seconds).
+      operationId: getAccessToken
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+                - client_id
+                - client_secret
+                - scope
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                    - client_credentials
+                  description: OAuth2 grant type
+                client_id:
+                  type: string
+                  description: Client ID provided by DODO
+                  example: "zachran-obed-prod"
+                client_secret:
+                  type: string
+                  format: password
+                  description: Client secret provided by DODO
+                scope:
+                  type: string
+                  description: Requested scope for API access
+                  example: "delivery:create"
+      responses:
+        "200":
+          description: Access token granted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "400":
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Invalid client credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orders:
+    post:
+      summary: Create Delivery Order
+      description: |
+        Create a new delivery order with pickup and drop-off details.
+        Order identifier must be unique across all orders.
+      operationId: createOrder
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderRequest"
+      responses:
+        "201":
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "400":
+          description: Invalid request body or validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized - invalid or expired token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Order with this identifier already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.dodo.cz/oauth/token
+          scopes:
+            delivery:create: Create delivery orders
+
+  schemas:
+    TokenResponse:
+      type: object
+      required:
+        - token_type
+        - expires_in
+        - ext_expires_in
+        - access_token
+      properties:
+        token_type:
+          type: string
+          enum:
+            - Bearer
+          description: Token type
+        expires_in:
+          type: integer
+          description: Token expiration time in seconds
+          example: 3600
+        ext_expires_in:
+          type: integer
+          description: Extended expiration time in seconds
+          example: 3600
+        access_token:
+          type: string
+          description: Access token for API requests
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+    OrderRequest:
+      type: object
+      required:
+        - Identifier
+        - Pickup
+        - Drop
+        - CustomerName
+        - CustomerPhone
+        - Price
+      properties:
+        Identifier:
+          type: string
+          description: |
+            Unique order identifier. Format: {donor}-{recipient}-{date}
+            Must be unique across all orders.
+          example: "primirest-tanvald-charita-liberec-16.1.2026"
+          maxLength: 100
+        Pickup:
+          $ref: "#/components/schemas/PickupDetails"
+        Drop:
+          $ref: "#/components/schemas/DropDetails"
+        CustomerName:
+          type: string
+          description: Customer contact name (recipient responsible person)
+          example: "Anna Strejcová"
+          maxLength: 100
+        CustomerPhone:
+          type: string
+          description: Customer contact phone with country code
+          example: "+420123456789"
+          pattern: '^\+[1-9]\d{1,14}$'
+        Price:
+          type: integer
+          description: Order price in minor currency units (always 0 for charity)
+          example: 0
+          minimum: 0
+
+    PickupDetails:
+      type: object
+      required:
+        - BranchIdentifier
+        - RequiredStart
+        - RequiredEnd
+        - Note
+      properties:
+        BranchIdentifier:
+          type: string
+          description: DODO branch identifier for pickup location
+          example: "zachran-obed-tanvald"
+          maxLength: 50
+        RequiredStart:
+          type: string
+          format: date-time
+          description: Pickup window start time (ISO 8601 with timezone)
+          example: "2026-01-17T16:30:00.000Z"
+        RequiredEnd:
+          type: string
+          format: date-time
+          description: Pickup window end time (ISO 8601 with timezone)
+          example: "2026-01-17T17:00:00.000Z"
+        Note:
+          type: string
+          description: |
+            Instructions for driver at pickup location.
+            Include donor contact and any access instructions.
+          example: "Za rohem, zazvoňte na zvonek\nDonor: +420111222333\nRecipient: +420444555666"
+          maxLength: 500
+
+    DropDetails:
+      type: object
+      required:
+        - AddressRawValue
+        - RequiredStart
+        - RequiredEnd
+        - Note
+      properties:
+        AddressRawValue:
+          type: string
+          description: |
+            Full delivery address as single string.
+            Format: {street} {houseNumber} {city} {postalCode}
+          example: "Spojená 866/63 Praha 130 00"
+          maxLength: 200
+        RequiredStart:
+          type: string
+          format: date-time
+          description: Delivery window start time (ISO 8601 with timezone)
+          example: "2026-01-17T17:30:00.000Z"
+        RequiredEnd:
+          type: string
+          format: date-time
+          description: Delivery window end time (ISO 8601 with timezone)
+          example: "2026-01-17T18:00:00.000Z"
+        Note:
+          type: string
+          description: |
+            Instructions for driver at delivery location.
+            Include recipient contact and any access instructions.
+          example: "Hlavní vchod, 2. patro\nDonor: +420111222333\nRecipient: +420444555666"
+          maxLength: 500
+
+    OrderResponse:
+      type: object
+      required:
+        - orderId
+        - status
+        - createdAt
+      properties:
+        orderId:
+          type: string
+          description: DODO internal order ID
+          example: "DODO-2026-01-17-12345"
+        status:
+          type: string
+          enum:
+            - Created
+            - Assigned
+            - InProgress
+            - Completed
+            - Cancelled
+          description: Current order status
+          example: "Created"
+        createdAt:
+          type: string
+          format: date-time
+          description: Order creation timestamp
+          example: "2026-01-17T09:00:00.000Z"
+        trackingUrl:
+          type: string
+          format: uri
+          description: Optional URL for tracking order status
+          example: "https://track.dodo.cz/orders/DODO-2026-01-17-12345"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code or type
+          example: "invalid_request"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The 'Identifier' field is required"
+        details:
+          type: object
+          description: Additional error details (optional)
+          additionalProperties: true
+
+tags:
+  - name: Authentication
+    description: OAuth2 authentication endpoints
+  - name: Orders
+    description: Delivery order management
