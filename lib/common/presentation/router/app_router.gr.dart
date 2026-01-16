@@ -20,17 +20,17 @@ import 'package:zachranobed/features/debug/components_screen.dart' as _i4;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i6;
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart' as _i19;
 import 'package:zachranobed/features/food/domain/model/food_info.dart' as _i21;
-import 'package:zachranobed/features/food/presentation/screens/offer_food_boxes_screen.dart' as _i13;
-import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart' as _i12;
-import 'package:zachranobed/features/food/presentation/screens/offer_food_overview_screen.dart' as _i14;
-import 'package:zachranobed/features/food/presentation/screens/order_shipping_of_boxes_screen.dart' as _i15;
+import 'package:zachranobed/features/food/presentation/screens/offer_food_boxes_screen.dart' as _i12;
+import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart' as _i11;
+import 'package:zachranobed/features/food/presentation/screens/offer_food_overview_screen.dart' as _i13;
+import 'package:zachranobed/features/food/presentation/screens/order_shipping_of_boxes_screen.dart' as _i14;
 import 'package:zachranobed/features/food/presentation/screens/thank_you_screen.dart' as _i16;
 import 'package:zachranobed/features/forceupdate/presentation/force_update_screen.dart' as _i7;
 import 'package:zachranobed/features/login/presentation/screen/change_password_screen.dart' as _i3;
 import 'package:zachranobed/features/login/presentation/screen/forgot_password_screen.dart' as _i8;
 import 'package:zachranobed/features/login/presentation/screen/login_screen.dart' as _i10;
 import 'package:zachranobed/features/menu/presentation/contacts_screen.dart' as _i5;
-import 'package:zachranobed/features/menu/presentation/menu_screen.dart' as _i11;
+import 'package:zachranobed/features/menu/presentation/profile_screen.dart' as _i15;
 
 /// generated route for
 /// [_i1.AppTermsScreen]
@@ -226,22 +226,7 @@ class LoginRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.MenuScreen]
-class MenuRoute extends _i17.PageRouteInfo<void> {
-  const MenuRoute({List<_i17.PageRouteInfo>? children}) : super(MenuRoute.name, initialChildren: children);
-
-  static const String name = 'MenuRoute';
-
-  static _i17.PageInfo page = _i17.PageInfo(
-    name,
-    builder: (data) {
-      return const _i11.MenuScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [_i12.OfferFoodAddNewScreen]
+/// [_i11.OfferFoodAddNewScreen]
 class OfferFoodAddNewRoute extends _i17.PageRouteInfo<void> {
   const OfferFoodAddNewRoute({List<_i17.PageRouteInfo>? children})
       : super(OfferFoodAddNewRoute.name, initialChildren: children);
@@ -251,13 +236,13 @@ class OfferFoodAddNewRoute extends _i17.PageRouteInfo<void> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      return const _i12.OfferFoodAddNewScreen();
+      return const _i11.OfferFoodAddNewScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i13.OfferFoodBoxesScreen]
+/// [_i12.OfferFoodBoxesScreen]
 class OfferFoodBoxesRoute extends _i17.PageRouteInfo<OfferFoodBoxesRouteArgs> {
   OfferFoodBoxesRoute({
     _i18.Key? key,
@@ -278,7 +263,7 @@ class OfferFoodBoxesRoute extends _i17.PageRouteInfo<OfferFoodBoxesRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<OfferFoodBoxesRouteArgs>();
-      return _i13.OfferFoodBoxesScreen(
+      return _i12.OfferFoodBoxesScreen(
         key: args.key,
         currentBoxesQuantity: args.currentBoxesQuantity,
       );
@@ -314,7 +299,7 @@ class OfferFoodBoxesRouteArgs {
 }
 
 /// generated route for
-/// [_i12.OfferFoodEditExistingScreen]
+/// [_i11.OfferFoodEditExistingScreen]
 class OfferFoodEditExistingRoute extends _i17.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i18.Key? key,
@@ -332,7 +317,7 @@ class OfferFoodEditExistingRoute extends _i17.PageRouteInfo<OfferFoodEditExistin
     name,
     builder: (data) {
       final args = data.argsAs<OfferFoodEditExistingRouteArgs>();
-      return _i12.OfferFoodEditExistingScreen(
+      return _i11.OfferFoodEditExistingScreen(
         key: args.key,
         foodInfo: args.foodInfo,
       );
@@ -364,7 +349,7 @@ class OfferFoodEditExistingRouteArgs {
 }
 
 /// generated route for
-/// [_i12.OfferFoodInitialScreen]
+/// [_i11.OfferFoodInitialScreen]
 class OfferFoodInitialRoute extends _i17.PageRouteInfo<void> {
   const OfferFoodInitialRoute({List<_i17.PageRouteInfo>? children})
       : super(OfferFoodInitialRoute.name, initialChildren: children);
@@ -374,13 +359,13 @@ class OfferFoodInitialRoute extends _i17.PageRouteInfo<void> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      return const _i12.OfferFoodInitialScreen();
+      return const _i11.OfferFoodInitialScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i14.OfferFoodOverviewScreen]
+/// [_i13.OfferFoodOverviewScreen]
 class OfferFoodOverviewRoute extends _i17.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i18.Key? key,
@@ -401,7 +386,7 @@ class OfferFoodOverviewRoute extends _i17.PageRouteInfo<OfferFoodOverviewRouteAr
     name,
     builder: (data) {
       final args = data.argsAs<OfferFoodOverviewRouteArgs>();
-      return _i14.OfferFoodOverviewScreen(
+      return _i13.OfferFoodOverviewScreen(
         key: args.key,
         initialFoodInfos: args.initialFoodInfos,
       );
@@ -437,7 +422,7 @@ class OfferFoodOverviewRouteArgs {
 }
 
 /// generated route for
-/// [_i15.OrderShippingOfBoxesScreen]
+/// [_i14.OrderShippingOfBoxesScreen]
 class OrderShippingOfBoxesRoute extends _i17.PageRouteInfo<void> {
   const OrderShippingOfBoxesRoute({List<_i17.PageRouteInfo>? children})
       : super(OrderShippingOfBoxesRoute.name, initialChildren: children);
@@ -447,7 +432,22 @@ class OrderShippingOfBoxesRoute extends _i17.PageRouteInfo<void> {
   static _i17.PageInfo page = _i17.PageInfo(
     name,
     builder: (data) {
-      return const _i15.OrderShippingOfBoxesScreen();
+      return const _i14.OrderShippingOfBoxesScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i15.ProfileScreen]
+class ProfileRoute extends _i17.PageRouteInfo<void> {
+  const ProfileRoute({List<_i17.PageRouteInfo>? children}) : super(ProfileRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileRoute';
+
+  static _i17.PageInfo page = _i17.PageInfo(
+    name,
+    builder: (data) {
+      return const _i15.ProfileScreen();
     },
   );
 }

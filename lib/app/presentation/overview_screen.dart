@@ -58,7 +58,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         actions: [
           IconButton(
             onPressed: () {
-              context.router.push(const MenuRoute());
+              context.router.push(const ProfileRoute());
             },
             icon: const Icon(Icons.person_outline),
           ),
