@@ -4,12 +4,12 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
 import 'package:zachranobed/common/presentation/widget/card_row.dart';
 import 'package:zachranobed/common/presentation/widget/delivery_info_banner.dart';
@@ -17,6 +17,7 @@ import 'package:zachranobed/common/presentation/widget/indicator.dart';
 import 'package:zachranobed/common/presentation/widget/new_offer_floating_button.dart';
 import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_floating_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
 import 'package:zachranobed/features/food/presentation/widget/box_summary.dart';
 import 'package:zachranobed/features/food/presentation/widget/card_list.dart';
 
@@ -51,31 +52,32 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   @override
   Widget build(BuildContext context) {
+    final user = HelperService.watchCurrentUser(context);
+    if (user == null) {
+      return const SizedBox();
+    }
     return ScreenScaffold.universalBuilder(
-      appBar: ZOAppBar(
-        title: context.l10n.overview,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
+      appBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: UiWelcomeTile(
+          entityName: user.establishmentName,
+          onPressed: () {
               context.router.push(const ProfileRoute());
-            },
-            icon: const Icon(Icons.person_outline),
-          ),
-        ],
+          },
+        ),
       ),
-      builder: _buildContent,
+      builder: (context) => _buildContent(context, user),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
-    final user = HelperService.watchCurrentUser(context);
+  Widget _buildContent(BuildContext context, UserData user) {
     return Scaffold(
+      backgroundColor: context.uiColors.transparent,
       floatingActionButton: _floatingActionButton(context),
       body: CustomScrollView(
         slivers: [
           DeliveryInfoBanner(
-            user: user!,
+            user: user,
             showFoodBoxesCheckup: _setBoxesCheckupInProgress,
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 20)),

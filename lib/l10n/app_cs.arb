@@ -311,5 +311,7 @@
 
     "offlineScreenTitle": "Jste bez připojení k internetu!",
     "offlineScreenDescription": "Pro plnohodnotné využití všech funkcí aplikace je zapotřebí internetové připojení.",
-    "offlineScreenCloseApp": "Zavřít aplikaci"
+    "offlineScreenCloseApp": "Zavřít aplikaci",
+
+    "overviewWelcomeTitle": "Vítejte"
 }

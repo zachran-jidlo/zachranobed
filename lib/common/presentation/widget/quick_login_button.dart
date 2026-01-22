@@ -107,7 +107,7 @@ const List<SectionedListEntry<_TestUser>> _users = [
     _TestUser(
       "test-zo-charita-multi-westeros-2",
       "[charita]",
-      "Hostinec U Prasečí hlavy",
+      "Noční hlídka na Černém hradě",
       "zo.charita.test.multi.westeros.2@gmail.com",
       "Bageta123",
     ),
@@ -116,7 +116,7 @@ const List<SectionedListEntry<_TestUser>> _users = [
     _TestUser(
       "test-zo-charita-multi-westeros-3",
       "[charita]",
-      "Kratochvilné kouzelnické kejkle",
+      "Společenství Vrabčáků",
       "zo.charita.test.multi.westeros.3@gmail.com",
       "Bageta123",
     ),
