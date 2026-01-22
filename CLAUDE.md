@@ -189,10 +189,31 @@ The app uses a custom UI component library with `Ui` prefix (e.g., `UiPrimaryBut
 - `ErrorPage` - Specialized error state page with retry functionality (wraps InfoPage with localized error messages)
 - `LoadingPage` - Simple full-screen loading state with centered circular progress indicator
 
+**Screen Scaffold** (`lib/common/presentation/widget/screen_scaffold.dart`):
+- `ScreenScaffold` - Base scaffold for all screens with adaptive web/mobile layouts
+- Automatically centers content on web within max-width breakpoint
+- Uses `surfaceGray` background by default
+- Handles SafeArea and system navigation bar coloring
+
+```dart
+// Same content for web and mobile (most common)
+ScreenScaffold.universal(
+  appBar: UiAppBar(title: 'Title'),
+  child: MyContent(),
+)
+
+// Different layouts for web and mobile
+ScreenScaffold(
+  appBar: UiAppBar(title: 'Title'),
+  web: (context) => WebLayout(),
+  mobile: (context) => MobileLayout(),
+)
+```
+
 ### Typography System
 
 Two font families with distinct roles:
-- **Montserrat** - Used for display, headline, and title text (headers, navigation)
+- **Futura PT** (FuturaMedium/FuturaBold) - Used for display, headline, and title text (headers, navigation)
 - **Plus Jakarta Sans** - Used for body and label text (content, buttons)
 
 Access via `context.textStyles` with Material Design 3 scale (displayLarge, headlineLarge, titleMedium, bodyLarge, labelLarge, etc.). Custom variants include `headlineHeavy` and `titleHeavy` for bold weights.
@@ -246,3 +267,30 @@ Interactive component gallery available at `lib/features/debug/components_screen
 - **Component Gallery**: `lib/features/debug/components_screen.dart`
 - **Notifiers**: `lib/common/presentation/notifiers/`
 - **Firebase Services**: `lib/common/data/service/`
+
+## Firebase Cloud Functions
+
+The `functions/` directory contains TypeScript Cloud Functions deployed on Node.js v20.
+
+```bash
+# Navigate to functions directory
+cd functions
+
+# Install dependencies
+npm install
+
+# Build TypeScript
+npm run build
+
+# Deploy functions
+firebase deploy --only functions
+```
+
+**Structure:**
+- `src/index.ts` - Main entry point exporting all functions
+- `src/functions/` - Individual function implementations
+- `src/services/` - Business logic (notifications, etc.)
+- `src/utils/` - Utilities (email, date)
+- `src/models/` - TypeScript interfaces
+
+**Dependencies:** firebase-admin ^13.1.0, firebase-functions ^6.3.2

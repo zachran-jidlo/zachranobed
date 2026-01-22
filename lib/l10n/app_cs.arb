@@ -272,10 +272,13 @@
     "offerFoodDetailRemoveButton": "Smazat pokrm",
 
     "activePairCardCanteenLabel": "Aktivní jídelna",
+    "activePairCardCharityLabel": "Aktivní charita",
     "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
     "activePairCanteenTitle": "Jídelna",
+    "activePairCharityTitle": "Charita",
     "activePairContactsCanteenLabel": "(aktivní jídelna)",
+    "activePairContactsCharityLabel": "(aktivní charita)",
 
     "forceUpdateScreenTitle": "Nová verze aplikace",
     "forceUpdateScreenDescriptionStart": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci ",

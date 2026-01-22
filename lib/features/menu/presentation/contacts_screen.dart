@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -86,9 +87,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
     final entries = <SectionedListEntry<Widget>>[];
 
     // Add target entity sections
+    final isMultiPair = summary.targets.length > 1;
     for (final target in summary.targets) {
       if (target.contacts.isNotEmpty) {
-        final labelSuffix = _resolveLabelSuffix(target);
+        final labelSuffix = _resolveLabelSuffix(target, isMultiPair);
         final headerText = labelSuffix.isEmpty ? target.name : "${target.name} $labelSuffix";
         entries.add(SectionedListHeader(headerText));
 
@@ -143,14 +145,17 @@ class _ContactsScreenState extends State<ContactsScreen> {
     return SectionedListView(entries: entries);
   }
 
-  String _resolveLabelSuffix(EntityContacts contacts) {
-    final user = HelperService.getCurrentUser(context)!;
-
-    // Show "is active" suffix only for charity and an active pair
-    if (user is! Charity || !contacts.active) {
+  String _resolveLabelSuffix(EntityContacts contacts, bool isMultiPair) {
+    // Show label only for multi-pair entities and active pairs
+    if (!isMultiPair || !contacts.active) {
       return "";
     }
 
-    return context.l10n.activePairContactsCanteenLabel;
+    final user = HelperService.getCurrentUser(context)!;
+    return switch (user) {
+      Charity() => context.l10n.activePairContactsCanteenLabel,
+      Canteen() => context.l10n.activePairContactsCharityLabel,
+      _ => "",
+    };
   }
 }
