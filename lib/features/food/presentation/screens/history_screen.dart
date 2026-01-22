@@ -114,6 +114,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
         _isLoading = false;
         _hasMore = items.isNotEmpty;
       });
+
+      // If the content is too short, automatically trigger the next load
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_hasMore && _scrollController.hasClients && _scrollController.position.maxScrollExtent == 0) {
+          _loadData();
+        }
+      });
     } catch (e) {
       _setError();
     }
@@ -226,6 +233,7 @@ class _HistoryList extends StatelessWidget {
       onRefresh: onRefresh,
       child: SectionedListView<OfferedFood>.builder(
         controller: controller,
+        physics: const AlwaysScrollableScrollPhysics(),
         entries: entries,
         itemBuilder: (context, item) {
           return _buildItem(context, item);

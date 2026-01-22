@@ -46,10 +46,14 @@ class SectionedListView<T> extends StatelessWidget {
   /// An optional controller for the scroll view.
   final ScrollController? controller;
 
+  /// An optional physics object for the scroll view.
+  final ScrollPhysics? physics;
+
   const SectionedListView({
     super.key,
     required List<SectionedListEntry<Widget>> this.entries,
     this.controller,
+    this.physics,
   }) : itemBuilder = null;
 
   const SectionedListView.builder({
@@ -57,12 +61,14 @@ class SectionedListView<T> extends StatelessWidget {
     required this.entries,
     required Widget Function(BuildContext, T) this.itemBuilder,
     this.controller,
+    this.physics,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       controller: controller,
+      physics: physics,
       padding: const EdgeInsets.all(16.0),
       itemCount: entries.length,
       itemBuilder: (context, index) {
