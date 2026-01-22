@@ -4,6 +4,7 @@ import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
 class DeliveryService {
@@ -49,13 +50,11 @@ class DeliveryService {
     required String donorId,
     required String recipientId,
   }) {
-    final now = DateTime.now();
-    final lastMidnight = DateTime(now.year, now.month, now.day);
     final snapshots = _collection
         .where('donorId', isEqualTo: donorId)
         .where('recipientId', isEqualTo: recipientId)
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
-        .whereTime('deliveryDate', lastMidnight)
+        .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
         .snapshots();
     return snapshots.map((snapshot) => snapshot.docs.firstOrNull?.data());
   }

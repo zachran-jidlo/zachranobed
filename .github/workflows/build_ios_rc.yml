@@ -31,6 +31,7 @@ jobs:
           provisioning_profile_base64: ${{ secrets.IOS_RC_PROVISIONING_PROFILE_BASE64 }}
           keychain_password: ${{ secrets.IOS_TEMPORARY_KEYCHAIN_PASSWORD }}
           build_flavor: 'rc'
+          build_target: 'lib/main_stage.dart'
           build_export_options: 'ios/ExportOptionsRc.plist'
 
       # Uploads iOS related artifacts from build to GitHub Actions.

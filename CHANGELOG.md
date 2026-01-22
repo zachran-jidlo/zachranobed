@@ -22,6 +22,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-387** Update app terms screen with new design.
 - **ZOB-388** Update force update screen with new design.
 - **ZOB-389** Update profile and sub-profile screens with new design.
+- **ZOB-390** Update change pair screen with new design.
 
 ### Removed
 

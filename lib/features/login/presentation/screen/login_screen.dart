@@ -7,6 +7,7 @@ import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
+import 'package:zachranobed/common/presentation/model/app_flavor_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
   final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
+  final _appFlavorData = GetIt.I<AppFlavorData>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -189,6 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               },
             ),
+            ...quickLoginWidgets(),
             const SizedBox(height: 24),
             GestureDetector(
               onLongPress: showDebugScreenIfPossible,
@@ -204,6 +207,18 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget> quickLoginWidgets() {
+    final widget = _appFlavorData.quickLoginButton?.call(_emailController, _passwordController);
+    if (widget == null) {
+      return [];
+    }
+
+    return [
+      const SizedBox(height: 24),
+      widget,
+    ];
   }
 
   void showDebugScreenIfPossible() {

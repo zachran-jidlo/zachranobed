@@ -14,6 +14,12 @@ class DateTimeUtils {
     return DateTime(now.year, now.month, now.day).add(duration);
   }
 
+  /// Returns a [DateTime] object representing the start of the current day.
+  static DateTime lastMidnight() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
+
   /// Returns a [String] with current day in 'yyyy-MM-dd' format.
   static String getCurrentDayMark() {
     final formatter = DateFormat('yyyy-MM-dd');

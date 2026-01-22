@@ -24,7 +24,7 @@ jobs:
 
       # Builds a release APK for the 'dev' flavor.
       - name: Build Android APK
-        run: flutter build apk --release --flavor dev
+        run: flutter build apk --release --flavor dev --target lib/main_dev.dart
 
       # Uploads Android related artifacts (APK and mappings) from build to GitHub Actions.
       - name: Upload artifacts

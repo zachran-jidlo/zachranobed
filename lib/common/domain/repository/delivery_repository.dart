@@ -20,4 +20,13 @@ abstract class DeliveryRepository {
     required Delivery delivery,
     required DateTime time,
   });
+
+  /// Creates an empty food delivery in prepared state for the given [user].
+  ///
+  /// Returns `true` if the delivery was created successfully, `false` otherwise.
+  /// If a delivery already exists for today, returns `true` without creating
+  /// a new one.
+  Future<bool> createFoodDelivery({
+    required UserData user,
+  });
 }

@@ -24,7 +24,7 @@ jobs:
 
       # Builds a release APK for the 'stage' flavor.
       - name: Build Android APK
-        run: flutter build apk --release --flavor stage
+        run: flutter build apk --release --flavor stage --target lib/main_stage.dart
 
       # Uploads Android related artifacts (APK and mappings) from build to GitHub Actions.
       - name: Upload artifacts

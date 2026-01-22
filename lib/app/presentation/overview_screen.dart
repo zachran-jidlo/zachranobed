@@ -87,7 +87,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             ),
             sliver: MultiSliver(
               children: [
-                _buildActiveCanteen(context),
+                _buildActivePair(context),
                 CardList(user: user),
                 const SizedBox(height: GapSize.m),
                 BoxSummary(
@@ -146,38 +146,68 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
       return const SizedBox();
     }
 
-    return user is Canteen ? const NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
+    return user is Canteen ? NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
   }
 
-  Widget _buildActiveCanteen(BuildContext context) {
+  Widget _buildActivePair(BuildContext context) {
     final user = HelperService.watchCurrentUser(context);
-    if (user is! Charity) {
-      return const SizedBox();
+    switch (user) {
+      case Charity():
+        return Column(
+          children: [
+            CardRow(
+              label: context.l10n.activePairCardCanteenLabel,
+              title: user.activePair.donorEstablishmentName,
+              action: (context) {
+                if (!user.hasMultiplePairs) {
+                  return const SizedBox();
+                }
+                return Indicator(
+                  isVisible: user.isAnyNonActiveCheckupNeeded,
+                  child: ZOButton(
+                    text: context.l10n.activePairCardChangeAction,
+                    type: ZOButtonType.secondary,
+                    minimumSize: ZOButtonSize.tiny(),
+                    onPressed: () async {
+                      await context.router.push(const ChangeActivePairRoute());
+                      _refreshBoxesCheckupState();
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: GapSize.xs),
+          ],
+        );
+      case Canteen():
+        return Column(
+          children: [
+            CardRow(
+              label: context.l10n.activePairCardCharityLabel,
+              title: user.activePair.recipientEstablishmentName,
+              action: (context) {
+                if (!user.hasMultiplePairs) {
+                  return const SizedBox();
+                }
+                return Indicator(
+                  isVisible: user.isAnyNonActiveCheckupNeeded,
+                  child: ZOButton(
+                    text: context.l10n.activePairCardChangeAction,
+                    type: ZOButtonType.secondary,
+                    minimumSize: ZOButtonSize.tiny(),
+                    onPressed: () async {
+                      await context.router.push(const ChangeActivePairRoute());
+                      _refreshBoxesCheckupState();
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: GapSize.xs),
+          ],
+        );
+      default:
+        return const SizedBox();
     }
-    return Column(
-      children: [
-        CardRow(
-          label: context.l10n.activePairCardCanteenLabel,
-          title: user.activePair.donorEstablishmentName,
-          action: (context) {
-            if (!user.hasMultiplePairs) {
-              return const SizedBox();
-            }
-            return Indicator(
-              isVisible: user.isAnyNonActiveCheckupNeeded,
-              child: ZOButton(
-                text: context.l10n.activePairCardChangeAction,
-                type: ZOButtonType.secondary,
-                minimumSize: ZOButtonSize.tiny(),
-                onPressed: () {
-                  context.router.push(const ChangeActivePairRoute());
-                },
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: GapSize.xs),
-      ],
-    );
   }
 }
