@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+import 'package:get_it/get_it.dart' show GetIt;
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
+import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -12,7 +15,10 @@ import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/dialog.dart';
 
 class NewOfferFloatingButton extends StatelessWidget {
-  const NewOfferFloatingButton({super.key});
+  final _checkIfDevtoolsAreEnabled = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _createFoodDelivery = GetIt.I<CreateFoodDeliveryUseCase>();
+
+  NewOfferFloatingButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +88,31 @@ class NewOfferFloatingButton extends StatelessWidget {
   }
 
   Widget _buildCantOfferAnymoreButton(BuildContext context) {
+    String? confirmText;
+    if (_checkIfDevtoolsAreEnabled.invoke()) {
+      confirmText = context.l10n.cantOfferAnymoreDialogContentCreateAction;
+    }
+
     return FloatingActionButton(
       onPressed: () => showDialog(
         context: context,
         builder: (context) => ZODialog(
+          criticalConfirmStyle: true,
           title: context.l10n.newOfferDialogTitle,
           content: context.l10n.cantOfferAnymoreDialogContent,
           cancelText: context.l10n.commonCancel,
+          confirmText: confirmText,
           onCancelPressed: () => Navigator.of(context).pop(false),
+          onConfirmPressed: () async {
+            final user = HelperService.getCurrentUser(context);
+            if (user != null) {
+              await _createFoodDelivery.invoke(user);
+            }
+
+            if (context.mounted) {
+              Navigator.of(context).pop(true);
+            }
+          },
         ),
       ),
       elevation: 0,

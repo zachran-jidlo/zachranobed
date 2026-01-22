@@ -33,7 +33,7 @@ jobs:
 
       # Builds a debug APK for the 'dev' flavor.
       - name: Build Android APK
-        run: flutter build apk --debug --flavor dev
+        run: flutter build apk --debug --flavor dev --target lib/main_dev.dart
 
   lint:
     runs-on: ubuntu-latest

@@ -34,11 +34,11 @@ jobs:
 
       # Builds a release AAB for the 'prod' flavor. Used for manual upload to Google Play.
       - name: Build Android AAB
-        run: flutter build appbundle --release --flavor prod
+        run: flutter build appbundle --release --flavor prod --target lib/main_prod.dart
 
       # Builds a release APK for the 'prod' flavor. Used for Firebase App Distribution.
       - name: Build Android APK
-        run: flutter build apk --release --flavor prod
+        run: flutter build apk --release --flavor prod --target lib/main_prod.dart
 
       # Removes previously injected Android keystore file and its associated properties.
       - name: Remove keystore files

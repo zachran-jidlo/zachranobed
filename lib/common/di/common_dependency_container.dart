@@ -15,6 +15,7 @@ import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
+import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
@@ -48,9 +49,17 @@ class CommonDependencyContainer {
   }
 
   static void _setupDeliveryComponents() {
+    // Repositories
     GetIt.I.registerFactory<DeliveryRepository>(
       () => FirebaseDeliveryRepository(
         GetIt.I<DeliveryService>(),
+      ),
+    );
+
+    // UseCases
+    GetIt.I.registerFactory<CreateFoodDeliveryUseCase>(
+      () => CreateFoodDeliveryUseCase(
+        GetIt.I<DeliveryRepository>(),
       ),
     );
   }

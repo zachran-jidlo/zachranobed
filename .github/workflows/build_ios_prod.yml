@@ -31,6 +31,7 @@ jobs:
           provisioning_profile_base64: ${{ secrets.IOS_PROD_PROVISIONING_PROFILE_BASE64 }}
           keychain_password: ${{ secrets.IOS_TEMPORARY_KEYCHAIN_PASSWORD }}
           build_flavor: 'prod'
+          build_target: 'lib/main_prod.dart'
           build_export_options: 'ios/ExportOptionsProd.plist'
 
       # Uploads iOS related artifacts from build to GitHub Actions.

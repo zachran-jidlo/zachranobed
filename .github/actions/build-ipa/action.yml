@@ -17,6 +17,9 @@ inputs:
   build_flavor:
     description: 'The specific configuration or flavor of the build (e.g., dev, stage, prod)'
     required: true
+  build_target:
+    description: 'The specific build target main dart file'
+    required: true
   build_export_options:
     description: 'The property list containing export options for customizing the build process'
     required: true
@@ -64,6 +67,7 @@ runs:
         flutter build ipa \
           --release \
           --flavor ${{ inputs.build_flavor }} \
+          --target ${{ inputs.build_target }} \
           --export-options-plist ${{ inputs.build_export_options }}
 
     # Important! Cleanup: remove the certificate and provisioning profile from the runner

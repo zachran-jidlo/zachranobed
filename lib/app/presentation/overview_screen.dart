@@ -146,7 +146,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
       return const SizedBox();
     }
 
-    return user is Canteen ? const NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
+    return user is Canteen ? NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
   }
 
   Widget _buildActivePair(BuildContext context) {
