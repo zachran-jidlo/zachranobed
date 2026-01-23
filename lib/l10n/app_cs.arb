@@ -325,5 +325,18 @@
     "overviewCharityDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto jídelnu den darování.",
     "overviewCharityDonationStatusCardAcceptedLabel": "Jídelna potvrdila dnešní darování.",
     "overviewCharityDonationStatusCardOfferedLabel": "Darované pokrmy se připravují.",
-    "overviewCharityDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly převzaty a míří k vám."
+    "overviewCharityDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly převzaty a míří k vám.",
+
+    "overviewFoodBoxesHeaderTitle": "Vratné krabičky",
+    "overviewFoodBoxesShowAllAction": "Zobrazit vše",
+    "overviewFoodBoxesAvailableLabel": "K dispozici",
+    "overviewFoodBoxesTotalLabel": "Celkem {count} ks",
+    "@overviewFoodBoxesTotalLabel": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "34"
+            }
+        }
+    }
 }

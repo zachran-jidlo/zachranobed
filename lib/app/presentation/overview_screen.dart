@@ -14,6 +14,7 @@ import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
+import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -64,6 +65,8 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
           children: [
             const SizedBox(height: 8.0),
             _buildDonationStatusCard(context, user),
+            const SizedBox(height: 24.0),
+            FoodBoxesOverviewSection(user: user),
             const SizedBox(height: 24.0),
           ],
         ),

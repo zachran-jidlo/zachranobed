@@ -72,7 +72,6 @@ class UiDonationStatusCard extends StatelessWidget {
         left: 16.0,
         top: 16.0,
         bottom: 16.0,
-        right: 8.0,
       ),
       child: Row(
         spacing: 16.0,
