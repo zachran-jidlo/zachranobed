@@ -55,26 +55,4 @@ class DeliveryNotifier extends ChangeNotifier {
     // Only update UI listeners, so that "canDonate" flag is reevaluated
     notifyListeners();
   }
-
-  bool canDonate(UserData user) {
-    if (user is! Canteen) {
-      return false;
-    }
-
-    final currentDelivery = _delivery;
-    if (currentDelivery == null) {
-      return false;
-    }
-
-    // User is updated before the delivery, so we should check if delivery matches the current active pair
-    if (currentDelivery.recipientId != user.activePair.recipientId) {
-      return false;
-    }
-
-    final time = DateTimeUtils.getDateTimeOfCurrentDelivery(user.pickUpFrom);
-    return _repository.canDonateFood(
-      delivery: currentDelivery,
-      time: time,
-    );
-  }
 }

@@ -10,12 +10,6 @@ import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 class FirebaseDeliveryRepository implements DeliveryRepository {
   final DeliveryService _deliveryService;
 
-  final List<DeliveryState> closedStates = [
-    DeliveryState.inDelivery,
-    DeliveryState.delivered,
-    DeliveryState.notUsed,
-  ];
-
   FirebaseDeliveryRepository(this._deliveryService);
 
   @override
@@ -39,21 +33,6 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
       delivery.id,
       state.toDto(),
     );
-  }
-
-  @override
-  bool canDonateFood({required Delivery delivery, required DateTime time}) {
-    if (closedStates.contains(delivery.state)) {
-      return false;
-    }
-
-    final pickupDuration = Duration(minutes: delivery.confirmationTime);
-    final canDonateUntil = time.subtract(pickupDuration);
-    if (delivery.state == DeliveryState.prepared && DateTime.now().isAfter(canDonateUntil)) {
-      return false;
-    }
-
-    return true;
   }
 
   @override
@@ -82,7 +61,7 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
       meals: [],
       state: DeliveryStateDto.prepared,
       type: DeliveryTypeDto.foodDelivery,
-      confirmationTime: user.activePair.confirmationTime,
+      confirmationTime: user.activePair.confirmationTime.inMinutes,
     );
 
     return _deliveryService.createDelivery(newDelivery);

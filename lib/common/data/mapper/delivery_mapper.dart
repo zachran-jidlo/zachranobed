@@ -21,7 +21,7 @@ extension DeliveryMapper on DeliveryDto {
       recipientId: recipientId,
       state: deliveryState,
       type: deliveryType,
-      confirmationTime: confirmationTime ?? 0,
+      confirmationTime: Duration(minutes: confirmationTime ?? 0),
       hasMeals: meals.isNotEmpty,
     );
   }

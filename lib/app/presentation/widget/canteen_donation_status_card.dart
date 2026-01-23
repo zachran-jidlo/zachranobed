@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:zachranobed/app/presentation/widget/ticking_donation_countdown_label.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
-import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
@@ -157,8 +155,8 @@ class CanteenDonationStatusCard extends StatelessWidget {
     }
 
     if (delivery.state == DeliveryState.prepared) {
-      final pickupEndTime = DateTimeUtils.getDateTimeOfCurrentDelivery(canteen.activePair.pickupTimeStart);
-      final deadline = pickupEndTime.subtract(Duration(minutes: delivery.confirmationTime));
+      final pickupEndTime = canteen.activePair.pickupTimeStart.atToday();
+      final deadline = pickupEndTime.subtract(delivery.confirmationTime);
       return TickingDonationCountdownLabel(
         deadline: deadline,
         label: context.l10n.overviewDonationStatusCardTimerCountdownLabel,
@@ -167,21 +165,29 @@ class CanteenDonationStatusCard extends StatelessWidget {
     }
 
     if (delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered) {
-      final startTime = DateFormat('HH:mm').parse(canteen.activePair.pickupTimeStart);
-      final endTime = DateFormat('HH:mm').parse(canteen.activePair.pickupTimeEnd);
       return UiDonationTimeRangeLabel(
-        startTime: TimeOfDay(hour: startTime.hour, minute: startTime.minute),
-        endTime: TimeOfDay(hour: endTime.hour, minute: endTime.minute),
         label: context.l10n.overviewDonationStatusCardTimerPickUpLabel,
+        startTime: TimeOfDay(
+          hour: canteen.activePair.pickupTimeStart.hour,
+          minute: canteen.activePair.pickupTimeStart.minute,
+        ),
+        endTime: TimeOfDay(
+          hour: canteen.activePair.pickupTimeEnd.hour,
+          minute: canteen.activePair.pickupTimeEnd.minute,
+        ),
       );
     }
 
-    final startTime = DateFormat('HH:mm').parse(canteen.activePair.deliveryTimeStart);
-    final endTime = DateFormat('HH:mm').parse(canteen.activePair.deliveryTimeEnd);
     return UiDonationTimeRangeLabel(
-      startTime: TimeOfDay(hour: startTime.hour, minute: startTime.minute),
-      endTime: TimeOfDay(hour: endTime.hour, minute: endTime.minute),
       label: context.l10n.overviewDonationStatusCardTimerDeliveryLabel,
+      startTime: TimeOfDay(
+        hour: canteen.activePair.deliveryTimeStart.hour,
+        minute: canteen.activePair.deliveryTimeStart.minute,
+      ),
+      endTime: TimeOfDay(
+        hour: canteen.activePair.deliveryTimeEnd.hour,
+        minute: canteen.activePair.deliveryTimeEnd.minute,
+      ),
     );
   }
 
@@ -221,10 +227,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       return false;
     }
 
-    final time = DateTimeUtils.getDateTimeOfCurrentDelivery(canteen.activePair.pickupTimeStart);
-    final pickupDuration = Duration(minutes: delivery.confirmationTime);
-    final canDonateUntil = time.subtract(pickupDuration);
-    if (delivery.state == DeliveryState.prepared && DateTime.now().isAfter(canDonateUntil)) {
+    if (delivery.state == DeliveryState.prepared && !canteen.isCurrentTimeWithinPickupRange()) {
       return false;
     }
 

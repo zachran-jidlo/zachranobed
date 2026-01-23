@@ -78,11 +78,13 @@ class DebugScreen extends StatelessWidget {
       );
     }
 
-    final canDonate = deliveryNotifier.canDonate(user);
-
     return UiListTile(
       title: "Delivery is created",
-      supportingText: "ID: ${delivery.id}\n\nState: ${delivery.state.name}\n\nCan donate: $canDonate",
+      supportingText: "ID: ${delivery.id}\n\n"
+          "State: ${delivery.state.name}\n\n"
+          "Pick-up: ${user.activePair.pickupTimeStart}-${user.activePair.pickupTimeEnd}\n\n"
+          "Delivery: ${user.activePair.deliveryTimeStart}-${user.activePair.deliveryTimeEnd}\n\n"
+          "Must be confirmed until: ${user.activePair.pickupTimeStart.atToday().subtract(delivery.confirmationTime)}",
     );
   }
 }

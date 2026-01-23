@@ -12,8 +12,6 @@ import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
-import 'package:zachranobed/common/presentation/widget/new_offer_floating_button.dart';
-import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_floating_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
 

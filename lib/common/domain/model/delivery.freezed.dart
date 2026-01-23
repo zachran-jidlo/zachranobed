@@ -20,7 +20,7 @@ mixin _$Delivery {
   String get recipientId;
   DeliveryState get state;
   DeliveryType get type;
-  int get confirmationTime;
+  Duration get confirmationTime;
   bool get hasMeals;
 
   /// Create a copy of Delivery
@@ -68,7 +68,7 @@ abstract mixin class $DeliveryCopyWith<$Res> {
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      int confirmationTime,
+      Duration confirmationTime,
       bool hasMeals});
 }
 
@@ -116,7 +116,7 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
       confirmationTime: null == confirmationTime
           ? _self.confirmationTime
           : confirmationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Duration,
       hasMeals: null == hasMeals
           ? _self.hasMeals
           : hasMeals // ignore: cast_nullable_to_non_nullable
@@ -149,7 +149,7 @@ class _Delivery extends Delivery {
   @override
   final DeliveryType type;
   @override
-  final int confirmationTime;
+  final Duration confirmationTime;
   @override
   final bool hasMeals;
 
@@ -201,7 +201,7 @@ abstract mixin class _$DeliveryCopyWith<$Res>
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      int confirmationTime,
+      Duration confirmationTime,
       bool hasMeals});
 }
 
@@ -249,7 +249,7 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
       confirmationTime: null == confirmationTime
           ? _self.confirmationTime
           : confirmationTime // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Duration,
       hasMeals: null == hasMeals
           ? _self.hasMeals
           : hasMeals // ignore: cast_nullable_to_non_nullable

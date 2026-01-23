@@ -1,10 +1,12 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:zachranobed/common/data/dto/entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/local_time.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 
 /// DTO to domain mapper for [EntityPair].
@@ -23,8 +25,20 @@ extension EntityPairMapper on EntityPairDto {
       return null;
     }
 
+    final pickupTimeStart = fromString(pickupTimeWindow.start);
+    final pickupTimeEnd = fromString(pickupTimeWindow.end);
+    if (pickupTimeStart == null || pickupTimeEnd == null) {
+      return null;
+    }
+
     final deliveryTimeWindow = deliveryTimeWindows.firstOrNull;
     if (deliveryTimeWindow == null) {
+      return null;
+    }
+
+    final deliveryTimeStart = fromString(deliveryTimeWindow.start);
+    final deliveryTimeEnd = fromString(deliveryTimeWindow.end);
+    if (deliveryTimeStart == null || deliveryTimeEnd == null) {
       return null;
     }
 
@@ -34,18 +48,38 @@ extension EntityPairMapper on EntityPairDto {
       recipientId: recipient.id,
       recipientEstablishmentName: recipient.establishmentName,
       carrierId: carrierId,
-      pickupTimeStart: pickupTimeWindow.start,
-      pickupTimeEnd: pickupTimeWindow.end,
-      deliveryTimeStart: deliveryTimeWindow.start,
-      deliveryTimeEnd: deliveryTimeWindow.end,
+      pickupTimeStart: pickupTimeStart,
+      pickupTimeEnd: pickupTimeEnd,
+      deliveryTimeStart: deliveryTimeStart,
+      deliveryTimeEnd: deliveryTimeEnd,
       donorFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.donor),
       recipientFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.recipient),
-      confirmationTime: confirmationTime,
+      confirmationTime: Duration(minutes: confirmationTime),
     );
   }
 
   FoodBoxesCheckup _getCheckup(FoodBoxesCheckupDto? dto) {
     return dto?.toDomain() ?? FoodBoxesCheckup.createDefault();
+  }
+
+  LocalTime? fromString(String time) {
+    final regex = RegExp(r'^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$');
+    final match = regex.firstMatch(time);
+
+    if (match == null) {
+      return null;
+    }
+
+    final hour = match.group(1);
+    final minute = match.group(2);
+    if (hour == null || minute == null) {
+      return null;
+    }
+
+    return LocalTime(
+      hour: int.parse(hour),
+      minute: int.parse(minute),
+    );
   }
 }
 

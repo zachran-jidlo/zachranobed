@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
@@ -157,12 +156,16 @@ class CharityDonationStatusCard extends StatelessWidget {
 
     final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered;
     if (accepted && delivery.hasMeals || delivery.state == DeliveryState.inDelivery) {
-      final startTime = DateFormat('HH:mm').parse(charity.activePair.deliveryTimeStart);
-      final endTime = DateFormat('HH:mm').parse(charity.activePair.deliveryTimeEnd);
       return UiDonationTimeRangeLabel(
-        startTime: TimeOfDay(hour: startTime.hour, minute: startTime.minute),
-        endTime: TimeOfDay(hour: endTime.hour, minute: endTime.minute),
         label: context.l10n.overviewDonationStatusCardTimerDeliveryLabel,
+        startTime: TimeOfDay(
+          hour: charity.activePair.deliveryTimeStart.hour,
+          minute: charity.activePair.deliveryTimeStart.minute,
+        ),
+        endTime: TimeOfDay(
+          hour: charity.activePair.deliveryTimeEnd.hour,
+          minute: charity.activePair.deliveryTimeEnd.minute,
+        ),
       );
     }
 
