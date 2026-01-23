@@ -22,6 +22,7 @@ extension DeliveryMapper on DeliveryDto {
       state: deliveryState,
       type: deliveryType,
       confirmationTime: confirmationTime ?? 0,
+      hasMeals: meals.isNotEmpty,
     );
   }
 }

@@ -15,6 +15,7 @@ class EntityPairDto {
   final String recipientId;
   final String carrierId;
   final List<TimeWindowDto> pickupTimeWindows;
+  final List<TimeWindowDto> deliveryTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
   final FoodBoxesCheckupSummaryDto? foodboxesCheckup;
   final int confirmationTime;
@@ -24,6 +25,7 @@ class EntityPairDto {
     required this.recipientId,
     required this.carrierId,
     required this.pickupTimeWindows,
+    required this.deliveryTimeWindows,
     required this.foodboxes,
     required this.foodboxesCheckup,
     required this.confirmationTime,

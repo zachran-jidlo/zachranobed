@@ -16,6 +16,7 @@ abstract class Delivery with _$Delivery {
     required DeliveryState state,
     required DeliveryType type,
     required int confirmationTime,
+    required bool hasMeals,
   }) = _Delivery;
 }
 

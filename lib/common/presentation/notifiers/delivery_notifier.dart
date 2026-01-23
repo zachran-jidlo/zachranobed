@@ -19,21 +19,16 @@ class DeliveryNotifier extends ChangeNotifier {
   StreamSubscription<Delivery?>? _streamSubscription;
 
   void init(UserData user) async {
-    if (user is! Canteen) {
-      return;
-    }
     observeDelivery(user);
   }
 
-  /// Observes the deliveries for a Canteen.
+  /// Observes the current delivery.
   ///
   /// This method subscribes to the stream of deliveries from the repository and
   /// updates the current delivery whenever a new delivery is emitted.
-  ///
-  /// The [canteen] parameter must not be null.
-  void observeDelivery(Canteen canteen) {
+  void observeDelivery(UserData user) {
     _streamSubscription?.cancel();
-    _streamSubscription = _repository.observeCurrentDelivery(user: canteen).listen((delivery) async {
+    _streamSubscription = _repository.observeCurrentDelivery(user: user).listen((delivery) async {
       _delivery = delivery;
       notifyListeners();
     });
@@ -68,6 +63,11 @@ class DeliveryNotifier extends ChangeNotifier {
 
     final currentDelivery = _delivery;
     if (currentDelivery == null) {
+      return false;
+    }
+
+    // User is updated before the delivery, so we should check if delivery matches the current active pair
+    if (currentDelivery.recipientId != user.activePair.recipientId) {
       return false;
     }
 

@@ -21,6 +21,7 @@ mixin _$Delivery {
   DeliveryState get state;
   DeliveryType get type;
   int get confirmationTime;
+  bool get hasMeals;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -41,16 +42,18 @@ mixin _$Delivery {
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.confirmationTime, confirmationTime) ||
-                other.confirmationTime == confirmationTime));
+                other.confirmationTime == confirmationTime) &&
+            (identical(other.hasMeals, hasMeals) ||
+                other.hasMeals == hasMeals));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, donorId, recipientId, state, type, confirmationTime);
+  int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state,
+      type, confirmationTime, hasMeals);
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals)';
   }
 }
 
@@ -65,7 +68,8 @@ abstract mixin class $DeliveryCopyWith<$Res> {
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      int confirmationTime});
+      int confirmationTime,
+      bool hasMeals});
 }
 
 /// @nodoc
@@ -86,6 +90,7 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
     Object? state = null,
     Object? type = null,
     Object? confirmationTime = null,
+    Object? hasMeals = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -112,6 +117,10 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
           ? _self.confirmationTime
           : confirmationTime // ignore: cast_nullable_to_non_nullable
               as int,
+      hasMeals: null == hasMeals
+          ? _self.hasMeals
+          : hasMeals // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -125,7 +134,8 @@ class _Delivery extends Delivery {
       required this.recipientId,
       required this.state,
       required this.type,
-      required this.confirmationTime})
+      required this.confirmationTime,
+      required this.hasMeals})
       : super._();
 
   @override
@@ -140,6 +150,8 @@ class _Delivery extends Delivery {
   final DeliveryType type;
   @override
   final int confirmationTime;
+  @override
+  final bool hasMeals;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -161,16 +173,18 @@ class _Delivery extends Delivery {
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.confirmationTime, confirmationTime) ||
-                other.confirmationTime == confirmationTime));
+                other.confirmationTime == confirmationTime) &&
+            (identical(other.hasMeals, hasMeals) ||
+                other.hasMeals == hasMeals));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, donorId, recipientId, state, type, confirmationTime);
+  int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state,
+      type, confirmationTime, hasMeals);
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals)';
   }
 }
 
@@ -187,7 +201,8 @@ abstract mixin class _$DeliveryCopyWith<$Res>
       String recipientId,
       DeliveryState state,
       DeliveryType type,
-      int confirmationTime});
+      int confirmationTime,
+      bool hasMeals});
 }
 
 /// @nodoc
@@ -208,6 +223,7 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
     Object? state = null,
     Object? type = null,
     Object? confirmationTime = null,
+    Object? hasMeals = null,
   }) {
     return _then(_Delivery(
       id: null == id
@@ -234,6 +250,10 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
           ? _self.confirmationTime
           : confirmationTime // ignore: cast_nullable_to_non_nullable
               as int,
+      hasMeals: null == hasMeals
+          ? _self.hasMeals
+          : hasMeals // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

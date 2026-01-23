@@ -23,6 +23,12 @@ class EntityPair {
   /// The time (HH:mm) when pickup window ends.
   final String pickupTimeEnd;
 
+  /// The time (HH:mm) when delivery window starts.
+  final String deliveryTimeStart;
+
+  /// The time (HH:mm) when delivery window ends.
+  final String deliveryTimeEnd;
+
   /// The food boxes checkup state of the donor.
   final FoodBoxesCheckup donorFoodBoxesCheckup;
 
@@ -41,6 +47,8 @@ class EntityPair {
     required this.carrierId,
     required this.pickupTimeStart,
     required this.pickupTimeEnd,
+    required this.deliveryTimeStart,
+    required this.deliveryTimeEnd,
     required this.donorFoodBoxesCheckup,
     required this.recipientFoodBoxesCheckup,
     required this.confirmationTime,

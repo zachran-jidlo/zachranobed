@@ -18,8 +18,13 @@ extension EntityPairMapper on EntityPairDto {
       return null;
     }
 
-    final window = pickupTimeWindows.firstOrNull;
-    if (window == null) {
+    final pickupTimeWindow = pickupTimeWindows.firstOrNull;
+    if (pickupTimeWindow == null) {
+      return null;
+    }
+
+    final deliveryTimeWindow = deliveryTimeWindows.firstOrNull;
+    if (deliveryTimeWindow == null) {
       return null;
     }
 
@@ -29,8 +34,10 @@ extension EntityPairMapper on EntityPairDto {
       recipientId: recipient.id,
       recipientEstablishmentName: recipient.establishmentName,
       carrierId: carrierId,
-      pickupTimeStart: window.start,
-      pickupTimeEnd: window.end,
+      pickupTimeStart: pickupTimeWindow.start,
+      pickupTimeEnd: pickupTimeWindow.end,
+      deliveryTimeStart: deliveryTimeWindow.start,
+      deliveryTimeEnd: deliveryTimeWindow.end,
       donorFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.donor),
       recipientFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.recipient),
       confirmationTime: confirmationTime,

@@ -275,7 +275,6 @@
 
     "activePairCardCanteenLabel": "Aktivní jídelna",
     "activePairCardCharityLabel": "Aktivní charita",
-    "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
     "activePairCanteenTitle": "Jídelna",
     "activePairCharityTitle": "Charita",
@@ -313,5 +312,27 @@
     "offlineScreenDescription": "Pro plnohodnotné využití všech funkcí aplikace je zapotřebí internetové připojení.",
     "offlineScreenCloseApp": "Zavřít aplikaci",
 
-    "overviewWelcomeTitle": "Vítejte"
+    "overviewWelcomeTitle": "Vítejte",
+
+    "overviewDonationStatusCardChangeAction": "Změnit",
+    "overviewDonationStatusCardDeliveryDetailsAction": "Detail daru",
+    "overviewDonationStatusCardDeliveryDayLabel": "Je den darování.",
+    "overviewDonationStatusCardTimerCountdownLabel": "Odpočet času pro darování",
+    "overviewDonationStatusCardTimerPickUpLabel": "Přibližný čas vyzvednutí",
+    "overviewDonationStatusCardTimerDeliveryLabel": "Předpokládaný čas doručení",
+    "overviewDonationStatusCardDoneLabel": "Dnešní darování <success>proběhlo úspěšně</success>.",
+
+    "overviewCanteenDonationStatusCardAcceptAction": "Chci darovat",
+    "overviewCanteenDonationStatusCardOfferAction": "Zadat pokrmy",
+    "overviewCanteenDonationStatusCardLabel": "Darujete charitě",
+    "overviewCanteenDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto charitu den darování.",
+    "overviewCanteenDonationStatusCardAcceptedLabel": "Přeprava potvrzena.",
+    "overviewCanteenDonationStatusCardOnWayToPickUpLabel": "Přeprava potvrzena.",
+    "overviewCanteenDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly předány a míří do charity.",
+
+    "overviewCharityDonationStatusCardLabel": "Aktivní jídelna",
+    "overviewCharityDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto jídelnu den darování.",
+    "overviewCharityDonationStatusCardAcceptedLabel": "Jídelna potvrdila dnešní darování.",
+    "overviewCharityDonationStatusCardOfferedLabel": "Darované pokrmy se připravují.",
+    "overviewCharityDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly převzaty a míří k vám."
 }
