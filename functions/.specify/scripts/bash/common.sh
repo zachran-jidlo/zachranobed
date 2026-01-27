@@ -4,7 +4,7 @@
 # Get repository root, with fallback for non-git repositories
 get_repo_root() {
     if git rev-parse --show-toplevel >/dev/null 2>&1; then
-        git rev-parse --show-toplevel
+        echo "$(git rev-parse --show-toplevel)/functions"
     else
         # Fall back to script location for non-git repos
         local script_dir="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

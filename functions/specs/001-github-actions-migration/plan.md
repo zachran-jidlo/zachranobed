@@ -35,7 +35,7 @@ Migrate two GitHub Actions (sendOrders and checkOrders) into Firebase Cloud Func
 | I. Code Quality | TypeScript strict mode enabled (`tsconfig.json`), ESLint configured with Google style | ✓ |
 | II. Repository Structure | Models in `src/models/`, services in `src/services/`, functions in `src/functions/` | ✓ |
 | III. Tools & Frameworks | Firebase Functions v2 API, `setGlobalOptions({region: "europe-west1"})` | ✓ |
-| IV. Firebase Functions Spec | Scheduled functions use `onSchedule`, secrets via `defineString()`, error isolation | ✓ |
+| IV. Firebase Functions Specification | Scheduled functions use `onSchedule`, secrets via `defineString()`, error isolation | ✓ |
 
 **Notes**: All gates pass. Existing codebase already follows the constitution. This migration adds new scheduled functions without modifying existing notification functions.
 

@@ -5,6 +5,8 @@ import { notifyAboutLackOfBoxes } from "./functions/notifications/lackOfBoxesFun
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
+import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
+import { onRequest } from "firebase-functions/v2/https";
 
 // Export for Firebase Functions (CommonJS style)
 exports.notifyCharityAboutDonationV2 = notifyCharityAboutDonationV2;
@@ -13,11 +15,32 @@ exports.notifyAboutLackOfBoxes = notifyAboutLackOfBoxes;
 exports.boxesMismatchNotification = boxesMismatchNotification;
 exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
 
-// Only export the scheduled function for the specific project
+// Get current project ID
 const currentProjectId =
   process.env.GCLOUD_PROJECT || process.env.FIREBASE_PROJECT_ID;
-const allowedProjectId = "zachran-obed"; // Replace with your target project ID
+const allowedProjectId = "zachran-obed";
 
+// DEV ONLY: Manual HTTP triggers for testing scheduled functions
+if (currentProjectId === "zachran-obed-dev") {
+  exports.triggerSendOrders = onRequest(async (req, res) => {
+    try {
+      await sendOrders();
+      res.json({
+        status: "success",
+        message: "sendOrders executed successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+}
+
+// PROD ONLY: Export scheduled functions
 if (currentProjectId === allowedProjectId) {
   exports.scheduledFunctionCrontab = scheduledFunctionCrontab;
 }
+
+exports.sendOrdersFunction = sendOrdersFunction;

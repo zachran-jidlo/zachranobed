@@ -94,7 +94,7 @@ Food boxes that need returning from recipients back to donors are processed sepa
 - What happens when DODO API credentials are invalid or expired? The OAuth token refresh should fail gracefully with logged error; processing continues for non-DODO deliveries.
 - What happens when the scheduled function runs during daylight saving time transition? Time calculations use explicit timezone handling to avoid missed or duplicate runs.
 - What happens when Firestore is temporarily unavailable? Function retries according to Cloud Functions default retry policy.
-- What happens when a delivery has no pickup time window defined? The system logs an error and skips that delivery.
+- What happens when a delivery has no pickup time window defined? **Out of scope** - current implementation assumes valid time windows from entity pair configuration; malformed data is a data quality issue to be addressed separately.
 
 ## Requirements *(mandatory)*
 
@@ -105,7 +105,7 @@ Food boxes that need returning from recipients back to donors are processed sepa
 - **FR-003**: System MUST assign delivery state PREPARED and type FOOD_DELIVERY to newly created deliveries
 - **FR-004**: System MUST generate delivery identifier in format `{donorEstablishmentId}-{recipientEstablishmentId}-{date}`
 - **FR-005**: System MUST copy time windows from entity pair configuration to delivery document
-- **FR-006**: System MUST process delivery state transitions every 7-8 minutes during business hours (9:00-17:00 CET, weekdays)
+- **FR-006**: System MUST process delivery state transitions with alternating 7-8 minute intervals during business hours (9:00-17:00 CET, weekdays)
 - **FR-007**: System MUST mark PREPARED deliveries as NOT_USED when confirmation deadline passes (45 min before pickup for DODO, 20 min for personal)
 - **FR-008**: System MUST respect custom confirmationTime from delivery document when set
 - **FR-009**: System MUST create DODO logistics order for OFFERED/ACCEPTED deliveries before deadline when carrier is 'dodo'
@@ -132,9 +132,9 @@ Food boxes that need returning from recipients back to donors are processed sepa
 
 ### Measurable Outcomes
 
-- **SC-001**: All active entity pairs receive delivery documents by 7:15 AM UTC each weekday
-- **SC-002**: Unconfirmed deliveries are marked NOT_USED within 15 minutes of deadline passing
-- **SC-003**: DODO orders are created within 15 minutes of delivery confirmation
+- **SC-001**: All active entity pairs receive delivery documents by 7:15 AM UTC each weekday (max 15-minute processing guarantee from 7:00 AM trigger)
+- **SC-002**: Unconfirmed deliveries are marked NOT_USED within 15 minutes (max) of deadline passing
+- **SC-003**: DODO orders are created within 15 minutes (max) of delivery confirmation
 - **SC-004**: System processes all deliveries without manual intervention during normal operations
 - **SC-005**: Individual delivery failures do not block processing of other deliveries (error isolation)
 - **SC-006**: Migration maintains identical business logic as existing GitHub Actions (functional parity)

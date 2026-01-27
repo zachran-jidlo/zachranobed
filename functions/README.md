@@ -85,7 +85,7 @@ This can be accomplished through a set of commands in terminal on the existing p
 
    ```
    cd functions
-   gsutil -m cp -r gs://export-for-emulator .
+   gsutil cp -r gs://export-for-emulator .
    ```
 
 ## Using emulator for development

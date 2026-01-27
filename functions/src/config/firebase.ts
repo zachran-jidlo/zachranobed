@@ -10,5 +10,12 @@ setGlobalOptions({
 
 export const githubToken = defineString("GITHUB_TOKEN");
 
+// DODO API secrets
+export const dodoClientId = defineString("DODO_CLIENT_ID");
+export const dodoClientSecret = defineString("DODO_CLIENT_SECRET");
+export const dodoOauthUri = defineString("DODO_OAUTH_URI");
+export const dodoScope = defineString("DODO_SCOPE");
+export const dodoOrdersApi = defineString("DODO_ORDERS_API");
+
 admin.initializeApp();
 export const db = admin.firestore();

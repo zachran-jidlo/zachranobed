@@ -23,7 +23,7 @@ Single project structure: `src/` at repository root (functions/)
 
 **Purpose**: Install dependencies and configure Firebase secrets
 
-- [ ] T001 Install zod dependency: `npm install zod`
+- [X] T001 Install zod dependency: `npm install zod`
 - [ ] T002 [P] Set DODO_CLIENT_ID secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_ID`
 - [ ] T003 [P] Set DODO_CLIENT_SECRET secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_SECRET`
 - [ ] T004 [P] Set DODO_OAUTH_URI secret in Firebase: `firebase functions:secrets:set DODO_OAUTH_URI`
@@ -40,17 +40,17 @@ Single project structure: `src/` at repository root (functions/)
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T007 [P] Create Entity model with zod schema in src/models/Entity.ts
-- [ ] T008 [P] Create EntityPair model with zod schema in src/models/EntityPair.ts
-- [ ] T009 [P] Create Delivery model with zod schemas (DeliveryState, DeliveryType, DeliveryTimeWindow, CarrierOrder) in src/models/Delivery.ts
-- [ ] T010 [P] Create DodoToken model with zod schema in src/models/DodoToken.ts
-- [ ] T011 [P] Create DodoOrder model with zod schema in src/models/DodoOrder.ts
-- [ ] T012 Create barrel export file for models in src/models/index.ts
-- [ ] T013 [P] Add DODO secret definitions to src/config/firebase.ts using defineString()
-- [ ] T014 [P] Implement getNextBusinessDay() utility in src/utils/dateUtils.ts
-- [ ] T015 [P] Implement getDateInFuture() utility in src/utils/dateUtils.ts
-- [ ] T016 [P] Implement formatCzechDate() utility in src/utils/dateUtils.ts
-- [ ] T017 [P] Implement getMinutesBeforePickup() utility in src/utils/dateUtils.ts
+- [X] T007 [P] Create Entity model with zod schema in src/models/Entity.ts
+- [X] T008 [P] Create EntityPair model with zod schema in src/models/EntityPair.ts
+- [X] T009 [P] Create Delivery model with zod schemas (DeliveryState, DeliveryType, DeliveryTimeWindow, CarrierOrder) in src/models/Delivery.ts
+- [X] T010 [P] Create DodoToken model with zod schema in src/models/DodoToken.ts
+- [X] T011 [P] Create DodoOrder model with zod schema in src/models/DodoOrder.ts
+- [X] T012 Create barrel export file for models in src/models/index.ts
+- [X] T013 [P] Add DODO secret definitions to src/config/firebase.ts using defineString()
+- [X] T014 [P] Implement getNextBusinessDay() utility in src/utils/dateUtils.ts
+- [X] T015 [P] Implement getDateInFuture() utility in src/utils/dateUtils.ts
+- [X] T016 [P] Implement formatCzechDate() utility in src/utils/dateUtils.ts
+- [X] T017 [P] Implement getMinutesBeforePickup() utility in src/utils/dateUtils.ts
 
 **Checkpoint**: Foundation ready - all models and utilities available - user story implementation can now begin in parallel
 
@@ -64,13 +64,13 @@ Single project structure: `src/` at repository root (functions/)
 
 ### Implementation for User Story 1
 
-- [ ] T018 [P] [US1] Implement getEntities() in src/services/entityService.ts to load all entities from Firestore
-- [ ] T019 [P] [US1] Implement getEntityPairs() in src/services/entityService.ts to load active entity pairs (carrierId != 'disabled')
-- [ ] T020 [US1] Implement createDeliveryDocument() in src/services/deliveryService.ts to save delivery to Firestore with PREPARED state
-- [ ] T021 [US1] Implement sendOrders() core logic in src/functions/sendOrdersFunction.ts: load entity pairs, load entities, create deliveries for tomorrow (skip weekends)
-- [ ] T022 [US1] Wrap sendOrders() with onSchedule trigger (cron: "0 7 * * 1-5", timeZone: "UTC") in src/functions/sendOrdersFunction.ts
-- [ ] T023 [US1] Add conditional export for sendOrdersFunction in src/index.ts (only for project "zachran-obed")
-- [ ] T024 [US1] Test User Story 1 in Firebase Emulator: manually trigger sendOrders and verify deliveries created with correct date, state, and identifier format
+- [X] T018 [P] [US1] Implement getEntities() in src/services/entityService.ts to load all entities from Firestore
+- [X] T019 [P] [US1] Implement getEntityPairs() in src/services/entityService.ts to load active entity pairs (carrierId != 'disabled')
+- [X] T020 [US1] Implement createDeliveryDocument() in src/services/deliveryService.ts to save delivery to Firestore with PREPARED state
+- [X] T021 [US1] Implement sendOrders() core logic in src/functions/sendOrdersFunction.ts: load entity pairs, load entities, create deliveries for tomorrow (skip weekends)
+- [X] T022 [US1] Wrap sendOrders() with onSchedule trigger (cron: "0 7 * * 1-5", timeZone: "UTC") in src/functions/sendOrdersFunction.ts
+- [X] T023 [US1] Add conditional export for sendOrdersFunction in src/index.ts (only for project "zachran-obed")
+- [X] T024 [US1] Test User Story 1 in Firebase Emulator: manually trigger sendOrders and verify deliveries created with correct date, state, and identifier format
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - delivery documents are created daily for active pairs
 
@@ -143,7 +143,7 @@ Single project structure: `src/` at repository root (functions/)
 - [ ] T042 [P] [US5] Implement updateBoxDelivery() in src/services/deliveryService.ts to update box delivery with new state, identifier, time windows, and carrierId
 - [ ] T043 [US5] Implement checkBoxReturnDeliveries() logic in src/functions/checkOrdersFunction.ts: load box deliveries, create reverse DODO order (pickup from recipient, delivery to donor), fixed time windows (10:00-10:30 pickup, 11:00-11:30 delivery)
 - [ ] T044 [US5] Integrate checkBoxReturnDeliveries() into main checkOrders flow after food delivery processing
-- [ ] T045 [US5] Wrap checkOrders() with onSchedule trigger (cron: "0,7,15,22,30,37,45,52 9-17 * * 1-5", timeZone: "Europe/Prague") in src/functions/checkOrdersFunction.ts
+- [ ] T045 [US5] Wrap checkOrders() with onSchedule trigger (cron: "0,7,15,22,30,37,45,52 9-17 * * 1-5" alternating 7-8 min intervals, timeZone: "Europe/Prague") in src/functions/checkOrdersFunction.ts
 - [ ] T046 [US5] Add conditional export for checkOrdersFunction in src/index.ts (only for project "zachran-obed")
 - [ ] T047 [US5] Test User Story 5 in Firebase Emulator: create BOX_DELIVERY in OFFERED state, trigger checkOrders, verify DODO order with reversed locations and state changes to IN_DELIVERY
 
@@ -163,10 +163,12 @@ Single project structure: `src/` at repository root (functions/)
 - [ ] T053 Run npm run build and verify successful TypeScript compilation
 - [ ] T054 Update checkDeliveriesInvocatorFunction.ts: remove GitHub Actions trigger logic, add comment "Replaced by checkOrdersFunction - kept for reference"
 - [ ] T055 Test full workflow in Firebase Emulator following quickstart.md: sendOrders creates deliveries, checkOrders processes state transitions and creates DODO orders
-- [ ] T056 Deploy to DEV environment: `firebase use default && npm run deploy`
-- [ ] T057 Monitor DEV logs for 24 hours: `firebase functions:log --follow`
-- [ ] T058 Compare DEV results with GitHub Actions output for functional parity (run both in parallel)
-- [ ] T059 Document any deviations from old solution in specs/001-github-actions-migration/migration-notes.md
+- [ ] T056 Test error isolation: Create delivery with missing entity reference, verify error logged and remaining deliveries process successfully
+- [ ] T057 Verify production-only export: Check src/index.ts exports sendOrdersFunction and checkOrdersFunction only when GCLOUD_PROJECT equals "zachran-obed"
+- [ ] T058 Deploy to DEV environment: `firebase use default && npm run deploy`
+- [ ] T059 Monitor DEV logs for 24 hours: `firebase functions:log --follow`
+- [ ] T060 Compare DEV results with GitHub Actions output for functional parity (run both in parallel)
+- [ ] T061 Document any deviations from old solution in specs/001-github-actions-migration/migration-notes.md
 
 ---
 
@@ -284,7 +286,7 @@ With multiple developers:
 
 ## Task Count Summary
 
-- **Total Tasks**: 59
+- **Total Tasks**: 61
 - **Phase 1 (Setup)**: 6 tasks
 - **Phase 2 (Foundational)**: 11 tasks
 - **Phase 3 (US1)**: 7 tasks
@@ -292,7 +294,7 @@ With multiple developers:
 - **Phase 5 (US3)**: 8 tasks
 - **Phase 6 (US4)**: 3 tasks
 - **Phase 7 (US5)**: 7 tasks
-- **Phase 8 (Polish)**: 12 tasks
+- **Phase 8 (Polish)**: 14 tasks
 
 **Parallel Opportunities**: 23 tasks marked [P] can run in parallel within their phases
 

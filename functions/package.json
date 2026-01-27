@@ -19,7 +19,8 @@
     "firebase-admin": "^13.6.0",
     "firebase-functions": "^6.4.0",
     "firebase-tools": "^13.31.1",
-    "runtypes": "^7.0.4"
+    "runtypes": "^7.0.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
