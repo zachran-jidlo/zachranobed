@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/widget/canteen_donation_status_card.dart';
 import 'package:zachranobed/app/presentation/widget/charity_donation_status_card.dart';
+import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
@@ -10,11 +11,13 @@ import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
-import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -67,21 +70,12 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             _buildDonationStatusCard(context, user),
             const SizedBox(height: 24.0),
             FoodBoxesOverviewSection(user: user),
+            ..._buildNewBoxDeliveryButton(context, user),
             const SizedBox(height: 24.0),
           ],
         ),
       ),
     );
-  }
-
-  /// Refreshes the state of the food boxes checkup.
-  void _refreshBoxesCheckupState() {
-    setState(() {
-      final user = HelperService.getCurrentUser(context);
-      if (user != null) {
-        _boxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
-      }
-    });
   }
 
   Widget _buildDonationStatusCard(BuildContext context, UserData user) {
@@ -106,6 +100,36 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         _ => const SizedBox(),
       },
     );
+  }
+
+  List<Widget> _buildNewBoxDeliveryButton(BuildContext context, UserData user) {
+    if (user is! Charity) {
+      return [];
+    }
+
+    return [
+      const SizedBox(height: 16.0),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: UiOutlineButton(
+          size: UiButtonSize.medium(fullWidth: true),
+          text: context.l10n.overviewCreateBoxDeliveryAction,
+          onPressed: () {
+            context.router.push(const OrderShippingOfBoxesRoute());
+          },
+        ),
+      ),
+    ];
+  }
+
+  /// Refreshes the state of the food boxes checkup.
+  void _refreshBoxesCheckupState() {
+    setState(() {
+      final user = HelperService.getCurrentUser(context);
+      if (user != null) {
+        _boxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+      }
+    });
   }
 
   void _onChangePairPressed() async {

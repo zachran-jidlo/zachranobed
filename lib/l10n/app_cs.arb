@@ -338,5 +338,7 @@
                 "example": "34"
             }
         }
-    }
+    },
+
+    "overviewCreateBoxDeliveryAction": "Zadat vratku krabiček"
 }
