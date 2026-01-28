@@ -11,9 +11,9 @@ import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart'
 /// This class provides factory methods to create statistics displays that are
 /// tailored to the user's role (canteen or charity), showing relevant labels
 /// and quantities for each.
-class FoodBoxTileStat {
+class FoodBoxTileStatFactory {
   /// Private constructor to prevent instantiation.
-  FoodBoxTileStat._();
+  FoodBoxTileStatFactory._();
 
   /// Builds a list of [UiFoodBoxTileStat] for a full-size tile display.
   ///

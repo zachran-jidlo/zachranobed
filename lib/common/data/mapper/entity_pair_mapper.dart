@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:zachranobed/common/data/dto/entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';

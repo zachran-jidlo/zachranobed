@@ -12,14 +12,38 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 
+/// A status card widget displaying the current donation state for canteen users.
+///
+/// Shows the delivery progress, status text, countdown timer (when applicable),
+/// and action buttons based on the current [delivery] state. The card displays
+/// the paired charity name and allows switching pairs if multiple are available.
+///
+/// Delivery states and their UI:
+/// - **prepared**: Shows countdown timer and "Accept" button
+/// - **accepted/offered**: Shows pickup time range and "Offer Food" button
+/// - **inDelivery**: Shows delivery time range
+/// - **delivered**: Shows completion message
+/// - **null/notUsed**: Shows "not a delivery day" message
 class CanteenDonationStatusCard extends StatelessWidget {
+  /// The canteen user data containing pair information and pickup times.
   final Canteen canteen;
+
+  /// The current delivery for today, or null if no delivery is scheduled.
   final Delivery? delivery;
+
+  /// Called when the user taps the "Change" button to switch active pair.
   final VoidCallback onChangePairPressed;
+
+  /// Called when the user accepts the delivery in "prepared" state.
   final VoidCallback onAcceptDeliveryPressed;
+
+  /// Called when the user wants to offer food after accepting delivery.
   final VoidCallback onOfferFoodPressed;
+
+  /// Called when the confirmation countdown timer reaches zero.
   final VoidCallback onCountdownTimeout;
 
+  /// Creates a [CanteenDonationStatusCard].
   const CanteenDonationStatusCard({
     super.key,
     required this.canteen,

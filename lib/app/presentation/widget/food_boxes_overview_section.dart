@@ -11,7 +11,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat_factory.dart';
 
 /// A section widget that displays food box statistics on the overview screen.
 ///
@@ -124,7 +124,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
       title: stat.type.name,
       size: UiFoodBoxTileSize.full,
       totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
-      stats: FoodBoxTileStat.buildFullTileStats(context, widget.user, stat),
+      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat),
     );
   }
 
