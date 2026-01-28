@@ -47,6 +47,14 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
     _initStream();
   }
 
+  @override
+  void didUpdateWidget(covariant DeliveryDetailScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.deliveryId != widget.deliveryId) {
+      _initStream();
+    }
+  }
+
   void _initStream() {
     final useCase = GetIt.I<ObserveDeliveryMealsUseCase>();
     _stream = useCase.invoke(widget.deliveryId);
@@ -72,7 +80,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
           appBar: UiAppBar(title: context.l10n.deliveryDetailTitle),
           builder: (context) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return LoadingPage();
+              return const LoadingPage();
             }
             if (snapshot.hasError) {
               return ErrorPage(onRetryPressed: _retry);
@@ -101,7 +109,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
         UiPrimaryButton(
           size: UiButtonSize.medium(fullWidth: true),
           text: context.l10n.deliveryDetailAddMealsAction,
-          onPressed: () => context.pushRoute(OfferFoodInitialRoute()),
+          onPressed: () => context.pushRoute(const OfferFoodInitialRoute()),
         ),
         const SizedBox(height: 16),
         UiTextButton(

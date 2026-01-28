@@ -23,11 +23,11 @@ class MealTileFactory {
   static Widget buildMealTile(BuildContext context, OfferedFood item) {
     return UiMealTile(
       title: item.dishName,
-      quantityLabel: formatQuantity(context, item),
+      quantityLabel: _formatQuantity(context, item),
       badges: [
-        buildCategoryBadge(context, item),
-        buildAllergensBadge(context, item),
-        buildDateBadge(context, item),
+        _buildCategoryBadge(context, item),
+        _buildAllergensBadge(context, item),
+        _buildDateBadge(context, item),
       ],
     );
   }
@@ -35,7 +35,7 @@ class MealTileFactory {
   /// Formats the quantity label for the given [item].
   ///
   /// Returns the number of servings if available, otherwise the number of packages.
-  static String formatQuantity(BuildContext context, OfferedFood item) {
+  static String _formatQuantity(BuildContext context, OfferedFood item) {
     if (item.numberOfServings != null) {
       return context.l10n.commonServingsCount(item.numberOfServings!);
     }
@@ -46,13 +46,7 @@ class MealTileFactory {
   }
 
   /// Builds a category badge for the given [item].
-  ///
-  /// Shows different icons and labels based on the food category type:
-  /// - Warm: hot icon with temperature
-  /// - Cooled: cold icon
-  /// - Packaged: pack icon
-  /// - Unknown: meal icon with category name
-  static UiMealBadge buildCategoryBadge(BuildContext context, OfferedFood item) {
+  static UiMealBadge _buildCategoryBadge(BuildContext context, OfferedFood item) {
     return switch (item.foodCategoryType) {
       FoodCategoryType.warm => UiMealBadge(
           icon: UiIconSpec.svg(ImageAssets.iconHot),
@@ -76,12 +70,7 @@ class MealTileFactory {
   }
 
   /// Builds an allergens badge for the given [item].
-  ///
-  /// Handles special cases:
-  /// - No allergens: shows "Bez alergenů"
-  /// - On package: shows "Viz obal"
-  /// - Otherwise: shows comma-separated allergen numbers
-  static UiMealBadge buildAllergensBadge(BuildContext context, OfferedFood item) {
+  static UiMealBadge _buildAllergensBadge(BuildContext context, OfferedFood item) {
     String allergensLabel;
     if (listEquals(item.allergens, [FoodAllergen.noAllergensNumber])) {
       allergensLabel = context.l10n.allergensNotPresent;
@@ -97,9 +86,7 @@ class MealTileFactory {
   }
 
   /// Builds a date badge for the given [item].
-  ///
-  /// Shows the consume by date formatted as "d.M.y HH:mm" or "Viz obal" if on packaging.
-  static UiMealBadge buildDateBadge(BuildContext context, OfferedFood item) {
+  static UiMealBadge _buildDateBadge(BuildContext context, OfferedFood item) {
     final dateLabel = switch (item.consumeBy) {
       FoodDateTimeSpecified(date: final date) =>
         DateTimeUtils.formatDateTime(date, "d.M.y HH:mm"),
