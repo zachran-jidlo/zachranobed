@@ -1,15 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/data/dto/food_box_type_dto.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat.dart';
 
 /// A section widget that displays food box statistics on the overview screen.
 ///
@@ -31,24 +33,37 @@ class FoodBoxesOverviewSection extends StatefulWidget {
 }
 
 class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
-  late final ObserveFoodBoxStatisticsUseCase _useCase;
+  late Stream<Iterable<FoodBoxStatistics>> _stream;
 
   @override
   void initState() {
     super.initState();
-    _useCase = GetIt.I<ObserveFoodBoxStatisticsUseCase>();
+    _stream = _createStream();
+  }
+
+  @override
+  void didUpdateWidget(FoodBoxesOverviewSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.user != oldWidget.user) {
+      _stream = _createStream();
+    }
+  }
+
+  Stream<Iterable<FoodBoxStatistics>> _createStream() {
+    final useCase = GetIt.I<ObserveFoodBoxStatisticsUseCase>();
+    return useCase.invoke(widget.user);
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Iterable<FoodBoxStatistics>>(
-      stream: _useCase.invoke(widget.user),
+      stream: _stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox.shrink();
         }
 
-        final statistics = snapshot.data!.where((stat) => stat.type.id != FoodBoxTypeDto.idDisposable).toList();
+        final statistics = snapshot.data!.toList();
 
         if (statistics.isEmpty) {
           return const SizedBox.shrink();
@@ -86,7 +101,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
         UiTextButton(
           text: context.l10n.overviewFoodBoxesShowAllAction,
           onPressed: () {
-            // TODO: Navigate to food box statistics detail screen
+            context.router.push(FoodBoxesDetailRoute(user: widget.user));
           },
         ),
       ],
@@ -109,40 +124,8 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
       title: stat.type.name,
       size: UiFoodBoxTileSize.full,
       totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
-      stats: _buildFullTileStats(context, stat),
+      stats: FoodBoxTileStat.buildFullTileStats(context, widget.user, stat),
     );
-  }
-
-  List<UiFoodBoxTileStat> _buildFullTileStats(
-    BuildContext context,
-    FoodBoxStatistics stat,
-  ) {
-    switch (widget.user) {
-      case Canteen():
-        return [
-          UiFoodBoxTileStat(
-            value: stat.quantityAtCanteen,
-            label: context.l10n.overviewFoodBoxesAvailableLabel,
-          ),
-          UiFoodBoxTileStat(
-            value: stat.quantityAtCharity,
-            label: context.l10n.charity,
-          ),
-        ];
-      case Charity():
-        return [
-          UiFoodBoxTileStat(
-            value: stat.quantityAtCharity,
-            label: context.l10n.overviewFoodBoxesAvailableLabel,
-          ),
-          UiFoodBoxTileStat(
-            value: stat.quantityAtCanteen,
-            label: context.l10n.canteen,
-          ),
-        ];
-      default:
-        return [];
-    }
   }
 
   Widget _buildSmallTilesGrid(
