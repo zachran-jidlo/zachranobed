@@ -72,14 +72,9 @@
     "navigationLabelOverview": "Přehled",
     "navigationLabelHistory": "Historie",
     "navigationLabelNotifications": "Notifikace",
-    "newOffer": "Darovat pokrmy",
     "overview": "Přehled",
     "historyTitle": "Historie",
-    "youCanDonate": "Darování můžete potvrdit ještě",
-    "youCantDonateAnymore": "Dnes již nemůžete darovat",
-    "courierWillCome": "Pokrmy budou vyzvednuty mezi",
     "contactCarrier": "Kontaktovat dopravce",
-    "wantToDonate": "Chci darovat",
     "boxStatisticsHeader": "Stav krabiček",
     "lastDonated": "Naposledy darováno",
     "savedLunches": "Záchráněno pokrmů",
@@ -152,10 +147,6 @@
     "continueTheOffer": "Pokračovat",
     "cancelOfferDialogContent": "Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?",
     "cancelShippingOfBoxesDialogContent": "Máte rozpracovanou objednávku vratky krabiček. Opravdu si ji přejete zahodit?",
-    "newOfferDialogTitle": "Darování pokrmů?",
-    "newOfferDialogContent": "Abyste mohli darovat pokrmy, musíte nejdříve potvrdit darování.",
-    "cantOfferAnymoreDialogContent": "Právě teď není možné nabídnout zbylé pokrmy. Pokud se vám to stává často, kontaktujte prosím Zachraň oběd s žádostí o změnu rozvrhu tak, aby lépe odpovídal vašim potřebám pro darování.",
-    "cantOfferAnymoreDialogContentCreateAction": "Vytvořit objednavku",
     "filter": "Filtrovat",
     "organization": "Organizace",
     "donor": "Dárce",
@@ -275,7 +266,6 @@
 
     "activePairCardCanteenLabel": "Aktivní jídelna",
     "activePairCardCharityLabel": "Aktivní charita",
-    "activePairCardChangeAction": "Změnit",
     "activePairCardSelectAction": "Vybrat",
     "activePairCanteenTitle": "Jídelna",
     "activePairCharityTitle": "Charita",
@@ -311,5 +301,44 @@
 
     "offlineScreenTitle": "Jste bez připojení k internetu!",
     "offlineScreenDescription": "Pro plnohodnotné využití všech funkcí aplikace je zapotřebí internetové připojení.",
-    "offlineScreenCloseApp": "Zavřít aplikaci"
+    "offlineScreenCloseApp": "Zavřít aplikaci",
+
+    "overviewWelcomeTitle": "Vítejte",
+
+    "overviewDonationStatusCardChangeAction": "Změnit",
+    "overviewDonationStatusCardDeliveryDetailsAction": "Detail daru",
+    "overviewDonationStatusCardDeliveryDayLabel": "Je den darování.",
+    "overviewDonationStatusCardTimerCountdownLabel": "Odpočet času pro darování",
+    "overviewDonationStatusCardTimerPickUpLabel": "Přibližný čas vyzvednutí",
+    "overviewDonationStatusCardTimerDeliveryLabel": "Předpokládaný čas doručení",
+    "overviewDonationStatusCardDoneLabel": "Dnešní darování <success>proběhlo úspěšně</success>.",
+
+    "overviewCanteenDonationStatusCardAcceptAction": "Chci darovat",
+    "overviewCanteenDonationStatusCardOfferAction": "Zadat pokrmy",
+    "overviewCanteenDonationStatusCardLabel": "Darujete charitě",
+    "overviewCanteenDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto charitu den darování.",
+    "overviewCanteenDonationStatusCardAcceptedLabel": "Přeprava potvrzena.",
+    "overviewCanteenDonationStatusCardOnWayToPickUpLabel": "Přeprava potvrzena.",
+    "overviewCanteenDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly předány a míří do charity.",
+
+    "overviewCharityDonationStatusCardLabel": "Aktivní jídelna",
+    "overviewCharityDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto jídelnu den darování.",
+    "overviewCharityDonationStatusCardAcceptedLabel": "Jídelna potvrdila dnešní darování.",
+    "overviewCharityDonationStatusCardOfferedLabel": "Darované pokrmy se připravují.",
+    "overviewCharityDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly převzaty a míří k vám.",
+
+    "overviewFoodBoxesHeaderTitle": "Vratné krabičky",
+    "overviewFoodBoxesShowAllAction": "Zobrazit vše",
+    "overviewFoodBoxesAvailableLabel": "K dispozici",
+    "overviewFoodBoxesTotalLabel": "Celkem {count} ks",
+    "@overviewFoodBoxesTotalLabel": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "34"
+            }
+        }
+    },
+
+    "overviewCreateBoxDeliveryAction": "Zadat vratku krabiček"
 }

@@ -14,6 +14,9 @@ EntityPairDto _$EntityPairDtoFromJson(Map<String, dynamic> json) =>
       pickupTimeWindows: (json['pickupTimeWindows'] as List<dynamic>)
           .map((e) => TimeWindowDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      deliveryTimeWindows: (json['deliveryTimeWindows'] as List<dynamic>)
+          .map((e) => TimeWindowDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       foodboxes: (json['foodboxes'] as List<dynamic>)
           .map((e) => FoodBoxPairDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -30,6 +33,7 @@ Map<String, dynamic> _$EntityPairDtoToJson(EntityPairDto instance) =>
       'recipientId': instance.recipientId,
       'carrierId': instance.carrierId,
       'pickupTimeWindows': instance.pickupTimeWindows,
+      'deliveryTimeWindows': instance.deliveryTimeWindows,
       'foodboxes': instance.foodboxes,
       'foodboxesCheckup': instance.foodboxesCheckup,
       'confirmationTime': instance.confirmationTime,

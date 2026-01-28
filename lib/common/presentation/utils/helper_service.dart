@@ -26,21 +26,6 @@ class HelperService {
     return (to.difference(from).inDays / 7).ceil();
   }
 
-  /// Checks if the current user is a canteen and evaluates additional
-  /// conditions such as whether the delivery is confirmed or cancelled, and
-  /// whether the current time falls within a certain window in which the user
-  /// can donate food.
-  ///
-  /// Returns a [bool] indicating whether the current user is eligible to
-  /// donate food.
-  static bool canDonate(BuildContext context) {
-    final user = watchCurrentUser(context);
-    if (user == null) {
-      return false;
-    }
-    return context.watch<DeliveryNotifier>().canDonate(user);
-  }
-
   /// Retrieves user information using the [GetUserDataUseCase] and sets the user data
   /// in the [UserNotifier]. If the user has a `canteen` role, it calculates
   /// the date of today's delivery and uses it to fetch the corresponding

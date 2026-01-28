@@ -5,15 +5,6 @@ class DateTimeUtils {
   /// Private constructor to prevent instantiation.
   DateTimeUtils._();
 
-  /// Returns a [DateTime] object representing the parsed date and [time] of
-  /// delivery for today.
-  static DateTime getDateTimeOfCurrentDelivery(String time) {
-    final timePart = DateFormat('HH:mm').parse(time);
-    final duration = Duration(hours: timePart.hour, minutes: timePart.minute);
-    final now = DateTime.now();
-    return DateTime(now.year, now.month, now.day).add(duration);
-  }
-
   /// Returns a [DateTime] object representing the start of the current day.
   static DateTime lastMidnight() {
     final now = DateTime.now();

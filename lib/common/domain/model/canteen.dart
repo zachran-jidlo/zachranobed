@@ -1,7 +1,7 @@
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/local_time.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
-import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 
 class Canteen extends UserData {
   Canteen({
@@ -22,14 +22,12 @@ class Canteen extends UserData {
   ///
   /// Returns `true` if the current time is within the pickup range, `false` otherwise.
   bool isCurrentTimeWithinPickupRange() {
-    DateTime now = DateTime.now();
-    DateTime timeWithin = DateTimeUtils.getDateTimeOfCurrentDelivery(pickUpWithin);
-    return now.isBefore(timeWithin);
+    return DateTime.now().isBefore(pickUpWithin.atToday());
   }
 
-  String get pickUpFrom => activePair.pickupTimeStart;
+  LocalTime get pickUpFrom => activePair.pickupTimeStart;
 
-  String get pickUpWithin => activePair.pickupTimeEnd;
+  LocalTime get pickUpWithin => activePair.pickupTimeEnd;
 
   @override
   UserData copyWith({required EntityPair activePair}) {

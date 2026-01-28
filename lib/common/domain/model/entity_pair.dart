@@ -1,4 +1,5 @@
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/local_time.dart';
 
 /// Represents an entity pair between donor and recipient (canteen and charity).
 class EntityPair {
@@ -17,11 +18,17 @@ class EntityPair {
   /// The carrier ID used for delivery.
   final String carrierId;
 
-  /// The time (HH:mm) when pickup window starts.
-  final String pickupTimeStart;
+  /// The time when pickup window starts.
+  final LocalTime pickupTimeStart;
 
-  /// The time (HH:mm) when pickup window ends.
-  final String pickupTimeEnd;
+  /// The time when pickup window ends.
+  final LocalTime pickupTimeEnd;
+
+  /// The time when delivery window starts.
+  final LocalTime deliveryTimeStart;
+
+  /// The time when delivery window ends.
+  final LocalTime deliveryTimeEnd;
 
   /// The food boxes checkup state of the donor.
   final FoodBoxesCheckup donorFoodBoxesCheckup;
@@ -29,8 +36,8 @@ class EntityPair {
   /// The food boxes checkup state of the recipient.
   final FoodBoxesCheckup recipientFoodBoxesCheckup;
 
-  /// The confirmation time in minutes.
-  final int confirmationTime;
+  /// The confirmation time.
+  final Duration confirmationTime;
 
   /// Creates a new [EntityPair] instance.
   EntityPair({
@@ -41,6 +48,8 @@ class EntityPair {
     required this.carrierId,
     required this.pickupTimeStart,
     required this.pickupTimeEnd,
+    required this.deliveryTimeStart,
+    required this.deliveryTimeEnd,
     required this.donorFoodBoxesCheckup,
     required this.recipientFoodBoxesCheckup,
     required this.confirmationTime,

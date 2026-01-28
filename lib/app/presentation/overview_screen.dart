@@ -1,24 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:sliver_tools/sliver_tools.dart';
+import 'package:provider/provider.dart';
+import 'package:zachranobed/app/presentation/widget/canteen_donation_status_card.dart';
+import 'package:zachranobed/app/presentation/widget/charity_donation_status_card.dart';
+import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
-import 'package:zachranobed/common/presentation/widget/card_row.dart';
-import 'package:zachranobed/common/presentation/widget/delivery_info_banner.dart';
-import 'package:zachranobed/common/presentation/widget/indicator.dart';
-import 'package:zachranobed/common/presentation/widget/new_offer_floating_button.dart';
-import 'package:zachranobed/common/presentation/widget/new_shipping_of_boxes_floating_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/features/food/presentation/widget/box_summary.dart';
-import 'package:zachranobed/features/food/presentation/widget/card_list.dart';
+import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
@@ -28,7 +27,6 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
-  final GlobalKey _boxSummaryKey = GlobalKey();
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false);
 
   @override
@@ -51,59 +49,77 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   @override
   Widget build(BuildContext context) {
+    final user = HelperService.watchCurrentUser(context);
+    if (user == null) {
+      return const SizedBox();
+    }
     return ScreenScaffold.universalBuilder(
-      appBar: ZOAppBar(
-        title: context.l10n.overview,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
+      appBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: UiWelcomeTile(
+          entityName: user.establishmentName,
+          onPressed: () {
               context.router.push(const ProfileRoute());
-            },
-            icon: const Icon(Icons.person_outline),
-          ),
-        ],
+          },
+        ),
       ),
-      builder: _buildContent,
+      builder: (context) => SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 8.0),
+            _buildDonationStatusCard(context, user),
+            const SizedBox(height: 24.0),
+            FoodBoxesOverviewSection(user: user),
+            ..._buildNewBoxDeliveryButton(context, user),
+            const SizedBox(height: 24.0),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
-    final user = HelperService.watchCurrentUser(context);
-    return Scaffold(
-      floatingActionButton: _floatingActionButton(context),
-      body: CustomScrollView(
-        slivers: [
-          DeliveryInfoBanner(
-            user: user!,
-            showFoodBoxesCheckup: _setBoxesCheckupInProgress,
+  Widget _buildDonationStatusCard(BuildContext context, UserData user) {
+    final delivery = context.watch<DeliveryNotifier>().delivery;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: switch (user) {
+        Canteen() => CanteenDonationStatusCard(
+            canteen: user,
+            delivery: delivery,
+            onChangePairPressed: _onChangePairPressed,
+            onAcceptDeliveryPressed: () => _onAcceptDeliveryPressed(user),
+            onOfferFoodPressed: _onOfferFoodPressed,
+            onCountdownTimeout: _onDeliveryConfirmationTimeout,
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              left: WidgetStyle.padding,
-              right: WidgetStyle.padding,
-              bottom: WidgetStyle.overviewBottomPadding,
-            ),
-            sliver: MultiSliver(
-              children: [
-                _buildActivePair(context),
-                CardList(user: user),
-                const SizedBox(height: GapSize.m),
-                BoxSummary(
-                  key: _boxSummaryKey,
-                  user: user,
-                  state: _boxesCheckupState,
-                  refreshState: _refreshBoxesCheckupState,
-                  setInProgress: _setBoxesCheckupInProgress,
-                ),
-                const SizedBox(height: GapSize.m),
-              ],
-            ),
+        Charity() => CharityDonationStatusCard(
+            charity: user,
+            delivery: delivery,
+            onChangePairPressed: _onChangePairPressed,
           ),
-        ],
-      ),
+        _ => const SizedBox(),
+      },
     );
+  }
+
+  List<Widget> _buildNewBoxDeliveryButton(BuildContext context, UserData user) {
+    if (user is! Charity) {
+      return [];
+    }
+
+    return [
+      const SizedBox(height: 16.0),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: UiOutlineButton(
+          size: UiButtonSize.medium(fullWidth: true),
+          text: context.l10n.overviewCreateBoxDeliveryAction,
+          onPressed: () {
+            context.router.push(const OrderShippingOfBoxesRoute());
+          },
+        ),
+      ),
+    ];
   }
 
   /// Refreshes the state of the food boxes checkup.
@@ -116,98 +132,40 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     });
   }
 
-  /// Sets the state of the food boxes checkup to in-progress.
-  void _setBoxesCheckupInProgress() {
-    setState(() {
-      _boxesCheckupState = FoodBoxesCheckupCheckInProgress();
-    });
-
-    // Delay to ensure layout is complete before scrolling to the box summary
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final boxSummaryContext = _boxSummaryKey.currentContext;
-      if (boxSummaryContext != null) {
-        Scrollable.ensureVisible(
-          boxSummaryContext,
-          duration: const Duration(milliseconds: 250),
-        );
-      }
-    });
+  void _onChangePairPressed() async {
+    await context.router.push(const ChangeActivePairRoute());
+    _refreshBoxesCheckupState();
   }
 
-  Widget _floatingActionButton(BuildContext context) {
-    final user = HelperService.getCurrentUser(context);
-    if (user == null) {
-      return const SizedBox();
-    }
-
-    // When food boxes checkup is needed and cannot be delayed floating action button should not be accessible
-    final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
-    if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
-      return const SizedBox();
-    }
-
-    return user is Canteen ? NewOfferFloatingButton() : const NewShippingOfBoxesFloatingButton();
+  void _onAcceptDeliveryPressed(UserData user) async {
+    // TODO: How to process this?
+    // final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
+    // if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => ZODialog(
+    //       criticalConfirmStyle: true,
+    //       title: context.l10n.foodBoxesCheckupDialogTitle,
+    //       content: context.l10n.foodBoxesCheckupDialogContent,
+    //       confirmText: context.l10n.foodBoxesCheckupDialogConfirmAction,
+    //       cancelText: context.l10n.commonCancel,
+    //       onConfirmPressed: () {
+    //         context.router.maybePop();
+    //         _setBoxesCheckupInProgress();
+    //       },
+    //       onCancelPressed: () => context.router.maybePop(),
+    //     ),
+    //   );
+    //   return;
+    // }
+    context.read<DeliveryNotifier>().updateDeliveryState(DeliveryState.accepted);
   }
 
-  Widget _buildActivePair(BuildContext context) {
-    final user = HelperService.watchCurrentUser(context);
-    switch (user) {
-      case Charity():
-        return Column(
-          children: [
-            CardRow(
-              label: context.l10n.activePairCardCanteenLabel,
-              title: user.activePair.donorEstablishmentName,
-              action: (context) {
-                if (!user.hasMultiplePairs) {
-                  return const SizedBox();
-                }
-                return Indicator(
-                  isVisible: user.isAnyNonActiveCheckupNeeded,
-                  child: ZOButton(
-                    text: context.l10n.activePairCardChangeAction,
-                    type: ZOButtonType.secondary,
-                    minimumSize: ZOButtonSize.tiny(),
-                    onPressed: () async {
-                      await context.router.push(const ChangeActivePairRoute());
-                      _refreshBoxesCheckupState();
-                    },
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: GapSize.xs),
-          ],
-        );
-      case Canteen():
-        return Column(
-          children: [
-            CardRow(
-              label: context.l10n.activePairCardCharityLabel,
-              title: user.activePair.recipientEstablishmentName,
-              action: (context) {
-                if (!user.hasMultiplePairs) {
-                  return const SizedBox();
-                }
-                return Indicator(
-                  isVisible: user.isAnyNonActiveCheckupNeeded,
-                  child: ZOButton(
-                    text: context.l10n.activePairCardChangeAction,
-                    type: ZOButtonType.secondary,
-                    minimumSize: ZOButtonSize.tiny(),
-                    onPressed: () async {
-                      await context.router.push(const ChangeActivePairRoute());
-                      _refreshBoxesCheckupState();
-                    },
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: GapSize.xs),
-          ],
-        );
-      default:
-        return const SizedBox();
-    }
+  void _onOfferFoodPressed() {
+    context.router.push(const OfferFoodInitialRoute());
+  }
+
+  void _onDeliveryConfirmationTimeout() {
+    context.read<DeliveryNotifier>().refreshDelivery();
   }
 }

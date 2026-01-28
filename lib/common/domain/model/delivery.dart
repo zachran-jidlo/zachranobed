@@ -15,7 +15,8 @@ abstract class Delivery with _$Delivery {
     required String recipientId,
     required DeliveryState state,
     required DeliveryType type,
-    required int confirmationTime,
+    required Duration confirmationTime,
+    required bool hasMeals,
   }) = _Delivery;
 }
 
