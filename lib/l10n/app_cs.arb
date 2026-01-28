@@ -340,5 +340,13 @@
         }
     },
 
-    "overviewCreateBoxDeliveryAction": "Zadat vratku krabiček"
+    "overviewCreateBoxDeliveryAction": "Zadat vratku krabiček",
+
+    "deliveryDetailTitle": "Detail daru",
+    "deliveryDetailDescription": "Jídelna daruje tyto pokrmy.",
+    "deliveryDetailEmptyCanteenTitle": "V seznamu nejsou žádné zadané pokrmy",
+    "deliveryDetailEmptyCanteenDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
+    "deliveryDetailEmptyCharityTitle": "Pokrmy zatím nebyly zadány",
+    "deliveryDetailEmptyCharityDescription": "Jídelna ještě nezadala informace o pokrmech. Údaje mohou být doplněny až do konce času pro doručení.",
+    "deliveryDetailAddMealsAction": "Zadat pokrmy"
 }

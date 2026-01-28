@@ -39,4 +39,9 @@ abstract class OfferedFoodRepository {
     required List<FoodInfo> foodInfo,
     required List<BoxInfo> boxInfo,
   });
+
+  /// Returns a stream of offered food items for a specific delivery.
+  Stream<Iterable<OfferedFood>> observeMealsForDelivery({
+    required String deliveryId,
+  });
 }
