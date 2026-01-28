@@ -60,7 +60,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
       stream: _stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const SizedBox.shrink();
+          return const Center(child: CircularProgressIndicator());
         }
 
         final statistics = snapshot.data!.toList();
