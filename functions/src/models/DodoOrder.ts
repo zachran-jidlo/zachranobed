@@ -34,3 +34,36 @@ export const DodoOrderRequestSchema = z.object({
 });
 
 export type DodoOrderRequest = z.infer<typeof DodoOrderRequestSchema>;
+
+/**
+ * Internal representation of DODO order with Date objects for easier manipulation.
+ * Convert to DodoOrderRequest for API calls.
+ */
+export interface DodoOrder {
+  /** Unique order identifier (matches deliveryIdentifier) */
+  id: string;
+  /** DODO branch identifier for pickup location */
+  pickupDodoId: string;
+  /** Pickup establishment ID */
+  pickupId: string;
+  /** Pickup window start */
+  pickupFrom: Date;
+  /** Pickup window end */
+  pickupTo: Date;
+  /** Note for driver at pickup */
+  pickupNote: string;
+  /** Delivery establishment ID */
+  deliverId: string;
+  /** Full delivery address */
+  deliverAddress: string;
+  /** Delivery window start */
+  deliverFrom: Date;
+  /** Delivery window end */
+  deliverTo: Date;
+  /** Note for driver at delivery */
+  deliverNote: string;
+  /** Customer contact name */
+  customerName: string;
+  /** Customer contact phone */
+  customerPhone: string;
+}

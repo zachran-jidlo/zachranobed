@@ -6,6 +6,7 @@ import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
+import { checkOrders } from "./functions/checkOrdersFunction";
 import { onRequest } from "firebase-functions/v2/https";
 
 // Export for Firebase Functions (CommonJS style)
@@ -28,6 +29,21 @@ if (currentProjectId === "zachran-obed-dev") {
       res.json({
         status: "success",
         message: "sendOrders executed successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
+
+  exports.triggerCheckOrders = onRequest(async (req, res) => {
+    try {
+      await checkOrders();
+      res.json({
+        status: "success",
+        message: "checkOrders executed successfully",
       });
     } catch (error) {
       res.status(500).json({

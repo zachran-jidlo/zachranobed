@@ -5,7 +5,8 @@ import { defineString } from "firebase-functions/params";
 setGlobalOptions({
   region: "europe-west1",
   serviceAccount:
-    "firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com",
+    "firebase-adminsdk-ju14s@zachran-obed-dev.iam.gserviceaccount.com",
+  //"firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com",
 });
 
 export const githubToken = defineString("GITHUB_TOKEN");
@@ -16,6 +17,7 @@ export const dodoClientSecret = defineString("DODO_CLIENT_SECRET");
 export const dodoOauthUri = defineString("DODO_OAUTH_URI");
 export const dodoScope = defineString("DODO_SCOPE");
 export const dodoOrdersApi = defineString("DODO_ORDERS_API");
+export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 
 admin.initializeApp();
 export const db = admin.firestore();

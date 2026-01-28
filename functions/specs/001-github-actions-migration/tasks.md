@@ -24,11 +24,11 @@ Single project structure: `src/` at repository root (functions/)
 **Purpose**: Install dependencies and configure Firebase secrets
 
 - [X] T001 Install zod dependency: `npm install zod`
-- [ ] T002 [P] Set DODO_CLIENT_ID secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_ID`
-- [ ] T003 [P] Set DODO_CLIENT_SECRET secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_SECRET`
-- [ ] T004 [P] Set DODO_OAUTH_URI secret in Firebase: `firebase functions:secrets:set DODO_OAUTH_URI`
-- [ ] T005 [P] Set DODO_SCOPE secret in Firebase: `firebase functions:secrets:set DODO_SCOPE`
-- [ ] T006 [P] Set DODO_ORDERS_API secret in Firebase: `firebase functions:secrets:set DODO_ORDERS_API`
+- [X] T002 [P] Set DODO_CLIENT_ID secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_ID`
+- [X] T003 [P] Set DODO_CLIENT_SECRET secret in Firebase: `firebase functions:secrets:set DODO_CLIENT_SECRET`
+- [X] T004 [P] Set DODO_OAUTH_URI secret in Firebase: `firebase functions:secrets:set DODO_OAUTH_URI`
+- [X] T005 [P] Set DODO_SCOPE secret in Firebase: `firebase functions:secrets:set DODO_SCOPE`
+- [X] T006 [P] Set DODO_ORDERS_API secret in Firebase: `firebase functions:secrets:set DODO_ORDERS_API`
 
 **Checkpoint**: Dependencies installed and secrets configured
 
@@ -84,11 +84,11 @@ Single project structure: `src/` at repository root (functions/)
 
 ### Implementation for User Story 2
 
-- [ ] T025 [P] [US2] Implement getTodaysDeliveries() in src/services/deliveryService.ts to query deliveries in PREPARED/OFFERED/ACCEPTED states for today
-- [ ] T026 [P] [US2] Implement updateDeliveryState() in src/services/deliveryService.ts to update delivery state in Firestore
-- [ ] T027 [US2] Implement handlePreparedDelivery() logic in src/functions/checkOrdersFunction.ts: check deadline, mark as NOT_USED if passed
-- [ ] T028 [US2] Implement getMinutesConfirmedBeforePickup() helper in src/functions/checkOrdersFunction.ts using confirmationTime or carrier defaults (45 min DODO, 20 min personal)
-- [ ] T029 [US2] Test User Story 2 in Firebase Emulator: create PREPARED delivery with past deadline, trigger checkOrders, verify state changes to NOT_USED
+- [X] T025 [P] [US2] Implement getTodaysDeliveries() in src/services/deliveryService.ts to query deliveries in PREPARED/OFFERED/ACCEPTED states for today
+- [X] T026 [P] [US2] Implement updateDeliveryState() in src/services/deliveryService.ts to update delivery state in Firestore
+- [X] T027 [US2] Implement handlePreparedDelivery() logic in src/functions/checkOrdersFunction.ts: check deadline, mark as NOT_USED if passed
+- [X] T028 [US2] Implement getMinutesConfirmedBeforePickup() helper in src/functions/checkOrdersFunction.ts using confirmationTime or carrier defaults (45 min DODO, 20 min personal)
+- [X] T029 [US2] Test User Story 2 in Firebase Emulator: create PREPARED delivery with past deadline, trigger checkOrders, verify state changes to NOT_USED
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently - deliveries created and expired ones marked NOT_USED
 
@@ -102,14 +102,14 @@ Single project structure: `src/` at repository root (functions/)
 
 ### Implementation for User Story 3
 
-- [ ] T030 [P] [US3] Implement getDodoToken() in src/services/dodoService.ts using native fetch for OAuth2 token request
-- [ ] T031 [P] [US3] Implement createDodoOrder() in src/services/dodoService.ts using native fetch to post order to DODO API
-- [ ] T032 [US3] Implement updateDeliveryWithOrderCreationTime() in src/services/deliveryService.ts to set carrierOrder.createdAt timestamp
-- [ ] T033 [US3] Implement createDodoOrderFromDelivery() helper in src/functions/checkOrdersFunction.ts to build DodoOrderRequest payload from delivery/entities
-- [ ] T034 [US3] Implement handleOfferedOrAcceptedDelivery() logic in src/functions/checkOrdersFunction.ts: check if before deadline, create DODO order if carrier is 'dodo' and no existing carrierOrder
-- [ ] T035 [US3] Add 30-minute buffer for DODO confirmation deadline in handleDeliveryState() in src/functions/checkOrdersFunction.ts
-- [ ] T036 [US3] Implement error isolation: wrap order creation in try-catch, log errors, continue processing remaining deliveries
-- [ ] T037 [US3] Test User Story 3 in Firebase Emulator: create OFFERED delivery, trigger checkOrders, verify DODO API called (check logs) and carrierOrder.createdAt set
+- [X] T030 [P] [US3] Implement getDodoToken() in src/services/dodoService.ts using native fetch for OAuth2 token request
+- [X] T031 [P] [US3] Implement createDodoOrder() in src/services/dodoService.ts using native fetch to post order to DODO API
+- [X] T032 [US3] Implement updateDeliveryWithOrderCreationTime() in src/services/deliveryService.ts to set carrierOrder.createdAt timestamp
+- [X] T033 [US3] Implement createDodoOrderFromDelivery() helper in src/functions/checkOrdersFunction.ts to build DodoOrderRequest payload from delivery/entities
+- [X] T034 [US3] Implement handleOfferedOrAcceptedDelivery() logic in src/functions/checkOrdersFunction.ts: check if before deadline, create DODO order if carrier is 'dodo' and no existing carrierOrder
+- [X] T035 [US3] Add 30-minute buffer for DODO confirmation deadline in handleDeliveryState() in src/functions/checkOrdersFunction.ts
+- [X] T036 [US3] Implement error isolation: wrap order creation in try-catch, log errors, continue processing remaining deliveries
+- [X] T037 [US3] Test User Story 3 in Firebase Emulator: create OFFERED delivery, trigger checkOrders, verify DODO API called (check logs) and carrierOrder.createdAt set
 
 **Checkpoint**: At this point, User Stories 1, 2, AND 3 should work independently - deliveries created, expired ones marked NOT_USED, confirmed ones get DODO orders
 
@@ -123,9 +123,9 @@ Single project structure: `src/` at repository root (functions/)
 
 ### Implementation for User Story 4
 
-- [ ] T038 [US4] Implement handleAcceptedOrOfferedDeliveryAfterConfirmation() logic in src/functions/checkOrdersFunction.ts: check if pickup time passed, transition to IN_DELIVERY if carrierOrder exists
-- [ ] T039 [US4] Integrate US4 logic into main checkOrders flow in src/functions/checkOrdersFunction.ts
-- [ ] T040 [US4] Test User Story 4 in Firebase Emulator: create delivery with carrierOrder.createdAt and past pickup time, trigger checkOrders, verify state changes to IN_DELIVERY
+- [X] T038 [US4] Implement handleAcceptedOrOfferedDeliveryAfterConfirmation() logic in src/functions/checkOrdersFunction.ts: check if pickup time passed, transition to IN_DELIVERY if carrierOrder exists
+- [X] T039 [US4] Integrate US4 logic into main checkOrders flow in src/functions/checkOrdersFunction.ts
+- [X] T040 [US4] Test User Story 4 in Firebase Emulator: create delivery with carrierOrder.createdAt and past pickup time, trigger checkOrders, verify state changes to IN_DELIVERY
 
 **Checkpoint**: User Stories 1-4 independently functional - full food delivery lifecycle automated
 
