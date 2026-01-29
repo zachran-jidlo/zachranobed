@@ -6,7 +6,10 @@ import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { scheduledFunctionCrontab } from "./functions/checkDeliveriesInvocatorFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
-import { checkOrders } from "./functions/checkOrdersFunction";
+import {
+  checkOrders,
+  checkOrdersFunction,
+} from "./functions/checkOrdersFunction";
 import { onRequest } from "firebase-functions/v2/https";
 
 // Export for Firebase Functions (CommonJS style)
@@ -58,5 +61,5 @@ if (currentProjectId === "zachran-obed-dev") {
 if (currentProjectId === allowedProjectId) {
   exports.scheduledFunctionCrontab = scheduledFunctionCrontab;
 }
-
 exports.sendOrdersFunction = sendOrdersFunction;
+exports.checkOrdersFunction = checkOrdersFunction;

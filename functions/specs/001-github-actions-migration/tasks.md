@@ -139,13 +139,13 @@ Single project structure: `src/` at repository root (functions/)
 
 ### Implementation for User Story 5
 
-- [ ] T041 [P] [US5] Implement getTodaysBoxDeliveries() in src/services/deliveryService.ts to query BOX_DELIVERY type deliveries for today in OFFERED state
-- [ ] T042 [P] [US5] Implement updateBoxDelivery() in src/services/deliveryService.ts to update box delivery with new state, identifier, time windows, and carrierId
-- [ ] T043 [US5] Implement checkBoxReturnDeliveries() logic in src/functions/checkOrdersFunction.ts: load box deliveries, create reverse DODO order (pickup from recipient, delivery to donor), fixed time windows (10:00-10:30 pickup, 11:00-11:30 delivery)
-- [ ] T044 [US5] Integrate checkBoxReturnDeliveries() into main checkOrders flow after food delivery processing
-- [ ] T045 [US5] Wrap checkOrders() with onSchedule trigger (cron: "0,7,15,22,30,37,45,52 9-17 * * 1-5" alternating 7-8 min intervals, timeZone: "Europe/Prague") in src/functions/checkOrdersFunction.ts
-- [ ] T046 [US5] Add conditional export for checkOrdersFunction in src/index.ts (only for project "zachran-obed")
-- [ ] T047 [US5] Test User Story 5 in Firebase Emulator: create BOX_DELIVERY in OFFERED state, trigger checkOrders, verify DODO order with reversed locations and state changes to IN_DELIVERY
+- [X] T041 [P] [US5] Implement getTodaysBoxDeliveries() in src/services/deliveryService.ts to query BOX_DELIVERY type deliveries for today in OFFERED state
+- [X] T042 [P] [US5] Implement updateBoxDelivery() in src/services/deliveryService.ts to update box delivery with new state, identifier, time windows, and carrierId
+- [X] T043 [US5] Implement checkBoxReturnDeliveries() logic in src/functions/checkOrdersFunction.ts: load box deliveries, create reverse DODO order (pickup from recipient, delivery to donor), fixed time windows (10:00-10:30 pickup, 11:00-11:30 delivery)
+- [X] T044 [US5] Integrate checkBoxReturnDeliveries() into main checkOrders flow after food delivery processing
+- [X] T045 [US5] Wrap checkOrders() with onSchedule trigger (cron: "0,7,15,22,30,37,45,52 9-17 * * 1-5" alternating 7-8 min intervals, timeZone: "Europe/Prague") in src/functions/checkOrdersFunction.ts
+- [X] T046 [US5] Add conditional export for checkOrdersFunction in src/index.ts (only for project "zachran-obed")
+- [X] T047 [US5] Test User Story 5 in Firebase Emulator: create BOX_DELIVERY in OFFERED state, trigger checkOrders, verify DODO order with reversed locations and state changes to IN_DELIVERY
 
 **Checkpoint**: All user stories should now be independently functional - full food and box delivery workflows automated
 
