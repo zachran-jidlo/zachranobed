@@ -180,4 +180,18 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
 
     return true;
   }
+
+  @override
+  Stream<Iterable<OfferedFood>> observeMealsForDelivery({
+    required String deliveryId,
+  }) async* {
+    final deliveryStream = _deliveryService.observeDeliveryById(deliveryId);
+
+    yield* deliveryStream.asyncMap((delivery) async {
+      if (delivery == null) {
+        return const Iterable<OfferedFood>.empty();
+      }
+      return _mapDeliveriesToOfferedFood([delivery]);
+    });
+  }
 }

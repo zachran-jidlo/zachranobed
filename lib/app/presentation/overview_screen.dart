@@ -91,11 +91,13 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             onAcceptDeliveryPressed: () => _onAcceptDeliveryPressed(user),
             onOfferFoodPressed: _onOfferFoodPressed,
             onCountdownTimeout: _onDeliveryConfirmationTimeout,
+            onDeliveryDetailPressed: _onDeliveryDetailPressed,
           ),
         Charity() => CharityDonationStatusCard(
             charity: user,
             delivery: delivery,
             onChangePairPressed: _onChangePairPressed,
+            onDeliveryDetailPressed: _onDeliveryDetailPressed,
           ),
         _ => const SizedBox(),
       },
@@ -163,6 +165,10 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   void _onOfferFoodPressed() {
     context.router.push(const OfferFoodInitialRoute());
+  }
+
+  void _onDeliveryDetailPressed(String id) {
+    context.pushRoute(DeliveryDetailRoute(deliveryId: id));
   }
 
   void _onDeliveryConfirmationTimeout() {

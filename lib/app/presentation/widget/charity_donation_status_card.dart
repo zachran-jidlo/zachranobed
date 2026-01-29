@@ -33,12 +33,16 @@ class CharityDonationStatusCard extends StatelessWidget {
   /// Called when the user taps the "Change" button to switch active pair.
   final VoidCallback onChangePairPressed;
 
+  /// Called when the user wants to open delivery detail with already donated meals.
+  final Function(String) onDeliveryDetailPressed;
+
   /// Creates a [CharityDonationStatusCard].
   const CharityDonationStatusCard({
     super.key,
     required this.charity,
     required this.delivery,
     required this.onChangePairPressed,
+    required this.onDeliveryDetailPressed,
   });
 
   @override
@@ -198,11 +202,12 @@ class CharityDonationStatusCard extends StatelessWidget {
 
     final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered;
     if (accepted && delivery.hasMeals || delivery.state == DeliveryState.inDelivery) {
-      // TODO: Add action button
       return UiOutlineButton(
         text: context.l10n.overviewDonationStatusCardDeliveryDetailsAction,
         icon: Icons.receipt_long,
-        onPressed: () {},
+        onPressed: () {
+          onDeliveryDetailPressed(delivery.id);
+        },
       );
     }
 

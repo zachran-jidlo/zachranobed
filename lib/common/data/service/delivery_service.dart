@@ -66,6 +66,15 @@ class DeliveryService {
     return snapshot.data();
   }
 
+  /// Observes a specific delivery by its ID.
+  ///
+  /// This method sets up a Firestore stream to listen for changes in a
+  /// specific delivery document. Returns a `Stream` of `DeliveryDto?` that
+  /// emits whenever the delivery document changes.
+  Stream<DeliveryDto?> observeDeliveryById(String deliveryId) {
+    return _collection.doc(deliveryId).snapshots().map((snapshot) => snapshot.data());
+  }
+
   /// Updates the 'state' field of a delivery document identified by the
   /// specified [id] with the provided [state] value.
   Future<bool> updateDeliveryState(String id, DeliveryStateDto state) async {

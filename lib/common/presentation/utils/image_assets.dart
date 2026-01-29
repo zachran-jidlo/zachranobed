@@ -27,6 +27,7 @@ class ImageAssets {
   static const imageFoodBackgroundSquare = 'assets/image_food_background_square.png';
   static const imageFoodBackgroundDimmed = 'assets/image_food_background_dimmed.png';
   static const imageEmptyChef = 'assets/image_empty_chef.svg';
+  static const imageEmptyMeals = 'assets/image_empty_meals.svg';
   static const imageEmptyBox = 'assets/image_empty_box.svg';
   static const imageEmptyNotifications = 'assets/image_empty_notifications.svg';
   static const imageEmptyOverview = 'assets/image_empty_overview.svg';

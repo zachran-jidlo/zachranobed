@@ -5,6 +5,7 @@ This is a changelog for **ZachranObed** application.
 ## [2.0.0]
 ### Added
 - **ZOB-381** Add new UI components and color definitions from new design system.
+- **ZOB-393** Add new delivery details screen.
 
 ### Fixed
 
@@ -23,6 +24,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-388** Update force update screen with new design.
 - **ZOB-389** Update profile and sub-profile screens with new design.
 - **ZOB-390** Update change pair screen with new design.
+- **ZOB-391** Update overview screen with new design.
 
 ### Removed
 

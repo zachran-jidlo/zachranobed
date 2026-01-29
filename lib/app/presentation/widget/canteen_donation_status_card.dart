@@ -5,6 +5,7 @@ import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
@@ -40,6 +41,9 @@ class CanteenDonationStatusCard extends StatelessWidget {
   /// Called when the user wants to offer food after accepting delivery.
   final VoidCallback onOfferFoodPressed;
 
+  /// Called when the user wants to open delivery detail with already donated meals.
+  final Function(String) onDeliveryDetailPressed;
+
   /// Called when the confirmation countdown timer reaches zero.
   final VoidCallback onCountdownTimeout;
 
@@ -51,6 +55,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
     required this.onChangePairPressed,
     required this.onAcceptDeliveryPressed,
     required this.onOfferFoodPressed,
+    required this.onDeliveryDetailPressed,
     required this.onCountdownTimeout,
   });
 
@@ -227,14 +232,15 @@ class CanteenDonationStatusCard extends StatelessWidget {
       );
     }
 
-    // TODO: Add action button
-    // if (delivery.hasMeals) {
-    //   return UiOutlineButton(
-    //     text: context.l10n.overviewDonationStatusCardDeliveryDetailsAction,
-    //     icon: Icons.receipt_long,
-    //     onPressed: () {},
-    //   );
-    // }
+    if (delivery.hasMeals) {
+      return UiOutlineButton(
+        text: context.l10n.overviewDonationStatusCardDeliveryDetailsAction,
+        icon: Icons.receipt_long,
+        onPressed: () {
+          onDeliveryDetailPressed(delivery.id);
+        },
+      );
+    }
 
     return UiPrimaryButton(
       text: context.l10n.overviewCanteenDonationStatusCardOfferAction,
