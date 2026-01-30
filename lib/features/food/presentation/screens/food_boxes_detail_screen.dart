@@ -7,6 +7,7 @@ import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/content_with_loading.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
@@ -106,43 +107,43 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
   }
 
   Widget _buildCheckupActions(BuildContext context) {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    return Row(
-      spacing: 8.0,
-      children: [
-        Expanded(
-          child: UiOutlineButton(
-            text: context.l10n.foodBoxesCheckupInProgressMismatchesAction,
-            size: UiButtonSize.medium(fullWidth: true),
-            onPressed: () {
-              _withLoading(
-                context: context,
-                action: () => _reportMismatch.invoke(widget.user),
-              );
-            },
+    return ContentWithLoading(
+      isLoading: _isLoading,
+      child: Row(
+        spacing: 8.0,
+        children: [
+          Expanded(
+            child: UiOutlineButton(
+              text: context.l10n.foodBoxesCheckupInProgressMismatchesAction,
+              size: UiButtonSize.medium(fullWidth: true),
+              onPressed: () {
+                _withLoading(
+                  context: context,
+                  action: () => _reportMismatch.invoke(widget.user),
+                );
+              },
+            ),
           ),
-        ),
-        Expanded(
-          child: UiPrimaryButton(
-            text: context.l10n.foodBoxesCheckupInProgressMatchesAction,
-            size: UiButtonSize.medium(fullWidth: true),
-            onPressed: () {
-              _withLoading(
-                context: context,
-                action: () => _verifyCheckup.invoke(widget.user),
-                onSuccess: () {
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupSuccessMessage),
-                  );
-                },
-              );
-            },
+          Expanded(
+            child: UiPrimaryButton(
+              text: context.l10n.foodBoxesCheckupInProgressMatchesAction,
+              size: UiButtonSize.medium(fullWidth: true),
+              onPressed: () {
+                _withLoading(
+                  context: context,
+                  action: () => _verifyCheckup.invoke(widget.user),
+                  onSuccess: () {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupSuccessMessage),
+                    );
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

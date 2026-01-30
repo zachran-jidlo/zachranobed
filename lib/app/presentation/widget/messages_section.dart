@@ -6,6 +6,7 @@ import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
+import 'package:zachranobed/common/presentation/widget/other/content_with_loading.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_check_needed.dart';
@@ -38,7 +39,7 @@ class MessagesSection extends StatefulWidget {
 
 class _MessagesSectionState extends State<MessagesSection> {
   late final DelayFoodBoxesCheckupUseCase _delayCheckup;
-  bool _isLoading = false;
+  bool _isFoodBoxesCheckupLoading = false;
 
   @override
   void initState() {
@@ -48,13 +49,6 @@ class _MessagesSectionState extends State<MessagesSection> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: const Center(child: CircularProgressIndicator()),
-      );
-    }
-
     final messages = _buildMessages(context, widget.user);
 
     if (messages.isEmpty) {
@@ -82,38 +76,41 @@ class _MessagesSectionState extends State<MessagesSection> {
   }
 
   Widget _buildFoodBoxesCheckupTileCheckNeeded(BuildContext context, UserData user, bool isDelayAvailable) {
-    return FoodBoxesCheckupTileCheckNeeded(
-      isDelayAvailable: isDelayAvailable,
-      onDelayPressed: () async {
-        setState(() {
-          _isLoading = true;
-        });
+    return ContentWithLoading(
+      isLoading: _isFoodBoxesCheckupLoading,
+      child: FoodBoxesCheckupTileCheckNeeded(
+        isDelayAvailable: isDelayAvailable,
+        onDelayPressed: () async {
+          setState(() {
+            _isFoodBoxesCheckupLoading = true;
+          });
 
-        final success = await _delayCheckup.invoke(user);
-        if (context.mounted) {
-          if (success) {
-            await HelperService.loadUserInfo(context);
-            widget.refreshCheckupState();
-          } else {
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupErrorMessage),
-            );
+          final success = await _delayCheckup.invoke(user);
+          if (context.mounted) {
+            if (success) {
+              await HelperService.loadUserInfo(context);
+              widget.refreshCheckupState();
+            } else {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupErrorMessage),
+              );
+            }
           }
-        }
 
-        setState(() {
-          _isLoading = false;
-        });
-      },
-      onCheckPressed: () {
-        context.router.push(
-          FoodBoxesDetailRoute(
-            user: user,
-            isCheckupMode: true,
-          ),
-        );
-      },
+          setState(() {
+            _isFoodBoxesCheckupLoading = false;
+          });
+        },
+        onCheckPressed: () {
+          context.router.push(
+            FoodBoxesDetailRoute(
+              user: user,
+              isCheckupMode: true,
+            ),
+          );
+        },
+      ),
     );
   }
 }
