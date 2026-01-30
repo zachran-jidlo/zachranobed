@@ -29,6 +29,7 @@ class FoodBoxesCheckupCheckNeeded extends FoodBoxesCheckupState {
   FoodBoxesCheckupCheckNeeded({required this.isDelayAvailable});
 }
 
+/// TODO: Remove?
 /// Represents the "Check In Progress" state of a food box checkup.
 class FoodBoxesCheckupCheckInProgress extends FoodBoxesCheckupState {}
 
