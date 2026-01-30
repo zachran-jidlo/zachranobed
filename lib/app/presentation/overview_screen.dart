@@ -69,7 +69,10 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             const SizedBox(height: 8.0),
             _buildDonationStatusCard(context, user),
             const SizedBox(height: 24.0),
-            FoodBoxesOverviewSection(user: user),
+            FoodBoxesOverviewSection(
+              user: user,
+              checkupState: _boxesCheckupState,
+            ),
             ..._buildNewBoxDeliveryButton(context, user),
             const SizedBox(height: 24.0),
           ],
