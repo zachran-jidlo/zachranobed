@@ -17,6 +17,13 @@ import {
   formatCzechDate,
 } from "../utils/dateUtils";
 import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
+import {
+  dodoClientId,
+  dodoClientSecret,
+  dodoOauthUri,
+  dodoScope,
+  dodoOrdersApi,
+} from "../config/firebase";
 
 /**
  * Get the number of minutes before pickup that confirmation is required.
@@ -512,6 +519,13 @@ export const checkOrdersFunction = onSchedule(
   {
     schedule: "0,7,15,22,30,37,45,52 9-17 * * 1-5",
     timeZone: "Europe/Prague",
+    secrets: [
+      dodoClientId,
+      dodoClientSecret,
+      dodoOauthUri,
+      dodoScope,
+      dodoOrdersApi,
+    ],
   },
   async () => {
     await checkOrders();

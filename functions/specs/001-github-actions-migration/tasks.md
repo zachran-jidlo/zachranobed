@@ -155,20 +155,20 @@ Single project structure: `src/` at repository root (functions/)
 
 **Purpose**: Final integration, cleanup, and verification
 
-- [ ] T048 [P] Add lazy caching for entities and entity pairs in entityService.ts (module-level variables, check if null before fetching)
-- [ ] T049 [P] Add comprehensive error logging with delivery context (deliveryIdentifier, donorId, recipientId) throughout checkOrdersFunction.ts
-- [ ] T050 [P] Verify all functions follow double-quote string convention per ESLint config
-- [ ] T051 [P] Verify all functions have explicit return types per TypeScript strict mode
-- [ ] T052 Run npm run lint and fix any remaining issues
-- [ ] T053 Run npm run build and verify successful TypeScript compilation
-- [ ] T054 Update checkDeliveriesInvocatorFunction.ts: remove GitHub Actions trigger logic, add comment "Replaced by checkOrdersFunction - kept for reference"
-- [ ] T055 Test full workflow in Firebase Emulator following quickstart.md: sendOrders creates deliveries, checkOrders processes state transitions and creates DODO orders
-- [ ] T056 Test error isolation: Create delivery with missing entity reference, verify error logged and remaining deliveries process successfully
-- [ ] T057 Verify production-only export: Check src/index.ts exports sendOrdersFunction and checkOrdersFunction only when GCLOUD_PROJECT equals "zachran-obed"
-- [ ] T058 Deploy to DEV environment: `firebase use default && npm run deploy`
-- [ ] T059 Monitor DEV logs for 24 hours: `firebase functions:log --follow`
-- [ ] T060 Compare DEV results with GitHub Actions output for functional parity (run both in parallel)
-- [ ] T061 Document any deviations from old solution in specs/001-github-actions-migration/migration-notes.md
+- [X] T048 [P] Add lazy caching for entities and entity pairs in entityService.ts (module-level variables, check if null before fetching)
+- [X] T049 [P] Add comprehensive error logging with delivery context (deliveryIdentifier, donorId, recipientId) throughout checkOrdersFunction.ts
+- [X] T050 [P] Verify all functions follow double-quote string convention per ESLint config
+- [X] T051 [P] Verify all functions have explicit return types per TypeScript strict mode
+- [X] T052 Run npm run lint and fix any remaining issues
+- [X] T053 Run npm run build and verify successful TypeScript compilation
+- [X] T054 Update checkDeliveriesInvocatorFunction.ts: remove GitHub Actions trigger logic, add comment "Replaced by checkOrdersFunction - kept for reference"
+- [X] T055 Test full workflow in Firebase Emulator following quickstart.md: sendOrders creates deliveries, checkOrders processes state transitions and creates DODO orders
+- [X] T056 Test error isolation: Create delivery with missing entity reference, verify error logged and remaining deliveries process successfully
+- [X] T057 Verify production-only export: Check src/index.ts exports sendOrdersFunction and checkOrdersFunction only when GCLOUD_PROJECT equals "zachran-obed"
+- [X] T058 Deploy to DEV environment: `firebase use default && npm run deploy`
+- [X] T059 Monitor DEV logs for 24 hours: `firebase functions:log --follow`
+- [X] T060 Compare DEV results with GitHub Actions output for functional parity (run both in parallel)
+- [X] T061 Document any deviations from old solution in specs/001-github-actions-migration/migration-notes.md
 
 ---
 

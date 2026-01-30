@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.
  * @return {boolean} - True if the date is today, false otherwise.
@@ -13,66 +15,68 @@ export function isToday(date: Date): boolean {
 
 /**
  * Get the next business day, skipping weekends.
+ * Returns midnight Prague time for the target date.
  * @param {number} daysInFuture - Number of days in the future (default: 1)
- * @return {Date} - The next business day
+ * @return {Date} - The next business day at midnight Prague time
  */
 export function getNextBusinessDay(daysInFuture: number = 1): Date {
-  const date = new Date();
-  date.setDate(date.getDate() + daysInFuture);
-  date.setHours(0, 0, 0, 0);
+  let pragueDate = DateTime.now()
+    .setZone("Europe/Prague")
+    .plus({ days: daysInFuture })
+    .startOf("day"); // Midnight Prague time
 
-  // Move date to the closest Monday if it's a weekend
-  if (date.getDay() === 0) {
-    // Sunday
-    date.setDate(date.getDate() + 1); // Move to Monday
-  } else if (date.getDay() === 6) {
+  // Move to Monday if weekend
+  if (pragueDate.weekday === 6) {
     // Saturday
-    date.setDate(date.getDate() + 2); // Move to Monday
+    pragueDate = pragueDate.plus({ days: 2 });
+  } else if (pragueDate.weekday === 7) {
+    // Sunday
+    pragueDate = pragueDate.plus({ days: 1 });
   }
 
-  return date;
+  return pragueDate.toJSDate();
 }
 
 /**
  * Calculates the date after a specified number of days in the future, with a given time.
  * If the calculated date falls on a weekend, it is moved to the closest Monday.
+ * Time is interpreted as Prague timezone.
  * @param {number} daysInFuture - The number of days in the future
- * @param {string} time - The time in HH:MM format (default: "00:00")
- * @return {Date} - The calculated date
+ * @param {string} time - The time in HH:MM format in Prague timezone (default: "00:00")
+ * @return {Date} - The calculated date with proper UTC representation of Prague time
  */
 export function getDateInFuture(
   daysInFuture: number,
   time: string = "00:00"
 ): Date {
-  const date = new Date();
-  const offset = date.getTimezoneOffset() / 60; // Minutes to hours
+  const [hours, minutes] = time.split(":").map(Number);
 
-  date.setDate(date.getDate() + daysInFuture);
-  const hours = parseInt(time.split(":")[0]);
-  const utcHours = hours + offset;
-  date.setUTCHours(utcHours);
-  date.setUTCMinutes(parseInt(time.split(":")[1]));
-  date.setUTCSeconds(0);
+  let pragueDate = DateTime.now()
+    .setZone("Europe/Prague")
+    .plus({ days: daysInFuture })
+    .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
-  // Move date to the closest Monday if it's a weekend
-  if (date.getDay() === 0) {
-    // Sunday
-    date.setDate(date.getDate() + 1); // Move to Monday
-  } else if (date.getDay() === 6) {
+  // Move to Monday if weekend
+  if (pragueDate.weekday === 6) {
     // Saturday
-    date.setDate(date.getDate() + 2); // Move to Monday
+    pragueDate = pragueDate.plus({ days: 2 });
+  } else if (pragueDate.weekday === 7) {
+    // Sunday
+    pragueDate = pragueDate.plus({ days: 1 });
   }
 
-  return date;
+  return pragueDate.toJSDate();
 }
 
 /**
  * Format date in Czech locale for delivery identifier.
+ * Uses Prague timezone to ensure consistency with deliveryDate field.
  * @param {Date} date - The date to format
- * @return {string} - Date string in format "d. m. yyyy"
+ * @return {string} - Date string in format "d.m.yyyy"
  */
 export function formatCzechDate(date: Date): string {
-  return date.toLocaleDateString("cs").toLowerCase().replace(/ /g, "");
+  const pragueDate = DateTime.fromJSDate(date).setZone("Europe/Prague");
+  return `${pragueDate.day}.${pragueDate.month}.${pragueDate.year}`;
 }
 
 /**

@@ -1,6 +1,14 @@
-import {Timestamp, DocumentReference} from "firebase-admin/firestore";
-import {db} from "../config/firebase";
-import {Delivery, DeliveryState, DeliveryType, DeliveryTimeWindow, CarrierOrder} from "../models";
+import { Timestamp, DocumentReference } from "firebase-admin/firestore";
+import { db } from "../config/firebase";
+import {
+  Delivery,
+  DeliveryState,
+  DeliveryType,
+  DeliveryTimeWindow,
+  CarrierOrder,
+} from "../models";
+import { DateTime } from "luxon";
+import { logger } from "firebase-functions/v2";
 
 /**
  * Create a delivery document in Firestore with PREPARED state.
@@ -42,24 +50,44 @@ export async function createDeliveryDocument(deliveryData: {
     delivery.confirmationTime = deliveryData.confirmationTime;
   }
 
-  await db.collection("deliveries").doc(deliveryData.deliveryIdentifier).set(delivery);
+  await db
+    .collection("deliveries")
+    .doc(deliveryData.deliveryIdentifier)
+    .set(delivery);
 }
 
 /**
  * Load today's deliveries in specified states.
+ * Uses Prague timezone to match how deliveries are created.
  * @param {DeliveryState[]} states - The states to filter by
  * @return {Promise<Delivery[]>} - Array of deliveries
  */
 export async function getTodaysDeliveries(
-  states: DeliveryState[]
+  states: DeliveryState[],
 ): Promise<Delivery[]> {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayTimestamp = Timestamp.fromDate(today);
+  // Get today's date range in Prague timezone
+  const todayStart = DateTime.now()
+    .setZone("Europe/Prague")
+    .startOf("day")
+    .toJSDate();
 
+  const todayEnd = DateTime.now()
+    .setZone("Europe/Prague")
+    .endOf("day")
+    .toJSDate();
+
+  const startTimestamp = Timestamp.fromDate(todayStart);
+  const endTimestamp = Timestamp.fromDate(todayEnd);
+
+  logger.debug(
+    `Loading deliveries between ${startTimestamp.toDate().toISOString()} and ${endTimestamp.toDate().toISOString()} in states: ${states.join(", ")}`,
+  );
+
+  // Use range query to handle deliveries with milliseconds in timestamp
   const snapshot = await db
     .collection("deliveries")
-    .where("deliveryDate", "==", todayTimestamp)
+    .where("deliveryDate", ">=", startTimestamp)
+    .where("deliveryDate", "<=", endTimestamp)
     .where("state", "in", states)
     .get();
 
@@ -77,9 +105,9 @@ export async function getTodaysDeliveries(
  */
 export async function updateDeliveryState(
   deliveryRef: DocumentReference,
-  state: DeliveryState
+  state: DeliveryState,
 ): Promise<void> {
-  await deliveryRef.update({state});
+  await deliveryRef.update({ state });
 }
 
 /**
@@ -90,9 +118,9 @@ export async function updateDeliveryState(
  */
 export async function updateDeliveryWithOrderCreationTime(
   deliveryRef: DocumentReference,
-  carrierOrder: CarrierOrder
+  carrierOrder: CarrierOrder,
 ): Promise<void> {
-  await deliveryRef.update({carrierOrder});
+  await deliveryRef.update({ carrierOrder });
 }
 
 /**
@@ -100,13 +128,25 @@ export async function updateDeliveryWithOrderCreationTime(
  * @return {Promise<Delivery[]>} - Array of box deliveries
  */
 export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayTimestamp = Timestamp.fromDate(today);
+  // Get today's date range in Prague timezone
+  const todayStart = DateTime.now()
+    .setZone("Europe/Prague")
+    .startOf("day")
+    .toJSDate();
 
+  const todayEnd = DateTime.now()
+    .setZone("Europe/Prague")
+    .endOf("day")
+    .toJSDate();
+
+  const startTimestamp = Timestamp.fromDate(todayStart);
+  const endTimestamp = Timestamp.fromDate(todayEnd);
+
+  // Use range query to handle deliveries with milliseconds in timestamp
   const snapshot = await db
     .collection("deliveries")
-    .where("deliveryDate", "==", todayTimestamp)
+    .where("deliveryDate", ">=", startTimestamp)
+    .where("deliveryDate", "<=", endTimestamp)
     .where("type", "==", "BOX_DELIVERY")
     .where("state", "==", "OFFERED")
     .get();
@@ -135,7 +175,7 @@ export async function updateBoxDelivery(
   deliveryDate: Date,
   pickupTimeWindow: DeliveryTimeWindow,
   deliveryTimeWindow: DeliveryTimeWindow,
-  carrierId: string
+  carrierId: string,
 ): Promise<void> {
   await deliveryRef.update({
     state,
