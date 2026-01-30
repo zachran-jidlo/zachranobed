@@ -281,7 +281,7 @@
     "foodBoxesCheckupSuccessMessage": "Děkujeme za spolupráci ",
     "foodBoxesCheckupVerifiedLabel": "Zkontrolováno",
     "foodBoxesCheckupNeededCardTitle": "Kontrola krabiček",
-    "foodBoxesCheckupNeededCardDefaultDescription": "Je čas na pravidelnou kontrolu stavu krabiček.",
+    "foodBoxesCheckupNeededCardDefaultDescription": "Proveďte pravidelnou kontrolu vratných krabiček.",
     "foodBoxesCheckupNeededCardMandatoryDescription": "Pro další práci s aplikací je zapotřebí provést pravidelnou kontrolu krabiček.",
     "foodBoxesCheckupNeededCardDelayAction": "Později",
     "foodBoxesCheckupNeededCardCheckAction": "Zkontrolovat",
@@ -289,6 +289,16 @@
     "foodBoxesCheckupInProgressDescription": "Zkontroluje stav jednotlivých typů krabiček zda jejich počty souhlasí.",
     "foodBoxesCheckupInProgressMatchesAction": "Vše souhlasí",
     "foodBoxesCheckupInProgressMismatchesAction": "Nesouhlasí",
+    "foodBoxesCheckupDelayedCountdownTemplate": "Na kontrolu máte {time}",
+    "@foodBoxesCheckupDelayedCountdownTemplate": {
+        "placeholders": {
+            "time": {
+                "type": "String",
+                "example": "2 dny"
+            }
+        }
+    },
+    "foodBoxesCheckupMismatchTitle": "Nahlášený nesoulad",
 
     "notificationsTitle": "Notifikace",
     "notificationsLast7DaysTitle": "Posledních 7 dní",
