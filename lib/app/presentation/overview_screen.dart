@@ -117,7 +117,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   }
 
   List<Widget> _buildNewBoxDeliveryButton(BuildContext context, UserData user) {
-    if (user is! Charity) {
+    if (user is! Charity || !user.activePair.usesReturnableFoodBoxes) {
       return [];
     }
 

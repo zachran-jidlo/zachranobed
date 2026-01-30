@@ -37,6 +37,11 @@ extension FoodBoxesCheckupDtoMapper on FoodBoxesCheckupStatus {
         return FoodBoxesCheckupStatusDto.delayed;
       case FoodBoxesCheckupStatus.mismatch:
         return FoodBoxesCheckupStatusDto.mismatch;
+
+      // There is no DTO representation of "not-needed" status, it is always inferred from the fact if entity-pair
+      // uses returnable food boxes.
+      case FoodBoxesCheckupStatus.notNeeded:
+        return FoodBoxesCheckupStatusDto.ok;
     }
   }
 }

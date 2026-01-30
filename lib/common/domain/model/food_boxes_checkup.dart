@@ -19,12 +19,6 @@ class FoodBoxesCheckup {
     required this.verifiedAt,
   });
 
-  /// Creates a default [FoodBoxesCheckup] instance with an "ok" status for new users.
-  FoodBoxesCheckup.createDefault()
-      : status = FoodBoxesCheckupStatus.ok,
-        checkAt = DateTime.now(),
-        verifiedAt = null;
-
   /// Determines whether a checkup is currently needed.
   bool isCheckupNeeded() {
     final state = getState();
@@ -47,6 +41,7 @@ class FoodBoxesCheckup {
           final isDelayAvailable = delayedUntil.isAfter(now);
           state = FoodBoxesCheckupCheckNeeded(isDelayAvailable: isDelayAvailable);
         }
+        break;
 
       case FoodBoxesCheckupStatus.delayed:
         final delayedUntil = checkAt.add(const Duration(days: Constants.foodBoxesCheckupMaxDelay));
@@ -55,9 +50,15 @@ class FoodBoxesCheckup {
         } else {
           state = FoodBoxesCheckupCheckNeeded(isDelayAvailable: false);
         }
+        break;
 
       case FoodBoxesCheckupStatus.mismatch:
         state = FoodBoxesCheckupMismatch();
+        break;
+
+      case FoodBoxesCheckupStatus.notNeeded:
+        state = FoodBoxesCheckupAllGood(isVerified: false);
+        break;
     }
 
     return state;
@@ -74,4 +75,7 @@ enum FoodBoxesCheckupStatus {
 
   /// A mismatch was found during the checkup.
   mismatch,
+
+  /// The checkup is not needed.
+  notNeeded,
 }
