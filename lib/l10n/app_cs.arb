@@ -4,24 +4,6 @@
     "commonClose": "Zavřít",
     "commonBack": "Zpět",
     "commonCancel": "Zrušit",
-    "commonDaysCount" : "{count, plural, zero{0 dní} one{1 den} few{{count} dny} other{{count} dní}}",
-    "@commonDaysCount" : {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "42"
-            }
-        }
-    },
-    "commonHoursCount" : "{count, plural, zero{0 hodin} one{1 hodina} few{{count} hodiny} other{{count} hodin}}",
-    "@commonHoursCount" : {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "42"
-            }
-        }
-    },
     "commonDaysAccusativeCount" : "{count, plural, zero{0 dní} one{1 den} few{{count} dny} other{{count} dní}}",
     "@commonDaysAccusativeCount" : {
         "placeholders": {
@@ -90,17 +72,8 @@
     "navigationLabelOverview": "Přehled",
     "navigationLabelHistory": "Historie",
     "navigationLabelNotifications": "Notifikace",
-    "overview": "Přehled",
     "historyTitle": "Historie",
-    "contactCarrier": "Kontaktovat dopravce",
-    "boxStatisticsHeader": "Stav krabiček",
-    "lastDonated": "Naposledy darováno",
-    "savedLunches": "Záchráněno pokrmů",
-    "total": "Celkem",
-    "lastThirtyDays": "Za posledních 30 dní",
     "offerFood": "Darovat pokrmy",
-    "offerLeftoverFood": "Nabídka zbylých pokrmů",
-    "offerFoodDescription": "Vyplňte prosím tento formulář, který slouží k evidenci pokrmů. Děkujeme, že zachraňujete jídlo a pomáháte lidem v nouzi.",
     "foodName": "Název pokrmu",
     "allergens": "Alergeny",
     "allergensList": "Seznam alergenů",
@@ -125,18 +98,7 @@
     "foodTemperatureWithCelsius": "Teplota [°C]",
     "numberOfServings": "Počet porcí",
     "numberOfPackages": "Počet kusů",
-    "boxType": "Typ krabičky",
-    "box": "Typ krabičky",
     "preparedAt": "Datum výroby",
-    "preparedAtTemplate": "Datum a čas výroby: {dateTime}",
-    "@preparedAtTemplate": {
-      "placeholders": {
-        "dateTime": {
-          "type": "String",
-          "example": "28.11.2024  20:00"
-        }
-      }
-    },
     "consumeBy": "Spotřebujte do",
     "consumeByTemplate": "Datum a čas spotřeby: {dateTime}",
     "@consumeByTemplate": {
@@ -153,7 +115,6 @@
     "foodDateTimeLabelMinus1Day": "Včera",
     "foodDateTimeLabelMinus2Days": "-2 dny",
     "foodDateTimeLabelOnPackaging": "Viz obal",
-    "addAnotherFood": "Přidat další",
     "foodDonationConfirmation": "Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.",
     "shippingOrderConfirmation": "Vratku krabiček do jídelny jste úspěšně objednali \u2764. Děkujeme, že pomáháte.",
     "offerError": "Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.",
@@ -165,7 +126,6 @@
     "continueTheOffer": "Pokračovat",
     "cancelOfferDialogContent": "Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?",
     "cancelShippingOfBoxesDialogContent": "Máte rozpracovanou objednávku vratky krabiček. Opravdu si ji přejete zahodit?",
-    "filter": "Filtrovat",
     "organization": "Organizace",
     "donor": "Dárce",
     "recipient": "Příjemce",
@@ -175,9 +135,7 @@
     "settings": "Nastavení",
     "changePassword": "Změnit heslo",
     "about": "Více o projektu",
-    "sponsors": "Sponzoři",
     "more": "Další",
-    "rate": "Ohodnotit aplikaci",
     "privacyProtection": "Ochrana soukromí",
     "termsOfUse": "Podmínky používání",
     "currentPassword": "Současné heslo",
@@ -201,7 +159,6 @@
         }
       }
     },
-    "shippingOfBoxes": "Vratka krabiček",
     "shippingOfBoxesToCanteen": "Vratka krabiček do jídelny",
     "shippingOfBoxesEmptyTitle": "Nelze zadat vratku krabiček",
     "shippingOfBoxesEmptyDescription": "V tuto chvíli není možné zadat vratku krabiček. Buď nemáte v evidenci žádné volné krabičky nebo je systém vypnutý (víkend).",
@@ -209,7 +166,6 @@
     "shippingOfBoxesEmptyFormMessage": "Nebyly vybrány žádné krabičky k vrácení.",
     "shippingOfBoxesDescription": "Zadejte skutečný počet krabiček, které vracíte.",
     "orderShipping": "Vrátit krabičky",
-    "addAnotherBoxType": "Přidat další typ krabičky",
     "passwordReset": "Zapomenuté heslo",
     "resetPassword": "Odeslat",
     "passwordResetExplanation": "Na zadanou e-mailovou adresu vám dojde odkaz pro obnovení hesla.",
@@ -219,8 +175,6 @@
     "profileScreenTitle": "Profil",
     "donationsEmptyTitle": "Zatím nebyly darovány žádné pokrmy",
     "donationsEmptyDescription": "Jakmile proběhne první darování, najdete zde historii darovaných pokrmů.",
-    "boxesEmptyTitle": "Zatím neproběhla žádná přeprava krabiček",
-    "boxesEmptyDescription": "Historie přepravy krabiček není k dispozici, přeprava ještě neproběhla.",
     "appTermsTitle": "Než budete pokračovat,",
     "appTermsSubtitle": "tak bychom od vás potřebovali souhlas s podmínkami s účastí na projektu.",
     "appTermsNewVersionTitle": "Aktualizovali jsme podmínky.",
@@ -246,10 +200,6 @@
         }
       }
     },
-    "offerFoodFormRemoveAction": "Smazat pokrm",
-    "offerFoodFormEditDialogTitle": "Zahodit pokrm?",
-    "offerFoodFormEditDialogContent": "Obsah rozpracovaného pokrmu bude vymazán. Opravdu chcete připravovaný pokrm zahodit?",
-    "offerFoodFormEditDialogConfirmAction": "Zahodit",
     "offerFoodFormRemoveDialogTitle": "Smazat pokrm?",
     "offerFoodFormRemoveDialogContent": "Opravdu chcete zadaný pokrm smazat z nabídky darovaných jídel? ",
     "offerFoodFormRemoveDialogConfirmAction": "Smazat pokrm",
