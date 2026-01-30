@@ -9,7 +9,7 @@ import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart
 
 /// A banner widget displayed when a food boxes mismatch has been reported.
 class FoodBoxesCheckupTileMismatch extends StatelessWidget {
-  /// Creates a [CheckupBannerMismatch] widget.
+  /// Creates a [FoodBoxesCheckupTileMismatch] widget.
   const FoodBoxesCheckupTileMismatch({
     super.key,
   });

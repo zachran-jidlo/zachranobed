@@ -23,7 +23,7 @@
         }
     },
     "commonDaysAccusativeCount" : "{count, plural, zero{0 dní} one{1 den} few{{count} dny} other{{count} dní}}",
-    "@commonDaysCount" : {
+    "@commonDaysAccusativeCount" : {
         "placeholders": {
             "count": {
                 "type": "int",
@@ -32,7 +32,7 @@
         }
     },
     "commonHoursAccusativeCount" : "{count, plural, zero{0 hodin} one{1 hodinu} few{{count} hodiny} other{{count} hodin}}",
-    "@commonHoursCount" : {
+    "@commonHoursAccusativeCount" : {
         "placeholders": {
             "count": {
                 "type": "int",

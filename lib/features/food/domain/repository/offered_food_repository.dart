@@ -6,7 +6,6 @@ import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-
   /// Fetches a page of offered food history with pagination support.
   ///
   /// Use [startAfterDate] to fetch items after the last delivery date from the previous page.

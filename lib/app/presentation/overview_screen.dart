@@ -193,6 +193,10 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         _ => (null, null),
       };
 
+      if (title == null || content == null) {
+        return false;
+      }
+
       showDialog(
         context: context,
         builder: (context) => UiDialog(
@@ -205,14 +209,16 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             ),
             UiPrimaryButton(
               text: context.l10n.foodBoxesCheckupDialogConfirmAction,
-              onPressed: () {
-                context.maybePop();
-                context.router.push(
-                  FoodBoxesDetailRoute(
-                    user: user,
-                    isCheckupMode: true,
-                  ),
-                );
+              onPressed: () async {
+                await context.maybePop();
+                if (context.mounted) {
+                  context.router.push(
+                    FoodBoxesDetailRoute(
+                      user: user,
+                      isCheckupMode: true,
+                    ),
+                  );
+                }
               },
             ),
           ],
