@@ -323,7 +323,8 @@
     "notificationsLast7DaysTitle": "Posledních 7 dní",
     "notificationsEmptyTitle": "V tuto chvíli tu nejsou žádné notifikace.",
 
-    "foodBoxesCheckupDialogTitle": "Nelze darovat",
+    "foodBoxesCheckupDialogCanteenTitle": "Nelze darovat",
+    "foodBoxesCheckupDialogCharityTitle": "Nelze zadat vratku",
     "foodBoxesCheckupDialogCanteenContent": "Abyste mohli darovat pokrmy, musíte nejdříve provést kontrolu stavu vratných krabiček.",
     "foodBoxesCheckupDialogCharityContent": "Abyste mohli zadat vratku krabiček, musíte nejdříve provést kontrolu stavu vratných krabiček.",
     "foodBoxesCheckupDialogConfirmAction": "Zkontrolovat",

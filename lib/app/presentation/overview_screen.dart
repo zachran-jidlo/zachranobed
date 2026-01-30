@@ -63,7 +63,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         child: UiWelcomeTile(
           entityName: user.establishmentName,
           onPressed: () {
-              context.router.push(const ProfileRoute());
+            context.router.push(const ProfileRoute());
           },
         ),
       ),
@@ -181,16 +181,22 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   bool _showCheckupNeededDialog(UserData user) {
     final checkupState = user.getFoodBoxesCheckup(user.activePair).getState();
     if (checkupState is FoodBoxesCheckupCheckNeeded && !checkupState.isDelayAvailable) {
-      final content = switch (user) {
-        Canteen() => context.l10n.foodBoxesCheckupDialogCanteenContent,
-        Charity() => context.l10n.foodBoxesCheckupDialogCharityContent,
-        _ => null,
+      final (title, content) = switch (user) {
+        Canteen() => (
+            context.l10n.foodBoxesCheckupDialogCanteenTitle,
+            context.l10n.foodBoxesCheckupDialogCanteenContent,
+          ),
+        Charity() => (
+            context.l10n.foodBoxesCheckupDialogCharityTitle,
+            context.l10n.foodBoxesCheckupDialogCharityContent,
+          ),
+        _ => (null, null),
       };
 
       showDialog(
         context: context,
         builder: (context) => UiDialog(
-          title: context.l10n.foodBoxesCheckupDialogTitle,
+          title: title,
           content: content,
           actions: [
             UiTextButton(
