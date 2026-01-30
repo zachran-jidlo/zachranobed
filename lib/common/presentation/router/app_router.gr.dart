@@ -10,11 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i19;
-import 'package:collection/collection.dart' as _i24;
-import 'package:flutter/foundation.dart' as _i21;
+import 'package:collection/collection.dart' as _i23;
 import 'package:flutter/material.dart' as _i20;
 import 'package:zachranobed/app/presentation/home_screen.dart' as _i11;
-import 'package:zachranobed/common/domain/model/user_data.dart' as _i22;
+import 'package:zachranobed/common/domain/model/user_data.dart' as _i21;
 import 'package:zachranobed/features/activepair/presentation/change_active_pair_screen.dart'
     as _i2;
 import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart'
@@ -22,8 +21,8 @@ import 'package:zachranobed/features/appTerms/presentation/app_terms_screen.dart
 import 'package:zachranobed/features/debug/components_screen.dart' as _i4;
 import 'package:zachranobed/features/debug/debug_screen.dart' as _i6;
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart'
-    as _i23;
-import 'package:zachranobed/features/food/domain/model/food_info.dart' as _i25;
+    as _i22;
+import 'package:zachranobed/features/food/domain/model/food_info.dart' as _i24;
 import 'package:zachranobed/features/food/presentation/screens/delivery_detail_screen.dart'
     as _i7;
 import 'package:zachranobed/features/food/presentation/screens/food_boxes_detail_screen.dart'
@@ -189,7 +188,7 @@ class DebugRoute extends _i19.PageRouteInfo<void> {
 /// [_i7.DeliveryDetailScreen]
 class DeliveryDetailRoute extends _i19.PageRouteInfo<DeliveryDetailRouteArgs> {
   DeliveryDetailRoute({
-    _i21.Key? key,
+    _i20.Key? key,
     required String deliveryId,
     List<_i19.PageRouteInfo>? children,
   }) : super(
@@ -215,7 +214,7 @@ class DeliveryDetailRoute extends _i19.PageRouteInfo<DeliveryDetailRouteArgs> {
 class DeliveryDetailRouteArgs {
   const DeliveryDetailRouteArgs({this.key, required this.deliveryId});
 
-  final _i21.Key? key;
+  final _i20.Key? key;
 
   final String deliveryId;
 
@@ -241,11 +240,16 @@ class FoodBoxesDetailRoute
     extends _i19.PageRouteInfo<FoodBoxesDetailRouteArgs> {
   FoodBoxesDetailRoute({
     _i20.Key? key,
-    required _i22.UserData user,
+    required _i21.UserData user,
+    bool isCheckupMode = false,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           FoodBoxesDetailRoute.name,
-          args: FoodBoxesDetailRouteArgs(key: key, user: user),
+          args: FoodBoxesDetailRouteArgs(
+            key: key,
+            user: user,
+            isCheckupMode: isCheckupMode,
+          ),
           initialChildren: children,
         );
 
@@ -255,32 +259,44 @@ class FoodBoxesDetailRoute
     name,
     builder: (data) {
       final args = data.argsAs<FoodBoxesDetailRouteArgs>();
-      return _i8.FoodBoxesDetailScreen(key: args.key, user: args.user);
+      return _i8.FoodBoxesDetailScreen(
+        key: args.key,
+        user: args.user,
+        isCheckupMode: args.isCheckupMode,
+      );
     },
   );
 }
 
 class FoodBoxesDetailRouteArgs {
-  const FoodBoxesDetailRouteArgs({this.key, required this.user});
+  const FoodBoxesDetailRouteArgs({
+    this.key,
+    required this.user,
+    this.isCheckupMode = false,
+  });
 
   final _i20.Key? key;
 
-  final _i22.UserData user;
+  final _i21.UserData user;
+
+  final bool isCheckupMode;
 
   @override
   String toString() {
-    return 'FoodBoxesDetailRouteArgs{key: $key, user: $user}';
+    return 'FoodBoxesDetailRouteArgs{key: $key, user: $user, isCheckupMode: $isCheckupMode}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! FoodBoxesDetailRouteArgs) return false;
-    return key == other.key && user == other.user;
+    return key == other.key &&
+        user == other.user &&
+        isCheckupMode == other.isCheckupMode;
   }
 
   @override
-  int get hashCode => key.hashCode ^ user.hashCode;
+  int get hashCode => key.hashCode ^ user.hashCode ^ isCheckupMode.hashCode;
 }
 
 /// generated route for
@@ -368,7 +384,7 @@ class OfferFoodAddNewRoute extends _i19.PageRouteInfo<void> {
 class OfferFoodBoxesRoute extends _i19.PageRouteInfo<OfferFoodBoxesRouteArgs> {
   OfferFoodBoxesRoute({
     _i20.Key? key,
-    required Map<_i23.FoodBoxType, int> currentBoxesQuantity,
+    required Map<_i22.FoodBoxType, int> currentBoxesQuantity,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           OfferFoodBoxesRoute.name,
@@ -398,7 +414,7 @@ class OfferFoodBoxesRouteArgs {
 
   final _i20.Key? key;
 
-  final Map<_i23.FoodBoxType, int> currentBoxesQuantity;
+  final Map<_i22.FoodBoxType, int> currentBoxesQuantity;
 
   @override
   String toString() {
@@ -410,7 +426,7 @@ class OfferFoodBoxesRouteArgs {
     if (identical(this, other)) return true;
     if (other is! OfferFoodBoxesRouteArgs) return false;
     return key == other.key &&
-        const _i24.MapEquality().equals(
+        const _i23.MapEquality().equals(
           currentBoxesQuantity,
           other.currentBoxesQuantity,
         );
@@ -418,7 +434,7 @@ class OfferFoodBoxesRouteArgs {
 
   @override
   int get hashCode =>
-      key.hashCode ^ const _i24.MapEquality().hash(currentBoxesQuantity);
+      key.hashCode ^ const _i23.MapEquality().hash(currentBoxesQuantity);
 }
 
 /// generated route for
@@ -427,7 +443,7 @@ class OfferFoodEditExistingRoute
     extends _i19.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i20.Key? key,
-    required _i25.FoodInfo foodInfo,
+    required _i24.FoodInfo foodInfo,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           OfferFoodEditExistingRoute.name,
@@ -454,7 +470,7 @@ class OfferFoodEditExistingRouteArgs {
 
   final _i20.Key? key;
 
-  final _i25.FoodInfo foodInfo;
+  final _i24.FoodInfo foodInfo;
 
   @override
   String toString() {
@@ -494,7 +510,7 @@ class OfferFoodOverviewRoute
     extends _i19.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i20.Key? key,
-    required List<_i25.FoodInfo> initialFoodInfos,
+    required List<_i24.FoodInfo> initialFoodInfos,
     List<_i19.PageRouteInfo>? children,
   }) : super(
           OfferFoodOverviewRoute.name,
@@ -524,7 +540,7 @@ class OfferFoodOverviewRouteArgs {
 
   final _i20.Key? key;
 
-  final List<_i25.FoodInfo> initialFoodInfos;
+  final List<_i24.FoodInfo> initialFoodInfos;
 
   @override
   String toString() {
@@ -536,7 +552,7 @@ class OfferFoodOverviewRouteArgs {
     if (identical(this, other)) return true;
     if (other is! OfferFoodOverviewRouteArgs) return false;
     return key == other.key &&
-        const _i24.ListEquality().equals(
+        const _i23.ListEquality().equals(
           initialFoodInfos,
           other.initialFoodInfos,
         );
@@ -544,7 +560,7 @@ class OfferFoodOverviewRouteArgs {
 
   @override
   int get hashCode =>
-      key.hashCode ^ const _i24.ListEquality().hash(initialFoodInfos);
+      key.hashCode ^ const _i23.ListEquality().hash(initialFoodInfos);
 }
 
 /// generated route for
