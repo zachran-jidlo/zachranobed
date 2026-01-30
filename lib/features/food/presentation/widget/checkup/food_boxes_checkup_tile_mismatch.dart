@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 
@@ -29,16 +30,10 @@ class FoodBoxesCheckupTileMismatch extends StatelessWidget {
   void _showMismatchInfo(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          context.l10n.foodBoxesCheckupMismatchTitle,
-          textAlign: TextAlign.center,
-          style: context.textStyles.headlineSmall,
-        ),
-        content: Text(
-          context.l10n.foodBoxesCheckupMismatchDescription,
-          style: context.textStyles.bodyMedium,
-        ),
+      builder: (context) => UiDialog(
+        title: context.l10n.foodBoxesCheckupMismatchTitle,
+        content: context.l10n.foodBoxesCheckupMismatchDescription,
+        titleAlign: TextAlign.center,
         icon: UiIcon(
           spec: UiIconSpec.data(Icons.info_outline),
           color: context.uiColors.textPrimary,
