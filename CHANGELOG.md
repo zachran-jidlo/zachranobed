@@ -25,6 +25,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-389** Update profile and sub-profile screens with new design.
 - **ZOB-390** Update change pair screen with new design.
 - **ZOB-391** Update overview screen with new design.
+- **ZOB-392** Update monthly food boxes checkup flow with new design.
 
 ### Removed
 
