@@ -9,7 +9,9 @@ sealed class UiIconSpec {
   const factory UiIconSpec.data(IconData iconData) = UiIconDataSpec;
 
   /// Creates an icon specification from an SVG asset path.
-  const factory UiIconSpec.svg(String assetPath) = UiSvgAssetSpec;
+  ///
+  /// Set [applyTint] to false to render the SVG with its original colors.
+  const factory UiIconSpec.svg(String assetPath, {bool applyTint}) = UiSvgAssetSpec;
 }
 
 /// Icon specification using Flutter's built-in [IconData].
@@ -26,8 +28,14 @@ class UiSvgAssetSpec extends UiIconSpec {
   /// The path to the SVG asset.
   final String assetPath;
 
+  /// Whether to apply tint color to the SVG.
+  ///
+  /// When true (default), the SVG is tinted with the icon color.
+  /// When false, the SVG renders with its original colors.
+  final bool applyTint;
+
   /// Creates a [UiSvgAssetSpec].
-  const UiSvgAssetSpec(this.assetPath);
+  const UiSvgAssetSpec(this.assetPath, {this.applyTint = true});
 }
 
 /// A widget that renders an icon based on the provided [UiIconSpec].
@@ -72,11 +80,11 @@ class UiIcon extends StatelessWidget {
           size: size,
           color: color,
         ),
-      UiSvgAssetSpec(:final assetPath) => SvgPicture.asset(
+      UiSvgAssetSpec(:final assetPath, :final applyTint) => SvgPicture.asset(
           assetPath,
           width: size ?? iconTheme.size,
           height: size ?? iconTheme.size,
-          colorFilter: _buildColorFilter(color, iconTheme.color),
+          colorFilter: applyTint ? _buildColorFilter(color, iconTheme.color) : null,
         ),
     };
   }
