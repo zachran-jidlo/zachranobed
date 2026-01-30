@@ -30,6 +30,9 @@ class EntityPair {
   /// The time when delivery window ends.
   final LocalTime deliveryTimeEnd;
 
+  /// Whether pair uses returnable food boxes.
+  final bool usesReturnableFoodBoxes;
+
   /// The food boxes checkup state of the donor.
   final FoodBoxesCheckup donorFoodBoxesCheckup;
 
@@ -50,6 +53,7 @@ class EntityPair {
     required this.pickupTimeEnd,
     required this.deliveryTimeStart,
     required this.deliveryTimeEnd,
+    required this.usesReturnableFoodBoxes,
     required this.donorFoodBoxesCheckup,
     required this.recipientFoodBoxesCheckup,
     required this.confirmationTime,

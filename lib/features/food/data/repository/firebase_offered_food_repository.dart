@@ -30,44 +30,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   );
 
   @override
-  Future<int> getSavedMealsCount({
-    required UserData user,
-    int? timePeriod,
-  }) async {
-    var mealsCount = 0;
-    final deliveries = await _deliveryService.getDeliveries(
-      donorId: user.activePair.donorId,
-      recipientId: user.activePair.recipientId,
-      timePeriod: timePeriod,
-    );
-    for (var delivery in deliveries) {
-      // Count all meals in all deliveries except packaged meals
-      mealsCount += delivery.meals.fold(0, (inc, e) => inc + (e.count ?? 0));
-    }
-    return mealsCount;
-  }
-
-  @override
-  Stream<Iterable<OfferedFood>> observeHistory({
-    required UserData user,
-    int? limit,
-    DateTime? from,
-    DateTime? to,
-  }) async* {
-    final deliveries = _deliveryService.observeDeliveries(
-      donorId: user.activePair.donorId,
-      recipientId: user.activePair.recipientId,
-      limit: limit,
-      from: from,
-      to: to,
-    );
-
-    yield* deliveries.asyncMap((deliveries) async {
-      return _mapDeliveriesToOfferedFood(deliveries);
-    });
-  }
-
-  @override
   Future<Iterable<OfferedFood>> getHistoryPaginated({
     required UserData user,
     required int limit,

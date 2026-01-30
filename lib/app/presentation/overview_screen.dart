@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/widget/canteen_donation_status_card.dart';
 import 'package:zachranobed/app/presentation/widget/charity_donation_status_card.dart';
 import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
+import 'package:zachranobed/app/presentation/widget/messages_section.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
@@ -16,7 +17,10 @@ import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -59,17 +63,25 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         child: UiWelcomeTile(
           entityName: user.establishmentName,
           onPressed: () {
-              context.router.push(const ProfileRoute());
+            context.router.push(const ProfileRoute());
           },
         ),
       ),
       builder: (context) => SingleChildScrollView(
         child: Column(
           children: [
+            MessagesSection(
+              user: user,
+              checkupState: _boxesCheckupState,
+              refreshCheckupState: _refreshBoxesCheckupState,
+            ),
             const SizedBox(height: 8.0),
             _buildDonationStatusCard(context, user),
             const SizedBox(height: 24.0),
-            FoodBoxesOverviewSection(user: user),
+            FoodBoxesOverviewSection(
+              user: user,
+              checkupState: _boxesCheckupState,
+            ),
             ..._buildNewBoxDeliveryButton(context, user),
             const SizedBox(height: 24.0),
           ],
@@ -89,7 +101,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             delivery: delivery,
             onChangePairPressed: _onChangePairPressed,
             onAcceptDeliveryPressed: () => _onAcceptDeliveryPressed(user),
-            onOfferFoodPressed: _onOfferFoodPressed,
+            onOfferFoodPressed: () => _onOfferFoodPressed(user),
             onCountdownTimeout: _onDeliveryConfirmationTimeout,
             onDeliveryDetailPressed: _onDeliveryDetailPressed,
           ),
@@ -105,7 +117,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   }
 
   List<Widget> _buildNewBoxDeliveryButton(BuildContext context, UserData user) {
-    if (user is! Charity) {
+    if (user is! Charity || !user.activePair.usesReturnableFoodBoxes) {
       return [];
     }
 
@@ -116,9 +128,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         child: UiOutlineButton(
           size: UiButtonSize.medium(fullWidth: true),
           text: context.l10n.overviewCreateBoxDeliveryAction,
-          onPressed: () {
-            context.router.push(const OrderShippingOfBoxesRoute());
-          },
+          onPressed: () => _onReturnBoxesPressed(user),
         ),
       ),
     ];
@@ -140,31 +150,24 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
   }
 
   void _onAcceptDeliveryPressed(UserData user) async {
-    // TODO: How to process this?
-    // final foodBoxesCheckupState = user.getFoodBoxesCheckup(user.activePair).getState();
-    // if (foodBoxesCheckupState is FoodBoxesCheckupCheckNeeded && !foodBoxesCheckupState.isDelayAvailable) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => ZODialog(
-    //       criticalConfirmStyle: true,
-    //       title: context.l10n.foodBoxesCheckupDialogTitle,
-    //       content: context.l10n.foodBoxesCheckupDialogContent,
-    //       confirmText: context.l10n.foodBoxesCheckupDialogConfirmAction,
-    //       cancelText: context.l10n.commonCancel,
-    //       onConfirmPressed: () {
-    //         context.router.maybePop();
-    //         _setBoxesCheckupInProgress();
-    //       },
-    //       onCancelPressed: () => context.router.maybePop(),
-    //     ),
-    //   );
-    //   return;
-    // }
+    if (_showCheckupNeededDialog(user)) {
+      return;
+    }
     context.read<DeliveryNotifier>().updateDeliveryState(DeliveryState.accepted);
   }
 
-  void _onOfferFoodPressed() {
+  void _onOfferFoodPressed(UserData user) {
+    if (_showCheckupNeededDialog(user)) {
+      return;
+    }
     context.router.push(const OfferFoodInitialRoute());
+  }
+
+  void _onReturnBoxesPressed(UserData user) {
+    if (_showCheckupNeededDialog(user)) {
+      return;
+    }
+    context.router.push(const OrderShippingOfBoxesRoute());
   }
 
   void _onDeliveryDetailPressed(String id) {
@@ -173,5 +176,57 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   void _onDeliveryConfirmationTimeout() {
     context.read<DeliveryNotifier>().refreshDelivery();
+  }
+
+  bool _showCheckupNeededDialog(UserData user) {
+    final checkupState = user.getFoodBoxesCheckup(user.activePair).getState();
+    if (checkupState is FoodBoxesCheckupCheckNeeded && !checkupState.isDelayAvailable) {
+      final (title, content) = switch (user) {
+        Canteen() => (
+            context.l10n.foodBoxesCheckupDialogCanteenTitle,
+            context.l10n.foodBoxesCheckupDialogCanteenContent,
+          ),
+        Charity() => (
+            context.l10n.foodBoxesCheckupDialogCharityTitle,
+            context.l10n.foodBoxesCheckupDialogCharityContent,
+          ),
+        _ => (null, null),
+      };
+
+      if (title == null || content == null) {
+        return false;
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) => UiDialog(
+          title: title,
+          content: content,
+          actions: [
+            UiTextButton(
+              text: context.l10n.commonClose,
+              onPressed: () => context.maybePop(),
+            ),
+            UiPrimaryButton(
+              text: context.l10n.foodBoxesCheckupDialogConfirmAction,
+              onPressed: () async {
+                await context.maybePop();
+                if (context.mounted) {
+                  context.router.push(
+                    FoodBoxesDetailRoute(
+                      user: user,
+                      isCheckupMode: true,
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      );
+      return true;
+    }
+
+    return false;
   }
 }

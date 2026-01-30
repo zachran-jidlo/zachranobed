@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
@@ -11,6 +12,9 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
+import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_delayed.dart';
+import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_mismatch.dart';
+import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_verified.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat_factory.dart';
 
 /// A section widget that displays food box statistics on the overview screen.
@@ -18,14 +22,20 @@ import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat
 /// Shows returnable box types with their quantities. Uses a full-size tile
 /// when there is only one box type, and small tiles in a grid when there
 /// are multiple types.
+///
+/// Also displays checkup-related banners based on the current checkup state.
 class FoodBoxesOverviewSection extends StatefulWidget {
   /// The user data to display statistics for.
   final UserData user;
+
+  /// The current state of the food boxes checkup.
+  final FoodBoxesCheckupState checkupState;
 
   /// Creates a [FoodBoxesOverviewSection] widget.
   const FoodBoxesOverviewSection({
     super.key,
     required this.user,
+    required this.checkupState,
   });
 
   @override
@@ -79,6 +89,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
               ),
               child: _buildHeader(context),
             ),
+            _buildCheckupBanner(context),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: _buildContent(context, statistics),
@@ -86,6 +97,37 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildCheckupBanner(BuildContext context) {
+    final state = widget.checkupState;
+    Widget? banner;
+    if (state is FoodBoxesCheckupDelayed) {
+      banner = FoodBoxesCheckupTileCheckDelayed(
+        remainingDuration: state.duration,
+        onPressed: () {
+          context.router.push(
+            FoodBoxesDetailRoute(
+              user: widget.user,
+              isCheckupMode: true,
+            ),
+          );
+        },
+      );
+    } else if (state is FoodBoxesCheckupMismatch) {
+      banner = FoodBoxesCheckupTileMismatch();
+    } else if (state is FoodBoxesCheckupAllGood && state.isVerified) {
+      banner = const FoodBoxesCheckupTileVerified();
+    }
+
+    if (banner == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: banner,
     );
   }
 

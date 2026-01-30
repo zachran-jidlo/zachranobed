@@ -41,6 +41,8 @@ extension EntityPairMapper on EntityPairDto {
       return null;
     }
 
+    final usesReturnableFoodBoxes = foodboxes.any((e) => e.count > 0);
+
     return EntityPair(
       donorId: donor.id,
       donorEstablishmentName: donor.establishmentName,
@@ -51,14 +53,40 @@ extension EntityPairMapper on EntityPairDto {
       pickupTimeEnd: pickupTimeEnd,
       deliveryTimeStart: deliveryTimeStart,
       deliveryTimeEnd: deliveryTimeEnd,
-      donorFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.donor),
-      recipientFoodBoxesCheckup: _getCheckup(foodboxesCheckup?.recipient),
+      usesReturnableFoodBoxes: usesReturnableFoodBoxes,
+      donorFoodBoxesCheckup: _getCheckup(usesReturnableFoodBoxes, foodboxesCheckup?.donor),
+      recipientFoodBoxesCheckup: _getCheckup(usesReturnableFoodBoxes, foodboxesCheckup?.recipient),
       confirmationTime: Duration(minutes: confirmationTime),
     );
   }
 
-  FoodBoxesCheckup _getCheckup(FoodBoxesCheckupDto? dto) {
-    return dto?.toDomain() ?? FoodBoxesCheckup.createDefault();
+  /// Maps the food boxes checkup DTO to domain model.
+  ///
+  /// The checkup state is determined as follows:
+  /// 1. If the pair doesn't use returnable food boxes → checkup is not needed,
+  ///    the monthly checkup flow will be skipped entirely.
+  /// 2. If no checkup DTO exists (first-time setup) → defaults to OK status with no
+  ///    verification, allowing normal app usage.
+  /// 3. Otherwise → maps the DTO to domain, preserving the actual checkup state
+  ///    from the backend (ok, delayed, mismatch).
+  FoodBoxesCheckup _getCheckup(bool usesReturnableFoodBoxes, FoodBoxesCheckupDto? dto) {
+    if (!usesReturnableFoodBoxes) {
+      return FoodBoxesCheckup(
+        status: FoodBoxesCheckupStatus.notNeeded,
+        checkAt: DateTime.now(),
+        verifiedAt: null,
+      );
+    }
+
+    if (dto == null) {
+      return FoodBoxesCheckup(
+        status: FoodBoxesCheckupStatus.ok,
+        checkAt: DateTime.now(),
+        verifiedAt: null,
+      );
+    }
+
+    return dto.toDomain();
   }
 
   LocalTime? fromString(String time) {

@@ -4,7 +4,6 @@
 /// - `AllGood`: Checkup completed successfully and the status flag whether the checkup is verified or not.
 /// - `Mismatch`: A mismatch was detected during the checkup.
 /// - `CheckNeeded`: The checkup is needed and the user should perform further actions.
-/// - `CheckInProgress`: The checkup is currently in progress.
 /// - `Delayed`: The checkup has been delayed.
 sealed class FoodBoxesCheckupState {}
 
@@ -28,9 +27,6 @@ class FoodBoxesCheckupCheckNeeded extends FoodBoxesCheckupState {
   /// Creates a [FoodBoxesCheckupCheckNeeded] state.
   FoodBoxesCheckupCheckNeeded({required this.isDelayAvailable});
 }
-
-/// Represents the "Check In Progress" state of a food box checkup.
-class FoodBoxesCheckupCheckInProgress extends FoodBoxesCheckupState {}
 
 /// Represents the "Delayed" state of a food box checkup.
 class FoodBoxesCheckupDelayed extends FoodBoxesCheckupState {

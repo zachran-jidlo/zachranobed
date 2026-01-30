@@ -6,21 +6,6 @@ import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 
 /// Repository to manage offered food.
 abstract class OfferedFoodRepository {
-  /// Returns a [Future] that completes with an [int] representing the total
-  /// count of saved meals for the specified [timePeriod] and [user].
-  Future<int> getSavedMealsCount({
-    required UserData user,
-    int? timePeriod,
-  });
-
-  /// Returns a stream with a list of offered food for the [user].
-  Stream<Iterable<OfferedFood>> observeHistory({
-    required UserData user,
-    int? limit,
-    DateTime? from,
-    DateTime? to,
-  });
-
   /// Fetches a page of offered food history with pagination support.
   ///
   /// Use [startAfterDate] to fetch items after the last delivery date from the previous page.
