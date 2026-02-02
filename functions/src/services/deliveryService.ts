@@ -89,6 +89,8 @@ export async function getTodaysDeliveries(
     .where("deliveryDate", ">=", startTimestamp)
     .where("deliveryDate", "<=", endTimestamp)
     .where("state", "in", states)
+    .where("type", "==", "FOOD_DELIVERY")
+    .where("carrierId", "!=", "disabled")
     .get();
 
   return snapshot.docs.map((doc) => ({
@@ -149,6 +151,7 @@ export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
     .where("deliveryDate", "<=", endTimestamp)
     .where("type", "==", "BOX_DELIVERY")
     .where("state", "==", "OFFERED")
+    .where("boxReturnCarrierId", "!=", "disabled")
     .get();
 
   return snapshot.docs.map((doc) => ({

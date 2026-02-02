@@ -213,10 +213,19 @@ async function handleOfferedOrAcceptedDelivery(
       return;
     }
 
-    // Skip if not using DODO carrier
+    // Skip DODO order creation for personal carriers
     if (delivery.carrierId !== "dodo") {
       logger.debug(
-        `|${handledOrdersCount}| Carrier is ${delivery.carrierId}, won't create order`,
+        `|${handledOrdersCount}| Carrier is ${delivery.carrierId}, won't create DODO order`,
+      );
+
+      // Set carrierOrder.createdAt for personal carriers to mark as confirmed
+      await updateDeliveryWithOrderCreationTime(delivery.ref, {
+        createdAt: Timestamp.now(),
+      });
+
+      logger.info(
+        `|${handledOrdersCount}| Personal carrier delivery ${delivery.deliveryIdentifier} marked as confirmed`,
       );
       return;
     }
@@ -383,31 +392,46 @@ async function checkBoxReturnDeliveries(
       customerPhone: donor.phone,
     };
 
-    const orderCreated = await createDodoOrder(order, dodoToken);
-
-    if (orderCreated) {
-      logger.debug(`|${loggerDeliveryNumber}| -> Order created successfully`);
-
-      logger.info(
-        `|${loggerDeliveryNumber}| ->  Box delivery in state OFFERED - moving to IN_DELIVERY state`,
-      );
-
-      await updateBoxDelivery(
-        delivery.ref,
-        "IN_DELIVERY",
-        deliveryIdentifier,
-        deliveryDate,
-        pickupTimeWindow,
-        deliveryTimeWindow,
-        entityPair.boxReturnCarrierId,
-      );
-
-      logger.info(
-        `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state`,
-      );
-    } else {
-      logger.error(`|${loggerDeliveryNumber}| -> Failed to create order`);
+    switch (entityPair.boxReturnCarrierId) {
+      case "dodo":
+        logger.info(
+          `|${loggerDeliveryNumber}| -> Creating DODO order for box return delivery ${deliveryIdentifier}`,
+        );
+        const orderCreated = await createDodoOrder(order, dodoToken);
+        if (orderCreated) {
+          logger.debug(
+            `|${loggerDeliveryNumber}| -> Order created successfully`,
+          );
+        } else {
+          logger.error(
+            `|${loggerDeliveryNumber}| -> Failed to create DODO order for box return delivery ${deliveryIdentifier}`,
+          );
+        }
+        break;
+      default:
+        logger.warn(
+          `|${loggerDeliveryNumber}| -> Other box return carrier ${entityPair.boxReturnCarrierId} for delivery ${deliveryIdentifier}, not creating order`,
+        );
+        break;
     }
+
+    logger.info(
+      `|${loggerDeliveryNumber}| ->  Box delivery in state OFFERED - moving to IN_DELIVERY state`,
+    );
+
+    await updateBoxDelivery(
+      delivery.ref,
+      "IN_DELIVERY",
+      deliveryIdentifier,
+      deliveryDate,
+      pickupTimeWindow,
+      deliveryTimeWindow,
+      entityPair.boxReturnCarrierId,
+    );
+
+    logger.info(
+      `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state`,
+    );
   }
 }
 
@@ -517,7 +541,7 @@ export async function checkOrders(): Promise<void> {
  */
 export const checkOrdersFunction = onSchedule(
   {
-    schedule: "0,7,15,22,30,37,45,52 9-17 * * 1-5",
+    schedule: "0,7,15,22,30,37,45,52 9-20 * * 1-5",
     timeZone: "Europe/Prague",
     secrets: [
       dodoClientId,
