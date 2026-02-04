@@ -35,12 +35,6 @@ class FoodBoxesCheckupTileCheckNeeded extends StatelessWidget {
       title: context.l10n.foodBoxesCheckupNeededCardTitle,
       description: description,
       icon: Icons.warning_rounded,
-      trailing: isDelayAvailable
-          ? UiIconButton.solid(
-              icon: Icons.close,
-              onPressed: onDelayPressed,
-            )
-          : null,
       actions: [
         Row(
           spacing: 8.0,

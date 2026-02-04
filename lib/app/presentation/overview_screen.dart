@@ -19,6 +19,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dar
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
@@ -123,12 +124,15 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
     return [
       const SizedBox(height: 16.0),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: UiOutlineButton(
-          size: UiButtonSize.medium(fullWidth: true),
-          text: context.l10n.overviewCreateBoxDeliveryAction,
-          onPressed: () => _onReturnBoxesPressed(user),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: UiOutlineButton(
+            size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
+            text: context.l10n.overviewCreateBoxDeliveryAction,
+            onPressed: () => _onReturnBoxesPressed(user),
+          ),
         ),
       ),
     ];

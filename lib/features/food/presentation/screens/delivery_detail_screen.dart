@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/canteen.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -10,6 +11,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dar
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
@@ -152,7 +154,9 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
                 spacing: 16.0,
                 children: [
                   Text(
-                    context.l10n.deliveryDetailDescription,
+                    isCanteen
+                        ? context.l10n.deliveryDetailCanteenDescription
+                        : context.l10n.deliveryDetailCharityDescription,
                     style: context.textStyles.bodyLarge,
                   ),
                   ...meals.map((item) => MealTileFactory.buildMealTile(context, item)),
@@ -167,20 +171,22 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
   }
 
   Widget _buildBottomButtons(BuildContext context, bool isCanteen) {
+    final isMobileLayout = context.watch<AdaptiveLayoutConfig>().isMobile;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
+      child: Flex(
+        spacing: 16.0,
+        direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
         children: [
-          if (isCanteen) ...[
+          if (isCanteen)
             UiOutlineButton(
-              size: UiButtonSize.medium(fullWidth: true),
+              size: UiButtonSize.medium(fullWidth: isMobileLayout),
               text: context.l10n.deliveryDetailAddMealsAction,
               onPressed: () => context.pushRoute(OfferFoodInitialRoute()),
             ),
-            const SizedBox(height: 16),
-          ],
           UiPrimaryButton(
-            size: UiButtonSize.medium(fullWidth: true),
+            size: UiButtonSize.medium(fullWidth: isMobileLayout),
             text: context.l10n.commonClose,
             onPressed: () => context.maybePop(),
           ),
