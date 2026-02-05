@@ -102,7 +102,6 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
               return ErrorPage(onRetryPressed: _loadStatistics);
             }
             final availableBoxes = snapshot.requireData.where((statistics) => statistics.quantityAtCharity > 0);
-            debugPrint("$availableBoxes");
             if (availableBoxes.isEmpty) {
               return _buildEmptyPage();
             }
@@ -210,6 +209,11 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
   }
 
   void _onConfirmationButtonPressed() async {
+    final user = HelperService.getCurrentUser(context);
+    if (user == null || user is! Charity) {
+      return;
+    }
+
     if (_boxesQuantity.values.every((quantity) => quantity == 0)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -218,9 +222,36 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
           ),
         );
       }
-    } else if (await _verifyAvailableBoxCountWithLoading()) {
-      final isSuccess = await _orderShipping();
+    } else {
+      UiDialog.showLoadingDialog(context);
+
+      final available = await _verifyAvailableBoxCount.invoke(
+        user: user,
+        requiredBoxes: _boxesQuantity,
+      );
+
+      if (!available) {
+        if (mounted) {
+          context.router.pop();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            ZOTemporarySnackBar(
+              backgroundColor: Colors.red,
+              message: context.l10n.boxCountError,
+            ),
+          );
+        }
+
+        return;
+      }
+
+      final isSuccess = await _createBoxDelivery.invoke(
+        charity: user,
+        boxesQuantity: _boxesQuantity,
+      );
+
       if (mounted) {
+        context.router.pop();
         context.router.replace(
           ThankYouRoute(
             isSuccess: isSuccess,
@@ -228,49 +259,6 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
           ),
         );
       }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            backgroundColor: Colors.red,
-            message: context.l10n.boxCountError,
-          ),
-        );
-      }
     }
-  }
-
-  Future<bool> _verifyAvailableBoxCountWithLoading() async {
-    UiDialog.showLoadingDialog(context);
-
-    final user = HelperService.getCurrentUser(context);
-    if (user == null) {
-      return false;
-    }
-
-    final available = await _verifyAvailableBoxCount.invoke(
-      user: user,
-      requiredBoxes: _boxesQuantity,
-    );
-
-    if (!available) {
-      if (mounted) {
-        context.router.pop();
-      }
-    }
-
-    return available;
-  }
-
-  Future<bool> _orderShipping() async {
-    final user = HelperService.getCurrentUser(context);
-    if (user is! Charity) {
-      return false;
-    }
-
-    return _createBoxDelivery.invoke(
-      charity: user,
-      boxesQuantity: _boxesQuantity,
-    );
   }
 }
