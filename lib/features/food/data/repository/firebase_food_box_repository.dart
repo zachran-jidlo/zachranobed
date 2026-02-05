@@ -7,9 +7,6 @@ import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
 import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
-import 'package:zachranobed/common/domain/model/box_info.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
@@ -30,6 +27,11 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     this._entityPairService,
     this._deliveryService,
   );
+
+  @override
+  String getDisposableBoxId() {
+    return FoodBoxTypeDto.idDisposable;
+  }
 
   @override
   Future<Iterable<FoodBoxType>> getTypes({
@@ -89,52 +91,16 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   }
 
   @override
-  Future<bool> verifyAvailableBoxCount({
-    required UserData user,
-    required Map<String, int> requiredBoxes,
-    required int Function(FoodBoxStatistics) getQuantity,
-  }) async {
-    final statistics = await observeStatistics(user).first;
-    final statisticsMap = {for (final s in statistics) s.type.id: s};
-
-    for (final item in requiredBoxes.entries) {
-      final required = item.value;
-
-      var available = 0;
-      final statisticsItem = statisticsMap[item.key];
-      if (statisticsItem != null) {
-        available = getQuantity(statisticsItem);
-      }
-
-      if (available < required && item.key != FoodBoxTypeDto.idDisposable) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  @override
   Future<bool> createBoxDelivery({
     required UserData user,
-    required List<BoxInfo> boxInfo,
+    required Map<String, int> boxesQuantity,
   }) async {
-    final Map<String, int> foodBoxesCount = {};
-    for (final info in boxInfo) {
-      final foodBoxId = info.foodBoxId;
-      if (foodBoxId == null) {
-        continue;
-      }
-      final required = info.numberOfBoxes ?? 0;
-      foodBoxesCount[foodBoxId] = (foodBoxesCount[foodBoxId] ?? 0) + required;
-    }
-
     final donorId = user.activePair.donorId;
     final recipientId = user.activePair.recipientId;
     final moveBoxesSuccess = await _entityPairService.moveBoxesToDonor(
       donorId: donorId,
       recipientId: recipientId,
-      changeMap: foodBoxesCount,
+      changeMap: boxesQuantity,
     );
 
     if (!moveBoxesSuccess) {
@@ -144,15 +110,17 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     // Prepare delivery ID and check if any exists in Firebase
     final id = '$recipientId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
     final delivery = await _deliveryService.getDeliveryById(id);
+
+    // Create a mutable copy to accumulate existing boxes if delivery exists
+    final totalQuantity = Map<String, int>.from(boxesQuantity);
     if (delivery != null) {
-      // Add to count map existing boxes count
       for (final box in delivery.foodBoxes) {
-        final value = foodBoxesCount[box.foodBoxId] ?? 0;
-        foodBoxesCount[box.foodBoxId] = value + box.count;
+        final value = totalQuantity[box.foodBoxId] ?? 0;
+        totalQuantity[box.foodBoxId] = value + box.count;
       }
     }
 
-    final foodBoxes = foodBoxesCount.entries.map((e) {
+    final foodBoxes = totalQuantity.entries.map((e) {
       return FoodBoxDeliveryDto(
         foodBoxId: e.key,
         count: e.value,

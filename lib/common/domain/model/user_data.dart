@@ -1,8 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/local_time.dart';
 
-abstract class UserData {
+part 'canteen.dart';
+part 'charity.dart';
+
+sealed class UserData {
   final String entityId;
   final String email;
   final String establishmentName;

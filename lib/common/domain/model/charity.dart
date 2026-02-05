@@ -1,6 +1,4 @@
-import 'package:zachranobed/common/domain/model/entity_pair.dart';
-import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
-import 'package:zachranobed/common/domain/model/user_data.dart';
+part of 'user_data.dart';
 
 class Charity extends UserData {
   Charity({

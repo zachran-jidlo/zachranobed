@@ -58,4 +58,13 @@ class UiDialog extends StatelessWidget {
       style: context.textStyles.bodyMedium,
     );
   }
+
+  /// Shows a basic loading dialog.
+  static void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+  }
 }

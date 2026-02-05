@@ -5,8 +5,6 @@ import 'package:zachranobed/app/presentation/widget/canteen_donation_status_card
 import 'package:zachranobed/app/presentation/widget/charity_donation_status_card.dart';
 import 'package:zachranobed/app/presentation/widget/food_boxes_overview_section.dart';
 import 'package:zachranobed/app/presentation/widget/messages_section.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
@@ -112,7 +110,6 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             onChangePairPressed: _onChangePairPressed,
             onDeliveryDetailPressed: _onDeliveryDetailPressed,
           ),
-        _ => const SizedBox(),
       },
     );
   }
@@ -194,12 +191,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             context.l10n.foodBoxesCheckupDialogCharityTitle,
             context.l10n.foodBoxesCheckupDialogCharityContent,
           ),
-        _ => (null, null),
       };
-
-      if (title == null || content == null) {
-        return false;
-      }
 
       showDialog(
         context: context,

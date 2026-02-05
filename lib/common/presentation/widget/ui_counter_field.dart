@@ -83,7 +83,11 @@ class _UiCounterFieldState extends State<UiCounterField> {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value) {
       _currentValue = widget.value.clamp(widget.minValue, widget.maxValue);
-      _controller.text = _currentValue.toString();
+
+      final textValue = _currentValue.toString();
+      if (_controller.text != textValue) {
+        _controller.text = textValue;
+      }
     }
   }
 
