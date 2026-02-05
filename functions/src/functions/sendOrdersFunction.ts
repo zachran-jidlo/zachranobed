@@ -117,11 +117,11 @@ export async function sendOrders(): Promise<void> {
 }
 
 /**
- * Scheduled function that runs daily at 7:00 AM Prague time on weekdays.
+ * Scheduled function that runs daily at 4:00 PM Prague time on weekdays.
  */
 export const sendOrdersFunction = onSchedule(
   {
-    schedule: "0 7 * * 1-5",
+    schedule: "0 16 * * 1-5",
     timeZone: "Europe/Prague",
   },
   async () => {
