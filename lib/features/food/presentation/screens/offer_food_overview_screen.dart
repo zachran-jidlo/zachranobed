@@ -20,8 +20,8 @@ import 'package:zachranobed/common/presentation/widget/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
-import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_info_row.dart';
 
@@ -40,7 +40,7 @@ class OfferFoodOverviewScreen extends StatefulWidget {
 
 class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   final _offeredFoodRepository = GetIt.I<OfferedFoodRepository>();
-  final _foodBoxRepository = GetIt.I<FoodBoxRepository>();
+  final _verifyAvailableBoxCount = GetIt.I<VerifyAvailableBoxCountUseCase>();
 
   final _foodInfos = <FoodInfo>[];
   final _boxInfos = <FoodBoxType, int>{};
@@ -232,10 +232,9 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     );
 
     final requiredBoxes = _boxInfos.map((type, quantity) => MapEntry(type.id, quantity));
-    final hasRequiredBoxes = await _foodBoxRepository.verifyAvailableBoxCount(
+    final hasRequiredBoxes = await _verifyAvailableBoxCount.invoke(
       user: HelperService.getCurrentUser(context)!,
       requiredBoxes: requiredBoxes,
-      getQuantity: (e) => e.quantityAtCanteen,
     );
 
     if (hasRequiredBoxes) {

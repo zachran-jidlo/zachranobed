@@ -8,11 +8,13 @@ import 'package:zachranobed/features/food/data/repository/firebase_food_box_repo
 import 'package:zachranobed/features/food/data/repository/firebase_offered_food_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/features/food/domain/usecase/create_box_delivery_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_delivery_meals_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/report_food_boxes_mismatch_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_food_boxes_checkup_use_case.dart';
 
 /// DI setup for food feature.
@@ -69,6 +71,18 @@ class FoodDependencyContainer {
 
     GetIt.I.registerFactory<DelayFoodBoxesCheckupUseCase>(
       () => DelayFoodBoxesCheckupUseCase(
+        GetIt.I<FoodBoxRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<VerifyAvailableBoxCountUseCase>(
+      () => VerifyAvailableBoxCountUseCase(
+        GetIt.I<FoodBoxRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<CreateBoxDeliveryUseCase>(
+      () => CreateBoxDeliveryUseCase(
         GetIt.I<FoodBoxRepository>(),
       ),
     );
