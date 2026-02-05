@@ -3,7 +3,6 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/counter_field.dart';
-import 'package:zachranobed/common/presentation/widget/section_header.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 
@@ -37,18 +36,6 @@ class FoodBoxCounter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SectionHeader(
-          title: Text(
-            type.name,
-            style: context.textStyles.titleLarge,
-          ),
-          subtitle: Text(
-            context.l10n.totalCountOfBoxes(maxQuantity),
-            style: context.textStyles.titleSmall.copyWith(
-              color: ZOColors.onBackgroundSecondary,
-            ),
-          ),
-        ),
         const SizedBox(height: GapSize.xs),
         CounterField(
           label: context.l10n.numberOfBoxes,

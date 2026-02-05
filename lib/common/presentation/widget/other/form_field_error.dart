@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 
 /// A widget that displays an error message for a form field.
 class FormFieldError extends StatelessWidget {
@@ -16,11 +15,11 @@ class FormFieldError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: GapSize.xs),
+      padding: const EdgeInsets.only(top: 16.0),
       child: Text(
         message,
         style: context.textStyles.bodySmall.copyWith(
-          color: ZOColors.primary,
+          color: context.uiColors.error,
         ),
       ),
     );

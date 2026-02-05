@@ -12,11 +12,12 @@ import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/dialog.dart';
 import 'package:zachranobed/common/presentation/widget/empty_page.dart';
 import 'package:zachranobed/common/presentation/widget/info_banner.dart';
+import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
@@ -363,16 +364,10 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
 
   Widget _buildSectionHeader(BuildContext context) {
     return SectionHeader(
-      useBottomPadding: false,
-      title: Text(
-        context.l10n.offerFoodOverviewSectionFoodInfoTitle,
-        style: context.textStyles.titleMedium,
-      ),
-      action: ZOButton(
+      title: context.l10n.offerFoodOverviewSectionFoodInfoTitle,
+      action: UiTextButton(
         text: context.l10n.offerFoodOverviewSectionFoodInfoAddAction,
         icon: Icons.add,
-        type: ZOButtonType.textPrimary,
-        minimumSize: ZOButtonSize.mediumWrapContent,
         onPressed: onAddPressed,
       ),
     );
@@ -468,24 +463,16 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
 
   Widget _buildSectionHeader(BuildContext context) {
     return SectionHeader(
-      useBottomPadding: false,
-      title: Text(
-        context.l10n.offerFoodOverviewSectionBoxInfoTitle,
-        style: context.textStyles.titleMedium,
-      ),
+      title: context.l10n.offerFoodOverviewSectionBoxInfoTitle,
       action: boxInfos.isEmpty
-          ? ZOButton(
+          ? UiTextButton(
               text: context.l10n.offerFoodOverviewSectionBoxInfoAddAction,
               icon: Icons.add,
-              type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             )
-          : ZOButton(
+          : UiTextButton(
               text: context.l10n.offerFoodOverviewSectionBoxInfoEditAction,
               icon: Icons.edit,
-              type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             ),
     );

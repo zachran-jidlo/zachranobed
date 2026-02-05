@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/assist_chip.dart';
 import 'package:zachranobed/common/presentation/widget/date_time_picker.dart';
-import 'package:zachranobed/common/presentation/widget/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/other/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 
 /// A widget that displays a set of chips for selecting food date and time.
@@ -68,10 +67,10 @@ class FoodDateTimeChips extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: GapSize.xs,
-                  runSpacing: GapSize.xs,
+                  spacing: 16.0,
+                  runSpacing: 16.0,
                   children: options.map((option) {
-                    return AssistChip(
+                    return UiChip(
                       text: option.text,
                       selected: _isSelected(state, option),
                       onPressed: () => _onPressed(context, state, option),
@@ -167,12 +166,10 @@ class FoodDateTimeChips extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: GapSize.xs),
+      padding: const EdgeInsets.only(top: 16.0),
       child: Text(
         labelText,
-        style: context.textStyles.bodyLarge.copyWith(
-          color: ZOColors.onPrimaryLight,
-        ),
+        style: context.textStyles.bodyMedium,
       ),
     );
   }

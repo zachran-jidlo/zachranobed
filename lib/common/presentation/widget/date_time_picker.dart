@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// A utility class for picking date and time using native dialogs.
 class DateTimePicker {
@@ -64,10 +65,23 @@ class DateTimePicker {
     return showTimePicker(
       context: context,
       initialTime: initial,
+      initialEntryMode: TimePickerEntryMode.input,
+      hourLabelText: "",
+      minuteLabelText: "",
       builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: context.uiColors.primary,
+              onPrimary: context.uiColors.textPrimary,
+              primaryContainer: context.uiColors.surfaceGray,
+              error: context.uiColors.error,
+            ),
+          ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: child!,
+          ),
         );
       },
     );

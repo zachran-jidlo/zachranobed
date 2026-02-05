@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/assist_chip.dart';
-import 'package:zachranobed/common/presentation/widget/form_field_error.dart';
-import 'package:zachranobed/common/presentation/widget/tooltip.dart';
+import 'package:zachranobed/common/presentation/widget/other/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/ui_tooltip.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 
 /// A widget that displays a set of chips representing food allergens.
@@ -53,15 +52,15 @@ class FoodAllergensChips extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: GapSize.xs,
-                  runSpacing: GapSize.xs,
+                  spacing: 16.0,
+                  runSpacing: 16.0,
                   children: [
                     ...allergens.map(
                       (allergen) {
                         final number = allergen.number.toString();
-                        return ZOTooltip(
+                        return UiTooltip(
                           message: allergen.text,
-                          child: AssistChip(
+                          child: UiChip(
                             text: number,
                             selected: state.value!.contains(number),
                             onPressed: () {
@@ -71,12 +70,12 @@ class FoodAllergensChips extends StatelessWidget {
                         );
                       },
                     ),
-                    AssistChip(
+                    UiChip(
                       text: context.l10n.allergensNotPresent,
                       selected: state.value!.contains(FoodAllergen.noAllergensNumber),
                       onPressed: () => _onSingleSelectPressed(state, FoodAllergen.noAllergensNumber),
                     ),
-                    AssistChip(
+                    UiChip(
                       text: context.l10n.allergensOnPackage,
                       selected: state.value!.contains(FoodAllergen.onPackageNumber),
                       onPressed: () => _onSingleSelectPressed(state, FoodAllergen.onPackageNumber),

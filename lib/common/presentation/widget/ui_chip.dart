@@ -45,6 +45,7 @@ class UiChip extends StatelessWidget {
       ),
       textStyle: context.textStyles.labelLarge,
       shadowColor: Colors.black,
+      overlayColor: context.uiColors.transparent,
     );
 
     if (selected) {
@@ -85,7 +86,15 @@ class UiChip extends StatelessWidget {
       );
     } else {
       return baseStyle.copyWith(
-        overlayColor: WidgetStateProperty.all(context.uiColors.surfaceGray),
+        backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.pressed)) {
+            return context.uiColors.surfaceGrayDark;
+          }
+          if (states.contains(WidgetState.hovered)) {
+            return context.uiColors.surfaceGrayDark;
+          }
+          return context.uiColors.transparent;
+        }),
         foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.disabled)) {
             return context.uiColors.inactive;
