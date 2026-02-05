@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
@@ -200,7 +198,6 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
     final value = switch (widget.user) {
       Canteen() => stat.quantityAtCanteen,
       Charity() => stat.quantityAtCharity,
-      _ => 0,
     };
 
     return UiFoodBoxTile(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
@@ -48,8 +46,6 @@ class FoodBoxTileStatFactory {
             label: context.l10n.canteen,
           ),
         ];
-      default:
-        return [];
     }
   }
 }

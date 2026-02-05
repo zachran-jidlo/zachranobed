@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_text/styled_text.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';

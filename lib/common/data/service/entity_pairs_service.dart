@@ -3,8 +3,6 @@ import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/common/data/utils/timestamp_converter.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
 

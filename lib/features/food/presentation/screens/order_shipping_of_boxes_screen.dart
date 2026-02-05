@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';

@@ -8,8 +8,6 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/domain/model/box_info.dart';
-import 'package:zachranobed/common/domain/model/canteen.dart';
-import 'package:zachranobed/common/domain/model/charity.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
