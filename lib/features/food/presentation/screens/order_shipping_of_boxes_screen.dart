@@ -26,6 +26,12 @@ import 'package:zachranobed/features/food/domain/usecase/create_box_delivery_use
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 
+/// A screen that allows charity users to order shipping of food boxes
+/// back to the canteen.
+///
+/// Displays a list of available box types with counters, allowing users to
+/// specify how many boxes of each type they want to ship. Shows an empty state
+/// when no boxes are available at the charity.
 @RoutePage()
 class OrderShippingOfBoxesScreen extends StatefulWidget {
   const OrderShippingOfBoxesScreen({super.key});
