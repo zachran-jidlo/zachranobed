@@ -2,11 +2,18 @@ import * as admin from "firebase-admin";
 import { setGlobalOptions } from "firebase-functions/v2";
 import { defineString, defineSecret } from "firebase-functions/params";
 
+const currentProjectId =
+  process.env.GCLOUD_PROJECT || process.env.FIREBASE_PROJECT_ID;
+
+const SERVICE_ACCOUNTS: Record<string, string> = {
+  "zachran-obed-dev":
+    "firebase-adminsdk-ju14s@zachran-obed-dev.iam.gserviceaccount.com",
+  "zachran-obed": "firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com",
+};
+
 setGlobalOptions({
   region: "europe-west1",
-  serviceAccount:
-    // "firebase-adminsdk-ju14s@zachran-obed-dev.iam.gserviceaccount.com",
-    "firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com",
+  serviceAccount: SERVICE_ACCOUNTS[currentProjectId || "zachran-obed"],
 });
 
 export const githubToken = defineString("GITHUB_TOKEN");
