@@ -640,7 +640,14 @@ export async function checkOrders(): Promise<void> {
       } catch (error) {
         logger.error(
           `|${handledOrdersCount}| Failed to process delivery ${delivery.deliveryIdentifier}:`,
-          error,
+          {
+            error: error instanceof Error ? error.message : String(error),
+            deliveryId: delivery.ref.id,
+            deliveryIdentifier: delivery.deliveryIdentifier,
+            state: delivery.state,
+            carrierId: delivery.carrierId,
+            stack: error instanceof Error ? error.stack : undefined,
+          },
         );
       }
 
@@ -651,7 +658,10 @@ export async function checkOrders(): Promise<void> {
       `Script finished, ${handledOrdersCount} orders(s) have been handled`,
     );
   } catch (error) {
-    logger.error("Food deliveries processing failed:", error);
+    logger.error("Food deliveries processing failed:", {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
   }
 
   // Always process box return deliveries, even if food delivery processing failed
@@ -664,7 +674,10 @@ export async function checkOrders(): Promise<void> {
       );
     }
   } catch (error) {
-    logger.error("Box deliveries processing failed:", error);
+    logger.error("Box deliveries processing failed:", {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
   }
 }
 
