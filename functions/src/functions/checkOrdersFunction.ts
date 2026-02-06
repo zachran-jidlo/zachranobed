@@ -175,6 +175,182 @@ async function handlePreparedDelivery(
 }
 
 /**
+ * Calculate corrected confirmation deadline with buffer for DODO carrier.
+ * @param {Delivery} delivery - The delivery document
+ * @param {number} minutesBeforePickup - Minutes before pickup for confirmation
+ * @return {Date} The corrected confirmation deadline
+ */
+function calculateConfirmationDeadline(
+  delivery: Delivery,
+  minutesBeforePickup: number,
+): Date {
+  const baseDeadline = new Date(
+    delivery.pickupTimeWindow.start.toDate().getTime() -
+      minutesBeforePickup * 60000,
+  );
+
+  // Add 30-minute buffer for DODO carrier to account for cron timing
+  if (delivery.carrierId === "dodo") {
+    return new Date(baseDeadline.getTime() + 30 * 60000);
+  }
+
+  return baseDeadline;
+}
+
+/**
+ * Mark personal carrier delivery as confirmed.
+ * @param {Delivery} delivery - The delivery document
+ * @param {number} handledOrdersCount - Counter for logging
+ * @return {Promise<void>}
+ */
+async function markPersonalCarrierAsConfirmed(
+  delivery: Delivery,
+  handledOrdersCount: number,
+): Promise<void> {
+  logger.debug(
+    `|${handledOrdersCount}| Carrier is ${delivery.carrierId}, won't create DODO order`,
+  );
+
+  await updateDeliveryWithOrderCreationTime(delivery.ref, {
+    createdAt: Timestamp.now(),
+  });
+
+  logger.info(
+    `|${handledOrdersCount}| Personal carrier delivery ${delivery.deliveryIdentifier} marked as confirmed`,
+  );
+}
+
+/**
+ * Create DODO order for delivery.
+ * @param {Delivery} delivery - The delivery document
+ * @param {number} handledOrdersCount - Counter for logging
+ * @param {DodoToken} dodoToken - OAuth2 token for DODO API
+ * @param {EntityPair[]} entityPairs - All entity pairs
+ * @param {Entity[]} entities - All entities
+ * @return {Promise<void>}
+ */
+async function createDodoOrderForDelivery(
+  delivery: Delivery,
+  handledOrdersCount: number,
+  dodoToken: DodoToken,
+  entityPairs: EntityPair[],
+  entities: Entity[],
+): Promise<void> {
+  logger.info(
+    `|${handledOrdersCount}| Ordering delivery for ${delivery.deliveryIdentifier}.`,
+  );
+
+  const participants = getDeliveryParticipants(
+    delivery,
+    entityPairs,
+    entities,
+    handledOrdersCount,
+  );
+
+  if (!participants) {
+    return;
+  }
+
+  const order = createDodoOrderFromDelivery(
+    participants.entityPair,
+    participants.donor,
+    participants.recipient,
+    delivery,
+  );
+
+  const orderCreated = await createDodoOrder(order, dodoToken);
+
+  if (orderCreated) {
+    await updateDeliveryWithOrderCreationTime(delivery.ref, {
+      createdAt: Timestamp.now(),
+    });
+    logger.info(
+      `|${handledOrdersCount}| Successfully created order ${delivery.deliveryIdentifier}`,
+    );
+  } else {
+    logger.error(
+      `|${handledOrdersCount}| Failed to create DODO order ${delivery.deliveryIdentifier}`,
+    );
+  }
+}
+
+/**
+ * Handle order creation for delivery before deadline.
+ * @param {Delivery} delivery - The delivery document
+ * @param {number} handledOrdersCount - Counter for logging
+ * @param {DodoToken} dodoToken - OAuth2 token for DODO API
+ * @param {EntityPair[]} entityPairs - All entity pairs
+ * @param {Entity[]} entities - All entities
+ * @return {Promise<void>}
+ */
+async function handleOrderCreation(
+  delivery: Delivery,
+  handledOrdersCount: number,
+  dodoToken: DodoToken,
+  entityPairs: EntityPair[],
+  entities: Entity[],
+): Promise<void> {
+  if (delivery.carrierOrder?.createdAt) {
+    logger.info(
+      `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} already ordered.`,
+    );
+    return;
+  }
+
+  // Handle personal carrier
+  if (delivery.carrierId !== "dodo") {
+    await markPersonalCarrierAsConfirmed(delivery, handledOrdersCount);
+    return;
+  }
+
+  // Handle DODO carrier
+  await createDodoOrderForDelivery(
+    delivery,
+    handledOrdersCount,
+    dodoToken,
+    entityPairs,
+    entities,
+  );
+}
+
+/**
+ * Handle delivery after confirmation deadline has passed.
+ * @param {Delivery} delivery - The delivery document
+ * @param {number} handledOrdersCount - Counter for logging
+ * @param {Date} correctedDeadline - The corrected confirmation deadline
+ * @return {Promise<void>}
+ */
+async function handleAfterDeadline(
+  delivery: Delivery,
+  handledOrdersCount: number,
+  correctedDeadline: Date,
+): Promise<void> {
+  if (!delivery.carrierOrder?.createdAt) {
+    logger.error(
+      `|${handledOrdersCount}| Delivery for ${
+        delivery.deliveryIdentifier
+      } can't be ordered. Latest time for confirmation ${correctedDeadline.toLocaleString(
+        "cs",
+      )} passed.`,
+    );
+    return;
+  }
+
+  const pickupTo = delivery.pickupTimeWindow.end.toDate();
+
+  if (new Date() > pickupTo) {
+    logger.info(
+      `|${handledOrdersCount}| Moving delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state.`,
+    );
+    await updateDeliveryState(delivery.ref, "IN_DELIVERY");
+  } else {
+    logger.info(
+      `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} is not ready for pickup yet.`,
+    );
+  }
+}
+
+/**
  * Handle OFFERED/ACCEPTED deliveries - create DODO order if needed.
  * @param {Delivery} delivery - The delivery in OFFERED/ACCEPTED state
  * @param {number} handledOrdersCount - Counter for logging
@@ -191,106 +367,172 @@ async function handleOfferedOrAcceptedDelivery(
   entities: Entity[],
 ): Promise<void> {
   const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
-
-  // Add 30-minute buffer for DODO carrier to account for cron timing
-  let correctedLatestConfirmationDate = new Date(
-    delivery.pickupTimeWindow.start.toDate().getTime() -
-      minutesBeforePickup * 60000,
+  const correctedDeadline = calculateConfirmationDeadline(
+    delivery,
+    minutesBeforePickup,
   );
 
-  if (delivery.carrierId === "dodo") {
-    correctedLatestConfirmationDate = new Date(
-      correctedLatestConfirmationDate.getTime() + 30 * 60000,
-    );
-  }
-
-  // Before deadline - create order if needed
-  if (new Date() < correctedLatestConfirmationDate) {
-    if (delivery.carrierOrder?.createdAt) {
-      logger.info(
-        `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} already ordered.`,
-      );
-      return;
-    }
-
-    // Skip DODO order creation for personal carriers
-    if (delivery.carrierId !== "dodo") {
-      logger.debug(
-        `|${handledOrdersCount}| Carrier is ${delivery.carrierId}, won't create DODO order`,
-      );
-
-      // Set carrierOrder.createdAt for personal carriers to mark as confirmed
-      await updateDeliveryWithOrderCreationTime(delivery.ref, {
-        createdAt: Timestamp.now(),
-      });
-
-      logger.info(
-        `|${handledOrdersCount}| Personal carrier delivery ${delivery.deliveryIdentifier} marked as confirmed`,
-      );
-      return;
-    }
-
-    logger.info(
-      `|${handledOrdersCount}| Ordering delivery for ${delivery.deliveryIdentifier}.`,
-    );
-
-    const participants = getDeliveryParticipants(
+  if (new Date() < correctedDeadline) {
+    await handleOrderCreation(
       delivery,
+      handledOrdersCount,
+      dodoToken,
       entityPairs,
       entities,
-      handledOrdersCount,
     );
+  } else {
+    await handleAfterDeadline(delivery, handledOrdersCount, correctedDeadline);
+  }
+}
 
-    if (!participants) {
-      return;
-    }
+/**
+ * Create box return order data with reverse pickup/delivery.
+ * @param {EntityPair} entityPair - The entity pair
+ * @param {Entity} donor - The donor entity
+ * @param {Entity} recipient - The recipient entity
+ * @param {string} deliveryIdentifier - The delivery identifier
+ * @return {DodoOrder} The box return order
+ */
+function createBoxReturnOrder(
+  entityPair: EntityPair,
+  donor: Entity,
+  recipient: Entity,
+  deliveryIdentifier: string,
+): DodoOrder {
+  const pickupTimeWindow = {
+    start: Timestamp.fromDate(getDateInFuture(1, "10:00")),
+    end: Timestamp.fromDate(getDateInFuture(1, "10:30")),
+  };
 
-    const order = createDodoOrderFromDelivery(
-      participants.entityPair,
-      participants.donor,
-      participants.recipient,
-      delivery,
+  const deliveryTimeWindow = {
+    start: Timestamp.fromDate(getDateInFuture(1, "11:00")),
+    end: Timestamp.fromDate(getDateInFuture(1, "11:30")),
+  };
+
+  return {
+    id: deliveryIdentifier,
+    pickupDodoId: entityPair.carrierRecipientId,
+    pickupId: recipient.establishmentId,
+    pickupFrom: pickupTimeWindow.start.toDate(),
+    pickupTo: pickupTimeWindow.end.toDate(),
+    pickupNote:
+      "Vyzvednutí obalů\n" +
+      updateNoteWithPhoneNumbers(
+        recipient.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    deliverId: donor.establishmentId,
+    deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
+    deliverFrom: deliveryTimeWindow.start.toDate(),
+    deliverTo: deliveryTimeWindow.end.toDate(),
+    deliverNote:
+      "Doručení obalů\n" +
+      updateNoteWithPhoneNumbers(
+        donor.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    customerName: donor.responsiblePerson,
+    customerPhone: donor.phone,
+  };
+}
+
+/**
+ * Process a single box delivery - create order and update state.
+ * @param {Delivery} delivery - The box delivery to process
+ * @param {number} loggerDeliveryNumber - Counter for logging
+ * @param {DodoToken} dodoToken - OAuth2 token for DODO API
+ * @param {EntityPair[]} entityPairs - All entity pairs
+ * @param {Entity[]} entities - All entities
+ * @return {Promise<void>}
+ */
+async function processBoxDelivery(
+  delivery: Delivery,
+  loggerDeliveryNumber: number,
+  dodoToken: DodoToken,
+  entityPairs: EntityPair[],
+  entities: Entity[],
+): Promise<void> {
+  logger.info(
+    `|${loggerDeliveryNumber}| -> Handling box delivery FBID: ${delivery.ref.id}`,
+  );
+
+  if (delivery.state !== "OFFERED") {
+    logger.info(
+      `|${loggerDeliveryNumber}| -> Box delivery FBID: ${delivery.ref.id} is not in state OFFERED`,
     );
+    return;
+  }
 
+  const participants = getDeliveryParticipants(
+    delivery,
+    entityPairs,
+    entities,
+    loggerDeliveryNumber,
+  );
+
+  if (!participants) {
+    return;
+  }
+
+  const { entityPair, donor, recipient } = participants;
+
+  // Create delivery for tomorrow (1 day in future)
+  const deliveryDate = getDateInFuture(1);
+  const deliveryIdentifier = `${recipient.establishmentId}-${
+    donor.establishmentId
+  }-${formatCzechDate(deliveryDate)}`
+    .toLowerCase()
+    .replace(/ /g, "");
+
+  const order = createBoxReturnOrder(
+    entityPair,
+    donor,
+    recipient,
+    deliveryIdentifier,
+  );
+
+  // Create DODO order if carrier is DODO
+  if (entityPair.boxReturnCarrierId === "dodo") {
+    logger.info(
+      `|${loggerDeliveryNumber}| -> Creating DODO order for box return delivery ${deliveryIdentifier}`,
+    );
     const orderCreated = await createDodoOrder(order, dodoToken);
-
-    if (orderCreated) {
-      await updateDeliveryWithOrderCreationTime(delivery.ref, {
-        createdAt: Timestamp.now(),
-      });
-      logger.info(
-        `|${handledOrdersCount}| Successfully created order ${delivery.deliveryIdentifier}`,
-      );
-    } else {
+    if (!orderCreated) {
       logger.error(
-        `|${handledOrdersCount}| Failed to create DODO order ${delivery.deliveryIdentifier}`,
+        `|${loggerDeliveryNumber}| -> Failed to create DODO order for box return delivery ${deliveryIdentifier}`,
       );
     }
   } else {
-    // After deadline - check if order was created
-    if (delivery.carrierOrder?.createdAt) {
-      const pickupTo = delivery.pickupTimeWindow.end.toDate();
-
-      if (new Date() > pickupTo) {
-        logger.info(
-          `|${handledOrdersCount}| Moving delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state.`,
-        );
-        await updateDeliveryState(delivery.ref, "IN_DELIVERY");
-      } else {
-        logger.info(
-          `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} is not ready for pickup yet.`,
-        );
-      }
-    } else {
-      logger.error(
-        `|${handledOrdersCount}| Delivery for ${
-          delivery.deliveryIdentifier
-        } can't be ordered. Latest time for confirmation ${correctedLatestConfirmationDate.toLocaleString(
-          "cs",
-        )} passed.`,
-      );
-    }
+    logger.warn(
+      `|${loggerDeliveryNumber}| -> Other box return carrier ${entityPair.boxReturnCarrierId} for delivery ${deliveryIdentifier}, not creating order`,
+    );
   }
+
+  logger.info(
+    `|${loggerDeliveryNumber}| ->  Box delivery in state OFFERED - moving to IN_DELIVERY state`,
+  );
+
+  await updateBoxDelivery(
+    delivery.ref,
+    "IN_DELIVERY",
+    deliveryIdentifier,
+    deliveryDate,
+    {
+      start: Timestamp.fromDate(getDateInFuture(1, "10:00")),
+      end: Timestamp.fromDate(getDateInFuture(1, "10:30")),
+    },
+    {
+      start: Timestamp.fromDate(getDateInFuture(1, "11:00")),
+      end: Timestamp.fromDate(getDateInFuture(1, "11:30")),
+    },
+    entityPair.boxReturnCarrierId,
+  );
+
+  logger.info(
+    `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state`,
+  );
 }
 
 /**
@@ -312,125 +554,16 @@ async function checkBoxReturnDeliveries(
   );
 
   if (boxDeliveries.length === 0) {
-    logger.info("No box deliveries found for today");
     return;
   }
 
-  let loggerDeliveryNumber = -1;
-
-  for (const delivery of boxDeliveries) {
-    loggerDeliveryNumber++;
-    logger.info(
-      `|${loggerDeliveryNumber}| -> Handling box delivery FBID: ${delivery.ref.id}`,
-    );
-
-    if (delivery.state !== "OFFERED") {
-      logger.info(
-        `|${loggerDeliveryNumber}| -> Box delivery FBID: ${delivery.ref.id} is not in state OFFERED`,
-      );
-      continue;
-    }
-
-    const participants = getDeliveryParticipants(
-      delivery,
+  for (let i = 0; i < boxDeliveries.length; i++) {
+    await processBoxDelivery(
+      boxDeliveries[i],
+      i,
+      dodoToken,
       entityPairs,
       entities,
-      loggerDeliveryNumber,
-    );
-
-    if (!participants) {
-      continue;
-    }
-
-    const { entityPair, donor, recipient } = participants;
-
-    // Create delivery for tomorrow (1 day in future)
-    const deliveryDate = getDateInFuture(1);
-    const deliveryIdentifier = `${recipient.establishmentId}-${
-      donor.establishmentId
-    }-${formatCzechDate(deliveryDate)}`
-      .toLowerCase()
-      .replace(/ /g, "");
-
-    // Fixed time windows for box returns
-    const pickupTimeWindow = {
-      start: Timestamp.fromDate(getDateInFuture(1, "10:00")),
-      end: Timestamp.fromDate(getDateInFuture(1, "10:30")),
-    };
-
-    const deliveryTimeWindow = {
-      start: Timestamp.fromDate(getDateInFuture(1, "11:00")),
-      end: Timestamp.fromDate(getDateInFuture(1, "11:30")),
-    };
-
-    // Create reverse order: pickup from recipient, delivery to donor
-    const order: DodoOrder = {
-      id: deliveryIdentifier,
-      pickupDodoId: entityPair.carrierRecipientId,
-      pickupId: recipient.establishmentId,
-      pickupFrom: pickupTimeWindow.start.toDate(),
-      pickupTo: pickupTimeWindow.end.toDate(),
-      pickupNote:
-        "Vyzvednutí obalů\n" +
-        updateNoteWithPhoneNumbers(
-          recipient.noteForDriver || "",
-          recipient.phone,
-          donor.phone,
-        ),
-      deliverId: donor.establishmentId,
-      deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
-      deliverFrom: deliveryTimeWindow.start.toDate(),
-      deliverTo: deliveryTimeWindow.end.toDate(),
-      deliverNote:
-        "Doručení obalů\n" +
-        updateNoteWithPhoneNumbers(
-          donor.noteForDriver || "",
-          recipient.phone,
-          donor.phone,
-        ),
-      customerName: donor.responsiblePerson,
-      customerPhone: donor.phone,
-    };
-
-    switch (entityPair.boxReturnCarrierId) {
-      case "dodo":
-        logger.info(
-          `|${loggerDeliveryNumber}| -> Creating DODO order for box return delivery ${deliveryIdentifier}`,
-        );
-        const orderCreated = await createDodoOrder(order, dodoToken);
-        if (orderCreated) {
-          logger.debug(
-            `|${loggerDeliveryNumber}| -> Order created successfully`,
-          );
-        } else {
-          logger.error(
-            `|${loggerDeliveryNumber}| -> Failed to create DODO order for box return delivery ${deliveryIdentifier}`,
-          );
-        }
-        break;
-      default:
-        logger.warn(
-          `|${loggerDeliveryNumber}| -> Other box return carrier ${entityPair.boxReturnCarrierId} for delivery ${deliveryIdentifier}, not creating order`,
-        );
-        break;
-    }
-
-    logger.info(
-      `|${loggerDeliveryNumber}| ->  Box delivery in state OFFERED - moving to IN_DELIVERY state`,
-    );
-
-    await updateBoxDelivery(
-      delivery.ref,
-      "IN_DELIVERY",
-      deliveryIdentifier,
-      deliveryDate,
-      pickupTimeWindow,
-      deliveryTimeWindow,
-      entityPair.boxReturnCarrierId,
-    );
-
-    logger.info(
-      `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state`,
     );
   }
 }
