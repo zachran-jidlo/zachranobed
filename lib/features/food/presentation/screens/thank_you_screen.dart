@@ -11,11 +11,31 @@ import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.
 import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 
+/// A screen displayed after completing a food delivery flow.
+///
+/// Shows a thank you message on success or an error message on failure,
+/// along with a button to navigate back to the home screen.
+///
+/// The screen has different layouts optimized for web and mobile:
+/// - **Web**: Centered card with dimmed food background image
+/// - **Mobile**: Full-width layout with food background image at the top
 @RoutePage()
 class ThankYouScreen extends StatelessWidget {
+  /// Whether the operation completed successfully.
+  ///
+  /// When `true`, displays the provided [message].
+  /// When `false`, displays a localized error message.
   final bool isSuccess;
+
+  /// The message to display when [isSuccess] is `true`.
+  ///
+  /// This is typically a thank you or confirmation message.
+  /// Ignored when [isSuccess] is `false`.
   final String message;
 
+  /// Creates a thank you screen.
+  ///
+  /// Both [isSuccess] and [message] are required parameters.
   const ThankYouScreen({
     super.key,
     required this.isSuccess,
@@ -32,6 +52,7 @@ class ThankYouScreen extends StatelessWidget {
     );
   }
 
+  /// Builds the web-specific layout with a centered card on a dimmed background.
   Widget _webLayout(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
@@ -73,6 +94,7 @@ class ThankYouScreen extends StatelessWidget {
     );
   }
 
+  /// Builds the mobile-specific layout with a top image and scrollable content.
   Widget _mobileLayout(BuildContext context) {
     return CustomScrollView(
       slivers: [
@@ -107,10 +129,10 @@ class ThankYouScreen extends StatelessWidget {
     );
   }
 
-  /// Builds the main content of the thank you screen.
+  /// Builds the shared content used by both web and mobile layouts.
   ///
-  /// The [useWideButton] parameter determines whether to stretch button to
-  /// screen width.
+  /// Contains the message text and a button to navigate back to home.
+  /// The button width adapts based on the current layout (full-width on mobile).
   Widget _screenContent(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

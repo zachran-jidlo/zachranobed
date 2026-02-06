@@ -180,7 +180,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
   Widget _buildEmptyPage() {
     return InfoPage(
-      image: ImageAssets.imageEmptyOverview,
+      image: ImageAssets.imageEmptyMeals,
       title: context.l10n.offerFoodOverviewEmptyTitle,
       description: context.l10n.offerFoodOverviewEmptyDescription,
       actions: [
