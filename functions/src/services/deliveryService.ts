@@ -11,6 +11,20 @@ import { DateTime } from "luxon";
 import { logger } from "firebase-functions/v2";
 
 /**
+ * Parameters for creating a new delivery document.
+ */
+interface CreateDeliveryData {
+  carrierId: string;
+  donorId: string;
+  recipientId: string;
+  deliveryDate: Date;
+  deliveryIdentifier: string;
+  pickupTimeWindow: { start: Date; end: Date };
+  deliveryTimeWindow: { start: Date; end: Date };
+  confirmationTime?: number;
+}
+
+/**
  * Get today's date range in Prague timezone as Firestore Timestamps.
  * @return {{ start: Timestamp; end: Timestamp }} - Start and end timestamps for today
  */
@@ -32,26 +46,19 @@ function getTodayDateRange(): { start: Timestamp; end: Timestamp } {
 
 /**
  * Create a delivery document in Firestore with PREPARED state.
- * @param {object} deliveryData - The delivery data
+ * @param {CreateDeliveryData} deliveryData - The delivery data
  * @return {Promise<void>}
  */
-export async function createDeliveryDocument(deliveryData: {
-  carrierId: string;
-  donorId: string;
-  recipientId: string;
-  deliveryDate: Date;
-  deliveryIdentifier: string;
-  pickupTimeWindow: { start: Date; end: Date };
-  deliveryTimeWindow: { start: Date; end: Date };
-  confirmationTime?: number;
-}): Promise<void> {
-  const delivery: Record<string, unknown> = {
+export async function createDeliveryDocument(
+  deliveryData: CreateDeliveryData,
+): Promise<void> {
+  const delivery = {
     carrierId: deliveryData.carrierId,
     donorId: deliveryData.donorId,
     recipientId: deliveryData.recipientId,
     deliveryDate: Timestamp.fromDate(deliveryData.deliveryDate),
-    state: "PREPARED" as DeliveryState,
-    type: "FOOD_DELIVERY" as DeliveryType,
+    state: "PREPARED" as const,
+    type: "FOOD_DELIVERY" as const,
     deliveryIdentifier: deliveryData.deliveryIdentifier,
     pickupTimeWindow: {
       start: Timestamp.fromDate(deliveryData.pickupTimeWindow.start),
@@ -63,12 +70,10 @@ export async function createDeliveryDocument(deliveryData: {
     },
     foodBoxes: [],
     meals: [],
+    ...(deliveryData.confirmationTime !== undefined && {
+      confirmationTime: deliveryData.confirmationTime,
+    }),
   };
-
-  // Only include confirmationTime if it's defined
-  if (deliveryData.confirmationTime !== undefined) {
-    delivery.confirmationTime = deliveryData.confirmationTime;
-  }
 
   await db
     .collection("deliveries")

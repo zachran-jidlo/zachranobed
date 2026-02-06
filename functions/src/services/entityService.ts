@@ -34,12 +34,14 @@ export async function getEntityPairs(): Promise<EntityPair[]> {
   }
 
   const snapshot = await db.collection("entityPairs").get();
-  cachedEntityPairs = snapshot.docs
-    .map((doc) => ({
-      ref: doc.ref,
-      ...doc.data(),
-    }))
-    .filter((pair: any) => pair.carrierId !== "disabled") as EntityPair[];
+  const allPairs = snapshot.docs.map((doc) => ({
+    ref: doc.ref,
+    ...doc.data(),
+  })) as EntityPair[];
+
+  cachedEntityPairs = allPairs.filter(
+    (pair) => pair.carrierId !== "disabled",
+  );
 
   return cachedEntityPairs;
 }
