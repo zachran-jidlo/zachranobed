@@ -11,7 +11,6 @@ import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dar
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/dialog.dart';
 import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
@@ -19,6 +18,7 @@ import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_checkbox.dart';
+import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
@@ -251,11 +251,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }
 
   void _onConfirmationButtonPressed() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
+    UiDialog.showLoadingDialog(context);
 
     final requiredBoxes = _boxInfos.map((type, quantity) => MapEntry(type.id, quantity));
     final hasRequiredBoxes = await _verifyAvailableBoxCount.invoke(
@@ -285,16 +281,21 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }
 
   void _showCancelConfirmationDialog() async {
-    final confirmed = await showDialog(
+    final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => ZODialog(
-        criticalConfirmStyle: true,
+      builder: (context) => UiDialog(
         title: context.l10n.cancelOffer,
         content: context.l10n.cancelOfferDialogContent,
-        confirmText: context.l10n.confirmCancel,
-        cancelText: context.l10n.continueTheOffer,
-        onConfirmPressed: () => context.router.maybePop(true),
-        onCancelPressed: () => context.router.maybePop(false),
+        actions: [
+          UiTextButton(
+            text: context.l10n.continueTheOffer,
+            onPressed: () => context.router.maybePop(false),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.confirmCancel,
+            onPressed: () => context.router.maybePop(true),
+          ),
+        ],
       ),
     );
 
@@ -342,17 +343,22 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
     showDialog(
       context: context,
-      builder: (context) => ZODialog(
-        criticalConfirmStyle: true,
+      builder: (context) => UiDialog(
         title: context.l10n.offerFoodOverviewUpdateBoxesDialogTitle,
         content: message,
-        confirmText: context.l10n.offerFoodOverviewUpdateBoxesDialogConfirmAction,
-        cancelText: context.l10n.commonCancel,
-        onConfirmPressed: () {
-          context.router.maybePop();
-          _onEditBoxesPressed();
-        },
-        onCancelPressed: () => context.router.maybePop(),
+        actions: [
+          UiTextButton(
+            text: context.l10n.commonCancel,
+            onPressed: () => context.router.maybePop(),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.offerFoodOverviewUpdateBoxesDialogConfirmAction,
+            onPressed: () {
+              context.router.maybePop();
+              _onEditBoxesPressed();
+            },
+          ),
+        ],
       ),
     );
   }
