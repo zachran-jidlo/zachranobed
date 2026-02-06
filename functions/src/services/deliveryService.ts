@@ -11,6 +11,26 @@ import { DateTime } from "luxon";
 import { logger } from "firebase-functions/v2";
 
 /**
+ * Get today's date range in Prague timezone as Firestore Timestamps.
+ * @return {{ start: Timestamp; end: Timestamp }} - Start and end timestamps for today
+ */
+function getTodayDateRange(): { start: Timestamp; end: Timestamp } {
+  const todayStart = DateTime.now()
+    .setZone("Europe/Prague")
+    .startOf("day")
+    .toJSDate();
+  const todayEnd = DateTime.now()
+    .setZone("Europe/Prague")
+    .endOf("day")
+    .toJSDate();
+
+  return {
+    start: Timestamp.fromDate(todayStart),
+    end: Timestamp.fromDate(todayEnd),
+  };
+}
+
+/**
  * Create a delivery document in Firestore with PREPARED state.
  * @param {object} deliveryData - The delivery data
  * @return {Promise<void>}
@@ -65,29 +85,17 @@ export async function createDeliveryDocument(deliveryData: {
 export async function getTodaysDeliveries(
   states: DeliveryState[],
 ): Promise<Delivery[]> {
-  // Get today's date range in Prague timezone
-  const todayStart = DateTime.now()
-    .setZone("Europe/Prague")
-    .startOf("day")
-    .toJSDate();
-
-  const todayEnd = DateTime.now()
-    .setZone("Europe/Prague")
-    .endOf("day")
-    .toJSDate();
-
-  const startTimestamp = Timestamp.fromDate(todayStart);
-  const endTimestamp = Timestamp.fromDate(todayEnd);
+  const { start, end } = getTodayDateRange();
 
   logger.debug(
-    `Loading deliveries between ${startTimestamp.toDate().toISOString()} and ${endTimestamp.toDate().toISOString()} in states: ${states.join(", ")}`,
+    `Loading deliveries between ${start.toDate().toISOString()} and ${end.toDate().toISOString()} in states: ${states.join(", ")}`,
   );
 
   // Use range query to handle deliveries with milliseconds in timestamp
   const snapshot = await db
     .collection("deliveries")
-    .where("deliveryDate", ">=", startTimestamp)
-    .where("deliveryDate", "<=", endTimestamp)
+    .where("deliveryDate", ">=", start)
+    .where("deliveryDate", "<=", end)
     .where("state", "in", states)
     .where("type", "==", "FOOD_DELIVERY")
     .where("carrierId", "!=", "disabled")
@@ -130,25 +138,13 @@ export async function updateDeliveryWithOrderCreationTime(
  * @return {Promise<Delivery[]>} - Array of box deliveries
  */
 export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
-  // Get today's date range in Prague timezone
-  const todayStart = DateTime.now()
-    .setZone("Europe/Prague")
-    .startOf("day")
-    .toJSDate();
-
-  const todayEnd = DateTime.now()
-    .setZone("Europe/Prague")
-    .endOf("day")
-    .toJSDate();
-
-  const startTimestamp = Timestamp.fromDate(todayStart);
-  const endTimestamp = Timestamp.fromDate(todayEnd);
+  const { start, end } = getTodayDateRange();
 
   // Use range query to handle deliveries with milliseconds in timestamp
   const snapshot = await db
     .collection("deliveries")
-    .where("deliveryDate", ">=", startTimestamp)
-    .where("deliveryDate", "<=", endTimestamp)
+    .where("deliveryDate", ">=", start)
+    .where("deliveryDate", "<=", end)
     .where("type", "==", "BOX_DELIVERY")
     .where("state", "==", "OFFERED")
     .where("boxReturnCarrierId", "!=", "disabled")

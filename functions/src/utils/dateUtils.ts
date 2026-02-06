@@ -14,27 +14,29 @@ export function isToday(date: Date): boolean {
 }
 
 /**
+ * Skip weekend by moving Saturday to Monday and Sunday to Monday.
+ * @param {DateTime} date - The date to check
+ * @return {DateTime} - The date, moved to Monday if it was a weekend
+ */
+function skipWeekend(date: DateTime): DateTime {
+  if (date.weekday === 6) return date.plus({ days: 2 }); // Saturday -> Monday
+  if (date.weekday === 7) return date.plus({ days: 1 }); // Sunday -> Monday
+  return date;
+}
+
+/**
  * Get the next business day, skipping weekends.
  * Returns midnight Prague time for the target date.
  * @param {number} daysInFuture - Number of days in the future (default: 1)
  * @return {Date} - The next business day at midnight Prague time
  */
 export function getNextBusinessDay(daysInFuture: number = 1): Date {
-  let pragueDate = DateTime.now()
+  const pragueDate = DateTime.now()
     .setZone("Europe/Prague")
     .plus({ days: daysInFuture })
     .startOf("day"); // Midnight Prague time
 
-  // Move to Monday if weekend
-  if (pragueDate.weekday === 6) {
-    // Saturday
-    pragueDate = pragueDate.plus({ days: 2 });
-  } else if (pragueDate.weekday === 7) {
-    // Sunday
-    pragueDate = pragueDate.plus({ days: 1 });
-  }
-
-  return pragueDate.toJSDate();
+  return skipWeekend(pragueDate).toJSDate();
 }
 
 /**
@@ -51,21 +53,12 @@ export function getDateInFuture(
 ): Date {
   const [hours, minutes] = time.split(":").map(Number);
 
-  let pragueDate = DateTime.now()
+  const pragueDate = DateTime.now()
     .setZone("Europe/Prague")
     .plus({ days: daysInFuture })
     .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
-  // Move to Monday if weekend
-  if (pragueDate.weekday === 6) {
-    // Saturday
-    pragueDate = pragueDate.plus({ days: 2 });
-  } else if (pragueDate.weekday === 7) {
-    // Sunday
-    pragueDate = pragueDate.plus({ days: 1 });
-  }
-
-  return pragueDate.toJSDate();
+  return skipWeekend(pragueDate).toJSDate();
 }
 
 /**
