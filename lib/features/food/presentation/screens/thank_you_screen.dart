@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 
 @RoutePage()
@@ -23,6 +25,7 @@ class ThankYouScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenScaffold(
+      backgroundColor: context.uiColors.surfaceWhite,
       centerWebLayout: false,
       web: _webLayout,
       mobile: _mobileLayout,
@@ -48,10 +51,10 @@ class ThankYouScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: GapSize.xxl),
+                    const SizedBox(height: 48.0),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: GapSize.l),
-                      child: _screenContent(context, useWideButton: false),
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: _screenContent(context),
                     ),
                     const SizedBox(height: 80.0),
                     SvgPicture.asset(
@@ -59,7 +62,7 @@ class ThankYouScreen extends StatelessWidget {
                       width: 270,
                       height: 46,
                     ),
-                    const SizedBox(height: GapSize.xxl),
+                    const SizedBox(height: 48.0),
                   ],
                 ),
               ),
@@ -85,10 +88,10 @@ class ThankYouScreen extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: GapSize.xxl,
-                    vertical: GapSize.m,
+                    horizontal: 48.0,
+                    vertical: 24.0,
                   ),
-                  child: _screenContent(context, useWideButton: true),
+                  child: _screenContent(context),
                 ),
               ),
               SvgPicture.asset(
@@ -96,7 +99,7 @@ class ThankYouScreen extends StatelessWidget {
                 width: 158,
                 height: 28,
               ),
-              const SizedBox(height: GapSize.xxl),
+              const SizedBox(height: 48.0),
             ],
           ),
         )
@@ -108,23 +111,19 @@ class ThankYouScreen extends StatelessWidget {
   ///
   /// The [useWideButton] parameter determines whether to stretch button to
   /// screen width.
-  Widget _screenContent(
-    BuildContext context, {
-    required bool useWideButton,
-  }) {
+  Widget _screenContent(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           isSuccess ? message : context.l10n.offerError,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: FontSize.xl),
+          style: context.textStyles.headlineMedium,
         ),
-        const SizedBox(height: GapSize.xl),
-        ZOButton(
+        const SizedBox(height: 40.0),
+        UiPrimaryButton(
+          size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
           text: context.l10n.backToOverview,
-          icon: MaterialSymbols.home_outlined,
-          minimumSize: ZOButtonSize.large(fullWidth: useWideButton),
           onPressed: () {
             context.navigateTo(const HomeRoute());
           },

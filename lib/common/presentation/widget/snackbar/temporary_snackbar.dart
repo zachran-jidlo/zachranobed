@@ -15,8 +15,8 @@ class ZOTemporarySnackBar extends SnackBar {
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.only(
             bottom: 32.0,
-            left: WidgetStyle.padding,
-            right: WidgetStyle.padding,
+            left: 16.0,
+            right: 16.0,
           ),
           showCloseIcon: true,
           content: Text(message),
