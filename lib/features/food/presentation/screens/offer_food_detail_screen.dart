@@ -222,11 +222,11 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
         actions: [
           UiTextButton(
             text: context.l10n.commonCancel,
-            onPressed: () => context.maybePop(false),
+            onPressed: () => context.router.maybePop(false),
           ),
           UiPrimaryButton(
             text: context.l10n.offerFoodFormRemoveDialogConfirmAction,
-            onPressed: () => context.maybePop(true),
+            onPressed: () => context.router.maybePop(true),
           ),
         ],
       ),
@@ -246,11 +246,11 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
         actions: [
           UiTextButton(
             text: context.l10n.continueTheOffer,
-            onPressed: () => context.maybePop(false),
+            onPressed: () => context.router.maybePop(false),
           ),
           UiPrimaryButton(
             text: context.l10n.confirmCancel,
-            onPressed: () => context.maybePop(true),
+            onPressed: () => context.router.maybePop(true),
           ),
         ],
       ),

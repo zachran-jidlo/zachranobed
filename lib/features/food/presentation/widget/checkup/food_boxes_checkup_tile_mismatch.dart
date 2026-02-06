@@ -41,7 +41,7 @@ class FoodBoxesCheckupTileMismatch extends StatelessWidget {
         actions: [
           UiPrimaryButton(
             text: context.l10n.commonClose,
-            onPressed: () => context.maybePop(),
+            onPressed: () => context.router.maybePop(),
           ),
         ],
       ),

@@ -117,7 +117,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
         UiTextButton(
           size: UiButtonSize.medium(fullWidth: true),
           text: context.l10n.commonClose,
-          onPressed: () => context.maybePop(),
+          onPressed: () => context.router.maybePop(),
         ),
       ],
     );
@@ -132,7 +132,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
         UiPrimaryButton(
           size: UiButtonSize.medium(fullWidth: true),
           text: context.l10n.commonBack,
-          onPressed: () => context.maybePop(),
+          onPressed: () => context.router.maybePop(),
         ),
       ],
     );
@@ -188,7 +188,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
           UiPrimaryButton(
             size: UiButtonSize.medium(fullWidth: isMobileLayout),
             text: context.l10n.commonClose,
-            onPressed: () => context.maybePop(),
+            onPressed: () => context.router.maybePop(),
           ),
         ],
       ),
