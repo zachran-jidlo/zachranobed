@@ -24,6 +24,15 @@
     },
     "commonToday": "Dnes",
     "commonCountShort": "ks",
+    "commonCountTemplate": "{count} ks",
+    "@commonCountTemplate": {
+      "placeholders": {
+        "count": {
+          "type": "int",
+          "example": "42"
+        }
+      }
+    },
     "commonServingsCount": "{count, plural, zero{0 porcí} one{1 porce} few{{count} porce} other{{count} porcí}}",
     "@commonServingsCount" : {
         "placeholders": {
@@ -191,21 +200,14 @@
     "commonGenericErrorTitle": "Něco se pokazilo",
     "commonGenericErrorDescription": "Při načítání dat došlo k chybě. Zkuste to prosím za chvíli znovu.",
     "commonGenericErrorRetryAction": "Zkusit znovu",
-    "foodInfoCountTemplate": "{count} ks",
-    "@foodInfoCountTemplate": {
-      "placeholders": {
-        "count": {
-          "type": "int",
-          "example": "42"
-        }
-      }
-    },
+
     "offerFoodFormRemoveDialogTitle": "Chcete smazat pokrm?",
     "offerFoodFormRemoveDialogContent": "Pokud smažete tento pokrm, nezapomeňte na úpravu vratných krabiček.",
     "offerFoodFormRemoveDialogConfirmAction": "Smazat pokrm",
 
     "offerFoodOverviewScreenTitle": "Shrnutí",
-    "offerFoodOverviewBanner": "Zkontrolujte si prosím počet krabiček a porcí.",
+    "offerFoodOverviewBannerTitle": "Kontrola před odesláním",
+    "offerFoodOverviewBannerDescription": "Zkontrolujte prosím uvedené počty porcí a krabiček před odesláním daru, děkujeme.",
     "offerFoodOverviewEmptyTitle": "V seznamu nejsou žádné zadané pokrmy",
     "offerFoodOverviewEmptyDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
     "offerFoodOverviewEmptyAction": "Zadat pokrmy",

@@ -40,7 +40,7 @@ class MealTileFactory {
       return context.l10n.commonServingsCount(item.numberOfServings!);
     }
     if (item.numberOfPackages != null) {
-      return context.l10n.foodInfoCountTemplate(item.numberOfPackages!);
+      return context.l10n.commonCountTemplate(item.numberOfPackages!);
     }
     return '';
   }
