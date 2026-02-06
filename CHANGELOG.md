@@ -27,6 +27,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-391** Update overview screen with new design.
 - **ZOB-392** Update monthly food boxes checkup flow with new design.
 - **ZOB-394** Update box delivery flow with new design.
+- **ZOB-395** Update meals delivery flow with new design.
 
 ### Removed
 
