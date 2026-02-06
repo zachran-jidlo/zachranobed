@@ -3,7 +3,22 @@
     "allow": [
       "Bash(git fetch:*)",
       "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(npm run lint)",
+      "Bash(firebase use:*)",
+      "Bash(firebase functions:list:*)",
+      "Bash(gcloud functions describe:*)",
+      "Bash(gcloud functions logs read:*)",
+      "Bash(gcloud firestore documents describe:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(curl*)",
+      "Bash(grep:*)",
+      "Bash(test:*)",
+      "Bash(firebase functions:log:*)"
     ]
   }
 }
