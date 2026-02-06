@@ -13,7 +13,7 @@ import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
@@ -198,10 +198,9 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
             const CircularProgressIndicator(),
             if (_showLogoutButton)
               Padding(
-                padding: const EdgeInsets.only(top: GapSize.m),
-                child: ZOButton(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: UiPrimaryButton(
                   text: context.l10n.signOut,
-                  minimumSize: ZOButtonSize.tiny(),
                   onPressed: () async {
                     final entityId = HelperService.getCurrentUser(context)?.entityId;
                     await authService.signOut(entityId);
