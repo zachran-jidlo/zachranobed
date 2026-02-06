@@ -1,4 +1,3 @@
-import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
@@ -18,11 +17,12 @@ abstract class OfferedFoodRepository {
 
   /// Creates a food offer to the given [delivery] and updates a [delivery]
   /// with a correct state. The [foodInfo] contains all necessary information
-  /// about donated food.
+  /// about donated food. The [boxInfo] map contains box IDs as keys and
+  /// the number of boxes as values.
   Future<bool> createOffer({
     required Delivery delivery,
     required List<FoodInfo> foodInfo,
-    required List<BoxInfo> boxInfo,
+    required Map<String, int> boxInfo,
   });
 
   /// Returns a stream of offered food items for a specific delivery.

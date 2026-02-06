@@ -30,7 +30,6 @@ class ImageAssets {
   static const imageEmptyMeals = 'assets/image_empty_meals.svg';
   static const imageEmptyBox = 'assets/image_empty_box.svg';
   static const imageEmptyNotifications = 'assets/image_empty_notifications.svg';
-  static const imageEmptyOverview = 'assets/image_empty_overview.svg';
   static const imageErrorGeneric = 'assets/image_error_generic.svg';
   static const imageErrorOffline = 'assets/image_error_offline.svg';
   static const imageAppTermsNotAccepted = 'assets/image_app_terms_not_accepted.svg';

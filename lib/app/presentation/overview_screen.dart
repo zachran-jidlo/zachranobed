@@ -201,12 +201,12 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
           actions: [
             UiTextButton(
               text: context.l10n.commonClose,
-              onPressed: () => context.maybePop(),
+              onPressed: () => context.router.maybePop(),
             ),
             UiPrimaryButton(
               text: context.l10n.foodBoxesCheckupDialogConfirmAction,
               onPressed: () async {
-                await context.maybePop();
+                await context.router.maybePop();
                 if (context.mounted) {
                   context.router.push(
                     FoodBoxesDetailRoute(

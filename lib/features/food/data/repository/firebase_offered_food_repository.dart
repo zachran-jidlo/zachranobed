@@ -5,7 +5,6 @@ import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
-import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
@@ -75,12 +74,12 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   Future<bool> createOffer({
     required Delivery delivery,
     required List<FoodInfo> foodInfo,
-    required List<BoxInfo> boxInfo,
+    required Map<String, int> boxInfo,
   }) async {
     const uuid = Uuid();
     final List<MealDetailDto> mealDetails = [];
     final List<MealDto> meals = [];
-    final Map<String, int> changeBoxesMap = {};
+
     for (final element in foodInfo) {
       final id = uuid.v4();
       mealDetails.add(
@@ -106,26 +105,18 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
       );
     }
 
-    for (final element in boxInfo) {
-      final boxId = element.foodBoxId;
-      final boxCount = element.numberOfBoxes;
-      if (boxId != null && boxCount != null) {
-        changeBoxesMap[boxId] = (changeBoxesMap[boxId] ?? 0) + boxCount;
-      }
-    }
-
     if (!await _mealService.addMeals(mealDetails)) {
       return false;
     }
 
-    if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals, changeBoxesMap)) {
+    if (!await _deliveryService.addMealsAndBoxes(delivery.id, meals, boxInfo)) {
       return false;
     }
 
     final moveBoxesSuccess = await _entityPairService.moveBoxesToRecipient(
       donorId: delivery.donorId,
       recipientId: delivery.recipientId,
-      changeMap: changeBoxesMap,
+      changeMap: boxInfo,
     );
 
     if (!moveBoxesSuccess) {

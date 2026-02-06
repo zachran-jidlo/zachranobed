@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
+import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 
 /// A custom tooltip widget with a specific style and positioning.
 ///
 /// This widget wraps the standard Flutter [Tooltip] and provides a
 /// consistent look and feel for tooltips within the application.
-class ZOTooltip extends StatelessWidget {
+class UiTooltip extends StatelessWidget {
   /// The message to display in the tooltip.
   final String message;
 
@@ -13,7 +13,7 @@ class ZOTooltip extends StatelessWidget {
   final Widget child;
 
   /// Creates a [ZOTooltip] widget.
-  const ZOTooltip({
+  const UiTooltip({
     super.key,
     required this.message,
     required this.child,
@@ -24,19 +24,12 @@ class ZOTooltip extends StatelessWidget {
     return Tooltip(
       preferBelow: false,
       message: message,
+      textStyle: context.textStyles.bodySmall.copyWith(color: context.uiColors.textPrimaryInverse),
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
       verticalOffset: 40.0,
       decoration: BoxDecoration(
-        color: ZOColors.infoSnackBarBackground,
+        color: context.uiColors.textPrimary,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(
-            color: ZOColors.disabledButtonChild,
-            blurRadius: 16,
-            offset: Offset(0, 8),
-            spreadRadius: -2,
-          )
-        ],
       ),
       child: child,
     );

@@ -3,12 +3,12 @@ import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/date_time_picker.dart';
-import 'package:zachranobed/common/presentation/widget/section_header.dart';
+import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/single_select_chips.dart';
-import 'package:zachranobed/common/presentation/widget/text_field.dart';
+import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
@@ -74,15 +74,12 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.foodName);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.foodName,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.foodName,
       ),
-      const SizedBox(height: GapSize.xs),
-      ZOTextField(
+      const SizedBox(height: 16.0),
+      UiTextField(
         key: ValueKey(formFieldKey),
-        label: context.l10n.foodName,
+        labelText: context.l10n.foodName,
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
         onValidation: widget.formValidationManager.wrapValidator(
           formFieldKey,
@@ -100,19 +97,16 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.allergens);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.allergens,
-          style: context.textStyles.titleMedium,
-        ),
-        action: SectionHeaderIcon(
-          icon: const Icon(Icons.info_outline),
+        title: context.l10n.allergens,
+        action: UiIconButton.gradient(
+          icon: Icons.info_outline_rounded,
           onPressed: () {
             final allergens = FoodAllergen.all(context);
             FoodAllergensBottomSheet.show(context, allergens, fullHeight: true);
           },
         ),
       ),
-      const SizedBox(height: GapSize.xs),
+      const SizedBox(height: 16.0),
       FoodAllergensChips(
         key: ValueKey(formFieldKey),
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
@@ -132,12 +126,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.foodCategory);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.foodCategory,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.foodCategory,
       ),
-      const SizedBox(height: GapSize.xs),
+      const SizedBox(height: 16.0),
       SingleSelectChips(
         key: ValueKey(formFieldKey),
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
@@ -159,13 +150,10 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.temperature);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.foodTemperature,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.foodTemperature,
       ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
+      const SizedBox(height: 16.0),
+      UiCounterField(
         key: ValueKey(formFieldKey),
         label: context.l10n.foodTemperatureWithCelsius,
         minValue: Constants.foodTemperatureMin,
@@ -176,7 +164,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           FieldValidationUtils.getFoodTemperatureValidator(context),
         ),
-        initialValue: widget.foodInfo.foodTemperature ?? Constants.foodTemperatureInitial,
+        value: widget.foodInfo.foodTemperature ?? Constants.foodTemperatureInitial,
         onChanged: (val) {
           widget.onChanged(widget.foodInfo.copyWith(foodTemperature: val));
         },
@@ -188,13 +176,10 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final keyServings = _createFormFieldKey(FormFieldType.numberOfServings);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.numberOfServings,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.numberOfServings,
       ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
+      const SizedBox(height: 16.0),
+      UiCounterField(
         key: ValueKey(keyServings),
         label: context.l10n.numberOfServings,
         focusNode: widget.formValidationManager.getFocusNode(keyServings),
@@ -202,7 +187,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           keyServings,
           FieldValidationUtils.getServingsValidator(context),
         ),
-        initialValue: widget.foodInfo.numberOfServings ?? 0,
+        value: widget.foodInfo.numberOfServings ?? 0,
         onChanged: (val) {
           widget.onChanged(widget.foodInfo.copyWith(numberOfServings: val));
         },
@@ -214,13 +199,10 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.numberOfPackages);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.numberOfPackages,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.numberOfPackages,
       ),
-      const SizedBox(height: GapSize.xs),
-      CounterField(
+      const SizedBox(height: 16.0),
+      UiCounterField(
         key: ValueKey(formFieldKey),
         label: context.l10n.numberOfPackages,
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
@@ -228,7 +210,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           FieldValidationUtils.getPackagesValidator(context),
         ),
-        initialValue: widget.foodInfo.numberOfPackages ?? 0,
+        value: widget.foodInfo.numberOfPackages ?? 0,
         onChanged: (val) {
           widget.onChanged(widget.foodInfo.copyWith(numberOfPackages: val));
         },
@@ -240,12 +222,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.preparedAt);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.preparedAt,
-          style: context.textStyles.titleMedium,
-        ),
+        title: context.l10n.preparedAt,
       ),
-      const SizedBox(height: GapSize.xs),
+      const SizedBox(height: 16.0),
       FoodDateTimeChips(
         key: ValueKey(formFieldKey),
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
@@ -268,12 +247,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
     final formFieldKey = _createFormFieldKey(FormFieldType.consumeBy);
     return [
       SectionHeader(
-        title: Text(
-          context.l10n.consumeBy,
-          style: context.textStyles.titleMedium,
-        ),
-        action: SectionHeaderIcon(
-          icon: const Icon(Icons.today_rounded),
+        title: context.l10n.consumeBy,
+        action: UiIconButton.gradient(
+          icon: Icons.today_rounded,
           onPressed: () async {
             final now = DateTime.now();
             final date = await DateTimePicker.pickDateTime(
@@ -289,7 +265,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           },
         ),
       ),
-      const SizedBox(height: GapSize.xs),
+      const SizedBox(height: 16.0),
       FoodDateTimeChips(
         // Use a compound key, so that state is correctly updated when value set
         // from [DateTimePicker.pickDateTime] above
@@ -311,7 +287,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
   }
 
   Widget _buildGap() {
-    return const SizedBox(height: GapSize.xl);
+    return const SizedBox(height: 32.0);
   }
 
   DateTime _consumeByInitialTime() {

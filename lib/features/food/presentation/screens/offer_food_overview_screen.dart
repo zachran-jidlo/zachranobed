@@ -2,33 +2,48 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/domain/model/box_info.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
-import 'package:zachranobed/common/presentation/widget/dialog.dart';
-import 'package:zachranobed/common/presentation/widget/empty_page.dart';
-import 'package:zachranobed/common/presentation/widget/info_banner.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_checkbox.dart';
+import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
+import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
-import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
+import 'package:zachranobed/features/food/domain/usecase/create_food_offer_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart';
-import 'package:zachranobed/features/food/presentation/widget/food_info_row.dart';
 
+/// A screen that displays an overview of food items to be offered as a donation.
+///
+/// Allows canteen users to review the list of food items they want to donate,
+/// add or edit food items, specify the number of returnable boxes, and confirm
+/// the donation. Shows a dismissible banner reminding users to verify counts
+/// before submission.
+///
+/// Displays an empty state when no food items have been added yet, with options
+/// to add new items or close the screen.
 @RoutePage()
 class OfferFoodOverviewScreen extends StatefulWidget {
+  /// The initial list of food items to display.
   final List<FoodInfo> initialFoodInfos;
 
+  /// Creates an [OfferFoodOverviewScreen].
   const OfferFoodOverviewScreen({
     super.key,
     required this.initialFoodInfos,
@@ -39,13 +54,14 @@ class OfferFoodOverviewScreen extends StatefulWidget {
 }
 
 class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
-  final _offeredFoodRepository = GetIt.I<OfferedFoodRepository>();
+  final _createFoodOffer = GetIt.I<CreateFoodOfferUseCase>();
   final _verifyAvailableBoxCount = GetIt.I<VerifyAvailableBoxCountUseCase>();
 
   final _foodInfos = <FoodInfo>[];
   final _boxInfos = <FoodBoxType, int>{};
 
   var _isEmptyConfirmed = false;
+  var _isBannerDismissed = false;
 
   @override
   void initState() {
@@ -58,115 +74,130 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenScaffold(
-      appBar: ZOAppBar(
+    return ScreenScaffold.universalBuilder(
+      appBar: UiAppBar(
         title: context.l10n.offerFoodOverviewScreenTitle,
       ),
-      web: (context) => _offerFoodOverviewScreenContent(useWideButton: false),
-      mobile: (context) => _offerFoodOverviewScreenContent(useWideButton: true),
+      builder: (context) {
+        if (_foodInfos.isEmpty) {
+          return _buildEmptyPage();
+        }
+
+        return _buildContent(context);
+      },
     );
   }
 
-  /// Builds the content of the offer food overview screen.
-  ///
-  /// The [useWideButton] parameter determines whether to stretch confirmation
-  /// button to screen width.
-  Widget _offerFoodOverviewScreenContent({
-    required bool useWideButton,
-  }) {
+  Widget _buildContent(BuildContext context) {
     return PopScope(
-      canPop: _foodInfos.isEmpty,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
           _showCancelConfirmationDialog();
         }
       },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (_foodInfos.isEmpty)
-              _emptyScreenContent(useWideButton)
-            else ...[
-              InfoBanner.text(
-                backgroundColor: ZOColors.amberTransparent,
-                message: context.l10n.offerFoodOverviewBanner,
-              ),
-              const SizedBox(height: GapSize.m),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: WidgetStyle.padding,
-                ),
-                child: Column(
-                  children: [
-                    OfferFoodOverviewFoodSection(
-                      foodInfos: _foodInfos,
-                      onAddPressed: _onAddNewFoodPressed,
-                      onEditPressed: _onEditFoodPressed,
-                    ),
-                    const SizedBox(height: GapSize.xl),
-                    OfferFoodOverviewBoxSection(
-                      boxInfos: _boxInfos,
-                      onEditPressed: _onEditBoxesPressed,
-                      isEmptyConfirmed: _isEmptyConfirmed,
-                      onEmptyConfirmedChanged: (value) {
-                        setState(() {
-                          _isEmptyConfirmed = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: GapSize.xxl),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ZOButton(
-                        text: context.l10n.offerFood,
-                        icon: Icons.check,
-                        enabled: _isEmptyConfirmed || _boxInfos.isNotEmpty,
-                        minimumSize: ZOButtonSize.large(
-                          fullWidth: useWideButton,
-                        ),
-                        onPressed: _onConfirmationButtonPressed,
-                      ),
-                    ),
-                    const SizedBox(height: GapSize.xs),
-                  ],
-                ),
-              ),
-            ],
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: _buildSummary(context),
+            ),
+          ),
+          _buildBottomButton(context),
+        ],
       ),
     );
   }
 
-  Widget _emptyScreenContent(bool useWideButton) {
+  Widget _buildSummary(BuildContext context) {
     return Column(
       children: [
-        EmptyPage(
-          vectorImagePath: ImageAssets.imageEmptyOverview,
-          title: context.l10n.offerFoodOverviewEmptyTitle,
-          description: context.l10n.offerFoodOverviewEmptyDescription,
-        ),
+        if (!_isBannerDismissed)
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: 16.0,
+              bottom: 32.0,
+            ),
+            child: UiNotificationTile(
+              icon: Icons.warning_rounded,
+              title: context.l10n.offerFoodOverviewBannerTitle,
+              description: context.l10n.offerFoodOverviewBannerDescription,
+              trailing: UiIconButton.solid(
+                icon: Icons.close,
+                onPressed: () => setState(() => _isBannerDismissed = true),
+              ),
+            ),
+          ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: GapSize.xl),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              ZOButton(
-                text: context.l10n.offerFoodOverviewEmptyAction,
-                icon: Icons.add,
-                minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
-                onPressed: _onAddNewFoodPressed,
+              OfferFoodOverviewFoodSection(
+                foodInfos: _foodInfos,
+                onAddPressed: _onAddNewFoodPressed,
+                onEditPressed: _onEditFoodPressed,
               ),
-              const SizedBox(height: GapSize.xs),
-              ZOButton(
-                text: context.l10n.commonClose,
-                type: ZOButtonType.textPrimary,
-                minimumSize: ZOButtonSize.medium(fullWidth: useWideButton),
-                onPressed: () => context.router.maybePop(),
+              const SizedBox(height: 48),
+              OfferFoodOverviewBoxSection(
+                boxInfos: _boxInfos,
+                onEditPressed: _onEditBoxesPressed,
+                isEmptyConfirmed: _isEmptyConfirmed,
+                onEmptyConfirmedChanged: (value) {
+                  setState(() {
+                    _isEmptyConfirmed = value;
+                  });
+                },
               ),
             ],
           ),
         ),
-        const SizedBox(height: GapSize.xl),
+      ],
+    );
+  }
+
+  Widget _buildBottomButton(BuildContext context) {
+    final isMobileLayout = context.watch<AdaptiveLayoutConfig>().isMobile;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Flex(
+        spacing: 16.0,
+        direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
+        children: [
+          UiPrimaryButton(
+            size: UiButtonSize.medium(fullWidth: isMobileLayout),
+            text: context.l10n.offerFood,
+            enabled: _isEmptyConfirmed || _boxInfos.isNotEmpty,
+            onPressed: _onConfirmationButtonPressed,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyPage() {
+    return InfoPage(
+      image: ImageAssets.imageEmptyMeals,
+      title: context.l10n.offerFoodOverviewEmptyTitle,
+      description: context.l10n.offerFoodOverviewEmptyDescription,
+      actions: [
+        Column(
+          spacing: 16.0,
+          children: [
+            UiPrimaryButton(
+              size: UiButtonSize.medium(fullWidth: true),
+              text: context.l10n.offerFoodOverviewEmptyAction,
+              onPressed: _onAddNewFoodPressed,
+            ),
+            UiTextButton(
+              text: context.l10n.commonClose,
+              onPressed: () => context.router.maybePop(),
+            ),
+          ],
+        )
       ],
     );
   }
@@ -177,13 +208,8 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
       return false;
     }
 
-    final boxInfo = _boxInfos.entries.map((entry) {
-      return BoxInfo(
-        foodBoxId: entry.key.id,
-        numberOfBoxes: entry.value,
-      );
-    }).toList();
-    return _offeredFoodRepository.createOffer(
+    final boxInfo = _boxInfos.map((type, quantity) => MapEntry(type.id, quantity));
+    return _createFoodOffer.invoke(
       delivery: delivery,
       foodInfo: _foodInfos,
       boxInfo: boxInfo,
@@ -225,11 +251,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }
 
   void _onConfirmationButtonPressed() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
+    UiDialog.showLoadingDialog(context);
 
     final requiredBoxes = _boxInfos.map((type, quantity) => MapEntry(type.id, quantity));
     final hasRequiredBoxes = await _verifyAvailableBoxCount.invoke(
@@ -259,16 +281,21 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   }
 
   void _showCancelConfirmationDialog() async {
-    final confirmed = await showDialog(
+    final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => ZODialog(
-        criticalConfirmStyle: true,
+      builder: (context) => UiDialog(
         title: context.l10n.cancelOffer,
         content: context.l10n.cancelOfferDialogContent,
-        confirmText: context.l10n.confirmCancel,
-        cancelText: context.l10n.continueTheOffer,
-        onConfirmPressed: () => context.router.maybePop(true),
-        onCancelPressed: () => context.router.maybePop(false),
+        actions: [
+          UiTextButton(
+            text: context.l10n.continueTheOffer,
+            onPressed: () => context.router.maybePop(false),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.confirmCancel,
+            onPressed: () => context.router.maybePop(true),
+          ),
+        ],
       ),
     );
 
@@ -316,17 +343,22 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
 
     showDialog(
       context: context,
-      builder: (context) => ZODialog(
-        criticalConfirmStyle: true,
+      builder: (context) => UiDialog(
         title: context.l10n.offerFoodOverviewUpdateBoxesDialogTitle,
         content: message,
-        confirmText: context.l10n.offerFoodOverviewUpdateBoxesDialogConfirmAction,
-        cancelText: context.l10n.commonCancel,
-        onConfirmPressed: () {
-          context.router.maybePop();
-          _onEditBoxesPressed();
-        },
-        onCancelPressed: () => context.router.maybePop(),
+        actions: [
+          UiTextButton(
+            text: context.l10n.commonCancel,
+            onPressed: () => context.router.maybePop(),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.offerFoodOverviewUpdateBoxesDialogConfirmAction,
+            onPressed: () {
+              context.router.maybePop();
+              _onEditBoxesPressed();
+            },
+          ),
+        ],
       ),
     );
   }
@@ -354,6 +386,7 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 16.0,
       children: [
         _buildSectionHeader(context),
         _buildList(context),
@@ -363,40 +396,43 @@ class OfferFoodOverviewFoodSection extends StatelessWidget {
 
   Widget _buildSectionHeader(BuildContext context) {
     return SectionHeader(
-      useBottomPadding: false,
-      title: Text(
-        context.l10n.offerFoodOverviewSectionFoodInfoTitle,
-        style: context.textStyles.titleMedium,
-      ),
-      action: ZOButton(
+      title: context.l10n.offerFoodOverviewSectionFoodInfoTitle,
+      action: UiTextButton(
         text: context.l10n.offerFoodOverviewSectionFoodInfoAddAction,
         icon: Icons.add,
-        type: ZOButtonType.textPrimary,
-        minimumSize: ZOButtonSize.mediumWrapContent,
         onPressed: onAddPressed,
       ),
     );
   }
 
   Widget _buildList(BuildContext context) {
-    if (foodInfos.isEmpty) {
-      return const SizedBox();
-    }
     return Column(
-      children: foodInfos
-          .map(
-            (food) => FoodInfoRow(
-              foodInfo: food,
-              onPressed: () {
-                onEditPressed(food);
-              },
+      spacing: 8.0,
+      children: foodInfos.map(
+        (food) {
+          final count = food.numberOfServings ?? food.numberOfPackages ?? 0;
+          return UiListTile(
+            title: food.dishName.toString(),
+            end: Row(
+              spacing: 16.0,
+              children: [
+                Text(
+                  context.l10n.commonCountTemplate(count),
+                  style: context.textStyles.labelLarge.copyWith(
+                    color: context.uiColors.textPrimary,
+                  ),
+                ),
+                UiGradientIcon(
+                  spec: UiIconSpec.data(Icons.edit),
+                  gradient: context.uiColors.primaryGradient,
+                  size: 24,
+                ),
+              ],
             ),
-          )
-          .separated(
-            const SizedBox(height: 8.0),
-            leading: true,
-          )
-          .toList(),
+            onPressed: () => onEditPressed(food),
+          );
+        },
+      ).toList(),
     );
   }
 }
@@ -430,97 +466,76 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader(context),
-        const SizedBox(height: GapSize.xs),
-        Text(context.l10n.offerFoodOverviewSectionBoxInfoDescription),
-        const SizedBox(height: GapSize.xs),
+        const SizedBox(height: 16),
         if (boxInfos.isEmpty) ...[
+          Text(
+            context.l10n.offerFoodOverviewSectionBoxInfoDescription,
+            style: context.textStyles.bodyMedium,
+          ),
           _buildCheckbox(context)
         ] else ...[
-          _buildCard(context),
+          _buildBoxList(context),
         ]
       ],
     );
   }
 
   Widget _buildCheckbox(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          onEmptyConfirmedChanged(!isEmptyConfirmed);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: ZOColors.cardBackground,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            children: [
-              Checkbox(
-                  value: isEmptyConfirmed,
-                  onChanged: (value) {
-                    onEmptyConfirmedChanged(value ?? isEmptyConfirmed);
-                  }),
-              Text(context.l10n.offerFoodOverviewSectionBoxInfoEmpty)
-            ],
-          ),
-        ));
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => onEmptyConfirmedChanged(!isEmptyConfirmed),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            UiCheckbox(
+              isChecked: isEmptyConfirmed,
+              onChanged: (value) => onEmptyConfirmedChanged(value),
+            ),
+            Flexible(
+              child: Text(
+                context.l10n.offerFoodOverviewSectionBoxInfoEmpty,
+                style: context.textStyles.bodyMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildSectionHeader(BuildContext context) {
     return SectionHeader(
-      useBottomPadding: false,
-      title: Text(
-        context.l10n.offerFoodOverviewSectionBoxInfoTitle,
-        style: context.textStyles.titleMedium,
-      ),
+      title: context.l10n.offerFoodOverviewSectionBoxInfoTitle,
       action: boxInfos.isEmpty
-          ? ZOButton(
+          ? UiTextButton(
               text: context.l10n.offerFoodOverviewSectionBoxInfoAddAction,
               icon: Icons.add,
-              type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             )
-          : ZOButton(
+          : UiTextButton(
               text: context.l10n.offerFoodOverviewSectionBoxInfoEditAction,
               icon: Icons.edit,
-              type: ZOButtonType.textPrimary,
-              minimumSize: ZOButtonSize.mediumWrapContent,
               onPressed: onEditPressed,
             ),
     );
   }
 
-  Widget _buildCard(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: ZOColors.borderColor,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: boxInfos.entries
-            .map((e) {
-              return ListTile(
-                title: Text(
-                  e.key.name,
-                  style: context.textStyles.bodyLarge,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: Text(
-                  context.l10n.foodInfoCountTemplate(e.value),
-                  style: context.textStyles.bodyLarge.copyWith(color: ZOColors.onPrimaryLight),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              );
-            })
-            .separated(const Divider(height: 1, color: ZOColors.secondary))
-            .toList(),
-      ),
+  Widget _buildBoxList(BuildContext context) {
+    return Column(
+      spacing: 8.0,
+      children: boxInfos.entries.map(
+        (entry) {
+          return UiListTile(
+            title: entry.key.name,
+            end: Text(
+              context.l10n.commonCountTemplate(entry.value),
+              style: context.textStyles.labelLarge,
+            ),
+          );
+        },
+      ).toList(),
     );
   }
 }

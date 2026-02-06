@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/assist_chip.dart';
-import 'package:zachranobed/common/presentation/widget/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/other/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
 
 /// A widget that displays a set of chips for single selection.
 ///
 /// This widget allows users to select a single option from a list of choices
-/// represented by chips. It uses [AssistChip] widgets to display the options
+/// represented by chips. It uses [UiChip] widgets to display the options
 /// and provides callbacks for handling selection changes and validation.
 /// Internally uses [FormField] for validation in [Form].
 class SingleSelectChips<T> extends StatelessWidget {
@@ -53,10 +52,10 @@ class SingleSelectChips<T> extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
-                  spacing: GapSize.xs,
-                  runSpacing: GapSize.xs,
+                  spacing: 16.0,
+                  runSpacing: 16.0,
                   children: options.map((option) {
-                    return AssistChip(
+                    return UiChip(
                       text: optionLabel(option),
                       selected: option == state.value,
                       onPressed: () {

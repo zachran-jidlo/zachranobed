@@ -24,6 +24,15 @@
     },
     "commonToday": "Dnes",
     "commonCountShort": "ks",
+    "commonCountTemplate": "{count} ks",
+    "@commonCountTemplate": {
+      "placeholders": {
+        "count": {
+          "type": "int",
+          "example": "42"
+        }
+      }
+    },
     "commonServingsCount": "{count, plural, zero{0 porcí} one{1 porce} few{{count} porce} other{{count} porcí}}",
     "@commonServingsCount" : {
         "placeholders": {
@@ -46,10 +55,10 @@
     "invalidFieldFoodCategory": "Není vybraný druh pokrmu.",
     "invalidFieldFoodTemperatureTooLow": "Teplota je příliš nízká.",
     "invalidFieldFoodTemperatureTooHigh": "Teplota je příliš vysoká.",
-    "invalidFieldPackages": "Zadejte počet kusů.",
-    "invalidFieldBoxNumber": "Zadejte počet krabiček.",
+    "invalidFieldPackages": "Není zadán počet kusů.",
+    "invalidFieldBoxNumber": "Není zadán počet krabiček.",
     "invalidFieldBoxNumberTooHigh": "Zadáno více krabiček, než je k dispozici",
-    "invalidFieldServings": "Zadejte počet porcí.",
+    "invalidFieldServings": "Není zadán počet porcí.",
     "invalidFieldPreparedAt": "Není vybraný datum výroby.",
     "invalidFieldPreparedAtDateInPast": "Zvolte datum spotřeby v minulosti.",
     "invalidFieldConsumeBy": "Není vybraný datum a čas spotřeby.",
@@ -120,11 +129,11 @@
     "offerError": "Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.",
     "boxCountError": "Nemůžete odeslat více krabiček, než kolik máte u sebe.",
     "backToOverview": "Zpět na přehled",
-    "cancelOffer": "Zahodit nabídku?",
+    "cancelOffer": "Zahodit evidenci?",
     "cancelShippingOfBoxes": "Zahodit vratku?",
     "confirmCancel": "Zahodit",
     "continueTheOffer": "Pokračovat",
-    "cancelOfferDialogContent": "Máte rozpracovanou nabídku. Opravdu si ji přejete zahodit?",
+    "cancelOfferDialogContent": "Máte rozpracovaný formulář pro evidenci pokrmů, opravdu si ho přejete zahodit?",
     "cancelShippingOfBoxesDialogContent": "Máte rozpracovanou objednávku vratky krabiček. Opravdu si ji přejete zahodit?",
     "organization": "Organizace",
     "donor": "Dárce",
@@ -191,21 +200,14 @@
     "commonGenericErrorTitle": "Něco se pokazilo",
     "commonGenericErrorDescription": "Při načítání dat došlo k chybě. Zkuste to prosím za chvíli znovu.",
     "commonGenericErrorRetryAction": "Zkusit znovu",
-    "foodInfoCountTemplate": "{count} ks",
-    "@foodInfoCountTemplate": {
-      "placeholders": {
-        "count": {
-          "type": "int",
-          "example": "42"
-        }
-      }
-    },
-    "offerFoodFormRemoveDialogTitle": "Smazat pokrm?",
-    "offerFoodFormRemoveDialogContent": "Opravdu chcete zadaný pokrm smazat z nabídky darovaných jídel? ",
+
+    "offerFoodFormRemoveDialogTitle": "Chcete smazat pokrm?",
+    "offerFoodFormRemoveDialogContent": "Pokud smažete tento pokrm, nezapomeňte na úpravu vratných krabiček.",
     "offerFoodFormRemoveDialogConfirmAction": "Smazat pokrm",
 
     "offerFoodOverviewScreenTitle": "Shrnutí",
-    "offerFoodOverviewBanner": "Zkontrolujte si prosím počet krabiček a porcí.",
+    "offerFoodOverviewBannerTitle": "Kontrola před odesláním",
+    "offerFoodOverviewBannerDescription": "Zkontrolujte prosím uvedené počty porcí a krabiček před odesláním daru, děkujeme.",
     "offerFoodOverviewEmptyTitle": "V seznamu nejsou žádné zadané pokrmy",
     "offerFoodOverviewEmptyDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
     "offerFoodOverviewEmptyAction": "Zadat pokrmy",
@@ -213,7 +215,7 @@
     "offerFoodOverviewSectionFoodInfoTitle": "Pokrmy a porce",
     "offerFoodOverviewSectionBoxInfoAddAction": "Přidat krabičky",
     "offerFoodOverviewSectionBoxInfoEditAction": "Upravit",
-    "offerFoodOverviewSectionBoxInfoTitle": "Počet vratných krabiček",
+    "offerFoodOverviewSectionBoxInfoTitle": "Vratné krabičky",
     "offerFoodOverviewSectionBoxInfoDescription": "Pro darování pokrmů zadejte počet krabiček, ve kterých budou pokrmy darovány.",
     "offerFoodOverviewSectionBoxInfoEmpty": "Pokrmy darovány bez vratných krabiček",
     "offerFoodOverviewUpdateBoxesDialogTitle": "Upravit počty krabiček?",
@@ -226,7 +228,9 @@
     "offerFoodBoxInfoSaveAction": "Uložit",
     "offerFoodBoxInfoEmptyTitle": "Není možné zadat vratné krabičky",
     "offerFoodBoxInfoEmptyDescription": "V tuto chvíli u sebe nemáte žádné vratné krabičky",
+    "offerFoodBoxInfoDescription": "Zadejte počet vratných krabiček, ve kterých darujete pokrmy.",
 
+    "offerFoodDetailScreenTitle": "Evidence pokrmů",
     "offerFoodDetailAddScreenTitle": "Nabídka zbylých pokrmů",
     "offerFoodDetailEditScreenTitle": "Úprava zadaného pokrmu",
     "offerFoodDetailContinueButton": "Pokračovat",

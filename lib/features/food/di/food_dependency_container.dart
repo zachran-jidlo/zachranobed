@@ -9,6 +9,7 @@ import 'package:zachranobed/features/food/data/repository/firebase_offered_food_
 import 'package:zachranobed/features/food/domain/repository/food_box_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/food/domain/usecase/create_box_delivery_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/create_food_offer_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_delivery_meals_use_case.dart';
@@ -84,6 +85,12 @@ class FoodDependencyContainer {
     GetIt.I.registerFactory<CreateBoxDeliveryUseCase>(
       () => CreateBoxDeliveryUseCase(
         GetIt.I<FoodBoxRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<CreateFoodOfferUseCase>(
+      () => CreateFoodOfferUseCase(
+        GetIt.I<OfferedFoodRepository>(),
       ),
     );
   }

@@ -1,12 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
-import 'package:zachranobed/common/presentation/widget/app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/button.dart';
-import 'package:zachranobed/common/presentation/widget/dialog.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_info_fields.dart';
@@ -114,139 +118,81 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenScaffold(
-      appBar: ZOAppBar(
-        title: _getScreenTitle(),
+    return ScreenScaffold.universalBuilder(
+      appBar: UiAppBar(
+        title: context.l10n.offerFoodDetailScreenTitle,
       ),
-      web: (context) => _offerFoodDetailScreenContent(
-        actionButtonsAxis: Axis.horizontal,
-      ),
-      mobile: (context) => _offerFoodDetailScreenContent(
-        actionButtonsAxis: Axis.vertical,
-      ),
-    );
-  }
-
-  /// Builds the content of the offer food detail screen.
-  ///
-  /// The [actionButtonsAxis] parameter determines direction of the action
-  /// buttons.
-  Widget _offerFoodDetailScreenContent({
-    required Axis actionButtonsAxis,
-  }) {
-    return PopScope(
-      canPop: !_foodInfoPending.isSomethingFilled() || widget.foodInfo == _foodInfoPending,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          _showCancelConfirmationDialog();
-        }
-      },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: WidgetStyle.padding,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                FoodInfoFields(
-                  formValidationManager: _formValidationManager,
-                  foodInfo: _foodInfoPending,
-                  onChanged: (food) {
-                    setState(() {
-                      _foodInfoPending = food;
-                    });
-                  },
+      builder: (context) {
+        return PopScope(
+          canPop: !_foodInfoPending.isSomethingFilled() || widget.foodInfo == _foodInfoPending,
+          onPopInvokedWithResult: (didPop, result) {
+            if (!didPop) {
+              _showCancelConfirmationDialog();
+            }
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FoodInfoFields(
+                      formValidationManager: _formValidationManager,
+                      foodInfo: _foodInfoPending,
+                      onChanged: (food) {
+                        setState(() {
+                          _foodInfoPending = food;
+                        });
+                      },
+                    ),
+                    _buildBottomButtons(context),
+                    const SizedBox(height: 16.0),
+                  ],
                 ),
-                const SizedBox(height: GapSize.m),
-                _bottomActionsButtons(actionButtonsAxis: actionButtonsAxis),
-                const SizedBox(height: GapSize.l),
-              ],
+              ),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBottomButtons(BuildContext context) {
+    final isMobileLayout = context.watch<AdaptiveLayoutConfig>().isMobile;
+
+    final actions = [
+      if (widget.screenMode == OfferFoodDetailScreenMode.edit)
+        UiOutlineButton(
+          size: UiButtonSize.medium(fullWidth: isMobileLayout),
+          icon: Icons.delete_outlined,
+          text: context.l10n.offerFoodDetailRemoveButton,
+          onPressed: () => _onRemoveFoodPressed(false),
         ),
-      ),
+      switch (widget.screenMode) {
+        OfferFoodDetailScreenMode.add => UiPrimaryButton(
+            size: UiButtonSize.medium(fullWidth: isMobileLayout),
+            text: context.l10n.offerFoodDetailContinueButton,
+            onPressed: _onConfirmationButtonPressed,
+          ),
+        OfferFoodDetailScreenMode.edit => UiPrimaryButton(
+            size: UiButtonSize.medium(fullWidth: isMobileLayout),
+            icon: Icons.check,
+            text: context.l10n.offerFoodDetailSaveButton,
+            onPressed: _onConfirmationButtonPressed,
+          )
+      },
+    ];
+
+    return Flex(
+      spacing: 16.0,
+      direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
+      children: isMobileLayout ? actions : actions.reversed.toList(),
     );
-  }
-
-  String _getScreenTitle() {
-    switch (widget.screenMode) {
-      case OfferFoodDetailScreenMode.add:
-        return context.l10n.offerFoodDetailAddScreenTitle;
-      case OfferFoodDetailScreenMode.edit:
-        return context.l10n.offerFoodDetailEditScreenTitle;
-    }
-  }
-
-  Widget _bottomActionsButtons({
-    required Axis actionButtonsAxis,
-  }) {
-    switch (actionButtonsAxis) {
-      case Axis.horizontal:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _confirmationButton(
-              fullWidth: false,
-            ),
-            const SizedBox.square(dimension: GapSize.xs),
-            _removeButton(
-              fullWidth: false,
-              large: true,
-            ),
-          ],
-        );
-      case Axis.vertical:
-        return Column(
-          children: [
-            _removeButton(
-              fullWidth: true,
-              large: false,
-            ),
-            const SizedBox.square(dimension: GapSize.xs),
-            _confirmationButton(
-              fullWidth: true,
-            ),
-          ],
-        );
-    }
-  }
-
-  Widget _removeButton({required bool large, required bool fullWidth}) {
-    return ZOButton(
-      icon: Icons.delete_outlined,
-      text: context.l10n.offerFoodDetailRemoveButton,
-      type: ZOButtonType.tertiary,
-      minimumSize: large ? ZOButtonSize.large(fullWidth: fullWidth) : ZOButtonSize.medium(fullWidth: fullWidth),
-      onPressed: () => _onRemoveFoodPressed(false),
-    );
-  }
-
-  Widget _confirmationButton({required bool fullWidth}) {
-    switch (widget.screenMode) {
-      case OfferFoodDetailScreenMode.add:
-        return ZOButton(
-          text: context.l10n.offerFoodDetailContinueButton,
-          minimumSize: ZOButtonSize.large(fullWidth: fullWidth),
-          onPressed: _onConfirmationButtonPressed,
-        );
-      case OfferFoodDetailScreenMode.edit:
-        return ZOButton(
-          icon: Icons.check,
-          text: context.l10n.offerFoodDetailSaveButton,
-          minimumSize: ZOButtonSize.large(fullWidth: fullWidth),
-          onPressed: _onConfirmationButtonPressed,
-        );
-    }
   }
 
   void _onConfirmationButtonPressed() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
+    UiDialog.showLoadingDialog(context);
 
     if (_formKey.currentState!.validate()) {
       if (mounted) {
@@ -270,17 +216,20 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   void _onRemoveFoodPressed(bool removeConfirmed) async {
     final confirmed = await showDialog(
       context: context,
-      builder: (context) {
-        return ZODialog(
-          criticalConfirmStyle: true,
-          title: context.l10n.offerFoodFormRemoveDialogTitle,
-          content: context.l10n.offerFoodFormRemoveDialogContent,
-          confirmText: context.l10n.offerFoodFormRemoveDialogConfirmAction,
-          cancelText: context.l10n.commonCancel,
-          onConfirmPressed: () => context.router.maybePop(true),
-          onCancelPressed: () => context.router.maybePop(false),
-        );
-      },
+      builder: (context) => UiDialog(
+        title: context.l10n.offerFoodFormRemoveDialogTitle,
+        content: context.l10n.offerFoodFormRemoveDialogContent,
+        actions: [
+          UiTextButton(
+            text: context.l10n.commonCancel,
+            onPressed: () => context.router.maybePop(false),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.offerFoodFormRemoveDialogConfirmAction,
+            onPressed: () => context.router.maybePop(true),
+          ),
+        ],
+      ),
     );
 
     if (mounted && confirmed) {
@@ -291,14 +240,19 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
   void _showCancelConfirmationDialog() async {
     final confirmed = await showDialog(
       context: context,
-      builder: (context) => ZODialog(
-        criticalConfirmStyle: true,
+      builder: (context) => UiDialog(
         title: context.l10n.cancelOffer,
         content: context.l10n.cancelOfferDialogContent,
-        confirmText: context.l10n.confirmCancel,
-        cancelText: context.l10n.continueTheOffer,
-        onConfirmPressed: () => Navigator.of(context).maybePop(true),
-        onCancelPressed: () => context.router.maybePop(false),
+        actions: [
+          UiTextButton(
+            text: context.l10n.continueTheOffer,
+            onPressed: () => context.router.maybePop(false),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.confirmCancel,
+            onPressed: () => context.router.maybePop(true),
+          ),
+        ],
       ),
     );
 

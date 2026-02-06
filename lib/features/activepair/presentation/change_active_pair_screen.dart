@@ -50,7 +50,7 @@ class _ChangeActivePairScreenState extends State<ChangeActivePairScreen> {
         actions: [
           UiIconButton.solid(
             icon: Icons.close,
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.router.pop(),
           ),
         ],
       ),
@@ -95,7 +95,7 @@ class _ChangeActivePairScreenState extends State<ChangeActivePairScreen> {
                 onSelectPressed: () {
                   _changeActivePair.invoke(pair.donorId, pair.recipientId);
                   HelperService.updateActivePair(context, pair);
-                  Navigator.pop(context);
+                  context.router.pop();
                 },
               );
             }).separated(const SizedBox(height: 8.0)),
