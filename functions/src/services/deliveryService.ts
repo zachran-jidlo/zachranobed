@@ -3,7 +3,6 @@ import { db } from "../config/firebase";
 import {
   Delivery,
   DeliveryState,
-  DeliveryType,
   DeliveryTimeWindow,
   CarrierOrder,
 } from "../models";

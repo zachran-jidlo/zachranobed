@@ -24,6 +24,11 @@ import {
   dodoScope,
   dodoOrdersApi,
 } from "../config/firebase";
+import {
+  CONFIRMATION_MINUTES,
+  BOX_RETURN_SCHEDULE,
+  NOTE_PREFIXES,
+} from "../config/constants";
 
 /**
  * Get the number of minutes before pickup that confirmation is required.
@@ -38,11 +43,9 @@ function getMinutesConfirmedBeforePickup(delivery: Delivery): number {
   }
 
   // Default based on carrier type
-  if (delivery.carrierId === "dodo") {
-    return 45; // 45 minutes for DODO carrier
-  } else {
-    return 20; // 20 minutes for personal carrier
-  }
+  return delivery.carrierId === "dodo"
+    ? CONFIRMATION_MINUTES.DODO
+    : CONFIRMATION_MINUTES.PERSONAL;
 }
 
 /**
@@ -189,9 +192,11 @@ function calculateConfirmationDeadline(
       minutesBeforePickup * 60000,
   );
 
-  // Add 30-minute buffer for DODO carrier to account for cron timing
+  // Add buffer for DODO carrier to account for cron timing
   if (delivery.carrierId === "dodo") {
-    return new Date(baseDeadline.getTime() + 30 * 60000);
+    return new Date(
+      baseDeadline.getTime() + CONFIRMATION_MINUTES.BUFFER * 60000,
+    );
   }
 
   return baseDeadline;
@@ -400,13 +405,19 @@ function createBoxReturnOrder(
   deliveryIdentifier: string,
 ): DodoOrder {
   const pickupTimeWindow = {
-    start: Timestamp.fromDate(getDateInFuture(1, "10:00")),
-    end: Timestamp.fromDate(getDateInFuture(1, "10:30")),
+    start: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
+    ),
+    end: Timestamp.fromDate(getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end)),
   };
 
   const deliveryTimeWindow = {
-    start: Timestamp.fromDate(getDateInFuture(1, "11:00")),
-    end: Timestamp.fromDate(getDateInFuture(1, "11:30")),
+    start: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
+    ),
+    end: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end),
+    ),
   };
 
   return {
@@ -416,7 +427,7 @@ function createBoxReturnOrder(
     pickupFrom: pickupTimeWindow.start.toDate(),
     pickupTo: pickupTimeWindow.end.toDate(),
     pickupNote:
-      "Vyzvednutí obalů\n" +
+      NOTE_PREFIXES.BOX_PICKUP +
       updateNoteWithPhoneNumbers(
         recipient.noteForDriver || "",
         recipient.phone,
@@ -427,7 +438,7 @@ function createBoxReturnOrder(
     deliverFrom: deliveryTimeWindow.start.toDate(),
     deliverTo: deliveryTimeWindow.end.toDate(),
     deliverNote:
-      "Doručení obalů\n" +
+      NOTE_PREFIXES.BOX_DELIVERY +
       updateNoteWithPhoneNumbers(
         donor.noteForDriver || "",
         recipient.phone,
@@ -520,12 +531,20 @@ async function processBoxDelivery(
     deliveryIdentifier,
     deliveryDate,
     {
-      start: Timestamp.fromDate(getDateInFuture(1, "10:00")),
-      end: Timestamp.fromDate(getDateInFuture(1, "10:30")),
+      start: Timestamp.fromDate(
+        getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
+      ),
+      end: Timestamp.fromDate(
+        getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end),
+      ),
     },
     {
-      start: Timestamp.fromDate(getDateInFuture(1, "11:00")),
-      end: Timestamp.fromDate(getDateInFuture(1, "11:30")),
+      start: Timestamp.fromDate(
+        getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
+      ),
+      end: Timestamp.fromDate(
+        getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end),
+      ),
     },
     entityPair.boxReturnCarrierId,
   );
