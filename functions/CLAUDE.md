@@ -54,35 +54,54 @@ firebase functions:log
 src/
 ├── index.ts              # Main entry point - exports all Firebase Functions
 ├── config/
-│   └── firebase.ts       # Firebase Admin initialization, global options
+│   ├── firebase.ts       # Firebase Admin initialization, global options
+│   └── constants.ts      # Business rule constants
 ├── functions/
-│   ├── checkDeliveriesInvocatorFunction.ts   # Scheduled cron trigger
-│   ├── mismatchFunction.ts                   # Box mismatch notifications
+│   ├── checkOrdersFunction.ts                 # Scheduled order checking (9-20 CET)
+│   ├── sendOrdersFunction.ts                  # Scheduled daily delivery creation (16:00 Prague)
+│   ├── checkDeliveriesInvocatorFunction.ts    # Legacy GitHub Actions trigger (deprecated)
+│   ├── mismatchFunction.ts                    # Box mismatch notifications
 │   └── notifications/                         # Firestore-triggered notifications
 │       ├── foodDeliveryFunction.ts
 │       ├── boxReturnFunction.ts
 │       ├── lackOfBoxesFunction.ts
 │       └── monthlyBoxCheckupFunction.ts
 ├── services/
-│   └── notificationService.ts    # FCM push notifications + Firestore notifications
+│   ├── notificationService.ts    # FCM push notifications + Firestore notifications
+│   ├── deliveryService.ts        # Delivery document management
+│   ├── entityService.ts          # Entity and EntityPair loading
+│   └── dodoService.ts            # DODO Logistics API integration
 ├── models/
-│   └── FoodBox.ts               # Data models
+│   ├── Delivery.ts               # Delivery document schema
+│   ├── Entity.ts                 # Entity document schema
+│   ├── EntityPair.ts             # EntityPair document schema
+│   ├── DodoToken.ts              # DODO OAuth2 token schema
+│   ├── DodoOrder.ts              # DODO order request schema
+│   └── index.ts                  # Barrel exports
 └── utils/
-    ├── dateUtils.ts             # Date/time utilities
-    └── emailUtils.ts            # Email generation
+    ├── dateUtils.ts              # Date/time utilities (Luxon-based)
+    ├── emailUtils.ts             # Email generation
+    └── noteUtils.ts              # Delivery note generation
 
 lib/          # Compiled JavaScript output (gitignored)
 build/        # Build artifacts
 seed/         # Emulator seed data
-features/     # Feature documentation
+specs/        # Feature specifications
+old_solution/ # Legacy GitHub Actions implementation (reference)
 ```
 
 ### Firebase Function Types
 
 **Scheduled Functions** (v2 scheduler):
-- `scheduledFunctionCrontab` - Cron-based scheduler that triggers GitHub Actions for order checking
+- `sendOrdersFunction` - Creates daily delivery documents for active entity pairs
+  - Runs at 16:00 (4 PM) Prague time on weekdays
   - Only exported for production project (`zachran-obed`)
-  - Runs weekdays 9-17 CET every 7-8 minutes
+- `checkOrdersFunction` - Processes delivery state transitions and creates DODO carrier orders
+  - Runs every 7-8 minutes from 9:00-20:00 Prague time on weekdays
+  - Only exported for production project (`zachran-obed`)
+- `scheduledFunctionCrontab` - **DEPRECATED** Legacy GitHub Actions trigger
+  - Replaced by `checkOrdersFunction`
+  - Kept for reference only
 
 **Firestore Triggers** (v2 onDocumentUpdated):
 - `notifyCharityAboutDonationV2` - Triggers on `deliveries/{id}` updates when state changes to ACCEPTED/NOT_USED
@@ -232,8 +251,13 @@ See README.md for complete curl examples.
 
 - Function exports: `src/index.ts`
 - Firebase config & secrets: `src/config/firebase.ts`
-- Notification service: `src/services/notificationService.ts`
-- Scheduled functions: `src/functions/checkDeliveriesInvocatorFunction.ts`
+- Business constants: `src/config/constants.ts`
+- Scheduled functions: `src/functions/checkOrdersFunction.ts`, `src/functions/sendOrdersFunction.ts`
 - Firestore triggers: `src/functions/notifications/`
+- Notification service: `src/services/notificationService.ts`
+- Delivery service: `src/services/deliveryService.ts`
+- DODO API integration: `src/services/dodoService.ts`
+- Entity management: `src/services/entityService.ts`
+- Data models: `src/models/`
 - TypeScript config: `tsconfig.json`
 - ESLint config: `eslint.config.mjs`

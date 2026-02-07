@@ -2,6 +2,7 @@ import { Timestamp, DocumentReference } from "firebase-admin/firestore";
 import { db } from "../config/firebase";
 import {
   Delivery,
+  DeliverySchema,
   DeliveryState,
   DeliveryTimeWindow,
   CarrierOrder,
@@ -105,10 +106,19 @@ export async function getTodaysDeliveries(
     .where("carrierId", "!=", "disabled")
     .get();
 
-  return snapshot.docs.map((doc) => ({
-    ref: doc.ref,
-    ...doc.data(),
-  })) as Delivery[];
+  return snapshot.docs
+    .map((doc) => {
+      const result = DeliverySchema.safeParse({
+        ref: doc.ref,
+        ...doc.data(),
+      });
+      if (!result.success) {
+        logger.warn(`Invalid delivery document ${doc.id}:`, result.error);
+        return null;
+      }
+      return result.data;
+    })
+    .filter((delivery): delivery is Delivery => delivery !== null);
 }
 
 /**
@@ -154,10 +164,19 @@ export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
     .where("boxReturnCarrierId", "!=", "disabled")
     .get();
 
-  return snapshot.docs.map((doc) => ({
-    ref: doc.ref,
-    ...doc.data(),
-  })) as Delivery[];
+  return snapshot.docs
+    .map((doc) => {
+      const result = DeliverySchema.safeParse({
+        ref: doc.ref,
+        ...doc.data(),
+      });
+      if (!result.success) {
+        logger.warn(`Invalid box delivery document ${doc.id}:`, result.error);
+        return null;
+      }
+      return result.data;
+    })
+    .filter((delivery): delivery is Delivery => delivery !== null);
 }
 
 /**

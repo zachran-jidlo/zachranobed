@@ -140,8 +140,8 @@ Migrated DODO API credentials to Firebase Secret Manager using `defineSecret()`:
 **Important**: Credentials removed from `.env.zachran-obed` to prevent conflicts with Secret Manager. Only `EXTERNAL_API_ALLOWED` remains as a regular parameter (`defineString()`).
 
 ### Schedule Changes
-- `sendOrdersFunction`: Runs at 7:00 AM Prague time (was UTC in old solution)
-- `checkOrdersFunction`: Maintains same schedule (every 7-8 minutes, 9-17 Prague time)
+- `sendOrdersFunction`: Runs at 16:00 (4 PM) Prague time daily on weekdays (was 7:00 AM UTC in old solution)
+- `checkOrdersFunction`: Runs every 7-8 minutes, 9-20 Prague time on weekdays (extended from original 9-17 to provide longer processing window)
 
 ---
 

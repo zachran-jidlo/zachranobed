@@ -29,6 +29,8 @@ export const DeliverySchema = z.object({
   ref: z.any() as z.ZodType<DocumentReference>,
   /** Carrier ID: 'dodo', 'personal', or 'disabled' */
   carrierId: z.string(),
+  /** Box return carrier ID (for BOX_DELIVERY type) */
+  boxReturnCarrierId: z.string().optional(),
   /** Donor entity ID */
   donorId: z.string(),
   /** Recipient entity ID */

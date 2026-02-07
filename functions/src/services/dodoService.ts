@@ -7,7 +7,7 @@ import {
   dodoOrdersApi,
   externalApiAllowed,
 } from "../config/firebase";
-import {DodoToken, DodoOrder} from "../models";
+import {DodoToken, DodoTokenSchema, DodoOrder} from "../models";
 
 /**
  * Get OAuth2 access token from DODO API.
@@ -52,11 +52,19 @@ export async function getDodoToken(): Promise<DodoToken> {
   }
 
   const data = await response.json();
+
+  // Validate response against schema
+  const result = DodoTokenSchema.safeParse(data);
+  if (!result.success) {
+    logger.error("Invalid DODO token response:", result.error);
+    throw new Error("DODO API returned invalid token format");
+  }
+
   logger.info(
-    `Successfully received temporary DODO oauth token (expires in ${data.expires_in}s)`
+    `Successfully received temporary DODO oauth token (expires in ${result.data.expires_in}s)`
   );
 
-  return data as DodoToken;
+  return result.data;
 }
 
 /**
