@@ -84,7 +84,8 @@ Development MUST use the specified toolchain versions and configurations to ensu
 **Non-Negotiable Rules**:
 - Firebase Functions v2 API (`firebase-functions/v2`) MUST be used for all new functions
 - `setGlobalOptions()` MUST define region as `europe-west1`
-- Secrets MUST be managed via `defineString()` from `firebase-functions/params`
+- Secrets (such as credentials, API keys, and tokens) MUST be managed via `defineSecret()` from `firebase-functions/params`
+- Non-secret configuration parameters (such as feature flags and non-sensitive IDs) MUST be managed via `defineString()` from `firebase-functions/params`
 - Build process: `npm run build` (TypeScript compilation)
 - Linting: `npm run lint` before any deployment
 - Deployment: `npm run deploy` (never manual `firebase deploy` without lint check)
