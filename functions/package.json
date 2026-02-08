@@ -20,7 +20,6 @@
     "firebase-functions": "^6.4.0",
     "firebase-tools": "^13.31.1",
     "luxon": "^3.7.2",
-    "runtypes": "^7.0.4",
     "zod": "^4.3.6"
   },
   "devDependencies": {
