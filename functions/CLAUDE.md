@@ -125,7 +125,8 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
 - Global options set in `src/config/firebase.ts` via `setGlobalOptions()`
 - Region: `europe-west1`
 - Service account configured per environment (see README.md)
-- Secrets managed via `defineString()` from `firebase-functions/params`
+- Non-sensitive config params managed via `defineString()` from `firebase-functions/params`
+- Sensitive secrets (for example DODO credentials) managed via `defineSecret()` backed by Secret Manager
 
 ## Environment Management
 
