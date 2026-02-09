@@ -64,3 +64,13 @@ export async function getEntityPairs(): Promise<EntityPair[]> {
 
   return cachedEntityPairs;
 }
+
+/**
+ * Clear entity caches to ensure fresh data on next invocation.
+ * Should be called at the end of each function run.
+ */
+export function clearEntityCache(): void {
+  logger.debug("Clearing entity cache for next invocation");
+  cachedEntities = null;
+  cachedEntityPairs = null;
+}

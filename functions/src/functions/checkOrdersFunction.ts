@@ -8,7 +8,7 @@ import {
   getTodaysBoxDeliveries,
   updateBoxDelivery,
 } from "../services/deliveryService";
-import { getEntities, getEntityPairs } from "../services/entityService";
+import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
 import { getDodoToken, createDodoOrder } from "../services/dodoService";
 import { Delivery, DodoToken, DodoOrder, Entity, EntityPair } from "../models";
 import {
@@ -697,6 +697,9 @@ export async function checkOrders(): Promise<void> {
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
     });
+  } finally {
+    // Clear cache to ensure fresh data on next invocation
+    clearEntityCache();
   }
 }
 

@@ -1,5 +1,5 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { getEntities, getEntityPairs } from "../services/entityService";
+import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
 import { createDeliveryDocument } from "../services/deliveryService";
 import {
   getNextBusinessDay,
@@ -113,6 +113,9 @@ export async function sendOrders(): Promise<void> {
   } catch (error) {
     logger.error("sendOrders failed:", error);
     throw error;
+  } finally {
+    // Clear cache to ensure fresh data on next invocation
+    clearEntityCache();
   }
 }
 
