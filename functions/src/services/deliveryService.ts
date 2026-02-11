@@ -161,7 +161,6 @@ export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
     .where("deliveryDate", "<=", end)
     .where("type", "==", "BOX_DELIVERY")
     .where("state", "==", "OFFERED")
-    .where("boxReturnCarrierId", "!=", "disabled")
     .get();
 
   return snapshot.docs

@@ -1,5 +1,5 @@
-import {z} from "zod";
-import {DocumentReference} from "firebase-admin/firestore";
+import { z } from "zod";
+import { DocumentReference } from "firebase-admin/firestore";
 
 export const TimeWindowSchema = z.object({
   /** Start time in HH:MM format (e.g., "16:30") */
@@ -8,8 +8,6 @@ export const TimeWindowSchema = z.object({
   end: z.string().regex(/^\d{2}:\d{2}$/),
 });
 
-export const OrderStatusSchema = z.enum(["WAITING", "CONFIRMED", "CANCELED"]);
-
 export const EntityPairSchema = z.object({
   /** Firestore document reference (added at runtime) */
   ref: z.any() as z.ZodType<DocumentReference>,
@@ -17,8 +15,6 @@ export const EntityPairSchema = z.object({
   donorId: z.string(),
   /** Recipient entity ID */
   recipientId: z.string(),
-  /** Order status (legacy field, not used in migration) */
-  orderStatus: OrderStatusSchema,
   /** DODO location ID for donor pickup */
   carrierDonorId: z.string(),
   /** DODO location ID for recipient delivery */
@@ -36,5 +32,4 @@ export const EntityPairSchema = z.object({
 });
 
 export type TimeWindow = z.infer<typeof TimeWindowSchema>;
-export type OrderStatus = z.infer<typeof OrderStatusSchema>;
 export type EntityPair = z.infer<typeof EntityPairSchema>;

@@ -27,8 +27,8 @@ export const CarrierOrderSchema = z.object({
 export const DeliverySchema = z.object({
   /** Firestore document reference (added at runtime) */
   ref: z.any() as z.ZodType<DocumentReference>,
-  /** Carrier ID: 'dodo', 'personal', or 'disabled' */
-  carrierId: z.string(),
+  /** Carrier ID: 'dodo', 'personal', or 'disabled' (optional for BOX_DELIVERY - set during processing) */
+  carrierId: z.string().optional(),
   /** Box return carrier ID (for BOX_DELIVERY type) */
   boxReturnCarrierId: z.string().optional(),
   /** Donor entity ID */
@@ -41,12 +41,12 @@ export const DeliverySchema = z.object({
   state: DeliveryStateSchema,
   /** Type of delivery */
   type: DeliveryTypeSchema,
-  /** Unique identifier for carrier system */
-  deliveryIdentifier: z.string(),
-  /** Time window for pickup from donor */
-  pickupTimeWindow: DeliveryTimeWindowSchema,
-  /** Time window for delivery to recipient */
-  deliveryTimeWindow: DeliveryTimeWindowSchema,
+  /** Unique identifier for carrier system (optional for BOX_DELIVERY - generated during processing) */
+  deliveryIdentifier: z.string().optional(),
+  /** Time window for pickup from donor (optional for BOX_DELIVERY - calculated during processing) */
+  pickupTimeWindow: DeliveryTimeWindowSchema.optional(),
+  /** Time window for delivery to recipient (optional for BOX_DELIVERY - calculated during processing) */
+  deliveryTimeWindow: DeliveryTimeWindowSchema.optional(),
   /** Food boxes included (legacy field, empty array for migration) */
   foodBoxes: z.array(z.any()).default([]),
   /** Meals included (legacy field, empty array for migration) */

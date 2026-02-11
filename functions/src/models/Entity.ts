@@ -1,5 +1,5 @@
-import {z} from "zod";
-import {DocumentReference} from "firebase-admin/firestore";
+import { z } from "zod";
+import { DocumentReference } from "firebase-admin/firestore";
 
 export const EntityTypeSchema = z.enum(["DONOR", "RECIPIENT"]);
 
@@ -29,7 +29,7 @@ export const EntitySchema = z.object({
   /** House/building number */
   houseNumber: z.string(),
   /** Postal code */
-  postalCode: z.string(),
+  postalCode: z.number(),
   /** Optional note for delivery driver */
   noteForDriver: z.string().optional(),
 });

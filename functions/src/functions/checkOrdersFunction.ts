@@ -43,6 +43,7 @@ function getMinutesConfirmedBeforePickup(delivery: Delivery): number {
   }
 
   // Default based on carrier type
+  // For FOOD_DELIVERY documents, carrierId should always exist
   return delivery.carrierId === "dodo"
     ? CONFIRMATION_MINUTES.DODO
     : CONFIRMATION_MINUTES.PERSONAL;
@@ -54,6 +55,11 @@ function getMinutesConfirmedBeforePickup(delivery: Delivery): number {
  * @return {boolean} True if deadline has passed
  */
 function hasConfirmationDeadlinePassed(delivery: Delivery): boolean {
+  // For FOOD_DELIVERY documents, pickupTimeWindow should always exist
+  if (!delivery.pickupTimeWindow?.start) {
+    throw new Error(`Pickup time window not defined for delivery ${delivery.ref.id}`);
+  }
+
   const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
   const minutesUntilPickup = getMinutesBeforePickup(
     delivery.pickupTimeWindow.start.toDate(),
@@ -118,6 +124,14 @@ function createDodoOrderFromDelivery(
   recipient: Entity,
   delivery: Delivery,
 ): DodoOrder {
+  // For FOOD_DELIVERY documents, these fields should always exist
+  if (!delivery.deliveryIdentifier) {
+    throw new Error(`Delivery identifier not defined for delivery ${delivery.ref.id}`);
+  }
+  if (!delivery.pickupTimeWindow || !delivery.deliveryTimeWindow) {
+    throw new Error(`Time windows not defined for delivery ${delivery.ref.id}`);
+  }
+
   return {
     id: delivery.deliveryIdentifier,
     pickupDodoId: entityPair.carrierDonorId,
@@ -153,6 +167,14 @@ async function handlePreparedDelivery(
   delivery: Delivery,
   handledOrdersCount: number,
 ): Promise<void> {
+  // For FOOD_DELIVERY documents, these fields should always exist
+  if (!delivery.pickupTimeWindow?.start || !delivery.deliveryIdentifier) {
+    logger.error(
+      `|${handledOrdersCount}| Required fields missing for delivery ${delivery.ref.id}`,
+    );
+    return;
+  }
+
   const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
 
   if (hasConfirmationDeadlinePassed(delivery)) {
@@ -187,6 +209,11 @@ function calculateConfirmationDeadline(
   delivery: Delivery,
   minutesBeforePickup: number,
 ): Date {
+  // For FOOD_DELIVERY documents, pickupTimeWindow should always exist
+  if (!delivery.pickupTimeWindow?.start) {
+    throw new Error(`Pickup time window not defined for delivery ${delivery.ref.id}`);
+  }
+
   const baseDeadline = new Date(
     delivery.pickupTimeWindow.start.toDate().getTime() -
       minutesBeforePickup * 60000,
@@ -330,6 +357,14 @@ async function handleAfterDeadline(
   handledOrdersCount: number,
   correctedDeadline: Date,
 ): Promise<void> {
+  // For FOOD_DELIVERY documents, these fields should always exist
+  if (!delivery.pickupTimeWindow?.end || !delivery.deliveryIdentifier) {
+    logger.error(
+      `|${handledOrdersCount}| Required fields missing for delivery ${delivery.ref.id}`,
+    );
+    return;
+  }
+
   if (!delivery.carrierOrder?.createdAt) {
     logger.error(
       `|${handledOrdersCount}| Delivery for ${
@@ -550,7 +585,7 @@ async function processBoxDelivery(
   );
 
   logger.info(
-    `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state`,
+    `|${loggerDeliveryNumber}| -> Successfully moved box delivery ${deliveryIdentifier} to IN_DELIVERY state`,
   );
 }
 
@@ -622,15 +657,15 @@ export async function checkOrders(): Promise<void> {
     for (const delivery of deliveries) {
       try {
         logger.info(
-          `|${handledOrdersCount}| Handling delivery ${delivery.deliveryIdentifier}/FBID: ${delivery.ref.id}`,
+          `|${handledOrdersCount}| Handling delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}/FBID: ${delivery.ref.id}`,
         );
 
         if (
-          !delivery.pickupTimeWindow.start ||
-          !delivery.pickupTimeWindow.end
+          !delivery.pickupTimeWindow?.start ||
+          !delivery.pickupTimeWindow?.end
         ) {
           logger.error(
-            `|${handledOrdersCount}| Pickup time window is not defined for delivery ${delivery.deliveryIdentifier}`,
+            `|${handledOrdersCount}| Pickup time window is not defined for delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}`,
           );
           handledOrdersCount++;
           continue;
@@ -658,7 +693,7 @@ export async function checkOrders(): Promise<void> {
         }
       } catch (error) {
         logger.error(
-          `|${handledOrdersCount}| Failed to process delivery ${delivery.deliveryIdentifier}:`,
+          `|${handledOrdersCount}| Failed to process delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}:`,
           {
             error: error instanceof Error ? error.message : String(error),
             deliveryId: delivery.ref.id,
