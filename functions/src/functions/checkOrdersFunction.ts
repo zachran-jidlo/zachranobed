@@ -8,7 +8,11 @@ import {
   getTodaysBoxDeliveries,
   updateBoxDelivery,
 } from "../services/deliveryService";
-import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
+import {
+  getEntities,
+  getEntityPairs,
+  clearEntityCache,
+} from "../services/entityService";
 import { getDodoToken, createDodoOrder } from "../services/dodoService";
 import { Delivery, DodoToken, DodoOrder, Entity, EntityPair } from "../models";
 import {
@@ -57,7 +61,9 @@ function getMinutesConfirmedBeforePickup(delivery: Delivery): number {
 function hasConfirmationDeadlinePassed(delivery: Delivery): boolean {
   // For FOOD_DELIVERY documents, pickupTimeWindow should always exist
   if (!delivery.pickupTimeWindow?.start) {
-    throw new Error(`Pickup time window not defined for delivery ${delivery.ref.id}`);
+    throw new Error(
+      `Pickup time window not defined for delivery ${delivery.ref.id}`,
+    );
   }
 
   const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
@@ -126,7 +132,9 @@ function createDodoOrderFromDelivery(
 ): DodoOrder {
   // For FOOD_DELIVERY documents, these fields should always exist
   if (!delivery.deliveryIdentifier) {
-    throw new Error(`Delivery identifier not defined for delivery ${delivery.ref.id}`);
+    throw new Error(
+      `Delivery identifier not defined for delivery ${delivery.ref.id}`,
+    );
   }
   if (!delivery.pickupTimeWindow || !delivery.deliveryTimeWindow) {
     throw new Error(`Time windows not defined for delivery ${delivery.ref.id}`);
@@ -184,11 +192,7 @@ async function handlePreparedDelivery(
     );
 
     logger.warn(
-      `|${handledOrdersCount}| Delivery ${
-        delivery.deliveryIdentifier
-      } NOT USED. Latest time for confirmation ${latestConfirmationDate.toLocaleString(
-        "cs",
-      )} passed.`,
+      `|${handledOrdersCount}| State transition: ${delivery.state} → NOT_USED (confirmation deadline ${latestConfirmationDate.toLocaleString("cs")} passed)`,
     );
 
     await updateDeliveryState(delivery.ref, "NOT_USED");
@@ -211,7 +215,9 @@ function calculateConfirmationDeadline(
 ): Date {
   // For FOOD_DELIVERY documents, pickupTimeWindow should always exist
   if (!delivery.pickupTimeWindow?.start) {
-    throw new Error(`Pickup time window not defined for delivery ${delivery.ref.id}`);
+    throw new Error(
+      `Pickup time window not defined for delivery ${delivery.ref.id}`,
+    );
   }
 
   const baseDeadline = new Date(
@@ -243,12 +249,13 @@ async function markPersonalCarrierAsConfirmed(
     `|${handledOrdersCount}| Carrier is ${delivery.carrierId}, won't create DODO order`,
   );
 
+  const confirmedAt = Timestamp.now().toDate();
   await updateDeliveryWithOrderCreationTime(delivery.ref, {
     createdAt: Timestamp.now(),
   });
 
   logger.info(
-    `|${handledOrdersCount}| Personal carrier delivery ${delivery.deliveryIdentifier} marked as confirmed`,
+    `|${handledOrdersCount}| ✓ Personal carrier delivery ${delivery.deliveryIdentifier} confirmed at ${confirmedAt.toLocaleString("cs")}`,
   );
 }
 
@@ -290,14 +297,23 @@ async function createDodoOrderForDelivery(
     delivery,
   );
 
+  logger.info(`|${handledOrdersCount}| DODO order details:`);
+  logger.info(
+    `|${handledOrdersCount}|   Pickup: ${order.pickupFrom.toLocaleString("cs")} - ${order.pickupTo.toLocaleString("cs")}`,
+  );
+  logger.info(
+    `|${handledOrdersCount}|   Delivery: ${order.deliverFrom.toLocaleString("cs")} - ${order.deliverTo.toLocaleString("cs")}`,
+  );
+
   const orderCreated = await createDodoOrder(order, dodoToken);
 
   if (orderCreated) {
+    const confirmedAt = Timestamp.now().toDate();
     await updateDeliveryWithOrderCreationTime(delivery.ref, {
       createdAt: Timestamp.now(),
     });
     logger.info(
-      `|${handledOrdersCount}| Successfully created order ${delivery.deliveryIdentifier}`,
+      `|${handledOrdersCount}| ✓ DODO order created successfully for ${delivery.deliveryIdentifier} at ${confirmedAt.toLocaleString("cs")}`,
     );
   } else {
     logger.error(
@@ -323,8 +339,9 @@ async function handleOrderCreation(
   entities: Entity[],
 ): Promise<void> {
   if (delivery.carrierOrder?.createdAt) {
+    const orderedAt = delivery.carrierOrder.createdAt.toDate();
     logger.info(
-      `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} already ordered.`,
+      `|${handledOrdersCount}| Delivery ${delivery.deliveryIdentifier} already ordered at ${orderedAt.toLocaleString("cs")}`,
     );
     return;
   }
@@ -379,8 +396,9 @@ async function handleAfterDeadline(
   const pickupTo = delivery.pickupTimeWindow.end.toDate();
 
   if (new Date() > pickupTo) {
+    const currentTime = new Date();
     logger.info(
-      `|${handledOrdersCount}| Moving delivery ${delivery.deliveryIdentifier} to IN_DELIVERY state.`,
+      `|${handledOrdersCount}| State transition: ${delivery.state} → IN_DELIVERY at ${currentTime.toLocaleString("cs")} (pickup window ended)`,
     );
     await updateDeliveryState(delivery.ref, "IN_DELIVERY");
   } else {
@@ -501,7 +519,13 @@ async function processBoxDelivery(
   entities: Entity[],
 ): Promise<void> {
   logger.info(
-    `|${loggerDeliveryNumber}| -> Handling box delivery FBID: ${delivery.ref.id}`,
+    `|${loggerDeliveryNumber}| -> Handling box delivery FBID: ${delivery.ref.id} [STATE: ${delivery.state}]`,
+  );
+  logger.info(
+    `|${loggerDeliveryNumber}| -> Delivery date: ${delivery.deliveryDate?.toDate().toLocaleDateString("cs")}`,
+  );
+  logger.info(
+    `|${loggerDeliveryNumber}| -> Participants: Donor=${delivery.donorId}, Recipient=${delivery.recipientId}`,
   );
 
   if (delivery.state !== "OFFERED") {
@@ -556,8 +580,21 @@ async function processBoxDelivery(
     );
   }
 
+  const pickupTimeWindow = {
+    start: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
+    ),
+    end: Timestamp.fromDate(getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end)),
+  };
+
   logger.info(
-    `|${loggerDeliveryNumber}| ->  Box delivery in state OFFERED - moving to IN_DELIVERY state`,
+    `|${loggerDeliveryNumber}| -> State transition: OFFERED → IN_DELIVERY`,
+  );
+  logger.info(
+    `|${loggerDeliveryNumber}| -> New delivery identifier: ${deliveryIdentifier}`,
+  );
+  logger.info(
+    `|${loggerDeliveryNumber}| -> Pickup window: ${pickupTimeWindow.start.toDate().toLocaleString("cs")} - ${pickupTimeWindow.end.toDate().toLocaleString("cs")}`,
   );
 
   await updateBoxDelivery(
@@ -565,14 +602,7 @@ async function processBoxDelivery(
     "IN_DELIVERY",
     deliveryIdentifier,
     deliveryDate,
-    {
-      start: Timestamp.fromDate(
-        getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
-      ),
-      end: Timestamp.fromDate(
-        getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end),
-      ),
-    },
+    pickupTimeWindow,
     {
       start: Timestamp.fromDate(
         getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
@@ -632,7 +662,10 @@ export async function checkOrders(): Promise<void> {
   let entities: Entity[] = [];
 
   try {
-    logger.info("Starting checkOrders function");
+    const startTime = new Date();
+    logger.info(
+      `Starting checkOrders function at ${startTime.toLocaleString("cs")}`,
+    );
 
     // Get DODO OAuth token
     dodoToken = await getDodoToken();
@@ -656,8 +689,9 @@ export async function checkOrders(): Promise<void> {
     // Process each delivery
     for (const delivery of deliveries) {
       try {
+        // Log delivery being processed with state
         logger.info(
-          `|${handledOrdersCount}| Handling delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}/FBID: ${delivery.ref.id}`,
+          `|${handledOrdersCount}| Handling delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}/FBID: ${delivery.ref.id} [STATE: ${delivery.state}]`,
         );
 
         if (
@@ -671,10 +705,47 @@ export async function checkOrders(): Promise<void> {
           continue;
         }
 
-        const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+        // Log participants for tracing
         logger.info(
-          `|${handledOrdersCount}| Minutes before pickup: ${minutesBeforePickup}`,
+          `|${handledOrdersCount}| Participants: Donor=${delivery.donorId}, Recipient=${delivery.recipientId}`,
         );
+
+        // Log carrier type
+        logger.info(`|${handledOrdersCount}| Carrier: ${delivery.carrierId}`);
+
+        // Calculate and log confirmation deadline
+        const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+        const confirmationDeadline = new Date(
+          delivery.pickupTimeWindow.start.toDate().getTime() -
+            minutesBeforePickup * 60000,
+        );
+        const minutesUntilDeadline = Math.floor(
+          (confirmationDeadline.getTime() - new Date().getTime()) / 60000,
+        );
+
+        logger.info(
+          `|${handledOrdersCount}| Confirmation required: ${minutesBeforePickup} minutes before pickup`,
+        );
+        logger.info(
+          `|${handledOrdersCount}| Confirmation deadline: ${confirmationDeadline.toLocaleString("cs")} (${minutesUntilDeadline} minutes remaining)`,
+        );
+
+        // Log pickup time window
+        logger.info(
+          `|${handledOrdersCount}| Pickup window: ${delivery.pickupTimeWindow.start.toDate().toLocaleString("cs")} - ${delivery.pickupTimeWindow.end.toDate().toLocaleString("cs")}`,
+        );
+
+        // Log delivery time window
+        logger.info(
+          `|${handledOrdersCount}| Delivery window: ${delivery.deliveryTimeWindow?.start.toDate().toLocaleString("cs")} - ${delivery.deliveryTimeWindow?.end.toDate().toLocaleString("cs")}`,
+        );
+
+        // Log custom confirmation time if set
+        if (delivery.confirmationTime !== undefined) {
+          logger.info(
+            `|${handledOrdersCount}| Using custom confirmation time: ${delivery.confirmationTime} minutes`,
+          );
+        }
 
         // Handle based on current state
         if (delivery.state === "PREPARED") {
@@ -693,13 +764,26 @@ export async function checkOrders(): Promise<void> {
         }
       } catch (error) {
         logger.error(
-          `|${handledOrdersCount}| Failed to process delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}:`,
+          `|${handledOrdersCount}| ❌ Failed to process delivery ${delivery.deliveryIdentifier ?? delivery.ref.id}:`,
           {
             error: error instanceof Error ? error.message : String(error),
             deliveryId: delivery.ref.id,
             deliveryIdentifier: delivery.deliveryIdentifier,
             state: delivery.state,
             carrierId: delivery.carrierId,
+            donorId: delivery.donorId,
+            recipientId: delivery.recipientId,
+            pickupTimeStart: delivery.pickupTimeWindow?.start
+              .toDate()
+              .toISOString(),
+            pickupTimeEnd: delivery.pickupTimeWindow?.end
+              .toDate()
+              .toISOString(),
+            currentTime: new Date().toISOString(),
+            hasCarrierOrder: !!delivery.carrierOrder?.createdAt,
+            carrierOrderCreatedAt: delivery.carrierOrder?.createdAt
+              ?.toDate()
+              .toISOString(),
             stack: error instanceof Error ? error.stack : undefined,
           },
         );
@@ -708,8 +792,9 @@ export async function checkOrders(): Promise<void> {
       handledOrdersCount++;
     }
 
+    const endTime = new Date();
     logger.info(
-      `Script finished, ${handledOrdersCount} orders(s) have been handled`,
+      `Script finished at ${endTime.toLocaleString("cs")}: ${handledOrdersCount} order(s) processed`,
     );
   } catch (error) {
     logger.error("Food deliveries processing failed:", {
