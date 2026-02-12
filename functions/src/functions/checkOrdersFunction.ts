@@ -569,14 +569,32 @@ async function processBoxDelivery(
       `|${loggerDeliveryNumber}| -> Creating DODO order for box return delivery ${deliveryIdentifier}`,
     );
     const orderCreated = await createDodoOrder(order, dodoToken);
-    if (!orderCreated) {
+    if (orderCreated) {
+      const createdAt = Timestamp.now().toDate();
+      await updateDeliveryWithOrderCreationTime(delivery.ref, {
+        createdAt: Timestamp.now(),
+      });
+      logger.info(
+        `|${loggerDeliveryNumber}| -> ✓ Box return DODO order created successfully at ${createdAt.toLocaleString("cs")}`,
+      );
+    } else {
       logger.error(
         `|${loggerDeliveryNumber}| -> Failed to create DODO order for box return delivery ${deliveryIdentifier}`,
       );
     }
   } else {
-    logger.warn(
-      `|${loggerDeliveryNumber}| -> Other box return carrier ${entityPair.boxReturnCarrierId} for delivery ${deliveryIdentifier}, not creating order`,
+    // Personal carrier - mark as confirmed without creating DODO order
+    logger.debug(
+      `|${loggerDeliveryNumber}| -> Carrier is ${entityPair.boxReturnCarrierId}, won't create DODO order`,
+    );
+
+    const confirmedAt = Timestamp.now().toDate();
+    await updateDeliveryWithOrderCreationTime(delivery.ref, {
+      createdAt: Timestamp.now(),
+    });
+
+    logger.info(
+      `|${loggerDeliveryNumber}| -> ✓ Personal carrier box delivery ${deliveryIdentifier} confirmed at ${confirmedAt.toLocaleString("cs")}`,
     );
   }
 
