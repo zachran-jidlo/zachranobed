@@ -13,6 +13,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_countdown_label.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
@@ -29,7 +30,6 @@ import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
 import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
-import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
@@ -107,8 +107,6 @@ class _Header extends StatelessWidget {
   const _Header.h1(this.text) : size = _HeaderSize.h1;
 
   const _Header.h2(this.text) : size = _HeaderSize.h2;
-
-  const _Header.h3(this.text) : size = _HeaderSize.h3;
 
   @override
   Widget build(BuildContext context) {
@@ -769,9 +767,9 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
           spacing: 16.0,
           children: [
             Text(
-              'Current step: ${_currentStep + 1}' +
-                  '\nCurrent step active: $_isCurrentStepActive' +
-                  '\nProgress complete: $_isProgressComplete',
+              'Current step: ${_currentStep + 1} '
+              '\nCurrent step active: $_isCurrentStepActive '
+              '\nProgress complete: $_isProgressComplete',
             ),
             UiProgressStepper(
               currentStep: _currentStep,

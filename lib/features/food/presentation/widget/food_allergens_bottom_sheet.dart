@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 
 /// A utility class for displaying a bottom sheet with a list of food allergens.

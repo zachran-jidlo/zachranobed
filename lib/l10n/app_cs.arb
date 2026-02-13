@@ -135,9 +135,6 @@
     "continueTheOffer": "Pokračovat",
     "cancelOfferDialogContent": "Máte rozpracovaný formulář pro evidenci pokrmů, opravdu si ho přejete zahodit?",
     "cancelShippingOfBoxesDialogContent": "Máte rozpracovanou objednávku vratky krabiček. Opravdu si ji přejete zahodit?",
-    "organization": "Organizace",
-    "donor": "Dárce",
-    "recipient": "Příjemce",
     "saveLunch": "Zachraň oběd",
     "feedback": "Zpětná vazba",
     "feedbackSubject": "Zpětná vazba k projektu Zachraň oběd",
@@ -231,8 +228,6 @@
     "offerFoodBoxInfoDescription": "Zadejte počet vratných krabiček, ve kterých darujete pokrmy.",
 
     "offerFoodDetailScreenTitle": "Evidence pokrmů",
-    "offerFoodDetailAddScreenTitle": "Nabídka zbylých pokrmů",
-    "offerFoodDetailEditScreenTitle": "Úprava zadaného pokrmu",
     "offerFoodDetailContinueButton": "Pokračovat",
     "offerFoodDetailSaveButton": "Uložit změny",
     "offerFoodDetailRemoveButton": "Smazat pokrm",
