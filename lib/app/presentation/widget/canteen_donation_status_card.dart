@@ -117,7 +117,6 @@ class CanteenDonationStatusCard extends StatelessWidget {
         break;
       case DeliveryState.accepted:
       case DeliveryState.offered:
-        // TODO: Set correct status text
         statusText = context.l10n.overviewCanteenDonationStatusCardAcceptedLabel;
         break;
       case DeliveryState.inDelivery:
@@ -145,12 +144,12 @@ class CanteenDonationStatusCard extends StatelessWidget {
 
     switch (delivery.state) {
       case DeliveryState.prepared:
-        currentStep = 1;
-        isCurrentStepActive = false;
+        currentStep = 0;
+        isCurrentStepActive = true;
         break;
       case DeliveryState.accepted:
       case DeliveryState.offered:
-        currentStep = 2;
+        currentStep = 1;
         isCurrentStepActive = false;
         break;
       case DeliveryState.inDelivery:
