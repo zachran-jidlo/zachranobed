@@ -5,29 +5,9 @@ class ZOColors {
   static const onPrimary = Color.fromRGBO(255, 255, 255, 1);
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
-  static const surfaceVariant = Color.fromRGBO(245, 221, 219, 1);
-  static const onSurface = Color.fromRGBO(32, 26, 25, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
-  static const onSecondary = Color.fromRGBO(44, 21, 19, 1);
-  static const onBackgroundSecondary = Color.fromRGBO(0, 0, 0, 0.5);
-  static const borderColor = Color.fromRGBO(216, 194, 191, 1);
-  static const lightBorderColor = Color.fromRGBO(251, 238, 236, 1);
-  static const cardBackground = Color.fromRGBO(255, 251, 255, 1);
-  static const onCardBackground = Color.fromRGBO(119, 86, 83, 1);
-  static const disabledButtonChild = Color.fromRGBO(28, 27, 31, 0.16);
-  static const disabledButtonBackground = Color.fromRGBO(28, 27, 31, 0.12);
-  static const disabledButtonForeground = Color.fromRGBO(32, 26, 25, 0.38);
   static const infoSnackBarBackground = Color.fromRGBO(54, 47, 46, 1);
-  static const onInfoSnackBarBackground = Color.fromRGBO(255, 251, 238, 1);
   static const outline = Color.fromRGBO(133, 115, 113, 1);
-  static const success = Color.fromRGBO(135, 179, 0, 1);
-  static const successLight = Color.fromRGBO(231, 240, 204, 1);
-  static const onSuccess = Color.fromRGBO(255, 255, 255, 1);
-  static const amberTransparent = Color.fromRGBO(255, 182, 0, 0.4);
-  static const assistChipSelectedBackground = Color.fromRGBO(73, 69, 79, 0.12);
-  static const staticBadgeBackground = Color.fromRGBO(19, 161, 4, 1);
-  static const staticBadgeBorder = Color.fromRGBO(12, 128, 0, 1);
-  static const staticBadgeOnBackground = Colors.white;
 }
 
 /// A class that defines layout constants.
