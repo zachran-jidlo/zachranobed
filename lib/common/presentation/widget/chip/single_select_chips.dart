@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/presentation/widget/other/form_field_error.dart';
-import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/form/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/chip/ui_chip.dart';
 
 /// A widget that displays a set of chips for single selection.
 ///

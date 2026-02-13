@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 
 /// Represents the size variant of [UiFoodBoxTile].
 enum UiFoodBoxTileSize {

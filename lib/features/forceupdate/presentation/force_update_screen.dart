@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/store_utils.dart';
-import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 
 /// A screen that notifies users when a mandatory app update is required.
 ///

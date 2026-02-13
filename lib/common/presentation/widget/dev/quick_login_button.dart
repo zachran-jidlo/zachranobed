@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
-import 'package:zachranobed/common/presentation/widget/sectioned_list_view.dart';
-import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 
 /// A list of available test users grouped by sections.
 ///

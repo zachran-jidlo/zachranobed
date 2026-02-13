@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_shader_mask.dart';
 
 /// A widget that displays a [text] with a [gradient] applied to it.
 class UiGradientText extends StatelessWidget {

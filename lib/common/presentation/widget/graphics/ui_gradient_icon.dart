@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 
 /// A widget that renders an icon with a gradient or solid color applied via shader mask.
 class UiGradientIcon extends StatelessWidget {

@@ -6,10 +6,10 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/sectioned_list_view.dart';
-import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_contact_tile.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_contact_tile.dart';
 import 'package:zachranobed/features/menu/domain/model/contacts_summary.dart';
 import 'package:zachranobed/features/menu/domain/model/entity_contacts.dart';
 import 'package:zachranobed/features/menu/domain/usecase/get_contacts_use_case.dart';

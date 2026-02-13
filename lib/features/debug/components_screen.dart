@@ -16,24 +16,24 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time
 import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_change_pair_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
-import 'package:zachranobed/common/presentation/widget/ui_contact_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
-import 'package:zachranobed/common/presentation/widget/ui_food_box_return_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_meal_badge.dart';
-import 'package:zachranobed/common/presentation/widget/ui_meal_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_navigation_drawer_item.dart';
-import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_box_counter_tile.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_change_pair_tile.dart';
+import 'package:zachranobed/common/presentation/widget/chip/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_contact_tile.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_food_box_return_tile.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/chip/ui_meal_badge.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_meal_tile.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_navigation_drawer_item.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_password_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 
 @RoutePage()
 class ComponentsScreen extends StatelessWidget {

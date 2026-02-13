@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/other/form_field_error.dart';
-import 'package:zachranobed/common/presentation/widget/ui_chip.dart';
-import 'package:zachranobed/common/presentation/widget/ui_tooltip.dart';
+import 'package:zachranobed/common/presentation/widget/form/form_field_error.dart';
+import 'package:zachranobed/common/presentation/widget/chip/ui_chip.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_tooltip.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 
 /// A widget that displays a set of chips representing food allergens.

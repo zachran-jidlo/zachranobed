@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_card.dart';
-import 'package:zachranobed/common/presentation/widget/ui_indicator.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_indicator.dart';
 
 /// A tile widget for displaying and selecting entity pairs (canteens/charities).
 class UiChangePairTile extends StatelessWidget {
