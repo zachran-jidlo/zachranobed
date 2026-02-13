@@ -15,7 +15,7 @@ import 'package:zachranobed/common/presentation/widget/other/adaptive_content.da
 import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/ui_temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_checkbox.dart';
 import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
@@ -270,12 +270,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
     } else {
       if (mounted) {
         context.router.maybePop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            backgroundColor: Colors.red,
-            message: context.l10n.boxCountError,
-          ),
-        );
+        UiTemporarySnackBar.showError(context, message: context.l10n.boxCountError);
       }
     }
   }

@@ -8,11 +8,11 @@ import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
-import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/ui_temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
 
@@ -125,23 +125,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       await authService.signOut(entityId);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            message: context.l10n.newPasswordSuccessfullySaved,
-          ),
-        );
-
+        UiTemporarySnackBar.show(context, message: context.l10n.newPasswordSuccessfullySaved);
         context.router.replaceAll([const LoginRoute()]);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         context.router.pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            backgroundColor: Colors.red,
-            message:
-                _isPasswordError(e) ? context.l10n.invalidCurrentPasswordError : context.l10n.somethingWentWrongError,
-          ),
+        final isError = _isPasswordError(e);
+        UiTemporarySnackBar.showError(
+          context,
+          message: isError ? context.l10n.invalidCurrentPasswordError : context.l10n.somethingWentWrongError,
         );
       }
     }

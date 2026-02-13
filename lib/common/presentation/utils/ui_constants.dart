@@ -6,7 +6,6 @@ class ZOColors {
   static const primaryLight = Color.fromRGBO(248, 223, 229, 1);
   static const onPrimaryLight = Color.fromRGBO(83, 67, 65, 1);
   static const secondary = Color.fromRGBO(255, 218, 214, 1);
-  static const infoSnackBarBackground = Color.fromRGBO(54, 47, 46, 1);
   static const outline = Color.fromRGBO(133, 115, 113, 1);
 }
 

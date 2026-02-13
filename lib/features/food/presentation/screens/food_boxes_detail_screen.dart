@@ -10,7 +10,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.
 import 'package:zachranobed/common/presentation/widget/other/content_with_loading.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/ui_temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
 import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
@@ -133,10 +133,7 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
                   context: context,
                   action: () => _verifyCheckup.invoke(widget.user),
                   onSuccess: () {
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupSuccessMessage),
-                    );
+                    UiTemporarySnackBar.show(context, message: context.l10n.foodBoxesCheckupSuccessMessage);
                   },
                 );
               },
@@ -179,10 +176,7 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
           context.router.maybePop();
         }
       } else {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupErrorMessage),
-        );
+        UiTemporarySnackBar.showError(context, message: context.l10n.foodBoxesCheckupErrorMessage);
       }
     }
 

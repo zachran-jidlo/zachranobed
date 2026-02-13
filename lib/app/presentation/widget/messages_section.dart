@@ -7,7 +7,7 @@ import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/other/content_with_loading.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/snackbar/ui_temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_check_needed.dart';
 
@@ -91,10 +91,7 @@ class _MessagesSectionState extends State<MessagesSection> {
               await HelperService.loadUserInfo(context);
               widget.refreshCheckupState();
             } else {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context).showSnackBar(
-                ZOTemporarySnackBar(message: context.l10n.foodBoxesCheckupErrorMessage),
-              );
+              UiTemporarySnackBar.showError(context, message: context.l10n.foodBoxesCheckupErrorMessage);
             }
           }
 
