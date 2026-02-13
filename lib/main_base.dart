@@ -7,7 +7,7 @@ import 'package:zachranobed/app/data/logger/zo_logger_initializer.dart';
 import 'package:zachranobed/app/di/app_dependency_container.dart';
 import 'package:zachranobed/common/data/utils/firebase_helper.dart';
 import 'package:zachranobed/common/domain/model/project_configuration.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
+import 'package:zachranobed/common/presentation/utils/ui_colors.dart';
 import 'package:zachranobed/features/notifications/data/firebase/notifications.dart';
 
 Future<void> mainBase() async {
@@ -25,7 +25,7 @@ Future<void> mainBase() async {
 
   ZoLoggerInitializer.init();
 
-  await Notifications().initNotifications(ZOColors.primary);
+  await Notifications().initNotifications(UiColors.light.primary);
 
   initializeDateFormatting();
 
