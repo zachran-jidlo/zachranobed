@@ -21,7 +21,8 @@
       "Bash(firebase functions:log:*)",
       "Bash(/Users/jiri.zoudun/Development/flutter/zachranObed/zachranobed/functions/scripts/test-dodo-webhook.sh)",
       "Bash(lsof:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(npm run lint:fix:*)"
     ]
   }
 }

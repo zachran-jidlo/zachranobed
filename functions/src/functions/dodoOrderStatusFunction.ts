@@ -19,6 +19,21 @@ export const dodoOrderStatus = onRequest(
     secrets: [dodoWebhookToken],
   },
   async (req, res) => {
+    const T = "🚗";
+
+    // Log every incoming request with full details
+    logger.info(`${T} ➡️ incoming request`, {
+      method: req.method,
+      path: req.path,
+      headers: {
+        "content-type": req.headers["content-type"],
+        "authorization": req.headers.authorization ? "Basic ***" : undefined,
+        "user-agent": req.headers["user-agent"],
+        "x-forwarded-for": req.headers["x-forwarded-for"],
+      },
+      body: req.body,
+    });
+
     const respond = (
       statusCode: number,
       body: { IsSuccess: boolean; Errors: string[] },
@@ -26,19 +41,16 @@ export const dodoOrderStatus = onRequest(
     ): void => {
       const logData = { statusCode, ...body, ...context };
       if (body.IsSuccess) {
-        logger.info("DODO webhook response", logData);
+        logger.info(`${T} ✅ ${statusCode}`, logData);
       } else {
-        logger.warn("DODO webhook response", logData);
+        logger.warn(`${T} ❌ ${statusCode}`, logData);
       }
       res.status(statusCode).json(body);
     };
 
     // 1. Validate HTTP method (PUT only)
     if (req.method !== "PUT") {
-      respond(405, { IsSuccess: false, Errors: ["Method not allowed"] }, {
-        method: req.method,
-        path: req.path,
-      });
+      respond(405, { IsSuccess: false, Errors: ["Method not allowed"] });
       return;
     }
 
@@ -47,9 +59,7 @@ export const dodoOrderStatus = onRequest(
     const identifier = pathParts[0];
 
     if (pathParts.length !== 2 || pathParts[1] !== "status") {
-      respond(404, { IsSuccess: false, Errors: ["Not found"] }, {
-        path: req.path,
-      });
+      respond(404, { IsSuccess: false, Errors: ["Not found"] });
       return;
     }
 
@@ -70,13 +80,12 @@ export const dodoOrderStatus = onRequest(
     if (!OrderStatus) {
       respond(400, { IsSuccess: false, Errors: ["Missing OrderStatus"] }, {
         identifier,
-        body: req.body,
       });
       return;
     }
 
     if (!VALID_STATUSES.includes(OrderStatus)) {
-      logger.warn(`Unknown DODO OrderStatus: ${OrderStatus} for ${identifier}`);
+      logger.warn(`${T} ⚠️ Unknown OrderStatus: ${OrderStatus} for ${identifier}`);
       // Still accept it — don't break the integration over unknown statuses
     }
 
@@ -85,7 +94,6 @@ export const dodoOrderStatus = onRequest(
     respond(200, { IsSuccess: true, Errors: [] }, {
       identifier,
       orderStatus: OrderStatus,
-      fullPayload: req.body,
     });
   }
 );
