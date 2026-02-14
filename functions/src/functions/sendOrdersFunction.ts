@@ -3,16 +3,17 @@ import { getEntities, getEntityPairs, clearEntityCache } from "../services/entit
 import { createDeliveryDocument } from "../services/deliveryService";
 import {
   getNextBusinessDay,
-  getDateInFuture,
+  createDateWithTime,
   formatCzechDate,
 } from "../utils/dateUtils";
 import { logger } from "firebase-functions";
 
 /**
  * Core logic for sending orders - creates delivery documents for tomorrow.
+ * @param {Date} deliveryDate - Optional custom delivery date. If not provided, uses tomorrow.
  * @return {Promise<void>}
  */
-export async function sendOrders(): Promise<void> {
+export async function sendOrders(deliveryDate?: Date): Promise<void> {
   try {
     logger.info("Starting sendOrders function");
 
@@ -23,8 +24,10 @@ export async function sendOrders(): Promise<void> {
     const entities = await getEntities();
     logger.info(`Loaded ${entities.length} entities`);
 
-    // Get tomorrow's date (or Monday if tomorrow is weekend)
-    const deliveryDate = getNextBusinessDay(1);
+    // Get tomorrow's date (or Monday if tomorrow is weekend) if not provided
+    if (!deliveryDate) {
+      deliveryDate = getNextBusinessDay(1);
+    }
     logger.info(`Creating deliveries for date: ${deliveryDate.toISOString()}`);
 
     let createdCount = 0;
@@ -72,15 +75,15 @@ export async function sendOrders(): Promise<void> {
           continue;
         }
 
-        // Create pickup and delivery time windows for tomorrow
+        // Create pickup and delivery time windows for the delivery date
         const pickupTimeWindow = {
-          start: getDateInFuture(1, pickupWindow.start),
-          end: getDateInFuture(1, pickupWindow.end),
+          start: createDateWithTime(deliveryDate, pickupWindow.start),
+          end: createDateWithTime(deliveryDate, pickupWindow.end),
         };
 
         const deliveryTimeWindow = {
-          start: getDateInFuture(1, deliveryWindow.start),
-          end: getDateInFuture(1, deliveryWindow.end),
+          start: createDateWithTime(deliveryDate, deliveryWindow.start),
+          end: createDateWithTime(deliveryDate, deliveryWindow.end),
         };
 
         // Create delivery document

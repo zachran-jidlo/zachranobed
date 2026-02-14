@@ -73,6 +73,23 @@ export function formatCzechDate(date: Date): string {
 }
 
 /**
+ * Create a Date object for a specific date with a given time.
+ * Time is interpreted as Prague timezone.
+ * @param {Date} baseDate - The base date (midnight)
+ * @param {string} time - The time in HH:MM format in Prague timezone
+ * @return {Date} - The date with the specified time in Prague timezone
+ */
+export function createDateWithTime(baseDate: Date, time: string): Date {
+  const [hours, minutes] = time.split(":").map(Number);
+
+  const pragueDate = DateTime.fromJSDate(baseDate)
+    .setZone("Europe/Prague")
+    .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
+
+  return pragueDate.toJSDate();
+}
+
+/**
  * Get minutes before pickup time for confirmation.
  * @param {Date} pickupTime - The pickup time
  * @return {number} - Minutes before pickup

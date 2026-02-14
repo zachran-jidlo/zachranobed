@@ -11,6 +11,7 @@ import {
 } from "./functions/checkOrdersFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS } from "./config/constants";
+import { DateTime } from "luxon";
 
 // Export for Firebase Functions (CommonJS style)
 exports.notifyCharityAboutDonationV2 = notifyCharityAboutDonationV2;
@@ -27,10 +28,31 @@ const currentProjectId =
 if (currentProjectId === ENVIRONMENTS.DEV) {
   exports.triggerSendOrders = onRequest(async (req, res) => {
     try {
-      await sendOrders();
+      let deliveryDate: Date | undefined;
+
+      // Parse date from query parameter or request body
+      const dateStr = req.query.date as string || req.body?.date;
+
+      if (dateStr) {
+        // Parse date string in format YYYY-MM-DD
+        const parsed = DateTime.fromISO(dateStr, { zone: "Europe/Prague" });
+
+        if (!parsed.isValid) {
+          res.status(400).json({
+            status: "error",
+            message: `Invalid date format. Use YYYY-MM-DD format. Error: ${parsed.invalidReason}`,
+          });
+          return;
+        }
+
+        deliveryDate = parsed.startOf("day").toJSDate();
+      }
+
+      await sendOrders(deliveryDate);
+
       res.json({
         status: "success",
-        message: "sendOrders executed successfully",
+        message: `sendOrders executed successfully${dateStr ? ` for date ${dateStr}` : ""}`,
       });
     } catch (error) {
       res.status(500).json({
