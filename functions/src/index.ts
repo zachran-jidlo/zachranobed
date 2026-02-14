@@ -9,6 +9,7 @@ import {
   checkOrders,
   checkOrdersFunction,
 } from "./functions/checkOrdersFunction";
+import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS } from "./config/constants";
 import { DateTime } from "luxon";
@@ -81,3 +82,6 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;
 exports.checkOrdersFunction = checkOrdersFunction;
+
+// DODO webhook — URL: /orders/{identifier}/status
+exports.orders = dodoOrderStatus;
