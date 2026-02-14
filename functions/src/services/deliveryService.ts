@@ -148,6 +148,50 @@ export async function updateDeliveryWithOrderCreationTime(
 }
 
 /**
+ * DODO status to Firestore delivery state mapping.
+ */
+const DODO_STATUS_TO_STATE: Record<string, DeliveryState> = {
+  "OnWayToPickup": "ON_WAY_TO_PICK_UP",
+  "OnWayToCustomer": "IN_DELIVERY",
+  "ArrivedToCustomer": "DELIVERED",
+};
+
+/**
+ * Update delivery state based on a DODO webhook status callback.
+ * Looks up the delivery by deliveryIdentifier and transitions its state.
+ * @param {string} identifier - The delivery identifier from DODO
+ * @param {string} dodoStatus - The DODO order status
+ * @return {Promise<{ updated: boolean; reason?: string }>}
+ */
+export async function updateDeliveryStateByDodoStatus(
+  identifier: string,
+  dodoStatus: string,
+): Promise<{ updated: boolean; reason?: string }> {
+  const newState = DODO_STATUS_TO_STATE[dodoStatus];
+  if (!newState) {
+    return { updated: false, reason: "no_mapping" };
+  }
+
+  const snapshot = await db
+    .collection("deliveries")
+    .where("deliveryIdentifier", "==", identifier)
+    .limit(1)
+    .get();
+
+  if (snapshot.empty) {
+    logger.warn(`Delivery not found for identifier: ${identifier}`);
+    return { updated: false, reason: "not_found" };
+  }
+
+  const doc = snapshot.docs[0];
+  await updateDeliveryState(doc.ref, newState);
+  logger.info(
+    `Updated delivery ${doc.id} state to ${newState} (DODO status: ${dodoStatus})`,
+  );
+  return { updated: true };
+}
+
+/**
  * Load today's box deliveries in OFFERED state.
  * @return {Promise<Delivery[]>} - Array of box deliveries
  */

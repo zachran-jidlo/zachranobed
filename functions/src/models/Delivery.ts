@@ -5,6 +5,7 @@ export const DeliveryStateSchema = z.enum([
   "PREPARED",
   "OFFERED",
   "ACCEPTED",
+  "ON_WAY_TO_PICK_UP",
   "IN_DELIVERY",
   "DELIVERED",
   "NOT_USED",
