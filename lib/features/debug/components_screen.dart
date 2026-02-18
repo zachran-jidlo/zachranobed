@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +16,7 @@ import 'package:zachranobed/common/presentation/widget/donation/ui_donation_coun
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
+import 'package:zachranobed/common/presentation/widget/progress/ui_page_indicator.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
@@ -757,6 +760,14 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
   int _currentProgress = 5;
   final int _maxProgress = 10;
 
+  final _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -849,6 +860,37 @@ class _ProgressComponentsState extends State<_ProgressComponents> {
                   enabled: _currentProgress > 0,
                 ),
               ],
+            ),
+            const SizedBox(height: 16.0),
+            const Text('Page Indicator:'),
+            SizedBox(
+              height: 100,
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: Text(
+                        'Page ${index + 1}',
+                        style: context.textStyles.headlineMedium,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Center(
+              child: UiPageIndicator(
+                controller: _pageController,
+                pageCount: 5,
+              ),
             ),
           ],
         ),
