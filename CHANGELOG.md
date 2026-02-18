@@ -30,6 +30,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-395** Update meals delivery flow with new design.
 
 ### Removed
+- **ZOB-396** Remove old design components.
 
 ## [1.8.0]
 ### Added
