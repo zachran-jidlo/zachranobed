@@ -329,5 +329,16 @@
     "deliveryDetailEmptyCanteenDescription": "Seznam je prázdný, pokud chcete darovat pokrmy, zadejte je.",
     "deliveryDetailEmptyCharityTitle": "Pokrmy zatím nebyly zadány",
     "deliveryDetailEmptyCharityDescription": "Jídelna ještě nezadala informace o pokrmech. Údaje mohou být doplněny až do konce času pro doručení.",
-    "deliveryDetailAddMealsAction": "Zadat pokrmy"
+    "deliveryDetailAddMealsAction": "Zadat pokrmy",
+
+    "whatsNewTitle1": "Novinky v aplikaci",
+    "whatsNewDescription1": "Představujeme vám novinky v aplikaci Zachraň oběd.",
+    "whatsNewTitle2": "Nový přehled",
+    "whatsNewDescription2": "Vše, na co jste zvyklí, zůstává – darování, krabičky i profil. Jen jsme upravili záložky pro snadnější orientaci. Historii krabiček nyní najdete v sekci Historie a Notifikace nyní naleznete ve vlastní záložce.",
+    "whatsNewTitle3": "Karta daru",
+    "whatsNewDescription3": "U darování teď vidíte, v jaké fázi se nachází přeprava – podle pohybu kurýra nebo odměřovaného času vyzvednutí. Máte tak vždy přehled, co se právě děje.",
+    "whatsNewTitle4": "Přehled daru",
+    "whatsNewDescription4": "Detail daru jsme zjednodušili. V přehledu se zobrazují pouze dny, kdy opravdu proběhlo darování. Také se snadno poznejte v historii.",
+    "whatsNewTitle5": "Manuál",
+    "whatsNewDescription5": "Další potřebné informace a detaily nových funkcí naleznete v manuálech, které vám byly zaslány týmem Zachraň oběd."
 }

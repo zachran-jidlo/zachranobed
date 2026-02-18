@@ -34,6 +34,9 @@ class ImageAssets {
   static const imageAppTermsNewVersion = 'assets/image_app_terms_new_version.svg';
   static const imageForceUpdate = 'assets/image_force_update.svg';
 
+  // What's New
+  static const imageWhatsNewBackground = 'assets/image_whats_new_background.svg';
+
   // What's New for Canteen
   static const imageWhatsNewCanteen1 = 'assets/image_whats_new_canteen_1.png';
   static const imageWhatsNewCanteen2 = 'assets/image_whats_new_canteen_2.png';
