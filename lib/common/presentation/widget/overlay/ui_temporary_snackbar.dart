@@ -56,7 +56,9 @@ class UiTemporarySnackBar {
     Duration duration = const Duration(seconds: 5),
   }) {
     final messenger = ScaffoldMessenger.of(context);
-    if (clearPrevious) messenger.clearSnackBars();
+    if (clearPrevious) {
+      messenger.clearSnackBars();
+    }
     messenger.showSnackBar(
       _buildSnackBar(
         message: message,
