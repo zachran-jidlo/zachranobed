@@ -33,4 +33,18 @@ class ImageAssets {
   static const imageAppTermsNotAccepted = 'assets/image_app_terms_not_accepted.svg';
   static const imageAppTermsNewVersion = 'assets/image_app_terms_new_version.svg';
   static const imageForceUpdate = 'assets/image_force_update.svg';
+
+  // What's New for Canteen
+  static const imageWhatsNewCanteen1 = 'assets/image_whats_new_canteen_1.png';
+  static const imageWhatsNewCanteen2 = 'assets/image_whats_new_canteen_2.png';
+  static const imageWhatsNewCanteen3 = 'assets/image_whats_new_canteen_3.png';
+  static const imageWhatsNewCanteen4 = 'assets/image_whats_new_canteen_4.png';
+  static const imageWhatsNewCanteen5 = 'assets/image_whats_new_canteen_5.png';
+
+  // What's New for Charity
+  static const imageWhatsNewCharity1 = 'assets/image_whats_new_charity_1.png';
+  static const imageWhatsNewCharity2 = 'assets/image_whats_new_charity_2.png';
+  static const imageWhatsNewCharity3 = 'assets/image_whats_new_charity_3.png';
+  static const imageWhatsNewCharity4 = 'assets/image_whats_new_charity_4.png';
+  static const imageWhatsNewCharity5 = 'assets/image_whats_new_charity_5.png';
 }
