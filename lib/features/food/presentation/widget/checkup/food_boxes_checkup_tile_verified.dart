@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 
 /// A badge widget displayed when food boxes have been verified.
 class FoodBoxesCheckupTileVerified extends StatelessWidget {

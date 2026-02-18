@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 
 /// A password text field widget with visibility toggle functionality.
 ///

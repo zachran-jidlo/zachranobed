@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 
 /// A banner widget displayed when a food boxes mismatch has been reported.
 class FoodBoxesCheckupTileMismatch extends StatelessWidget {

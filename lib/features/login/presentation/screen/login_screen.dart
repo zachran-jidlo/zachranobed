@@ -16,11 +16,11 @@ import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_card.dart';
-import 'package:zachranobed/common/presentation/widget/ui_password_text_field.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_password_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -248,13 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       if (mounted) {
         context.router.pop();
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            backgroundColor: Colors.red,
-            message: context.l10n.wrongCredentialsError,
-          ),
-        );
+        UiTemporarySnackBar.showError(context, message: context.l10n.wrongCredentialsError);
       }
     }
   }

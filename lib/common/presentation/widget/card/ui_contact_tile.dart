@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 
 /// A contact tile widget that displays contact information with optional call functionality.
 class UiContactTile extends StatelessWidget {

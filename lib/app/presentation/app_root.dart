@@ -12,7 +12,6 @@ import 'package:zachranobed/common/presentation/router/app_router.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_colors.dart';
-import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/utils/ui_text_styles.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
 import 'package:zachranobed/features/offline/presentation/connectivity_wrapper.dart';
@@ -86,27 +85,26 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: ZOColors.primary,
-              onPrimary: ZOColors.onPrimary,
-              secondary: ZOColors.primaryLight,
-              onSecondary: ZOColors.onPrimaryLight,
-              surface: Colors.white,
-              surfaceTint: Colors.white,
-              primaryContainer: ZOColors.secondary,
+              primary: UiColors.light.primary,
+              onPrimary: UiColors.light.textPrimaryInverse,
+              secondary: UiColors.light.primary,
+              onSecondary: UiColors.light.textPrimaryInverse,
+              surface: UiColors.light.surfaceWhite,
+              surfaceTint: UiColors.light.surfaceWhite,
             ),
             textTheme: UiTextStyles.getTextTheme(),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: UiColors.light.surfaceWhite,
             visualDensity: VisualDensity.standard,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
+            highlightColor: UiColors.light.transparent,
+            splashColor: UiColors.light.transparent,
             appBarTheme: AppBarTheme(
               // Center title only for iOS platform
               centerTitle: RunningPlatform.isIOS(),
               scrolledUnderElevation: 0,
             ),
-            bottomSheetTheme: const BottomSheetThemeData(
+            bottomSheetTheme: BottomSheetThemeData(
               showDragHandle: true,
-              dragHandleColor: ZOColors.outline,
+              dragHandleColor: UiColors.light.textSecondary,
             ),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             extensions: [

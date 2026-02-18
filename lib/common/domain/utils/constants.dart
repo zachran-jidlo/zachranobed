@@ -21,5 +21,4 @@ class Constants {
   static const urlHomepage = 'https://zachranobed.cz';
   static const urlAppTerms = 'https://zachranobed.cz/wp-content/uploads/2025/07/Podminky_Zachran-jidlo_v.1.1.pdf';
   static const urlAppPrivacy = 'https://docs.google.com/document/d/1NhEGlrN4TgS49HviLkhcF4zCBU3i8w3ITkVQJhtMz-Q/edit';
-  static const urlSponsors = 'https://zachranobed.cz/';
 }

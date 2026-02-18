@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zachranobed/common/domain/utils/math_utils.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_outline_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 
 /// A text field with increment/decrement buttons for entering numeric values.
 ///

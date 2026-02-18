@@ -7,13 +7,13 @@ import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
-import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 
 @RoutePage()
 class ForgotPasswordScreen extends StatefulWidget {
@@ -92,24 +92,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       await authService.resetPassword(_emailController.text);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(message: context.l10n.passwordResetConfirmation),
-        );
-
+        UiTemporarySnackBar.show(context, message: context.l10n.passwordResetConfirmation);
         context.router.replaceAll([const LoginRoute()]);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         context.router.pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            backgroundColor: Colors.red,
-            message: e.code == 'invalid-email'
-                ? context.l10n.invalidFieldEmail
-                : e.code == 'user-not-found'
-                    ? context.l10n.userNotFoundError
-                    : context.l10n.somethingWentWrongError,
-          ),
+        UiTemporarySnackBar.showError(
+          context,
+          message: e.code == 'invalid-email'
+              ? context.l10n.invalidFieldEmail
+              : e.code == 'user-not-found'
+                  ? context.l10n.userNotFoundError
+                  : context.l10n.somethingWentWrongError,
         );
       }
     }

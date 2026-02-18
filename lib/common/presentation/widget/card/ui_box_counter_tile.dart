@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_card.dart';
-import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dart';
 
 /// A tile widget that displays box information with an editable counter.
 ///
