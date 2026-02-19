@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
@@ -45,6 +46,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController _confirmNewPasswordController = TextEditingController();
 
   final authService = GetIt.I<AuthService>();
+  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
 
   @override
   void dispose() {
@@ -123,6 +125,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       await authService.changePassword(_newPasswordController.text);
 
       await authService.signOut(entityId);
+
+      _notifyUserDataChanged.invoke(null);
 
       if (mounted) {
         UiTemporarySnackBar.show(context, message: context.l10n.newPasswordSuccessfullySaved);

@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/utils/device_utils.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -43,6 +44,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
+  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   String _appVersion = '-';
 
   @override
@@ -207,6 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final authService = GetIt.I<AuthService>();
     final entityId = HelperService.getCurrentUser(context)?.entityId;
     await authService.signOut(entityId);
+    _notifyUserDataChanged.invoke(null);
     if (mounted) {
       context.router.replaceAll([const LoginRoute()]);
     }

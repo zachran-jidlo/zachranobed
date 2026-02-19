@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
@@ -27,14 +33,31 @@ class AppRoot extends StatefulWidget {
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
   final _getUserData = GetIt.I<GetUserDataUseCase>();
+  final _observeUserData = GetIt.I<ObserveUserDataUseCase>();
   final _checkIfUpgradeAppShouldBeShown = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
   final _getAppTermsStatus = GetIt.I<GetAppTermsStatusUseCase>();
+  final _shouldShowOnboardingForUiChanges = GetIt.I<ShouldShowOnboardingForUiChangesUseCase>();
+  final _removeOnboardingForUiChangesFlag = GetIt.I<RemoveOnboardingForUiChangesFlagUseCase>();
+
+  StreamSubscription<void>? _userDataSubscription;
 
   @override
   void initState() {
     super.initState();
 
+    _userDataSubscription = _observeUserData.invoke().listen((user) {
+      if (user != null) {
+        _applicationStartCheckForUser(user);
+      }
+    });
+
     _applicationStartCheck();
+  }
+
+  @override
+  void dispose() {
+    _userDataSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -42,25 +65,35 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     _applicationStartCheck();
   }
 
+  /// Performs the initial checks after the application starts.
+  /// 1. Check if the app should be updated.
+  /// 2. Perform for user-related checks, see [_applicationStartCheckForUser].
   void _applicationStartCheck() async {
     final shouldShow = await _checkIfUpgradeAppShouldBeShown.invoke();
     if (shouldShow) {
       _appRouter.replace(const ForceUpdateRoute());
     }
 
-    _checkAppTerms();
+    final user = await _getUserData.invoke();
+    if (user != null) {
+      _applicationStartCheckForUser(user);
+    }
   }
 
-  void _checkAppTerms() async {
-    final user = await _getUserData.invoke();
-    if (user == null) {
-      // User is not logged in, do not check app terms
-      return;
-    }
-
+  /// Performs the initial checks after the application starts.
+  /// 1. Check if the app terms are accepted.
+  /// 2. Check if the onboarding for UI changes should be shown.
+  void _applicationStartCheckForUser(UserData user) async {
     final status = await _getAppTermsStatus.invoke(user);
     if (status != AppTermsStatus.accepted) {
       _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
+      return;
+    }
+
+    final shouldShowOnboarding = await _shouldShowOnboardingForUiChanges.invoke(user.entityId);
+    if (shouldShowOnboarding) {
+      await _removeOnboardingForUiChangesFlag.invoke(user.entityId);
+      _appRouter.push(const WhatsNewRoute());
     }
   }
 
