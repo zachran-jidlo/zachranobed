@@ -41,30 +41,12 @@ class WhatsNewScreen extends StatefulWidget {
 class _WhatsNewScreenState extends State<WhatsNewScreen> {
   static const double _textHorizontalPadding = 32.0;
 
-  late final PageController _pageController;
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-    _pageController.addListener(_onPageChanged);
-  }
+  final _pageController = PageController();
 
   @override
   void dispose() {
-    _pageController.removeListener(_onPageChanged);
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _onPageChanged() {
-    final page = _pageController.page?.round() ?? 0;
-    if (page != _currentPage) {
-      setState(() {
-        _currentPage = page;
-      });
-    }
   }
 
   @override
