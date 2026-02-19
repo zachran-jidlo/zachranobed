@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
@@ -32,6 +33,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = GetIt.I<AuthService>();
+  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
   final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
   final _appFlavorData = GetIt.I<AppFlavorData>();
@@ -241,7 +243,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         await HelperService.loadUserInfo(context);
 
-        ZOLogger.logMessage("Přihlášen uživatel: ${HelperService.getCurrentUser(_formKey.currentContext!)?.debugInfo}");
+        final user = HelperService.getCurrentUser(_formKey.currentContext!);
+        ZOLogger.logMessage("Přihlášen uživatel: ${user?.debugInfo}");
+
+        _notifyUserDataChanged.invoke(user);
 
         _continueToLoggedInContext();
       }

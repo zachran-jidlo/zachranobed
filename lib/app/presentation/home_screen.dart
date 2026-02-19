@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/overview_screen.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -33,6 +34,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTickerProviderStateMixin {
   final _updateNotificationsTokenUseCase = GetIt.I<UpdateNotificationsTokenUseCase>();
+  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
 
   /// The data for the tabs.
   final _tabs = [
@@ -204,6 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
                   onPressed: () async {
                     final entityId = HelperService.getCurrentUser(context)?.entityId;
                     await authService.signOut(entityId);
+                    _notifyUserDataChanged.invoke(null);
                     if (mounted) {
                       context.router.replaceAll([const LoginRoute()]);
                     }

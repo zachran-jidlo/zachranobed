@@ -23,6 +23,7 @@ EntityDto _$EntityDtoFromJson(Map<String, dynamic> json) => EntityDto(
       additionalContacts: (json['additionalContacts'] as List<dynamic>?)
           ?.map((e) => ContactDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      showOnboardingForUiChanges: json['showOnboardingForUiChanges'] as bool?,
     );
 
 Map<String, dynamic> _$EntityDtoToJson(EntityDto instance) => <String, dynamic>{
@@ -37,6 +38,7 @@ Map<String, dynamic> _$EntityDtoToJson(EntityDto instance) => <String, dynamic>{
       'entityType': _$EntityTypeDtoEnumMap[instance.entityType],
       'lastAcceptedAppTermsVersion': instance.lastAcceptedAppTermsVersion,
       'additionalContacts': instance.additionalContacts,
+      'showOnboardingForUiChanges': instance.showOnboardingForUiChanges,
     };
 
 const _$EntityTypeDtoEnumMap = {
