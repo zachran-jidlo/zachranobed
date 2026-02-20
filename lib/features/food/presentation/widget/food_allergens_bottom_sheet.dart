@@ -46,7 +46,7 @@ class FoodAllergensBottomSheet {
                             context.l10n.allergensList,
                             style: context.textStyles.titleLarge,
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 16),
                           ..._buildItems(context, allergens),
                         ],
                       ),
