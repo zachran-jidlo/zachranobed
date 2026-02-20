@@ -7,6 +7,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-381** Add new UI components and color definitions from new design system.
 - **ZOB-393** Add new delivery details screen.
 - **ZOB-404** Add new "What's new" screen.
+- **ZOB-405** Add support for allergen sub categories.
 
 ### Fixed
 

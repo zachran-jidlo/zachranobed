@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/utils/iterable_widget_utils.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_transparent_tile.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 
 /// A utility class for displaying a bottom sheet with a list of food allergens.
@@ -11,28 +11,13 @@ class FoodAllergensBottomSheet {
   /// Shows a bottom sheet containing a list of food allergens.
   ///
   /// The bottom sheet is scrollable and displays the allergens with their
-  /// corresponding numbers.
+  /// corresponding numbers. Allergens with sub-categories show their
+  /// sub-items with a dash icon.
   static void show(
     BuildContext context,
     List<FoodAllergen> allergens, {
     bool fullHeight = false,
   }) {
-    final itemWidgets = allergens.map((allergen) {
-      return Text(
-        "${allergen.number}. ${allergen.text}",
-        style: context.textStyles.bodyLarge,
-      );
-    }).separated(
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        child: Container(
-          width: double.infinity,
-          color: context.uiColors.inactive,
-          height: 1.0,
-        ),
-      ),
-    );
-
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -61,8 +46,8 @@ class FoodAllergensBottomSheet {
                             context.l10n.allergensList,
                             style: context.textStyles.titleLarge,
                           ),
-                          const SizedBox(height: 28),
-                          ...itemWidgets,
+                          const SizedBox(height: 16),
+                          ..._buildItems(context, allergens),
                         ],
                       ),
                     ),
@@ -74,5 +59,49 @@ class FoodAllergensBottomSheet {
         );
       },
     );
+  }
+
+  static List<Widget> _buildItems(
+    BuildContext context,
+    List<FoodAllergen> allergens,
+  ) {
+    final items = <Widget>[];
+    final divider = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        width: double.infinity,
+        height: 1.0,
+        color: context.uiColors.inactive,
+      ),
+    );
+
+    for (var i = 0; i < allergens.length; i++) {
+      final allergen = allergens[i];
+
+      items.add(
+        UiListTransparentTile(
+          title: "${allergen.number}. ${allergen.text}",
+        ),
+      );
+
+      for (final subItem in allergen.subItems) {
+        items.add(
+          UiListTransparentTile(
+            title: "${subItem.key(allergen.number)} ${subItem.text}",
+            start: Icon(
+              Icons.remove,
+              size: 24,
+              color: context.uiColors.textPrimary,
+            ),
+          ),
+        );
+      }
+
+      if (i < allergens.length - 1) {
+        items.add(divider);
+      }
+    }
+
+    return items;
   }
 }
