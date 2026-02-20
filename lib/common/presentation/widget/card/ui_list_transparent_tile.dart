@@ -29,6 +29,7 @@ class UiListTransparentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(8.0),
       onTap: onPressed,
       splashColor: context.uiColors.textPrimary.withValues(alpha: 0.1),
       highlightColor: context.uiColors.textPrimary.withValues(alpha: 0.1),
