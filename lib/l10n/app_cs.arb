@@ -86,6 +86,7 @@
     "foodName": "Název pokrmu",
     "allergens": "Alergeny",
     "allergensList": "Seznam alergenů",
+    "allergensSave": "Uložit",
     "allergensNotPresent": "Bez alergenů",
     "allergensOnPackage": "Viz obal",
     "allergen01": "Obiloviny obsahující lepek",
