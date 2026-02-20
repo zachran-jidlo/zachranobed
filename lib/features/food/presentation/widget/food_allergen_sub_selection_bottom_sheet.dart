@@ -69,7 +69,7 @@ class _FoodAllergenSubSelectionSheetState extends State<_FoodAllergenSubSelectio
       return List.filled(widget.allergen.subItems.length, true);
     }
     return widget.allergen.subItems
-        .map((sub) => widget.currentSelection.contains("${widget.allergen.number}${sub.label}"))
+        .map((sub) => widget.currentSelection.contains(sub.key(widget.allergen.number)))
         .toList();
   }
 
@@ -84,66 +84,81 @@ class _FoodAllergenSubSelectionSheetState extends State<_FoodAllergenSubSelectio
       ),
     );
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.l10n.allergensList,
-                    style: context.textStyles.titleLarge,
-                  ),
-                  const SizedBox(height: 16),
-                  UiListTransparentTile(
-                    title: "${widget.allergen.number}. ${widget.allergen.text}",
-                    end: AbsorbPointer(
-                      child: UiCheckbox(
-                        isChecked: _areAllChecked(),
-                        onChanged: (_) {},
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.9,
+      minChildSize: 0.0,
+      maxChildSize: 0.9,
+      snap: true,
+      builder: (context, scrollController) {
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 80.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        context.l10n.allergensList,
+                        style: context.textStyles.titleLarge,
                       ),
-                    ),
-                    onPressed: _toggleParent,
-                  ),
-                  ...widget.allergen.subItems.expandIndexed((index, subItem) {
-                    return [
-                      divider,
+                      const SizedBox(height: 16),
                       UiListTransparentTile(
-                        title: "${widget.allergen.number}${subItem.label} ${subItem.text}",
-                        start: Icon(
-                          Icons.remove,
-                          size: 24,
-                          color: context.uiColors.textPrimary,
-                        ),
+                        title: "${widget.allergen.number}. ${widget.allergen.text}",
                         end: AbsorbPointer(
                           child: UiCheckbox(
-                            isChecked: _subItemsChecked[index],
+                            isChecked: _areAllChecked(),
                             onChanged: (_) {},
                           ),
                         ),
-                        onPressed: () => _toggleSubItem(index),
+                        onPressed: _toggleParent,
                       ),
-                    ];
-                  }),
-                ],
+                      ...widget.allergen.subItems.expandIndexed((index, subItem) {
+                        return [
+                          divider,
+                          UiListTransparentTile(
+                            title: "${subItem.key(widget.allergen.number)} ${subItem.text}",
+                            start: Icon(
+                              Icons.remove,
+                              size: 24,
+                              color: context.uiColors.textPrimary,
+                            ),
+                            end: AbsorbPointer(
+                              child: UiCheckbox(
+                                isChecked: _subItemsChecked[index],
+                                onChanged: (_) {},
+                              ),
+                            ),
+                            onPressed: () => _toggleSubItem(index),
+                          ),
+                        ];
+                      }),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-          child: UiPrimaryButton(
-            size: UiButtonSize.medium(fullWidth: true),
-            text: context.l10n.allergensSave,
-            onPressed: () => context.pop(_computeResult()),
-          ),
-        ),
-      ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: context.uiColors.surfaceWhite,
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                child: UiPrimaryButton(
+                  size: UiButtonSize.medium(fullWidth: true),
+                  text: context.l10n.allergensSave,
+                  onPressed: () => context.pop(_computeResult()),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -172,7 +187,7 @@ class _FoodAllergenSubSelectionSheetState extends State<_FoodAllergenSubSelectio
     }
     return widget.allergen.subItems
         .whereIndexed((index, e) => _subItemsChecked[index])
-        .map((e) => "${widget.allergen.number}${e.label}")
+        .map((e) => e.key(widget.allergen.number))
         .toList();
   }
 }

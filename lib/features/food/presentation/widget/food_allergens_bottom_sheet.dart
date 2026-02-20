@@ -87,7 +87,7 @@ class FoodAllergensBottomSheet {
       for (final subItem in allergen.subItems) {
         items.add(
           UiListTransparentTile(
-            title: "${allergen.number}${subItem.label} ${subItem.text}",
+            title: "${subItem.key(allergen.number)} ${subItem.text}",
             start: Icon(
               Icons.remove,
               size: 24,

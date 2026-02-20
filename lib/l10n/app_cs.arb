@@ -89,6 +89,15 @@
     "allergensSave": "Uložit",
     "allergensNotPresent": "Bez alergenů",
     "allergensOnPackage": "Viz obal",
+    "allergensSubItemsTemplate": "Specifikace alergenů: {subItems}",
+    "@allergensSubItemsTemplate": {
+      "placeholders": {
+        "subItems": {
+          "type": "String",
+          "example": "1a Pšenice"
+        }
+      }
+    },
     "allergen01": "Obiloviny obsahující lepek",
     "allergen01a": "Pšenice",
     "allergen01b": "Žito",

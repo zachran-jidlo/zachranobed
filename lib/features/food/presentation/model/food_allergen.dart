@@ -14,6 +14,11 @@ class FoodAllergenSubItem {
     required this.label,
     required this.text,
   });
+
+  /// Generates a key for the sub-item.
+  String key(int number) {
+    return '$number$label';
+  }
 }
 
 /// Represents a food allergen with its number and localized text.
