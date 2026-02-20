@@ -53,6 +53,7 @@ class DefaultFirebaseOptions {
     projectId: 'zachran-obed',
     authDomain: 'zachran-obed.firebaseapp.com',
     storageBucket: 'zachran-obed.appspot.com',
+    measurementId: 'G-J15Q6J9XJV'
   );
 
   static const FirebaseOptions android = FirebaseOptions(
