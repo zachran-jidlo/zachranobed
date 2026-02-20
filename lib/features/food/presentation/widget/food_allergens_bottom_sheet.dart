@@ -46,7 +46,7 @@ class FoodAllergensBottomSheet {
                             context.l10n.allergensList,
                             style: context.textStyles.titleLarge,
                           ),
-                          const SizedBox(height: 28),
+                          const SizedBox(height: 24),
                           ..._buildItems(context, allergens),
                         ],
                       ),
@@ -66,10 +66,13 @@ class FoodAllergensBottomSheet {
     List<FoodAllergen> allergens,
   ) {
     final items = <Widget>[];
-    final divider = Container(
-      width: double.infinity,
-      height: 1.0,
-      color: context.uiColors.inactive,
+    final divider = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        width: double.infinity,
+        height: 1.0,
+        color: context.uiColors.inactive,
+      ),
     );
 
     for (var i = 0; i < allergens.length; i++) {
