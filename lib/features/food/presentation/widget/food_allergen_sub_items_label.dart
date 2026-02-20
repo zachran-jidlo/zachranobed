@@ -20,9 +20,14 @@ class FoodAllergenSubItemsLabel extends StatelessWidget {
     if (parts.isEmpty) {
       return const SizedBox.shrink();
     }
-    return Text(
-      context.l10n.allergensSubItemsTemplate(parts.join(', ')),
-      style: context.textStyles.bodyMedium,
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.only(top: 16.0),
+      child: Text(
+        context.l10n.allergensSubItemsTemplate(parts.join(', ')),
+        style: context.textStyles.bodyMedium,
+      ),
     );
   }
 

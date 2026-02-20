@@ -47,15 +47,11 @@ class UiListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 16.0,
         children: [
-          if (start != null) ...[
-            start!,
-          ],
+          if (start != null) start!,
           Expanded(
             child: _buildMainContent(context),
           ),
-          if (end != null) ...[
-            end!,
-          ],
+          if (end != null) end!,
         ],
       ),
     );

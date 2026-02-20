@@ -37,9 +37,7 @@ class UiListTransparentTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 8.0,
         children: [
-          if (start != null) ...[
-            start!,
-          ],
+          if (start != null) start!,
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -49,9 +47,7 @@ class UiListTransparentTile extends StatelessWidget {
               ),
             ),
           ),
-          if (end != null) ...[
-            end!,
-          ],
+          if (end != null) end!,
         ],
       ),
     );

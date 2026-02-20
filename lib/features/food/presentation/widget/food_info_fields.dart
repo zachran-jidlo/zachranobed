@@ -120,29 +120,8 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           FieldValidationUtils.getFoodAllergensValidator(context),
         ),
       ),
-      ..._buildFoodAllergensSubItemsInfoPart(),
-    ];
-  }
-
-  List<Widget> _buildFoodAllergensSubItemsInfoPart() {
-    final label = FoodAllergenSubItemsLabel(
-      currentSelection: widget.foodInfo.allergens ?? [],
-    );
-
-    final bool isShrunk = switch (label) {
-      SizedBox(width: 0.0, height: 0.0) => true,
-      _ => false,
-    };
-
-    if (isShrunk) {
-      return [];
-    }
-
-    return [
-      const SizedBox(height: 16.0),
-      SizedBox(
-        width: double.infinity,
-        child: label,
+      FoodAllergenSubItemsLabel(
+        currentSelection: widget.foodInfo.allergens ?? [],
       ),
     ];
   }

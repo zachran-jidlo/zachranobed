@@ -115,7 +115,7 @@ class FoodAllergensChips extends StatelessWidget {
         currentSelection: state.value!,
       );
 
-      if (result != null && context.mounted) {
+      if (result != null && context.mounted && state.mounted) {
         _onSubAllergenSaved(state, allergen, result);
       }
     } else {
