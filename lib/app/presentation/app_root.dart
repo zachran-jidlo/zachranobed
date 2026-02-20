@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +112,11 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
           // It is not possible to use AppLocalizations here, because it is not
           // available yet. Therefore, the title is hardcoded.
           title: "Zachraň oběd",
-          routerConfig: _appRouter.config(),
+          routerConfig: _appRouter.config(
+            navigatorObservers: () => [
+              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+            ],
+          ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: const Locale('cs'),
