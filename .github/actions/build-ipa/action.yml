@@ -71,6 +71,18 @@ runs:
           --target ${{ inputs.build_target }} \
           --export-options-plist ${{ inputs.build_export_options }}
 
+    # Find the generated dSYM and upload it using the exact plist for this flavor
+    - name: Upload dSYMs to Firebase Crashlytics
+      shell: bash
+      run: |
+        FLAVOR="${{ inputs.build_flavor }}"
+        PLIST_PATH="ios/Runner/Firebase/$FLAVOR/GoogleService-Info.plist"
+
+        echo "Uploading dSYMs for flavor: $FLAVOR"
+        echo "Using Plist: $PLIST_PATH"
+
+        find build/ios/archive/Runner.xcarchive -name "*.dSYM" | xargs -I \{\} ios/Pods/FirebaseCrashlytics/upload-symbols -gsp "$PLIST_PATH" -p ios \{\}
+
     # Important! Cleanup: remove the certificate and provisioning profile from the runner
     - name: Clean up keychain and provisioning profile
       shell: bash
