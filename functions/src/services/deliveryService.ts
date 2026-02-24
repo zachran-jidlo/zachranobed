@@ -122,6 +122,48 @@ export async function getTodaysDeliveries(
 }
 
 /**
+ * Load deliveries for a specific date in the specified states (all delivery types).
+ * @param {Date} date - The delivery date
+ * @param {DeliveryState[]} states - The states to filter by
+ * @return {Promise<Delivery[]>} - Array of deliveries
+ */
+export async function getDeliveriesByDateAndStates(
+  date: Date,
+  states: DeliveryState[],
+): Promise<Delivery[]> {
+  const dateStart = DateTime.fromJSDate(date)
+    .setZone("Europe/Prague")
+    .startOf("day")
+    .toJSDate();
+  const dateEnd = DateTime.fromJSDate(date)
+    .setZone("Europe/Prague")
+    .endOf("day")
+    .toJSDate();
+
+  // TODO: Create Firestore index for deliveryDate + state to optimize this query.
+  const snapshot = await db
+    .collection("deliveries")
+    .where("deliveryDate", ">=", Timestamp.fromDate(dateStart))
+    .where("deliveryDate", "<=", Timestamp.fromDate(dateEnd))
+    .where("state", "in", states)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => {
+      const result = DeliverySchema.safeParse({
+        ref: doc.ref,
+        ...doc.data(),
+      });
+      if (!result.success) {
+        logger.warn(`Invalid delivery document ${doc.id}:`, result.error);
+        return null;
+      }
+      return result.data;
+    })
+    .filter((delivery): delivery is Delivery => delivery !== null);
+}
+
+/**
  * Update delivery state in Firestore.
  * @param {DocumentReference} deliveryRef - The delivery document reference
  * @param {DeliveryState} state - The new state

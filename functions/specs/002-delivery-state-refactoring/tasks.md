@@ -28,7 +28,10 @@
 
 - [ ] T001 Install `@google-cloud/tasks` dependency via `npm install @google-cloud/tasks`
 - [ ] T002 [P] Add `ON_WAY_TO_PICK_UP` and `DONE` states to Zod schema in `src/models/Delivery.ts` (keep `OFFERED` temporarily, mark deprecated)
-- [ ] T003 [P] Add Cloud Tasks constants (`CLOUD_TASKS_QUEUE`, `CLOUD_TASKS_LOCATION`) to `src/config/constants.ts`
+- [ ] T003 [P] Add `CLOUD_TASKS_QUEUE` and `CLOUD_TASKS_LOCATION` as `defineString()` params in `src/config/firebase.ts`:
+      `defineString("CLOUD_TASKS_QUEUE", { default: "delivery-state-transitions" })` and
+      `defineString("CLOUD_TASKS_LOCATION", { default: "europe-west1" })`.
+      Do NOT add to `constants.ts` — constitution requires `defineString()` for non-secret config params.
 
 ---
 
@@ -45,6 +48,16 @@
 
 ---
 
+## Phase 2.5: Infrastructure Prerequisites (manual, one-time per environment)
+
+**Purpose**: GCP resources that must exist before Cloud Tasks can be deployed or tested. Manual step — not automated.
+
+**⚠️ BLOCKER for Phase 3**: must be completed before deploying `cloudTaskHandler` to DEV.
+
+- [ ] T005b [INFRA] Enable Cloud Tasks API and create the `delivery-state-transitions` queue on both GCP projects, then grant the service account the `roles/cloudfunctions.invoker` role on `cloudTaskHandler`. See Infrastructure Setup section in plan.md for exact `gcloud` commands.
+
+---
+
 ## Phase 3: User Story 1 — Cloud Task Infrastructure (Priority: P1) 🎯 MVP
 
 **Goal**: Create the Cloud Task service and HTTP handler that all timed transitions depend on
@@ -53,9 +66,16 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Create `src/services/cloudTaskService.ts` with `scheduleStateTransition({ deliveryId, targetState, preconditionState, executeAt })` using `@google-cloud/tasks` CloudTasksClient, OIDC auth, project/queue/location from constants and environment
+- [ ] T006 [US1] Create `src/services/cloudTaskService.ts` with `scheduleStateTransition({ deliveryId, targetState, preconditionState, executeAt })`:
+      - Uses `@google-cloud/tasks` CloudTasksClient
+      - Queue: `CLOUD_TASKS_QUEUE.value()`, Location: `CLOUD_TASKS_LOCATION.value()` (`defineString` params, not constants)
+      - Handler URL: `https://${CLOUD_TASKS_LOCATION.value()}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/cloudTaskHandler`
+      - OIDC token: `{ serviceAccountEmail: process.env.FUNCTION_TARGET_SA ?? "", audience: handlerUrl }`
+      - `scheduleTime`: set from `executeAt` param
 - [ ] T007 [US1] Add `scheduleMultipleTransitions(tasks[])` convenience method to `src/services/cloudTaskService.ts` for scheduling all personal delivery tasks at once
-- [ ] T008 [US1] Create `src/functions/cloudTaskHandlerFunction.ts` — `onRequest` HTTP Cloud Function (v2) that receives `{ deliveryId, targetState, preconditionState }`, loads delivery doc, guards on `state === preconditionState`, updates state or returns 200 no-op
+- [ ] T008 [US1] Create `src/functions/cloudTaskHandlerFunction.ts` — `onRequest` HTTP Cloud Function (v2) that receives `{ deliveryId, targetState, preconditionState }`, loads delivery doc, guards on `state === preconditionState`, updates state or returns 200 no-op.
+      Auth: IAM invoker policy only (no in-code JWT verification — do NOT grant `allUsers` invoker access).
+      Errors: 400 for invalid/missing payload fields; 500 for Firestore errors (triggers Cloud Tasks retry).
 - [ ] T009 [US1] Export `cloudTaskHandler` in `src/index.ts` (add alongside existing exports, do not remove anything yet)
 
 **Checkpoint**: Cloud Task infrastructure deployed and callable — all other stories can now schedule tasks
@@ -100,8 +120,14 @@
 
 ### Implementation for User Story 4
 
-- [ ] T014 [US4] Create `src/functions/finalizeDeliveriesFunction.ts` — scheduled at `0 0 * * *` (midnight Prague time, daily). Queries today's deliveries in DELIVERED → transitions to DONE. Safety net: PREPARED → NOT_USED. Logs summary of transitions.
-- [ ] T015 [US4] Export `finalizeDeliveries` in `src/index.ts`
+- [ ] T014 [US4] Create `src/functions/finalizeDeliveriesFunction.ts` — scheduled at `0 0 * * *` (midnight, timezone: `Europe/Prague`, daily). Three passes (all date-filtered to today only):
+      1. DELIVERED → DONE
+      2. Safety net: PREPARED → NOT_USED (Cloud Task missed)
+      3. Warning log: ACCEPTED deliveries where `deliveryTimeWindow.end < now` — log IDs, no auto-transition
+      Logs count of each transition made.
+- [ ] T015 [US4] Export `finalizeDeliveries` in `src/index.ts` **conditionally** (production-only):
+      `if (process.env.GCLOUD_PROJECT === "zachran-obed") { exports.finalizeDeliveries = ... }`
+      Same pattern used by `sendOrdersFunction`.
 - [ ] T016 [US4] Add `triggerFinalizeDeliveries` dev HTTP trigger in `src/index.ts` (DEV environment only, similar to existing `triggerSendOrders`)
 
 **Checkpoint**: Full delivery lifecycle works end-to-end: PREPARED → ... → DELIVERED → DONE
@@ -123,6 +149,8 @@
 - [ ] T021 [P] [US5] Delete `src/functions/checkDeliveriesInvocatorFunction.ts`
 - [ ] T022 [US5] Remove OFFERED-specific logic from `src/services/deliveryService.ts` (remove old box delivery processing that was handled by checkOrders)
 - [ ] T023 [US5] Remove dead imports across all modified files, run `npm run lint:fix` and `npm run build` to verify clean compilation
+- [ ] T023b [POST-MIGRATION] After PROD validation: remove `OFFERED` from Zod schema in `src/models/Delivery.ts`.
+      **Do NOT do this in the current PR.** Add `// TODO(post-migration): remove OFFERED` comment in T002 output as a reminder.
 
 **Checkpoint**: Codebase clean, no dead code, build and lint pass
 
@@ -134,7 +162,8 @@
 
 - **Phase 1 (Setup)**: No dependencies — start immediately
 - **Phase 2 (Foundational)**: Depends on T002 (model updates)
-- **Phase 3 (US1 - Cloud Tasks)**: Depends on Phase 1 + Phase 2
+- **Phase 2.5 (Infrastructure)**: No code dependency — can be done in parallel with Phase 1/2, but must complete before deploying Phase 3
+- **Phase 3 (US1 - Cloud Tasks)**: Depends on Phase 1 + Phase 2 + Phase 2.5 (T005b must be done in GCP before deploy)
 - **Phase 4 (US2 - Food)**: Depends on Phase 3 (needs cloudTaskService + handler)
 - **Phase 5 (US3 - Box)**: Depends on Phase 3 (needs cloudTaskService + handler)
 - **Phase 6 (US4 - Finalize)**: Depends on Phase 2 (needs deliveryService queries)
@@ -192,7 +221,7 @@ Phase 7: T017 → T018 → T019 → T020/T021 → T022 → T023
 
 - [P] tasks = different files, no dependencies
 - [Story] label maps task to specific user story
-- Total tasks: 23
-- Tasks per story: US1=4, US2=2, US3=2, US4=3, US5=7, Setup=3, Foundational=2
+- Total tasks: 25 (23 implementation + T005b infrastructure + T023b post-migration)
+- Tasks per story: US1=4, US2=2, US3=2, US4=3, US5=8, Setup=3, Foundational=2, Infra=1
 - Infrastructure setup (GCP Cloud Tasks queue, IAM roles) is a manual prerequisite — see plan.md
 - During migration: checkOrdersFunction can run alongside new Cloud Tasks (precondition guards prevent conflicts)

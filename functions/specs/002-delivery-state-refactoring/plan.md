@@ -160,9 +160,10 @@ If the donor accepts **after** the `ON_WAY_TO_PICK_UP` Cloud Task has already fi
 
 - Add states to Zod schema: `ON_WAY_TO_PICK_UP`, `DONE`
 - Keep `OFFERED` in schema temporarily (read old docs) but mark as deprecated
-- Add constants:
-  - `CLOUD_TASKS_QUEUE` — queue name (e.g., `delivery-state-transitions`)
-  - `CLOUD_TASKS_LOCATION` — `europe-west1`
+- Add params via `defineString()` in `src/config/firebase.ts` (or a new `src/config/params.ts`):
+  - `CLOUD_TASKS_QUEUE = defineString("CLOUD_TASKS_QUEUE", { default: "delivery-state-transitions" })`
+  - `CLOUD_TASKS_LOCATION = defineString("CLOUD_TASKS_LOCATION", { default: "europe-west1" })`
+- Note: these are non-secret config params — use `defineString()`, not the constants file. Set corresponding values in `.env` files / Firebase config for each environment.
 
 ### Task 2: Create Cloud Task Service
 
@@ -184,10 +185,12 @@ function scheduleMultipleTransitions(tasks: ScheduleTransitionParams[]): Promise
 ```
 
 - Uses `@google-cloud/tasks` CloudTasksClient
-- Constructs HTTP request targeting the `cloudTaskHandler` function URL
+- Constructs HTTP request targeting the `cloudTaskHandler` function URL:
+  `https://${CLOUD_TASKS_LOCATION.value()}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/cloudTaskHandler`
+- Reads queue and location via `CLOUD_TASKS_QUEUE.value()` / `CLOUD_TASKS_LOCATION.value()` (`defineString` params)
+- Derives project ID from `process.env.GCLOUD_PROJECT`
 - Sets `scheduleTime` from `executeAt`
-- Uses OIDC token for authentication (service account invoking its own project's function)
-- Derives project ID and handler URL from environment
+- OIDC token: `{ serviceAccountEmail: process.env.FUNCTION_TARGET_SA ?? "", audience: handlerUrl }`
 
 ### Task 3: Create Cloud Task Handler Function
 
@@ -201,7 +204,12 @@ function scheduleMultipleTransitions(tasks: ScheduleTransitionParams[]): Promise
   - If mismatch → log info ("skipping, state is {current} not {expected}") and return 200
 - Updates delivery state via `deliveryService.updateDeliveryState()`
 - Returns 200 on success
-- Authentication: Cloud Tasks uses OIDC token; function validates via IAM (default Firebase v2 behavior with `invoker` role)
+- Error handling: return 400 for missing/invalid payload fields; return 500 (and let Cloud Tasks retry) for Firestore errors or delivery-not-found
+- Authentication strategy: **IAM invoker policy only** (no in-code token verification needed).
+  - The `cloudTaskHandler` function is deployed WITHOUT `invoker: "allUsers"` — only the Cloud Tasks service account (granted `roles/cloudfunctions.invoker`) can call it.
+  - Firebase Functions v2 enforces this automatically when no public access is granted.
+  - Do NOT add manual JWT/OIDC verification in function code — IAM handles it.
+  - Required IAM binding is documented in the Infrastructure Setup section.
 
 ### Task 4: Refactor sendOrdersFunction
 
@@ -211,7 +219,7 @@ After creating each delivery document:
 
 **For ALL carriers (dodo + personal):**
 - Schedule NOT_USED Cloud Task at `pickupStart - confirmationMinutes` with precondition `PREPARED`
-  - `confirmationMinutes` = entityPair.confirmationTime or CONFIRMATION_MINUTES.DODO (45) / CONFIRMATION_MINUTES.PERSONAL (20) based on carrierId
+  - `confirmationMinutes` = `entityPair.confirmationTime ?? CONFIRMATION_MINUTES[carrierId]` where defaults are DODO=45, PERSONAL=20. EntityPair value takes precedence; constant is the fallback.
 
 **For personal carrier only:**
 - Schedule ON_WAY_TO_PICK_UP at `pickupTimeWindow.start` with precondition `ACCEPTED`
@@ -237,10 +245,12 @@ After creating each delivery document:
 
 **File:** `src/functions/finalizeDeliveriesFunction.ts`
 
-- Scheduled function: `0 0 * * *` (midnight Prague time, daily including weekends to catch Friday deliveries)
-- Queries today's deliveries in state `DELIVERED` → transition to `DONE`
-- Safety net: queries `PREPARED` deliveries from today → transition to `NOT_USED` (in case Cloud Task failed)
-- Logs summary of transitions made
+- Scheduled function: `0 0 * * *` (midnight, timezone: `Europe/Prague`, daily including weekends to catch Friday deliveries)
+- Three passes (all date-filtered to today only):
+  1. **DELIVERED → DONE**: query today's DELIVERED deliveries, transition each to DONE
+  2. **Safety net PREPARED → NOT_USED**: query today's PREPARED deliveries (Cloud Task missed), transition to NOT_USED
+  3. **Stuck ACCEPTED warning**: query today's ACCEPTED deliveries where `deliveryTimeWindow.end < now`, log warning with delivery IDs. Do NOT auto-transition — donor accepted too late, human review needed.
+- Logs count of each transition made
 
 ### Task 7: Update index.ts & Remove checkOrdersFunction
 
@@ -249,7 +259,7 @@ After creating each delivery document:
 Export new functions:
 - `cloudTaskHandler` — HTTP (needs `invoker` role for Cloud Tasks service account)
 - `boxDeliveryCreated` — Firestore onCreate trigger
-- `finalizeDeliveries` — scheduled
+- `finalizeDeliveries` — scheduled, **production-only** (wrap in `GCLOUD_PROJECT === "zachran-obed"` guard, same pattern as `sendOrdersFunction`)
 
 Remove exports:
 - `checkOrdersFunction`

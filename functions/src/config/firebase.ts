@@ -20,6 +20,10 @@ setGlobalOptions({
 
 export const githubToken = defineString("GITHUB_TOKEN");
 
+// Cloud Tasks config params
+export const cloudTasksQueue = defineString("CLOUD_TASKS_QUEUE", { default: "delivery-state-transitions" });
+export const cloudTasksLocation = defineString("CLOUD_TASKS_LOCATION", { default: "europe-west1" });
+
 // DODO API secrets
 export const dodoClientId = defineSecret("DODO_CLIENT_ID");
 export const dodoClientSecret = defineSecret("DODO_CLIENT_SECRET");

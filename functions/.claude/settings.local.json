@@ -18,7 +18,9 @@
       "Bash(curl*)",
       "Bash(grep:*)",
       "Bash(test:*)",
-      "Bash(firebase functions:log:*)"
+      "Bash(firebase functions:log:*)",
+      "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(tail:*)"
     ]
   }
 }
