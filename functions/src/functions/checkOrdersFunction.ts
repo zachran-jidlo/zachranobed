@@ -20,6 +20,7 @@ import {
   getDateInFuture,
   formatCzechDate,
 } from "../utils/dateUtils";
+import { getConfirmationMinutes } from "../utils/deliveryUtils";
 import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
 import {
   dodoClientId,
@@ -34,24 +35,6 @@ import {
   NOTE_PREFIXES,
 } from "../config/constants";
 
-/**
- * Get the number of minutes before pickup that confirmation is required.
- * Uses custom confirmationTime if set, otherwise defaults based on carrier.
- * @param {Delivery} delivery - The delivery document
- * @return {number} Minutes before pickup for confirmation deadline
- */
-function getMinutesConfirmedBeforePickup(delivery: Delivery): number {
-  // Use custom confirmationTime if set
-  if (delivery.confirmationTime !== undefined) {
-    return delivery.confirmationTime;
-  }
-
-  // Default based on carrier type
-  // For FOOD_DELIVERY documents, carrierId should always exist
-  return delivery.carrierId === "dodo"
-    ? CONFIRMATION_MINUTES.DODO
-    : CONFIRMATION_MINUTES.PERSONAL;
-}
 
 /**
  * Check if confirmation deadline has passed for a delivery.
@@ -66,7 +49,7 @@ function hasConfirmationDeadlinePassed(delivery: Delivery): boolean {
     );
   }
 
-  const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+  const minutesBeforePickup = getConfirmationMinutes(delivery);
   const minutesUntilPickup = getMinutesBeforePickup(
     delivery.pickupTimeWindow.start.toDate(),
   );
@@ -183,7 +166,7 @@ async function handlePreparedDelivery(
     return;
   }
 
-  const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+  const minutesBeforePickup = getConfirmationMinutes(delivery);
 
   if (hasConfirmationDeadlinePassed(delivery)) {
     const latestConfirmationDate = new Date(
@@ -424,7 +407,7 @@ async function handleOfferedOrAcceptedDelivery(
   entityPairs: EntityPair[],
   entities: Entity[],
 ): Promise<void> {
-  const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+  const minutesBeforePickup = getConfirmationMinutes(delivery);
   const correctedDeadline = calculateConfirmationDeadline(
     delivery,
     minutesBeforePickup,
@@ -732,7 +715,7 @@ export async function checkOrders(): Promise<void> {
         logger.info(`|${handledOrdersCount}| Carrier: ${delivery.carrierId}`);
 
         // Calculate and log confirmation deadline
-        const minutesBeforePickup = getMinutesConfirmedBeforePickup(delivery);
+        const minutesBeforePickup = getConfirmationMinutes(delivery);
         const confirmationDeadline = new Date(
           delivery.pickupTimeWindow.start.toDate().getTime() -
             minutesBeforePickup * 60000,
