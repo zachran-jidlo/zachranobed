@@ -13,7 +13,7 @@ import {
   getEntityPairs,
   clearEntityCache,
 } from "../services/entityService";
-import { getDodoToken, createDodoOrder } from "../services/dodoService";
+import { getDodoToken, createDodoOrder, createBoxReturnOrder } from "../services/dodoService";
 import { Delivery, DodoToken, DodoOrder, Entity, EntityPair } from "../models";
 import {
   getMinutesBeforePickup,
@@ -32,7 +32,6 @@ import {
 import {
   CONFIRMATION_MINUTES,
   BOX_RETURN_SCHEDULE,
-  NOTE_PREFIXES,
 } from "../config/constants";
 
 
@@ -426,64 +425,6 @@ async function handleOfferedOrAcceptedDelivery(
   }
 }
 
-/**
- * Create box return order data with reverse pickup/delivery.
- * @param {EntityPair} entityPair - The entity pair
- * @param {Entity} donor - The donor entity
- * @param {Entity} recipient - The recipient entity
- * @param {string} deliveryIdentifier - The delivery identifier
- * @return {DodoOrder} The box return order
- */
-function createBoxReturnOrder(
-  entityPair: EntityPair,
-  donor: Entity,
-  recipient: Entity,
-  deliveryIdentifier: string,
-): DodoOrder {
-  const pickupTimeWindow = {
-    start: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
-    ),
-    end: Timestamp.fromDate(getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end)),
-  };
-
-  const deliveryTimeWindow = {
-    start: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
-    ),
-    end: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end),
-    ),
-  };
-
-  return {
-    id: deliveryIdentifier,
-    pickupDodoId: entityPair.carrierRecipientId,
-    pickupId: recipient.establishmentId,
-    pickupFrom: pickupTimeWindow.start.toDate(),
-    pickupTo: pickupTimeWindow.end.toDate(),
-    pickupNote:
-      NOTE_PREFIXES.BOX_PICKUP +
-      updateNoteWithPhoneNumbers(
-        recipient.noteForDriver || "",
-        recipient.phone,
-        donor.phone,
-      ),
-    deliverId: donor.establishmentId,
-    deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
-    deliverFrom: deliveryTimeWindow.start.toDate(),
-    deliverTo: deliveryTimeWindow.end.toDate(),
-    deliverNote:
-      NOTE_PREFIXES.BOX_DELIVERY +
-      updateNoteWithPhoneNumbers(
-        donor.noteForDriver || "",
-        recipient.phone,
-        donor.phone,
-      ),
-    customerName: donor.responsiblePerson,
-    customerPhone: donor.phone,
-  };
-}
 
 /**
  * Process a single box delivery - create order and update state.

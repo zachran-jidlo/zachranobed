@@ -190,6 +190,44 @@ export async function updateDeliveryWithOrderCreationTime(
 }
 
 /**
+ * Initialize box delivery document with server-calculated fields not set by the mobile app.
+ * Mirrors the fields written by the old checkOrdersFunction: identifier, date, time windows, carrier.
+ * @param {DocumentReference} deliveryRef - The delivery document reference
+ * @param {string} deliveryIdentifier - Calculated delivery identifier
+ * @param {Date} deliveryDate - Calculated delivery date (tomorrow)
+ * @param {Date} pickupStart - Pickup window start
+ * @param {Date} pickupEnd - Pickup window end
+ * @param {Date} deliveryStart - Delivery window start
+ * @param {Date} deliveryEnd - Delivery window end
+ * @param {string} carrierId - The resolved carrier ID from EntityPair.boxReturnCarrierId
+ * @return {Promise<void>}
+ */
+export async function initializeBoxDelivery(
+  deliveryRef: DocumentReference,
+  deliveryIdentifier: string,
+  deliveryDate: Date,
+  pickupStart: Date,
+  pickupEnd: Date,
+  deliveryStart: Date,
+  deliveryEnd: Date,
+  carrierId: string,
+): Promise<void> {
+  await deliveryRef.update({
+    deliveryIdentifier,
+    deliveryDate: Timestamp.fromDate(deliveryDate),
+    carrierId,
+    pickupTimeWindow: {
+      start: Timestamp.fromDate(pickupStart),
+      end: Timestamp.fromDate(pickupEnd),
+    },
+    deliveryTimeWindow: {
+      start: Timestamp.fromDate(deliveryStart),
+      end: Timestamp.fromDate(deliveryEnd),
+    },
+  });
+}
+
+/**
  * Load today's box deliveries in OFFERED state.
  * @return {Promise<Delivery[]>} - Array of box deliveries
  */

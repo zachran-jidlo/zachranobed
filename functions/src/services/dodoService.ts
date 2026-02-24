@@ -7,7 +7,11 @@ import {
   dodoOrdersApi,
   externalApiAllowed,
 } from "../config/firebase";
-import {DodoToken, DodoTokenSchema, DodoOrder} from "../models";
+import {DodoToken, DodoTokenSchema, DodoOrder, Entity, EntityPair} from "../models";
+import { Timestamp } from "firebase-admin/firestore";
+import { getDateInFuture } from "../utils/dateUtils";
+import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
+import { BOX_RETURN_SCHEDULE, NOTE_PREFIXES } from "../config/constants";
 
 /**
  * Get OAuth2 access token from DODO API.
@@ -128,4 +132,64 @@ export async function createDodoOrder(
 
   logger.debug(`DODO order ${order.id} created successfully`);
   return true;
+}
+
+/**
+ * Build a box return DODO order object from entity data and pre-calculated time windows.
+ * Pickup is from the recipient (box donor), delivery is back to the donor (original sender).
+ * @param {EntityPair} entityPair - The entity pair
+ * @param {Entity} donor - The donor entity
+ * @param {Entity} recipient - The recipient entity
+ * @param {string} deliveryIdentifier - The delivery identifier
+ * @return {DodoOrder} The box return order
+ */
+export function createBoxReturnOrder(
+  entityPair: EntityPair,
+  donor: Entity,
+  recipient: Entity,
+  deliveryIdentifier: string,
+): DodoOrder {
+  const pickupTimeWindow = {
+    start: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
+    ),
+    end: Timestamp.fromDate(getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end)),
+  };
+
+  const deliveryTimeWindow = {
+    start: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
+    ),
+    end: Timestamp.fromDate(
+      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end),
+    ),
+  };
+
+  return {
+    id: deliveryIdentifier,
+    pickupDodoId: entityPair.carrierRecipientId,
+    pickupId: recipient.establishmentId,
+    pickupFrom: pickupTimeWindow.start.toDate(),
+    pickupTo: pickupTimeWindow.end.toDate(),
+    pickupNote:
+      NOTE_PREFIXES.BOX_PICKUP +
+      updateNoteWithPhoneNumbers(
+        recipient.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    deliverId: donor.establishmentId,
+    deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
+    deliverFrom: deliveryTimeWindow.start.toDate(),
+    deliverTo: deliveryTimeWindow.end.toDate(),
+    deliverNote:
+      NOTE_PREFIXES.BOX_DELIVERY +
+      updateNoteWithPhoneNumbers(
+        donor.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    customerName: donor.responsiblePerson,
+    customerPhone: donor.phone,
+  };
 }
