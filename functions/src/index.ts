@@ -5,6 +5,7 @@ import { notifyAboutLackOfBoxes } from "./functions/notifications/lackOfBoxesFun
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
+import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import {
   checkOrders,
   checkOrdersFunction,
@@ -77,6 +78,9 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
     }
   });
 }
+
+// Export HTTP functions
+exports.cloudTaskHandler = cloudTaskHandler;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;
