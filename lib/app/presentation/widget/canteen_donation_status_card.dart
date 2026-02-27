@@ -10,8 +10,8 @@ import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
-import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
 
 /// A status card widget displaying the current donation state for canteen users.
 ///
@@ -21,9 +21,10 @@ import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 ///
 /// Delivery states and their UI:
 /// - **prepared**: Shows countdown timer and "Accept" button
-/// - **accepted/offered**: Shows pickup time range and "Offer Food" button
+/// - **accepted/onWayToPickUp**: Shows pickup time range and "Offer Food" button
 /// - **inDelivery**: Shows delivery time range
 /// - **delivered**: Shows completion message
+/// - **done**: Shows completion message
 /// - **null/notUsed**: Shows "not a delivery day" message
 class CanteenDonationStatusCard extends StatelessWidget {
   /// The canteen user data containing pair information and pickup times.
@@ -94,7 +95,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       );
     }
 
-    if (delivery.state == DeliveryState.delivered) {
+    if (delivery.state == DeliveryState.delivered || delivery.state == DeliveryState.done) {
       return StyledText(
         text: context.l10n.overviewDonationStatusCardDoneLabel,
         style: context.textStyles.bodyMedium,
@@ -116,13 +117,16 @@ class CanteenDonationStatusCard extends StatelessWidget {
         statusText = context.l10n.overviewDonationStatusCardDeliveryDayLabel;
         break;
       case DeliveryState.accepted:
-      case DeliveryState.offered:
         statusText = context.l10n.overviewCanteenDonationStatusCardAcceptedLabel;
+        break;
+      case DeliveryState.onWayToPickUp:
+        statusText = context.l10n.overviewCanteenDonationStatusCardOnWayToPickUpLabel;
         break;
       case DeliveryState.inDelivery:
         statusText = context.l10n.overviewCanteenDonationStatusCardOnWayToCustomerLabel;
         break;
       case DeliveryState.delivered:
+      case DeliveryState.done:
       case DeliveryState.notUsed:
         // No-op, handled above
         break;
@@ -148,8 +152,11 @@ class CanteenDonationStatusCard extends StatelessWidget {
         isCurrentStepActive = true;
         break;
       case DeliveryState.accepted:
-      case DeliveryState.offered:
         currentStep = 1;
+        isCurrentStepActive = false;
+        break;
+      case DeliveryState.onWayToPickUp:
+        currentStep = 2;
         isCurrentStepActive = false;
         break;
       case DeliveryState.inDelivery:
@@ -157,6 +164,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
         isCurrentStepActive = true;
         break;
       case DeliveryState.delivered:
+      case DeliveryState.done:
       case DeliveryState.notUsed:
         currentStep = 5;
         isCurrentStepActive = true;
@@ -166,7 +174,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
     return UiProgressStepper(
       currentStep: currentStep,
       isCurrentStepActive: isCurrentStepActive,
-      isProgressComplete: delivery.state == DeliveryState.delivered,
+      isProgressComplete: delivery.state == DeliveryState.delivered || delivery.state == DeliveryState.done,
       icons: const [
         UiIconSpec.data(Icons.today_rounded),
         UiIconSpec.svg(ImageAssets.iconDeliveryAccept),
@@ -178,7 +186,10 @@ class CanteenDonationStatusCard extends StatelessWidget {
   }
 
   Widget? _buildActionInfo(BuildContext context, Delivery? delivery) {
-    if (delivery == null || !_canDonate(delivery) || delivery.state == DeliveryState.delivered) {
+    if (delivery == null ||
+        !_canDonate(delivery) ||
+        delivery.state == DeliveryState.delivered ||
+        delivery.state == DeliveryState.done) {
       return null;
     }
 
@@ -192,7 +203,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       );
     }
 
-    if (delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered) {
+    if (delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.onWayToPickUp) {
       return UiDonationTimeRangeLabel(
         label: context.l10n.overviewDonationStatusCardTimerPickUpLabel,
         startTime: TimeOfDay(
@@ -220,7 +231,10 @@ class CanteenDonationStatusCard extends StatelessWidget {
   }
 
   Widget? _buildActionButton(BuildContext context, Delivery? delivery) {
-    if (delivery == null || !_canDonate(delivery) || delivery.state == DeliveryState.delivered) {
+    if (delivery == null ||
+        !_canDonate(delivery) ||
+        delivery.state == DeliveryState.delivered ||
+        delivery.state == DeliveryState.done) {
       return null;
     }
 

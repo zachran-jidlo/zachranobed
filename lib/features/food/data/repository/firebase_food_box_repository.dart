@@ -137,7 +137,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         deliveryDate: DateTime.now(),
         foodBoxes: foodBoxes.toList(),
         meals: [],
-        state: DeliveryStateDto.offered,
+        state: DeliveryStateDto.accepted,
         type: DeliveryTypeDto.boxDelivery,
         confirmationTime: user.activePair.confirmationTime.inMinutes,
       );

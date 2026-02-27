@@ -22,10 +22,11 @@ abstract class Delivery with _$Delivery {
 
 enum DeliveryState {
   prepared,
-  offered,
   accepted,
+  onWayToPickUp,
   inDelivery,
   delivered,
+  done,
   notUsed,
 }
 

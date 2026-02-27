@@ -34,14 +34,16 @@ extension DeliveryStateMapper on DeliveryStateDto {
     switch (this) {
       case DeliveryStateDto.prepared:
         return DeliveryState.prepared;
-      case DeliveryStateDto.offered:
-        return DeliveryState.offered;
       case DeliveryStateDto.accepted:
         return DeliveryState.accepted;
+      case DeliveryStateDto.onWayToPickUp:
+        return DeliveryState.onWayToPickUp;
       case DeliveryStateDto.inDelivery:
         return DeliveryState.inDelivery;
       case DeliveryStateDto.delivered:
         return DeliveryState.delivered;
+      case DeliveryStateDto.done:
+        return DeliveryState.done;
       case DeliveryStateDto.notUsed:
         return DeliveryState.notUsed;
     }
@@ -55,14 +57,16 @@ extension DeliveryStateDtoMapper on DeliveryState {
     switch (this) {
       case DeliveryState.prepared:
         return DeliveryStateDto.prepared;
-      case DeliveryState.offered:
-        return DeliveryStateDto.offered;
       case DeliveryState.accepted:
         return DeliveryStateDto.accepted;
+      case DeliveryState.onWayToPickUp:
+        return DeliveryStateDto.onWayToPickUp;
       case DeliveryState.inDelivery:
         return DeliveryStateDto.inDelivery;
       case DeliveryState.delivered:
         return DeliveryStateDto.delivered;
+      case DeliveryState.done:
+        return DeliveryStateDto.done;
       case DeliveryState.notUsed:
         return DeliveryStateDto.notUsed;
     }
