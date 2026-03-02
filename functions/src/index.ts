@@ -8,10 +8,6 @@ import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
 import { finalizeDeliveriesFunction, finalizeDeliveries } from "./functions/finalizeDeliveriesFunction";
-import {
-  checkOrders,
-  checkOrdersFunction,
-} from "./functions/checkOrdersFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS } from "./config/constants";
 import { DateTime } from "luxon";
@@ -65,21 +61,6 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
     }
   });
 
-  exports.triggerCheckOrders = onRequest(async (req, res) => {
-    try {
-      await checkOrders();
-      res.json({
-        status: "success",
-        message: "checkOrders executed successfully",
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
-        message: error instanceof Error ? error.message : "Unknown error",
-      });
-    }
-  });
-
   exports.triggerFinalizeDeliveries = onRequest(async (req, res) => {
     try {
       const dateStr = req.query.date as string || req.body?.date;
@@ -110,6 +91,4 @@ exports.boxDeliveryCreated = boxDeliveryCreated;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;
-exports.checkOrdersFunction = checkOrdersFunction;
-
 exports.finalizeDeliveriesFunction = finalizeDeliveriesFunction;

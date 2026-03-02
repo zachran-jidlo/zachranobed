@@ -4,7 +4,6 @@ import {
   Delivery,
   DeliverySchema,
   DeliveryState,
-  DeliveryTimeWindow,
   CarrierOrder,
 } from "../models";
 import { DateTime } from "luxon";
@@ -227,63 +226,3 @@ export async function initializeBoxDelivery(
   });
 }
 
-/**
- * Load today's box deliveries in OFFERED state.
- * @return {Promise<Delivery[]>} - Array of box deliveries
- */
-export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
-  const { start, end } = getTodayDateRange();
-
-  // Use range query to handle deliveries with milliseconds in timestamp
-  const snapshot = await db
-    .collection("deliveries")
-    .where("deliveryDate", ">=", start)
-    .where("deliveryDate", "<=", end)
-    .where("type", "==", "BOX_DELIVERY")
-    .where("state", "==", "OFFERED")
-    .get();
-
-  return snapshot.docs
-    .map((doc) => {
-      const result = DeliverySchema.safeParse({
-        ref: doc.ref,
-        ...doc.data(),
-      });
-      if (!result.success) {
-        logger.warn(`Invalid box delivery document ${doc.id}:`, result.error);
-        return null;
-      }
-      return result.data;
-    })
-    .filter((delivery): delivery is Delivery => delivery !== null);
-}
-
-/**
- * Update box delivery with new state, identifier, time windows, and carrierId.
- * @param {DocumentReference} deliveryRef - The delivery document reference
- * @param {DeliveryState} state - The new state
- * @param {string} deliveryIdentifier - The new delivery identifier
- * @param {Date} deliveryDate - The delivery date
- * @param {DeliveryTimeWindow} pickupTimeWindow - The pickup time window
- * @param {DeliveryTimeWindow} deliveryTimeWindow - The delivery time window
- * @param {string} carrierId - The carrier ID
- * @return {Promise<void>}
- */
-export async function updateBoxDelivery(
-  deliveryRef: DocumentReference,
-  state: DeliveryState,
-  deliveryIdentifier: string,
-  deliveryDate: Date,
-  pickupTimeWindow: DeliveryTimeWindow,
-  deliveryTimeWindow: DeliveryTimeWindow,
-  carrierId: string,
-): Promise<void> {
-  await deliveryRef.update({
-    state,
-    deliveryIdentifier,
-    deliveryDate: Timestamp.fromDate(deliveryDate),
-    pickupTimeWindow,
-    deliveryTimeWindow,
-    carrierId,
-  });
-}
