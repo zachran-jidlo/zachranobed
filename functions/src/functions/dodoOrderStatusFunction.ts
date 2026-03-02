@@ -1,7 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions";
 import { dodoWebhookToken } from "../config/firebase";
-import { updateDeliveryStateByDodoStatus } from "../services/deliveryService";
+// import { updateDeliveryStateByDodoStatus } from "../services/deliveryService";
 
 // Valid DODO order statuses
 const VALID_STATUSES = [
