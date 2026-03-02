@@ -55,8 +55,10 @@ export const dodoOrderStatus = onRequest(
       return;
     }
 
-    // 2. Parse URL path: req.path = "/{identifier}/status"
-    const pathParts = req.path.split("/").filter(Boolean);
+    // 2. Parse URL path: req.path = "/{identifier}/status" or "/orders/{identifier}/status"
+    // Firebase may include the function name prefix in req.path
+    const rawParts = req.path.split("/").filter(Boolean);
+    const pathParts = rawParts[0] === "orders" ? rawParts.slice(1) : rawParts;
     const identifier = pathParts[0];
 
     if (pathParts.length !== 2 || pathParts[1] !== "status") {
@@ -114,7 +116,7 @@ export const dodoOrderStatus = onRequest(
       {
         identifier,
         orderStatus: OrderStatus,
-        stateUpdate: result,
+        // stateUpdate: result,
       },
     );
   },
