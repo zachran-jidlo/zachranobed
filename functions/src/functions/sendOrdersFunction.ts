@@ -9,6 +9,7 @@ import {
 } from "../utils/dateUtils";
 import { getConfirmationMinutes } from "../utils/deliveryUtils";
 import { logger } from "firebase-functions";
+import { TIMEZONE } from "../config/constants";
 
 /**
  * Core logic for sending orders - creates delivery documents for tomorrow.
@@ -175,7 +176,7 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
 export const sendOrdersFunction = onSchedule(
   {
     schedule: "0 16 * * 1-5",
-    timeZone: "Europe/Prague",
+    timeZone: TIMEZONE,
   },
   async () => {
     await sendOrders();

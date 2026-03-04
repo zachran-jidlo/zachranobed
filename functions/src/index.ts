@@ -9,7 +9,7 @@ import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
 import { finalizeDeliveriesFunction, finalizeDeliveries } from "./functions/finalizeDeliveriesFunction";
 import { onRequest } from "firebase-functions/v2/https";
-import { ENVIRONMENTS } from "./config/constants";
+import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { DateTime } from "luxon";
 
 // Export for Firebase Functions (CommonJS style)
@@ -34,7 +34,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 
       if (dateStr) {
         // Parse date string in format YYYY-MM-DD
-        const parsed = DateTime.fromISO(dateStr, { zone: "Europe/Prague" });
+        const parsed = DateTime.fromISO(dateStr, { zone: TIMEZONE });
 
         if (!parsed.isValid) {
           res.status(400).json({
@@ -67,7 +67,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
       let date: Date | undefined;
 
       if (dateStr) {
-        const parsed = DateTime.fromISO(dateStr, { zone: "Europe/Prague" });
+        const parsed = DateTime.fromISO(dateStr, { zone: TIMEZONE });
         if (!parsed.isValid) {
           res.status(400).json({ status: "error", message: `Invalid date format. Use YYYY-MM-DD. Error: ${parsed.invalidReason}` });
           return;

@@ -2,6 +2,7 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import { logger } from "firebase-functions/v2";
 import { DateTime } from "luxon";
 import { getDeliveriesByDateAndStates, updateDeliveryState } from "../services/deliveryService";
+import { TIMEZONE } from "../config/constants";
 
 /**
  * Core logic for finalizing deliveries at end of day.
@@ -9,7 +10,7 @@ import { getDeliveriesByDateAndStates, updateDeliveryState } from "../services/d
  * @return {Promise<void>}
  */
 export async function finalizeDeliveries(date?: Date): Promise<void> {
-  const targetDate = date ?? DateTime.now().setZone("Europe/Prague").toJSDate();
+  const targetDate = date ?? DateTime.now().setZone(TIMEZONE).toJSDate();
 
   logger.info(`finalizeDeliveries: processing date ${targetDate.toISOString()}`);
 
@@ -34,6 +35,11 @@ export async function finalizeDeliveries(date?: Date): Promise<void> {
     notUsedCount++;
   }
   logger.info(`finalizeDeliveries: safety net transitioned ${notUsedCount} deliveries PREPARED → NOT_USED`);
+  if (notUsedCount > 0) {
+    logger.warn(
+      `finalizeDeliveries: safety net activated for ${notUsedCount} PREPARED deliveries — Cloud Tasks may have failed`,
+    );
+  }
 
   // Pass 3: Warning — ACCEPTED past delivery window end (donor accepted too late)
   const now = new Date();
@@ -60,7 +66,7 @@ export async function finalizeDeliveries(date?: Date): Promise<void> {
 export const finalizeDeliveriesFunction = onSchedule(
   {
     schedule: "0 0 * * *",
-    timeZone: "Europe/Prague",
+    timeZone: TIMEZONE,
   },
   async () => {
     await finalizeDeliveries();

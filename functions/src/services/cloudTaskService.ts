@@ -33,24 +33,35 @@ export async function scheduleStateTransition(
     preconditionState: params.preconditionState,
   });
 
-  const [response] = await client.createTask({
-    parent,
-    task: {
-      httpRequest: {
-        httpMethod: "POST",
-        url: handlerUrl,
-        headers: { "Content-Type": "application/json" },
-        body: Buffer.from(payload).toString("base64"),
-        oidcToken: {
-          serviceAccountEmail: process.env.FUNCTION_TARGET_SA ?? "",
-          audience: handlerUrl,
+  let response;
+  try {
+    [response] = await client.createTask({
+      parent,
+      task: {
+        httpRequest: {
+          httpMethod: "POST",
+          url: handlerUrl,
+          headers: { "Content-Type": "application/json" },
+          body: Buffer.from(payload).toString("base64"),
+          oidcToken: {
+            serviceAccountEmail: process.env.FUNCTION_TARGET_SA ?? "",
+            audience: handlerUrl,
+          },
+        },
+        scheduleTime: {
+          seconds: Math.floor(params.executeAt.getTime() / 1000),
         },
       },
-      scheduleTime: {
-        seconds: Math.floor(params.executeAt.getTime() / 1000),
-      },
-    },
-  });
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    logger.error(
+      `Failed to schedule Cloud Task | delivery=${params.deliveryId} target=${params.targetState} at=${params.executeAt.toISOString()} error=${message}`,
+    );
+    throw new Error(
+      `Cloud Tasks API error for delivery ${params.deliveryId} → ${params.targetState}: ${message}`,
+    );
+  }
 
   const taskName = response.name ?? "unknown";
   logger.info(

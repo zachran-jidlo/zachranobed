@@ -13,8 +13,17 @@ import { getDateInFuture } from "../utils/dateUtils";
 import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
 import { BOX_RETURN_SCHEDULE, NOTE_PREFIXES } from "../config/constants";
 
+interface CachedToken {
+  token: DodoToken;
+  expiresAt: number; // Unix ms
+}
+
+let tokenCache: CachedToken | null = null;
+const TOKEN_EXPIRY_BUFFER_MS = 60_000; // Refresh 60s before actual expiry
+
 /**
  * Get OAuth2 access token from DODO API.
+ * Caches the token in memory and reuses it until 60s before expiry.
  * Returns fake token if EXTERNAL_API_ALLOWED is false.
  * @return {Promise<DodoToken>}
  */
@@ -29,6 +38,11 @@ export async function getDodoToken(): Promise<DodoToken> {
       ext_expires_in: 3600,
       access_token: "fake_token_for_testing",
     };
+  }
+
+  if (tokenCache && Date.now() < tokenCache.expiresAt - TOKEN_EXPIRY_BUFFER_MS) {
+    logger.info("Reusing cached DODO oauth token");
+    return tokenCache.token;
   }
 
   logger.info("Getting temporary DODO oauth token");
@@ -67,6 +81,11 @@ export async function getDodoToken(): Promise<DodoToken> {
   logger.info(
     `Successfully received temporary DODO oauth token (expires in ${result.data.expires_in}s)`
   );
+
+  tokenCache = {
+    token: result.data,
+    expiresAt: Date.now() + result.data.expires_in * 1000,
+  };
 
   return result.data;
 }

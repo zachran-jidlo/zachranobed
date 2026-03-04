@@ -8,6 +8,7 @@ import {
 } from "../models";
 import { DateTime } from "luxon";
 import { logger } from "firebase-functions/v2";
+import { TIMEZONE } from "../config/constants";
 
 /**
  * Parameters for creating a new delivery document.
@@ -29,11 +30,11 @@ interface CreateDeliveryData {
  */
 function getTodayDateRange(): { start: Timestamp; end: Timestamp } {
   const todayStart = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .startOf("day")
     .toJSDate();
   const todayEnd = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .endOf("day")
     .toJSDate();
 
@@ -131,15 +132,14 @@ export async function getDeliveriesByDateAndStates(
   states: DeliveryState[],
 ): Promise<Delivery[]> {
   const dateStart = DateTime.fromJSDate(date)
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .startOf("day")
     .toJSDate();
   const dateEnd = DateTime.fromJSDate(date)
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .endOf("day")
     .toJSDate();
 
-  // TODO: Create Firestore index for deliveryDate + state to optimize this query.
   const snapshot = await db
     .collection("deliveries")
     .where("deliveryDate", ">=", Timestamp.fromDate(dateStart))
