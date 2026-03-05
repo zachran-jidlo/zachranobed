@@ -113,7 +113,7 @@ export const boxDeliveryCreated = onDocumentCreated(
       // Create DODO order or mark personal carrier as confirmed, then transition to ACCEPTED
       if (carrierId === "dodo") {
         const dodoToken = await getDodoToken();
-        const order = createBoxReturnOrder(entityPair, donor, recipient, deliveryIdentifier);
+        const order = createBoxReturnOrder(entityPair, donor, recipient, deliveryIdentifier, pickupStart, pickupEnd, deliveryStart, deliveryEnd);
         const orderCreated = await createDodoOrder(order, dodoToken);
 
         if (orderCreated) {

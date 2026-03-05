@@ -8,10 +8,8 @@ import {
   externalApiAllowed,
 } from "../config/firebase";
 import {DodoToken, DodoTokenSchema, DodoOrder, Entity, EntityPair} from "../models";
-import { Timestamp } from "firebase-admin/firestore";
-import { getDateInFuture } from "../utils/dateUtils";
 import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
-import { BOX_RETURN_SCHEDULE, NOTE_PREFIXES } from "../config/constants";
+import { NOTE_PREFIXES } from "../config/constants";
 
 interface CachedToken {
   token: DodoToken;
@@ -160,6 +158,10 @@ export async function createDodoOrder(
  * @param {Entity} donor - The donor entity
  * @param {Entity} recipient - The recipient entity
  * @param {string} deliveryIdentifier - The delivery identifier
+ * @param {Date} pickupStart - Pre-computed pickup window start
+ * @param {Date} pickupEnd - Pre-computed pickup window end
+ * @param {Date} deliveryStart - Pre-computed delivery window start
+ * @param {Date} deliveryEnd - Pre-computed delivery window end
  * @return {DodoOrder} The box return order
  */
 export function createBoxReturnOrder(
@@ -167,29 +169,17 @@ export function createBoxReturnOrder(
   donor: Entity,
   recipient: Entity,
   deliveryIdentifier: string,
+  pickupStart: Date,
+  pickupEnd: Date,
+  deliveryStart: Date,
+  deliveryEnd: Date,
 ): DodoOrder {
-  const pickupTimeWindow = {
-    start: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start),
-    ),
-    end: Timestamp.fromDate(getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end)),
-  };
-
-  const deliveryTimeWindow = {
-    start: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start),
-    ),
-    end: Timestamp.fromDate(
-      getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end),
-    ),
-  };
-
   return {
     id: deliveryIdentifier,
     pickupDodoId: entityPair.carrierRecipientId,
     pickupId: recipient.establishmentId,
-    pickupFrom: pickupTimeWindow.start.toDate(),
-    pickupTo: pickupTimeWindow.end.toDate(),
+    pickupFrom: pickupStart,
+    pickupTo: pickupEnd,
     pickupNote:
       NOTE_PREFIXES.BOX_PICKUP +
       updateNoteWithPhoneNumbers(
@@ -199,8 +189,8 @@ export function createBoxReturnOrder(
       ),
     deliverId: donor.establishmentId,
     deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
-    deliverFrom: deliveryTimeWindow.start.toDate(),
-    deliverTo: deliveryTimeWindow.end.toDate(),
+    deliverFrom: deliveryStart,
+    deliverTo: deliveryEnd,
     deliverNote:
       NOTE_PREFIXES.BOX_DELIVERY +
       updateNoteWithPhoneNumbers(
