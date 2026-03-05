@@ -8,6 +8,13 @@ export const TimeWindowSchema = z.object({
   end: z.string().regex(/^\d{2}:\d{2}$/),
 });
 
+export const FoodBoxSchema = z.object({
+  foodBoxId: z.string(),
+  count: z.number(),
+  donorCount: z.number(),
+  recipientCount: z.number(),
+});
+
 export const EntityPairSchema = z.object({
   /** Firestore document reference (added at runtime) */
   ref: z.any() as z.ZodType<DocumentReference>,
@@ -29,6 +36,8 @@ export const EntityPairSchema = z.object({
   pickupTimeWindows: z.array(TimeWindowSchema),
   /** Minutes before pickup to confirm (overrides carrier default) */
   confirmationTime: z.number().optional(),
+  /** Food boxes managed by this entity pair */
+  foodboxes: z.array(FoodBoxSchema).optional(),
 });
 
 export type TimeWindow = z.infer<typeof TimeWindowSchema>;

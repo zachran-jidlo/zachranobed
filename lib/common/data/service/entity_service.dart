@@ -73,4 +73,21 @@ class EntityService {
       maxAttempts: 1,
     );
   }
+
+  /// Checks if the onboarding for UI changes should be shown for the entity.
+  ///
+  /// Returns `true` if the `showOnboardingForUiChanges` flag is set to `true`,
+  /// otherwise returns `false` (including when the flag is `null` or missing).
+  Future<bool> shouldShowOnboardingForUiChanges(String entityId) async {
+    final snapshot = await _collection.doc(entityId).get();
+    final data = snapshot.data();
+    return data?.showOnboardingForUiChanges ?? false;
+  }
+
+  /// Removes the `showOnboardingForUiChanges` flag from the entity document.
+  Future<void> removeOnboardingForUiChangesFlag(String entityId) {
+    return _collection.doc(entityId).update({
+      'showOnboardingForUiChanges': FieldValue.delete(),
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_text.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_text.dart';
 
 /// A text button widget.
 class UiTextButton extends StatefulWidget {

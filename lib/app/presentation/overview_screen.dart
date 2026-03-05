@@ -17,10 +17,10 @@ import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dar
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
-import 'package:zachranobed/common/presentation/widget/ui_welcome_tile.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_welcome_tile.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({super.key});
