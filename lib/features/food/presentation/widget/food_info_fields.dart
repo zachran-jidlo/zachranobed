@@ -4,16 +4,17 @@ import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
-import 'package:zachranobed/common/presentation/widget/date_time_picker.dart';
-import 'package:zachranobed/common/presentation/widget/other/section_header.dart';
-import 'package:zachranobed/common/presentation/widget/single_select_chips.dart';
-import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
-import 'package:zachranobed/common/presentation/widget/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/chip/single_select_chips.dart';
+import 'package:zachranobed/common/presentation/widget/form/date_time_picker.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/section_header.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 import 'package:zachranobed/features/food/presentation/model/food_form_field_type.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergen_sub_items_label.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_date_time_chips.dart';
@@ -118,6 +119,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           FieldValidationUtils.getFoodAllergensValidator(context),
         ),
+      ),
+      FoodAllergenSubItemsLabel(
+        currentSelection: widget.foodInfo.allergens ?? [],
       ),
     ];
   }

@@ -71,5 +71,9 @@ class AppRouter extends RootStackRouter {
         MaterialRoute(
           page: ForceUpdateRoute.page,
         ),
+        MaterialRoute(
+          page: WhatsNewRoute.page,
+          guards: [AuthGuard()],
+        ),
       ];
 }

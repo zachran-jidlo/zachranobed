@@ -11,7 +11,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 
 /// A status card widget displaying the current donation state for canteen users.
 ///
@@ -117,7 +117,6 @@ class CanteenDonationStatusCard extends StatelessWidget {
         break;
       case DeliveryState.accepted:
       case DeliveryState.offered:
-        // TODO: Set correct status text
         statusText = context.l10n.overviewCanteenDonationStatusCardAcceptedLabel;
         break;
       case DeliveryState.inDelivery:
@@ -145,12 +144,12 @@ class CanteenDonationStatusCard extends StatelessWidget {
 
     switch (delivery.state) {
       case DeliveryState.prepared:
-        currentStep = 1;
-        isCurrentStepActive = false;
+        currentStep = 0;
+        isCurrentStepActive = true;
         break;
       case DeliveryState.accepted:
       case DeliveryState.offered:
-        currentStep = 2;
+        currentStep = 1;
         isCurrentStepActive = false;
         break;
       case DeliveryState.inDelivery:

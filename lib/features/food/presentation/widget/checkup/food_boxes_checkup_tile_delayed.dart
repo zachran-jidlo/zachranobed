@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 
 /// A banner widget displayed when food boxes checkup has been delayed.
 class FoodBoxesCheckupTileCheckDelayed extends StatelessWidget {

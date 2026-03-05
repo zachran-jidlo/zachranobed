@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
-import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 
 /// A banner widget displayed when food boxes checkup is needed.
 class FoodBoxesCheckupTileCheckNeeded extends StatelessWidget {

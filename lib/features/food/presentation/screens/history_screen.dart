@@ -8,9 +8,9 @@ import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dar
 import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/sectioned_list_view.dart';
-import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';

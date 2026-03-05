@@ -8,7 +8,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 
 /// A status card widget displaying the current donation state for charity users.
 ///
