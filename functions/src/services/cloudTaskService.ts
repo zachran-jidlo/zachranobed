@@ -1,5 +1,5 @@
 import { CloudTasksClient } from "@google-cloud/tasks";
-import { cloudTasksQueue, cloudTasksLocation } from "../config/firebase";
+import { cloudTasksQueue, cloudTasksLocation, currentServiceAccount } from "../config/firebase";
 import { DeliveryState } from "../models";
 import { logger } from "firebase-functions/v2";
 
@@ -44,7 +44,7 @@ export async function scheduleStateTransition(
           headers: { "Content-Type": "application/json" },
           body: Buffer.from(payload).toString("base64"),
           oidcToken: {
-            serviceAccountEmail: process.env.FUNCTION_TARGET_SA ?? "",
+            serviceAccountEmail: currentServiceAccount,
             audience: handlerUrl,
           },
         },

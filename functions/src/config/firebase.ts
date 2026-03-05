@@ -13,9 +13,12 @@ const SERVICE_ACCOUNTS: Record<string, string> = {
     "firebase-adminsdk-gd4ef@zachran-obed.iam.gserviceaccount.com",
 };
 
+export const currentServiceAccount =
+  SERVICE_ACCOUNTS[currentProjectId || ENVIRONMENTS.PROD];
+
 setGlobalOptions({
   region: "europe-west1",
-  serviceAccount: SERVICE_ACCOUNTS[currentProjectId || ENVIRONMENTS.PROD],
+  serviceAccount: currentServiceAccount,
 });
 
 export const githubToken = defineString("GITHUB_TOKEN");
