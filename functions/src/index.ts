@@ -84,6 +84,8 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 }
 
 // Export HTTP functions
+// Exported unconditionally: Cloud Tasks invokes this in all environments
+// (both DEV and PROD create tasks that need this endpoint).
 exports.cloudTaskHandler = cloudTaskHandler;
 
 // Export Firestore triggers

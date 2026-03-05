@@ -1,14 +1,15 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions/v2";
-import { db } from "../config/firebase";
+import { db, currentServiceAccount } from "../config/firebase";
 import { DeliverySchema, DeliveryStateSchema } from "../models";
 import { updateDeliveryState } from "../services/deliveryService";
 
 /**
  * HTTP Cloud Function invoked by Cloud Tasks to execute delivery state transitions.
- * Auth: IAM invoker policy only — only the Cloud Tasks service account can call this.
+ * Auth: IAM invoker policy — only the Cloud Tasks service account can call this.
+ * The `invoker` option sets the Cloud Run IAM binding automatically on deploy.
  */
-export const cloudTaskHandler = onRequest(async (req, res) => {
+export const cloudTaskHandler = onRequest({ invoker: currentServiceAccount }, async (req, res) => {
   // Validate HTTP method
   if (req.method !== "POST") {
     res.status(405).send("Method Not Allowed");
