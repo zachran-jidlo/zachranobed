@@ -11,12 +11,15 @@ import { sendNotificationsAndCleanup } from "../../services/notificationService"
  * many pairs it belongs to.
  */
 export const monthlyBoxCheckupFunction = onSchedule(
-  "0 9 * * 5", // Every Friday at 9:00 AM
+  {
+    schedule: "0 9 * * 5", // Every Friday at 9:00 AM
+    timeZone: "Europe/Prague",
+  },
   async (event) => {
     const now = new Date();
 
     // Check if it's the first Friday (day between 1-7)
-    if (now.getDate() < 1 || now.getDate() > 7) {
+    if (now.getDate() > 7) {
       console.info("Not the first Friday of the month, skipping notifications");
       return;
     }
@@ -31,7 +34,7 @@ export const monthlyBoxCheckupFunction = onSchedule(
       const data = doc.data();
       const foodboxes = data.foodboxes ?? [];
       const hasBoxes = foodboxes.some(
-        (box: { count?: number }) => (box.count ?? 0) > 0
+        (box: { count?: number }) => (box.count ?? 0) > 0,
       );
 
       if (hasBoxes) {
@@ -46,7 +49,7 @@ export const monthlyBoxCheckupFunction = onSchedule(
     }
 
     console.info(
-      `Found ${entityIdsWithBoxes.size} entities with boxes, sending notifications`
+      `Found ${entityIdsWithBoxes.size} entities with boxes, sending notifications`,
     );
 
     // Fetch entity docs and send notifications
@@ -66,12 +69,19 @@ export const monthlyBoxCheckupFunction = onSchedule(
           fcmTokens,
           "Kontrola krabiček",
           "Proveďte měsíční kontrolu stavu krabiček",
-          "ALL_FOOD_BOXES_CHECKUP"
+          "ALL_FOOD_BOXES_CHECKUP",
         );
-      }
+      },
     );
 
-    await Promise.all(notificationPromises);
-    console.info("Monthly box checkup notifications sent successfully");
-  }
+    try {
+      await Promise.all(notificationPromises);
+      console.info("Monthly box checkup notifications sent successfully");
+    } catch (error) {
+      console.error(
+        "Error while sending monthly box checkup notifications",
+        error,
+      );
+    }
+  },
 );
