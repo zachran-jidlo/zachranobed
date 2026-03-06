@@ -80,7 +80,7 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
             if (snapshot.hasError || snapshot.data == null) {
               return ErrorPage(onRetryPressed: _loadStatistics);
             }
-            final availableBoxes = snapshot.requireData.where((statistics) => statistics.quantityAtCanteen > 0);
+            final availableBoxes = snapshot.requireData.where((s) => s.availableQuantityAtCanteen > 0);
             if (availableBoxes.isEmpty) {
               return _buildEmptyPage();
             }
@@ -137,11 +137,11 @@ class _OfferFoodBoxesScreenState extends State<OfferFoodBoxesScreen> {
           ...availableBoxes.map((value) {
             return UiBoxCounterTile(
               title: value.type.name,
-              subtitle: context.l10n.totalCountOfBoxes(value.quantityAtCanteen),
+              subtitle: context.l10n.totalCountOfBoxes(value.availableQuantityAtCanteen),
               counterField: UiCounterField(
                 label: context.l10n.numberOfBoxes,
                 value: _boxesQuantity[value.type] ?? 0,
-                maxValue: value.quantityAtCanteen,
+                maxValue: value.availableQuantityAtCanteen,
                 onChanged: (count) {
                   setState(() {
                     _boxesQuantity[value.type] = count;

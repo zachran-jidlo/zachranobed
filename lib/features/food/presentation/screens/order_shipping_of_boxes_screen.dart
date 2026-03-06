@@ -101,7 +101,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
             if (snapshot.hasError || snapshot.data == null) {
               return ErrorPage(onRetryPressed: _loadStatistics);
             }
-            final availableBoxes = snapshot.requireData.where((statistics) => statistics.quantityAtCharity > 0);
+            final availableBoxes = snapshot.requireData.where((s) => s.availableQuantityAtCharity > 0);
             if (availableBoxes.isEmpty) {
               return _buildEmptyPage();
             }
@@ -169,13 +169,11 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
           ...availableBoxes.map((value) {
             return UiBoxCounterTile(
               title: value.type.name,
-              subtitle: context.l10n.totalCountOfBoxes(
-                value.quantityAtCharity,
-              ),
+              subtitle: context.l10n.totalCountOfBoxes(value.availableQuantityAtCharity),
               counterField: UiCounterField(
                 label: context.l10n.numberOfBoxes,
                 value: _boxesQuantity[value.type.id] ?? 0,
-                maxValue: value.quantityAtCharity,
+                maxValue: value.availableQuantityAtCharity,
                 onChanged: (count) {
                   setState(() {
                     _boxesQuantity[value.type.id] = count;
