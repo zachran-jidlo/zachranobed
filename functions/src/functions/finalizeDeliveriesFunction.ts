@@ -10,7 +10,7 @@ import { TIMEZONE } from "../config/constants";
  * @return {Promise<void>}
  */
 export async function finalizeDeliveries(date?: Date): Promise<void> {
-  const targetDate = date ?? DateTime.now().setZone(TIMEZONE).toJSDate();
+  const targetDate = date ?? DateTime.now().setZone(TIMEZONE).minus({ days: 1 }).toJSDate();
 
   logger.info(`finalizeDeliveries: processing date ${targetDate.toISOString()}`);
 
@@ -43,19 +43,19 @@ export async function finalizeDeliveries(date?: Date): Promise<void> {
 
   // Pass 3: Warning — ACCEPTED past delivery window end (donor accepted too late)
   const now = new Date();
-  const accepted = await getDeliveriesByDateAndStates(targetDate, ["ACCEPTED"]);
-  const stuckAccepted = accepted.filter(
+  const midDeliveryStates = await getDeliveriesByDateAndStates(targetDate, ["ACCEPTED", "ON_WAY_TO_PICK_UP", "IN_DELIVERY"]);
+  const stuckMidDeliveryStates = midDeliveryStates.filter(
     (d) => d.deliveryTimeWindow && d.deliveryTimeWindow.end.toDate() < now,
   );
 
-  if (stuckAccepted.length > 0) {
+  if (stuckMidDeliveryStates.length > 0) {
     logger.warn(
-      `finalizeDeliveries: ${stuckAccepted.length} ACCEPTED deliveries past delivery window end — human review needed. IDs: ${stuckAccepted.map((d) => d.ref.id).join(", ")}`,
+      `finalizeDeliveries: ${stuckMidDeliveryStates.length} ACCEPTED, ON_WAY_TO_PICK_UP, IN_DELIVERY deliveries past delivery window end — human review needed. IDs: ${stuckMidDeliveryStates.map((d) => d.ref.id).join(", ")}`,
     );
   }
 
   logger.info(
-    `finalizeDeliveries: complete — DONE: ${doneCount}, NOT_USED (safety net): ${notUsedCount}, stuck ACCEPTED: ${stuckAccepted.length}`,
+    `finalizeDeliveries: complete — DONE: ${doneCount}, NOT_USED (safety net): ${notUsedCount}, stuck mid delivery: ${stuckMidDeliveryStates.length}`,
   );
 }
 

@@ -6,12 +6,9 @@ import { TIMEZONE } from "../config/constants";
  * @return {boolean} - True if the date is today, false otherwise.
  */
 export function isToday(date: Date): boolean {
-  const today = new Date();
-  return (
-    date.getFullYear() === today.getFullYear() &&
-    date.getMonth() === today.getMonth() &&
-    date.getDate() === today.getDate()
-  );
+  const pragueNow = DateTime.now().setZone(TIMEZONE).startOf("day");
+  const pragueDate = DateTime.fromJSDate(date).setZone(TIMEZONE).startOf("day");
+  return pragueNow.equals(pragueDate);
 }
 
 /**

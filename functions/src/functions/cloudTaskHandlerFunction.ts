@@ -48,7 +48,8 @@ export const cloudTaskHandler = onRequest({ invoker: currentServiceAccount }, as
     const result = DeliverySchema.safeParse({ ref: docRef, ...doc.data() });
     if (!result.success) {
       logger.error(`cloudTaskHandler: invalid delivery document ${deliveryId}`, result.error);
-      res.status(500).json({ error: "Invalid delivery document" });
+      // Return 200 to prevent Cloud Tasks retry for a permanently invalid document
+      res.status(200).json({ error: "Invalid delivery document" });
       return;
     }
 
