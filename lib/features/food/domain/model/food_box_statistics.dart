@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 
 /// Statistics for a single food box type within a donor–recipient pair.
@@ -40,11 +42,11 @@ class FoodBoxStatistics {
 
   /// Boxes the charity can use — excludes those already on the way back.
   int get availableQuantityAtCharity =>
-      quantityAtCharity - quantityOnTheWayToCanteen;
+      max(quantityAtCharity - quantityOnTheWayToCanteen, 0);
 
   /// Boxes the canteen can use — excludes those already on the way out.
   int get availableQuantityAtCanteen =>
-      quantityAtCanteen - quantityOnTheWayToCharity;
+      max(quantityAtCanteen - quantityOnTheWayToCharity, 0);
 
   /// Total boxes currently in transit in either direction.
   int get quantityOnTheWay =>

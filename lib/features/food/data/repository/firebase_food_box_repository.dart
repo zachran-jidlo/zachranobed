@@ -67,10 +67,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     );
 
     yield* Rx.combineLatest2(pairStream, activeDeliveriesStream, (pair, activeDeliveries) {
-      return (pair, activeDeliveries);
-    }).map((combined) {
-      final (pair, activeDeliveries) = combined;
-
       // Accumulate pair counts
       final Map<String, FoodBoxPairDto> boxesCountMap = {};
       for (final foodBox in pair?.foodboxes ?? <FoodBoxPairDto>[]) {
