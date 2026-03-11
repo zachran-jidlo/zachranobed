@@ -45,14 +45,16 @@ class DeliveryDto {
 enum DeliveryStateDto {
   @JsonValue("PREPARED")
   prepared,
-  @JsonValue("OFFERED")
-  offered,
   @JsonValue("ACCEPTED")
   accepted,
+  @JsonValue("ON_WAY_TO_PICK_UP")
+  onWayToPickUp,
   @JsonValue("IN_DELIVERY")
   inDelivery,
   @JsonValue("DELIVERED")
   delivered,
+  @JsonValue("DONE")
+  done,
   @JsonValue("NOT_USED")
   notUsed;
 

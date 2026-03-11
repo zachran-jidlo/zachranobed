@@ -30,6 +30,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-392** Update monthly food boxes checkup flow with new design.
 - **ZOB-394** Update box delivery flow with new design.
 - **ZOB-395** Update meals delivery flow with new design.
+- **ZOB-399** Update delivery state enum.
 
 ### Removed
 - **ZOB-396** Remove old design components.

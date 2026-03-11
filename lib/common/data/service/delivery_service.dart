@@ -10,10 +10,11 @@ import 'package:zachranobed/common/domain/utils/future_utils.dart';
 class DeliveryService {
   /// Valid states for delivery items in history.
   final List<String> _validHistoryStates = [
-    DeliveryStateDto.offered.toJson(),
     DeliveryStateDto.accepted.toJson(),
+    DeliveryStateDto.onWayToPickUp.toJson(),
     DeliveryStateDto.inDelivery.toJson(),
     DeliveryStateDto.delivered.toJson(),
+    DeliveryStateDto.done.toJson(),
   ];
 
   final _collection = FirebaseFirestore.instance.collection('deliveries').withConverter(

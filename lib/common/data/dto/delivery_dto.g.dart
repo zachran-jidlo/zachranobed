@@ -40,10 +40,11 @@ Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
 
 const _$DeliveryStateDtoEnumMap = {
   DeliveryStateDto.prepared: 'PREPARED',
-  DeliveryStateDto.offered: 'OFFERED',
   DeliveryStateDto.accepted: 'ACCEPTED',
+  DeliveryStateDto.onWayToPickUp: 'ON_WAY_TO_PICK_UP',
   DeliveryStateDto.inDelivery: 'IN_DELIVERY',
   DeliveryStateDto.delivered: 'DELIVERED',
+  DeliveryStateDto.done: 'DONE',
   DeliveryStateDto.notUsed: 'NOT_USED',
 };
 
