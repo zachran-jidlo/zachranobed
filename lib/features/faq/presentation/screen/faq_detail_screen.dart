@@ -53,6 +53,18 @@ class FaqDetailScreen extends StatelessWidget {
         decoration: TextDecoration.underline,
         decorationColor: context.uiColors.primary,
       ),
+      blockquoteDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color:context.uiColors.primary, width: 2.0),
+      ),
+      horizontalRuleDecoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            width: 2.0,
+            color: context.uiColors.surfaceGrayDark,
+          ),
+        ),
+      ),
     );
   }
 
