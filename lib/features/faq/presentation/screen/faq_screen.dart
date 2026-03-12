@@ -28,7 +28,8 @@ class FaqScreen extends StatefulWidget {
 }
 
 class _FaqScreenState extends State<FaqScreen> {
-  final _observeFaqItems = GetIt.I<ObserveFaqItemsUseCase>();
+  late final Stream<List<FaqItem>> _faqStream =
+      GetIt.I<ObserveFaqItemsUseCase>().invoke();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _FaqScreenState extends State<FaqScreen> {
       ),
       builder: (context) {
         return StreamBuilder<List<FaqItem>>(
-          stream: _observeFaqItems.invoke(),
+          stream: _faqStream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LoadingPage();

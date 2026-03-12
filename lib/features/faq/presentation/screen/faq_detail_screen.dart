@@ -55,7 +55,7 @@ class FaqDetailScreen extends StatelessWidget {
       ),
       blockquoteDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color:context.uiColors.primary, width: 2.0),
+        border: Border.all(color: context.uiColors.primary, width: 2.0),
       ),
       horizontalRuleDecoration: BoxDecoration(
         border: Border(
@@ -69,8 +69,13 @@ class FaqDetailScreen extends StatelessWidget {
   }
 
   void _handleLink(BuildContext context, String url) {
-    if (!AppDeeplinkHandler.handle(context, url)) {
-      launchUrl(Uri.parse(url));
+    if (AppDeeplinkHandler.handle(context, url)) {
+      return;
     }
+    final uri = Uri.tryParse(url);
+    if (uri == null) {
+      return;
+    }
+    launchUrl(uri);
   }
 }
