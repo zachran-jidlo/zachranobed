@@ -19,6 +19,7 @@ import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dar
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_navigation_drawer_item.dart';
+import 'package:zachranobed/features/faq/presentation/screen/faq_screen.dart';
 import 'package:zachranobed/features/food/presentation/screens/history_screen.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
@@ -26,7 +27,9 @@ import 'package:zachranobed/features/notifications/presentation/notifications_sc
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialTabIndex;
+
+  const HomeScreen({super.key, this.initialTabIndex = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -42,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
       label: (context) => context.l10n.navigationLabelOverview,
       iconSpec: const UiIconSpec.data(Icons.home),
       content: (context) => const OverviewScreen(),
+    ),
+    _TabScreenData(
+      label: (context) => context.l10n.navigationLabelFaq,
+      iconSpec: const UiIconSpec.data(Icons.menu_book),
+      content: (context) => const FaqScreen(),
     ),
     _TabScreenData(
       label: (context) => context.l10n.navigationLabelHistory,
@@ -74,7 +82,11 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: _tabs.length);
+    _tabController = TabController(
+      vsync: this,
+      length: _tabs.length,
+      initialIndex: widget.initialTabIndex,
+    );
     _selectedIndex = _tabController.index;
 
     _tabController.addListener(() {
@@ -99,6 +111,14 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
         });
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialTabIndex != oldWidget.initialTabIndex) {
+      _tabController.animateTo(widget.initialTabIndex);
+    }
   }
 
   @override

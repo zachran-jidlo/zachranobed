@@ -274,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (status != AppTermsStatus.accepted) {
       context.router.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
     } else {
-      context.router.replace(const HomeRoute());
+      context.router.replace(HomeRoute());
     }
   }
 }

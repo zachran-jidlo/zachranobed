@@ -68,6 +68,7 @@ dependencies:
   connectivity_plus: ^6.1.4
   styled_text: ^9.0.0
   rxdart: ^0.28.0
+  flutter_markdown: ^0.7.6
 
 dev_dependencies:
   flutter_test:
