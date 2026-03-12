@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:zachranobed/features/faq/data/dto/faq_category_dto.dart';
 
 /*
  * Command to rebuild the faq_item_dto.g.dart file:
@@ -12,13 +11,13 @@ class FaqItemDto {
   final String question;
   final String answer;
   final int order;
-  final FaqCategoryDto? category;
+  final String? categoryId;
 
   FaqItemDto({
     required this.question,
     required this.answer,
     required this.order,
-    this.category,
+    this.categoryId,
   });
 
   factory FaqItemDto.fromJson(Map<String, dynamic> json) => _$FaqItemDtoFromJson(json);

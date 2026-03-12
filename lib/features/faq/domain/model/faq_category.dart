@@ -18,5 +18,8 @@ abstract class FaqCategory with _$FaqCategory {
 
     /// Short description shown below the title in the category card.
     required String description,
+
+    /// Sort order of the category in the list.
+    required int order,
   }) = _FaqCategory;
 }

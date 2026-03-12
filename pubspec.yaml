@@ -67,6 +67,7 @@ dependencies:
   pub_semver: ^2.2.0
   connectivity_plus: ^6.1.4
   styled_text: ^9.0.0
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

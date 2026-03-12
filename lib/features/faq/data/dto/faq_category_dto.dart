@@ -8,14 +8,14 @@ part 'faq_category_dto.g.dart';
 
 @JsonSerializable()
 class FaqCategoryDto {
-  final String id;
   final String title;
   final String description;
+  final int order;
 
   FaqCategoryDto({
-    required this.id,
     required this.title,
     required this.description,
+    required this.order,
   });
 
   factory FaqCategoryDto.fromJson(Map<String, dynamic> json) => _$FaqCategoryDtoFromJson(json);

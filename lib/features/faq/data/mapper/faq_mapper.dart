@@ -6,11 +6,12 @@ import 'package:zachranobed/features/faq/domain/model/faq_item.dart';
 /// DTO to domain mapper for [FaqCategory].
 extension FaqCategoryMapper on FaqCategoryDto {
   /// Maps DTO to domain representation.
-  FaqCategory toDomain() {
+  FaqCategory toDomain(String id) {
     return FaqCategory(
       id: id,
       title: title,
       description: description,
+      order: order,
     );
   }
 }
@@ -18,13 +19,13 @@ extension FaqCategoryMapper on FaqCategoryDto {
 /// DTO to domain mapper for [FaqItem].
 extension FaqItemMapper on FaqItemDto {
   /// Maps DTO to domain representation.
-  FaqItem toDomain(String id) {
+  FaqItem toDomain(String id, {FaqCategory? category}) {
     return FaqItem(
       id: id,
       question: question,
       answer: answer,
       order: order,
-      category: category?.toDomain(),
+      category: category,
     );
   }
 }

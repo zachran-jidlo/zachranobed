@@ -15,9 +15,17 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$FaqCategory {
+  /// Unique identifier used to group FAQ items.
   String get id;
+
+  /// Display title shown in the category list.
   String get title;
+
+  /// Short description shown below the title in the category card.
   String get description;
+
+  /// Sort order of the category in the list.
+  int get order;
 
   /// Create a copy of FaqCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -34,15 +42,16 @@ mixin _$FaqCategory {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.order, order) || other.order == order));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description);
+  int get hashCode => Object.hash(runtimeType, id, title, description, order);
 
   @override
   String toString() {
-    return 'FaqCategory(id: $id, title: $title, description: $description)';
+    return 'FaqCategory(id: $id, title: $title, description: $description, order: $order)';
   }
 }
 
@@ -52,7 +61,7 @@ abstract mixin class $FaqCategoryCopyWith<$Res> {
           FaqCategory value, $Res Function(FaqCategory) _then) =
       _$FaqCategoryCopyWithImpl;
   @useResult
-  $Res call({String id, String title, String description});
+  $Res call({String id, String title, String description, int order});
 }
 
 /// @nodoc
@@ -70,6 +79,7 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = null,
+    Object? order = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -84,6 +94,10 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      order: null == order
+          ? _self.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -92,14 +106,26 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
 
 class _FaqCategory implements FaqCategory {
   const _FaqCategory(
-      {required this.id, required this.title, required this.description});
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.order});
 
+  /// Unique identifier used to group FAQ items.
   @override
   final String id;
+
+  /// Display title shown in the category list.
   @override
   final String title;
+
+  /// Short description shown below the title in the category card.
   @override
   final String description;
+
+  /// Sort order of the category in the list.
+  @override
+  final int order;
 
   /// Create a copy of FaqCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -117,15 +143,16 @@ class _FaqCategory implements FaqCategory {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.order, order) || other.order == order));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description);
+  int get hashCode => Object.hash(runtimeType, id, title, description, order);
 
   @override
   String toString() {
-    return 'FaqCategory(id: $id, title: $title, description: $description)';
+    return 'FaqCategory(id: $id, title: $title, description: $description, order: $order)';
   }
 }
 
@@ -137,7 +164,7 @@ abstract mixin class _$FaqCategoryCopyWith<$Res>
       __$FaqCategoryCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String title, String description});
+  $Res call({String id, String title, String description, int order});
 }
 
 /// @nodoc
@@ -155,6 +182,7 @@ class __$FaqCategoryCopyWithImpl<$Res> implements _$FaqCategoryCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = null,
+    Object? order = null,
   }) {
     return _then(_FaqCategory(
       id: null == id
@@ -169,6 +197,10 @@ class __$FaqCategoryCopyWithImpl<$Res> implements _$FaqCategoryCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      order: null == order
+          ? _self.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }

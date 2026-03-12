@@ -15,10 +15,19 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$FaqItem {
+  /// Firestore document ID.
   String get id;
+
+  /// The question text displayed in the list.
   String get question;
+
+  /// Full answer text.
   String get answer;
+
+  /// Sort order within a category (or globally when no categories exist).
   int get order;
+
+  /// Optional category this item belongs to.
   FaqCategory? get category;
 
   /// Create a copy of FaqItem
@@ -134,14 +143,23 @@ class _FaqItem implements FaqItem {
       required this.order,
       this.category});
 
+  /// Firestore document ID.
   @override
   final String id;
+
+  /// The question text displayed in the list.
   @override
   final String question;
+
+  /// Full answer text.
   @override
   final String answer;
+
+  /// Sort order within a category (or globally when no categories exist).
   @override
   final int order;
+
+  /// Optional category this item belongs to.
   @override
   final FaqCategory? category;
 
