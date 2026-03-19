@@ -1,12 +1,15 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
 import { createDeliveryDocument } from "../services/deliveryService";
+import { scheduleMultipleTransitions, ScheduleTransitionParams } from "../services/cloudTaskService";
 import {
   getNextBusinessDay,
   createDateWithTime,
   formatCzechDate,
 } from "../utils/dateUtils";
+import { getConfirmationMinutes } from "../utils/deliveryUtils";
 import { logger } from "firebase-functions";
+import { TIMEZONE } from "../config/constants";
 
 /**
  * Core logic for sending orders - creates delivery documents for tomorrow.
@@ -98,8 +101,53 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
           confirmationTime: pair.confirmationTime,
         });
 
+        // Schedule Cloud Tasks for state transitions
+        const confirmationMinutes = getConfirmationMinutes({
+          carrierId: pair.carrierId,
+          confirmationTime: pair.confirmationTime,
+        });
+
+        const notUsedAt = new Date(
+          pickupTimeWindow.start.getTime() - confirmationMinutes * 60 * 1000,
+        );
+
+        const tasks: ScheduleTransitionParams[] = [
+          {
+            deliveryId: deliveryIdentifier,
+            targetState: "NOT_USED",
+            preconditionState: "PREPARED",
+            executeAt: notUsedAt,
+          },
+        ];
+
+        // For personal carrier: schedule all state transitions
+        if (pair.carrierId === "personal") {
+          tasks.push(
+            {
+              deliveryId: deliveryIdentifier,
+              targetState: "ON_WAY_TO_PICK_UP",
+              preconditionState: "ACCEPTED",
+              executeAt: pickupTimeWindow.start,
+            },
+            {
+              deliveryId: deliveryIdentifier,
+              targetState: "IN_DELIVERY",
+              preconditionState: "ON_WAY_TO_PICK_UP",
+              executeAt: pickupTimeWindow.end,
+            },
+            {
+              deliveryId: deliveryIdentifier,
+              targetState: "DELIVERED",
+              preconditionState: "IN_DELIVERY",
+              executeAt: deliveryTimeWindow.end,
+            },
+          );
+        }
+
+        await scheduleMultipleTransitions(tasks);
+
         createdCount++;
-        logger.debug(`Created delivery: ${deliveryIdentifier}`);
+        logger.debug(`Created delivery and scheduled Cloud Tasks: ${deliveryIdentifier}`);
       } catch (error) {
         logger.error(
           `Failed to create delivery for pair ${pair.donorId}-${pair.recipientId}:`,
@@ -128,7 +176,7 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
 export const sendOrdersFunction = onSchedule(
   {
     schedule: "0 16 * * 1-5",
-    timeZone: "Europe/Prague",
+    timeZone: TIMEZONE,
   },
   async () => {
     await sendOrders();

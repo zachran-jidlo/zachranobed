@@ -4,11 +4,11 @@ import {
   Delivery,
   DeliverySchema,
   DeliveryState,
-  DeliveryTimeWindow,
   CarrierOrder,
 } from "../models";
 import { DateTime } from "luxon";
 import { logger } from "firebase-functions/v2";
+import { TIMEZONE } from "../config/constants";
 
 /**
  * Parameters for creating a new delivery document.
@@ -30,11 +30,11 @@ interface CreateDeliveryData {
  */
 function getTodayDateRange(): { start: Timestamp; end: Timestamp } {
   const todayStart = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .startOf("day")
     .toJSDate();
   const todayEnd = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .endOf("day")
     .toJSDate();
 
@@ -122,6 +122,47 @@ export async function getTodaysDeliveries(
 }
 
 /**
+ * Load deliveries for a specific date in the specified states (all delivery types).
+ * @param {Date} date - The delivery date
+ * @param {DeliveryState[]} states - The states to filter by
+ * @return {Promise<Delivery[]>} - Array of deliveries
+ */
+export async function getDeliveriesByDateAndStates(
+  date: Date,
+  states: DeliveryState[],
+): Promise<Delivery[]> {
+  const dateStart = DateTime.fromJSDate(date)
+    .setZone(TIMEZONE)
+    .startOf("day")
+    .toJSDate();
+  const dateEnd = DateTime.fromJSDate(date)
+    .setZone(TIMEZONE)
+    .endOf("day")
+    .toJSDate();
+
+  const snapshot = await db
+    .collection("deliveries")
+    .where("deliveryDate", ">=", Timestamp.fromDate(dateStart))
+    .where("deliveryDate", "<=", Timestamp.fromDate(dateEnd))
+    .where("state", "in", states)
+    .get();
+
+  return snapshot.docs
+    .map((doc) => {
+      const result = DeliverySchema.safeParse({
+        ref: doc.ref,
+        ...doc.data(),
+      });
+      if (!result.success) {
+        logger.warn(`Invalid delivery document ${doc.id}:`, result.error);
+        return null;
+      }
+      return result.data;
+    })
+    .filter((delivery): delivery is Delivery => delivery !== null);
+}
+
+/**
  * Update delivery state in Firestore.
  * @param {DocumentReference} deliveryRef - The delivery document reference
  * @param {DeliveryState} state - The new state
@@ -148,62 +189,40 @@ export async function updateDeliveryWithOrderCreationTime(
 }
 
 /**
- * Load today's box deliveries in OFFERED state.
- * @return {Promise<Delivery[]>} - Array of box deliveries
- */
-export async function getTodaysBoxDeliveries(): Promise<Delivery[]> {
-  const { start, end } = getTodayDateRange();
-
-  // Use range query to handle deliveries with milliseconds in timestamp
-  const snapshot = await db
-    .collection("deliveries")
-    .where("deliveryDate", ">=", start)
-    .where("deliveryDate", "<=", end)
-    .where("type", "==", "BOX_DELIVERY")
-    .where("state", "==", "OFFERED")
-    .get();
-
-  return snapshot.docs
-    .map((doc) => {
-      const result = DeliverySchema.safeParse({
-        ref: doc.ref,
-        ...doc.data(),
-      });
-      if (!result.success) {
-        logger.warn(`Invalid box delivery document ${doc.id}:`, result.error);
-        return null;
-      }
-      return result.data;
-    })
-    .filter((delivery): delivery is Delivery => delivery !== null);
-}
-
-/**
- * Update box delivery with new state, identifier, time windows, and carrierId.
+ * Initialize box delivery document with server-calculated fields not set by the mobile app.
+ * Mirrors the fields written by the old checkOrdersFunction: identifier, date, time windows, carrier.
  * @param {DocumentReference} deliveryRef - The delivery document reference
- * @param {DeliveryState} state - The new state
- * @param {string} deliveryIdentifier - The new delivery identifier
- * @param {Date} deliveryDate - The delivery date
- * @param {DeliveryTimeWindow} pickupTimeWindow - The pickup time window
- * @param {DeliveryTimeWindow} deliveryTimeWindow - The delivery time window
- * @param {string} carrierId - The carrier ID
+ * @param {string} deliveryIdentifier - Calculated delivery identifier
+ * @param {Date} deliveryDate - Calculated delivery date (tomorrow)
+ * @param {Date} pickupStart - Pickup window start
+ * @param {Date} pickupEnd - Pickup window end
+ * @param {Date} deliveryStart - Delivery window start
+ * @param {Date} deliveryEnd - Delivery window end
+ * @param {string} carrierId - The resolved carrier ID from EntityPair.boxReturnCarrierId
  * @return {Promise<void>}
  */
-export async function updateBoxDelivery(
+export async function initializeBoxDelivery(
   deliveryRef: DocumentReference,
-  state: DeliveryState,
   deliveryIdentifier: string,
   deliveryDate: Date,
-  pickupTimeWindow: DeliveryTimeWindow,
-  deliveryTimeWindow: DeliveryTimeWindow,
+  pickupStart: Date,
+  pickupEnd: Date,
+  deliveryStart: Date,
+  deliveryEnd: Date,
   carrierId: string,
 ): Promise<void> {
   await deliveryRef.update({
-    state,
     deliveryIdentifier,
     deliveryDate: Timestamp.fromDate(deliveryDate),
-    pickupTimeWindow,
-    deliveryTimeWindow,
     carrierId,
+    pickupTimeWindow: {
+      start: Timestamp.fromDate(pickupStart),
+      end: Timestamp.fromDate(pickupEnd),
+    },
+    deliveryTimeWindow: {
+      start: Timestamp.fromDate(deliveryStart),
+      end: Timestamp.fromDate(deliveryEnd),
+    },
   });
 }
+

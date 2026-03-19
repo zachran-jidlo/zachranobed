@@ -3,10 +3,13 @@ import {Timestamp, DocumentReference} from "firebase-admin/firestore";
 
 export const DeliveryStateSchema = z.enum([
   "PREPARED",
+  /** @deprecated OFFERED state is being removed. Keep for reading legacy documents during migration. TODO(post-migration): remove OFFERED */
   "OFFERED",
   "ACCEPTED",
+  "ON_WAY_TO_PICK_UP",
   "IN_DELIVERY",
   "DELIVERED",
+  "DONE",
   "NOT_USED",
 ]);
 
