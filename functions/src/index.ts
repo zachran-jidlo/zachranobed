@@ -6,6 +6,7 @@ import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 import { notifyCanteenAboutMissingMealInfo } from "./functions/notifications/missingMealInfoFunction";
 import { notifyCanteenAboutCourierIncoming } from "./functions/notifications/canteenCourierIncomingFunction";
+import { notifyCharityAboutCourierIncoming } from "./functions/notifications/charityCourierIncomingFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
@@ -23,6 +24,7 @@ exports.boxesMismatchNotification = boxesMismatchNotification;
 exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
 exports.notifyCanteenAboutMissingMealInfo = notifyCanteenAboutMissingMealInfo;
 exports.notifyCanteenAboutCourierIncoming = notifyCanteenAboutCourierIncoming;
+exports.notifyCharityAboutCourierIncoming = notifyCharityAboutCourierIncoming;
 
 // Get current project ID
 const currentProjectId =
