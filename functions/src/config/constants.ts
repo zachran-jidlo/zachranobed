@@ -12,6 +12,11 @@ export const CONFIRMATION_MINUTES = {
 } as const;
 
 /**
+ * Minutes before confirmation time to send a reminder to the donor.
+ */
+export const CONFIRMATION_REMINDER_MINUTES = 5;
+
+/**
  * Fixed time windows for box return deliveries.
  */
 export const BOX_RETURN_SCHEDULE = {

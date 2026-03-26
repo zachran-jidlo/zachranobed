@@ -1,7 +1,7 @@
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
 import { createDeliveryDocument } from "../services/deliveryService";
-import { scheduleMultipleTransitions, ScheduleTransitionParams } from "../services/cloudTaskService";
+import { scheduleMultipleTransitions, scheduleConfirmationReminder, ScheduleTransitionParams } from "../services/cloudTaskService";
 import {
   getNextBusinessDay,
   createDateWithTime,
@@ -9,7 +9,7 @@ import {
 } from "../utils/dateUtils";
 import { getConfirmationMinutes } from "../utils/deliveryUtils";
 import { logger } from "firebase-functions";
-import { TIMEZONE } from "../config/constants";
+import { TIMEZONE, CONFIRMATION_REMINDER_MINUTES } from "../config/constants";
 
 /**
  * Core logic for sending orders - creates delivery documents for tomorrow.
@@ -145,6 +145,12 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
         }
 
         await scheduleMultipleTransitions(tasks);
+
+        // Schedule confirmation reminder few minutes before the deadline
+        const reminderAt = new Date(
+          notUsedAt.getTime() - CONFIRMATION_REMINDER_MINUTES * 60 * 1000,
+        );
+        await scheduleConfirmationReminder(deliveryIdentifier, reminderAt);
 
         createdCount++;
         logger.debug(`Created delivery and scheduled Cloud Tasks: ${deliveryIdentifier}`);

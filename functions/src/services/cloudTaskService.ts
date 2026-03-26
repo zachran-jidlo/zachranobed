@@ -13,25 +13,25 @@ export interface ScheduleTransitionParams {
 const client = new CloudTasksClient();
 
 /**
- * Schedule a single delivery state transition via Cloud Tasks.
- * @param {ScheduleTransitionParams} params - Transition parameters
+ * Schedule an HTTP Cloud Task with a JSON payload.
+ * @param {string} functionName - Cloud Function name to invoke
+ * @param {Record<string, unknown>} payload - JSON payload
+ * @param {Date} executeAt - When to execute
+ * @param {string} logLabel - Label for log messages
  * @return {Promise<string>} - Cloud Task name
  */
-export async function scheduleStateTransition(
-  params: ScheduleTransitionParams,
+async function scheduleCloudTask(
+  functionName: string,
+  payload: Record<string, unknown>,
+  executeAt: Date,
+  logLabel: string,
 ): Promise<string> {
   const project = process.env.GCLOUD_PROJECT;
   const location = cloudTasksLocation.value();
   const queue = cloudTasksQueue.value();
-  const handlerUrl = `https://${location}-${project}.cloudfunctions.net/cloudTaskHandler`;
+  const handlerUrl = `https://${location}-${project}.cloudfunctions.net/${functionName}`;
 
   const parent = client.queuePath(project!, location, queue);
-
-  const payload = JSON.stringify({
-    deliveryId: params.deliveryId,
-    targetState: params.targetState,
-    preconditionState: params.preconditionState,
-  });
 
   let response;
   try {
@@ -42,32 +42,52 @@ export async function scheduleStateTransition(
           httpMethod: "POST",
           url: handlerUrl,
           headers: { "Content-Type": "application/json" },
-          body: Buffer.from(payload).toString("base64"),
+          body: Buffer.from(JSON.stringify(payload)).toString("base64"),
           oidcToken: {
             serviceAccountEmail: currentServiceAccount,
             audience: handlerUrl,
           },
         },
         scheduleTime: {
-          seconds: Math.floor(params.executeAt.getTime() / 1000),
+          seconds: Math.floor(executeAt.getTime() / 1000),
         },
       },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     logger.error(
-      `Failed to schedule Cloud Task | delivery=${params.deliveryId} target=${params.targetState} at=${params.executeAt.toISOString()} error=${message}`,
+      `Failed to schedule Cloud Task | ${logLabel} at=${executeAt.toISOString()} error=${message}`,
     );
     throw new Error(
-      `Cloud Tasks API error for delivery ${params.deliveryId} → ${params.targetState}: ${message}`,
+      `Cloud Tasks API error (${logLabel}): ${message}`,
     );
   }
 
   const taskName = response.name ?? "unknown";
   logger.info(
-    `Scheduled Cloud Task: ${taskName} | delivery=${params.deliveryId} target=${params.targetState} at=${params.executeAt.toISOString()}`,
+    `Scheduled Cloud Task: ${taskName} | ${logLabel} at=${executeAt.toISOString()}`,
   );
   return taskName;
+}
+
+/**
+ * Schedule a single delivery state transition via Cloud Tasks.
+ * @param {ScheduleTransitionParams} params - Transition parameters
+ * @return {Promise<string>} - Cloud Task name
+ */
+export async function scheduleStateTransition(
+  params: ScheduleTransitionParams,
+): Promise<string> {
+  return scheduleCloudTask(
+    "cloudTaskHandler",
+    {
+      deliveryId: params.deliveryId,
+      targetState: params.targetState,
+      preconditionState: params.preconditionState,
+    },
+    params.executeAt,
+    `delivery=${params.deliveryId} target=${params.targetState}`,
+  );
 }
 
 /**
@@ -79,4 +99,22 @@ export async function scheduleMultipleTransitions(
   tasks: ScheduleTransitionParams[],
 ): Promise<string[]> {
   return Promise.all(tasks.map((t) => scheduleStateTransition(t)));
+}
+
+/**
+ * Schedule a confirmation reminder notification via Cloud Tasks.
+ * @param {string} deliveryId - Delivery identifier
+ * @param {Date} executeAt - When to send the reminder
+ * @return {Promise<string>} - Cloud Task name
+ */
+export async function scheduleConfirmationReminder(
+  deliveryId: string,
+  executeAt: Date,
+): Promise<string> {
+  return scheduleCloudTask(
+    "confirmationReminderHandler",
+    { deliveryId },
+    executeAt,
+    `confirmationReminder delivery=${deliveryId}`,
+  );
 }

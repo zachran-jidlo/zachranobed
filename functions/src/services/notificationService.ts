@@ -1,4 +1,5 @@
 import * as admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../config/firebase";
 
 /**
@@ -23,7 +24,7 @@ async function createNotification(
       id: notificationRef.id,
       title,
       message,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      timestamp: FieldValue.serverTimestamp(),
       read: false,
       donorId: donorId || null,
       recipientId: recipientId || null,

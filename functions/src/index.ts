@@ -7,6 +7,7 @@ import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxC
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
+import { confirmationReminderHandler } from "./functions/notifications/confirmationReminderFunction";
 import { finalizeDeliveriesFunction, finalizeDeliveries } from "./functions/finalizeDeliveriesFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
@@ -87,6 +88,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 // Exported unconditionally: Cloud Tasks invokes this in all environments
 // (both DEV and PROD create tasks that need this endpoint).
 exports.cloudTaskHandler = cloudTaskHandler;
+exports.confirmationReminderHandler = confirmationReminderHandler;
 
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;
