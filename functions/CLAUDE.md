@@ -30,7 +30,7 @@ npm run serve    # Builds and starts emulator with seed data
 
 # Firebase emulator (manual)
 firebase emulators:start
-firebase emulators:start --import seed/export-for-emulator/2024-04-05T11:33:06_69896/ --export-on-exit seed/export-for-emulator/2024-04-05T11:33:06_69896/
+firebase emulators:start --import seed/export-for-emulator/2026-03-26T12:11:37_86276/ --export-on-exit seed/export-for-emulator/2026-03-26T12:11:37_86276/
 
 # Deployment
 npm run deploy         # Deploy to currently selected Firebase project

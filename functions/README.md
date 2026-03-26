@@ -105,7 +105,7 @@ firebase emulators:start
 If you want to use exported Firestore DB from previous steps you can use following command to import and export emulator db from project root.
 
 ```
-firebase emulators:start --import functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/ --export-on-exit functions/seed/export-for-emulator/2024-04-05T11:33:06_69896/
+firebase emulators:start --import functions/seed/export-for-emulator/2026-03-26T12:11:37_86276/ --export-on-exit functions/seed/export-for-emulator/2026-03-26T12:11:37_86276/
 ```
 
 Also to run the emulator easier you can use `npm run serve` which compiles functions and starts the emulator with seed data.
