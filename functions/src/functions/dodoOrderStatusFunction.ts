@@ -1,7 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions";
 import { dodoWebhookToken } from "../config/firebase";
-// import { updateDeliveryStateByDodoStatus } from "../services/deliveryService";
+import { updateDeliveryStateByDodoStatus } from "../services/deliveryService";
 
 // Valid DODO order statuses
 const VALID_STATUSES = [
@@ -103,8 +103,10 @@ export const dodoOrderStatus = onRequest(
     }
 
     // 5. Update Firestore delivery state based on DODO status
-    // const result = await updateDeliveryStateByDodoStatus(identifier, OrderStatus);
-    // TODO: For now, just log the intended update without actually calling the service (to avoid side effects during testing)
+    const result = await updateDeliveryStateByDodoStatus(
+      identifier,
+      OrderStatus,
+    );
     logger.info(
       `${T} 🔄 Updating delivery state for ${identifier} to ${OrderStatus}`,
     );
