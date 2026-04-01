@@ -5,9 +5,13 @@ import { notifyAboutLackOfBoxes } from "./functions/notifications/lackOfBoxesFun
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
+import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
-import { finalizeDeliveriesFunction, finalizeDeliveries } from "./functions/finalizeDeliveriesFunction";
+import {
+  finalizeDeliveriesFunction,
+  finalizeDeliveries,
+} from "./functions/finalizeDeliveriesFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { DateTime } from "luxon";
@@ -30,7 +34,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
       let deliveryDate: Date | undefined;
 
       // Parse date from query parameter or request body
-      const dateStr = req.query.date as string || req.body?.date;
+      const dateStr = (req.query.date as string) || req.body?.date;
 
       if (dateStr) {
         // Parse date string in format YYYY-MM-DD
@@ -63,22 +67,31 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 
   exports.triggerFinalizeDeliveries = onRequest(async (req, res) => {
     try {
-      const dateStr = req.query.date as string || req.body?.date;
+      const dateStr = (req.query.date as string) || req.body?.date;
       let date: Date | undefined;
 
       if (dateStr) {
         const parsed = DateTime.fromISO(dateStr, { zone: TIMEZONE });
         if (!parsed.isValid) {
-          res.status(400).json({ status: "error", message: `Invalid date format. Use YYYY-MM-DD. Error: ${parsed.invalidReason}` });
+          res.status(400).json({
+            status: "error",
+            message: `Invalid date format. Use YYYY-MM-DD. Error: ${parsed.invalidReason}`,
+          });
           return;
         }
         date = parsed.startOf("day").toJSDate();
       }
 
       await finalizeDeliveries(date);
-      res.json({ status: "success", message: `finalizeDeliveries executed successfully${dateStr ? ` for date ${dateStr}` : ""}` });
+      res.json({
+        status: "success",
+        message: `finalizeDeliveries executed successfully${dateStr ? ` for date ${dateStr}` : ""}`,
+      });
     } catch (error) {
-      res.status(500).json({ status: "error", message: error instanceof Error ? error.message : "Unknown error" });
+      res.status(500).json({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
   });
 }
@@ -93,4 +106,8 @@ exports.boxDeliveryCreated = boxDeliveryCreated;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;
+
+// DODO webhook — URL: /orders/{identifier}/status
+exports.orders = dodoOrderStatus;
+
 exports.finalizeDeliveriesFunction = finalizeDeliveriesFunction;

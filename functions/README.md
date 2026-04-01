@@ -124,6 +124,34 @@ If you run into any lint issues, you can try to solve them automatically by runn
 npm --prefix "$RESOURCE_DIR" run lint:fix
 ```
 
+# Testing DODO Webhook
+
+The DODO courier webhook receives delivery status updates at `PUT /orders/{identifier}/status`.
+
+## Test scripts
+
+```bash
+# Run automated test suite (auth, validation, all statuses)
+./scripts/test-dodo-webhook.sh                          # local emulator
+./scripts/test-dodo-webhook.sh --env dev                # DEV
+
+# Call webhook with specific identifier and status
+./scripts/call-dodo-webhook.sh <identifier> <status>              # local
+./scripts/call-dodo-webhook.sh <identifier> <status> --env dev    # DEV
+```
+
+Auth token is read from `.secret.local` (`DODO_WEBHOOK_TOKEN`). Override with `--token` or `DODO_TEST_TOKEN` env var.
+
+## DODO Status → Delivery State Mapping
+
+| DODO Status | New Delivery State |
+|---|---|
+| `OnWayToPickup` | `ON_WAY_TO_PICK_UP` |
+| `OnWayToCustomer` | `IN_DELIVERY` |
+| `ArrivedToCustomer` | `DELIVERED` |
+
+Other statuses (`ArrivedToPickup`, `Finished`, `Refused`) are accepted but don't update delivery state.
+
 # Snippets
 
 ## Create box shipment in deliveries collection
