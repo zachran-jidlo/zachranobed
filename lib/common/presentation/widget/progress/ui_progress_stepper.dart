@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_icon.dart';
-import 'package:zachranobed/common/presentation/widget/ui_gradient_shader_mask.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_shader_mask.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 
 /// A widget that displays a progress stepper with icons and connecting bars. This stepper visually represents progress
 /// through multiple steps using icons and connecting lines.

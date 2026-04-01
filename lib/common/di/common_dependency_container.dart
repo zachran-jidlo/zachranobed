@@ -19,6 +19,10 @@ import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 
 class CommonDependencyContainer {
@@ -66,15 +70,41 @@ class CommonDependencyContainer {
 
   static void _setupUserComponents() {
     // Repositories
-    GetIt.I.registerFactory<UserRepository>(
+    // Registered as lazy singleton to allow stream-based observation of user data changes.
+    GetIt.I.registerLazySingleton<UserRepository>(
       () => FirebaseUserRepository(
         GetIt.I<AuthService>(),
+        GetIt.I<EntityService>(),
       ),
     );
 
     // UseCases
     GetIt.I.registerFactory<GetUserDataUseCase>(
       () => GetUserDataUseCase(
+        GetIt.I<UserRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<ObserveUserDataUseCase>(
+      () => ObserveUserDataUseCase(
+        GetIt.I<UserRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<NotifyUserDataChangedUseCase>(
+      () => NotifyUserDataChangedUseCase(
+        GetIt.I<UserRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<ShouldShowOnboardingForUiChangesUseCase>(
+      () => ShouldShowOnboardingForUiChangesUseCase(
+        GetIt.I<UserRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<RemoveOnboardingForUiChangesFlagUseCase>(
+      () => RemoveOnboardingForUiChangesFlagUseCase(
         GetIt.I<UserRepository>(),
       ),
     );

@@ -28,6 +28,11 @@ export const NOTE_PREFIXES = {
 } as const;
 
 /**
+ * Timezone for all date/time calculations.
+ */
+export const TIMEZONE = "Europe/Prague";
+
+/**
  * Firebase project IDs for different environments.
  */
 export const ENVIRONMENTS = {

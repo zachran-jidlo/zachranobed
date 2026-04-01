@@ -7,10 +7,21 @@ import {
   dodoOrdersApi,
   externalApiAllowed,
 } from "../config/firebase";
-import {DodoToken, DodoTokenSchema, DodoOrder} from "../models";
+import {DodoToken, DodoTokenSchema, DodoOrder, Entity, EntityPair} from "../models";
+import { updateNoteWithPhoneNumbers } from "../utils/noteUtils";
+import { NOTE_PREFIXES } from "../config/constants";
+
+interface CachedToken {
+  token: DodoToken;
+  expiresAt: number; // Unix ms
+}
+
+let tokenCache: CachedToken | null = null;
+const TOKEN_EXPIRY_BUFFER_MS = 60_000; // Refresh 60s before actual expiry
 
 /**
  * Get OAuth2 access token from DODO API.
+ * Caches the token in memory and reuses it until 60s before expiry.
  * Returns fake token if EXTERNAL_API_ALLOWED is false.
  * @return {Promise<DodoToken>}
  */
@@ -25,6 +36,11 @@ export async function getDodoToken(): Promise<DodoToken> {
       ext_expires_in: 3600,
       access_token: "fake_token_for_testing",
     };
+  }
+
+  if (tokenCache && Date.now() < tokenCache.expiresAt - TOKEN_EXPIRY_BUFFER_MS) {
+    logger.info("Reusing cached DODO oauth token");
+    return tokenCache.token;
   }
 
   logger.info("Getting temporary DODO oauth token");
@@ -63,6 +79,11 @@ export async function getDodoToken(): Promise<DodoToken> {
   logger.info(
     `Successfully received temporary DODO oauth token (expires in ${result.data.expires_in}s)`
   );
+
+  tokenCache = {
+    token: result.data,
+    expiresAt: Date.now() + result.data.expires_in * 1000,
+  };
 
   return result.data;
 }
@@ -128,4 +149,56 @@ export async function createDodoOrder(
 
   logger.debug(`DODO order ${order.id} created successfully`);
   return true;
+}
+
+/**
+ * Build a box return DODO order object from entity data and pre-calculated time windows.
+ * Pickup is from the recipient (box donor), delivery is back to the donor (original sender).
+ * @param {EntityPair} entityPair - The entity pair
+ * @param {Entity} donor - The donor entity
+ * @param {Entity} recipient - The recipient entity
+ * @param {string} deliveryIdentifier - The delivery identifier
+ * @param {Date} pickupStart - Pre-computed pickup window start
+ * @param {Date} pickupEnd - Pre-computed pickup window end
+ * @param {Date} deliveryStart - Pre-computed delivery window start
+ * @param {Date} deliveryEnd - Pre-computed delivery window end
+ * @return {DodoOrder} The box return order
+ */
+export function createBoxReturnOrder(
+  entityPair: EntityPair,
+  donor: Entity,
+  recipient: Entity,
+  deliveryIdentifier: string,
+  pickupStart: Date,
+  pickupEnd: Date,
+  deliveryStart: Date,
+  deliveryEnd: Date,
+): DodoOrder {
+  return {
+    id: deliveryIdentifier,
+    pickupDodoId: entityPair.carrierRecipientId,
+    pickupId: recipient.establishmentId,
+    pickupFrom: pickupStart,
+    pickupTo: pickupEnd,
+    pickupNote:
+      NOTE_PREFIXES.BOX_PICKUP +
+      updateNoteWithPhoneNumbers(
+        recipient.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    deliverId: donor.establishmentId,
+    deliverAddress: `${donor.street} ${donor.houseNumber} ${donor.city} ${donor.postalCode}`,
+    deliverFrom: deliveryStart,
+    deliverTo: deliveryEnd,
+    deliverNote:
+      NOTE_PREFIXES.BOX_DELIVERY +
+      updateNoteWithPhoneNumbers(
+        donor.noteForDriver || "",
+        recipient.phone,
+        donor.phone,
+      ),
+    customerName: donor.responsiblePerson,
+    customerPhone: donor.phone,
+  };
 }

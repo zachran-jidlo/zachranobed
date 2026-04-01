@@ -7,7 +7,7 @@ import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/ui_food_box_tile.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_food_box_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_delayed.dart';

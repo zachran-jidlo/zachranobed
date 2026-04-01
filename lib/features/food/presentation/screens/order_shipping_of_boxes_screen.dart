@@ -11,16 +11,16 @@ import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/other/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
-import 'package:zachranobed/common/presentation/widget/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/snackbar/temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/ui_box_counter_tile.dart';
-import 'package:zachranobed/common/presentation/widget/ui_counter_field.dart';
-import 'package:zachranobed/common/presentation/widget/ui_dialog.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_box_counter_tile.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/create_box_delivery_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
@@ -216,11 +216,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
 
     if (_boxesQuantity.values.every((quantity) => quantity == 0)) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          ZOTemporarySnackBar(
-            message: context.l10n.shippingOfBoxesEmptyFormMessage,
-          ),
-        );
+        UiTemporarySnackBar.show(context, message: context.l10n.shippingOfBoxesEmptyFormMessage);
       }
     } else {
       UiDialog.showLoadingDialog(context);
@@ -233,13 +229,7 @@ class _OrderShippingOfBoxesScreenState extends State<OrderShippingOfBoxesScreen>
       if (!available) {
         if (mounted) {
           context.router.pop();
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            ZOTemporarySnackBar(
-              backgroundColor: Colors.red,
-              message: context.l10n.boxCountError,
-            ),
-          );
+          UiTemporarySnackBar.showError(context, message: context.l10n.boxCountError);
         }
 
         return;

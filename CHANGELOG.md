@@ -6,6 +6,8 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-381** Add new UI components and color definitions from new design system.
 - **ZOB-393** Add new delivery details screen.
+- **ZOB-404** Add new "What's new" screen.
+- **ZOB-405** Add support for allergen sub categories.
 
 ### Fixed
 
@@ -28,8 +30,10 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-392** Update monthly food boxes checkup flow with new design.
 - **ZOB-394** Update box delivery flow with new design.
 - **ZOB-395** Update meals delivery flow with new design.
+- **ZOB-399** Update delivery state enum.
 
 ### Removed
+- **ZOB-396** Remove old design components.
 
 ## [1.8.0]
 ### Added

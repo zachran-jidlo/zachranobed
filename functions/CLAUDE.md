@@ -133,6 +133,12 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
    - Sends FCM push notification to all registered device tokens
    - Removes invalid tokens from entity document
 
+**Delivery Identifier Format**:
+- Food deliveries (`sendOrdersFunction`): `{donor.establishmentId}-{recipient.establishmentId}-{date}`
+- Box deliveries (`boxDeliveryCreatedFunction`): `{recipient.establishmentId}-{donor.establishmentId}-{date}`
+
+The reversed order is intentional — box deliveries involve a return trip (pickup from recipient, delivery to donor), so the identifier reflects the pickup origin first.
+
 **Configuration Management**:
 - Global options set in `src/config/firebase.ts` via `setGlobalOptions()`
 - Region: `europe-west1`

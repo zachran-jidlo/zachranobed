@@ -1,16 +1,14 @@
 import { DateTime } from "luxon";
+import { TIMEZONE } from "../config/constants";
 
 /** Checks if the given date is today.
  * @param {Date} date - The date to check.
  * @return {boolean} - True if the date is today, false otherwise.
  */
 export function isToday(date: Date): boolean {
-  const today = new Date();
-  return (
-    date.getFullYear() === today.getFullYear() &&
-    date.getMonth() === today.getMonth() &&
-    date.getDate() === today.getDate()
-  );
+  const pragueNow = DateTime.now().setZone(TIMEZONE).startOf("day");
+  const pragueDate = DateTime.fromJSDate(date).setZone(TIMEZONE).startOf("day");
+  return pragueNow.equals(pragueDate);
 }
 
 /**
@@ -32,7 +30,7 @@ function skipWeekend(date: DateTime): DateTime {
  */
 export function getNextBusinessDay(daysInFuture: number = 1): Date {
   const pragueDate = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .plus({ days: daysInFuture })
     .startOf("day"); // Midnight Prague time
 
@@ -54,7 +52,7 @@ export function getDateInFuture(
   const [hours, minutes] = time.split(":").map(Number);
 
   const pragueDate = DateTime.now()
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .plus({ days: daysInFuture })
     .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
@@ -68,7 +66,7 @@ export function getDateInFuture(
  * @return {string} - Date string in format "d.m.yyyy"
  */
 export function formatCzechDate(date: Date): string {
-  const pragueDate = DateTime.fromJSDate(date).setZone("Europe/Prague");
+  const pragueDate = DateTime.fromJSDate(date).setZone(TIMEZONE);
   return `${pragueDate.day}.${pragueDate.month}.${pragueDate.year}`;
 }
 
@@ -83,7 +81,7 @@ export function createDateWithTime(baseDate: Date, time: string): Date {
   const [hours, minutes] = time.split(":").map(Number);
 
   const pragueDate = DateTime.fromJSDate(baseDate)
-    .setZone("Europe/Prague")
+    .setZone(TIMEZONE)
     .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
   return pragueDate.toJSDate();

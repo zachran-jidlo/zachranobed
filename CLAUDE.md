@@ -251,6 +251,24 @@ const SizedBox(height: GapSize.xl),
 const EdgeInsets.all(GapSize.m),
 ```
 
+**Row/Column Spacing**: Where possible, use the `spacing` parameter on `Row` and `Column` instead of wrapping children in `Padding` widgets.
+
+```dart
+// ✅ Correct - Use spacing parameter
+Row(
+  spacing: 8,
+  children: [Widget1(), Widget2(), Widget3()],
+)
+
+// ❌ Avoid - Wrapping each child in Padding
+Row(
+  children: [
+    Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: Widget1()),
+    Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: Widget2()),
+  ],
+)
+```
+
 ### Component Testing
 
 Interactive component gallery available at `lib/features/debug/components_screen.dart` - accessible via Debug menu in dev/stage builds to preview all UI components.

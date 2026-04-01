@@ -8,7 +8,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
 import 'package:zachranobed/common/presentation/widget/progress/ui_progress_stepper.dart';
-import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 
 /// A status card widget displaying the current donation state for charity users.
 ///
@@ -18,10 +18,11 @@ import 'package:zachranobed/common/presentation/widget/ui_icon.dart';
 ///
 /// Delivery states and their UI:
 /// - **prepared**: Shows "delivery day" message
-/// - **accepted/offered (no meals)**: Shows "accepted" message
-/// - **accepted/offered (with meals)**: Shows delivery time range and details button
+/// - **accepted/onWayToPickUp (no meals)**: Shows "accepted" message
+/// - **accepted/onWayToPickUp (with meals)**: Shows delivery time range and details button
 /// - **inDelivery**: Shows delivery time range and details button
 /// - **delivered**: Shows completion message
+/// - **done**: Shows completion message
 /// - **null/notUsed**: Shows "not a delivery day" message
 class CharityDonationStatusCard extends StatelessWidget {
   /// The charity user data containing pair information and delivery times.
@@ -80,7 +81,7 @@ class CharityDonationStatusCard extends StatelessWidget {
       );
     }
 
-    if (delivery.state == DeliveryState.delivered) {
+    if (delivery.state == DeliveryState.delivered || delivery.state == DeliveryState.done) {
       return StyledText(
         text: context.l10n.overviewDonationStatusCardDoneLabel,
         style: context.textStyles.bodyMedium,
@@ -102,7 +103,7 @@ class CharityDonationStatusCard extends StatelessWidget {
         statusText = context.l10n.overviewDonationStatusCardDeliveryDayLabel;
         break;
       case DeliveryState.accepted:
-      case DeliveryState.offered:
+      case DeliveryState.onWayToPickUp:
         if (!delivery.hasMeals) {
           statusText = context.l10n.overviewCharityDonationStatusCardAcceptedLabel;
         } else {
@@ -113,6 +114,7 @@ class CharityDonationStatusCard extends StatelessWidget {
         statusText = context.l10n.overviewCharityDonationStatusCardOnWayToCustomerLabel;
         break;
       case DeliveryState.delivered:
+      case DeliveryState.done:
       case DeliveryState.notUsed:
         // No-op, handled above
         break;
@@ -138,7 +140,7 @@ class CharityDonationStatusCard extends StatelessWidget {
         isCurrentStepActive = false;
         break;
       case DeliveryState.accepted:
-      case DeliveryState.offered:
+      case DeliveryState.onWayToPickUp:
         if (!delivery.hasMeals) {
           currentStep = 1;
           isCurrentStepActive = true;
@@ -152,6 +154,7 @@ class CharityDonationStatusCard extends StatelessWidget {
         isCurrentStepActive = false;
         break;
       case DeliveryState.delivered:
+      case DeliveryState.done:
       case DeliveryState.notUsed:
         currentStep = 5;
         isCurrentStepActive = true;
@@ -161,7 +164,7 @@ class CharityDonationStatusCard extends StatelessWidget {
     return UiProgressStepper(
       currentStep: currentStep,
       isCurrentStepActive: isCurrentStepActive,
-      isProgressComplete: delivery.state == DeliveryState.delivered,
+      isProgressComplete: delivery.state == DeliveryState.delivered || delivery.state == DeliveryState.done,
       icons: const [
         UiIconSpec.data(Icons.today_rounded),
         UiIconSpec.data(Icons.food_bank_rounded),
@@ -177,7 +180,7 @@ class CharityDonationStatusCard extends StatelessWidget {
       return null;
     }
 
-    final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered;
+    final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.onWayToPickUp;
     if (accepted && delivery.hasMeals || delivery.state == DeliveryState.inDelivery) {
       return UiDonationTimeRangeLabel(
         label: context.l10n.overviewDonationStatusCardTimerDeliveryLabel,
@@ -200,7 +203,7 @@ class CharityDonationStatusCard extends StatelessWidget {
       return null;
     }
 
-    final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.offered;
+    final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.onWayToPickUp;
     if (accepted && delivery.hasMeals || delivery.state == DeliveryState.inDelivery) {
       return UiOutlineButton(
         text: context.l10n.overviewDonationStatusCardDeliveryDetailsAction,

@@ -7,7 +7,6 @@ import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
-import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/features/food/data/mapper/offered_food_mapper.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
@@ -19,13 +18,11 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   final DeliveryService _deliveryService;
   final MealService _mealService;
   final EntityPairService _entityPairService;
-  final DeliveryRepository _deliveryRepository;
 
   FirebaseOfferedFoodRepository(
     this._deliveryService,
     this._mealService,
     this._entityPairService,
-    this._deliveryRepository,
   );
 
   @override
@@ -120,14 +117,6 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
     );
 
     if (!moveBoxesSuccess) {
-      return false;
-    }
-
-    final updateStateSuccess = await _deliveryRepository.updateDeliveryState(
-      delivery: delivery,
-      state: DeliveryState.offered,
-    );
-    if (!updateStateSuccess) {
       return false;
     }
 
