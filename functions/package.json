@@ -17,7 +17,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google-cloud/tasks": "^6.2.1",
-    "firebase-admin": "^13.6.0",
+    "firebase-admin": "^13.7.0",
     "firebase-functions": "^6.4.0",
     "firebase-tools": "^15.8.0",
     "luxon": "^3.7.2",
