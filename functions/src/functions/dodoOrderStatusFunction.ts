@@ -108,7 +108,7 @@ export const dodoOrderStatus = onRequest(
       OrderStatus,
     );
     logger.info(
-      `${T} 🔄 Updating delivery state for ${identifier} to ${OrderStatus}`,
+      `${T} 🔄 Updating delivery state for ${identifier} to ${OrderStatus}. Result: ${JSON.stringify(result)}`,
     );
 
     // 6. Return success
