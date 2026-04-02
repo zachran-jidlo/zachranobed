@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [2.1.0]
 ### Added
+- **ZOB-409** Add new FAQ section.
 
 ### Fixed
 
