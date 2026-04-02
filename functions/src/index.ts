@@ -8,6 +8,7 @@ import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
+import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
 import {
   finalizeDeliveriesFunction,
   finalizeDeliveries,
@@ -103,6 +104,7 @@ exports.cloudTaskHandler = cloudTaskHandler;
 
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;
+exports.orderDeliveryService = orderDeliveryService;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;

@@ -152,6 +152,54 @@ export async function createDodoOrder(
 }
 
 /**
+ * Build a food delivery DODO order object from entity data and pre-calculated time windows.
+ * Pickup is from the donor, delivery is to the recipient.
+ * @param {EntityPair} entityPair - The entity pair
+ * @param {Entity} donor - The donor entity
+ * @param {Entity} recipient - The recipient entity
+ * @param {string} deliveryIdentifier - The delivery identifier
+ * @param {Date} pickupStart - Pre-computed pickup window start
+ * @param {Date} pickupEnd - Pre-computed pickup window end
+ * @param {Date} deliveryStart - Pre-computed delivery window start
+ * @param {Date} deliveryEnd - Pre-computed delivery window end
+ * @return {DodoOrder} The food delivery order
+ */
+export function createFoodDeliveryOrder(
+  entityPair: EntityPair,
+  donor: Entity,
+  recipient: Entity,
+  deliveryIdentifier: string,
+  pickupStart: Date,
+  pickupEnd: Date,
+  deliveryStart: Date,
+  deliveryEnd: Date,
+): DodoOrder {
+  return {
+    id: deliveryIdentifier,
+    pickupDodoId: entityPair.carrierDonorId,
+    pickupId: donor.establishmentId,
+    pickupFrom: pickupStart,
+    pickupTo: pickupEnd,
+    pickupNote: updateNoteWithPhoneNumbers(
+      donor.noteForDriver || "",
+      donor.phone,
+      recipient.phone,
+    ),
+    deliverId: recipient.establishmentId,
+    deliverAddress: `${recipient.street} ${recipient.houseNumber} ${recipient.city} ${recipient.postalCode}`,
+    deliverFrom: deliveryStart,
+    deliverTo: deliveryEnd,
+    deliverNote: updateNoteWithPhoneNumbers(
+      recipient.noteForDriver || "",
+      donor.phone,
+      recipient.phone,
+    ),
+    customerName: recipient.responsiblePerson,
+    customerPhone: recipient.phone,
+  };
+}
+
+/**
  * Build a box return DODO order object from entity data and pre-calculated time windows.
  * Pickup is from the recipient (box donor), delivery is back to the donor (original sender).
  * @param {EntityPair} entityPair - The entity pair
