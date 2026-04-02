@@ -13,6 +13,7 @@ import {
   finalizeDeliveriesFunction,
   finalizeDeliveries,
 } from "./functions/finalizeDeliveriesFunction";
+import { createDodoOrderOnDemand } from "./functions/createDodoOrderOnDemandFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { DateTime } from "luxon";
@@ -113,3 +114,6 @@ exports.sendOrdersFunction = sendOrdersFunction;
 exports.orders = dodoOrderStatus;
 
 exports.finalizeDeliveriesFunction = finalizeDeliveriesFunction;
+
+// On-demand DODO order creation — enable/disable via GCloud Console
+exports.createDodoOrderOnDemand = createDodoOrderOnDemand;
