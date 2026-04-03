@@ -1,3 +1,40 @@
+/**
+ * On-demand DODO order creation function.
+ *
+ * ## Security
+ *
+ * This function has NO built-in authentication — it relies entirely on
+ * GCloud IAM. The `allUsers` principal has been removed from invokers,
+ * so only authenticated callers with `roles/cloudfunctions.invoker` can
+ * reach it. Unauthenticated requests are rejected with 403 by GCloud
+ * before the function code executes.
+ *
+ * ### Grant access to a user/service account:
+ * ```bash
+ * gcloud functions add-invoker-policy-binding createDodoOrderOnDemand \
+ *   --region=europe-west1 \
+ *   --member="user:someone@example.com" \
+ *   --gen2
+ * ```
+ *
+ * ### Revoke access:
+ * ```bash
+ * gcloud functions remove-invoker-policy-binding createDodoOrderOnDemand \
+ *   --region=europe-west1 \
+ *   --member="user:someone@example.com" \
+ *   --gen2
+ * ```
+ *
+ * ### Call the function (authenticated):
+ * ```bash
+ * curl -X POST \
+ *   -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
+ *   -H "Content-Type: application/json" \
+ *   https://europe-west1-PROJECT_ID.cloudfunctions.net/createDodoOrderOnDemand \
+ *   -d '{"date":"2026-04-03","donorId":"...","recipientId":"...","type":"FOOD_DELIVERY","dryRun":true}'
+ * ```
+ */
+
 import { onRequest } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions/v2";
 import { Timestamp } from "firebase-admin/firestore";
@@ -71,7 +108,7 @@ export const createDodoOrderOnDemand = onRequest(
       | undefined;
     const type = (req.body?.type || req.query.type) as string | undefined;
     const createDeliveryFlag = toBool(
-      req.body?.createDelivery ?? req.query.createDelivery
+      req.body?.createDelivery ?? req.query.createDelivery,
     );
     const dryRun = toBool(req.body?.dryRun ?? req.query.dryRun);
 
@@ -107,7 +144,7 @@ export const createDodoOrderOnDemand = onRequest(
     const deliveryDate = parsed.startOf("day").toJSDate();
 
     logger.info(
-      `createDodoOrderOnDemand: type=${deliveryType} date=${dateStr} donor=${donorId} recipient=${recipientId} createDelivery=${createDeliveryFlag} dryRun=${dryRun}`
+      `createDodoOrderOnDemand: type=${deliveryType} date=${dateStr} donor=${donorId} recipient=${recipientId} createDelivery=${createDeliveryFlag} dryRun=${dryRun}`,
     );
 
     try {
@@ -118,7 +155,7 @@ export const createDodoOrderOnDemand = onRequest(
       ]);
 
       const entityPair = entityPairs.find(
-        (p) => p.donorId === donorId && p.recipientId === recipientId
+        (p) => p.donorId === donorId && p.recipientId === recipientId,
       );
 
       if (!entityPair) {
@@ -135,7 +172,8 @@ export const createDodoOrderOnDemand = onRequest(
       if (!donor || !recipient) {
         res.status(404).json({
           status: "error",
-          message: `Entity not found: ${!donor ? "donor " + donorId : ""} ${!recipient ? "recipient " + recipientId : ""}`.trim(),
+          message:
+            `Entity not found: ${!donor ? "donor " + donorId : ""} ${!recipient ? "recipient " + recipientId : ""}`.trim(),
         });
         return;
       }
@@ -179,19 +217,19 @@ export const createDodoOrderOnDemand = onRequest(
       } else {
         pickupStart = createDateWithTime(
           deliveryDate,
-          BOX_RETURN_SCHEDULE.PICKUP.start
+          BOX_RETURN_SCHEDULE.PICKUP.start,
         );
         pickupEnd = createDateWithTime(
           deliveryDate,
-          BOX_RETURN_SCHEDULE.PICKUP.end
+          BOX_RETURN_SCHEDULE.PICKUP.end,
         );
         deliveryStart = createDateWithTime(
           deliveryDate,
-          BOX_RETURN_SCHEDULE.DELIVERY.start
+          BOX_RETURN_SCHEDULE.DELIVERY.start,
         );
         deliveryEnd = createDateWithTime(
           deliveryDate,
-          BOX_RETURN_SCHEDULE.DELIVERY.end
+          BOX_RETURN_SCHEDULE.DELIVERY.end,
         );
       }
 
@@ -215,7 +253,7 @@ export const createDodoOrderOnDemand = onRequest(
               pickupStart,
               pickupEnd,
               deliveryStart,
-              deliveryEnd
+              deliveryEnd,
             )
           : createBoxReturnOrder(
               entityPair,
@@ -225,7 +263,7 @@ export const createDodoOrderOnDemand = onRequest(
               pickupStart,
               pickupEnd,
               deliveryStart,
-              deliveryEnd
+              deliveryEnd,
             );
 
       // --- Execute actions ---
@@ -349,7 +387,7 @@ export const createDodoOrderOnDemand = onRequest(
               confirmationTime: entityPair.confirmationTime,
             });
             const notUsedAt = new Date(
-              pickupStart.getTime() - confirmationMinutes * 60 * 1000
+              pickupStart.getTime() - confirmationMinutes * 60 * 1000,
             );
 
             tasks.push({
@@ -378,7 +416,7 @@ export const createDodoOrderOnDemand = onRequest(
                   targetState: "DELIVERED",
                   preconditionState: "IN_DELIVERY",
                   executeAt: deliveryEnd,
-                }
+                },
               );
             }
           } else {
@@ -402,7 +440,7 @@ export const createDodoOrderOnDemand = onRequest(
                   targetState: "DELIVERED",
                   preconditionState: "IN_DELIVERY",
                   executeAt: deliveryEnd,
-                }
+                },
               );
             }
           }
@@ -470,5 +508,5 @@ export const createDodoOrderOnDemand = onRequest(
     } finally {
       clearEntityCache();
     }
-  }
+  },
 );
