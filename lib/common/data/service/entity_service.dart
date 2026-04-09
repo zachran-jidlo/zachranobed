@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/entity_dto.dart';
-import 'package:zachranobed/common/domain/utils/zo_logger.dart';
-import 'package:zachranobed/common/data/utils/device_utils.dart';
 import 'package:zachranobed/common/data/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 
 class EntityService {
   final _collection = FirebaseFirestore.instance.collection('entities').withConverter(
@@ -42,12 +41,11 @@ class EntityService {
     return _collection.doc(entityId).update({'lastAcceptedAppTermsVersion': version});
   }
 
-  /// Stores the given FCM [token] to the entity with ID [entityId] in in the
-  /// entities collection. It either updates the FCM token for this device
-  /// or creates a new one for this device's ID. If [token] is `null`,
-  /// the FCM token for this device is removed.
-  Future<void> updateFCMToken(String entityId, String? token) async {
-    final deviceId = await DeviceUtils.getId();
+  /// Stores the given FCM [token] for the [deviceId] under the entity with ID [entityId].
+  /// It either updates the FCM token for this device or creates a new one.
+  /// If [token] is `null`, the FCM token for this device is removed.
+  /// Does nothing if [deviceId] is `null`.
+  Future<void> updateFCMToken(String entityId, String? token, String? deviceId) async {
     if (deviceId == null) {
       ZOLogger.logMessage("Unable to retrieve device ID");
       return;

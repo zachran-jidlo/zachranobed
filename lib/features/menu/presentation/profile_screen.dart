@@ -4,22 +4,22 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
-import 'package:zachranobed/common/data/utils/device_utils.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
-import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
-import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
-import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 
 /// A screen that displays the user's profile and app settings.
 ///
@@ -45,6 +45,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
   final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
+  final _getAppVersion = GetIt.I<GetAppVersionUseCase>();
   String _appVersion = '-';
 
   @override
@@ -164,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   /// Loads and sets the app version from device info.
   Future<void> _initPackageInfo() async {
-    final version = await DeviceUtils.getAppVersion();
+    final version = await _getAppVersion.invoke();
     setState(() {
       _appVersion = version;
     });

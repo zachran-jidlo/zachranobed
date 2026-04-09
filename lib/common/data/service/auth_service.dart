@@ -9,6 +9,7 @@ import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/data/utils/firebase_helper.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/domain/usecase/get_device_id_usecase.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 
 class AuthService {
@@ -16,11 +17,13 @@ class AuthService {
   final EntityService _entityService;
   final EntityPairService _entityPairService;
   final AppPreferences _appPreferences;
+  final GetDeviceIdUseCase _getDeviceId;
 
   AuthService(
     this._entityService,
     this._entityPairService,
     this._appPreferences,
+    this._getDeviceId,
   );
 
   /// Gets the current user's e-mail and fetches entity, which also determines
@@ -87,7 +90,8 @@ class AuthService {
   Future<void> signOut(String? entityId) async {
     if (entityId != null) {
       try {
-        await _entityService.updateFCMToken(entityId, null);
+        final deviceId = await _getDeviceId.invoke();
+        await _entityService.updateFCMToken(entityId, null, deviceId);
       } on Exception catch (e) {
         ZOLogger.logException(e, "Unable to update FCM token, user is probably offline");
       }

@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/domain/usecase/get_device_id_usecase.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 
@@ -118,7 +119,8 @@ class Notifications {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
     }
-    _entityService.updateFCMToken(user.entityId, fCMToken);
+    final deviceId = await GetIt.I<GetDeviceIdUseCase>().invoke();
+    _entityService.updateFCMToken(user.entityId, fCMToken, deviceId);
   }
 
   /// Listens to token refresh events and saves the new token to the database.
@@ -129,7 +131,8 @@ class Notifications {
         ZOLogger.logMessage("User is not logged in, nothing to update");
         return;
       }
-      _entityService.updateFCMToken(user.entityId, token);
+      final deviceId = await GetIt.I<GetDeviceIdUseCase>().invoke();
+      _entityService.updateFCMToken(user.entityId, token, deviceId);
     });
   }
 }
