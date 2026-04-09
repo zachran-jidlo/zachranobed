@@ -33,6 +33,7 @@ class Notifications {
 
   final _authService = GetIt.I<AuthService>();
   final _entityService = GetIt.I<EntityService>();
+  final _getDeviceId = GetIt.I<GetDeviceIdUseCase>();
 
   /// Initializes local notifications for the application.
   ///
@@ -119,7 +120,7 @@ class Notifications {
       ZOLogger.logMessage("User is not logged in, nothing to update");
       return;
     }
-    final deviceId = await GetIt.I<GetDeviceIdUseCase>().invoke();
+    final deviceId = await _getDeviceId.invoke();
     _entityService.updateFCMToken(user.entityId, fCMToken, deviceId);
   }
 
@@ -131,7 +132,7 @@ class Notifications {
         ZOLogger.logMessage("User is not logged in, nothing to update");
         return;
       }
-      final deviceId = await GetIt.I<GetDeviceIdUseCase>().invoke();
+      final deviceId = await _getDeviceId.invoke();
       _entityService.updateFCMToken(user.entityId, token, deviceId);
     });
   }
