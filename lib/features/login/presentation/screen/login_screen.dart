@@ -2,11 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/model/app_flavor_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
@@ -17,11 +16,12 @@ import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_password_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/features/login/domain/usecase/sign_in_usecase.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _authService = GetIt.I<AuthService>();
+  final _signIn = GetIt.I<SignInUseCase>();
   final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
   final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
@@ -235,11 +235,11 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    final result = await _authService.signIn(
+    final success = await _signIn.invoke(
       _emailController.text,
       _passwordController.text,
     );
-    if (result != null) {
+    if (success) {
       if (mounted) {
         await HelperService.loadUserInfo(context);
 

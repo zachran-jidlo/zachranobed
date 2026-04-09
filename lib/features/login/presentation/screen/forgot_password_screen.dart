@@ -3,17 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
-import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/features/login/domain/usecase/reset_password_usecase.dart';
 
 @RoutePage()
 class ForgotPasswordScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   final TextEditingController _emailController = TextEditingController();
 
-  final authService = GetIt.I<AuthService>();
+  final _resetPassword = GetIt.I<ResetPasswordUseCase>();
 
   @override
   void dispose() {
@@ -69,7 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await _resetPassword();
+                      await _resetUserPassword();
                     }
                   },
                 ),
@@ -81,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Future<void> _resetPassword() async {
+  Future<void> _resetUserPassword() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -89,7 +89,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
 
     try {
-      await authService.resetPassword(_emailController.text);
+      await _resetPassword.invoke(_emailController.text);
 
       if (mounted) {
         UiTemporarySnackBar.show(context, message: context.l10n.passwordResetConfirmation);

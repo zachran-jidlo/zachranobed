@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_detail_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
-import 'package:zachranobed/common/presentation/model/food_category.dart';
+import 'package:zachranobed/common/domain/model/food_category.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 
