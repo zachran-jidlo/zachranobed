@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppConfig {
   String get minimumAppVersion;
+  String get latestAppVersion;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -30,15 +31,18 @@ mixin _$AppConfig {
         (other.runtimeType == runtimeType &&
             other is AppConfig &&
             (identical(other.minimumAppVersion, minimumAppVersion) ||
-                other.minimumAppVersion == minimumAppVersion));
+                other.minimumAppVersion == minimumAppVersion) &&
+            (identical(other.latestAppVersion, latestAppVersion) ||
+                other.latestAppVersion == latestAppVersion));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, minimumAppVersion);
+  int get hashCode =>
+      Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
 
   @override
   String toString() {
-    return 'AppConfig(minimumAppVersion: $minimumAppVersion)';
+    return 'AppConfig(minimumAppVersion: $minimumAppVersion, latestAppVersion: $latestAppVersion)';
   }
 }
 
@@ -47,7 +51,7 @@ abstract mixin class $AppConfigCopyWith<$Res> {
   factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) _then) =
       _$AppConfigCopyWithImpl;
   @useResult
-  $Res call({String minimumAppVersion});
+  $Res call({String minimumAppVersion, String latestAppVersion});
 }
 
 /// @nodoc
@@ -63,11 +67,16 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
   @override
   $Res call({
     Object? minimumAppVersion = null,
+    Object? latestAppVersion = null,
   }) {
     return _then(_self.copyWith(
       minimumAppVersion: null == minimumAppVersion
           ? _self.minimumAppVersion
           : minimumAppVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      latestAppVersion: null == latestAppVersion
+          ? _self.latestAppVersion
+          : latestAppVersion // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -76,10 +85,13 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
 /// @nodoc
 
 class $AppConfig implements AppConfig {
-  const $AppConfig({required this.minimumAppVersion});
+  const $AppConfig(
+      {required this.minimumAppVersion, required this.latestAppVersion});
 
   @override
   final String minimumAppVersion;
+  @override
+  final String latestAppVersion;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -95,15 +107,18 @@ class $AppConfig implements AppConfig {
         (other.runtimeType == runtimeType &&
             other is $AppConfig &&
             (identical(other.minimumAppVersion, minimumAppVersion) ||
-                other.minimumAppVersion == minimumAppVersion));
+                other.minimumAppVersion == minimumAppVersion) &&
+            (identical(other.latestAppVersion, latestAppVersion) ||
+                other.latestAppVersion == latestAppVersion));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, minimumAppVersion);
+  int get hashCode =>
+      Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
 
   @override
   String toString() {
-    return 'AppConfig(minimumAppVersion: $minimumAppVersion)';
+    return 'AppConfig(minimumAppVersion: $minimumAppVersion, latestAppVersion: $latestAppVersion)';
   }
 }
 
@@ -115,7 +130,7 @@ abstract mixin class $$AppConfigCopyWith<$Res>
       _$$AppConfigCopyWithImpl;
   @override
   @useResult
-  $Res call({String minimumAppVersion});
+  $Res call({String minimumAppVersion, String latestAppVersion});
 }
 
 /// @nodoc
@@ -131,11 +146,16 @@ class _$$AppConfigCopyWithImpl<$Res> implements $$AppConfigCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? minimumAppVersion = null,
+    Object? latestAppVersion = null,
   }) {
     return _then($AppConfig(
       minimumAppVersion: null == minimumAppVersion
           ? _self.minimumAppVersion
           : minimumAppVersion // ignore: cast_nullable_to_non_nullable
+              as String,
+      latestAppVersion: null == latestAppVersion
+          ? _self.latestAppVersion
+          : latestAppVersion // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

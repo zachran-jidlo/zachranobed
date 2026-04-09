@@ -1,14 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:styled_text/styled_text.dart';
+import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/store_utils.dart';
-import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/utils/web_page_utils.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 
 /// A screen that notifies users when a mandatory app update is required.
 ///
@@ -30,32 +33,27 @@ class ForceUpdateScreen extends StatelessWidget {
           image: ImageAssets.imageForceUpdate,
           title: InfoPageContent.text(context.l10n.forceUpdateScreenTitle),
           description: InfoPageContent.widget(
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: context.l10n.forceUpdateScreenDescriptionStart,
-                    style: context.textStyles.bodyLarge,
-                  ),
-                  TextSpan(
-                    text: context.l10n.applicationName,
-                    style: context.textStyles.bodyLarge.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: context.l10n.forceUpdateScreenDescriptionEnd,
-                    style: context.textStyles.bodyLarge,
-                  ),
-                ],
-              ),
+            StyledText(
+              text: context.l10n.forceUpdateScreenDescription,
+              style: context.textStyles.bodyLarge,
               textAlign: TextAlign.center,
+              tags: {
+                'b': StyledTextTag(
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              },
             ),
           ),
           actions: [
             UiPrimaryButton(
               size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
-              text: context.l10n.forceUpdateAction,
+              text: RunningPlatform.isWeb() ? context.l10n.forceUpdateWebAction : context.l10n.forceUpdateAction,
               onPressed: () async {
-                StoreUtils().openStore(context);
+                if (RunningPlatform.isWeb()) {
+                  reloadWebPageToHome();
+                } else {
+                  StoreUtils().openStore(context);
+                }
               },
             ),
           ],

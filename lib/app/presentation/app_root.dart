@@ -21,6 +21,7 @@ import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_colors.dart';
 import 'package:zachranobed/common/presentation/utils/ui_text_styles.dart';
 import 'package:zachranobed/features/forceupdate/domain/usecase/check_if_upgrade_app_should_be_shown_usecase.dart';
+import 'package:zachranobed/features/forceupdate/presentation/web_soft_update_banner.dart';
 import 'package:zachranobed/features/offline/presentation/connectivity_wrapper.dart';
 import 'package:zachranobed/l10n/app_localizations.dart';
 
@@ -154,8 +155,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
               return const SizedBox();
             }
 
-            return ConnectivityWrapper(
-              child: child,
+            return SoftUpdateWebBanner(
+              child: ConnectivityWrapper(
+                child: child,
+              ),
             );
           },
         );

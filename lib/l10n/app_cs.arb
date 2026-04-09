@@ -267,9 +267,13 @@
     "activePairContactsCharityLabel": "(aktivní charita)",
 
     "forceUpdateScreenTitle": "Nová verze aplikace",
-    "forceUpdateScreenDescriptionStart": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci ",
-    "forceUpdateScreenDescriptionEnd": " na nejnovější verzi.",
+    "forceUpdateScreenDescription": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci <b>Zachraň oběd</b> na nejnovější verzi.",
     "forceUpdateAction": "Aktualizovat aplikaci",
+    "forceUpdateWebAction": "Aktualizovat stránku",
+
+    "softUpdateWebBannerMessage": "Je dostupná nová verze aplikace.",
+    "softUpdateWebReloadAction": "Aktualizovat",
+    "softUpdateWebDismissAction": "Později",
 
     "foodBoxesCheckupErrorMessage": "Při ukládání došlo k neočekávané chybě, zkuste akci provést znovu.",
     "foodBoxesCheckupSuccessMessage": "Děkujeme za spolupráci ",

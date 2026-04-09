@@ -7,6 +7,7 @@ extension AppConfigMapper on AppConfigDto {
   AppConfig toDomain() {
     return AppConfig(
       minimumAppVersion: minimumAppVersion,
+      latestAppVersion: latestAppVersion,
     );
   }
 }
