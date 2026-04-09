@@ -12,7 +12,7 @@ class CheckIfUpgradeAppShouldBeShownUseCase {
 
   /// Fetches available application configuration.
   Future<bool> invoke() async {
-    if (!RunningPlatform.isMobile()) {
+    if (!RunningPlatform.isMobile() && !RunningPlatform.isWeb()) {
       return false;
     }
 

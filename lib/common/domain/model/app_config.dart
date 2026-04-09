@@ -10,5 +10,6 @@ part 'app_config.freezed.dart';
 abstract class AppConfig with _$AppConfig {
   const factory AppConfig({
     required String minimumAppVersion,
+    required String latestAppVersion,
   }) = $AppConfig;
 }

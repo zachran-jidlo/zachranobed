@@ -10,8 +10,12 @@ part 'app_config_dto.g.dart';
 class AppConfigDto {
   final String minimumAppVersion;
 
+  @JsonKey(defaultValue: '0.0.0')
+  final String latestAppVersion;
+
   AppConfigDto({
     required this.minimumAppVersion,
+    required this.latestAppVersion,
   });
 
   factory AppConfigDto.fromJson(Map<String, dynamic> json) => _$AppConfigDtoFromJson(json);
