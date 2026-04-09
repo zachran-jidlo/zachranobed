@@ -46,6 +46,20 @@ class InvalidLayerDependencyRule extends DartLintRule {
           ),
         );
 
+  static final _allLayerPatterns = [
+    RegExp(r'features/[^/]+/([^/]+)/'),
+    RegExp(r'common/([^/]+)/'),
+    RegExp(r'app/([^/]+)/'),
+  ];
+
+  static String? _extractLayer(String path) {
+    for (final p in _allLayerPatterns) {
+      final m = p.firstMatch(path);
+      if (m != null) return m.group(1);
+    }
+    return null;
+  }
+
   @override
   void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
     final filePath = resolver.source.fullName;
@@ -62,12 +76,10 @@ class InvalidLayerDependencyRule extends DartLintRule {
       if (importUri == null || !importUri.startsWith('package:')) return;
 
       final importPath = importUri.replaceFirst('package:', '');
-      final importedMatch = pattern.firstMatch(importPath);
+      final importedLayer = _extractLayer(importPath);
 
-      // Ignore if not importing another layer
-      if (importedMatch == null) return;
-
-      final importedLayer = importedMatch.group(1);
+      // Ignore if not importing a known layer
+      if (importedLayer == null) return;
 
       if (!_isLayerAllowed(currentLayer, importedLayer)) {
         reporter.atNode(node, code);
