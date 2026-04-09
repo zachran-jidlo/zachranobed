@@ -8,12 +8,12 @@ class ForceUpdateDependencyContainer {
 
   static void setup() {
     GetIt.I.registerFactory<CheckIfUpgradeAppShouldBeShownUseCase>(
-          () => CheckIfUpgradeAppShouldBeShownUseCase(
+      () => CheckIfUpgradeAppShouldBeShownUseCase(
         GetIt.I<AppConfigurationRepository>(),
       ),
     );
     GetIt.I.registerFactory<CheckWebSoftUpdateShouldBeShownUseCase>(
-          () => CheckWebSoftUpdateShouldBeShownUseCase(
+      () => CheckWebSoftUpdateShouldBeShownUseCase(
         GetIt.I<AppConfigurationRepository>(),
       ),
     );

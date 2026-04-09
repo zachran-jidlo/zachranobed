@@ -20,19 +20,24 @@ class SoftUpdateWebBanner extends StatefulWidget {
 }
 
 class _SoftUpdateWebBannerState extends State<SoftUpdateWebBanner> {
-  final _checkWebSoftUpdate = GetIt.I<CheckWebSoftUpdateShouldBeShownUseCase>();
+  late final CheckWebSoftUpdateShouldBeShownUseCase _checkWebSoftUpdate;
   bool _visible = false;
 
   @override
   void initState() {
     super.initState();
+    _checkWebSoftUpdate = GetIt.I<CheckWebSoftUpdateShouldBeShownUseCase>();
     WidgetsBinding.instance.addPostFrameCallback((_) => _check());
   }
 
   Future<void> _check() async {
-    final shouldShow = await _checkWebSoftUpdate.invoke();
-    if (shouldShow && mounted) {
-      setState(() => _visible = true);
+    try {
+      final shouldShow = await _checkWebSoftUpdate.invoke();
+      if (shouldShow && mounted) {
+        setState(() => _visible = true);
+      }
+    } catch (_) {
+      // Fail silently — banner is optional, errors must not affect the app.
     }
   }
 
@@ -45,31 +50,34 @@ class _SoftUpdateWebBannerState extends State<SoftUpdateWebBanner> {
           Positioned(
             right: 16,
             bottom: 16,
-            child: UiCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 16,
-                children: [
-                  Text(
-                    context.l10n.softUpdateWebBannerMessage,
-                    style: context.textStyles.titleMedium,
-                  ),
-                  Row(
-                    spacing: 8,
-                    children: [
-                      UiTextButton(
-                        size: UiButtonSize.tiny(),
-                        text: context.l10n.softUpdateWebDismissAction,
-                        onPressed: () => setState(() => _visible = false),
-                      ),
-                      UiPrimaryButton(
-                        size: UiButtonSize.tiny(),
-                        text: context.l10n.softUpdateWebReloadAction,
-                        onPressed: reloadWebPageToHome,
-                      ),
-                    ],
-                  ),
-                ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 320),
+              child: UiCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: 16,
+                  children: [
+                    Text(
+                      context.l10n.softUpdateWebBannerMessage,
+                      style: context.textStyles.titleMedium,
+                    ),
+                    Row(
+                      spacing: 8,
+                      children: [
+                        UiTextButton(
+                          size: UiButtonSize.tiny(),
+                          text: context.l10n.softUpdateWebDismissAction,
+                          onPressed: () => setState(() => _visible = false),
+                        ),
+                        UiPrimaryButton(
+                          size: UiButtonSize.tiny(),
+                          text: context.l10n.softUpdateWebReloadAction,
+                          onPressed: reloadWebPageToHome,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

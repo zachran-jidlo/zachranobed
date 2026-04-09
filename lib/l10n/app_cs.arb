@@ -269,7 +269,6 @@
     "forceUpdateScreenTitle": "Nová verze aplikace",
     "forceUpdateScreenDescription": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci <b>Zachraň oběd</b> na nejnovější verzi.",
     "forceUpdateAction": "Aktualizovat aplikaci",
-
     "forceUpdateWebAction": "Aktualizovat stránku",
 
     "softUpdateWebBannerMessage": "Je dostupná nová verze aplikace.",

@@ -1,11 +1,2 @@
-import 'dart:js_interop';
-
-import 'package:flutter/foundation.dart';
-
-@JS('window.location.assign')
-external void _locationAssign(String url);
-
-/// Navigates to the home page, triggering a full reload. No-op on non-web platforms.
-void reloadWebPageToHome() {
-  if (kIsWeb) _locationAssign('/');
-}
+export 'web_page_utils_stub.dart'
+    if (dart.library.js_interop) 'web_page_utils_web.dart';
