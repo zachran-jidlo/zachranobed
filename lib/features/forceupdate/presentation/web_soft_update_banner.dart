@@ -62,6 +62,7 @@ class _SoftUpdateWebBannerState extends State<SoftUpdateWebBanner> {
                       style: context.textStyles.titleMedium,
                     ),
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       spacing: 8,
                       children: [
                         UiTextButton(
