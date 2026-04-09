@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/repository/firebase_app_configuration_repository.dart';
+import 'package:zachranobed/common/data/repository/firebase_auth_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_delivery_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_user_repository.dart';
 import 'package:zachranobed/common/data/repository/platform_device_repository.dart';
@@ -14,6 +15,7 @@ import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
+import 'package:zachranobed/common/domain/repository/auth_repository.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/device_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
@@ -28,6 +30,7 @@ import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_useca
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 
 class CommonDependencyContainer {
@@ -41,6 +44,7 @@ class CommonDependencyContainer {
     _setupAppPreferencesComponents();
     _setupDeviceComponents();
     _setupServiceComponents();
+    _setupAuthComponents();
   }
 
   static void _setupAppTermsComponents() {
@@ -127,6 +131,11 @@ class CommonDependencyContainer {
 
   static void _setupAppPreferencesComponents() {
     GetIt.I.registerSingleton(AppPreferences());
+  }
+
+  static void _setupAuthComponents() {
+    GetIt.I.registerFactory<AuthRepository>(() => FirebaseAuthRepository(GetIt.I<AuthService>()));
+    GetIt.I.registerFactory<SignOutUseCase>(() => SignOutUseCase(GetIt.I<AuthRepository>()));
   }
 
   static void _setupDeviceComponents() {

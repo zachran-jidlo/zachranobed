@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
-import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
+import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -207,9 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   /// Signs out the current user and navigates to login screen.
   Future<void> _handleSignOut() async {
-    final authService = GetIt.I<AuthService>();
     final entityId = HelperService.getCurrentUser(context)?.entityId;
-    await authService.signOut(entityId);
+    await GetIt.I<SignOutUseCase>().invoke(entityId);
     _notifyUserDataChanged.invoke(null);
     if (mounted) {
       context.router.replaceAll([const LoginRoute()]);
