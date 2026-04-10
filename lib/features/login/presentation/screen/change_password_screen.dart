@@ -120,6 +120,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       await _changePassword.invoke(entityId, _oldPasswordController.text, _newPasswordController.text);
 
       if (mounted) {
+        context.router.pop();
         UiTemporarySnackBar.show(context, message: context.l10n.newPasswordSuccessfullySaved);
       }
     } on FirebaseAuthException catch (e) {

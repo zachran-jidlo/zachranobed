@@ -17,11 +17,16 @@ class FirebaseUserRepository implements UserRepository {
   /// (explicit sign-out, token revocation, account disabled, etc.) is
   /// automatically propagated through [observeUserData].
   FirebaseUserRepository(this._authService, this._entityService) {
-    _authService.observeAuthState().listen((firebaseUser) {
-      if (firebaseUser == null) {
-        _userDataController.add(null);
-      }
-    });
+    _authService.observeAuthState().listen(
+      (firebaseUser) {
+        if (firebaseUser == null) {
+          _userDataController.add(null);
+        }
+      },
+      onError: (_) {
+        // auth state errors don't affect the user data stream
+      },
+    );
   }
 
   @override
