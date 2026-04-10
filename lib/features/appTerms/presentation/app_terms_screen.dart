@@ -121,7 +121,7 @@ class _AppTermsScreen extends State<AppTermsScreen> {
 
     await _setNewestAcceptedAppTermsUseCase.invoke(user);
     if (mounted) {
-      context.router.replace(HomeRoute());
+      context.router.replaceAll([HomeRoute()]);
     }
   }
 

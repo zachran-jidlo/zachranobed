@@ -9,6 +9,7 @@ import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
@@ -35,21 +36,36 @@ class AppRoot extends StatefulWidget {
 class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _appRouter = GetIt.I<AppRouter>();
   final _getUserData = GetIt.I<GetUserDataUseCase>();
+  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   final _observeUserData = GetIt.I<ObserveUserDataUseCase>();
   final _checkIfUpgradeAppShouldBeShown = GetIt.I<CheckIfUpgradeAppShouldBeShownUseCase>();
   final _getAppTermsStatus = GetIt.I<GetAppTermsStatusUseCase>();
   final _shouldShowOnboardingForUiChanges = GetIt.I<ShouldShowOnboardingForUiChangesUseCase>();
   final _removeOnboardingForUiChangesFlag = GetIt.I<RemoveOnboardingForUiChangesFlagUseCase>();
 
+  // Held as a field so it can be accessed from stream listeners (no context needed).
+  final _userNotifier = UserNotifier();
+  final _deliveryNotifier = DeliveryNotifier(GetIt.I<DeliveryRepository>());
+
   StreamSubscription<void>? _userDataSubscription;
+  UserData? _previousUserData;
 
   @override
   void initState() {
     super.initState();
 
     _userDataSubscription = _observeUserData.invoke().listen((user) {
+      final previous = _previousUserData;
+      _previousUserData = user;
+
       if (user != null) {
         _applicationStartCheckForUser(user);
+      } else {
+        _userNotifier.user = null;
+        _deliveryNotifier.reset();
+        if (previous != null) {
+          _appRouter.replaceAll([const LoginRoute()]);
+        }
       }
     });
 
@@ -59,6 +75,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   @override
   void dispose() {
     _userDataSubscription?.cancel();
+    _userNotifier.dispose();
+    _deliveryNotifier.dispose();
     super.dispose();
   }
 
@@ -78,7 +96,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
     final user = await _getUserData.invoke();
     if (user != null) {
-      _applicationStartCheckForUser(user);
+      _notifyUserDataChanged.invoke(user);
     }
   }
 
@@ -103,10 +121,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ListenableProvider<UserNotifier>(create: (_) => UserNotifier()),
-        ListenableProvider<DeliveryNotifier>(create: (_) {
-          return DeliveryNotifier(GetIt.I<DeliveryRepository>());
-        }),
+        ListenableProvider<UserNotifier>.value(value: _userNotifier),
+        ListenableProvider<DeliveryNotifier>.value(value: _deliveryNotifier),
       ],
       builder: (context, child) {
         return MaterialApp.router(

@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/repository/firebase_app_configuration_repository.dart';
-import 'package:zachranobed/common/data/repository/firebase_auth_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_delivery_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_user_repository.dart';
 import 'package:zachranobed/common/data/repository/platform_device_repository.dart';
@@ -15,7 +14,6 @@ import 'package:zachranobed/common/data/service/entity_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
-import 'package:zachranobed/common/domain/repository/auth_repository.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/device_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
@@ -44,7 +42,6 @@ class CommonDependencyContainer {
     _setupAppPreferencesComponents();
     _setupDeviceComponents();
     _setupServiceComponents();
-    _setupAuthComponents();
   }
 
   static void _setupAppTermsComponents() {
@@ -118,6 +115,8 @@ class CommonDependencyContainer {
         GetIt.I<UserRepository>(),
       ),
     );
+
+    GetIt.I.registerFactory<SignOutUseCase>(() => SignOutUseCase(GetIt.I<UserRepository>()));
   }
 
   static void _setupAppConfigurationComponents() {
@@ -131,11 +130,6 @@ class CommonDependencyContainer {
 
   static void _setupAppPreferencesComponents() {
     GetIt.I.registerSingleton(AppPreferences());
-  }
-
-  static void _setupAuthComponents() {
-    GetIt.I.registerFactory<AuthRepository>(() => FirebaseAuthRepository(GetIt.I<AuthService>()));
-    GetIt.I.registerFactory<SignOutUseCase>(() => SignOutUseCase(GetIt.I<AuthRepository>()));
   }
 
   static void _setupDeviceComponents() {

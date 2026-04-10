@@ -12,7 +12,39 @@ class FirebaseUserRepository implements UserRepository {
   final _userDataController = StreamController<UserData?>.broadcast();
 
   /// Creates a new instance of [FirebaseUserRepository].
-  FirebaseUserRepository(this._authService, this._entityService);
+  ///
+  /// Subscribes to Firebase Auth state changes so that any session termination
+  /// (explicit sign-out, token revocation, account disabled, etc.) is
+  /// automatically propagated through [observeUserData].
+  FirebaseUserRepository(this._authService, this._entityService) {
+    _authService.observeAuthState().listen(
+      (firebaseUser) {
+        if (firebaseUser == null) {
+          _userDataController.add(null);
+        }
+      },
+      onError: (_) {
+        // auth state errors don't affect the user data stream
+      },
+    );
+  }
+
+  @override
+  Future<bool> signIn(String email, String password) async {
+    return await _authService.signIn(email, password) != null;
+  }
+
+  @override
+  Future<void> signOut(String? entityId) => _authService.signOut(entityId);
+
+  @override
+  Future<void> reauthenticateUser(String password) => _authService.reauthenticateUser(password);
+
+  @override
+  Future<void> changePassword(String password) => _authService.changePassword(password);
+
+  @override
+  Future<void> resetPassword(String email) => _authService.resetPassword(email);
 
   @override
   Future<UserData?> getUserData() {

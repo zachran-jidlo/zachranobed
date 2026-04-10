@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
@@ -44,7 +43,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   final _getAppVersion = GetIt.I<GetAppVersionUseCase>();
   String _appVersion = '-';
 
@@ -61,7 +59,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: context.l10n.profileScreenTitle,
       ),
       builder: (context) {
-        final user = HelperService.watchCurrentUser(context)!;
+        final user = HelperService.watchCurrentUser(context);
+        if (user == null) {
+          return const SizedBox.shrink();
+        }
 
         return SectionedListView(
           entries: [
@@ -209,10 +210,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _handleSignOut() async {
     final entityId = HelperService.getCurrentUser(context)?.entityId;
     await GetIt.I<SignOutUseCase>().invoke(entityId);
-    _notifyUserDataChanged.invoke(null);
-    if (mounted) {
-      context.router.replaceAll([const LoginRoute()]);
-    }
   }
 
   /// Shows debug screen if devtools are enabled.

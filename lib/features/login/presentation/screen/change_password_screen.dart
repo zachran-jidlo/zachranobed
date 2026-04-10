@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
-import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -46,7 +44,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController _confirmNewPasswordController = TextEditingController();
 
   final _changePassword = GetIt.I<ChangePasswordUseCase>();
-  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
 
   @override
   void dispose() {
@@ -122,11 +119,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     try {
       await _changePassword.invoke(entityId, _oldPasswordController.text, _newPasswordController.text);
 
-      _notifyUserDataChanged.invoke(null);
-
       if (mounted) {
+        context.router.pop();
         UiTemporarySnackBar.show(context, message: context.l10n.newPasswordSuccessfullySaved);
-        context.router.replaceAll([const LoginRoute()]);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {

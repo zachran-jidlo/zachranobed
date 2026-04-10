@@ -1,8 +1,8 @@
-import 'package:zachranobed/common/domain/repository/auth_repository.dart';
+import 'package:zachranobed/common/domain/repository/user_repository.dart';
 
 /// Use case to sign in with email and password.
 class SignInUseCase {
-  final AuthRepository _repository;
+  final UserRepository _repository;
 
   SignInUseCase(this._repository);
 

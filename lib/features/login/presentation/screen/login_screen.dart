@@ -2,9 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
-import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/model/app_flavor_data.dart';
@@ -35,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _signIn = GetIt.I<SignInUseCase>();
   final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
   final _checkIfDevtoolsAreEnabledUseCase = GetIt.I<CheckIfDevtoolsAreEnabledUseCase>();
-  final _getAppTermsStatusUseCase = GetIt.I<GetAppTermsStatusUseCase>();
   final _appFlavorData = GetIt.I<AppFlavorData>();
 
   final _formKey = GlobalKey<FormState>();
@@ -248,33 +245,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
         _notifyUserDataChanged.invoke(user);
 
-        _continueToLoggedInContext();
+        if (mounted) {
+          context.router.replace(HomeRoute());
+        }
       }
     } else {
       if (mounted) {
         context.router.pop();
         UiTemporarySnackBar.showError(context, message: context.l10n.wrongCredentialsError);
       }
-    }
-  }
-
-  Future<void> _continueToLoggedInContext() async {
-    final user = HelperService.getCurrentUser(context);
-    if (user == null) {
-      // Invalid user, should not happen
-      return;
-    }
-
-    final status = await _getAppTermsStatusUseCase.invoke(user);
-
-    if (!mounted) {
-      return;
-    }
-
-    if (status != AppTermsStatus.accepted) {
-      context.router.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
-    } else {
-      context.router.replace(HomeRoute());
     }
   }
 }

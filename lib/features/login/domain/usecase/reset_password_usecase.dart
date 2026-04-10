@@ -1,8 +1,8 @@
-import 'package:zachranobed/common/domain/repository/auth_repository.dart';
+import 'package:zachranobed/common/domain/repository/user_repository.dart';
 
 /// Use case to send a password reset email.
 class ResetPasswordUseCase {
-  final AuthRepository _repository;
+  final UserRepository _repository;
 
   ResetPasswordUseCase(this._repository);
 
