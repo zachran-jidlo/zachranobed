@@ -8,6 +8,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-418** Add soft and force updates to web application.
 
 ### Fixed
+- **ZOB-419** Fix logout related crash.
 
 ### Changed
 

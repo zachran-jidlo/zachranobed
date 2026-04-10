@@ -121,6 +121,12 @@ class AuthService {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
+  /// Stream that emits whenever the Firebase Auth session state changes.
+  ///
+  /// Emits the current [User] when authenticated, or `null` when the session
+  /// ends (sign-out, token revocation, account disabled, etc.).
+  Stream<User?> observeAuthState() => _auth.authStateChanges();
+
   /// Fetches canteen data from entity pairs relation.
   Future<Canteen?> _getCanteenData(EntityDto entity) async {
     final pairs = await _entityPairService.getByDonorId(entity.id);

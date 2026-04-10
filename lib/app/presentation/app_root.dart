@@ -41,6 +41,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _shouldShowOnboardingForUiChanges = GetIt.I<ShouldShowOnboardingForUiChangesUseCase>();
   final _removeOnboardingForUiChangesFlag = GetIt.I<RemoveOnboardingForUiChangesFlagUseCase>();
 
+  // Held as a field so it can be accessed from stream listeners (no context needed).
+  final _userNotifier = UserNotifier();
+  final _deliveryNotifier = DeliveryNotifier(GetIt.I<DeliveryRepository>());
+
   StreamSubscription<void>? _userDataSubscription;
 
   @override
@@ -50,6 +54,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     _userDataSubscription = _observeUserData.invoke().listen((user) {
       if (user != null) {
         _applicationStartCheckForUser(user);
+      } else {
+        _userNotifier.user = null;
+        _deliveryNotifier.reset();
+        _appRouter.replaceAll([const LoginRoute()]);
       }
     });
 
@@ -59,6 +67,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   @override
   void dispose() {
     _userDataSubscription?.cancel();
+    _userNotifier.dispose();
+    _deliveryNotifier.dispose();
     super.dispose();
   }
 
@@ -103,10 +113,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ListenableProvider<UserNotifier>(create: (_) => UserNotifier()),
-        ListenableProvider<DeliveryNotifier>(create: (_) {
-          return DeliveryNotifier(GetIt.I<DeliveryRepository>());
-        }),
+        ListenableProvider<UserNotifier>.value(value: _userNotifier),
+        ListenableProvider<DeliveryNotifier>.value(value: _deliveryNotifier),
       ],
       builder: (context, child) {
         return MaterialApp.router(
