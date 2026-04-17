@@ -104,8 +104,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     }
   }
 
-  /// Performs the initial checks after the application starts.
-  /// 1. Update the device info (ID, app version, platform) — at most once per 24 hours.
+  /// Performs user-scoped checks on app start and whenever user data changes (e.g. login).
+  /// 1. Update the device info (ID, app version, platform) — once per app launch, and then at
+  ///    most once per 24 hours while the process stays alive (the timestamp is in-memory only
+  ///    and resets on logout or process restart).
   /// 2. Check if the app terms are accepted.
   /// 3. Check if the onboarding for UI changes should be shown.
   void _applicationStartCheckForUser(UserData user) async {
@@ -113,7 +115,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     final lastUpdated = _deviceInfoLastUpdated;
     if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
       _deviceInfoLastUpdated = now;
-      _updateDeviceInfo.invoke(user.entityId);
+      await _updateDeviceInfo.invoke(user.entityId);
     }
 
     final status = await _getAppTermsStatus.invoke(user);

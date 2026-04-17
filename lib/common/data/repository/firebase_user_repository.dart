@@ -70,19 +70,19 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
-  Future<void> updateDeviceInfo(
-    String entityId,
-    String appVersion,
-    String appVersionCode,
-    String platform,
-    String deviceId,
-  ) {
+  Future<void> updateDeviceInfo({
+    required String entityId,
+    required String deviceId,
+    required String appVersion,
+    required String buildNumber,
+    required String platform,
+  }) {
     return _entityService.updateDeviceInfo(
-      entityId,
-      deviceId,
-      appVersion,
-      appVersionCode,
-      platform,
+      entityId: entityId,
+      deviceId: deviceId,
+      appVersion: appVersion,
+      buildNumber: buildNumber,
+      platform: platform,
     );
   }
 }

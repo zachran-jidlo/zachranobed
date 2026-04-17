@@ -74,17 +74,17 @@ class EntityService {
 
   /// Stores device info (app version, build number, platform, last used timestamp)
   /// for the given [deviceId] under the entity with ID [entityId].
-  Future<void> updateDeviceInfo(
-    String entityId,
-    String deviceId,
-    String appVersion,
-    String appVersionCode,
-    String platform,
-  ) {
+  Future<void> updateDeviceInfo({
+    required String entityId,
+    required String deviceId,
+    required String appVersion,
+    required String buildNumber,
+    required String platform,
+  }) {
     return _collection.doc(entityId).update({
       'devices.$deviceId': {
         'appVersion': appVersion,
-        'appVersionCode': appVersionCode,
+        'buildNumber': buildNumber,
         'platform': platform,
         'lastUsed': FieldValue.serverTimestamp(),
       },

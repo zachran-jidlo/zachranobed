@@ -28,15 +28,15 @@ class UpdateDeviceInfoUseCase {
       }
 
       final appVersion = await _getAppVersion.invoke();
-      final appVersionCode = await _getAppBuildNumber.invoke();
+      final buildNumber = await _getAppBuildNumber.invoke();
       final platform = RunningPlatform.current().name;
 
       await _userRepository.updateDeviceInfo(
-        entityId,
-        appVersion,
-        appVersionCode,
-        platform,
-        deviceId,
+        entityId: entityId,
+        deviceId: deviceId,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platform: platform,
       );
     } on Exception catch (e) {
       ZOLogger.logException(e, "Unable to update device info");
