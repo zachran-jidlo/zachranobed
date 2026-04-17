@@ -24,6 +24,8 @@ class DeliveryDto {
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final DeliveryTypeDto? type;
   final int? confirmationTime;
+  @JsonKey(includeIfNull: false)
+  final bool? foodBoxesTransferred;
 
   DeliveryDto({
     required this.id,
@@ -35,6 +37,7 @@ class DeliveryDto {
     required this.state,
     required this.type,
     required this.confirmationTime,
+    required this.foodBoxesTransferred,
   });
 
   factory DeliveryDto.fromJson(Map<String, dynamic> json) => _$DeliveryDtoFromJson(json);

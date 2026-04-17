@@ -174,7 +174,17 @@ class DeliveryService {
       ),
     );
 
-    return updateDeliveryFoodboxes(id, foodBoxes.toList());
+    final updateData = <String, dynamic>{
+      'foodBoxes': foodBoxes.map((e) => e.toJson()).toList(),
+    };
+
+    // Mark delivery for server-side box transfer (via Cloud Function).
+    // Skip if already transferred to avoid resetting it back to false.
+    if (delivery?.foodBoxesTransferred != true) {
+      updateData['foodBoxesTransferred'] = false;
+    }
+
+    return _collection.doc(id).update(updateData).toSuccess();
   }
 
   /// Creates a delivery from the given [dto] instance.

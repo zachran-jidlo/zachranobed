@@ -35,9 +35,12 @@ export const boxTransfer = onDocumentUpdated(
     // Guard: only react to transitions TO DELIVERED
     if (oldValue.state === "DELIVERED" || newValue.state !== "DELIVERED") return;
 
-    // Guard: skip if boxes already transferred
-    if (newValue.foodBoxesTransferred === true) {
-      logger.info(`boxTransfer: already processed ${event.params.id}, skipping`);
+    // Guard: only process deliveries explicitly marked for server-side transfer.
+    // - false  → new app created this delivery, Cloud Function should transfer
+    // - true   → already transferred, skip
+    // - absent → old app created this delivery and transferred client-side, skip
+    if (newValue.foodBoxesTransferred !== false) {
+      logger.info(`boxTransfer: skipping ${event.params.id} (foodBoxesTransferred=${newValue.foodBoxesTransferred})`);
       return;
     }
 

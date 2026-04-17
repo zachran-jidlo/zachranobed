@@ -168,6 +168,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         state: DeliveryStateDto.accepted,
         type: DeliveryTypeDto.boxDelivery,
         confirmationTime: user.activePair.confirmationTime.inMinutes,
+        foodBoxesTransferred: false,
       );
       return _deliveryService.createDelivery(newDelivery);
     } else {
