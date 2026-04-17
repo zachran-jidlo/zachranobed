@@ -13,6 +13,7 @@ import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_useca
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/update_device_info_usecase.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
@@ -42,6 +43,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _getAppTermsStatus = GetIt.I<GetAppTermsStatusUseCase>();
   final _shouldShowOnboardingForUiChanges = GetIt.I<ShouldShowOnboardingForUiChangesUseCase>();
   final _removeOnboardingForUiChangesFlag = GetIt.I<RemoveOnboardingForUiChangesFlagUseCase>();
+  final _updateDeviceInfo = GetIt.I<UpdateDeviceInfoUseCase>();
 
   // Held as a field so it can be accessed from stream listeners (no context needed).
   final _userNotifier = UserNotifier();
@@ -49,6 +51,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
   StreamSubscription<void>? _userDataSubscription;
   UserData? _previousUserData;
+  DateTime? _deviceInfoLastUpdated;
 
   @override
   void initState() {
@@ -63,6 +66,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
       } else {
         _userNotifier.user = null;
         _deliveryNotifier.reset();
+        _deviceInfoLastUpdated = null;
         if (previous != null) {
           _appRouter.replaceAll([const LoginRoute()]);
         }
@@ -100,10 +104,20 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
     }
   }
 
-  /// Performs the initial checks after the application starts.
-  /// 1. Check if the app terms are accepted.
-  /// 2. Check if the onboarding for UI changes should be shown.
+  /// Performs user-scoped checks on app start and whenever user data changes (e.g. login).
+  /// 1. Update the device info (ID, app version, platform) — once per app launch, and then at
+  ///    most once per 24 hours while the process stays alive (the timestamp is in-memory only
+  ///    and resets on logout or process restart).
+  /// 2. Check if the app terms are accepted.
+  /// 3. Check if the onboarding for UI changes should be shown.
   void _applicationStartCheckForUser(UserData user) async {
+    final now = DateTime.now();
+    final lastUpdated = _deviceInfoLastUpdated;
+    if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
+      _deviceInfoLastUpdated = now;
+      await _updateDeviceInfo.invoke(user.entityId);
+    }
+
     final status = await _getAppTermsStatus.invoke(user);
     if (status != AppTermsStatus.accepted) {
       _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));

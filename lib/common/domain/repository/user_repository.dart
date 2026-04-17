@@ -40,4 +40,13 @@ abstract class UserRepository {
 
   /// Removes the onboarding for UI changes flag from the entity document.
   Future<void> removeOnboardingForUiChangesFlag(String entityId);
+
+  /// Updates device info (app version, build number, platform) for the given entity.
+  Future<void> updateDeviceInfo({
+    required String entityId,
+    required String deviceId,
+    required String appVersion,
+    required String buildNumber,
+    required String platform,
+  });
 }

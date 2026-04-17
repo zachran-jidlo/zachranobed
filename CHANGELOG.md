@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-409** Add new FAQ section.
 - **ZOB-418** Add soft and force updates to web application.
+- **ZOB-420** Add sending a device info to Firestore.
 
 ### Fixed
 - **ZOB-419** Fix logout related crash.

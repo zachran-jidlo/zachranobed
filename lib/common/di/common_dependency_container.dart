@@ -18,6 +18,7 @@ import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/device_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
 import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_build_number_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_semantic_version_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
@@ -29,6 +30,7 @@ import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/update_device_info_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 
 class CommonDependencyContainer {
@@ -138,6 +140,17 @@ class CommonDependencyContainer {
     GetIt.I.registerFactory<GetAppVersionUseCase>(() => GetAppVersionUseCase(GetIt.I<DeviceRepository>()));
     GetIt.I.registerFactory<GetAppSemanticVersionUseCase>(
       () => GetAppSemanticVersionUseCase(GetIt.I<DeviceRepository>()),
+    );
+    GetIt.I.registerFactory<GetAppBuildNumberUseCase>(
+      () => GetAppBuildNumberUseCase(GetIt.I<DeviceRepository>()),
+    );
+    GetIt.I.registerFactory<UpdateDeviceInfoUseCase>(
+      () => UpdateDeviceInfoUseCase(
+        GetIt.I<UserRepository>(),
+        GetIt.I<GetDeviceIdUseCase>(),
+        GetIt.I<GetAppSemanticVersionUseCase>(),
+        GetIt.I<GetAppBuildNumberUseCase>(),
+      ),
     );
   }
 
