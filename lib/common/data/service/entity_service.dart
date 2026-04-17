@@ -72,6 +72,25 @@ class EntityService {
     );
   }
 
+  /// Stores device info (app version, build number, platform, last used timestamp)
+  /// for the given [deviceId] under the entity with ID [entityId].
+  Future<void> updateDeviceInfo(
+    String entityId,
+    String deviceId,
+    String appVersion,
+    String appVersionCode,
+    String platform,
+  ) {
+    return _collection.doc(entityId).update({
+      'devices.$deviceId': {
+        'appVersion': appVersion,
+        'appVersionCode': appVersionCode,
+        'platform': platform,
+        'lastUsed': FieldValue.serverTimestamp(),
+      },
+    });
+  }
+
   /// Checks if the onboarding for UI changes should be shown for the entity.
   ///
   /// Returns `true` if the `showOnboardingForUiChanges` flag is set to `true`,

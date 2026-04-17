@@ -8,4 +8,7 @@ abstract class DeviceRepository {
 
   /// Returns the semantic app version (e.g. "1.0.0").
   Future<String> getAppSemanticVersion();
+
+  /// Returns the app build number (e.g. "42").
+  Future<String> getAppBuildNumber();
 }

@@ -68,4 +68,21 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> removeOnboardingForUiChangesFlag(String entityId) {
     return _entityService.removeOnboardingForUiChangesFlag(entityId);
   }
+
+  @override
+  Future<void> updateDeviceInfo(
+    String entityId,
+    String appVersion,
+    String appVersionCode,
+    String platform,
+    String deviceId,
+  ) {
+    return _entityService.updateDeviceInfo(
+      entityId,
+      deviceId,
+      appVersion,
+      appVersionCode,
+      platform,
+    );
+  }
 }
