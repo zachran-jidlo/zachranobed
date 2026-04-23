@@ -150,6 +150,15 @@
     "foodDateTimeLabelMinus1Day": "Včera",
     "foodDateTimeLabelMinus2Days": "-2 dny",
     "foodDateTimeLabelOnPackaging": "Viz obal",
+    "mealTileCoolingDateTemplate": "Datum zchlazení: {date}",
+    "@mealTileCoolingDateTemplate": {
+      "placeholders": {
+        "date": {
+          "type": "String",
+          "example": "2. 4. 2026"
+        }
+      }
+    },
     "foodDonationConfirmation": "Pokrm jste úspěšně darovali \u2764. Děkujeme, že pomáháte.",
     "shippingOrderConfirmation": "Vratku krabiček do jídelny jste úspěšně objednali \u2764. Děkujeme, že pomáháte.",
     "offerError": "Nabídku se \n nepodařilo odeslat. \n \u274c Zkuste to prosím \n znovu.",
