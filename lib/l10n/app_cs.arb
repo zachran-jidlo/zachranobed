@@ -150,8 +150,8 @@
     "foodDateTimeLabelMinus1Day": "Včera",
     "foodDateTimeLabelMinus2Days": "-2 dny",
     "foodDateTimeLabelOnPackaging": "Viz obal",
-    "mealTileCoolingDateTemplate": "Datum zchlazení: {date}",
-    "@mealTileCoolingDateTemplate": {
+    "mealTilePreparedAtTemplate": "Datum zchlazení: {date}",
+    "@mealTilePreparedAtTemplate": {
       "placeholders": {
         "date": {
           "type": "String",

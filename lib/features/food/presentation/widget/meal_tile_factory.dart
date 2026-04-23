@@ -37,9 +37,9 @@ class MealTileFactory {
     return switch (item.preparedAt) {
       null => null,
       FoodDateTimeSpecified(date: final date) =>
-        context.l10n.mealTileCoolingDateTemplate(DateTimeUtils.formatDateTime(date, "d. M. y")),
+        context.l10n.mealTilePreparedAtTemplate(DateTimeUtils.formatDateTime(date, "d. M. yyyy")),
       FoodDateTimeOnPackaging() =>
-        context.l10n.mealTileCoolingDateTemplate(context.l10n.foodDateTimeLabelOnPackaging.toLowerCase()),
+        context.l10n.mealTilePreparedAtTemplate(context.l10n.foodDateTimeLabelOnPackaging.toLowerCase()),
     };
   }
 
@@ -99,8 +99,7 @@ class MealTileFactory {
   /// Builds a date badge for the given [item].
   static UiMealBadge _buildDateBadge(BuildContext context, OfferedFood item) {
     final dateLabel = switch (item.consumeBy) {
-      FoodDateTimeSpecified(date: final date) =>
-        DateTimeUtils.formatDateTime(date, "d. M. y HH:mm"),
+      FoodDateTimeSpecified(date: final date) => DateTimeUtils.formatDateTime(date, "d. M. yyyy HH:mm"),
       FoodDateTimeOnPackaging() => context.l10n.foodDateTimeLabelOnPackaging,
     };
 
