@@ -73,7 +73,7 @@ export const confirmationReminderHandler = onRequest({ invoker: currentServiceAc
         delivery.donorId,
         fcmTokens,
         "Blíží se konec odpočtu",
-        "Zbývá vám dnes jídlo? Máte 5 minut do konce času pro potvrzení darování.",
+        "Zbývá vám dnes jídlo? Máte 10 minut do konce času pro potvrzení darování.",
         "DONOR_CONFIRMATION_REMINDER",
         delivery.donorId,
         delivery.recipientId,
