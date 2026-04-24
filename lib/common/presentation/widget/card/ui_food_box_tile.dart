@@ -26,6 +26,22 @@ class UiFoodBoxTileStat {
   });
 }
 
+/// Counts of boxes currently in transit, relative to the viewer.
+///
+/// [incoming] is rendered as `+N`, [outgoing] as `−N`.
+class UiFoodBoxTileOnTheWay {
+  /// Boxes heading towards the user.
+  final int incoming;
+
+  /// Boxes leaving the user.
+  final int outgoing;
+
+  const UiFoodBoxTileOnTheWay({
+    required this.incoming,
+    required this.outgoing,
+  });
+}
+
 /// A tile widget that displays food box statistics.
 ///
 /// This widget shows a card with a title, optional total count,
@@ -51,6 +67,9 @@ class UiFoodBoxTile extends StatelessWidget {
   /// Whether the first stat box should show a selected/check state.
   final bool isSelected;
 
+  /// Counts of boxes currently in transit. Shown only for [UiFoodBoxTileSize.full] tile.
+  final UiFoodBoxTileOnTheWay? onTheWay;
+
   /// Creates a [UiFoodBoxTile] widget.
   const UiFoodBoxTile({
     super.key,
@@ -59,10 +78,12 @@ class UiFoodBoxTile extends StatelessWidget {
     this.totalLabel,
     this.size = UiFoodBoxTileSize.small,
     this.isSelected = false,
+    this.onTheWay,
   }) : assert(stats.length > 0, 'stats must contain at least one item');
 
   @override
   Widget build(BuildContext context) {
+    final onTheWay = size == UiFoodBoxTileSize.full ? this.onTheWay : null;
     return UiCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -71,6 +92,10 @@ class UiFoodBoxTile extends StatelessWidget {
           _buildHeader(context),
           const SizedBox(height: 16),
           _buildContent(context),
+          if (onTheWay != null) ...[
+            const SizedBox(height: 4),
+            _OnTheWayRow(onTheWay: onTheWay),
+          ],
         ],
       ),
     );
@@ -130,6 +155,71 @@ class UiFoodBoxTile extends StatelessWidget {
   }
 }
 
+/// A rounded surface-gray panel with a centered label and two values
+/// (`+incoming` on the left, `−outgoing` on the right) separated by a
+/// vertical divider.
+class _OnTheWayRow extends StatelessWidget {
+  final UiFoodBoxTileOnTheWay onTheWay;
+
+  const _OnTheWayRow({required this.onTheWay});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: context.uiColors.surfaceGray,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            context.l10n.overviewFoodBoxesOnTheWayLabel,
+            style: context.textStyles.labelSmall.copyWith(
+              color: context.uiColors.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildValue(
+                  context,
+                  '+${onTheWay.incoming}',
+                ),
+                VerticalDivider(
+                  width: 1,
+                  thickness: 1,
+                  color: context.uiColors.surfaceWhite,
+                ),
+                _buildValue(
+                  context,
+                  '−${onTheWay.outgoing}',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildValue(BuildContext context, String text) {
+    return Expanded(
+      child: Center(
+        child: Text(
+          text,
+          style: context.textStyles.titleMedium.copyWith(
+            color: context.uiColors.textSecondary,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// A container displaying a single statistic with value and label.
 class _StatBox extends StatelessWidget {
   /// The stat data to display.
@@ -157,6 +247,7 @@ class _StatBox extends StatelessWidget {
     final backgroundColor = isHighlighted ? context.uiColors.surfaceGrayDark : context.uiColors.surfaceGray;
 
     final border = hasBorder ? Border.all(color: context.uiColors.textSecondary, width: 1) : null;
+    final fontWeight = hasBorder ? FontWeight.w700 : FontWeight.w500;
 
     return Container(
       constraints: const BoxConstraints(minWidth: 106),
@@ -184,6 +275,7 @@ class _StatBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: context.textStyles.labelSmall.copyWith(
               color: context.uiColors.textSecondary,
+              fontWeight: fontWeight,
             ),
           ),
         ],

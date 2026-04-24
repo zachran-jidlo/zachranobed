@@ -1,5 +1,6 @@
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_reported_count.dart';
 
 /// DTO to domain mapper for [FoodBoxesCheckup].
 extension FoodBoxesCheckupMapper on FoodBoxesCheckupDto {
@@ -9,6 +10,7 @@ extension FoodBoxesCheckupMapper on FoodBoxesCheckupDto {
       status: _getStatus(status),
       checkAt: checkAt,
       verifiedAt: verifiedAt,
+      reportedCounts: reportedCounts?.map((e) => e.toDomain()).toList(),
     );
   }
 
@@ -43,5 +45,29 @@ extension FoodBoxesCheckupDtoMapper on FoodBoxesCheckupStatus {
       case FoodBoxesCheckupStatus.notNeeded:
         return FoodBoxesCheckupStatusDto.ok;
     }
+  }
+}
+
+/// DTO to domain mapper for [FoodBoxesCheckupReportedCount].
+extension FoodBoxesCheckupReportedCountMapper on FoodBoxesCheckupReportedCountDto {
+  /// Maps DTO to domain representation.
+  FoodBoxesCheckupReportedCount toDomain() {
+    return FoodBoxesCheckupReportedCount(
+      foodBoxId: foodBoxId,
+      realCount: realCount,
+      systemCount: systemCount,
+    );
+  }
+}
+
+/// Domain to DTO mapper for [FoodBoxesCheckupReportedCount].
+extension FoodBoxesCheckupReportedCountDtoMapper on FoodBoxesCheckupReportedCount {
+  /// Maps domain to DTO representation.
+  FoodBoxesCheckupReportedCountDto toDto() {
+    return FoodBoxesCheckupReportedCountDto(
+      foodBoxId: foodBoxId,
+      realCount: realCount,
+      systemCount: systemCount,
+    );
   }
 }

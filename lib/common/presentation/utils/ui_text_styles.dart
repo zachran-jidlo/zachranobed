@@ -80,7 +80,7 @@ class UiTextStyles {
             letterSpacing: 0,
           ),
           titleMedium: const TextStyle(
-            fontFamily: 'FuturaBold',
+            fontFamily: 'FuturaSemiBold',
             fontSize: 16,
             height: 24.0 / 16.0,
             letterSpacing: 0.15,

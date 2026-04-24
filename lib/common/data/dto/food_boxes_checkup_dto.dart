@@ -31,17 +31,37 @@ class FoodBoxesCheckupDto {
   @TimestampConverter()
   final DateTime? verifiedAt;
   final FoodBoxesCheckupLastChangeDto? lastChange;
+  final List<FoodBoxesCheckupReportedCountDto>? reportedCounts;
 
   FoodBoxesCheckupDto({
     required this.status,
     required this.checkAt,
     required this.verifiedAt,
     required this.lastChange,
+    this.reportedCounts,
   });
 
   factory FoodBoxesCheckupDto.fromJson(Map<String, dynamic> json) => _$FoodBoxesCheckupDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$FoodBoxesCheckupDtoToJson(this);
+}
+
+@JsonSerializable()
+class FoodBoxesCheckupReportedCountDto {
+  final String foodBoxId;
+  final int realCount;
+  final int systemCount;
+
+  FoodBoxesCheckupReportedCountDto({
+    required this.foodBoxId,
+    required this.realCount,
+    required this.systemCount,
+  });
+
+  factory FoodBoxesCheckupReportedCountDto.fromJson(Map<String, dynamic> json) =>
+      _$FoodBoxesCheckupReportedCountDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FoodBoxesCheckupReportedCountDtoToJson(this);
 }
 
 enum FoodBoxesCheckupStatusDto {

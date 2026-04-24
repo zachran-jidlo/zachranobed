@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
@@ -16,7 +17,6 @@ import 'package:zachranobed/common/presentation/widget/card/ui_food_box_tile.dar
 import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
-import 'package:zachranobed/features/food/domain/usecase/report_food_boxes_mismatch_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat_factory.dart';
 
@@ -48,7 +48,6 @@ class FoodBoxesDetailScreen extends StatefulWidget {
 class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
   late final Stream<Iterable<FoodBoxStatistics>> _stream;
   late final VerifyFoodBoxesCheckupUseCase _verifyCheckup;
-  late final ReportFoodBoxesMismatchUseCase _reportMismatch;
   bool _isLoading = false;
 
   @override
@@ -57,7 +56,6 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
     final observeStatistics = GetIt.I<ObserveFoodBoxStatisticsUseCase>();
     _stream = observeStatistics.invoke(widget.user);
     _verifyCheckup = GetIt.I<VerifyFoodBoxesCheckupUseCase>();
-    _reportMismatch = GetIt.I<ReportFoodBoxesMismatchUseCase>();
   }
 
   @override
@@ -67,13 +65,13 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
       builder: (context, snapshot) {
         return ScreenScaffold.universal(
           appBar: UiAppBar(title: context.l10n.overviewFoodBoxesHeaderTitle),
-          child: _buildContent(context, snapshot),
+          child: _buildBody(context, snapshot),
         );
       },
     );
   }
 
-  Widget _buildContent(
+  Widget _buildBody(
     BuildContext context,
     AsyncSnapshot<Iterable<FoodBoxStatistics>> snapshot,
   ) {
@@ -83,6 +81,22 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
 
     final statistics = snapshot.data!.toList();
 
+    return ContentWithLoading(
+      isLoading: _isLoading,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: _buildContent(context, statistics)),
+          if (widget.isCheckupMode) _buildCheckupActions(context, statistics),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    List<FoodBoxStatistics> statistics,
+  ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -96,19 +110,17 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
               description: context.l10n.foodBoxesCheckupInProgressDescription,
             ),
           ...statistics.map((stat) => _buildTile(context, stat)),
-          if (widget.isCheckupMode)
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: _buildCheckupActions(context),
-            ),
         ],
       ),
     );
   }
 
-  Widget _buildCheckupActions(BuildContext context) {
-    return ContentWithLoading(
-      isLoading: _isLoading,
+  Widget _buildCheckupActions(
+    BuildContext context,
+    List<FoodBoxStatistics> statistics,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         spacing: 8.0,
         children: [
@@ -117,9 +129,11 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
               text: context.l10n.foodBoxesCheckupInProgressMismatchesAction,
               size: UiButtonSize.medium(fullWidth: true),
               onPressed: () {
-                _withLoading(
-                  context: context,
-                  action: () => _reportMismatch.invoke(widget.user),
+                context.router.push(
+                  FoodBoxesCheckupMismatchRoute(
+                    user: widget.user,
+                    statistics: statistics,
+                  ),
                 );
               },
             ),
@@ -145,13 +159,23 @@ class _FoodBoxesDetailScreenState extends State<FoodBoxesDetailScreen> {
   }
 
   Widget _buildTile(BuildContext context, FoodBoxStatistics stat) {
-    return UiFoodBoxTile(
-      title: stat.type.name,
-      size: UiFoodBoxTileSize.full,
-      totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
-      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat),
-      isSelected: widget.isCheckupMode,
-    );
+    if (widget.isCheckupMode) {
+      return UiFoodBoxTile(
+        title: stat.type.name,
+        size: UiFoodBoxTileSize.full,
+        totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
+        stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat),
+        isSelected: true,
+        onTheWay: FoodBoxTileStatFactory.buildOnTheWay(widget.user, stat),
+      );
+    } else {
+      return UiFoodBoxTile(
+        title: stat.type.name,
+        size: UiFoodBoxTileSize.full,
+        totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
+        stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat, showOnTheWay: true),
+      );
+    }
   }
 
   /// Executes an [action] with a loading indicator.

@@ -119,6 +119,9 @@ flutter:
     - family: FuturaMedium
       fonts:
         - asset: fonts/Futura-Medium.ttf
+    - family: FuturaSemiBold
+      fonts:
+        - asset: fonts/Futura-SemiBold.ttf
     - family: FuturaBold
       fonts:
         - asset: fonts/Futura-Bold.ttf

@@ -85,12 +85,17 @@ class EntityPairService {
 
   /// Updates a food boxes checkup [status] and "next check" timestamp for entity pair based on the provided [donorId]
   /// and [recipientId]. The [target] parameter defines a path (could be either "donor" or "recipient").
+  ///
+  /// When [reportedCounts] is provided, they are written atomically alongside
+  /// the status update. Used when reporting a mismatch with per-box-type real
+  /// vs. in-system counts.
   Future<bool> updateFoodBoxesCheckupStatus({
     required String donorId,
     required String recipientId,
     required FoodBoxesCheckupStatusDto status,
     required DateTime checkAt,
     required String target,
+    List<FoodBoxesCheckupReportedCountDto>? reportedCounts,
   }) async {
     // Get reference to current document
     final reference = await _getPairDocument(donorId, recipientId);
@@ -98,14 +103,16 @@ class EntityPairService {
       return false;
     }
 
-    return _updateWithTransaction(
-      reference,
-      {
-        'foodboxesCheckup.$target.status': status.toJson(),
-        'foodboxesCheckup.$target.checkAt': const TimestampConverter().toJson(checkAt),
-        'foodboxesCheckup.$target.lastChange': FoodBoxesCheckupLastChangeDto.user.toJson(),
-      },
-    );
+    final updates = <String, dynamic>{
+      'foodboxesCheckup.$target.status': status.toJson(),
+      'foodboxesCheckup.$target.checkAt': const TimestampConverter().toJson(checkAt),
+      'foodboxesCheckup.$target.lastChange': FoodBoxesCheckupLastChangeDto.user.toJson(),
+    };
+    if (reportedCounts != null) {
+      updates['foodboxesCheckup.$target.reportedCounts'] = reportedCounts.map((e) => e.toJson()).toList();
+    }
+
+    return _updateWithTransaction(reference, updates);
   }
 
   /// Sets a food boxes checkup as verified and updates the "next check" timestamp for entity pair based on the

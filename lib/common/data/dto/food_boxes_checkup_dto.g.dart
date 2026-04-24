@@ -35,6 +35,10 @@ FoodBoxesCheckupDto _$FoodBoxesCheckupDtoFromJson(Map<String, dynamic> json) =>
           json['verifiedAt'], const TimestampConverter().fromJson),
       lastChange: $enumDecodeNullable(
           _$FoodBoxesCheckupLastChangeDtoEnumMap, json['lastChange']),
+      reportedCounts: (json['reportedCounts'] as List<dynamic>?)
+          ?.map((e) => FoodBoxesCheckupReportedCountDto.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$FoodBoxesCheckupDtoToJson(
@@ -45,6 +49,8 @@ Map<String, dynamic> _$FoodBoxesCheckupDtoToJson(
       'verifiedAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.verifiedAt, const TimestampConverter().toJson),
       'lastChange': instance.lastChange?.toJson(),
+      'reportedCounts':
+          instance.reportedCounts?.map((e) => e.toJson()).toList(),
     };
 
 const _$FoodBoxesCheckupStatusDtoEnumMap = {
@@ -69,3 +75,19 @@ Json? _$JsonConverterToJson<Json, Value>(
   Json? Function(Value value) toJson,
 ) =>
     value == null ? null : toJson(value);
+
+FoodBoxesCheckupReportedCountDto _$FoodBoxesCheckupReportedCountDtoFromJson(
+        Map<String, dynamic> json) =>
+    FoodBoxesCheckupReportedCountDto(
+      foodBoxId: json['foodBoxId'] as String,
+      realCount: (json['realCount'] as num).toInt(),
+      systemCount: (json['systemCount'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$FoodBoxesCheckupReportedCountDtoToJson(
+        FoodBoxesCheckupReportedCountDto instance) =>
+    <String, dynamic>{
+      'foodBoxId': instance.foodBoxId,
+      'realCount': instance.realCount,
+      'systemCount': instance.systemCount,
+    };

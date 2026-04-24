@@ -164,7 +164,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
       title: stat.type.name,
       size: UiFoodBoxTileSize.full,
       totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
-      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat),
+      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat, showOnTheWay: true),
     );
   }
 

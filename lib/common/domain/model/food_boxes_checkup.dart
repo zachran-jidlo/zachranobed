@@ -1,3 +1,4 @@
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_reported_count.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 
@@ -12,11 +13,16 @@ class FoodBoxesCheckup {
   /// The optional date and time when the checkup was verified.
   final DateTime? verifiedAt;
 
+  /// The per-box-type counts submitted by the user when the most recent
+  /// mismatch was reported.
+  final List<FoodBoxesCheckupReportedCount>? reportedCounts;
+
   /// Creates a new [FoodBoxesCheckup] instance.
   FoodBoxesCheckup({
     required this.status,
     required this.checkAt,
     required this.verifiedAt,
+    this.reportedCounts,
   });
 
   /// Determines whether a checkup is currently needed.
