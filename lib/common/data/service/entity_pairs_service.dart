@@ -118,6 +118,11 @@ class EntityPairService {
   /// Sets a food boxes checkup as verified and updates the "next check" timestamp for entity pair based on the
   /// provided [donorId] and [recipientId]. The [target] parameter defines a path (could be either "donor" or
   /// "recipient").
+  ///
+  /// This rewrites the entire `foodboxesCheckup.<target>` object, which
+  /// clears any `reportedCounts` written during a prior mismatch report.
+  /// That is by design. Once the user verifies, the previous report is no
+  /// longer relevant.
   Future<bool> verifyFoodBoxesCheckup({
     required String donorId,
     required String recipientId,

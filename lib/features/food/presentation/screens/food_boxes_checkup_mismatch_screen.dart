@@ -30,6 +30,11 @@ class FoodBoxesCheckupMismatchScreen extends StatefulWidget {
   final UserData user;
 
   /// The box statistics captured when the user opened this screen.
+  ///
+  /// This is a one-time snapshot by design. Deliveries that complete while
+  /// the user edits counters do not update the values shown here, so the
+  /// in-system count written alongside the real count on submit matches
+  /// what the user compared against while counting.
   final List<FoodBoxStatistics> statistics;
 
   const FoodBoxesCheckupMismatchScreen({
@@ -134,7 +139,7 @@ class _FoodBoxesCheckupMismatchScreenState extends State<FoodBoxesCheckupMismatc
       child: UiPrimaryButton(
         text: context.l10n.foodBoxesCheckupMismatchSubmitAction,
         size: UiButtonSize.medium(fullWidth: true),
-        enabled: _hasChange,
+        enabled: !_isLoading && _hasChange,
         onPressed: () => _submit(context),
       ),
     );
@@ -167,6 +172,9 @@ class _FoodBoxesCheckupMismatchScreenState extends State<FoodBoxesCheckupMismatc
       context.router.popUntilRouteWithName(HomeRoute.name);
     } else {
       UiTemporarySnackBar.showError(context, message: context.l10n.foodBoxesCheckupErrorMessage);
+      if (!mounted) {
+        return;
+      }
       setState(() {
         _isLoading = false;
       });

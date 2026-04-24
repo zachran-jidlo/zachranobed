@@ -196,7 +196,7 @@ class _OnTheWayRow extends StatelessWidget {
                 ),
                 _buildValue(
                   context,
-                  '−${onTheWay.outgoing}',
+                  '-${onTheWay.outgoing}',
                 ),
               ],
             ),
