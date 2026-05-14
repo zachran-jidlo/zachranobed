@@ -64,7 +64,7 @@ extension EntityPairMapper on EntityPairDto {
   ///
   /// The checkup state is determined as follows:
   /// 1. If the pair doesn't use returnable food boxes → checkup is not needed,
-  ///    the monthly checkup flow will be skipped entirely.
+  ///    the regular checkup flow will be skipped entirely.
   /// 2. If no checkup DTO exists (first-time setup) → defaults to OK status with no
   ///    verification, allowing normal app usage.
   /// 3. Otherwise → maps the DTO to domain, preserving the actual checkup state

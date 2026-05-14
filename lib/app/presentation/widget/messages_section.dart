@@ -13,7 +13,7 @@ import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes
 
 /// A section that displays actionable messages and notifications to the user.
 ///
-/// Currently handles displaying the food boxes checkup tile when a monthly
+/// Currently handles displaying the food boxes checkup tile when a regular
 /// checkup is needed.
 class MessagesSection extends StatefulWidget {
   /// The user data to display messages for.

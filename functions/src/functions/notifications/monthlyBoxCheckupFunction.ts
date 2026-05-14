@@ -27,7 +27,7 @@ export const monthlyBoxCheckupFunction = onSchedule(
       return;
     }
 
-    console.info(`It's the ${isFirstFriday ? "first" : "third"} Friday of the month,  sending notifications`);
+    console.info(`It's the ${isFirstFriday ? "first" : "third"} Friday of the month, sending notifications`);
 
     // Get all entity pairs and collect entity IDs that have boxes
     const entityPairsSnapshot = await db.collection("entityPairs").get();
@@ -71,7 +71,7 @@ export const monthlyBoxCheckupFunction = onSchedule(
           entityId,
           fcmTokens,
           "Kontrola krabiček",
-          "Proveďte měsíční kontrolu stavu krabiček",
+          "Proveďte pravidelnou kontrolu stavu krabiček",
           "ALL_FOOD_BOXES_CHECKUP",
         );
       },
@@ -79,10 +79,10 @@ export const monthlyBoxCheckupFunction = onSchedule(
 
     try {
       await Promise.all(notificationPromises);
-      console.info("Monthly box checkup notifications sent successfully");
+      console.info("Box checkup notifications sent successfully");
     } catch (error) {
       console.error(
-        "Error while sending monthly box checkup notifications",
+        "Error while sending box checkup notifications",
         error,
       );
     }
