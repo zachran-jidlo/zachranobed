@@ -23,6 +23,7 @@ class MealTileFactory {
   static Widget buildMealTile(BuildContext context, OfferedFood item) {
     return UiMealTile(
       title: item.dishName,
+      supportingText: _formatSupportingText(context, item),
       quantityLabel: _formatQuantity(context, item),
       badges: [
         _buildCategoryBadge(context, item),
@@ -30,6 +31,16 @@ class MealTileFactory {
         _buildDateBadge(context, item),
       ],
     );
+  }
+
+  static String? _formatSupportingText(BuildContext context, OfferedFood item) {
+    return switch (item.preparedAt) {
+      null => null,
+      FoodDateTimeSpecified(date: final date) =>
+        context.l10n.mealTilePreparedAtTemplate(DateTimeUtils.formatDateTime(date, "d. M. yyyy")),
+      FoodDateTimeOnPackaging() =>
+        context.l10n.mealTilePreparedAtTemplate(context.l10n.foodDateTimeLabelOnPackaging.toLowerCase()),
+    };
   }
 
   /// Formats the quantity label for the given [item].
@@ -88,8 +99,7 @@ class MealTileFactory {
   /// Builds a date badge for the given [item].
   static UiMealBadge _buildDateBadge(BuildContext context, OfferedFood item) {
     final dateLabel = switch (item.consumeBy) {
-      FoodDateTimeSpecified(date: final date) =>
-        DateTimeUtils.formatDateTime(date, "d.M.y HH:mm"),
+      FoodDateTimeSpecified(date: final date) => DateTimeUtils.formatDateTime(date, "d. M. yyyy HH:mm"),
       FoodDateTimeOnPackaging() => context.l10n.foodDateTimeLabelOnPackaging,
     };
 
