@@ -17,12 +17,15 @@ export async function constructAndSendEmail(
     return Promise.reject(new Error(`Entity not found: ${entityId}`));
   }
 
-  const hasReportedCounts = reportedCounts && reportedCounts.length > 0;
+  const mismatches = reportedCounts.filter(
+    (rc) => rc.systemCount !== rc.realCount
+  );
+  const hasReportedCounts = mismatches.length > 0;
   const foodboxesSectionTitle = hasReportedCounts ?
     "Nahlášený stav krabiček:" :
     "Aktuální stav krabiček:";
   const foodboxesHtml = hasReportedCounts ?
-    await constructReportedCountsTable(reportedCounts) :
+    await constructReportedCountsTable(mismatches) :
     await constructFoodboxesCount(entityPair);
 
   const email = {
@@ -94,7 +97,6 @@ async function constructReportedCountsTable(
 
   const cellStyle = "border:1px solid #ccc; padding:6px;";
   const rows = reportedCounts
-    .filter((rc) => rc.systemCount !== rc.realCount)
     .map((rc) => {
       const foodBoxName = foodBoxNames.docs
         .find((doc) => doc.id === rc.foodBoxId)
@@ -113,7 +115,7 @@ async function constructReportedCountsTable(
     "<table style=\"border-collapse: collapse;\">",
     "  <thead>",
     "    <tr>",
-    `      <th style="${cellStyle}"></th>`,
+    `      <th style="${cellStyle}">Krabička</th>`,
     `      <th style="${cellStyle}">Počet v systému</th>`,
     `      <th style="${cellStyle}">Reálný počet</th>`,
     "    </tr>",
