@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/domain/model/food_category.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
-import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
@@ -136,7 +136,20 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       SingleSelectChips(
         key: ValueKey(formFieldKey),
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
-        options: FoodCategory.createValues(context),
+        options: [
+          FoodCategory(
+            name: context.l10n.foodCategoryWarm,
+            type: FoodCategoryType.warm,
+          ),
+          FoodCategory(
+            name: context.l10n.foodCategoryCooled,
+            type: FoodCategoryType.cooled,
+          ),
+          FoodCategory(
+            name: context.l10n.foodCategoryPackaged,
+            type: FoodCategoryType.packaged,
+          ),
+        ],
         selection: widget.foodInfo.foodCategory,
         optionLabel: (e) => e.name,
         onSelectionChanged: (value) {

@@ -48,9 +48,26 @@ class DeliveryNotifier extends ChangeNotifier {
     }
   }
 
+  /// Cancels the active delivery subscription and clears delivery state.
+  ///
+  /// Call this on user logout to prevent Firestore permission-denied errors
+  /// caused by an active listener running after the auth session ends.
+  void reset() {
+    _streamSubscription?.cancel();
+    _streamSubscription = null;
+    _delivery = null;
+    notifyListeners();
+  }
+
   /// Inform listeners about the change.
   void refreshDelivery() {
     // Only update UI listeners, so that "canDonate" flag is reevaluated
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
   }
 }

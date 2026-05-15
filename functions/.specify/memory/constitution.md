@@ -99,7 +99,7 @@ All Firebase Cloud Functions MUST follow established patterns for triggers, erro
 **Supported Function Types**:
 1. **Scheduled Functions** (`onSchedule`): Cron-based triggers for periodic tasks
 2. **Firestore Triggers** (`onDocumentUpdated`): React to document state changes
-3. **HTTPS Functions** (if needed): RESTful endpoints
+3. **HTTPS Functions** (`onRequest`): RESTful endpoints (e.g., DODO courier webhook)
 
 **Non-Negotiable Rules**:
 - Firestore triggers MUST validate state transitions before processing

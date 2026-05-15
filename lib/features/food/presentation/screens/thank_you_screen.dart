@@ -147,7 +147,7 @@ class ThankYouScreen extends StatelessWidget {
           size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
           text: context.l10n.backToOverview,
           onPressed: () {
-            context.navigateTo(const HomeRoute());
+            context.navigateTo(HomeRoute());
           },
         ),
       ],

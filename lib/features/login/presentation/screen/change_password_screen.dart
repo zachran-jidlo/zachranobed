@@ -3,19 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:zachranobed/common/data/service/auth_service.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
-import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_password_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/form/ui_password_text_field.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/features/login/domain/usecase/change_password_usecase.dart';
 
 /// A screen that allows authenticated users to change their password.
 ///
@@ -45,8 +43,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmNewPasswordController = TextEditingController();
 
-  final authService = GetIt.I<AuthService>();
-  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
+  final _changePassword = GetIt.I<ChangePasswordUseCase>();
 
   @override
   void dispose() {
@@ -99,7 +96,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final entityId = HelperService.getCurrentUser(context)?.entityId;
-                        await _changePassword(entityId);
+                        await _changeUserPassword(entityId);
                       }
                     },
                   ),
@@ -112,7 +109,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Future<void> _changePassword(String? entityId) async {
+  Future<void> _changeUserPassword(String? entityId) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -120,17 +117,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
 
     try {
-      await authService.reauthenticateUser(_oldPasswordController.text);
-
-      await authService.changePassword(_newPasswordController.text);
-
-      await authService.signOut(entityId);
-
-      _notifyUserDataChanged.invoke(null);
+      await _changePassword.invoke(entityId, _oldPasswordController.text, _newPasswordController.text);
 
       if (mounted) {
+        context.router.pop();
         UiTemporarySnackBar.show(context, message: context.l10n.newPasswordSuccessfullySaved);
-        context.router.replaceAll([const LoginRoute()]);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {

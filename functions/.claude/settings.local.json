@@ -19,6 +19,10 @@
       "Bash(grep:*)",
       "Bash(test:*)",
       "Bash(firebase functions:log:*)",
+      "Bash(/Users/jiri.zoudun/Development/flutter/zachranObed/zachranobed/functions/scripts/test-dodo-webhook.sh)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(npm run lint:fix:*)"
       "Bash(bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
       "Bash(tail:*)"
     ]

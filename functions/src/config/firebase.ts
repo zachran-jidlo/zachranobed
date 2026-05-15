@@ -33,6 +33,7 @@ export const dodoClientSecret = defineSecret("DODO_CLIENT_SECRET");
 export const dodoOauthUri = defineSecret("DODO_OAUTH_URI");
 export const dodoScope = defineSecret("DODO_SCOPE");
 export const dodoOrdersApi = defineSecret("DODO_ORDERS_API");
+export const dodoWebhookToken = defineSecret("DODO_WEBHOOK_TOKEN");
 export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 
 admin.initializeApp();

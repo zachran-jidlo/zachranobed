@@ -2,14 +2,25 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [2.1.0]
+### Added
+- **ZOB-409** Add new FAQ section.
+- **ZOB-418** Add soft and force updates to web application.
+- **ZOB-420** Add sending a device info to Firestore.
+
+### Fixed
+- **ZOB-419** Fix logout related crash.
+
+### Changed
+
+### Removed
+
 ## [2.0.0]
 ### Added
 - **ZOB-381** Add new UI components and color definitions from new design system.
 - **ZOB-393** Add new delivery details screen.
 - **ZOB-404** Add new "What's new" screen.
 - **ZOB-405** Add support for allergen sub categories.
-
-### Fixed
 
 ### Changed
 - **ZOB-160** Refactor auth service usage, move some shared components to common folder.

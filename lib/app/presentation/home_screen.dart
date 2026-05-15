@@ -5,20 +5,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/overview_screen.dart';
-import 'package:zachranobed/common/data/service/auth_service.dart';
-import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
-import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
 import 'package:zachranobed/common/presentation/utils/lifecycle_watcher.dart';
 import 'package:zachranobed/common/presentation/utils/ui_constants.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
-import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
-import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_nav_bar.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_navigation_drawer_item.dart';
+import 'package:zachranobed/features/faq/presentation/screen/faq_screen.dart';
 import 'package:zachranobed/features/food/presentation/screens/history_screen.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/has_any_unread_notifications_use_case.dart';
 import 'package:zachranobed/features/notifications/domain/usecase/update_notifications_token_use_case.dart';
@@ -26,7 +25,9 @@ import 'package:zachranobed/features/notifications/presentation/notifications_sc
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialTabIndex;
+
+  const HomeScreen({super.key, this.initialTabIndex = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,7 +35,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTickerProviderStateMixin {
   final _updateNotificationsTokenUseCase = GetIt.I<UpdateNotificationsTokenUseCase>();
-  final _notifyUserDataChanged = GetIt.I<NotifyUserDataChangedUseCase>();
 
   /// The data for the tabs.
   final _tabs = [
@@ -42,6 +42,11 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
       label: (context) => context.l10n.navigationLabelOverview,
       iconSpec: const UiIconSpec.data(Icons.home),
       content: (context) => const OverviewScreen(),
+    ),
+    _TabScreenData(
+      label: (context) => context.l10n.navigationLabelFaq,
+      iconSpec: const UiIconSpec.data(Icons.menu_book),
+      content: (context) => const FaqScreen(),
     ),
     _TabScreenData(
       label: (context) => context.l10n.navigationLabelHistory,
@@ -74,7 +79,11 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: _tabs.length);
+    _tabController = TabController(
+      vsync: this,
+      length: _tabs.length,
+      initialIndex: widget.initialTabIndex,
+    );
     _selectedIndex = _tabController.index;
 
     _tabController.addListener(() {
@@ -99,6 +108,14 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
         });
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialTabIndex != oldWidget.initialTabIndex) {
+      _tabController.animateTo(widget.initialTabIndex);
+    }
   }
 
   @override
@@ -192,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
 
   Widget _homeScreenContent() {
     if (context.watch<UserNotifier>().user == null) {
-      final authService = GetIt.I<AuthService>();
+      final signOut = GetIt.I<SignOutUseCase>();
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -205,11 +222,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
                   text: context.l10n.signOut,
                   onPressed: () async {
                     final entityId = HelperService.getCurrentUser(context)?.entityId;
-                    await authService.signOut(entityId);
-                    _notifyUserDataChanged.invoke(null);
-                    if (mounted) {
-                      context.router.replaceAll([const LoginRoute()]);
-                    }
+                    await signOut.invoke(entityId);
                   },
                 ),
               ),

@@ -60,6 +60,7 @@ src/
 │   ├── checkOrdersFunction.ts                 # Scheduled order checking (9-20 CET)
 │   ├── sendOrdersFunction.ts                  # Scheduled daily delivery creation (16:00 Prague)
 │   ├── checkDeliveriesInvocatorFunction.ts    # Legacy GitHub Actions trigger (deprecated)
+│   ├── dodoOrderStatusFunction.ts              # DODO courier webhook (PUT /{id}/status)
 │   ├── mismatchFunction.ts                    # Box mismatch notifications
 │   └── notifications/                         # Firestore-triggered notifications
 │       ├── foodDeliveryFunction.ts
@@ -102,6 +103,17 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
 - `scheduledFunctionCrontab` - **DEPRECATED** Legacy GitHub Actions trigger
   - Replaced by `checkOrdersFunction`
   - Kept for reference only
+
+**HTTP Endpoints** (v2 onRequest):
+- `dodoOrderStatus` (exported as `orders`) - DODO courier webhook endpoint
+  - URL: `PUT /orders/{identifier}/status`
+  - Receives delivery status callbacks from DODO Logistics
+  - Authenticates via Basic auth (token stored in Secret Manager as `DODO_WEBHOOK_TOKEN`)
+  - Maps DODO statuses to Firestore delivery states:
+    - `OnWayToPickup` → `ON_WAY_TO_PICK_UP`
+    - `OnWayToCustomer` → `IN_DELIVERY`
+    - `ArrivedToCustomer` → `DELIVERED`
+  - Other statuses (`ArrivedToPickup`, `Finished`, `Refused`) are logged but don't change state
 
 **Firestore Triggers** (v2 onDocumentUpdated):
 - `notifyCharityAboutDonationV2` - Triggers on `deliveries/{id}` updates when state changes to ACCEPTED/NOT_USED
@@ -254,6 +266,24 @@ See README.md for complete curl examples.
 - Use `readonly` for immutable properties
 - PascalCase for types/interfaces, camelCase for functions/variables, UPPER_CASE for constants
 
+## Testing Scripts
+
+- `scripts/test-dodo-webhook.sh` - Automated test suite for the DODO webhook (auth, validation, all statuses)
+- `scripts/call-dodo-webhook.sh` - Manual webhook caller for testing specific status transitions
+
+```bash
+# Run all webhook tests against local emulator
+./scripts/test-dodo-webhook.sh
+
+# Run tests against DEV
+./scripts/test-dodo-webhook.sh --env dev
+
+# Call webhook with specific identifier and status
+./scripts/call-dodo-webhook.sh ZO-123 OnWayToPickup              # local
+./scripts/call-dodo-webhook.sh ZO-123 OnWayToCustomer --env dev   # DEV
+./scripts/call-dodo-webhook.sh ZO-123 ArrivedToCustomer --env prod
+```
+
 ## Important Locations
 
 - Function exports: `src/index.ts`
@@ -264,6 +294,8 @@ See README.md for complete curl examples.
 - Notification service: `src/services/notificationService.ts`
 - Delivery service: `src/services/deliveryService.ts`
 - DODO API integration: `src/services/dodoService.ts`
+- DODO webhook endpoint: `src/functions/dodoOrderStatusFunction.ts`
+- DODO webhook test scripts: `scripts/test-dodo-webhook.sh`, `scripts/call-dodo-webhook.sh`
 - Entity management: `src/services/entityService.ts`
 - Data models: `src/models/`
 - TypeScript config: `tsconfig.json`

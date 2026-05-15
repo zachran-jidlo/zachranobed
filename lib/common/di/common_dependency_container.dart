@@ -3,6 +3,7 @@ import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/repository/firebase_app_configuration_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_delivery_repository.dart';
 import 'package:zachranobed/common/data/repository/firebase_user_repository.dart';
+import 'package:zachranobed/common/data/repository/platform_device_repository.dart';
 import 'package:zachranobed/common/data/service/auth_service.dart';
 import 'package:zachranobed/common/data/service/carrier_service.dart';
 import 'package:zachranobed/common/data/service/configuration_service.dart';
@@ -14,15 +15,22 @@ import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
+import 'package:zachranobed/common/domain/repository/device_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
 import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_build_number_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_semantic_version_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/get_device_id_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/update_device_info_usecase.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
 
 class CommonDependencyContainer {
@@ -34,6 +42,7 @@ class CommonDependencyContainer {
     _setupUserComponents();
     _setupAppConfigurationComponents();
     _setupAppPreferencesComponents();
+    _setupDeviceComponents();
     _setupServiceComponents();
   }
 
@@ -108,6 +117,8 @@ class CommonDependencyContainer {
         GetIt.I<UserRepository>(),
       ),
     );
+
+    GetIt.I.registerFactory<SignOutUseCase>(() => SignOutUseCase(GetIt.I<UserRepository>()));
   }
 
   static void _setupAppConfigurationComponents() {
@@ -123,6 +134,26 @@ class CommonDependencyContainer {
     GetIt.I.registerSingleton(AppPreferences());
   }
 
+  static void _setupDeviceComponents() {
+    GetIt.I.registerFactory<DeviceRepository>(() => PlatformDeviceRepository());
+    GetIt.I.registerFactory<GetDeviceIdUseCase>(() => GetDeviceIdUseCase(GetIt.I<DeviceRepository>()));
+    GetIt.I.registerFactory<GetAppVersionUseCase>(() => GetAppVersionUseCase(GetIt.I<DeviceRepository>()));
+    GetIt.I.registerFactory<GetAppSemanticVersionUseCase>(
+      () => GetAppSemanticVersionUseCase(GetIt.I<DeviceRepository>()),
+    );
+    GetIt.I.registerFactory<GetAppBuildNumberUseCase>(
+      () => GetAppBuildNumberUseCase(GetIt.I<DeviceRepository>()),
+    );
+    GetIt.I.registerFactory<UpdateDeviceInfoUseCase>(
+      () => UpdateDeviceInfoUseCase(
+        GetIt.I<UserRepository>(),
+        GetIt.I<GetDeviceIdUseCase>(),
+        GetIt.I<GetAppSemanticVersionUseCase>(),
+        GetIt.I<GetAppBuildNumberUseCase>(),
+      ),
+    );
+  }
+
   static void _setupServiceComponents() {
     GetIt.I.registerSingleton(FoodBoxService());
     GetIt.I.registerSingleton(EntityService());
@@ -135,6 +166,7 @@ class CommonDependencyContainer {
         GetIt.I<EntityService>(),
         GetIt.I<EntityPairService>(),
         GetIt.I<AppPreferences>(),
+        GetIt.I<GetDeviceIdUseCase>(),
       ),
     );
     GetIt.I.registerSingleton(ConfigurationService());

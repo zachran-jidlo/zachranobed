@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/domain/model/food_category.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
-import 'package:zachranobed/common/presentation/model/food_category.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
-import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
-import 'package:zachranobed/common/presentation/widget/chip/ui_meal_badge.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_meal_tile.dart';
+import 'package:zachranobed/common/presentation/widget/chip/ui_meal_badge.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
@@ -23,6 +23,7 @@ class MealTileFactory {
   static Widget buildMealTile(BuildContext context, OfferedFood item) {
     return UiMealTile(
       title: item.dishName,
+      supportingText: _formatSupportingText(context, item),
       quantityLabel: _formatQuantity(context, item),
       badges: [
         _buildCategoryBadge(context, item),
@@ -30,6 +31,16 @@ class MealTileFactory {
         _buildDateBadge(context, item),
       ],
     );
+  }
+
+  static String? _formatSupportingText(BuildContext context, OfferedFood item) {
+    return switch (item.preparedAt) {
+      null => null,
+      FoodDateTimeSpecified(date: final date) =>
+        context.l10n.mealTilePreparedAtTemplate(DateTimeUtils.formatDateTime(date, "d. M. yyyy")),
+      FoodDateTimeOnPackaging() =>
+        context.l10n.mealTilePreparedAtTemplate(context.l10n.foodDateTimeLabelOnPackaging.toLowerCase()),
+    };
   }
 
   /// Formats the quantity label for the given [item].
@@ -88,8 +99,7 @@ class MealTileFactory {
   /// Builds a date badge for the given [item].
   static UiMealBadge _buildDateBadge(BuildContext context, OfferedFood item) {
     final dateLabel = switch (item.consumeBy) {
-      FoodDateTimeSpecified(date: final date) =>
-        DateTimeUtils.formatDateTime(date, "d.M.y HH:mm"),
+      FoodDateTimeSpecified(date: final date) => DateTimeUtils.formatDateTime(date, "d. M. yyyy HH:mm"),
       FoodDateTimeOnPackaging() => context.l10n.foodDateTimeLabelOnPackaging,
     };
 
