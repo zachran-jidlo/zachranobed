@@ -4,15 +4,19 @@ import { notifyCanteenAboutBoxShippmentV2 } from "./functions/notifications/boxR
 import { notifyAboutLackOfBoxes } from "./functions/notifications/lackOfBoxesFunction";
 import { boxesMismatchNotification } from "./functions/mismatchFunction";
 import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxCheckupFunction";
+import { notifyCanteenAboutMissingMealInfo } from "./functions/notifications/missingMealInfoFunction";
+import { notifyCanteenAboutCourierIncoming } from "./functions/notifications/canteenCourierIncomingFunction";
+import { notifyCharityAboutCourierIncoming } from "./functions/notifications/charityCourierIncomingFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
-import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
+import { confirmationReminderHandler } from "./functions/notifications/confirmationReminderFunction";
 import {
   finalizeDeliveriesFunction,
   finalizeDeliveries,
 } from "./functions/finalizeDeliveriesFunction";
+import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { DateTime } from "luxon";
@@ -23,6 +27,9 @@ exports.notifyCanteenAboutBoxShippmentV2 = notifyCanteenAboutBoxShippmentV2;
 exports.notifyAboutLackOfBoxes = notifyAboutLackOfBoxes;
 exports.boxesMismatchNotification = boxesMismatchNotification;
 exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
+exports.notifyCanteenAboutMissingMealInfo = notifyCanteenAboutMissingMealInfo;
+exports.notifyCanteenAboutCourierIncoming = notifyCanteenAboutCourierIncoming;
+exports.notifyCharityAboutCourierIncoming = notifyCharityAboutCourierIncoming;
 
 // Get current project ID
 const currentProjectId =
@@ -101,6 +108,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 // Exported unconditionally: Cloud Tasks invokes this in all environments
 // (both DEV and PROD create tasks that need this endpoint).
 exports.cloudTaskHandler = cloudTaskHandler;
+exports.confirmationReminderHandler = confirmationReminderHandler;
 
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;
