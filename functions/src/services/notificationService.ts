@@ -11,7 +11,7 @@ async function createNotification(
   message: string,
   type: string,
   donorId?: string,
-  recipientId?: string
+  recipientId?: string,
 ): Promise<void> {
   const notificationRef = db
     .collection("entities")
@@ -44,7 +44,7 @@ async function createNotification(
 async function cleanupInvalidTokens(
   entityId: string,
   tokens: { [key: string]: string },
-  results: admin.messaging.SendResponse[]
+  results: admin.messaging.SendResponse[],
 ): Promise<void> {
   const invalidTokens: string[] = [];
 
@@ -73,7 +73,7 @@ async function cleanupInvalidTokens(
     // Update entity with cleaned tokens
     await entityRef.update({ fcmTokens });
     console.info(
-      `Removed ${invalidTokens.length} invalid tokens from entity ${entityId}`
+      `Removed ${invalidTokens.length} invalid tokens from entity ${entityId}`,
     );
   }
 }
@@ -88,7 +88,7 @@ export async function sendNotificationsAndCleanup(
   body: string,
   type: string,
   donorId?: string,
-  recipientId?: string
+  recipientId?: string,
 ): Promise<void> {
   // Create notification document
   await createNotification(entityId, title, body, type, donorId, recipientId);
@@ -106,9 +106,13 @@ export async function sendNotificationsAndCleanup(
 
   console.info("Generated push notification messages:", messages);
   // TODO: There is a problem with messaging/mismatched-credential - token is from the app registered to diffrent Firebase project - DEV vs PROD.
-  const response = await admin.messaging().sendEach(messages);
+  let response;
+  if (messages.length > 0) {
+    response = await admin.messaging().sendEach(messages);
+  }
+
   console.info(
-    "Successfully sent " + response?.successCount + " push messages."
+    "Successfully sent " + (response?.successCount ?? 0) + " push messages.",
   );
 
   if (response) {
