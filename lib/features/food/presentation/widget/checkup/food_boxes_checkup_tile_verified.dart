@@ -9,8 +9,13 @@ import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 
 /// A badge widget displayed when food boxes have been verified.
 class FoodBoxesCheckupTileVerified extends StatelessWidget {
+  /// Whether the verification was performed by the user. The info button is
+  /// only shown in that case, since the dialog content speaks to the user's
+  /// own action.
+  final bool isVerifiedByUser;
+
   /// Creates a [FoodBoxesCheckupTileVerified] widget.
-  const FoodBoxesCheckupTileVerified({super.key});
+  const FoodBoxesCheckupTileVerified({super.key, required this.isVerifiedByUser});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +23,12 @@ class FoodBoxesCheckupTileVerified extends StatelessWidget {
       title: context.l10n.foodBoxesCheckupVerifiedLabel,
       icon: Icons.check_rounded,
       iconColor: context.uiColors.success,
-      trailing: UiIconButton.gradient(
-        icon: Icons.info_outline,
-        onPressed: () => _showVerifiedInfo(context),
-      ),
+      trailing: isVerifiedByUser
+          ? UiIconButton.gradient(
+              icon: Icons.info_outline,
+              onPressed: () => _showVerifiedInfo(context),
+            )
+          : null,
     );
   }
 

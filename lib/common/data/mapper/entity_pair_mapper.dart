@@ -75,6 +75,7 @@ extension EntityPairMapper on EntityPairDto {
         status: FoodBoxesCheckupStatus.notNeeded,
         checkAt: DateTime.now(),
         verifiedAt: null,
+        lastChange: FoodBoxesCheckupLastChange.admin,
       );
     }
 
@@ -83,6 +84,7 @@ extension EntityPairMapper on EntityPairDto {
         status: FoodBoxesCheckupStatus.ok,
         checkAt: DateTime.now(),
         verifiedAt: null,
+        lastChange: FoodBoxesCheckupLastChange.admin,
       );
     }
 

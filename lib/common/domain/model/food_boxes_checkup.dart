@@ -13,6 +13,9 @@ class FoodBoxesCheckup {
   /// The optional date and time when the checkup was verified.
   final DateTime? verifiedAt;
 
+  /// Who performed the most recent change to the checkup state.
+  final FoodBoxesCheckupLastChange lastChange;
+
   /// The per-box-type counts submitted by the user when the most recent
   /// mismatch was reported.
   final List<FoodBoxesCheckupReportedCount>? reportedCounts;
@@ -22,6 +25,7 @@ class FoodBoxesCheckup {
     required this.status,
     required this.checkAt,
     required this.verifiedAt,
+    required this.lastChange,
     this.reportedCounts,
   });
 
@@ -41,7 +45,10 @@ class FoodBoxesCheckup {
         if (checkAt.isAfter(now)) {
           final verifiedUntil = verifiedAt?.add(const Duration(days: Constants.foodBoxesVerifiedThreshold));
           final isVerified = verifiedUntil?.isAfter(now) ?? false;
-          state = FoodBoxesCheckupAllGood(isVerified: isVerified);
+          state = FoodBoxesCheckupAllGood(
+            isVerified: isVerified,
+            isVerifiedByUser: isVerified && lastChange == FoodBoxesCheckupLastChange.user,
+          );
         } else {
           final delayedUntil = checkAt.add(const Duration(days: Constants.foodBoxesCheckupMaxDelay));
           final isDelayAvailable = delayedUntil.isAfter(now);
@@ -63,7 +70,7 @@ class FoodBoxesCheckup {
         break;
 
       case FoodBoxesCheckupStatus.notNeeded:
-        state = FoodBoxesCheckupAllGood(isVerified: false);
+        state = FoodBoxesCheckupAllGood(isVerified: false, isVerifiedByUser: false);
         break;
     }
 
@@ -84,4 +91,13 @@ enum FoodBoxesCheckupStatus {
 
   /// The checkup is not needed.
   notNeeded,
+}
+
+/// Identifies who performed the most recent change to a food boxes checkup.
+enum FoodBoxesCheckupLastChange {
+  /// The user performed the most recent change.
+  user,
+
+  /// An admin performed the most recent change.
+  admin,
 }

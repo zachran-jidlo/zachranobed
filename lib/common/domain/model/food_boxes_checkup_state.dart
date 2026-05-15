@@ -12,8 +12,14 @@ class FoodBoxesCheckupAllGood extends FoodBoxesCheckupState {
   /// Whether the food box checkup is verified (by admin or user).
   final bool isVerified;
 
+  /// Whether the verification was performed by the user (as opposed to an admin).
+  final bool isVerifiedByUser;
+
   /// Creates an [FoodBoxesCheckupAllGood] state.
-  FoodBoxesCheckupAllGood({required this.isVerified});
+  FoodBoxesCheckupAllGood({
+    required this.isVerified,
+    required this.isVerifiedByUser,
+  });
 }
 
 /// Represents the "Mismatch" state of a food box checkup.

@@ -321,7 +321,7 @@
             }
         }
     },
-    "foodBoxesCheckupMismatchSubmitAction": "Upraveno",
+    "foodBoxesCheckupMismatchSubmitAction": "Nahlásit nesoulad",
 
     "notificationsTitle": "Notifikace",
     "notificationsLast7DaysTitle": "Posledních 7 dní",

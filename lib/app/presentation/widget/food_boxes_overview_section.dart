@@ -116,7 +116,9 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
     } else if (state is FoodBoxesCheckupMismatch) {
       banner = FoodBoxesCheckupTileMismatch();
     } else if (state is FoodBoxesCheckupAllGood && state.isVerified) {
-      banner = const FoodBoxesCheckupTileVerified();
+      banner = FoodBoxesCheckupTileVerified(
+        isVerifiedByUser: state.isVerifiedByUser,
+      );
     }
 
     if (banner == null) {

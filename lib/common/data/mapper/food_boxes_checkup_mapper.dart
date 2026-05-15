@@ -10,8 +10,19 @@ extension FoodBoxesCheckupMapper on FoodBoxesCheckupDto {
       status: _getStatus(status),
       checkAt: checkAt,
       verifiedAt: verifiedAt,
+      lastChange: _getLastChange(lastChange),
       reportedCounts: reportedCounts?.map((e) => e.toDomain()).toList(),
     );
+  }
+
+  FoodBoxesCheckupLastChange _getLastChange(FoodBoxesCheckupLastChangeDto? dto) {
+    switch (dto) {
+      case FoodBoxesCheckupLastChangeDto.user:
+        return FoodBoxesCheckupLastChange.user;
+      case FoodBoxesCheckupLastChangeDto.admin:
+      case null:
+        return FoodBoxesCheckupLastChange.admin;
+    }
   }
 
   FoodBoxesCheckupStatus _getStatus(FoodBoxesCheckupStatusDto? status) {
