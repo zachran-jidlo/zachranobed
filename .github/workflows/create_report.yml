@@ -21,6 +21,10 @@ jobs:
   modify-firestore:
     runs-on: ubuntu-latest
     timeout-minutes: 15  # Set a timeout of 15 minutes
+    env:
+      # szenius/set-timezone has no Node 24 release; force it onto Node 24 until a newer version of the action exists.
+      # See: https://github.com/szenius/set-timezone/issues/30
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Set previous month as TARGET_PERIOD for scheduled run
@@ -76,10 +80,10 @@ jobs:
           timezoneLinux: "Europe/Prague"
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
 

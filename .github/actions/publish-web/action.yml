@@ -14,7 +14,7 @@ runs:
 
   steps:
     - name: Checkout GitHub Pages repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: ${{ inputs.repository }}
         token: ${{ inputs.token }}
