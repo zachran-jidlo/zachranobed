@@ -51,6 +51,9 @@ jobs:
       # Downloads iOS related artifacts.
       - name: Download artifacts
         uses: actions/download-artifact@v8
+        with:
+          name: ios-artifacts
+          path: ios-artifacts
 
       # Upload IPA to the Firebase and distribute it with latest release notes.
       - name: Distribute to Firebase App Distribution

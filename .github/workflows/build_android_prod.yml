@@ -63,6 +63,9 @@ jobs:
       # Downloads Android related artifacts.
       - name: Download artifacts
         uses: actions/download-artifact@v8
+        with:
+          name: android-artifacts
+          path: android-artifacts
 
       # Upload APK to the Firebase and distribute it with latest release notes.
       - name: Distribute to Firebase App Distribution
