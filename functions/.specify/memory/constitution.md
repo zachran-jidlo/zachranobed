@@ -75,7 +75,7 @@ src/
 Development MUST use the specified toolchain versions and configurations to ensure consistency across environments.
 
 **Required Stack**:
-- **Node.js**: v20 (as specified in `engines.node`)
+- **Node.js**: v24 (as specified in `engines.node`)
 - **TypeScript**: ^5.7.3 with ES2017 target, CommonJS module format
 - **Firebase Admin SDK**: ^13.6.0
 - **Firebase Functions**: v2 API (^6.4.0) - NOT v1 API

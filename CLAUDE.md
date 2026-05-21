@@ -288,7 +288,7 @@ Interactive component gallery available at `lib/features/debug/components_screen
 
 ## Firebase Cloud Functions
 
-The `functions/` directory contains TypeScript Cloud Functions deployed on Node.js v20.
+The `functions/` directory contains TypeScript Cloud Functions deployed on Node.js v24.
 
 ```bash
 # Navigate to functions directory

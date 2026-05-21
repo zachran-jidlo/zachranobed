@@ -19,7 +19,7 @@
     "functions": {
       "port": 5001,
       "source": "functions",
-      "runtime": "nodejs20"
+      "runtime": "nodejs24"
     },
     "firestore": {
       "port": 8080

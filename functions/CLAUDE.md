@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Firebase Cloud Functions for Zachraň oběd (Save Lunch) - a backend service handling automated notifications, scheduled tasks, and business logic for the food redistribution platform.
 
-- Node.js: v20
+- Node.js: v24
 - TypeScript: ^5.7.3
 - Firebase Functions: v2 (^6.4.0)
 - Firebase Admin SDK: ^13.6.0
