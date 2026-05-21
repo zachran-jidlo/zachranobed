@@ -23,7 +23,7 @@ jobs:
       # Checkouts the repository with entire commit history, which is needed to calculate the
       # correct build version code in 'Setup environment' step.
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -42,7 +42,7 @@ jobs:
       # Checkouts the repository with entire commit history, which is needed to calculate the
       # correct build version code in 'Setup environment' step.
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
