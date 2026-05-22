@@ -47,7 +47,7 @@ export const boxTransfer = onDocumentUpdated(
     const docRef = event.data!.after.ref;
     const result = DeliverySchema.safeParse({ ref: docRef, ...newValue });
     if (!result.success) {
-      logger.warn(`boxTransfer: invalid delivery document ${event.params.id}`, result.error);
+      logger.error(`boxTransfer: invalid delivery document ${event.params.id}`, result.error);
       return;
     }
 
