@@ -17,17 +17,28 @@ class DateTimeUtils {
     return formatter.format(DateTime.now());
   }
 
-  /// Calculates the timestamp for the next food boxes check. This function determines the first Friday of the next
-  /// month at 7:00 AM UTC.
-  static DateTime getNextFoodBoxesCheckDateTime() {
-    final now = DateTime.now();
-    final firstDayOfNextMonth = DateTime(now.year, now.month + 1, 1);
+  /// Calculates the timestamp for the next food boxes check at 7:00 AM UTC.
+  /// Checkups run twice a month, on the first and the third Friday.
+  /// The optional [now] parameter is intended for tests, production code should
+  /// rely on the default value.
+  static DateTime getNextFoodBoxesCheckDateTime({DateTime? now}) {
+    final reference = now ?? DateTime.now();
 
-    // Adjust to the first Friday
-    final dayOffset = (5 - firstDayOfNextMonth.weekday + 7) % 7;
-    final nextMonthFriday = firstDayOfNextMonth.add(Duration(days: dayOffset));
+    final candidates = [
+      _nthFridayOfMonth(reference.year, reference.month, 1),
+      _nthFridayOfMonth(reference.year, reference.month, 3),
+      _nthFridayOfMonth(reference.year, reference.month + 1, 1),
+    ];
 
-    return DateTime.utc(nextMonthFriday.year, nextMonthFriday.month, nextMonthFriday.day, 7, 0, 0);
+    final next = candidates.firstWhere((date) => date.isAfter(reference));
+    return DateTime.utc(next.year, next.month, next.day, 7, 0, 0);
+  }
+
+  /// Returns the [n]-th Friday of the given month.
+  static DateTime _nthFridayOfMonth(int year, int month, int n) {
+    final firstOfMonth = DateTime(year, month, 1);
+    final offsetToFirstFriday = (5 - firstOfMonth.weekday + 7) % 7;
+    return firstOfMonth.add(Duration(days: offsetToFirstFriday + (n - 1) * 7));
   }
 
   /// Returns a [String] with current time in 'HH:mm' format.

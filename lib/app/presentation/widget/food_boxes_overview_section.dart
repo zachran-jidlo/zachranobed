@@ -116,7 +116,9 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
     } else if (state is FoodBoxesCheckupMismatch) {
       banner = FoodBoxesCheckupTileMismatch();
     } else if (state is FoodBoxesCheckupAllGood && state.isVerified) {
-      banner = const FoodBoxesCheckupTileVerified();
+      banner = FoodBoxesCheckupTileVerified(
+        isVerifiedByUser: state.isVerifiedByUser,
+      );
     }
 
     if (banner == null) {
@@ -164,7 +166,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
       title: stat.type.name,
       size: UiFoodBoxTileSize.full,
       totalLabel: context.l10n.overviewFoodBoxesTotalLabel(stat.totalQuantity),
-      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat),
+      stats: FoodBoxTileStatFactory.buildFullTileStats(context, widget.user, stat, showOnTheWay: true),
     );
   }
 

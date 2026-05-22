@@ -4,6 +4,7 @@ This is a changelog for **ZachranObed** application.
 
 ## [2.1.0]
 ### Added
+- **ZOB-408** Add reported counts to food boxes checkup flow.
 - **ZOB-409** Add new FAQ section.
 - **ZOB-418** Add soft and force updates to web application.
 - **ZOB-420** Add sending a device info to Firestore.

@@ -3,8 +3,8 @@ import { db } from "../../config/firebase";
 import { sendNotificationsAndCleanup } from "../../services/notificationService";
 
 /**
- * Function that runs every Friday at 9AM and checks if it's the first Friday of the month.
- * If it is, sends notifications to entities that manage food boxes.
+ * Function that runs every Friday at 9AM and checks if it's the first or the third
+ * Friday of the month. If it is, sends notifications to entities that manage food boxes.
  *
  * Only entities linked to at least one entity pair with boxes (count > 0) receive
  * a notification. Each entity receives at most one notification regardless of how
@@ -17,14 +17,17 @@ export const monthlyBoxCheckupFunction = onSchedule(
   },
   async (event) => {
     const now = new Date();
+    const day = now.getDate();
 
-    // Check if it's the first Friday (day between 1-7)
-    if (now.getDate() > 7) {
-      console.info("Not the first Friday of the month, skipping notifications");
+    // Check if it's the first Friday (day 1-7) or the third Friday (day 15-21)
+    const isFirstFriday = day >= 1 && day <= 7;
+    const isThirdFriday = day >= 15 && day <= 21;
+    if (!isFirstFriday && !isThirdFriday) {
+      console.info("Not the first or third Friday of the month, skipping notifications");
       return;
     }
 
-    console.info("It's the first Friday of the month, sending notifications");
+    console.info(`It's the ${isFirstFriday ? "first" : "third"} Friday of the month, sending notifications`);
 
     // Get all entity pairs and collect entity IDs that have boxes
     const entityPairsSnapshot = await db.collection("entityPairs").get();
@@ -68,7 +71,7 @@ export const monthlyBoxCheckupFunction = onSchedule(
           entityId,
           fcmTokens,
           "Kontrola krabiček",
-          "Proveďte měsíční kontrolu stavu krabiček",
+          "Proveďte pravidelnou kontrolu stavu krabiček",
           "ALL_FOOD_BOXES_CHECKUP",
         );
       },
@@ -76,10 +79,10 @@ export const monthlyBoxCheckupFunction = onSchedule(
 
     try {
       await Promise.all(notificationPromises);
-      console.info("Monthly box checkup notifications sent successfully");
+      console.info("Box checkup notifications sent successfully");
     } catch (error) {
       console.error(
-        "Error while sending monthly box checkup notifications",
+        "Error while sending box checkup notifications",
         error,
       );
     }

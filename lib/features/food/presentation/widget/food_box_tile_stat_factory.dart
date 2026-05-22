@@ -15,14 +15,25 @@ class FoodBoxTileStatFactory {
 
   /// Builds a list of [UiFoodBoxTileStat] for a full-size tile display.
   ///
-  /// Returns statistics with appropriate labels based on the [user] type:
-  /// - For [Canteen]: shows available quantity at canteen and quantity at charity
-  /// - For [Charity]: shows available quantity at charity and quantity at canteen
+  /// Returns stats with appropriate labels based on the [user] type:
+  /// - For [Canteen]: available quantity at canteen, then quantity at charity
+  /// - For [Charity]: available quantity at charity, then quantity at canteen
+  ///
+  /// When [showOnTheWay] is `true`, an aggregated in-transit cell is inserted
+  /// between the two main stats.
   static List<UiFoodBoxTileStat> buildFullTileStats(
     BuildContext context,
     UserData user,
-    FoodBoxStatistics stat,
-  ) {
+    FoodBoxStatistics stat, {
+    bool showOnTheWay = false,
+  }) {
+    final onTheWayStat = showOnTheWay
+        ? UiFoodBoxTileStat(
+            value: stat.quantityOnTheWay,
+            label: context.l10n.overviewFoodBoxesOnTheWayLabel,
+          )
+        : null;
+
     switch (user) {
       case Canteen():
         return [
@@ -30,10 +41,7 @@ class FoodBoxTileStatFactory {
             value: stat.availableQuantityAtCanteen,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
-          UiFoodBoxTileStat(
-            value: stat.quantityOnTheWay,
-            label: context.l10n.overviewFoodBoxesOnTheWayLabel,
-          ),
+          if (onTheWayStat != null) onTheWayStat,
           UiFoodBoxTileStat(
             value: stat.availableQuantityAtCharity,
             label: context.l10n.charity,
@@ -45,15 +53,34 @@ class FoodBoxTileStatFactory {
             value: stat.availableQuantityAtCharity,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
-          UiFoodBoxTileStat(
-            value: stat.quantityOnTheWay,
-            label: context.l10n.overviewFoodBoxesOnTheWayLabel,
-          ),
+          if (onTheWayStat != null) onTheWayStat,
           UiFoodBoxTileStat(
             value: stat.availableQuantityAtCanteen,
             label: context.l10n.canteen,
           ),
         ];
+    }
+  }
+
+  /// Builds the in-transit breakdown relative to the [user]'s role.
+  ///
+  /// `incoming` is the count heading towards the user. `outgoing` is the count
+  /// leaving the user.
+  static UiFoodBoxTileOnTheWay buildOnTheWay(
+    UserData user,
+    FoodBoxStatistics stat,
+  ) {
+    switch (user) {
+      case Canteen():
+        return UiFoodBoxTileOnTheWay(
+          incoming: stat.quantityOnTheWayToCanteen,
+          outgoing: stat.quantityOnTheWayToCharity,
+        );
+      case Charity():
+        return UiFoodBoxTileOnTheWay(
+          incoming: stat.quantityOnTheWayToCharity,
+          outgoing: stat.quantityOnTheWayToCanteen,
+        );
     }
   }
 }

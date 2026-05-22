@@ -1,3 +1,4 @@
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_reported_count.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
@@ -29,8 +30,12 @@ abstract class FoodBoxRepository {
   });
 
   /// Reports a mismatch in a food boxes checkup for the given [user].
+  ///
+  /// [reports] contains one entry per food-box type with the user-observed
+  /// real count and the in-system count at the moment of the report.
   Future<bool> reportFoodBoxesMismatch({
     required UserData user,
+    required List<FoodBoxesCheckupReportedCount> reports,
   });
 
   /// Verifies a food boxes checkup for the given [user].

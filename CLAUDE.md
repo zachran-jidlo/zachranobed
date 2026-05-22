@@ -104,6 +104,13 @@ Custom linting in `lint/arch/` enforces:
 - **Layer isolation**: Presentation → Domain → Data (not reverse)
 - **No direct data access from presentation**: Must go through domain layer
 
+## Documentation Comments
+
+- **Use simple English.** Short, plain sentences.
+- **Do not use em-dashes (—) or semicolons (;).** Break the thought into two sentences, or use a comma.
+- **Do not quote translated UI labels** (e.g. "Nesouhlasí", "Evidovaný počet", "Upraveno"). ARB strings change and comments rot silently. Describe behavior in language-neutral terms. Say "when the user reports a mismatch", "the in-system count", "on submit".
+- Reference l10n keys (e.g. `foodBoxesCheckupMismatchSubmitAction`) only when the key itself is load-bearing for the reader. Otherwise, describe the intent.
+
 ## Build Flavors
 
 Three environments with separate Firebase configs:

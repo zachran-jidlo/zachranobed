@@ -120,7 +120,7 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
 - `notifyCanteenAboutBoxShippmentV2` - Box return notifications
 - `notifyAboutLackOfBoxes` - Low box inventory alerts
 - `boxesMismatchNotification` - Box count mismatch detection
-- `monthlyBoxCheckupFunction` - Monthly box audit notifications
+- `monthlyBoxCheckupFunction` - Regular box audit notifications
 
 ### Key Patterns
 

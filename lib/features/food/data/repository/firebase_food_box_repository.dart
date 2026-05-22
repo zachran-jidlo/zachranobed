@@ -9,6 +9,7 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
+import 'package:zachranobed/common/domain/model/food_boxes_checkup_reported_count.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
@@ -192,6 +193,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   @override
   Future<bool> reportFoodBoxesMismatch({
     required UserData user,
+    required List<FoodBoxesCheckupReportedCount> reports,
   }) {
     return _entityPairService.updateFoodBoxesCheckupStatus(
       donorId: user.activePair.donorId,
@@ -199,6 +201,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       status: FoodBoxesCheckupStatus.mismatch.toDto(),
       target: _getFoodBoxesCheckupTarget(user),
       checkAt: user.getFoodBoxesCheckup(user.activePair).checkAt,
+      reportedCounts: reports.map((e) => e.toDto()).toList(),
     );
   }
 

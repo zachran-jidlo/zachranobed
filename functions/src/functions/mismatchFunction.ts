@@ -30,7 +30,12 @@ export const boxesMismatchNotification = onDocumentUpdated(
     if (newDonorStatus === "MISMATCH" && oldDonorStatus !== "MISMATCH") {
       console.info("Donor status is MISMATCH");
 
-      await constructAndSendEmail(newValue.donorId, newValue, true);
+      await constructAndSendEmail(
+        newValue.donorId,
+        newValue,
+        true,
+        newValue?.foodboxesCheckup?.donor?.reportedCounts ?? []
+      );
     }
 
     // RECIPIENT
@@ -40,7 +45,12 @@ export const boxesMismatchNotification = onDocumentUpdated(
     ) {
       console.info("Recipient status is MISMATCH");
 
-      await constructAndSendEmail(newValue.recipientId, newValue, false);
+      await constructAndSendEmail(
+        newValue.recipientId,
+        newValue,
+        false,
+        newValue?.foodboxesCheckup?.recipient?.reportedCounts ?? []
+      );
     }
   }
 );
