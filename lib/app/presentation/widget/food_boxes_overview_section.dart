@@ -196,8 +196,8 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
 
   Widget _buildSmallTile(BuildContext context, FoodBoxStatistics stat) {
     final value = switch (widget.user) {
-      Canteen() => stat.quantityAtCanteen,
-      Charity() => stat.quantityAtCharity,
+      Canteen() => stat.availableQuantityAtCanteen,
+      Charity() => stat.availableQuantityAtCharity,
     };
 
     return UiFoodBoxTile(

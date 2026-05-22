@@ -18,8 +18,8 @@ class VerifyAvailableBoxCountUseCase {
     required Map<String, int> requiredBoxes,
   }) async {
     int Function(FoodBoxStatistics?) getQuantity = switch (user) {
-      Canteen() => (statistics) => statistics?.quantityAtCanteen ?? 0,
-      Charity() => (statistics) => statistics?.quantityAtCharity ?? 0,
+      Canteen() => (statistics) => statistics?.availableQuantityAtCanteen ?? 0,
+      Charity() => (statistics) => statistics?.availableQuantityAtCharity ?? 0,
     };
 
     final statistics = await _repository.observeStatistics(user).first;

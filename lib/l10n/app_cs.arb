@@ -349,6 +349,7 @@
     "overviewFoodBoxesHeaderTitle": "Vratné krabičky",
     "overviewFoodBoxesShowAllAction": "Zobrazit vše",
     "overviewFoodBoxesAvailableLabel": "K dispozici",
+    "overviewFoodBoxesOnTheWayLabel": "Na cestě",
     "overviewFoodBoxesTotalLabel": "Celkem {count} ks",
     "@overviewFoodBoxesTotalLabel": {
         "placeholders": {

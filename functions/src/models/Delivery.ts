@@ -56,6 +56,8 @@ export const DeliverySchema = z.object({
   meals: z.array(z.any()).default([]),
   /** Carrier order metadata (set when DODO order created) */
   carrierOrder: CarrierOrderSchema.optional(),
+  /** Whether box counts have been transferred by the Cloud Function */
+  foodBoxesTransferred: z.boolean().optional(),
   /** Minutes before pickup to confirm (overrides carrier default) */
   confirmationTime: z.number().optional(),
 });

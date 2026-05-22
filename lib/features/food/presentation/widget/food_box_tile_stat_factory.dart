@@ -27,22 +27,30 @@ class FoodBoxTileStatFactory {
       case Canteen():
         return [
           UiFoodBoxTileStat(
-            value: stat.quantityAtCanteen,
+            value: stat.availableQuantityAtCanteen,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
           UiFoodBoxTileStat(
-            value: stat.quantityAtCharity,
+            value: stat.quantityOnTheWay,
+            label: context.l10n.overviewFoodBoxesOnTheWayLabel,
+          ),
+          UiFoodBoxTileStat(
+            value: stat.availableQuantityAtCharity,
             label: context.l10n.charity,
           ),
         ];
       case Charity():
         return [
           UiFoodBoxTileStat(
-            value: stat.quantityAtCharity,
+            value: stat.availableQuantityAtCharity,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
           UiFoodBoxTileStat(
-            value: stat.quantityAtCanteen,
+            value: stat.quantityOnTheWay,
+            label: context.l10n.overviewFoodBoxesOnTheWayLabel,
+          ),
+          UiFoodBoxTileStat(
+            value: stat.availableQuantityAtCanteen,
             label: context.l10n.canteen,
           ),
         ];

@@ -62,6 +62,7 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
       state: DeliveryStateDto.prepared,
       type: DeliveryTypeDto.foodDelivery,
       confirmationTime: user.activePair.confirmationTime.inMinutes,
+      foodBoxesTransferred: null,
     );
 
     return _deliveryService.createDelivery(newDelivery);

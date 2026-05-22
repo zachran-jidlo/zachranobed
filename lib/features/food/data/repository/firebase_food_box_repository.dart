@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_pair_dto.dart';
@@ -51,16 +52,23 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     // every change in the stream.
     final typesList = await getTypes();
     final typesMap = {for (final v in typesList) v.id: v};
+
+    final donorId = user.activePair.donorId;
+    final recipientId = user.activePair.recipientId;
+
     final pairStream = _entityPairService.observePair(
-      donorId: user.activePair.donorId,
-      recipientId: user.activePair.recipientId,
+      donorId: donorId,
+      recipientId: recipientId,
     );
 
-    yield* pairStream.map((pair) {
-      // Create accumulator map, as multiple pairs may have same food box types
-      // and we would like to show aggregated statistics across all pairs.
-      final Map<String, FoodBoxPairDto> boxesCountMap = {};
+    final activeDeliveriesStream = _deliveryService.observeActiveDeliveries(
+      donorId: donorId,
+      recipientId: recipientId,
+    );
 
+    yield* Rx.combineLatest2(pairStream, activeDeliveriesStream, (pair, activeDeliveries) {
+      // Accumulate pair counts
+      final Map<String, FoodBoxPairDto> boxesCountMap = {};
       for (final foodBox in pair?.foodboxes ?? <FoodBoxPairDto>[]) {
         final acc = boxesCountMap[foodBox.foodBoxId];
         boxesCountMap[foodBox.foodBoxId] = FoodBoxPairDto(
@@ -71,18 +79,47 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         );
       }
 
+      // Accumulate in-transit counts from active deliveries
+      final Map<String, int> onTheWayToCharity = {};
+      final Map<String, int> onTheWayToCanteen = {};
+
+      for (final delivery in activeDeliveries) {
+        if (delivery.foodBoxes.isEmpty) {
+          // Skip deliveries without food boxes
+          continue;
+        }
+
+        final target = switch (delivery.type) {
+          DeliveryTypeDto.foodDelivery => onTheWayToCharity,
+          DeliveryTypeDto.boxDelivery => onTheWayToCanteen,
+          _ => null,
+        };
+
+        if (target == null) {
+          // Skip deliveries with invalid type
+          continue;
+        }
+
+        for (final box in delivery.foodBoxes) {
+          target[box.foodBoxId] = (target[box.foodBoxId] ?? 0) + box.count;
+        }
+      }
+
       // Map accumulated values to domain instances
       return boxesCountMap.values.mapNotNull((element) {
-        // In case that type is not known, ignore this food box data
         final type = typesMap[element.foodBoxId];
         if (type == null) {
+          // In case that type is not known, ignore this food box data
           return null;
         }
+
         return FoodBoxStatistics(
           type: type,
           totalQuantity: element.count,
           quantityAtCanteen: element.donorCount,
           quantityAtCharity: element.recipientCount,
+          quantityOnTheWayToCharity: onTheWayToCharity[element.foodBoxId] ?? 0,
+          quantityOnTheWayToCanteen: onTheWayToCanteen[element.foodBoxId] ?? 0,
         );
       }).sorted((a, b) {
         return _getSortOrder(a.type).compareTo(_getSortOrder(b.type));
@@ -97,15 +134,6 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
   }) async {
     final donorId = user.activePair.donorId;
     final recipientId = user.activePair.recipientId;
-    final moveBoxesSuccess = await _entityPairService.moveBoxesToDonor(
-      donorId: donorId,
-      recipientId: recipientId,
-      changeMap: boxesQuantity,
-    );
-
-    if (!moveBoxesSuccess) {
-      return false;
-    }
 
     // Prepare delivery ID and check if any exists in Firebase
     final id = '$recipientId-$donorId-${DateTimeUtils.getCurrentDayMark()}';
@@ -140,6 +168,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
         state: DeliveryStateDto.accepted,
         type: DeliveryTypeDto.boxDelivery,
         confirmationTime: user.activePair.confirmationTime.inMinutes,
+        foodBoxesTransferred: false,
       );
       return _deliveryService.createDelivery(newDelivery);
     } else {

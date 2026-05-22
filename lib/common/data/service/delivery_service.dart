@@ -82,27 +82,6 @@ class DeliveryService {
     return await _collection.doc(id).update({'state': state.toJson()}).toSuccess();
   }
 
-  /// Queries the Firestore collection for deliveries of the given pair defined
-  /// by [donorId] and [recipientId] of the offered food. It allows an optional
-  /// parameter for specifying a [timePeriod] to filter the results.
-  Future<Iterable<DeliveryDto>> getDeliveries({
-    required String donorId,
-    required String recipientId,
-    int? timePeriod,
-  }) async {
-    var query = _collection.where(_hasEntity(donorId, recipientId));
-
-    if (timePeriod != null) {
-      query = query.where(
-        'deliveryDate',
-        isGreaterThan: DateTime.now().subtract(Duration(days: timePeriod)),
-      );
-    }
-
-    final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data());
-  }
-
   /// Sets up a Firestore stream to listen for changes in the `deliveries`
   /// collection, filtering deliveries based on the provided pair of [donorId]
   /// and [recipientId].
@@ -195,7 +174,17 @@ class DeliveryService {
       ),
     );
 
-    return updateDeliveryFoodboxes(id, foodBoxes.toList());
+    final updateData = <String, dynamic>{
+      'foodBoxes': foodBoxes.map((e) => e.toJson()).toList(),
+    };
+
+    // Mark delivery for server-side box transfer (via Cloud Function).
+    // Skip if already transferred to avoid resetting it back to false.
+    if (delivery?.foodBoxesTransferred != true) {
+      updateData['foodBoxesTransferred'] = false;
+    }
+
+    return _collection.doc(id).update(updateData).toSuccess();
   }
 
   /// Creates a delivery from the given [dto] instance.
@@ -216,6 +205,31 @@ class DeliveryService {
     return _collection //
         .doc(id)
         .update({'foodBoxes': foodBoxes.map((e) => e.toJson())}).toSuccess();
+  }
+
+  /// Observes active deliveries (not yet delivered or cancelled) for a given
+  /// donor-recipient pair.
+  Stream<Iterable<DeliveryDto>> observeActiveDeliveries({
+    required String donorId,
+    required String recipientId,
+  }) {
+    final activeStates = [
+      DeliveryStateDto.accepted.toJson(),
+      DeliveryStateDto.onWayToPickUp.toJson(),
+      DeliveryStateDto.inDelivery.toJson(),
+    ];
+
+    final query = _collection
+        .where(
+          Filter.and(
+            Filter('state', whereIn: activeStates),
+            Filter('donorId', isEqualTo: donorId),
+            Filter('recipientId', isEqualTo: recipientId),
+          ),
+        )
+        .where('deliveryDate', isGreaterThanOrEqualTo: DateTimeUtils.lastMidnight());
+
+    return query.snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()));
   }
 
   /// Prepares a filter to get only deliveries of the offered food for the given

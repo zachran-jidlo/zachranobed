@@ -12,6 +12,7 @@ import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
 import { confirmationReminderHandler } from "./functions/notifications/confirmationReminderFunction";
+import { boxTransfer } from "./functions/boxTransferFunction";
 import {
   finalizeDeliveriesFunction,
   finalizeDeliveries,
@@ -113,6 +114,7 @@ exports.confirmationReminderHandler = confirmationReminderHandler;
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;
 exports.orderDeliveryService = orderDeliveryService;
+exports.boxTransfer = boxTransfer;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;
