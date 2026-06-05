@@ -59,7 +59,7 @@ runs:
 
     - name: Select Xcode version
       shell: bash
-      run: sudo xcode-select -s /Applications/Xcode_16.2.app
+      run: sudo xcode-select -s /Applications/Xcode_26.5.app
 
     # Builds a release IPA for the given flavor.
     - name: Build iOS IPA
