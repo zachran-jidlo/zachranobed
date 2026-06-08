@@ -17,6 +17,17 @@ export async function constructAndSendEmail(
     return Promise.reject(new Error(`Entity not found: ${entityId}`));
   }
 
+  // Notify the opposite side of the pair so they can verify their own boxes
+  const counterpartyId = isDonor ? entityPair.recipientId : entityPair.donorId;
+  const counterparty = (await db.collection("entities").doc(counterpartyId).get()).data();
+
+  const to = ["marek.vimr@zachranjidlo.cz", "aplikace.zo@zachranjidlo.cz"];
+  if (counterparty?.email) {
+    to.push(counterparty.email);
+  } else {
+    console.warn(`Counterparty ${counterpartyId} has no email, sending to admins only`);
+  }
+
   const mismatches = reportedCounts.filter(
     (rc) => rc.systemCount !== rc.realCount
   );
@@ -30,11 +41,11 @@ export async function constructAndSendEmail(
 
   const email = {
     createdAt: Timestamp.now(),
-    to: ["marek.vimr@zachranjidlo.cz", "aplikace.zo@zachranjidlo.cz"],
+    to,
     message: {
       subject: "Nesoulad při kontrole krabiček",
       html: `
-  <p>Ahoj,</p>
+  <p>Dobrý den,</p>
 
   v rámci pravidelné kontroly stavu krabiček byl zjištěn nesoulad u těchto subjektů:
 
@@ -47,14 +58,13 @@ export async function constructAndSendEmail(
   ${foodboxesSectionTitle}
   ${foodboxesHtml}
 
-  <p><a href="https://rowy.app/p/zachran-obed/table/entityPairs">Zobrazit v aplikaci Rowy</a></p>
-
-  <p>Prosím o prověření této situace a případné kroky k jejímu vyřešení.</p>
+  <p><strong>Zkontrolujte, prosím, aktuální stav krabiček na Vaší straně.</strong><br>
+  Pokud neodpovídá údajům v aplikaci, kontaktujte koordinátora projektu.</p>
 
   <p>
   Děkujeme,
   <br>
-  <strong>Mobilní aplikace Zachraň oběd</strong>
+  <strong>Tým projektu Zachraň oběd</strong>
   </p>`,
     },
   };
