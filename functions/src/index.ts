@@ -25,6 +25,7 @@ import {
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
+import { reportTriggerToken } from "./config/firebase";
 import { DateTime } from "luxon";
 import { clearEntityCache, getEntities } from "./services/entityService";
 
@@ -112,13 +113,27 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 }
 
 // Manual report trigger, available in all environments.
-// TODO: protect with a token before rollout.
+// Requires the REPORT_TRIGGER_TOKEN secret as a bearer token.
 // Params:
 //   period   - YYYY-MM (one month) or YYYY (whole year).
 //              Defaults to the previous calendar month.
 //   entityId - send only this entity's report. The entity must have
 //              reporting enabled, otherwise 409 is returned.
-exports.triggerCreateReport = onRequest(async (req, res) => {
+exports.triggerCreateReport = onRequest(
+  { secrets: [reportTriggerToken] },
+  async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (
+    !authHeader?.startsWith("Bearer ") ||
+    authHeader.split(" ")[1] !== reportTriggerToken.value()
+  ) {
+    res.status(401).json({
+      status: "error",
+      message: "Unauthorized",
+    });
+    return;
+  }
+
   try {
     const periodStr = (req.query.period as string) || req.body?.period;
     const entityId = (req.query.entityId as string) || req.body?.entityId;
@@ -168,7 +183,8 @@ exports.triggerCreateReport = onRequest(async (req, res) => {
       message: error instanceof Error ? error.message : "Unknown error",
     });
   }
-});
+  },
+);
 
 // Export HTTP functions
 // Exported unconditionally: Cloud Tasks invokes this in all environments
