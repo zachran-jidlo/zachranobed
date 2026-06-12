@@ -16,6 +16,10 @@ import {
   finalizeDeliveriesFunction,
   finalizeDeliveries,
 } from "./functions/finalizeDeliveriesFunction";
+import {
+  createReportFunction,
+  createReport,
+} from "./functions/createReportFunction";
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
@@ -101,6 +105,36 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
       });
     }
   });
+
+  exports.triggerCreateReport = onRequest(async (req, res) => {
+    try {
+      const dateStr = (req.query.date as string) || req.body?.date;
+      let date: Date | undefined;
+
+      if (dateStr) {
+        const parsed = DateTime.fromISO(dateStr, { zone: TIMEZONE });
+        if (!parsed.isValid) {
+          res.status(400).json({
+            status: "error",
+            message: `Invalid date format. Use YYYY-MM-DD. Error: ${parsed.invalidReason}`,
+          });
+          return;
+        }
+        date = parsed.startOf("day").toJSDate();
+      }
+
+      await createReport(date);
+      res.json({
+        status: "success",
+        message: `createReport executed successfully${dateStr ? ` for date ${dateStr}` : ""}`,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  });
 }
 
 // Export HTTP functions
@@ -121,3 +155,5 @@ exports.sendOrdersFunction = sendOrdersFunction;
 exports.orders = dodoOrderStatus;
 
 exports.finalizeDeliveriesFunction = finalizeDeliveriesFunction;
+
+exports.createReportFunction = createReportFunction;

@@ -32,6 +32,13 @@ export const EntitySchema = z.object({
   postalCode: z.number(),
   /** Optional note for delivery driver */
   noteForDriver: z.string().optional(),
+  /** Optional monthly-report recipient settings (opt-in) */
+  reporting: z
+    .object({
+      enabled: z.boolean(),
+      emails: z.array(z.string().email()).default([]),
+    })
+    .optional(),
 });
 
 export type EntityType = z.infer<typeof EntityTypeSchema>;
