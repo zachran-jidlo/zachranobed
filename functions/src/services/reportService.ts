@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase-admin/firestore";
+import { Filter, Timestamp } from "firebase-admin/firestore";
 import { logger } from "firebase-functions/v2";
 import { DateTime } from "luxon";
 import { db } from "../config/firebase";
@@ -35,20 +35,50 @@ export interface EntityAttachment {
   csv: string;
 }
 
+export interface ReportEmailContent {
+  /** Full subject line of the report email. */
+  subject: string;
+  /** Period phrase inserted into the email body after the word report. */
+  periodPhrase: string;
+  /** Period part of the attachment file names. */
+  periodSlug: string;
+}
+
 export async function buildReport(
   start: Date,
   end: Date,
   entities: Entity[],
+  entityId?: string,
 ): Promise<ReportRow[]> {
   const entityById = new Map(entities.map((e) => [e.id, e]));
-  const mealCache = new Map<string, MealDetails | null>();
 
-  const snapshot = await db
+  let query = db
     .collection("deliveries")
     .where("deliveryDate", ">=", Timestamp.fromDate(start))
     .where("deliveryDate", "<", Timestamp.fromDate(end))
-    .where("type", "==", "FOOD_DELIVERY")
-    .get();
+    .where("type", "==", "FOOD_DELIVERY");
+
+  if (entityId) {
+    query = query.where(
+      Filter.or(
+        Filter.where("donorId", "==", entityId),
+        Filter.where("recipientId", "==", entityId),
+      ),
+    );
+  }
+
+  const snapshot = await query.get();
+
+  const mealIds = new Set<string>();
+  for (const doc of snapshot.docs) {
+    const meals = (doc.data().meals ?? []) as MealInDelivery[];
+    for (const meal of meals) {
+      if (meal.mealId) {
+        mealIds.add(meal.mealId);
+      }
+    }
+  }
+  const mealById = await fetchMealDetails([...mealIds]);
 
   const rows: ReportRow[] = [];
 
@@ -68,7 +98,7 @@ export async function buildReport(
         continue;
       }
 
-      const details = await resolveMealDetails(meal.mealId, mealCache);
+      const details = meal.mealId ? mealById.get(meal.mealId) : undefined;
       if (!details) {
         continue;
       }
@@ -91,29 +121,34 @@ export async function buildReport(
   return rows;
 }
 
-async function resolveMealDetails(
-  mealId: string,
-  cache: Map<string, MealDetails | null>,
-): Promise<MealDetails | null> {
-  if (cache.has(mealId)) {
-    return cache.get(mealId) ?? null;
+async function fetchMealDetails(
+  mealIds: string[],
+): Promise<Map<string, MealDetails>> {
+  const result = new Map<string, MealDetails>();
+  // Read in chunks to keep a single getAll request within
+  // Firestore request-size limits.
+  const chunkSize = 100;
+
+  for (let i = 0; i < mealIds.length; i += chunkSize) {
+    const refs = mealIds
+      .slice(i, i + chunkSize)
+      .map((id) => db.collection("meals").doc(id));
+    const snapshots = await db.getAll(...refs);
+
+    for (const docSnap of snapshots) {
+      if (!docSnap.exists) {
+        logger.warn(`Meal document not found: ${docSnap.id}`);
+        continue;
+      }
+      const data = docSnap.data() ?? {};
+      result.set(docSnap.id, {
+        name: typeof data.name === "string" ? data.name : "",
+        foodCategory: typeof data.foodCategory === "string" ? data.foodCategory : "",
+      });
+    }
   }
 
-  const docSnap = await db.collection("meals").doc(mealId).get();
-  if (!docSnap.exists) {
-    logger.warn(`Meal document not found: ${mealId}`);
-    cache.set(mealId, null);
-    return null;
-  }
-
-  const data = docSnap.data() ?? {};
-  const details: MealDetails = {
-    name: typeof data.name === "string" ? data.name : "",
-    foodCategory:
-      typeof data.foodCategory === "string" ? data.foodCategory : "",
-  };
-  cache.set(mealId, details);
-  return details;
+  return result;
 }
 
 export function groupByEntity(rows: ReportRow[]): Map<string, ReportRow[]> {
@@ -160,7 +195,7 @@ export function groupByEmail(
 
     const reporting = entity.reporting;
     if (!reporting?.enabled || reporting.emails.length === 0) {
-      logger.warn(
+      logger.info(
         `Entity ${entity.id} (${entity.establishmentName}) has deliveries in period but reporting is not enabled — skipped`,
       );
       continue;
@@ -185,15 +220,15 @@ export function groupByEmail(
 export async function sendReportEmail(
   email: string,
   entries: EntityAttachment[],
-  periodLabel: string,
-  periodSlug: string,
+  content: ReportEmailContent,
 ): Promise<void> {
+  const usedNames = new Set<string>();
   const message = {
-    subject: `Měsíční report darování z ${periodLabel}`,
+    subject: content.subject,
     html: `
   <p>Dobrý den,</p>
 
-  <p>v příloze naleznete report z <strong>${periodLabel}</strong></p>
+  <p>v příloze naleznete report <strong>${content.periodPhrase}</strong>.</p>
 
   <p>
     S pozdravem a přáním pěkného dne,
@@ -201,7 +236,7 @@ export async function sendReportEmail(
     <strong>Tým projektu Zachraň oběd</strong>
   </p>`,
     attachments: entries.map((entry) => ({
-      filename: `${slug(entry.entity.establishmentName)}-${periodSlug}.csv`,
+      filename: `${uniqueSlug(entry.entity, usedNames)}-${content.periodSlug}.csv`,
       content: Buffer.from(entry.csv, "utf8").toString("base64"),
       encoding: "base64",
       contentType: "text/csv; charset=utf-8",
@@ -224,7 +259,12 @@ function appendTo<K, V>(map: Map<K, V[]>, key: K, value: V): void {
 }
 
 function csvField(value: string): string {
-  return `"${value.replace(/"/g, "\"\"")}"`;
+  const escaped = value.replace(/"/g, "\"\"");
+  // Values are user-entered text. A leading =, +, - or @ would run
+  // as a formula when the CSV is opened in Excel. Prefix it with an
+  // apostrophe so spreadsheets treat the value as plain text.
+  const safe = /^[=+\-@]/.test(escaped) ? `'${escaped}` : escaped;
+  return `"${safe}"`;
 }
 
 function slug(value: string): string {
@@ -234,4 +274,21 @@ function slug(value: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Attachment names only have to be unique within one email.
+ * The slug is lossy, so similar establishment names can collide,
+ * and a name without latin letters or digits slugs to an empty
+ * string. Fall back to the entity id when the slug is empty and
+ * add a counter when the name was already used in this email.
+ */
+function uniqueSlug(entity: Entity, used: Set<string>): string {
+  const base = slug(entity.establishmentName) || entity.id;
+  let name = base;
+  for (let n = 2; used.has(name); n++) {
+    name = `${base}-${n}`;
+  }
+  used.add(name);
+  return name;
 }

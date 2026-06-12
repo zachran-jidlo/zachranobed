@@ -19,11 +19,14 @@ import {
 import {
   createReportFunction,
   createReport,
+  parsePeriod,
+  ReportPeriod,
 } from "./functions/createReportFunction";
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { DateTime } from "luxon";
+import { clearEntityCache, getEntities } from "./services/entityService";
 
 // Export for Firebase Functions (CommonJS style)
 exports.notifyCharityAboutDonationV2 = notifyCharityAboutDonationV2;
@@ -106,36 +109,66 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
     }
   });
 
-  exports.triggerCreateReport = onRequest(async (req, res) => {
-    try {
-      const dateStr = (req.query.date as string) || req.body?.date;
-      let date: Date | undefined;
-
-      if (dateStr) {
-        const parsed = DateTime.fromISO(dateStr, { zone: TIMEZONE });
-        if (!parsed.isValid) {
-          res.status(400).json({
-            status: "error",
-            message: `Invalid date format. Use YYYY-MM-DD. Error: ${parsed.invalidReason}`,
-          });
-          return;
-        }
-        date = parsed.startOf("day").toJSDate();
-      }
-
-      await createReport(date);
-      res.json({
-        status: "success",
-        message: `createReport executed successfully${dateStr ? ` for date ${dateStr}` : ""}`,
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
-        message: error instanceof Error ? error.message : "Unknown error",
-      });
-    }
-  });
 }
+
+// Manual report trigger, available in all environments.
+// TODO: protect with a token before rollout.
+// Params:
+//   period   - YYYY-MM (one month) or YYYY (whole year).
+//              Defaults to the previous calendar month.
+//   entityId - send only this entity's report. The entity must have
+//              reporting enabled, otherwise 409 is returned.
+exports.triggerCreateReport = onRequest(async (req, res) => {
+  try {
+    const periodStr = (req.query.period as string) || req.body?.period;
+    const entityId = (req.query.entityId as string) || req.body?.entityId;
+
+    let period: ReportPeriod | undefined;
+    if (periodStr) {
+      const parsed = parsePeriod(periodStr);
+      if (!parsed) {
+        res.status(400).json({
+          status: "error",
+          message: "Invalid period. Use YYYY-MM for a month or YYYY for a year.",
+        });
+        return;
+      }
+      period = parsed;
+    }
+
+    if (entityId) {
+      const entities = await getEntities();
+      const entity = entities.find((e) => e.id === entityId);
+      if (!entity) {
+        clearEntityCache();
+        res.status(404).json({
+          status: "error",
+          message: `Entity ${entityId} not found`,
+        });
+        return;
+      }
+      if (!entity.reporting?.enabled || entity.reporting.emails.length === 0) {
+        clearEntityCache();
+        res.status(409).json({
+          status: "error",
+          message: `Entity ${entityId} has reporting disabled or no report emails configured`,
+        });
+        return;
+      }
+    }
+
+    const stats = await createReport({ period, entityId });
+    res.json({
+      status: "success",
+      ...stats,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
 
 // Export HTTP functions
 // Exported unconditionally: Cloud Tasks invokes this in all environments
