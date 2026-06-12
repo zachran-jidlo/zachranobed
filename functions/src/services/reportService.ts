@@ -244,6 +244,7 @@ export async function sendReportEmail(
   };
 
   await db.collection("mails").add({
+    createdAt: Timestamp.now(),
     to: [email],
     message,
   });
