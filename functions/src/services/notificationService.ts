@@ -31,10 +31,10 @@ async function createNotification(
       type,
     })
     .then(() => {
-      console.info("Notification successfully saved!");
+      console.info(`Entity ${entityId}: notification successfully saved.`);
     })
     .catch((error) => {
-      console.error("Error writing document: ", error);
+      console.error(`Entity ${entityId}: error writing document: ${error}.`);
     });
 }
 
@@ -81,8 +81,8 @@ async function cleanupInvalidTokens(
 
     console.warn(
       `Entity ${entityId}: send failed for token ${token ?? "unknown"} ` +
-        `(${isPermanent ? "permanent, removing" : "transient, kept"}). ` +
-        `Code: ${code}. Message: ${message}`,
+      `(${isPermanent ? "permanent, removing" : "transient, kept"}). ` +
+      `Code: ${code}. Message: ${message}.`,
     );
 
     if (isPermanent && token) {
@@ -105,9 +105,7 @@ async function cleanupInvalidTokens(
 
     // Update entity with cleaned tokens
     await entityRef.update({ fcmTokens });
-    console.info(
-      `Removed ${invalidTokens.length} invalid tokens from entity ${entityId}`,
-    );
+    console.info(`Entity ${entityId}: removed ${invalidTokens.length} invalid tokens from entity.`);
   }
 }
 
@@ -137,7 +135,11 @@ export async function sendNotificationsAndCleanup(
     };
   });
 
-  console.info(`Entity ${entityId}: generated ${messages.length} push notification messages.`);
+
+  console.info(
+    `Entity ${entityId}: generated ${messages.length} push notification messages: ` +
+    JSON.stringify(messages),
+  );
   if (messages.length === 0) {
     console.info(`Entity ${entityId}: no tokens, nothing sent.`);
     return;
