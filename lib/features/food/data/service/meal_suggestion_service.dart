@@ -27,11 +27,9 @@ class MealSuggestionService {
     );
   }
 
-  /// Observes the list of [MealSuggestionDto] for the given [entityId], ordered
-  /// by name.
+  /// Observes the list of [MealSuggestionDto] for the given [entityId].
   Stream<List<MealSuggestionDto>> observe(String entityId) {
     return getCollection(entityId) //
-        .orderBy('name')
         .snapshots()
         .map((snapshot) => snapshot.docs.map((e) => e.data()).toList());
   }

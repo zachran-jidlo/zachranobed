@@ -21,6 +21,7 @@ import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statis
 import 'package:zachranobed/features/food/domain/usecase/observe_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/report_food_boxes_mismatch_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/sort_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/update_meal_suggestion_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_food_boxes_checkup_use_case.dart';
@@ -107,15 +108,21 @@ class FoodDependencyContainer {
       ),
     );
 
+    GetIt.I.registerFactory<SortMealSuggestionsUseCase>(
+      () => SortMealSuggestionsUseCase(),
+    );
+
     GetIt.I.registerFactory<ObserveMealSuggestionsUseCase>(
       () => ObserveMealSuggestionsUseCase(
         GetIt.I<MealSuggestionRepository>(),
+        GetIt.I<SortMealSuggestionsUseCase>(),
       ),
     );
 
     GetIt.I.registerFactory<GetMealSuggestionsUseCase>(
       () => GetMealSuggestionsUseCase(
         GetIt.I<MealSuggestionRepository>(),
+        GetIt.I<SortMealSuggestionsUseCase>(),
       ),
     );
 
