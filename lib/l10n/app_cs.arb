@@ -395,5 +395,10 @@
     "whatsNewTitle4": "Přehled daru",
     "whatsNewDescription4": "Detail daru jsme zjednodušili. V přehledu se zobrazují pouze dny, kdy opravdu proběhlo darování. Také se snadno poznejte v historii.",
     "whatsNewTitle5": "Manuál",
-    "whatsNewDescription5": "Další potřebné informace a detaily nových funkcí naleznete v manuálech, které vám byly zaslány týmem Zachraň oběd."
+    "whatsNewDescription5": "Další potřebné informace a detaily nových funkcí naleznete v manuálech, které vám byly zaslány týmem Zachraň oběd.",
+
+    "mealNameAutocompleteFieldSuggestionNotFoundTitle": "Pokrm nenalezen.",
+    "mealNameAutocompleteFieldSuggestionNotFoundSubtitle": "Po darování bude uložen i s alergeny",
+    "mealNameAutocompleteFieldAllergensNotPresent": "Bez alergenů",
+    "mealNameAutocompleteFieldAllergensOnPackage": "Alergeny jsou uvedeny na obalu"
 }

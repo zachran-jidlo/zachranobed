@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
+import 'package:zachranobed/common/domain/model/resource.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
+import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
@@ -12,6 +15,8 @@ import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.da
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
+import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
+import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_info_fields.dart';
 
@@ -102,12 +107,35 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
 
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
+  final _getMealSuggestions = GetIt.I<GetMealSuggestionsUseCase>();
+
+  Resource<List<MealSuggestion>> _mealSuggestions = const ResourceLoading();
 
   @override
   void initState() {
     super.initState();
 
     _foodInfoPending = widget.foodInfo ?? FoodInfo.withUuid();
+    _loadMealSuggestions();
+  }
+
+  Future<void> _loadMealSuggestions() async {
+    final entityId = HelperService.getCurrentUser(context)?.entityId;
+    if (entityId == null) {
+      // Runs synchronously within initState, so assign directly without setState.
+      _mealSuggestions = const ResourceSuccess([]);
+      return;
+    }
+    try {
+      final suggestions = await _getMealSuggestions.invoke(entityId: entityId);
+      if (mounted) {
+        setState(() => _mealSuggestions = ResourceSuccess(suggestions));
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _mealSuggestions = ResourceError(e));
+      }
+    }
   }
 
   @override
@@ -140,6 +168,7 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
                     FoodInfoFields(
                       formValidationManager: _formValidationManager,
                       foodInfo: _foodInfoPending,
+                      mealSuggestions: _mealSuggestions,
                       onChanged: (food) {
                         setState(() {
                           _foodInfoPending = food;
