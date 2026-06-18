@@ -19,6 +19,7 @@ import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_u
 import 'package:zachranobed/features/food/domain/usecase/observe_delivery_meals_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_meal_suggestions_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/report_food_boxes_mismatch_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/update_meal_suggestion_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
@@ -108,6 +109,12 @@ class FoodDependencyContainer {
 
     GetIt.I.registerFactory<ObserveMealSuggestionsUseCase>(
       () => ObserveMealSuggestionsUseCase(
+        GetIt.I<MealSuggestionRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<GetMealSuggestionsUseCase>(
+      () => GetMealSuggestionsUseCase(
         GetIt.I<MealSuggestionRepository>(),
       ),
     );
