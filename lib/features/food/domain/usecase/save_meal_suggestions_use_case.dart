@@ -1,13 +1,12 @@
-import 'package:collection/collection.dart';
-import 'package:zachranobed/common/domain/utils/string_utils.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
-import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
 import 'package:zachranobed/features/food/domain/repository/meal_suggestion_repository.dart';
+import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestion_key_use_case.dart';
 
 class SaveMealSuggestionsUseCase {
   final MealSuggestionRepository _repository;
+  final GetMealSuggestionKeyUseCase _getMealSuggestionKey;
 
-  SaveMealSuggestionsUseCase(this._repository);
+  SaveMealSuggestionsUseCase(this._repository, this._getMealSuggestionKey);
 
   /// Saves any meal in [foodInfo] that is not already a suggestion for
   /// [entityId]. Duplicates (same normalized name and same allergen set) are
@@ -19,7 +18,9 @@ class SaveMealSuggestionsUseCase {
   }) async {
     try {
       final existing = await _repository.getAll(entityId: entityId);
-      final seen = existing.map(_key).toSet();
+      final seen = existing
+          .map((s) => _getMealSuggestionKey.invoke(name: s.name, allergens: s.allergens))
+          .toSet();
 
       for (final food in foodInfo) {
         final name = food.dishName?.trim() ?? '';
@@ -30,7 +31,7 @@ class SaveMealSuggestionsUseCase {
 
         // Returns false when the key is already present, so this de-dups against
         // existing suggestions and earlier items in the same batch at once.
-        if (!seen.add(_keyOf(name, allergens))) {
+        if (!seen.add(_getMealSuggestionKey.invoke(name: name, allergens: allergens))) {
           continue;
         }
 
@@ -39,12 +40,5 @@ class SaveMealSuggestionsUseCase {
     } catch (_) {
       // Suggestions must never break the donation flow.
     }
-  }
-
-  String _key(MealSuggestion suggestion) => _keyOf(suggestion.name, suggestion.allergens);
-
-  /// Builds a dedup key from a normalized name and an order-independent allergen set.
-  String _keyOf(String name, List<String> allergens) {
-    return '${name.searchNormalized}|${allergens.sorted().join(',')}';
   }
 }

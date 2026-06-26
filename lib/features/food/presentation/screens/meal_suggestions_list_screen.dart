@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
 import 'package:zachranobed/common/domain/utils/string_utils.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
@@ -73,6 +75,15 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
     return ScreenScaffold.universal(
       appBar: UiAppBar(
         title: context.l10n.mealSuggestionsListTitle,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: UiIconFillButton(
+              icon: Icons.add,
+              onPressed: () => context.router.push(const MealSuggestionAddRoute()),
+            ),
+          ),
+        ],
       ),
       child: switch (_suggestions) {
         ResourceLoading() => LoadingPage(),

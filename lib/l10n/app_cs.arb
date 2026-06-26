@@ -405,5 +405,16 @@
     "mealSuggestionsListSearchHint": "Hledat pokrm",
     "mealSuggestionsListEmptyTitle": "Zatím žádné pokrmy",
     "mealSuggestionsListEmptyDescription": "Pokrmy se uloží automaticky po darování, nebo je můžete přidat ručně.",
-    "mealSuggestionsListNothingFound": "Žádný pokrm nenalezen."
+    "mealSuggestionsListNothingFound": "Žádný pokrm nenalezen.",
+
+    "mealSuggestionAddTitle": "Přidání pokrmu",
+    "mealSuggestionAddSaveAction": "Uložit pokrm",
+    "mealSuggestionDuplicateTitle": "Duplicitní pokrm",
+    "mealSuggestionDuplicateMessage": "Pokrm se zadanými parametry se v databázi již nachází.",
+    "mealSuggestionDuplicateBackAction": "Zpět",
+    "mealSuggestionDuplicateNewAction": "Zadat jiný pokrm",
+    "mealSuggestionDiscardTitle": "Zrušit zadání?",
+    "mealSuggestionDiscardMessage": "Rozpracovaný pokrm nebude uložený. Opravdu chcete zadání pokrmu opustit.",
+    "mealSuggestionDiscardConfirmAction": "Ano",
+    "mealSuggestionDiscardCancelAction": "Ne"
 }
