@@ -56,7 +56,8 @@ export async function buildReport(
     .collection("deliveries")
     .where("deliveryDate", ">=", Timestamp.fromDate(start))
     .where("deliveryDate", "<", Timestamp.fromDate(end))
-    .where("type", "==", "FOOD_DELIVERY");
+    .where("type", "==", "FOOD_DELIVERY")
+    .where("state", "==", "DONE");
 
   if (entityId) {
     query = query.where(
@@ -91,6 +92,10 @@ export async function buildReport(
 
     const donor = entityById.get(donorId);
     const recipient = entityById.get(recipientId);
+    const donorName = donor?.establishmentName ?? donorId;
+    const recipientName = recipient?.establishmentName ?? recipientId;
+
+    const rowsBefore = rows.length;
 
     for (const meal of meals) {
       const mealCount = meal.count ?? meal.packagesCount;
@@ -107,11 +112,27 @@ export async function buildReport(
         deliveryDate,
         donorId,
         recipientId,
-        donorName: donor?.establishmentName ?? donorId,
-        recipientName: recipient?.establishmentName ?? recipientId,
+        donorName,
+        recipientName,
         mealCount,
         mealName: details.name,
         foodCategory: details.foodCategory,
+      });
+    }
+
+    // The delivery is completed but donated no meals (empty list, or no
+    // meal with a usable count and details). Keep the day in the report
+    // with a zero-count placeholder row.
+    if (rows.length === rowsBefore) {
+      rows.push({
+        deliveryDate,
+        donorId,
+        recipientId,
+        donorName,
+        recipientName,
+        mealCount: 0,
+        mealName: "",
+        foodCategory: "",
       });
     }
   }
