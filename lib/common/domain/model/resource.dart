@@ -1,6 +1,14 @@
 /// Represents the state of an asynchronously loaded value.
 sealed class Resource<T> {
   const Resource();
+
+  /// Returns the loaded value, or null when not [ResourceSuccess].
+  T? getOrNull() {
+    return switch (this) {
+      ResourceSuccess(:final data) => data,
+      _ => null,
+    };
+  }
 }
 
 /// The value is still being loaded.

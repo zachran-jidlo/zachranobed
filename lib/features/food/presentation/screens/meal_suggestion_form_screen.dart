@@ -20,6 +20,7 @@ import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
 import 'package:zachranobed/features/food/domain/usecase/add_meal_suggestion_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/check_meal_suggestion_duplicate_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/delete_meal_suggestion_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/update_meal_suggestion_use_case.dart';
@@ -29,15 +30,31 @@ import 'package:zachranobed/features/food/presentation/widget/food_allergens_bot
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
 import 'package:zachranobed/features/food/presentation/widget/meal_name_autocomplete_field.dart';
 
+/// Whether the form creates a new meal suggestion or edits an existing one.
+sealed class MealSuggestionFormMode {
+  const MealSuggestionFormMode();
+}
+
+/// Adding a new meal suggestion.
+class MealSuggestionFormAddMode extends MealSuggestionFormMode {
+  const MealSuggestionFormAddMode();
+}
+
+/// Editing the given [suggestion].
+class MealSuggestionFormEditMode extends MealSuggestionFormMode {
+  final MealSuggestion suggestion;
+
+  const MealSuggestionFormEditMode(this.suggestion);
+}
+
 /// Form for creating or editing a meal suggestion.
 ///
 /// Saving rejects duplicates (same normalized name and allergen set) with a
 /// dialog. In edit mode the suggestion can also be deleted.
 class MealSuggestionFormScreen extends StatefulWidget {
-  /// The suggestion being edited, or null when adding a new one.
-  final MealSuggestion? suggestion;
+  final MealSuggestionFormMode mode;
 
-  const MealSuggestionFormScreen({super.key, this.suggestion});
+  const MealSuggestionFormScreen({super.key, required this.mode});
 
   @override
   State<MealSuggestionFormScreen> createState() => _MealSuggestionFormScreenState();
@@ -46,13 +63,14 @@ class MealSuggestionFormScreen extends StatefulWidget {
 /// Adds a new meal suggestion.
 @RoutePage()
 class MealSuggestionAddScreen extends MealSuggestionFormScreen {
-  const MealSuggestionAddScreen({super.key}) : super(suggestion: null);
+  const MealSuggestionAddScreen({super.key}) : super(mode: const MealSuggestionFormAddMode());
 }
 
 /// Edits an existing meal suggestion.
 @RoutePage()
 class MealSuggestionEditScreen extends MealSuggestionFormScreen {
-  const MealSuggestionEditScreen({super.key, required MealSuggestion suggestion}) : super(suggestion: suggestion);
+  MealSuggestionEditScreen({super.key, required MealSuggestion suggestion})
+      : super(mode: MealSuggestionFormEditMode(suggestion));
 }
 
 class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
@@ -62,6 +80,7 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
   final _addMealSuggestion = GetIt.I<AddMealSuggestionUseCase>();
   final _updateMealSuggestion = GetIt.I<UpdateMealSuggestionUseCase>();
   final _deleteMealSuggestion = GetIt.I<DeleteMealSuggestionUseCase>();
+  final _checkMealSuggestionDuplicate = GetIt.I<CheckMealSuggestionDuplicateUseCase>();
   final _getMealSuggestions = GetIt.I<GetMealSuggestionsUseCase>();
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
@@ -74,22 +93,27 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
   /// enter a different meal after a duplicate is reported.
   int _formVersion = 0;
 
-  bool get _isEdit => widget.suggestion != null;
+  bool get _isEdit => widget.mode is MealSuggestionFormEditMode;
 
   bool get _hasUnsavedChanges {
-    final original = widget.suggestion;
-    if (original == null) {
-      return _name.isNotEmpty || _allergens.isNotEmpty;
-    }
-    return _name.trim() != original.name ||
-        !const SetEquality<String>().equals(_allergens.toSet(), original.allergens.toSet());
+    return switch (widget.mode) {
+      MealSuggestionFormAddMode() => _name.isNotEmpty || _allergens.isNotEmpty,
+      MealSuggestionFormEditMode(:final suggestion) => _name.trim() != suggestion.name ||
+          !const SetEquality<String>().equals(_allergens.toSet(), suggestion.allergens.toSet()),
+    };
   }
 
   @override
   void initState() {
     super.initState();
-    _name = widget.suggestion?.name ?? '';
-    _allergens = List.of(widget.suggestion?.allergens ?? const []);
+    switch (widget.mode) {
+      case MealSuggestionFormAddMode():
+        _name = '';
+        _allergens = [];
+      case MealSuggestionFormEditMode(:final suggestion):
+        _name = suggestion.name;
+        _allergens = List.of(suggestion.allergens);
+    }
     _loadSuggestions();
   }
 
@@ -213,22 +237,26 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
       Flex(
         spacing: 16.0,
         direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
-        children: [
-          if (_isEdit) ...[
-            UiOutlineButton(
-              size: UiButtonSize.medium(fullWidth: isMobileLayout),
-              text: context.l10n.mealSuggestionFormDeleteAction,
-              onPressed: _onDeletePressed,
-            ),
-          ],
-          UiPrimaryButton(
-            size: UiButtonSize.medium(fullWidth: isMobileLayout),
-            text: _isEdit //
-                ? context.l10n.mealSuggestionFormEditSaveAction
-                : context.l10n.mealSuggestionFormAddSaveAction,
-            onPressed: _onSavePressed,
-          ),
-        ],
+        children: _isEdit //
+            ? [
+                UiOutlineButton(
+                  size: UiButtonSize.medium(fullWidth: isMobileLayout),
+                  text: context.l10n.mealSuggestionFormDeleteAction,
+                  onPressed: _onDeletePressed,
+                ),
+                UiPrimaryButton(
+                  size: UiButtonSize.medium(fullWidth: isMobileLayout),
+                  text: context.l10n.mealSuggestionFormEditSaveAction,
+                  onPressed: _onSavePressed,
+                ),
+              ]
+            : [
+                UiPrimaryButton(
+                  size: UiButtonSize.medium(fullWidth: isMobileLayout),
+                  text: context.l10n.mealSuggestionFormAddSaveAction,
+                  onPressed: _onSavePressed,
+                ),
+              ],
       )
     ];
   }
@@ -244,58 +272,56 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
       return;
     }
 
-    if (_isEdit) {
-      _update(user.entityId);
+    final mode = widget.mode;
+    final name = _name.trim();
+
+    if (!_checkDuplicates(name, mode)) {
+      return;
+    }
+
+    UiDialog.showLoadingDialog(context);
+    final success = await switch (mode) {
+      MealSuggestionFormAddMode() => //
+        _addMealSuggestion.invoke(
+          entityId: user.entityId,
+          name: name,
+          allergens: _allergens,
+        ),
+      MealSuggestionFormEditMode(:final suggestion) => //
+        _updateMealSuggestion.invoke(
+          entityId: user.entityId,
+          suggestion: MealSuggestion(id: suggestion.id, name: name, allergens: _allergens),
+        ),
+    };
+    if (!mounted) {
+      return;
+    }
+    context.router.pop();
+
+    if (success) {
+      context.router.pop();
     } else {
-      _add(user.entityId);
+      UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
     }
   }
 
-  void _add(String entityId) async {
-    UiDialog.showLoadingDialog(context);
+  // The suggestions are already loaded for the autocomplete, so the duplicate
+  // check runs against that list instead of re-fetching.
+  bool _checkDuplicates(String name, MealSuggestionFormMode mode) {
+    final excludeId = mode is MealSuggestionFormEditMode ? mode.suggestion.id : null;
 
-    final result = await _addMealSuggestion.invoke(
-      entityId: entityId,
-      name: _name.trim(),
+    final existing = _suggestions.getOrNull() ?? const [];
+    final isDuplicate = _checkMealSuggestionDuplicate.invoke(
+      existing: existing,
+      name: name,
       allergens: _allergens,
+      excludeId: excludeId,
     );
-    if (!mounted) {
-      return;
+    if (isDuplicate) {
+      _showDuplicateDialog();
+      return false;
     }
-    context.router.pop();
-    switch (result) {
-      case AddMealSuggestionResult.added:
-        context.router.pop();
-      case AddMealSuggestionResult.duplicate:
-        _showDuplicateDialog();
-      case AddMealSuggestionResult.failed:
-        UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
-    }
-  }
-
-  void _update(String entityId) async {
-    UiDialog.showLoadingDialog(context);
-
-    final result = await _updateMealSuggestion.invoke(
-      entityId: entityId,
-      suggestion: MealSuggestion(
-        id: widget.suggestion!.id,
-        name: _name.trim(),
-        allergens: _allergens,
-      ),
-    );
-    if (!mounted) {
-      return;
-    }
-    context.router.pop();
-    switch (result) {
-      case UpdateMealSuggestionResult.updated:
-        context.router.pop();
-      case UpdateMealSuggestionResult.duplicate:
-        _showDuplicateDialog();
-      case UpdateMealSuggestionResult.failed:
-        UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
-    }
+    return true;
   }
 
   Future<void> _onDeletePressed() async {
@@ -320,15 +346,16 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
     if (!mounted || confirmed != true) {
       return;
     }
+    final mode = widget.mode;
     final user = HelperService.getCurrentUser(context);
-    if (user == null) {
+    if (mode is! MealSuggestionFormEditMode || user == null) {
       return;
     }
 
     UiDialog.showLoadingDialog(context);
     final success = await _deleteMealSuggestion.invoke(
       entityId: user.entityId,
-      id: widget.suggestion!.id,
+      id: mode.suggestion.id,
     );
     if (!mounted) {
       return;

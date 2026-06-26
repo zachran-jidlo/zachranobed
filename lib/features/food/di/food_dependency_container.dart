@@ -20,6 +20,7 @@ import 'package:zachranobed/features/food/domain/usecase/observe_delivery_meals_
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/check_meal_suggestion_duplicate_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestion_key_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/report_food_boxes_mismatch_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/save_meal_suggestions_use_case.dart';
@@ -142,13 +143,17 @@ class FoodDependencyContainer {
     GetIt.I.registerFactory<AddMealSuggestionUseCase>(
       () => AddMealSuggestionUseCase(
         GetIt.I<MealSuggestionRepository>(),
-        GetIt.I<GetMealSuggestionKeyUseCase>(),
       ),
     );
 
     GetIt.I.registerFactory<UpdateMealSuggestionUseCase>(
       () => UpdateMealSuggestionUseCase(
         GetIt.I<MealSuggestionRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<CheckMealSuggestionDuplicateUseCase>(
+      () => CheckMealSuggestionDuplicateUseCase(
         GetIt.I<GetMealSuggestionKeyUseCase>(),
       ),
     );
