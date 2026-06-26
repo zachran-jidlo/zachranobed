@@ -151,9 +151,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
         gradient: context.uiColors.primaryGradient,
         spec: const UiIconSpec.data(Icons.chevron_right),
       ),
-      onPressed: () {
-        // TODO: navigate to the meal edit screen once it is implemented.
-      },
+      onPressed: () => context.router.push(MealSuggestionEditRoute(suggestion: suggestion)),
     );
   }
 }

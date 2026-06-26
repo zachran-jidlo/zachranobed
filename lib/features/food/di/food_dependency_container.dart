@@ -149,6 +149,7 @@ class FoodDependencyContainer {
     GetIt.I.registerFactory<UpdateMealSuggestionUseCase>(
       () => UpdateMealSuggestionUseCase(
         GetIt.I<MealSuggestionRepository>(),
+        GetIt.I<GetMealSuggestionKeyUseCase>(),
       ),
     );
 

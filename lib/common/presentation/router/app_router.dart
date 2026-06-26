@@ -30,6 +30,10 @@ class AppRouter extends RootStackRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: MealSuggestionEditRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: ChangePasswordRoute.page,
           guards: [AuthGuard()],
         ),

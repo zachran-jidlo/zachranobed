@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:zachranobed/common/presentation/utils/field_validation_utils.dar
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
@@ -18,47 +20,76 @@ import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
 import 'package:zachranobed/features/food/domain/usecase/add_meal_suggestion_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/delete_meal_suggestion_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_meal_suggestions_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/update_meal_suggestion_use_case.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
 import 'package:zachranobed/features/food/presentation/widget/meal_name_autocomplete_field.dart';
 
-/// A screen for manually adding a new meal suggestion.
+/// Form for creating or editing a meal suggestion.
 ///
-/// On save it rejects duplicates (same normalized name and allergen set) with a
-/// dialog, otherwise it stores the suggestion and returns to the list.
-@RoutePage()
-class MealSuggestionAddScreen extends StatefulWidget {
-  const MealSuggestionAddScreen({super.key});
+/// Saving rejects duplicates (same normalized name and allergen set) with a
+/// dialog. In edit mode the suggestion can also be deleted.
+class MealSuggestionFormScreen extends StatefulWidget {
+  /// The suggestion being edited, or null when adding a new one.
+  final MealSuggestion? suggestion;
+
+  const MealSuggestionFormScreen({super.key, this.suggestion});
 
   @override
-  State<MealSuggestionAddScreen> createState() => _MealSuggestionAddScreenState();
+  State<MealSuggestionFormScreen> createState() => _MealSuggestionFormScreenState();
 }
 
-class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
+/// Adds a new meal suggestion.
+@RoutePage()
+class MealSuggestionAddScreen extends MealSuggestionFormScreen {
+  const MealSuggestionAddScreen({super.key}) : super(suggestion: null);
+}
+
+/// Edits an existing meal suggestion.
+@RoutePage()
+class MealSuggestionEditScreen extends MealSuggestionFormScreen {
+  const MealSuggestionEditScreen({super.key, required MealSuggestion suggestion}) : super(suggestion: suggestion);
+}
+
+class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
   static const _nameFieldKey = 'name';
   static const _allergensFieldKey = 'allergens';
 
   final _addMealSuggestion = GetIt.I<AddMealSuggestionUseCase>();
+  final _updateMealSuggestion = GetIt.I<UpdateMealSuggestionUseCase>();
+  final _deleteMealSuggestion = GetIt.I<DeleteMealSuggestionUseCase>();
   final _getMealSuggestions = GetIt.I<GetMealSuggestionsUseCase>();
   final _formValidationManager = FormValidationManager();
   final _formKey = GlobalKey<FormState>();
 
   Resource<List<MealSuggestion>> _suggestions = const ResourceLoading();
-  String _name = '';
-  List<String> _allergens = [];
+  late String _name;
+  late List<String> _allergens;
 
   /// Bumped to reset the name and allergen inputs, e.g. when the user chooses to
   /// enter a different meal after a duplicate is reported.
   int _formVersion = 0;
 
-  bool get _hasInput => _name.isNotEmpty || _allergens.isNotEmpty;
+  bool get _isEdit => widget.suggestion != null;
+
+  bool get _hasUnsavedChanges {
+    final original = widget.suggestion;
+    if (original == null) {
+      return _name.isNotEmpty || _allergens.isNotEmpty;
+    }
+    return _name.trim() != original.name ||
+        !const SetEquality<String>().equals(_allergens.toSet(), original.allergens.toSet());
+  }
 
   @override
   void initState() {
     super.initState();
+    _name = widget.suggestion?.name ?? '';
+    _allergens = List.of(widget.suggestion?.allergens ?? const []);
     _loadSuggestions();
   }
 
@@ -89,11 +120,11 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
   Widget build(BuildContext context) {
     return ScreenScaffold.universalBuilder(
       appBar: UiAppBar(
-        title: context.l10n.mealSuggestionAddTitle,
+        title: _isEdit ? context.l10n.mealSuggestionFormEditTitle : context.l10n.mealSuggestionFormAddTitle,
       ),
       builder: (context) {
         return PopScope(
-          canPop: !_hasInput,
+          canPop: !_hasUnsavedChanges,
           onPopInvokedWithResult: (didPop, result) {
             if (!didPop) {
               _showDiscardDialog();
@@ -107,12 +138,11 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 16.0),
                     ..._buildNamePart(),
                     const SizedBox(height: 32.0),
                     ..._buildAllergensPart(),
-                    const SizedBox(height: 32.0),
-                    _buildSaveButton(context),
+                    const SizedBox(height: 24.0),
+                    ..._buildButtons(context),
                     const SizedBox(height: 16.0),
                   ],
                 ),
@@ -176,13 +206,31 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
     ];
   }
 
-  Widget _buildSaveButton(BuildContext context) {
-    final isMobile = context.watch<AdaptiveLayoutConfig>().isMobile;
-    return UiPrimaryButton(
-      size: UiButtonSize.medium(fullWidth: isMobile),
-      text: context.l10n.mealSuggestionAddSaveAction,
-      onPressed: _onSavePressed,
-    );
+  List<Widget> _buildButtons(BuildContext context) {
+    final isMobileLayout = context.watch<AdaptiveLayoutConfig>().isMobile;
+
+    return [
+      Flex(
+        spacing: 16.0,
+        direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
+        children: [
+          if (_isEdit) ...[
+            UiOutlineButton(
+              size: UiButtonSize.medium(fullWidth: isMobileLayout),
+              text: context.l10n.mealSuggestionFormDeleteAction,
+              onPressed: _onDeletePressed,
+            ),
+          ],
+          UiPrimaryButton(
+            size: UiButtonSize.medium(fullWidth: isMobileLayout),
+            text: _isEdit //
+                ? context.l10n.mealSuggestionFormEditSaveAction
+                : context.l10n.mealSuggestionFormAddSaveAction,
+            onPressed: _onSavePressed,
+          ),
+        ],
+      )
+    ];
   }
 
   Future<void> _onSavePressed() async {
@@ -196,9 +244,18 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
       return;
     }
 
+    if (_isEdit) {
+      _update(user.entityId);
+    } else {
+      _add(user.entityId);
+    }
+  }
+
+  void _add(String entityId) async {
     UiDialog.showLoadingDialog(context);
+
     final result = await _addMealSuggestion.invoke(
-      entityId: user.entityId,
+      entityId: entityId,
       name: _name.trim(),
       allergens: _allergens,
     );
@@ -206,7 +263,6 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
       return;
     }
     context.router.pop();
-
     switch (result) {
       case AddMealSuggestionResult.added:
         context.router.pop();
@@ -217,25 +273,101 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
     }
   }
 
+  void _update(String entityId) async {
+    UiDialog.showLoadingDialog(context);
+
+    final result = await _updateMealSuggestion.invoke(
+      entityId: entityId,
+      suggestion: MealSuggestion(
+        id: widget.suggestion!.id,
+        name: _name.trim(),
+        allergens: _allergens,
+      ),
+    );
+    if (!mounted) {
+      return;
+    }
+    context.router.pop();
+    switch (result) {
+      case UpdateMealSuggestionResult.updated:
+        context.router.pop();
+      case UpdateMealSuggestionResult.duplicate:
+        _showDuplicateDialog();
+      case UpdateMealSuggestionResult.failed:
+        UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
+    }
+  }
+
+  Future<void> _onDeletePressed() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => UiDialog(
+        title: context.l10n.mealSuggestionFormDeleteTitle,
+        content: context.l10n.mealSuggestionFormDeleteMessage,
+        actions: [
+          UiTextButton(
+            text: context.l10n.commonCancel,
+            onPressed: () => context.router.maybePop(false),
+          ),
+          UiPrimaryButton(
+            text: context.l10n.mealSuggestionFormDeleteAction,
+            onPressed: () => context.router.maybePop(true),
+          ),
+        ],
+      ),
+    );
+
+    if (!mounted || confirmed != true) {
+      return;
+    }
+    final user = HelperService.getCurrentUser(context);
+    if (user == null) {
+      return;
+    }
+
+    UiDialog.showLoadingDialog(context);
+    final success = await _deleteMealSuggestion.invoke(
+      entityId: user.entityId,
+      id: widget.suggestion!.id,
+    );
+    if (!mounted) {
+      return;
+    }
+    context.router.pop();
+
+    if (success) {
+      context.router.pop();
+    } else {
+      UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
+    }
+  }
+
   void _showDuplicateDialog() {
     showDialog(
       context: context,
       builder: (context) => UiDialog(
-        title: context.l10n.mealSuggestionDuplicateTitle,
-        content: context.l10n.mealSuggestionDuplicateMessage,
-        actions: [
-          UiTextButton(
-            text: context.l10n.mealSuggestionDuplicateBackAction,
-            onPressed: () => context.router.maybePop(),
-          ),
-          UiPrimaryButton(
-            text: context.l10n.mealSuggestionDuplicateNewAction,
-            onPressed: () {
-              context.router.maybePop();
-              _clearForm();
-            },
-          ),
-        ],
+        title: context.l10n.mealSuggestionFormDuplicateTitle,
+        content: context.l10n.mealSuggestionFormDuplicateMessage,
+        actions: _isEdit
+            ? [
+                UiPrimaryButton(
+                  text: context.l10n.mealSuggestionFormDuplicateBackAction,
+                  onPressed: () => context.router.maybePop(),
+                ),
+              ]
+            : [
+                UiTextButton(
+                  text: context.l10n.mealSuggestionFormDuplicateBackAction,
+                  onPressed: () => context.router.maybePop(),
+                ),
+                UiPrimaryButton(
+                  text: context.l10n.mealSuggestionFormDuplicateNewAction,
+                  onPressed: () {
+                    context.router.maybePop();
+                    _clearForm();
+                  },
+                ),
+              ],
       ),
     );
   }
@@ -244,15 +376,15 @@ class _MealSuggestionAddScreenState extends State<MealSuggestionAddScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => UiDialog(
-        title: context.l10n.mealSuggestionDiscardTitle,
-        content: context.l10n.mealSuggestionDiscardMessage,
+        title: context.l10n.mealSuggestionFormDiscardTitle,
+        content: context.l10n.mealSuggestionFormDiscardMessage,
         actions: [
           UiTextButton(
-            text: context.l10n.mealSuggestionDiscardCancelAction,
+            text: context.l10n.mealSuggestionFormDiscardCancelAction,
             onPressed: () => context.router.maybePop(false),
           ),
           UiPrimaryButton(
-            text: context.l10n.mealSuggestionDiscardConfirmAction,
+            text: context.l10n.mealSuggestionFormDiscardConfirmAction,
             onPressed: () => context.router.maybePop(true),
           ),
         ],

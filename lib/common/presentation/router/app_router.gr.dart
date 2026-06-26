@@ -28,15 +28,17 @@ import 'package:zachranobed/features/faq/presentation/screen/faq_questions_scree
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart'
     as _i30;
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart'
+    as _i32;
+import 'package:zachranobed/features/food/domain/model/food_info.dart' as _i33;
+import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart'
     as _i31;
-import 'package:zachranobed/features/food/domain/model/food_info.dart' as _i32;
 import 'package:zachranobed/features/food/presentation/screens/delivery_detail_screen.dart'
     as _i7;
 import 'package:zachranobed/features/food/presentation/screens/food_boxes_checkup_mismatch_screen.dart'
     as _i10;
 import 'package:zachranobed/features/food/presentation/screens/food_boxes_detail_screen.dart'
     as _i11;
-import 'package:zachranobed/features/food/presentation/screens/meal_suggestion_add_screen.dart'
+import 'package:zachranobed/features/food/presentation/screens/meal_suggestion_form_screen.dart'
     as _i16;
 import 'package:zachranobed/features/food/presentation/screens/meal_suggestions_list_screen.dart'
     as _i17;
@@ -592,6 +594,57 @@ class MealSuggestionAddRoute extends _i25.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i16.MealSuggestionEditScreen]
+class MealSuggestionEditRoute
+    extends _i25.PageRouteInfo<MealSuggestionEditRouteArgs> {
+  MealSuggestionEditRoute({
+    _i26.Key? key,
+    required _i31.MealSuggestion suggestion,
+    List<_i25.PageRouteInfo>? children,
+  }) : super(
+          MealSuggestionEditRoute.name,
+          args: MealSuggestionEditRouteArgs(key: key, suggestion: suggestion),
+          initialChildren: children,
+        );
+
+  static const String name = 'MealSuggestionEditRoute';
+
+  static _i25.PageInfo page = _i25.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MealSuggestionEditRouteArgs>();
+      return _i16.MealSuggestionEditScreen(
+        key: args.key,
+        suggestion: args.suggestion,
+      );
+    },
+  );
+}
+
+class MealSuggestionEditRouteArgs {
+  const MealSuggestionEditRouteArgs({this.key, required this.suggestion});
+
+  final _i26.Key? key;
+
+  final _i31.MealSuggestion suggestion;
+
+  @override
+  String toString() {
+    return 'MealSuggestionEditRouteArgs{key: $key, suggestion: $suggestion}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MealSuggestionEditRouteArgs) return false;
+    return key == other.key && suggestion == other.suggestion;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ suggestion.hashCode;
+}
+
+/// generated route for
 /// [_i17.MealSuggestionsListScreen]
 class MealSuggestionsListRoute extends _i25.PageRouteInfo<void> {
   const MealSuggestionsListRoute({List<_i25.PageRouteInfo>? children})
@@ -628,7 +681,7 @@ class OfferFoodAddNewRoute extends _i25.PageRouteInfo<void> {
 class OfferFoodBoxesRoute extends _i25.PageRouteInfo<OfferFoodBoxesRouteArgs> {
   OfferFoodBoxesRoute({
     _i26.Key? key,
-    required Map<_i31.FoodBoxType, int> currentBoxesQuantity,
+    required Map<_i32.FoodBoxType, int> currentBoxesQuantity,
     List<_i25.PageRouteInfo>? children,
   }) : super(
           OfferFoodBoxesRoute.name,
@@ -658,7 +711,7 @@ class OfferFoodBoxesRouteArgs {
 
   final _i26.Key? key;
 
-  final Map<_i31.FoodBoxType, int> currentBoxesQuantity;
+  final Map<_i32.FoodBoxType, int> currentBoxesQuantity;
 
   @override
   String toString() {
@@ -687,7 +740,7 @@ class OfferFoodEditExistingRoute
     extends _i25.PageRouteInfo<OfferFoodEditExistingRouteArgs> {
   OfferFoodEditExistingRoute({
     _i26.Key? key,
-    required _i32.FoodInfo foodInfo,
+    required _i33.FoodInfo foodInfo,
     List<_i25.PageRouteInfo>? children,
   }) : super(
           OfferFoodEditExistingRoute.name,
@@ -714,7 +767,7 @@ class OfferFoodEditExistingRouteArgs {
 
   final _i26.Key? key;
 
-  final _i32.FoodInfo foodInfo;
+  final _i33.FoodInfo foodInfo;
 
   @override
   String toString() {
@@ -754,7 +807,7 @@ class OfferFoodOverviewRoute
     extends _i25.PageRouteInfo<OfferFoodOverviewRouteArgs> {
   OfferFoodOverviewRoute({
     _i26.Key? key,
-    required List<_i32.FoodInfo> initialFoodInfos,
+    required List<_i33.FoodInfo> initialFoodInfos,
     List<_i25.PageRouteInfo>? children,
   }) : super(
           OfferFoodOverviewRoute.name,
@@ -784,7 +837,7 @@ class OfferFoodOverviewRouteArgs {
 
   final _i26.Key? key;
 
-  final List<_i32.FoodInfo> initialFoodInfos;
+  final List<_i33.FoodInfo> initialFoodInfos;
 
   @override
   String toString() {
