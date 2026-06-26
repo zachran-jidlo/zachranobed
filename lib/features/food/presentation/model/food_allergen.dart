@@ -89,3 +89,29 @@ class FoodAllergen {
     ];
   }
 }
+
+/// How a meal's allergen list should be displayed.
+enum FoodAllergensDisplay {
+  /// No allergens are present.
+  none,
+
+  /// Allergens are listed on the packaging.
+  onPackage,
+
+  /// An explicit list of allergen codes.
+  list;
+
+  /// Classifies a raw allergen code list into how it should be displayed.
+  ///
+  /// Keeps the special-case rules (no allergens, on packaging, explicit list)
+  /// in one place so the meal tiles and the suggestion labels stay consistent.
+  static FoodAllergensDisplay of(List<String> allergens) {
+    if (allergens.isEmpty || (allergens.length == 1 && allergens.first == FoodAllergen.noAllergensNumber)) {
+      return FoodAllergensDisplay.none;
+    }
+    if (allergens.length == 1 && allergens.first == FoodAllergen.onPackageNumber) {
+      return FoodAllergensDisplay.onPackage;
+    }
+    return FoodAllergensDisplay.list;
+  }
+}

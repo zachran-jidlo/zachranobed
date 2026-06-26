@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/domain/model/food_category.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
@@ -82,14 +81,11 @@ class MealTileFactory {
 
   /// Builds an allergens badge for the given [item].
   static UiMealBadge _buildAllergensBadge(BuildContext context, OfferedFood item) {
-    String allergensLabel;
-    if (listEquals(item.allergens, [FoodAllergen.noAllergensNumber])) {
-      allergensLabel = context.l10n.allergensNotPresent;
-    } else if (listEquals(item.allergens, [FoodAllergen.onPackageNumber])) {
-      allergensLabel = context.l10n.allergensOnPackage;
-    } else {
-      allergensLabel = item.allergens.join(', ');
-    }
+    final allergensLabel = switch (FoodAllergensDisplay.of(item.allergens)) {
+      FoodAllergensDisplay.none => context.l10n.allergensNotPresent,
+      FoodAllergensDisplay.onPackage => context.l10n.allergensOnPackage,
+      FoodAllergensDisplay.list => item.allergens.join(', '),
+    };
     return UiMealBadge(
       icon: UiIconSpec.svg(ImageAssets.iconAllergens),
       label: allergensLabel,

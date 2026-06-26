@@ -22,6 +22,7 @@ class SaveMealSuggestionsUseCase {
           .map((s) => _getMealSuggestionKey.invoke(name: s.name, allergens: s.allergens))
           .toSet();
 
+      final writes = <Future<bool>>[];
       for (final food in foodInfo) {
         final name = food.dishName?.trim() ?? '';
         final allergens = food.allergens ?? const [];
@@ -35,8 +36,12 @@ class SaveMealSuggestionsUseCase {
           continue;
         }
 
-        await _repository.add(entityId: entityId, name: name, allergens: allergens);
+        writes.add(_repository.add(entityId: entityId, name: name, allergens: allergens));
       }
+
+      // The writes are independent, so run them concurrently instead of
+      // serializing a round-trip per food item
+      await Future.wait(writes);
     } catch (_) {
       // Suggestions must never break the donation flow.
     }

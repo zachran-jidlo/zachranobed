@@ -22,7 +22,7 @@ import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_meal_suggestions_use_case.dart';
-import 'package:zachranobed/features/food/presentation/widget/meal_allergens_label_factory.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergens_label_factory.dart';
 
 /// A screen that lists the entity's saved meal suggestions.
 ///
@@ -51,7 +51,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
       return;
     }
     _subscription = _observeMealSuggestions.invoke(entityId: entityId).listen(
-      (suggestions) async {
+      (suggestions) {
         if (mounted) {
           setState(() => _suggestions = ResourceSuccess(suggestions));
         }
@@ -146,7 +146,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
   Widget _buildRow(BuildContext context, MealSuggestion suggestion) {
     return UiListTile(
       title: suggestion.name,
-      supportingText: MealAllergensLabelFactory.build(context, suggestion.allergens),
+      supportingText: FoodAllergensLabelFactory.build(context, suggestion.allergens),
       end: UiGradientIcon(
         gradient: context.uiColors.primaryGradient,
         spec: const UiIconSpec.data(Icons.chevron_right),

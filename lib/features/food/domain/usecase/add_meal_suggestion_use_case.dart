@@ -12,8 +12,7 @@ class AddMealSuggestionUseCase {
     required String entityId,
     required String name,
     required List<String> allergens,
-  }) async {
-    final id = await _repository.add(entityId: entityId, name: name, allergens: allergens);
-    return id != null;
+  }) {
+    return _repository.add(entityId: entityId, name: name, allergens: allergens);
   }
 }
