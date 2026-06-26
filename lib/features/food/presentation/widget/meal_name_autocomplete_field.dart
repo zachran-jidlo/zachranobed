@@ -6,7 +6,7 @@ import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/layout/content_with_loading.dart';
 import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
-import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
+import 'package:zachranobed/features/food/presentation/widget/meal_allergens_label_factory.dart';
 
 /// A meal name input that shows a dropdown of meal suggestions while typing.
 ///
@@ -194,22 +194,11 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
         return _buildItem(
           context: context,
           title: item.name,
-          subtitle: _allergensSubtitle(context, item),
+          subtitle: MealAllergensLabelFactory.build(context, item.allergens),
           onTap: () => _onSuggestionSelected(item),
         );
       },
     );
-  }
-
-  String _allergensSubtitle(BuildContext context, MealSuggestion suggestion) {
-    final allergens = suggestion.allergens;
-    if (allergens.isEmpty || allergens.length == 1 && allergens.first == FoodAllergen.noAllergensNumber) {
-      return context.l10n.mealNameAutocompleteFieldAllergensNotPresent;
-    }
-    if (allergens.length == 1 && allergens.first == FoodAllergen.onPackageNumber) {
-      return context.l10n.mealNameAutocompleteFieldAllergensOnPackage;
-    }
-    return '${context.l10n.allergens}: ${allergens.join(', ')}';
   }
 
   Widget _buildLoading() {

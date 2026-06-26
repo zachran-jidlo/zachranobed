@@ -91,6 +91,7 @@
     "allergensSave": "Uložit",
     "allergensNotPresent": "Bez alergenů",
     "allergensOnPackage": "Viz obal",
+    "allergensOnPackageLong": "Alergeny jsou uvedeny na obalu",
     "allergensSubItemsTemplate": "Specifikace alergenů: {subItems}",
     "@allergensSubItemsTemplate": {
       "placeholders": {
@@ -399,6 +400,10 @@
 
     "mealNameAutocompleteFieldSuggestionNotFoundTitle": "Pokrm nenalezen.",
     "mealNameAutocompleteFieldSuggestionNotFoundSubtitle": "Po darování bude uložen i s alergeny",
-    "mealNameAutocompleteFieldAllergensNotPresent": "Bez alergenů",
-    "mealNameAutocompleteFieldAllergensOnPackage": "Alergeny jsou uvedeny na obalu"
+
+    "mealSuggestionsListTitle": "Databáze pokrmů",
+    "mealSuggestionsListSearchHint": "Hledat pokrm",
+    "mealSuggestionsListEmptyTitle": "Zatím žádné pokrmy",
+    "mealSuggestionsListEmptyDescription": "Pokrmy se uloží automaticky po darování, nebo je můžete přidat ručně.",
+    "mealSuggestionsListNothingFound": "Žádný pokrm nenalezen."
 }

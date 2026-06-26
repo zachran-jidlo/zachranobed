@@ -22,6 +22,10 @@ class AppRouter extends RootStackRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: MealSuggestionsListRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: ChangePasswordRoute.page,
           guards: [AuthGuard()],
         ),

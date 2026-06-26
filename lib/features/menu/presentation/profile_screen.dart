@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/domain/usecase/check_if_devtools_are_enabled_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
+import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -81,6 +82,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () => context.router.push(const ContactsRoute()),
               ),
             ),
+            // The meal suggestions are only relevant for canteens.
+            if (user is Canteen)
+              SectionedListItem(
+                _buildListItem(
+                  context,
+                  icon: const UiIconSpec.data(Icons.list_alt_rounded),
+                  title: context.l10n.mealSuggestionsListTitle,
+                  onPressed: () => context.router.push(const MealSuggestionsListRoute()),
+                ),
+              ),
 
             // Settings section
             SectionedListHeader(context.l10n.settings),
