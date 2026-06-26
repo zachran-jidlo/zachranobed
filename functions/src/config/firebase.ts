@@ -34,5 +34,8 @@ export const dodoOrdersApi = defineSecret("DODO_ORDERS_API");
 export const dodoWebhookToken = defineSecret("DODO_WEBHOOK_TOKEN");
 export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 
+// Bearer token for the manual report trigger
+export const reportTriggerToken = defineSecret("REPORT_TRIGGER_TOKEN");
+
 admin.initializeApp();
 export const db = admin.firestore();

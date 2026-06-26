@@ -9,7 +9,7 @@ export const EntitySchema = z.object({
   /** Entity ID matching Firestore document ID */
   id: z.string(),
   /** Email address for contact */
-  email: z.string().email(),
+  email: z.email(),
   /** Establishment display name */
   establishmentName: z.string(),
   /** Unique establishment identifier for DODO system */
@@ -32,6 +32,14 @@ export const EntitySchema = z.object({
   postalCode: z.number(),
   /** Optional note for delivery driver */
   noteForDriver: z.string().optional(),
+  /** Optional monthly-report recipient settings (opt-in) */
+  reporting: z
+    .object({
+      enabled: z.boolean(),
+      emails: z.array(z.email()).default([]),
+    })
+    .optional()
+    .catch(undefined),
 });
 
 export type EntityType = z.infer<typeof EntityTypeSchema>;
