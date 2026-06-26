@@ -57,7 +57,10 @@ export async function buildReport(
     .where("deliveryDate", ">=", Timestamp.fromDate(start))
     .where("deliveryDate", "<", Timestamp.fromDate(end))
     .where("type", "==", "FOOD_DELIVERY")
-    .where("state", "==", "DONE");
+    // Completed deliveries. Current deliveries finalize to DONE via the
+    // daily job. Before 2.0.0 successful deliveries stayed in IN_DELIVERY
+    // and were never finalized, so keep that state for historical data.
+    .where("state", "in", ["DONE", "IN_DELIVERY"]);
 
   if (entityId) {
     query = query.where(
