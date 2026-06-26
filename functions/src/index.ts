@@ -120,7 +120,12 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 //   entityId - send only this entity's report. The entity must have
 //              reporting enabled, otherwise 409 is returned.
 exports.triggerCreateReport = onRequest(
-  { secrets: [reportTriggerToken] },
+  {
+    // IAM gate: allow anyone to reach the function.
+    // Authorization is handled in-code via reportTriggerToken.
+    invoker: "public",
+    secrets: [reportTriggerToken],
+  },
   async (req, res) => {
   const authHeader = req.headers.authorization;
   if (
