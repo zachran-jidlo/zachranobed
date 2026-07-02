@@ -403,9 +403,11 @@
 
     "mealSuggestionsListTitle": "Databáze pokrmů",
     "mealSuggestionsListSearchHint": "Hledat pokrm",
-    "mealSuggestionsListEmptyTitle": "Zatím žádné pokrmy",
-    "mealSuggestionsListEmptyDescription": "Pokrmy se uloží automaticky po darování, nebo je můžete přidat ručně.",
-    "mealSuggestionsListNothingFound": "Žádný pokrm nenalezen.",
+    "mealSuggestionsListEmptyTitle": "V seznamu nejsou zatím žádné  pokrmy",
+    "mealSuggestionsListEmptyDescription": "Pokrmy se uloží automaticky při darování nebo je můžete přidat ručně.",
+    "mealSuggestionsListNothingFoundTitle": "Tento pokrm v databázi není",
+    "mealSuggestionsListNothingFoundDescription": "Upřesněte hledaný výraz nebo můžete nový pokrm přidat.",
+    "mealSuggestionsListAddAction": "Přidat pokrm",
 
     "mealSuggestionFormAddTitle": "Přidání pokrmu",
     "mealSuggestionFormAddSaveAction": "Uložit pokrm",

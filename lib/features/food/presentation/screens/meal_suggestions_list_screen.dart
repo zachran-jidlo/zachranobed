@@ -3,17 +3,22 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/normalized.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
+import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_fill_icon_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
@@ -72,34 +77,36 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenScaffold.universal(
+    return ScreenScaffold.universalBuilder(
       appBar: UiAppBar(
         title: context.l10n.mealSuggestionsListTitle,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: UiIconFillButton(
-              icon: Icons.add,
-              onPressed: () => context.router.push(const MealSuggestionAddRoute()),
+          Visibility(
+            // When the list is empty, the button is hidden because the info page in the screen body shows it instead
+            visible: (_suggestions.getOrNull()?.items).orEmpty().isNotEmpty,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12.0),
+              child: UiIconFillButton(
+                icon: Icons.add,
+                onPressed: () => context.router.push(const MealSuggestionAddRoute()),
+              ),
             ),
-          ),
+          )
         ],
       ),
-      child: switch (_suggestions) {
-        ResourceLoading() => LoadingPage(),
-        ResourceError() => const ErrorPage(),
-        ResourceSuccess(:final data) => _buildContent(data),
+      builder: (context) {
+        return switch (_suggestions) {
+          ResourceLoading() => LoadingPage(),
+          ResourceError() => const ErrorPage(),
+          ResourceSuccess(:final data) => _buildContent(context, data),
+        };
       },
     );
   }
 
-  Widget _buildContent(NormalizedList<MealSuggestion> data) {
+  Widget _buildContent(BuildContext context, NormalizedList<MealSuggestion> data) {
     if (data.items.isEmpty) {
-      return InfoPage(
-        image: ImageAssets.imageEmptyMeals,
-        title: context.l10n.mealSuggestionsListEmptyTitle,
-        description: context.l10n.mealSuggestionsListEmptyDescription,
-      );
+      return _buildEmpty(context);
     }
 
     final filtered = data.matches(_query);
@@ -115,21 +122,38 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
           ),
         ),
         Expanded(
-          child: filtered.isNotEmpty ? _buildList(filtered) : _buildNothingFound(),
+          child: filtered.isNotEmpty ? _buildList(filtered) : _buildNothingFound(context),
         ),
       ],
     );
   }
 
-  Widget _buildNothingFound() {
-    return Center(
-      child: Text(
-        context.l10n.mealSuggestionsListNothingFound,
-        textAlign: TextAlign.center,
-        style: context.textStyles.bodyLarge.copyWith(
-          color: context.uiColors.textSecondary,
+  Widget _buildEmpty(BuildContext context) {
+    return InfoPage(
+      image: ImageAssets.imageEmptyMeals,
+      title: context.l10n.mealSuggestionsListEmptyTitle,
+      description: context.l10n.mealSuggestionsListEmptyDescription,
+      actions: [
+        UiPrimaryButton(
+          size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
+          text: context.l10n.mealSuggestionsListAddAction,
+          onPressed: () => context.pushRoute(const MealSuggestionAddRoute()),
         ),
-      ),
+      ],
+    );
+  }
+
+  Widget _buildNothingFound(BuildContext context) {
+    return InfoPage(
+      title: context.l10n.mealSuggestionsListNothingFoundTitle,
+      description: context.l10n.mealSuggestionsListNothingFoundDescription,
+      actions: [
+        UiPrimaryButton(
+          size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
+          text: context.l10n.mealSuggestionsListAddAction,
+          onPressed: () => context.pushRoute(const MealSuggestionAddRoute()),
+        ),
+      ],
     );
   }
 
