@@ -116,6 +116,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: UiTextField(
+            initialValue: _query,
             hintText: context.l10n.mealSuggestionsListSearchHint,
             leadingIcon: Icons.search,
             onChanged: (value) => setState(() => _query = value),
