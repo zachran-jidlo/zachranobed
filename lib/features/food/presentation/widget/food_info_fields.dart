@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/domain/model/food_category.dart';
+import 'package:zachranobed/common/domain/model/resource.dart';
 import 'package:zachranobed/common/domain/utils/constants.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
@@ -7,10 +8,10 @@ import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dar
 import 'package:zachranobed/common/presentation/widget/chip/single_select_chips.dart';
 import 'package:zachranobed/common/presentation/widget/form/date_time_picker.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dart';
-import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/layout/section_header.dart';
 import 'package:zachranobed/features/food/domain/model/food_date_time.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
+import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
 import 'package:zachranobed/features/food/presentation/model/food_form_field_type.dart';
 import 'package:zachranobed/features/food/presentation/utils/form_validation_manager.dart';
@@ -18,6 +19,7 @@ import 'package:zachranobed/features/food/presentation/widget/food_allergen_sub_
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_bottom_sheet.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_allergens_chips.dart';
 import 'package:zachranobed/features/food/presentation/widget/food_date_time_chips.dart';
+import 'package:zachranobed/features/food/presentation/widget/meal_name_autocomplete_field.dart';
 
 class FoodInfoFields extends StatefulWidget {
   final FoodInfo foodInfo;
@@ -25,11 +27,15 @@ class FoodInfoFields extends StatefulWidget {
 
   final FormValidationManager formValidationManager;
 
+  /// Meal suggestions offered as autocomplete for the meal name field.
+  final Resource<List<MealSuggestion>> mealSuggestions;
+
   const FoodInfoFields({
     super.key,
     required this.foodInfo,
     required this.onChanged,
     required this.formValidationManager,
+    required this.mealSuggestions,
   });
 
   @override
@@ -78,8 +84,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         title: context.l10n.foodName,
       ),
       const SizedBox(height: 16.0),
-      UiTextField(
+      MealNameAutocompleteField(
         key: ValueKey(formFieldKey),
+        suggestions: widget.mealSuggestions,
         labelText: context.l10n.foodName,
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
         onValidation: widget.formValidationManager.wrapValidator(
@@ -88,6 +95,14 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
         ),
         onChanged: (val) {
           widget.onChanged(widget.foodInfo.copyWith(dishName: val));
+        },
+        onSuggestionSelected: (suggestion) {
+          widget.onChanged(
+            widget.foodInfo.copyWith(
+              dishName: suggestion.name,
+              allergens: suggestion.allergens,
+            ),
+          );
         },
         initialValue: widget.foodInfo.dishName,
       )
@@ -109,7 +124,9 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
       ),
       const SizedBox(height: 16.0),
       FoodAllergensChips(
-        key: ValueKey(formFieldKey),
+        // Include the selection in the key, so the chips reflect allergens that
+        // were prefilled from a meal suggestion.
+        key: ValueKey("$formFieldKey-${widget.foodInfo.allergens?.join(',')}"),
         focusNode: widget.formValidationManager.getFocusNode(formFieldKey),
         selection: widget.foodInfo.allergens ?? [],
         onSelectionChanged: (allergens) {

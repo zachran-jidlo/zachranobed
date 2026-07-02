@@ -35,8 +35,8 @@ class _WidgetContent extends InfoPageContent {
 ///
 /// The component is wrapped in [SingleChildScrollView] to handle content overflow on smaller screens.
 class InfoPage extends StatelessWidget {
-  /// The path to the SVG asset to display at the top of the page.
-  final String image;
+  /// Optional path to the SVG asset to display at the top of the page.
+  final String? image;
 
   /// The main heading content displayed below the image.
   final InfoPageContent title;
@@ -55,7 +55,7 @@ class InfoPage extends StatelessWidget {
   /// This is the standard constructor for most use cases.
   InfoPage({
     super.key,
-    required this.image,
+    this.image,
     required String title,
     String? description,
     this.actions,
@@ -111,8 +111,10 @@ class InfoPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(image),
-              const SizedBox(height: 40.0),
+              if (image != null) ...[
+                SvgPicture.asset(image!),
+                const SizedBox(height: 40.0),
+              ],
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Column(

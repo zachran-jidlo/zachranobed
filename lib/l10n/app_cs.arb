@@ -91,6 +91,7 @@
     "allergensSave": "Uložit",
     "allergensNotPresent": "Bez alergenů",
     "allergensOnPackage": "Viz obal",
+    "allergensOnPackageLong": "Alergeny jsou uvedeny na obalu",
     "allergensSubItemsTemplate": "Specifikace alergenů: {subItems}",
     "@allergensSubItemsTemplate": {
       "placeholders": {
@@ -395,5 +396,32 @@
     "whatsNewTitle4": "Přehled daru",
     "whatsNewDescription4": "Detail daru jsme zjednodušili. V přehledu se zobrazují pouze dny, kdy opravdu proběhlo darování. Také se snadno poznejte v historii.",
     "whatsNewTitle5": "Manuál",
-    "whatsNewDescription5": "Další potřebné informace a detaily nových funkcí naleznete v manuálech, které vám byly zaslány týmem Zachraň oběd."
+    "whatsNewDescription5": "Další potřebné informace a detaily nových funkcí naleznete v manuálech, které vám byly zaslány týmem Zachraň oběd.",
+
+    "mealNameAutocompleteFieldSuggestionNotFoundTitle": "Pokrm nenalezen.",
+    "mealNameAutocompleteFieldSuggestionNotFoundSubtitle": "Po darování bude uložen i s alergeny",
+
+    "mealSuggestionsListTitle": "Databáze pokrmů",
+    "mealSuggestionsListSearchHint": "Hledat pokrm",
+    "mealSuggestionsListEmptyTitle": "V seznamu nejsou zatím žádné  pokrmy",
+    "mealSuggestionsListEmptyDescription": "Pokrmy se uloží automaticky při darování nebo je můžete přidat ručně.",
+    "mealSuggestionsListNothingFoundTitle": "Tento pokrm v databázi není",
+    "mealSuggestionsListNothingFoundDescription": "Upřesněte hledaný výraz nebo můžete nový pokrm přidat.",
+    "mealSuggestionsListAddAction": "Přidat pokrm",
+
+    "mealSuggestionFormAddTitle": "Přidání pokrmu",
+    "mealSuggestionFormAddSaveAction": "Uložit pokrm",
+    "mealSuggestionFormEditTitle": "Úprava pokrmu",
+    "mealSuggestionFormEditSaveAction": "Uložit změny",
+    "mealSuggestionFormDeleteAction": "Smazat pokrm",
+    "mealSuggestionFormDeleteTitle": "Smazat pokrm?",
+    "mealSuggestionFormDeleteMessage": "Opravdu si přejete tento pokrm smazat?",
+    "mealSuggestionFormDuplicateTitle": "Duplicitní pokrm",
+    "mealSuggestionFormDuplicateMessage": "Pokrm se zadanými parametry se v databázi již nachází.",
+    "mealSuggestionFormDuplicateBackAction": "Zpět",
+    "mealSuggestionFormDuplicateNewAction": "Zadat jiný pokrm",
+    "mealSuggestionFormDiscardTitle": "Zrušit zadání?",
+    "mealSuggestionFormDiscardMessage": "Rozpracovaný pokrm nebude uložený. Opravdu chcete zadání pokrmu opustit.",
+    "mealSuggestionFormDiscardConfirmAction": "Ano",
+    "mealSuggestionFormDiscardCancelAction": "Ne"
 }

@@ -11,21 +11,22 @@ import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dar
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
-import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
-import 'package:zachranobed/common/presentation/widget/layout/section_header.dart';
-import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
-import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
-import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
-import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/form/ui_checkbox.dart';
-import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
-import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
-import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
+import 'package:zachranobed/common/presentation/widget/form/ui_checkbox.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_icon.dart';
+import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
+import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.dart';
+import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/layout/section_header.dart';
+import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
+import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 import 'package:zachranobed/features/food/domain/model/food_info.dart';
 import 'package:zachranobed/features/food/domain/usecase/create_food_offer_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/save_meal_suggestions_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/verify_available_box_count_use_case.dart';
 import 'package:zachranobed/features/food/presentation/screens/offer_food_detail_screen.dart';
 
@@ -56,6 +57,7 @@ class OfferFoodOverviewScreen extends StatefulWidget {
 class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   final _createFoodOffer = GetIt.I<CreateFoodOfferUseCase>();
   final _verifyAvailableBoxCount = GetIt.I<VerifyAvailableBoxCountUseCase>();
+  final _saveMealSuggestions = GetIt.I<SaveMealSuggestionsUseCase>();
 
   final _foodInfos = <FoodInfo>[];
   final _boxInfos = <FoodBoxType, int>{};
@@ -253,19 +255,28 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
   void _onConfirmationButtonPressed() async {
     UiDialog.showLoadingDialog(context);
 
+    final user = HelperService.getCurrentUser(context)!;
     final requiredBoxes = _boxInfos.map((type, quantity) => MapEntry(type.id, quantity));
     final hasRequiredBoxes = await _verifyAvailableBoxCount.invoke(
-      user: HelperService.getCurrentUser(context)!,
+      user: user,
       requiredBoxes: requiredBoxes,
     );
 
     if (hasRequiredBoxes) {
       final isSuccess = await _offerFood();
+      if (isSuccess) {
+        await _saveMealSuggestions.invoke(
+          entityId: user.entityId,
+          foodInfo: _foodInfos,
+        );
+      }
       if (mounted) {
-        context.router.replace(ThankYouRoute(
-          isSuccess: isSuccess,
-          message: context.l10n.foodDonationConfirmation,
-        ));
+        context.router.replace(
+          ThankYouRoute(
+            isSuccess: isSuccess,
+            message: context.l10n.foodDonationConfirmation,
+          ),
+        );
       }
     } else {
       if (mounted) {
