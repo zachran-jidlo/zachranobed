@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:zachranobed/common/data/dto/food_box_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
+import 'package:zachranobed/common/data/dto/manual_donation_dto.dart';
 import 'package:zachranobed/common/data/dto/time_window_dto.dart';
 
 /*
@@ -18,6 +19,7 @@ class EntityPairDto {
   final List<TimeWindowDto> deliveryTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
   final FoodBoxesCheckupSummaryDto? foodboxesCheckup;
+  final ManualDonationSummaryDto? manualDonation;
   final int confirmationTime;
 
   EntityPairDto({
@@ -28,6 +30,7 @@ class EntityPairDto {
     required this.deliveryTimeWindows,
     required this.foodboxes,
     required this.foodboxesCheckup,
+    required this.manualDonation,
     required this.confirmationTime,
   });
 

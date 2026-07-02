@@ -27,6 +27,12 @@ class DeliveryDto {
   @JsonKey(includeIfNull: false)
   final bool? foodBoxesTransferred;
 
+  /// Marks a delivery created through the manual donation entry flow (bypassing
+  /// the normal delivery process). Such deliveries still appear in history but
+  /// are filtered out of the "today's delivery" overview.
+  @JsonKey(includeIfNull: false)
+  final bool? manualDonation;
+
   DeliveryDto({
     required this.id,
     required this.donorId,
@@ -38,6 +44,7 @@ class DeliveryDto {
     required this.type,
     required this.confirmationTime,
     required this.foodBoxesTransferred,
+    this.manualDonation,
   });
 
   factory DeliveryDto.fromJson(Map<String, dynamic> json) => _$DeliveryDtoFromJson(json);

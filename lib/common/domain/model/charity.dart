@@ -28,4 +28,7 @@ class Charity extends UserData {
 
   @override
   FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair) => pair.recipientFoodBoxesCheckup;
+
+  @override
+  bool isManualDonationEnabled(EntityPair pair) => pair.recipientManualDonationEnabled;
 }
