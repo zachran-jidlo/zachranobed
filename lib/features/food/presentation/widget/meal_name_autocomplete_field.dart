@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zachranobed/common/domain/model/normalized.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
 import 'package:zachranobed/common/domain/utils/string_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -6,7 +7,7 @@ import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 import 'package:zachranobed/common/presentation/widget/form/ui_text_field.dart';
 import 'package:zachranobed/common/presentation/widget/layout/content_with_loading.dart';
 import 'package:zachranobed/features/food/domain/model/meal_suggestion.dart';
-import 'package:zachranobed/features/food/presentation/widget/meal_allergens_label_factory.dart';
+import 'package:zachranobed/features/food/presentation/widget/food_allergens_label_factory.dart';
 
 /// A meal name input that shows a dropdown of meal suggestions while typing.
 ///
@@ -64,12 +65,25 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
   String _query = '';
   double _fieldWidth = 0;
 
+  /// The normalized view of the current suggestion list, rebuilt only when the
+  /// widget receives a new list.
+  late NormalizedList<MealSuggestion> _normalized;
+
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialValue);
     _query = widget.initialValue ?? '';
+    _rebuildNormalized();
     widget.focusNode.addListener(_updateOverlay);
+  }
+
+  @override
+  void didUpdateWidget(MealNameAutocompleteField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.suggestions, widget.suggestions)) {
+      _rebuildNormalized();
+    }
   }
 
   @override
@@ -79,14 +93,18 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
     super.dispose();
   }
 
-  /// Suggestions from [suggestions] matching the current query, or empty when
-  /// the query is too short.
-  List<MealSuggestion> _matches(List<MealSuggestion> suggestions) {
-    final query = _query.searchNormalized;
-    if (query.length < _minChars) {
+  /// Rebuilds the normalized suggestions from the current [widget.suggestions].
+  void _rebuildNormalized() {
+    _normalized = NormalizedList(widget.suggestions.getOrNull() ?? const [], (s) => s.name);
+  }
+
+  /// Suggestions matching the current query, or empty when the query is too
+  /// short.
+  List<MealSuggestion> _matches() {
+    if (_query.searchNormalized.length < _minChars) {
       return const [];
     }
-    return suggestions.where((s) => s.name.searchNormalized.contains(query)).toList();
+    return _normalized.matches(_query);
   }
 
   void _onChanged(String value) {
@@ -166,7 +184,8 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
         constraints: const BoxConstraints(maxHeight: _maxDropdownHeight),
         child: switch (widget.suggestions) {
           ResourceLoading() => _buildLoading(),
-          ResourceSuccess(:final data) => _buildResults(context, _matches(data)),
+          ResourceSuccess() => _buildResults(context, _matches()),
+          // A failed suggestion load is treated as no matches on purpose
           ResourceError() => _buildNotFound(context),
         },
       ),
@@ -194,7 +213,7 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
         return _buildItem(
           context: context,
           title: item.name,
-          subtitle: MealAllergensLabelFactory.build(context, item.allergens),
+          subtitle: FoodAllergensLabelFactory.build(context, item.allergens),
           onTap: () => _onSuggestionSelected(item),
         );
       },

@@ -9,8 +9,8 @@ abstract class MealSuggestionRepository {
   Future<List<MealSuggestion>> getAll({required String entityId});
 
   /// Creates a new suggestion for [entityId] with the given [name] and
-  /// [allergens]. Generates a new id and returns it, or `null` on failure.
-  Future<String?> add({
+  /// [allergens]. Returns `true` on success, `false` otherwise.
+  Future<bool> add({
     required String entityId,
     required String name,
     required List<String> allergens,

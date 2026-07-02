@@ -22,11 +22,11 @@ class FirebaseMealSuggestionRepository implements MealSuggestionRepository {
   }
 
   @override
-  Future<String?> add({
+  Future<bool> add({
     required String entityId,
     required String name,
     required List<String> allergens,
-  }) async {
+  }) {
     const uuid = Uuid();
     final dto = MealSuggestionDto(
       id: uuid.v4(),
@@ -34,8 +34,7 @@ class FirebaseMealSuggestionRepository implements MealSuggestionRepository {
       allergens: allergens,
     );
 
-    final success = await _service.save(entityId, dto);
-    return success ? dto.id : null;
+    return _service.save(entityId, dto);
   }
 
   @override

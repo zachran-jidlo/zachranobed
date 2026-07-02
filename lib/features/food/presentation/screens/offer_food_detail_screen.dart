@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
+import 'package:zachranobed/common/domain/utils/future_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
@@ -126,15 +127,9 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
       _mealSuggestions = const ResourceSuccess([]);
       return;
     }
-    try {
-      final suggestions = await _getMealSuggestions.invoke(entityId: entityId);
-      if (mounted) {
-        setState(() => _mealSuggestions = ResourceSuccess(suggestions));
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _mealSuggestions = ResourceError(e));
-      }
+    final result = await _getMealSuggestions.invoke(entityId: entityId).toResource();
+    if (mounted) {
+      setState(() => _mealSuggestions = result);
     }
   }
 

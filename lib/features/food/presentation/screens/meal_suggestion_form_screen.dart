@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
+import 'package:zachranobed/common/domain/utils/future_utils.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/field_validation_utils.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -128,15 +129,9 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
     if (entityId == null) {
       return;
     }
-    try {
-      final suggestions = await _getMealSuggestions.invoke(entityId: entityId);
-      if (mounted) {
-        setState(() => _suggestions = ResourceSuccess(suggestions));
-      }
-    } catch (error) {
-      if (mounted) {
-        setState(() => _suggestions = ResourceError(error));
-      }
+    final result = await _getMealSuggestions.invoke(entityId: entityId).toResource();
+    if (mounted) {
+      setState(() => _suggestions = result);
     }
   }
 
@@ -275,11 +270,31 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
     final mode = widget.mode;
     final name = _name.trim();
 
-    if (!_checkDuplicates(name, mode)) {
+    UiDialog.showLoadingDialog(context);
+
+    final existing = await _resolveExistingSuggestions(user.entityId);
+    if (!mounted) {
+      return;
+    }
+    if (existing == null) {
+      context.router.pop();
+      UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
       return;
     }
 
-    UiDialog.showLoadingDialog(context);
+    final excludeId = mode is MealSuggestionFormEditMode ? mode.suggestion.id : null;
+    final isDuplicate = _checkMealSuggestionDuplicate.invoke(
+      existing: existing,
+      name: name,
+      allergens: _allergens,
+      excludeId: excludeId,
+    );
+    if (isDuplicate) {
+      context.router.pop();
+      _showDuplicateDialog();
+      return;
+    }
+
     final success = await switch (mode) {
       MealSuggestionFormAddMode() => //
         _addMealSuggestion.invoke(
@@ -305,23 +320,22 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
     }
   }
 
-  // The suggestions are already loaded for the autocomplete, so the duplicate
-  // check runs against that list instead of re-fetching.
-  bool _checkDuplicates(String name, MealSuggestionFormMode mode) {
-    final excludeId = mode is MealSuggestionFormEditMode ? mode.suggestion.id : null;
-
-    final existing = _suggestions.getOrNull() ?? const [];
-    final isDuplicate = _checkMealSuggestionDuplicate.invoke(
-      existing: existing,
-      name: name,
-      allergens: _allergens,
-      excludeId: excludeId,
-    );
-    if (isDuplicate) {
-      _showDuplicateDialog();
-      return false;
+  /// Returns the suggestions to check duplicates against, or null when they
+  /// cannot be obtained.
+  ///
+  /// Reuses the list already loaded for the autocomplete when available. When
+  /// that load is still pending or has failed, fetches a fresh list so the
+  /// duplicate check is not silently skipped on the load it depends on.
+  Future<List<MealSuggestion>?> _resolveExistingSuggestions(String entityId) async {
+    final loaded = _suggestions.getOrNull();
+    if (loaded != null) {
+      return loaded;
     }
-    return true;
+    try {
+      return await _getMealSuggestions.invoke(entityId: entityId);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> _onDeletePressed() async {

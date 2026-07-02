@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/domain/model/normalized.dart';
 import 'package:zachranobed/common/domain/model/resource.dart';
-import 'package:zachranobed/common/domain/utils/string_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
@@ -39,7 +39,7 @@ class MealSuggestionsListScreen extends StatefulWidget {
 class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
   final _observeMealSuggestions = GetIt.I<ObserveMealSuggestionsUseCase>();
 
-  Resource<List<MealSuggestion>> _suggestions = const ResourceLoading();
+  Resource<NormalizedList<MealSuggestion>> _suggestions = const ResourceLoading();
   String _query = '';
   StreamSubscription<List<MealSuggestion>>? _subscription;
 
@@ -53,7 +53,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
     _subscription = _observeMealSuggestions.invoke(entityId: entityId).listen(
       (suggestions) {
         if (mounted) {
-          setState(() => _suggestions = ResourceSuccess(suggestions));
+          setState(() => _suggestions = ResourceSuccess(NormalizedList(suggestions, (s) => s.name)));
         }
       },
       onError: (Object error) {
@@ -93,8 +93,8 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
     );
   }
 
-  Widget _buildContent(List<MealSuggestion> data) {
-    if (data.isEmpty) {
+  Widget _buildContent(NormalizedList<MealSuggestion> data) {
+    if (data.items.isEmpty) {
       return InfoPage(
         image: ImageAssets.imageEmptyMeals,
         title: context.l10n.mealSuggestionsListEmptyTitle,
@@ -102,10 +102,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
       );
     }
 
-    final query = _query.searchNormalized;
-    final filtered = query.isNotEmpty
-        ? data.where((s) => s.name.searchNormalized.contains(query)).toList()
-        : data;
+    final filtered = data.matches(_query);
 
     return Column(
       children: [
