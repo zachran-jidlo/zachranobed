@@ -268,6 +268,36 @@
     "offerFoodDetailSaveButton": "Uložit změny",
     "offerFoodDetailRemoveButton": "Smazat pokrm",
 
+    "manualDonationCardTitle": "Zadání daru",
+    "manualDonationCardGoToHistoryDescription": "V případě potřeby můžete zadat obsah daru v sekci Historie.",
+    "manualDonationCardInHistoryDescription": "V případě potřeby můžete zadat obsah daru.",
+    "manualDonationGoToHistoryAction": "Přejít do Historie",
+    "manualDonationAddMealsAction": "Přidat pokrmy",
+
+    "addMealsToHistoryScreenTitle": "Evidence pokrmů",
+    "addMealsToHistoryCountLabel": "Skutečný počet",
+    "addMealsToHistorySaveAction": "Uložit",
+    "addMealsToHistoryEmptyTitle": "Nemáte žádné pokrmy",
+    "addMealsToHistoryEmptyCanteenDescription": "Nejprve si pokrmy zadejte do Databáze pokrmů v nastavení, poté je budete moci darovat.",
+    "addMealsToHistoryEmptyCharityDescription": "Jídelna doposud nezadala pokrmy, abyste mohli evidovat darované pokrmy.",
+    "addMealsToHistoryDialogTitle": "Přidání položek",
+    "addMealsToHistoryDialogDescription": "Před uložením prosím zkontrolujte správné počty zadaných položek.",
+    "addMealsToHistoryDialogItemTemplate": "{count}× {name}",
+    "@addMealsToHistoryDialogItemTemplate": {
+      "placeholders": {
+        "count": {
+          "type": "int",
+          "example": "8"
+        },
+        "name": {
+          "type": "String",
+          "example": "Chléb"
+        }
+      }
+    },
+    "addMealsToHistoryDialogEditAction": "Upravit pokrmy",
+    "addMealsToHistoryDialogConfirmAction": "Souhlasím",
+
     "activePairCardCanteenLabel": "Aktivní jídelna",
     "activePairCardCharityLabel": "Aktivní charita",
     "activePairCardSelectAction": "Vybrat",

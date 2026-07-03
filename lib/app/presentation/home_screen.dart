@@ -36,34 +36,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTickerProviderStateMixin {
   final _updateNotificationsTokenUseCase = GetIt.I<UpdateNotificationsTokenUseCase>();
 
-  /// The data for the tabs.
-  final _tabs = [
-    _TabScreenData(
-      label: (context) => context.l10n.navigationLabelOverview,
-      iconSpec: const UiIconSpec.data(Icons.home),
-      content: (context) => const OverviewScreen(),
-    ),
-    _TabScreenData(
-      label: (context) => context.l10n.navigationLabelFaq,
-      iconSpec: const UiIconSpec.data(Icons.menu_book),
-      content: (context) => const FaqScreen(),
-    ),
-    _TabScreenData(
-      label: (context) => context.l10n.navigationLabelHistory,
-      iconSpec: const UiIconSpec.svg(ImageAssets.iconHistory),
-      content: (context) => const HistoryScreen(),
-    ),
-    _TabScreenData(
-      label: (context) => context.l10n.navigationLabelNotifications,
-      iconSpec: const UiIconSpec.data(Icons.notifications),
-      content: (context) => const NotificationsScreen(),
-      showIndicator: (context) {
-        final user = HelperService.watchCurrentUser(context);
-        final hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
-        return user != null ? hasAnyUnreadNotifications.invoke(user) : Stream.value(false);
-      },
-    )
-  ];
+  /// The data for the tabs. Built once in [initState] so its content closures
+  /// can reference the late [_tabController] for cross-tab navigation.
+  late final List<_TabScreenData> _tabs;
 
   /// The controller, which is used to sync state between TabBar and
   /// NavigationDrawer.
@@ -75,10 +50,44 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
   /// Whether to show the logout button.
   bool _showLogoutButton = false;
 
+  List<_TabScreenData> _buildTabs() {
+    return [
+      _TabScreenData(
+        label: (context) => context.l10n.navigationLabelOverview,
+        iconSpec: const UiIconSpec.data(Icons.home),
+        content: (context) => OverviewScreen(
+          // 2 is an index of the History tab within [_tabs].
+          onNavigateToHistoryPressed: () => _tabController.animateTo(2),
+        ),
+      ),
+      _TabScreenData(
+        label: (context) => context.l10n.navigationLabelFaq,
+        iconSpec: const UiIconSpec.data(Icons.menu_book),
+        content: (context) => const FaqScreen(),
+      ),
+      _TabScreenData(
+        label: (context) => context.l10n.navigationLabelHistory,
+        iconSpec: const UiIconSpec.svg(ImageAssets.iconHistory),
+        content: (context) => const HistoryScreen(),
+      ),
+      _TabScreenData(
+        label: (context) => context.l10n.navigationLabelNotifications,
+        iconSpec: const UiIconSpec.data(Icons.notifications),
+        content: (context) => const NotificationsScreen(),
+        showIndicator: (context) {
+          final user = HelperService.watchCurrentUser(context);
+          final hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
+          return user != null ? hasAnyUnreadNotifications.invoke(user) : Stream.value(false);
+        },
+      )
+    ];
+  }
+
   @override
   void initState() {
     super.initState();
 
+    _tabs = _buildTabs();
     _tabController = TabController(
       vsync: this,
       length: _tabs.length,
