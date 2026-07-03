@@ -57,7 +57,13 @@ class DeliveryService {
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
         .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
         .snapshots();
-    return snapshots.map((snapshot) => snapshot.docs.firstOrNull?.data());
+
+    return snapshots.map((snapshot) {
+      final deliveries = snapshot.docs.map((doc) => doc.data());
+      // Manual donation entries share this query but must not drive the overview
+      // status card, so skip them client-side (older docs have no such field).
+      return deliveries.firstWhereOrNull((delivery) => delivery.manualDonation != true);
+    });
   }
 
   /// Returns a [Future] that completes with a [DeliveryDto] object with a
@@ -150,13 +156,9 @@ class DeliveryService {
     Iterable<MealDto> meals,
     Map<String, int> boxes,
   ) async {
-    final addMeals = await _collection.doc(id).update({
-      'meals': FieldValue.arrayUnion(
-        meals.map((e) => e.toJson()).toList(),
-      )
-    }).toSuccess();
+    final addMealsSuccess = await addMeals(id, meals);
 
-    if (!addMeals) {
+    if (!addMealsSuccess) {
       return false;
     }
 
@@ -185,6 +187,17 @@ class DeliveryService {
     }
 
     return _collection.doc(id).update(updateData).toSuccess();
+  }
+
+  /// Adds [meals] to the delivery with the given [id] without touching food
+  /// boxes. Used by the manual donation entry flow, which has no boxes.
+  /// Returns true on success.
+  Future<bool> addMeals(String id, Iterable<MealDto> meals) {
+    return _collection.doc(id).update({
+      'meals': FieldValue.arrayUnion(
+        meals.map((e) => e.toJson()).toList(),
+      )
+    }).toSuccess();
   }
 
   /// Creates a delivery from the given [dto] instance.
