@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
@@ -196,7 +198,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         UiPrimaryButton(
           text: context.l10n.manualDonationAddMealsAction,
           size: UiButtonSize.medium(fullWidth: true),
-          onPressed: () async {},
+          onPressed: () async {
+            final saved = await context.router.push(const AddMealsToHistoryRoute());
+            if (saved == true) {
+              _loadInitialData();
+            }
+          },
         ),
       ],
     );

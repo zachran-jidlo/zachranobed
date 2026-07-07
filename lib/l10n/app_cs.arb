@@ -280,6 +280,7 @@
     "addMealsToHistoryEmptyTitle": "Nemáte žádné pokrmy",
     "addMealsToHistoryEmptyCanteenDescription": "Nejprve si pokrmy zadejte do Databáze pokrmů v nastavení, poté je budete moci darovat.",
     "addMealsToHistoryEmptyCharityDescription": "Jídelna doposud nezadala pokrmy, abyste mohli evidovat darované pokrmy.",
+    "addMealsToHistoryEmptyAction": "Přejít do nastavení",
     "addMealsToHistoryDialogTitle": "Přidání položek",
     "addMealsToHistoryDialogDescription": "Před uložením prosím zkontrolujte správné počty zadaných položek.",
     "addMealsToHistoryDialogItemTemplate": "{count}× {name}",
