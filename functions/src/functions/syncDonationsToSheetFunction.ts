@@ -82,7 +82,7 @@ export async function syncDonationsToSheet(
       client,
       donationsSheetId.value(),
       donationsSheetTab.value(),
-      dateIso,
+      day,
       counts,
     );
 
