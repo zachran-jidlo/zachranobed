@@ -23,9 +23,10 @@ import {
   ReportPeriod,
 } from "./functions/createReportFunction";
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
+import { syncDonationsToSheet } from "./functions/syncDonationsToSheetFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
-import { reportTriggerToken } from "./config/firebase";
+import { reportTriggerToken, sheetsServiceAccountKey } from "./config/firebase";
 import { DateTime } from "luxon";
 import { clearEntityCache, getEntities } from "./services/entityService";
 
@@ -188,6 +189,88 @@ exports.triggerCreateReport = onRequest(
       message: error instanceof Error ? error.message : "Unknown error",
     });
   }
+  },
+);
+
+// Manual donation sheet sync, available in all environments.
+// Requires the REPORT_TRIGGER_TOKEN secret as a bearer token.
+// Params:
+//   date       - YYYY-MM-DD, sync one day. Defaults to yesterday.
+//   from + to   - YYYY-MM-DD range (inclusive), backfill many days.
+exports.triggerSyncDonationsToSheet = onRequest(
+  {
+    invoker: "public",
+    secrets: [reportTriggerToken, sheetsServiceAccountKey],
+    timeoutSeconds: 540,
+  },
+  async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (
+      !authHeader?.startsWith("Bearer ") ||
+      authHeader.split(" ")[1] !== reportTriggerToken.value()
+    ) {
+      res.status(401).json({ status: "error", message: "Unauthorized" });
+      return;
+    }
+
+    const parseDay = (value: string): DateTime | null => {
+      const parsed = DateTime.fromISO(value, { zone: TIMEZONE });
+      return parsed.isValid ? parsed.startOf("day") : null;
+    };
+
+    try {
+      const dateStr = (req.query.date as string) || req.body?.date;
+      const fromStr = (req.query.from as string) || req.body?.from;
+      const toStr = (req.query.to as string) || req.body?.to;
+
+      // Range backfill.
+      if (fromStr || toStr) {
+        const from = fromStr ? parseDay(fromStr) : null;
+        const to = toStr ? parseDay(toStr) : null;
+        if (!from || !to) {
+          res.status(400).json({
+            status: "error",
+            message: "Invalid range. Use from=YYYY-MM-DD&to=YYYY-MM-DD.",
+          });
+          return;
+        }
+        const days = to.diff(from, "days").days;
+        if (days < 0 || days > 366) {
+          res.status(400).json({
+            status: "error",
+            message: "Range must be forward and at most 366 days.",
+          });
+          return;
+        }
+        const results = [];
+        for (let d = from; d <= to; d = d.plus({ days: 1 })) {
+          results.push(await syncDonationsToSheet(d.toJSDate()));
+        }
+        res.json({ status: "success", days: results.length, results });
+        return;
+      }
+
+      // Single day (or yesterday by default).
+      let date: Date | undefined;
+      if (dateStr) {
+        const parsed = parseDay(dateStr);
+        if (!parsed) {
+          res.status(400).json({
+            status: "error",
+            message: "Invalid date. Use YYYY-MM-DD.",
+          });
+          return;
+        }
+        date = parsed.toJSDate();
+      }
+      const stats = await syncDonationsToSheet(date);
+      res.json({ status: "success", ...stats });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
   },
 );
 

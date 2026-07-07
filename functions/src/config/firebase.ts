@@ -37,5 +37,11 @@ export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 // Bearer token for the manual report trigger
 export const reportTriggerToken = defineSecret("REPORT_TRIGGER_TOKEN");
 
+// Google Sheets donation sync
+// JSON key of the service account that writes to the donations sheet.
+export const sheetsServiceAccountKey = defineSecret("SHEETS_SA_KEY");
+export const donationsSheetId = defineString("DONATIONS_SHEET_ID");
+export const donationsSheetTab = defineString("DONATIONS_SHEET_TAB");
+
 admin.initializeApp();
 export const db = admin.firestore();
