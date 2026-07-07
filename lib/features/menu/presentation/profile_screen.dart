@@ -82,6 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () => context.router.push(const ContactsRoute()),
               ),
             ),
+
+            // Settings section
+            SectionedListHeader(context.l10n.settings),
             // The meal suggestions are only relevant for canteens.
             if (user is Canteen)
               SectionedListItem(
@@ -92,9 +95,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: () => context.router.push(const MealSuggestionsListRoute()),
                 ),
               ),
-
-            // Settings section
-            SectionedListHeader(context.l10n.settings),
             SectionedListItem(
               _buildListItem(
                 context,
