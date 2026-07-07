@@ -25,6 +25,15 @@ abstract class OfferedFoodRepository {
     required Map<String, int> boxInfo,
   });
 
+  /// Records [foodInfo] straight into history for the [user]'s active pair,
+  /// bypassing the normal delivery process. Reuses today's manual delivery doc
+  /// (creating it in a valid history state when missing) so repeated calls on
+  /// the same day append to the same record. Returns true on success.
+  Future<bool> addMealsToHistory({
+    required UserData user,
+    required List<FoodInfo> foodInfo,
+  });
+
   /// Returns a stream of offered food items for a specific delivery.
   Stream<Iterable<OfferedFood>> observeMealsForDelivery({
     required String deliveryId,
