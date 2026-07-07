@@ -70,11 +70,15 @@ export async function upsertDailyDonations(
   const targetIso = day.toISODate();
   const dateCz = day.toFormat(DATE_FORMAT);
 
-  const grid = await client.spreadsheets.values.get({
-    spreadsheetId,
-    range: tabRef,
-    valueRenderOption: "FORMATTED_VALUE",
-  });
+  const grid = await withSheetsRetry(
+    () =>
+      client.spreadsheets.values.get({
+        spreadsheetId,
+        range: tabRef,
+        valueRenderOption: "FORMATTED_VALUE",
+      }),
+    "read grid",
+  );
   const values = (grid.data.values ?? []) as string[][];
   const header = values[HEADER_ROW_INDEX] ?? [];
 
@@ -87,7 +91,7 @@ export async function upsertDailyDonations(
     }
   });
 
-  // Find the day's row by parsing column B, or append one when missing.
+  // Find the day's row by parsing column B.
   let rowIndex = values.findIndex((row, index) => {
     if (index <= HEADER_ROW_INDEX) {
       return false;
@@ -100,24 +104,23 @@ export async function upsertDailyDonations(
     const parsed = DateTime.fromFormat(raw, DATE_FORMAT);
     return parsed.isValid && parsed.toISODate() === targetIso;
   });
+
+  // Collect every cell to write, so one day is one write request. When the day
+  // has no row yet, the next free row after the table also gets the date.
+  const data: sheets_v4.Schema$ValueRange[] = [];
   let rowAppended = false;
   if (rowIndex === -1) {
-    // Append after the table. The date goes in column B, written as text in
-    // Czech format so it is deterministic regardless of the sheet locale.
-    const appended = await client.spreadsheets.values.append({
-      spreadsheetId,
-      range: `${tabRef}!B:B`,
-      valueInputOption: "RAW",
-      insertDataOption: "INSERT_ROWS",
-      requestBody: { values: [[dateCz]] },
-    });
-    rowIndex = parseAppendedRowIndex(appended.data, values.length);
+    rowIndex = values.length;
     rowAppended = true;
+    // Written as text in Czech format, deterministic regardless of locale.
+    data.push({
+      range: `${tabRef}!${colIndexToA1(DATE_COLUMN_INDEX)}${rowIndex + 1}`,
+      values: [[dateCz]],
+    });
   }
 
-  const updates: sheets_v4.Schema$ValueRange[] = [];
+  let written = 0;
   let missingColumns = 0;
-
   for (const [entityId, { name, count }] of counts) {
     const columnIndex = columnByEntityId.get(entityId);
     if (columnIndex === undefined) {
@@ -127,34 +130,62 @@ export async function upsertDailyDonations(
       );
       continue;
     }
-    const cell = `${tabRef}!${colIndexToA1(columnIndex)}${rowIndex + 1}`;
-    updates.push({ range: cell, values: [[count]] });
-  }
-
-  if (updates.length > 0) {
-    await client.spreadsheets.values.batchUpdate({
-      spreadsheetId,
-      requestBody: { valueInputOption: "RAW", data: updates },
+    data.push({
+      range: `${tabRef}!${colIndexToA1(columnIndex)}${rowIndex + 1}`,
+      values: [[count]],
     });
+    written++;
   }
 
-  return { written: updates.length, missingColumns, rowAppended };
+  if (data.length > 0) {
+    await withSheetsRetry(
+      () =>
+        client.spreadsheets.values.batchUpdate({
+          spreadsheetId,
+          requestBody: { valueInputOption: "RAW", data },
+        }),
+      "write cells",
+    );
+  }
+
+  return { written, missingColumns, rowAppended };
+}
+
+/** HTTP status of a Sheets API error, checking the shapes gaxios uses. */
+function statusOf(error: unknown): number | undefined {
+  const e = error as {
+    code?: number | string;
+    status?: number;
+    response?: { status?: number };
+  };
+  const code = typeof e?.code === "string" ? Number(e.code) : e?.code;
+  return code ?? e?.status ?? e?.response?.status;
 }
 
 /**
- * Resolve the zero-based row index of an appended row from the API response.
- * Falls back to the previous row count when the response range is missing.
+ * Retry a Sheets call on rate-limit (429) errors with exponential backoff.
+ * Backfilling many days can otherwise trip the per-minute write quota.
  */
-function parseAppendedRowIndex(
-  data: sheets_v4.Schema$AppendValuesResponse,
-  previousRowCount: number,
-): number {
-  const range = data.updates?.updatedRange;
-  const match = range?.match(/![A-Z]+(\d+)/);
-  if (match) {
-    return Number(match[1]) - 1;
+async function withSheetsRetry<T>(
+  fn: () => Promise<T>,
+  label: string,
+): Promise<T> {
+  const maxAttempts = 5;
+  let delayMs = 2000;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (statusOf(error) !== 429 || attempt >= maxAttempts) {
+        throw error;
+      }
+      logger.warn(
+        `sheetsService: ${label} rate limited, retry ${attempt} in ${delayMs}ms`,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      delayMs *= 2;
+    }
   }
-  return previousRowCount;
 }
 
 /** Convert a zero-based column index to an A1 column label (0 -> A, 26 -> AA). */

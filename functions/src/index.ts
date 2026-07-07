@@ -244,6 +244,10 @@ exports.triggerSyncDonationsToSheet = onRequest(
         }
         const results = [];
         for (let d = from; d <= to; d = d.plus({ days: 1 })) {
+          if (results.length > 0) {
+            // Stay under the Sheets per-minute write quota during backfill.
+            await new Promise((resolve) => setTimeout(resolve, 1100));
+          }
           results.push(await syncDonationsToSheet(d.toJSDate()));
         }
         res.json({ status: "success", days: results.length, results });
