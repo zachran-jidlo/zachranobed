@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/domain/model/delivery_page_cursor.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
@@ -47,7 +48,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final _scrollController = ScrollController();
 
   final List<SectionedListEntry<OfferedFood>> _items = [];
+
+  /// Date of the last added item, used only to decide section header breaks.
   DateTime? _lastItemDate;
+
+  /// Cursor for the next page, or null before the first load and once the last
+  /// page has been reached.
+  DeliveryPageCursor? _nextCursor;
+
   bool _isLoading = false;
   bool _isError = false;
   bool _hasMore = false;
@@ -92,6 +100,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       if (initial) {
         _items.clear();
         _lastItemDate = null;
+        _nextCursor = null;
       }
     });
 
@@ -102,16 +111,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return;
       }
 
-      final items = await _useCase.invoke(
+      final page = await _useCase.invoke(
         user: user,
-        startAfterDate: initial ? null : _lastItemDate,
+        startAfter: initial ? null : _nextCursor,
       );
 
       setState(() {
-        _addItemsToEntries(items);
+        _addItemsToEntries(page.items);
+        _nextCursor = page.nextCursor;
 
         _isLoading = false;
-        _hasMore = items.isNotEmpty;
+        _hasMore = page.nextCursor != null;
       });
 
       // If the content is too short, automatically trigger the next load
