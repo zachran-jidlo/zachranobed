@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-26
 
     steps:
       # Checkouts the repository with entire commit history, which is needed to calculate the
