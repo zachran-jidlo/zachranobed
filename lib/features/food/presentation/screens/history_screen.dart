@@ -1,16 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:zachranobed/common/domain/model/delivery_page_cursor.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
+import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
 import 'package:zachranobed/common/presentation/utils/image_assets.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_icon_button.dart';
-import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
-import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
-import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/layout/sectioned_list_view.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
+import 'package:zachranobed/common/presentation/widget/page/error_page.dart';
+import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
+import 'package:zachranobed/common/presentation/widget/page/loading_page.dart';
 import 'package:zachranobed/features/food/domain/model/offered_food.dart';
 import 'package:zachranobed/features/food/domain/usecase/get_history_paginated_use_case.dart';
 import 'package:zachranobed/features/food/presentation/model/food_allergen.dart';
@@ -42,7 +48,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final _scrollController = ScrollController();
 
   final List<SectionedListEntry<OfferedFood>> _items = [];
+
+  /// Date of the last added item, used only to decide section header breaks.
   DateTime? _lastItemDate;
+
+  /// Cursor for the next page, or null before the first load and once the last
+  /// page has been reached.
+  DeliveryPageCursor? _nextCursor;
+
   bool _isLoading = false;
   bool _isError = false;
   bool _hasMore = false;
@@ -87,6 +100,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       if (initial) {
         _items.clear();
         _lastItemDate = null;
+        _nextCursor = null;
       }
     });
 
@@ -97,16 +111,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return;
       }
 
-      final items = await _useCase.invoke(
+      final page = await _useCase.invoke(
         user: user,
-        startAfterDate: initial ? null : _lastItemDate,
+        startAfter: initial ? null : _nextCursor,
       );
 
       setState(() {
-        _addItemsToEntries(items);
+        _addItemsToEntries(page.items);
+        _nextCursor = page.nextCursor;
 
         _isLoading = false;
-        _hasMore = items.isNotEmpty;
+        _hasMore = page.nextCursor != null;
       });
 
       // If the content is too short, automatically trigger the next load
@@ -169,19 +184,58 @@ class _HistoryScreenState extends State<HistoryScreen> {
       );
     }
 
+    final showManualDonationCard = HelperService.watchCurrentUser(context)?.manualDonationEnabled ?? false;
+    final manualDonationCard = showManualDonationCard ? _buildManualDonationCard(context) : null;
+
     if (_items.isEmpty) {
-      return InfoPage(
-        image: ImageAssets.imageEmptyChef,
-        title: context.l10n.donationsEmptyTitle,
-        description: context.l10n.donationsEmptyDescription,
-      );
+      return _buildEmptyPage(manualDonationCard);
     }
 
     return _HistoryList(
       items: _items,
+      leading: manualDonationCard,
       hasMore: _hasMore,
       onRefresh: _loadInitialData,
       controller: _scrollController,
+    );
+  }
+
+  Widget _buildManualDonationCard(BuildContext context) {
+    return UiNotificationTile(
+      title: context.l10n.manualDonationCardTitle,
+      description: context.l10n.manualDonationCardInHistoryDescription,
+      actions: [
+        UiPrimaryButton(
+          text: context.l10n.manualDonationAddMealsAction,
+          size: UiButtonSize.medium(fullWidth: true),
+          onPressed: () async {
+            final saved = await context.router.push(const AddMealsToHistoryRoute());
+            if (saved == true) {
+              _loadInitialData();
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmptyPage(Widget? manualDonationCard) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (manualDonationCard != null)
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: manualDonationCard,
+          ),
+        Expanded(
+          child: InfoPage(
+            image: ImageAssets.imageEmptyChef,
+            title: context.l10n.donationsEmptyTitle,
+            description: context.l10n.donationsEmptyDescription,
+          ),
+        ),
+      ],
     );
   }
 
@@ -200,28 +254,38 @@ class _HistoryList extends StatelessWidget {
   final Future<void> Function() onRefresh;
   final ScrollController controller;
 
+  /// Optional widget rendered as the first scrollable entry, so it scrolls away with the list.
+  final Widget? leading;
+
   const _HistoryList({
     required this.items,
     required this.hasMore,
     required this.onRefresh,
     required this.controller,
+    this.leading,
   });
 
   @override
   Widget build(BuildContext context) {
-    final entries = hasMore
-        ? [
-            ...items,
-            const SectionedListItemWidget<OfferedFood>(
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+    final entries = <SectionedListEntry<OfferedFood>>[
+      if (leading != null)
+        SectionedListItemWidget<OfferedFood>(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24.0),
+            child: leading!,
+          ),
+        ),
+      ...items,
+      if (hasMore)
+        const SectionedListItemWidget<OfferedFood>(
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: CircularProgressIndicator(),
             ),
-          ]
-        : items;
+          ),
+        ),
+    ];
 
     return RefreshIndicator(
       onRefresh: onRefresh,

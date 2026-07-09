@@ -4,6 +4,7 @@ import 'package:zachranobed/common/data/dto/delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/utils/firestore_utils.dart';
+import 'package:zachranobed/common/domain/model/delivery_page_cursor.dart';
 import 'package:zachranobed/common/domain/utils/date_time_utils.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
@@ -57,7 +58,13 @@ class DeliveryService {
         .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
         .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
         .snapshots();
-    return snapshots.map((snapshot) => snapshot.docs.firstOrNull?.data());
+
+    return snapshots.map((snapshot) {
+      final deliveries = snapshot.docs.map((doc) => doc.data());
+      // Manual donation entries share this query but must not drive the overview
+      // status card, so skip them client-side (older docs have no such field).
+      return deliveries.firstWhereOrNull((delivery) => delivery.manualDonation != true);
+    });
   }
 
   /// Returns a [Future] that completes with a [DeliveryDto] object with a
@@ -122,18 +129,25 @@ class DeliveryService {
 
   /// Fetches deliveries with pagination support using cursor-based pagination.
   ///
-  /// Use [startAfterDeliveryDate] to fetch deliveries after the last delivery date from the previous page.
-  /// Specify [limit] to control page size.
+  /// Pass the previous page's last delivery as [startAfter] to fetch the next
+  /// page, or null for the first page. Specify [limit] to control page size.
+  ///
+  /// The query orders by date and then by document id, so deliveries that share
+  /// the same date still have a stable, unique order. This lets the cursor land
+  /// exactly after the last delivery instead of skipping same-date siblings.
   Future<Iterable<DeliveryDto>> getDeliveriesPage({
     required String donorId,
     required String recipientId,
-    required DateTime? startAfterDeliveryDate,
+    required DeliveryPageCursor? startAfter,
     required int limit,
   }) async {
-    var query = _collection.orderBy('deliveryDate', descending: true).where(_hasEntity(donorId, recipientId));
+    var query = _collection
+        .orderBy('deliveryDate', descending: true)
+        .orderBy(FieldPath.documentId)
+        .where(_hasEntity(donorId, recipientId));
 
-    if (startAfterDeliveryDate != null) {
-      query = query.where('deliveryDate', isLessThan: startAfterDeliveryDate);
+    if (startAfter != null) {
+      query = query.startAfter([startAfter.deliveryDate, startAfter.deliveryId]);
     }
 
     query = query.limit(limit);
@@ -150,13 +164,9 @@ class DeliveryService {
     Iterable<MealDto> meals,
     Map<String, int> boxes,
   ) async {
-    final addMeals = await _collection.doc(id).update({
-      'meals': FieldValue.arrayUnion(
-        meals.map((e) => e.toJson()).toList(),
-      )
-    }).toSuccess();
+    final addMealsSuccess = await addMeals(id, meals);
 
-    if (!addMeals) {
+    if (!addMealsSuccess) {
       return false;
     }
 
@@ -185,6 +195,17 @@ class DeliveryService {
     }
 
     return _collection.doc(id).update(updateData).toSuccess();
+  }
+
+  /// Adds [meals] to the delivery with the given [id] without touching food
+  /// boxes. Used by the manual donation entry flow, which has no boxes.
+  /// Returns true on success.
+  Future<bool> addMeals(String id, Iterable<MealDto> meals) {
+    return _collection.doc(id).update({
+      'meals': FieldValue.arrayUnion(
+        meals.map((e) => e.toJson()).toList(),
+      )
+    }).toSuccess();
   }
 
   /// Creates a delivery from the given [dto] instance.

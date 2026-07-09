@@ -42,4 +42,7 @@ class Canteen extends UserData {
 
   @override
   FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair) => pair.donorFoodBoxesCheckup;
+
+  @override
+  bool isManualDonationEnabled(EntityPair pair) => pair.donorManualDonationEnabled;
 }

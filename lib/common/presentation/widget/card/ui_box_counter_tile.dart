@@ -5,13 +5,14 @@ import 'package:zachranobed/common/presentation/widget/form/ui_counter_field.dar
 
 /// A tile widget that displays box information with an editable counter.
 ///
-/// This widget shows a card with a title, subtitle, and a counter field slot.
+/// This widget shows a card with a title, an optional subtitle, and a counter
+/// field slot.
 class UiBoxCounterTile extends StatelessWidget {
   /// The name of the box type.
   final String title;
 
-  /// Subtitle displayed below the title.
-  final String subtitle;
+  /// Optional subtitle displayed below the title.
+  final String? subtitle;
 
   /// The counter field widget.
   final UiCounterField counterField;
@@ -20,7 +21,7 @@ class UiBoxCounterTile extends StatelessWidget {
   const UiBoxCounterTile({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.counterField,
   });
 
@@ -58,12 +59,13 @@ class UiBoxCounterTile extends StatelessWidget {
               color: context.uiColors.textPrimary,
             ),
           ),
-          Text(
-            subtitle,
-            style: context.textStyles.labelMedium.copyWith(
-              color: context.uiColors.textPrimary,
+          if (subtitle != null)
+            Text(
+              subtitle!,
+              style: context.textStyles.labelMedium.copyWith(
+                color: context.uiColors.textPrimary,
+              ),
             ),
-          ),
         ],
       ),
     );

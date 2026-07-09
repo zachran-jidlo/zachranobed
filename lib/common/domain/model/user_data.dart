@@ -36,7 +36,8 @@ sealed class UserData {
       Organization: $organization,
       Last accepted app terms version: $lastAcceptedAppTermsVersion,
       Active pair: ${activePair.donorId} <-> ${activePair.recipientId},
-      Has multiple pairs: $hasMultiplePairs
+      Has multiple pairs: $hasMultiplePairs,
+      Manual donation enabled: $manualDonationEnabled,
     ''';
   }
 
@@ -55,4 +56,11 @@ sealed class UserData {
 
   /// Return a relevant [FoodBoxesCheckup] for current user.
   FoodBoxesCheckup getFoodBoxesCheckup(EntityPair pair);
+
+  /// Whether manual donation entry is enabled for the given [pair] and this
+  /// user's role (donor for a canteen, recipient for a charity).
+  bool isManualDonationEnabled(EntityPair pair);
+
+  /// Whether manual donation entry is enabled for the current [activePair].
+  bool get manualDonationEnabled => isManualDonationEnabled(activePair);
 }

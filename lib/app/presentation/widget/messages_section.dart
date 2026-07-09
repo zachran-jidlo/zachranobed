@@ -6,6 +6,9 @@ import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/utils/helper_service.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/layout/content_with_loading.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
@@ -25,12 +28,17 @@ class MessagesSection extends StatefulWidget {
   /// Refreshes the state of the food boxes checkup.
   final VoidCallback refreshCheckupState;
 
+  /// Called when the user chooses to record a donation from the manual donation
+  /// entry card, switching to the History tab.
+  final VoidCallback onNavigateToHistoryPressed;
+
   /// Creates a [MessagesSection] widget.
   const MessagesSection({
     super.key,
     required this.user,
     required this.checkupState,
     required this.refreshCheckupState,
+    required this.onNavigateToHistoryPressed,
   });
 
   @override
@@ -72,7 +80,26 @@ class _MessagesSectionState extends State<MessagesSection> {
         _buildFoodBoxesCheckupTileCheckNeeded(context, user, isDelayAvailable),
       );
     }
+
+    if (user.manualDonationEnabled) {
+      messages.add(_buildManualDonationTile(context));
+    }
+
     return messages;
+  }
+
+  Widget _buildManualDonationTile(BuildContext context) {
+    return UiNotificationTile(
+      title: context.l10n.manualDonationCardTitle,
+      description: context.l10n.manualDonationCardGoToHistoryDescription,
+      actions: [
+        UiPrimaryButton(
+          text: context.l10n.manualDonationGoToHistoryAction,
+          size: UiButtonSize.medium(fullWidth: true),
+          onPressed: () => widget.onNavigateToHistoryPressed(),
+        ),
+      ],
+    );
   }
 
   Widget _buildFoodBoxesCheckupTileCheckNeeded(BuildContext context, UserData user, bool isDelayAvailable) {

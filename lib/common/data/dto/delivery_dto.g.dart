@@ -24,6 +24,7 @@ DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
           unknownValue: JsonKey.nullForUndefinedEnumValue),
       confirmationTime: (json['confirmationTime'] as num?)?.toInt(),
       foodBoxesTransferred: json['foodBoxesTransferred'] as bool?,
+      manualDonation: json['manualDonation'] as bool?,
     );
 
 Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
@@ -39,6 +40,7 @@ Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) =>
       'confirmationTime': instance.confirmationTime,
       if (instance.foodBoxesTransferred case final value?)
         'foodBoxesTransferred': value,
+      if (instance.manualDonation case final value?) 'manualDonation': value,
     };
 
 const _$DeliveryStateDtoEnumMap = {

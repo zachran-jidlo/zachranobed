@@ -23,7 +23,11 @@ import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_welcome_tile.dart';
 
 class OverviewScreen extends StatefulWidget {
-  const OverviewScreen({super.key});
+  /// Called when the user chooses to record a donation from the manual donation
+  /// entry card, switching to the History tab.
+  final VoidCallback onNavigateToHistoryPressed;
+
+  const OverviewScreen({super.key, required this.onNavigateToHistoryPressed});
 
   @override
   State<OverviewScreen> createState() => _OverviewScreenState();
@@ -73,6 +77,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
               user: user,
               checkupState: _boxesCheckupState,
               refreshCheckupState: _refreshBoxesCheckupState,
+              onNavigateToHistoryPressed: widget.onNavigateToHistoryPressed,
             ),
             const SizedBox(height: 8.0),
             _buildDonationStatusCard(context, user),

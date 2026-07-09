@@ -11,6 +11,7 @@ import 'package:zachranobed/features/food/domain/repository/food_box_repository.
 import 'package:zachranobed/features/food/domain/repository/meal_suggestion_repository.dart';
 import 'package:zachranobed/features/food/domain/repository/offered_food_repository.dart';
 import 'package:zachranobed/features/food/domain/usecase/add_meal_suggestion_use_case.dart';
+import 'package:zachranobed/features/food/domain/usecase/add_meals_to_history_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/create_box_delivery_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/create_food_offer_use_case.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
@@ -107,6 +108,12 @@ class FoodDependencyContainer {
 
     GetIt.I.registerFactory<CreateFoodOfferUseCase>(
       () => CreateFoodOfferUseCase(
+        GetIt.I<OfferedFoodRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<AddMealsToHistoryUseCase>(
+      () => AddMealsToHistoryUseCase(
         GetIt.I<OfferedFoodRepository>(),
       ),
     );

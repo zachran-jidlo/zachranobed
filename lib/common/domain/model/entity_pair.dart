@@ -39,6 +39,14 @@ class EntityPair {
   /// The food boxes checkup state of the recipient.
   final FoodBoxesCheckup recipientFoodBoxesCheckup;
 
+  /// Whether the donor can record donations straight into history for this
+  /// pair, bypassing the delivery process.
+  final bool donorManualDonationEnabled;
+
+  /// Whether the recipient can record donations straight into history for this
+  /// pair, bypassing the delivery process.
+  final bool recipientManualDonationEnabled;
+
   /// The confirmation time.
   final Duration confirmationTime;
 
@@ -56,6 +64,8 @@ class EntityPair {
     required this.usesReturnableFoodBoxes,
     required this.donorFoodBoxesCheckup,
     required this.recipientFoodBoxesCheckup,
+    required this.donorManualDonationEnabled,
+    required this.recipientManualDonationEnabled,
     required this.confirmationTime,
   });
 }

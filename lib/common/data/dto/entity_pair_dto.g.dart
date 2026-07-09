@@ -24,6 +24,10 @@ EntityPairDto _$EntityPairDtoFromJson(Map<String, dynamic> json) =>
           ? null
           : FoodBoxesCheckupSummaryDto.fromJson(
               json['foodboxesCheckup'] as Map<String, dynamic>),
+      manualDonation: json['manualDonation'] == null
+          ? null
+          : ManualDonationSummaryDto.fromJson(
+              json['manualDonation'] as Map<String, dynamic>),
       confirmationTime: (json['confirmationTime'] as num).toInt(),
     );
 
@@ -36,5 +40,6 @@ Map<String, dynamic> _$EntityPairDtoToJson(EntityPairDto instance) =>
       'deliveryTimeWindows': instance.deliveryTimeWindows,
       'foodboxes': instance.foodboxes,
       'foodboxesCheckup': instance.foodboxesCheckup,
+      'manualDonation': instance.manualDonation,
       'confirmationTime': instance.confirmationTime,
     };
