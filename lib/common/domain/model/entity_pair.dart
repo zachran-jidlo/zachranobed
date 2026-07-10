@@ -1,3 +1,4 @@
+import 'package:zachranobed/common/domain/model/carrier_type.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 import 'package:zachranobed/common/domain/model/local_time.dart';
 
@@ -47,6 +48,9 @@ class EntityPair {
   /// pair, bypassing the delivery process.
   final bool recipientManualDonationEnabled;
 
+  /// Whether the pickup confirmation feature is enabled for this pair.
+  final bool pickupConfirmationEnabled;
+
   /// The confirmation time.
   final Duration confirmationTime;
 
@@ -66,6 +70,11 @@ class EntityPair {
     required this.recipientFoodBoxesCheckup,
     required this.donorManualDonationEnabled,
     required this.recipientManualDonationEnabled,
+    required this.pickupConfirmationEnabled,
     required this.confirmationTime,
   });
+
+  /// Whether this pair should use the pickup confirmation flow. Only self-pickup
+  /// pairs with the feature enabled qualify.
+  bool get supportsPickupConfirmation => carrierId == CarrierType.personal.id && pickupConfirmationEnabled;
 }

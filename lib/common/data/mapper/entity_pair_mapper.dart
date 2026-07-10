@@ -58,6 +58,7 @@ extension EntityPairMapper on EntityPairDto {
       recipientFoodBoxesCheckup: _getCheckup(usesReturnableFoodBoxes, foodboxesCheckup?.recipient),
       donorManualDonationEnabled: manualDonation?.donor?.enabled ?? false,
       recipientManualDonationEnabled: manualDonation?.recipient?.enabled ?? false,
+      pickupConfirmationEnabled: pickupConfirmation?.enabled ?? false,
       confirmationTime: Duration(minutes: confirmationTime),
     );
   }

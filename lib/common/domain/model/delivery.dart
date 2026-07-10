@@ -17,6 +17,7 @@ abstract class Delivery with _$Delivery {
     required DeliveryType type,
     required Duration confirmationTime,
     required bool hasMeals,
+    required bool isPickupConfirmed,
   }) = _Delivery;
 }
 

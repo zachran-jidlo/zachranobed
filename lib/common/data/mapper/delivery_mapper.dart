@@ -23,6 +23,7 @@ extension DeliveryMapper on DeliveryDto {
       type: deliveryType,
       confirmationTime: Duration(minutes: confirmationTime ?? 0),
       hasMeals: meals.isNotEmpty,
+      isPickupConfirmed: pickupConfirmation?.pickupConfirmedAt != null,
     );
   }
 }

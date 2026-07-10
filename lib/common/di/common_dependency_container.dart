@@ -17,6 +17,7 @@ import 'package:zachranobed/common/domain/repository/app_configuration_repositor
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/repository/device_repository.dart';
 import 'package:zachranobed/common/domain/repository/user_repository.dart';
+import 'package:zachranobed/common/domain/usecase/confirm_pickup_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/create_food_delivery_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_build_number_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_semantic_version_usecase.dart';
@@ -72,6 +73,12 @@ class CommonDependencyContainer {
     // UseCases
     GetIt.I.registerFactory<CreateFoodDeliveryUseCase>(
       () => CreateFoodDeliveryUseCase(
+        GetIt.I<DeliveryRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<ConfirmPickupUseCase>(
+      () => ConfirmPickupUseCase(
         GetIt.I<DeliveryRepository>(),
       ),
     );

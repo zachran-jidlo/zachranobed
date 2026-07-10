@@ -5,7 +5,8 @@ This is a changelog for **ZachranObed** application.
 ## [2.2.0]
 ### Added
 - **ZOB-294** Add meal suggestions.
-- **ZOB-424** Add manual delivery flow.
+- **ZOB-422** Add optional pickup confirmation.
+- **ZOB-424** Add optional manual delivery flow.
 
 ## [2.1.0]
 ### Added

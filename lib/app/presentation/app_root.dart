@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/app_terms_status.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
+import 'package:zachranobed/common/domain/usecase/confirm_pickup_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
@@ -47,7 +48,10 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
   // Held as a field so it can be accessed from stream listeners (no context needed).
   final _userNotifier = UserNotifier();
-  final _deliveryNotifier = DeliveryNotifier(GetIt.I<DeliveryRepository>());
+  final _deliveryNotifier = DeliveryNotifier(
+    GetIt.I<DeliveryRepository>(),
+    GetIt.I<ConfirmPickupUseCase>(),
+  );
 
   StreamSubscription<void>? _userDataSubscription;
   UserData? _previousUserData;
