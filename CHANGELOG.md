@@ -2,19 +2,22 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [2.2.0]
+### Added
+- **ZOB-294** Add meal suggestions.
+- **ZOB-424** Add manual delivery flow.
+
 ## [2.1.0]
 ### Added
+- **ZOB-407** Add boxes on the way.
 - **ZOB-408** Add reported counts to food boxes checkup flow.
 - **ZOB-409** Add new FAQ section.
+- **ZOB-412** Add prepared at date to meal tile.
 - **ZOB-418** Add soft and force updates to web application.
 - **ZOB-420** Add sending a device info to Firestore.
 
 ### Fixed
 - **ZOB-419** Fix logout related crash.
-
-### Changed
-
-### Removed
 
 ## [2.0.0]
 ### Added
