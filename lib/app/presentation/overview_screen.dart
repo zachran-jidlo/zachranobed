@@ -114,6 +114,7 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
             delivery: delivery,
             onChangePairPressed: _onChangePairPressed,
             onDeliveryDetailPressed: _onDeliveryDetailPressed,
+            onConfirmPickupPressed: _onConfirmPickupPressed,
           ),
       },
     );
@@ -178,6 +179,10 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
 
   void _onDeliveryDetailPressed(String id) {
     context.pushRoute(DeliveryDetailRoute(deliveryId: id));
+  }
+
+  void _onConfirmPickupPressed() {
+    context.read<DeliveryNotifier>().confirmPickup();
   }
 
   void _onDeliveryConfirmationTimeout() {

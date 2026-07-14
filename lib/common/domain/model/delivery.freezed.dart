@@ -22,6 +22,7 @@ mixin _$Delivery {
   DeliveryType get type;
   Duration get confirmationTime;
   bool get hasMeals;
+  bool get isPickupConfirmed;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -44,16 +45,18 @@ mixin _$Delivery {
             (identical(other.confirmationTime, confirmationTime) ||
                 other.confirmationTime == confirmationTime) &&
             (identical(other.hasMeals, hasMeals) ||
-                other.hasMeals == hasMeals));
+                other.hasMeals == hasMeals) &&
+            (identical(other.isPickupConfirmed, isPickupConfirmed) ||
+                other.isPickupConfirmed == isPickupConfirmed));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state,
-      type, confirmationTime, hasMeals);
+      type, confirmationTime, hasMeals, isPickupConfirmed);
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals, isPickupConfirmed: $isPickupConfirmed)';
   }
 }
 
@@ -69,7 +72,8 @@ abstract mixin class $DeliveryCopyWith<$Res> {
       DeliveryState state,
       DeliveryType type,
       Duration confirmationTime,
-      bool hasMeals});
+      bool hasMeals,
+      bool isPickupConfirmed});
 }
 
 /// @nodoc
@@ -91,6 +95,7 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
     Object? type = null,
     Object? confirmationTime = null,
     Object? hasMeals = null,
+    Object? isPickupConfirmed = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -121,6 +126,10 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
           ? _self.hasMeals
           : hasMeals // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPickupConfirmed: null == isPickupConfirmed
+          ? _self.isPickupConfirmed
+          : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -135,7 +144,8 @@ class _Delivery extends Delivery {
       required this.state,
       required this.type,
       required this.confirmationTime,
-      required this.hasMeals})
+      required this.hasMeals,
+      required this.isPickupConfirmed})
       : super._();
 
   @override
@@ -152,6 +162,8 @@ class _Delivery extends Delivery {
   final Duration confirmationTime;
   @override
   final bool hasMeals;
+  @override
+  final bool isPickupConfirmed;
 
   /// Create a copy of Delivery
   /// with the given fields replaced by the non-null parameter values.
@@ -175,16 +187,18 @@ class _Delivery extends Delivery {
             (identical(other.confirmationTime, confirmationTime) ||
                 other.confirmationTime == confirmationTime) &&
             (identical(other.hasMeals, hasMeals) ||
-                other.hasMeals == hasMeals));
+                other.hasMeals == hasMeals) &&
+            (identical(other.isPickupConfirmed, isPickupConfirmed) ||
+                other.isPickupConfirmed == isPickupConfirmed));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state,
-      type, confirmationTime, hasMeals);
+      type, confirmationTime, hasMeals, isPickupConfirmed);
 
   @override
   String toString() {
-    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals)';
+    return 'Delivery(id: $id, donorId: $donorId, recipientId: $recipientId, state: $state, type: $type, confirmationTime: $confirmationTime, hasMeals: $hasMeals, isPickupConfirmed: $isPickupConfirmed)';
   }
 }
 
@@ -202,7 +216,8 @@ abstract mixin class _$DeliveryCopyWith<$Res>
       DeliveryState state,
       DeliveryType type,
       Duration confirmationTime,
-      bool hasMeals});
+      bool hasMeals,
+      bool isPickupConfirmed});
 }
 
 /// @nodoc
@@ -224,6 +239,7 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
     Object? type = null,
     Object? confirmationTime = null,
     Object? hasMeals = null,
+    Object? isPickupConfirmed = null,
   }) {
     return _then(_Delivery(
       id: null == id
@@ -253,6 +269,10 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
       hasMeals: null == hasMeals
           ? _self.hasMeals
           : hasMeals // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPickupConfirmed: null == isPickupConfirmed
+          ? _self.isPickupConfirmed
+          : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }

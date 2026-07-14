@@ -384,12 +384,17 @@
     "overviewCanteenDonationStatusCardLabel": "Darujete charitě",
     "overviewCanteenDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto charitu den darování",
     "overviewCanteenDonationStatusCardAcceptedLabel": "Darování potvrzeno",
+    "overviewCanteenDonationStatusCardAwaitingPickupConfirmationLabel": "Darování bylo z vaší strany potvrzeno. Teď musí charita potvrdit vyzvednutí.",
+    "overviewCanteenDonationStatusCardPickupConfirmedLabel": "Charita potvrdila vyzvednutí",
     "overviewCanteenDonationStatusCardOnWayToPickUpLabel": "Přeprava potvrzena",
     "overviewCanteenDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly předány a míří do charity",
 
     "overviewCharityDonationStatusCardLabel": "Aktivní jídelna",
     "overviewCharityDonationStatusCardNotDeliveryDayLabel": "Dnes není pro tuto jídelnu den darování",
     "overviewCharityDonationStatusCardAcceptedLabel": "Jídelna potvrdila dnešní darování",
+    "overviewCharityDonationStatusCardConfirmPickupAction": "Vyzvedneme",
+    "overviewCharityDonationStatusCardConfirmPickupInfoLabel": "Potvrďte, že si pokrmy dnes vyzvednete.",
+    "overviewCharityDonationStatusCardPickupConfirmedLabel": "Jídelna potvrdila dnešní darování. Vyzvednutí potvrzeno.",
     "overviewCharityDonationStatusCardOfferedLabel": "Darované pokrmy se připravují",
     "overviewCharityDonationStatusCardOnWayToCustomerLabel": "Pokrmy byly převzaty a míří k vám",
 

@@ -47,6 +47,9 @@ class EntityPair {
   /// pair, bypassing the delivery process.
   final bool recipientManualDonationEnabled;
 
+  /// Whether the pickup confirmation feature is enabled for this pair.
+  final bool pickupConfirmationEnabled;
+
   /// The confirmation time.
   final Duration confirmationTime;
 
@@ -66,6 +69,7 @@ class EntityPair {
     required this.recipientFoodBoxesCheckup,
     required this.donorManualDonationEnabled,
     required this.recipientManualDonationEnabled,
+    required this.pickupConfirmationEnabled,
     required this.confirmationTime,
   });
 }

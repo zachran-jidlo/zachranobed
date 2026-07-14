@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:zachranobed/common/data/dto/delivery_pickup_confirmation_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/utils/timestamp_converter.dart';
@@ -33,6 +34,11 @@ class DeliveryDto {
   @JsonKey(includeIfNull: false)
   final bool? manualDonation;
 
+  /// Pickup confirmation state for self-pickup pairs. Null for deliveries that
+  /// don't use the pickup confirmation flow.
+  @JsonKey(includeIfNull: false)
+  final DeliveryPickupConfirmationDto? pickupConfirmation;
+
   DeliveryDto({
     required this.id,
     required this.donorId,
@@ -45,6 +51,7 @@ class DeliveryDto {
     required this.confirmationTime,
     required this.foodBoxesTransferred,
     this.manualDonation,
+    this.pickupConfirmation,
   });
 
   factory DeliveryDto.fromJson(Map<String, dynamic> json) => _$DeliveryDtoFromJson(json);

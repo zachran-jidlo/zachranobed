@@ -36,6 +36,13 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
+  Future<bool> confirmPickup({
+    required Delivery delivery,
+  }) {
+    return _deliveryService.confirmPickup(delivery.id);
+  }
+
+  @override
   Future<bool> createFoodDelivery({
     required UserData user,
   }) async {

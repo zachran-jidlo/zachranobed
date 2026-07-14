@@ -117,7 +117,13 @@ class CanteenDonationStatusCard extends StatelessWidget {
         statusText = context.l10n.overviewDonationStatusCardDeliveryDayLabel;
         break;
       case DeliveryState.accepted:
-        statusText = context.l10n.overviewCanteenDonationStatusCardAcceptedLabel;
+        if (delivery.isPickupConfirmationActive(canteen)) {
+          statusText = delivery.isPickupConfirmed
+              ? context.l10n.overviewCanteenDonationStatusCardPickupConfirmedLabel
+              : context.l10n.overviewCanteenDonationStatusCardAwaitingPickupConfirmationLabel;
+        } else {
+          statusText = context.l10n.overviewCanteenDonationStatusCardAcceptedLabel;
+        }
         break;
       case DeliveryState.onWayToPickUp:
         statusText = context.l10n.overviewCanteenDonationStatusCardOnWayToPickUpLabel;

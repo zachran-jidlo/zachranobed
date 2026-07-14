@@ -14,6 +14,11 @@ abstract class DeliveryRepository {
     required DeliveryState state,
   });
 
+  /// Records that the recipient confirmed the pickup for the given [delivery].
+  Future<bool> confirmPickup({
+    required Delivery delivery,
+  });
+
   /// Creates an empty food delivery in prepared state for the given [user].
   ///
   /// Returns `true` if the delivery was created successfully, `false` otherwise.

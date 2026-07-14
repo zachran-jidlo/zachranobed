@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/delivery_pickup_confirmation_dto.dart';
 import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/data/dto/meal_dto.dart';
 import 'package:zachranobed/common/data/utils/firestore_utils.dart';
@@ -87,6 +88,18 @@ class DeliveryService {
   /// specified [id] with the provided [state] value.
   Future<bool> updateDeliveryState(String id, DeliveryStateDto state) async {
     return await _collection.doc(id).update({'state': state.toJson()}).toSuccess();
+  }
+
+  /// Records that the recipient confirmed the pickup for the delivery with the
+  /// given [id]. Writes through a typed DTO so the field name and timestamp
+  /// conversion come from generated code.
+  Future<bool> confirmPickup(String id) {
+    final update = DeliveryPickupConfirmationUpdateDto(
+      pickupConfirmation: DeliveryPickupConfirmationDto(
+        pickupConfirmedAt: DateTime.now(),
+      ),
+    );
+    return _collection.doc(id).update(update.toJson()).toSuccess();
   }
 
   /// Sets up a Firestore stream to listen for changes in the `deliveries`

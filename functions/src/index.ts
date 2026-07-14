@@ -6,6 +6,7 @@ import { monthlyBoxCheckupFunction } from "./functions/notifications/monthlyBoxC
 import { notifyCanteenAboutMissingMealInfo } from "./functions/notifications/missingMealInfoFunction";
 import { notifyCanteenAboutCourierIncoming } from "./functions/notifications/canteenCourierIncomingFunction";
 import { notifyCharityAboutCourierIncoming } from "./functions/notifications/charityCourierIncomingFunction";
+import { notifyCanteenAboutPickupConfirmed } from "./functions/notifications/pickupConfirmationFunction";
 import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
@@ -37,6 +38,7 @@ exports.monthlyBoxCheckupFunction = monthlyBoxCheckupFunction;
 exports.notifyCanteenAboutMissingMealInfo = notifyCanteenAboutMissingMealInfo;
 exports.notifyCanteenAboutCourierIncoming = notifyCanteenAboutCourierIncoming;
 exports.notifyCharityAboutCourierIncoming = notifyCharityAboutCourierIncoming;
+exports.notifyCanteenAboutPickupConfirmed = notifyCanteenAboutPickupConfirmed;
 
 // Get current project ID
 const currentProjectId =

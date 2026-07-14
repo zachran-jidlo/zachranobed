@@ -4,6 +4,7 @@ import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_outline_button.dart';
+import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_status_card.dart';
 import 'package:zachranobed/common/presentation/widget/donation/ui_donation_time_range_label.dart';
@@ -37,6 +38,9 @@ class CharityDonationStatusCard extends StatelessWidget {
   /// Called when the user wants to open delivery detail with already donated meals.
   final Function(String) onDeliveryDetailPressed;
 
+  /// Called when the user confirms they will pick the donation up.
+  final VoidCallback onConfirmPickupPressed;
+
   /// Creates a [CharityDonationStatusCard].
   const CharityDonationStatusCard({
     super.key,
@@ -44,6 +48,7 @@ class CharityDonationStatusCard extends StatelessWidget {
     required this.delivery,
     required this.onChangePairPressed,
     required this.onDeliveryDetailPressed,
+    required this.onConfirmPickupPressed,
   });
 
   @override
@@ -105,7 +110,11 @@ class CharityDonationStatusCard extends StatelessWidget {
       case DeliveryState.accepted:
       case DeliveryState.onWayToPickUp:
         if (!delivery.hasMeals) {
-          statusText = context.l10n.overviewCharityDonationStatusCardAcceptedLabel;
+          if (delivery.isPickupConfirmationActive(charity) && delivery.isPickupConfirmed) {
+            statusText = context.l10n.overviewCharityDonationStatusCardPickupConfirmedLabel;
+          } else {
+            statusText = context.l10n.overviewCharityDonationStatusCardAcceptedLabel;
+          }
         } else {
           statusText = context.l10n.overviewCharityDonationStatusCardOfferedLabel;
         }
@@ -180,6 +189,13 @@ class CharityDonationStatusCard extends StatelessWidget {
       return null;
     }
 
+    if (delivery.isPickupConfirmationActive(charity) && !delivery.isPickupConfirmed) {
+      return Text(
+        context.l10n.overviewCharityDonationStatusCardConfirmPickupInfoLabel,
+        style: context.textStyles.bodyMedium,
+      );
+    }
+
     final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.onWayToPickUp;
     if (accepted && delivery.hasMeals || delivery.state == DeliveryState.inDelivery) {
       return UiDonationTimeRangeLabel(
@@ -201,6 +217,13 @@ class CharityDonationStatusCard extends StatelessWidget {
   Widget? _buildActionButton(BuildContext context, Delivery? delivery) {
     if (delivery == null) {
       return null;
+    }
+
+    if (delivery.isPickupConfirmationActive(charity) && !delivery.isPickupConfirmed) {
+      return UiPrimaryButton(
+        text: context.l10n.overviewCharityDonationStatusCardConfirmPickupAction,
+        onPressed: onConfirmPickupPressed,
+      );
     }
 
     final accepted = delivery.state == DeliveryState.accepted || delivery.state == DeliveryState.onWayToPickUp;

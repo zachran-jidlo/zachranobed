@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
+import 'package:zachranobed/common/domain/usecase/confirm_pickup_use_case.dart';
 
 class DeliveryNotifier extends ChangeNotifier {
   final DeliveryRepository _repository;
+  final ConfirmPickupUseCase _confirmPickupUseCase;
   Delivery? _delivery;
 
-  DeliveryNotifier(this._repository);
+  DeliveryNotifier(this._repository, this._confirmPickupUseCase);
 
   Delivery? get delivery => _delivery;
 
@@ -45,6 +47,22 @@ class DeliveryNotifier extends ChangeNotifier {
         delivery: currentDelivery,
         state: state,
       );
+    }
+  }
+
+  /// Records that the recipient confirmed the pickup of the current delivery.
+  ///
+  /// Optimistically updates the local delivery so the UI reacts immediately,
+  /// then persists the confirmation.
+  Future<void> confirmPickup() async {
+    final currentDelivery = _delivery;
+    _delivery = currentDelivery?.copyWith(isPickupConfirmed: true);
+    notifyListeners();
+
+    if (currentDelivery != null) {
+      // No rollback needed on failure. An offline overlay blocks the UI when
+      // there is no connection, so the write can be assumed to succeed.
+      await _confirmPickupUseCase.invoke(currentDelivery);
     }
   }
 
