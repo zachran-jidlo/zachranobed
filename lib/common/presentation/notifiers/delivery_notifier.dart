@@ -60,6 +60,8 @@ class DeliveryNotifier extends ChangeNotifier {
     notifyListeners();
 
     if (currentDelivery != null) {
+      // No rollback needed on failure. An offline overlay blocks the UI when
+      // there is no connection, so the write can be assumed to succeed.
       await _confirmPickupUseCase.invoke(currentDelivery);
     }
   }

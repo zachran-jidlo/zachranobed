@@ -27,6 +27,7 @@ export const notifyCanteenAboutPickupConfirmed = onDocumentUpdated(
     if (
       newValue.state === "ACCEPTED" && // Filter out unnecessary loading from Firestore for other states
       !oldConfirmed && newConfirmed && // Fire only when pickup is confirmed for the first time
+      newValue.pickupTimeWindow?.start &&
       isToday(newValue.pickupTimeWindow.start.toDate())
     ) {
       const donorId = newValue.donorId;
@@ -38,7 +39,7 @@ export const notifyCanteenAboutPickupConfirmed = onDocumentUpdated(
       ])
         .then((results) => {
           if (results[0].exists && results[1].exists) {
-            const fcmTokens = results[0].data()!.fcmTokens;
+            const fcmTokens = results[0].data()!.fcmTokens ?? {};
             const recipient = results[1].data();
 
             const title = "Charita potvrdila vyzvednutí";
