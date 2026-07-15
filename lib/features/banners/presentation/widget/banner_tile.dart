@@ -28,6 +28,7 @@ class BannerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return UiNotificationTile(
       title: banner.title,
+      titleMaxLines: null,
       descriptionWidget: _buildMessage(context),
       icon: _icon(),
       iconColor: _iconColor(context),

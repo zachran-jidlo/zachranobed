@@ -10,6 +10,10 @@ class UiNotificationTile extends StatelessWidget {
   /// The title displayed in the notification.
   final String title;
 
+  /// Max lines for the title before it ellipsizes. Defaults to 1. Pass null to
+  /// let the title wrap freely (e.g. for longer remote-authored titles).
+  final int? titleMaxLines;
+
   /// The description text displayed below the title.
   final String? description;
 
@@ -33,6 +37,7 @@ class UiNotificationTile extends StatelessWidget {
   const UiNotificationTile({
     super.key,
     required this.title,
+    this.titleMaxLines = 1,
     this.description,
     this.descriptionWidget,
     this.icon,
@@ -81,8 +86,8 @@ class UiNotificationTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
               title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              maxLines: titleMaxLines,
+              overflow: titleMaxLines == null ? TextOverflow.clip : TextOverflow.ellipsis,
               style: context.textStyles.titleMedium.copyWith(
                 color: context.uiColors.textPrimary,
               ),

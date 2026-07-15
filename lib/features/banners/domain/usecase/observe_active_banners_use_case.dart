@@ -24,7 +24,7 @@ class ObserveActiveBannersUseCase {
 
   Stream<List<Banner>> invoke({required UserData user}) {
     final platform = RunningPlatform.current();
-    final currentVersion = _getAppSemanticVersion.invoke().asStream().map(_tryParseVersion);
+    final currentVersion = _getAppSemanticVersion.invoke().asStream().map(_tryParseVersion).onErrorReturn(null);
 
     return Rx.combineLatest4<List<Banner>, Set<String>, Version?, void, List<Banner>>(
       _repository.observeActive(),
