@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zachranobed/common/presentation/deeplink/app_deeplink_handler.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
+import 'package:zachranobed/common/presentation/widget/markdown/ui_markdown_style.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
 import 'package:zachranobed/features/faq/domain/model/faq_item.dart';
 
@@ -28,7 +29,7 @@ class FaqDetailScreen extends StatelessWidget {
         return Markdown(
           data: '## ${item.question}\n\n${item.answer}',
           padding: const EdgeInsets.all(16),
-          styleSheet: _buildStyleSheet(context),
+          styleSheet: uiMarkdownStyleSheet(context, context.textStyles.bodyLarge),
           onTapLink: (text, href, title) {
             if (href != null) {
               _handleLink(context, href);
@@ -36,35 +37,6 @@ class FaqDetailScreen extends StatelessWidget {
           },
         );
       },
-    );
-  }
-
-  MarkdownStyleSheet _buildStyleSheet(BuildContext context) {
-    return MarkdownStyleSheet(
-      h1: context.textStyles.headlineLarge,
-      h2: context.textStyles.titleLarge,
-      h3: context.textStyles.titleMedium,
-      p: context.textStyles.bodyLarge,
-      listBullet: context.textStyles.bodyLarge,
-      strong: context.textStyles.bodyLarge.copyWith(fontWeight: FontWeight.w700),
-      em: context.textStyles.bodyLarge.copyWith(fontStyle: FontStyle.italic),
-      a: TextStyle(
-        color: context.uiColors.primary,
-        decoration: TextDecoration.underline,
-        decorationColor: context.uiColors.primary,
-      ),
-      blockquoteDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: context.uiColors.primary, width: 2.0),
-      ),
-      horizontalRuleDecoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            width: 2.0,
-            color: context.uiColors.surfaceGrayDark,
-          ),
-        ),
-      ),
     );
   }
 
