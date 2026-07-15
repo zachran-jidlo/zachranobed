@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Added
 - **ZOB-294** Add meal suggestions.
 - **ZOB-422** Add optional pickup confirmation.
+- **ZOB-421** Add support for dynamic banners.
 - **ZOB-424** Add optional manual delivery flow.
 
 ## [2.1.0]
