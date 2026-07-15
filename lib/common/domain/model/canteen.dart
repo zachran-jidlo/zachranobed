@@ -10,6 +10,7 @@ class Canteen extends UserData {
     required super.lastAcceptedAppTermsVersion,
     required super.activePair,
     required super.allPairs,
+    required super.tags,
   });
 
   /// Checks if the current time is within the pickup range for a [Canteen].
@@ -37,6 +38,7 @@ class Canteen extends UserData {
       lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
       allPairs: allPairs,
       activePair: activePair,
+      tags: tags,
     );
   }
 

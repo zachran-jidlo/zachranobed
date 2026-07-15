@@ -22,6 +22,7 @@ class EntityDto {
   final int? lastAcceptedAppTermsVersion;
   final List<ContactDto>? additionalContacts;
   final bool? showOnboardingForUiChanges;
+  final List<String>? tags;
 
   EntityDto({
     required this.id,
@@ -36,6 +37,7 @@ class EntityDto {
     required this.lastAcceptedAppTermsVersion,
     required this.additionalContacts,
     required this.showOnboardingForUiChanges,
+    required this.tags,
   });
 
   factory EntityDto.fromJson(Map<String, dynamic> json) => _$EntityDtoFromJson(json);

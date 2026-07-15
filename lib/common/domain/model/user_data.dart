@@ -16,6 +16,9 @@ sealed class UserData {
   final EntityPair activePair;
   final List<EntityPair> allPairs;
 
+  /// Free-form labels used for targeting.
+  final List<String> tags;
+
   UserData({
     required this.entityId,
     required this.email,
@@ -25,6 +28,7 @@ sealed class UserData {
     required this.lastAcceptedAppTermsVersion,
     required this.activePair,
     required this.allPairs,
+    required this.tags,
   });
 
   String get debugInfo {
@@ -38,6 +42,7 @@ sealed class UserData {
       Active pair: ${activePair.donorId} <-> ${activePair.recipientId},
       Has multiple pairs: $hasMultiplePairs,
       Manual donation enabled: $manualDonationEnabled,
+      Tags: $tags,
     ''';
   }
 
