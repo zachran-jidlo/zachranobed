@@ -26,15 +26,11 @@ class ObserveActiveBannersUseCase {
     final platform = RunningPlatform.current();
     final currentVersion = _getAppSemanticVersion.invoke().asStream().map(_tryParseVersion);
 
-    // Re-evaluate periodically so time-window boundaries (validFrom/validTo)
-    // take effect while the screen stays open, not only on stream events.
-    final tick = Stream<void>.periodic(const Duration(minutes: 1)).startWith(null);
-
     return Rx.combineLatest4<List<Banner>, Set<String>, Version?, void, List<Banner>>(
       _repository.observeActive(),
       _repository.observeDismissedIds(),
       currentVersion,
-      tick,
+      _periodicTick(),
       (banners, dismissed, version, _) {
         final now = DateTime.now();
         return banners
@@ -42,6 +38,13 @@ class ObserveActiveBannersUseCase {
             .sortedBy<num>((banner) => banner.priority);
       },
     );
+  }
+
+  /// Emits immediately, then every minute, so time-window boundaries
+  /// (validFrom/validTo) take effect while the screen stays open, not only on
+  /// stream events.
+  Stream<void> _periodicTick() {
+    return Stream<void>.periodic(const Duration(minutes: 1)).startWith(null);
   }
 
   bool _matches(

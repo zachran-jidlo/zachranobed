@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/app/presentation/widget/canteen_donation_status_card.dart';
 import 'package:zachranobed/app/presentation/widget/charity_donation_status_card.dart';
@@ -21,6 +22,9 @@ import 'package:zachranobed/common/presentation/widget/layout/adaptive_content.d
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_dialog.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_welcome_tile.dart';
+import 'package:zachranobed/features/banners/domain/model/banner.dart';
+import 'package:zachranobed/features/banners/domain/usecase/dismiss_banner_use_case.dart';
+import 'package:zachranobed/features/banners/domain/usecase/observe_active_banners_use_case.dart';
 
 class OverviewScreen extends StatefulWidget {
   /// Called when the user chooses to record a donation from the manual donation
@@ -34,12 +38,17 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
+  final _observeActiveBanners = GetIt.I<ObserveActiveBannersUseCase>();
+  final _dismissBanner = GetIt.I<DismissBannerUseCase>();
+
   FoodBoxesCheckupState _boxesCheckupState = FoodBoxesCheckupAllGood(isVerified: false, isVerifiedByUser: false);
+  Stream<List<Banner>>? _bannersStream;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _refreshBoxesCheckupState();
+    _ensureBannersStream();
   }
 
   @override
@@ -73,11 +82,16 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
       builder: (context) => SingleChildScrollView(
         child: Column(
           children: [
-            MessagesSection(
-              user: user,
-              checkupState: _boxesCheckupState,
-              refreshCheckupState: _refreshBoxesCheckupState,
-              onNavigateToHistoryPressed: widget.onNavigateToHistoryPressed,
+            StreamBuilder<List<Banner>>(
+              stream: _bannersStream,
+              builder: (context, snapshot) => MessagesSection(
+                user: user,
+                banners: snapshot.data ?? const [],
+                onBannerDismiss: _onBannerDismiss,
+                checkupState: _boxesCheckupState,
+                refreshCheckupState: _refreshBoxesCheckupState,
+                onNavigateToHistoryPressed: widget.onNavigateToHistoryPressed,
+              ),
             ),
             const SizedBox(height: 8.0),
             _buildDonationStatusCard(context, user),
@@ -139,6 +153,23 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
         ),
       ),
     ];
+  }
+
+  /// Creates the banners stream once the user is available. The logged-in
+  /// entity is stable for this screen's lifetime (logout recreates the screen),
+  /// so the stream is built once.
+  void _ensureBannersStream() {
+    if (_bannersStream != null) {
+      return;
+    }
+    final user = HelperService.getCurrentUser(context);
+    if (user != null) {
+      _bannersStream = _observeActiveBanners.invoke(user: user);
+    }
+  }
+
+  void _onBannerDismiss(String id) {
+    _dismissBanner.invoke(id);
   }
 
   /// Refreshes the state of the food boxes checkup.
