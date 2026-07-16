@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 import 'package:get_it/get_it.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup_state.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
@@ -11,16 +11,24 @@ import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.
 import 'package:zachranobed/common/presentation/widget/card/ui_notification_tile.dart';
 import 'package:zachranobed/common/presentation/widget/layout/content_with_loading.dart';
 import 'package:zachranobed/common/presentation/widget/overlay/ui_temporary_snackbar.dart';
+import 'package:zachranobed/features/banners/domain/model/banner.dart';
+import 'package:zachranobed/features/banners/presentation/widget/banner_tile.dart';
 import 'package:zachranobed/features/food/domain/usecase/delay_food_boxes_checkup_use_case.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_check_needed.dart';
 
 /// A section that displays actionable messages and notifications to the user.
 ///
-/// Currently handles displaying the food boxes checkup tile when a regular
-/// checkup is needed.
+/// Shows dynamic banners on top, followed by the food boxes checkup tile when a
+/// regular checkup is needed and the manual donation entry card.
 class MessagesSection extends StatefulWidget {
   /// The user data to display messages for.
   final UserData user;
+
+  /// Dynamic banners to show, already filtered and sorted by priority.
+  final List<Banner> banners;
+
+  /// Called with the banner ID when the user closes a closable banner.
+  final void Function(String id) onBannerDismiss;
 
   /// The current state of the food boxes checkup.
   final FoodBoxesCheckupState checkupState;
@@ -36,6 +44,8 @@ class MessagesSection extends StatefulWidget {
   const MessagesSection({
     super.key,
     required this.user,
+    required this.banners,
+    required this.onBannerDismiss,
     required this.checkupState,
     required this.refreshCheckupState,
     required this.onNavigateToHistoryPressed,
@@ -74,6 +84,15 @@ class _MessagesSectionState extends State<MessagesSection> {
 
   List<Widget> _buildMessages(BuildContext context, UserData user) {
     final messages = <Widget>[];
+
+    for (final banner in widget.banners) {
+      messages.add(
+        BannerTile(
+          banner: banner,
+          onDismiss: () => widget.onBannerDismiss(banner.id),
+        ),
+      );
+    }
 
     if (widget.checkupState case FoodBoxesCheckupCheckNeeded(isDelayAvailable: final isDelayAvailable)) {
       messages.add(
