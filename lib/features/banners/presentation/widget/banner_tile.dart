@@ -31,7 +31,6 @@ class BannerTile extends StatelessWidget {
       titleMaxLines: null,
       descriptionWidget: _buildMessage(context),
       icon: _icon(),
-      iconColor: _iconColor(context),
       trailing: _buildTrailing(),
       actions: _buildActions(context),
     );
@@ -75,14 +74,6 @@ class BannerTile extends StatelessWidget {
     return switch (banner.type) {
       BannerType.warning => Icons.warning_rounded,
       BannerType.info => Icons.info_outline,
-      null => null,
-    };
-  }
-
-  Color? _iconColor(BuildContext context) {
-    return switch (banner.type) {
-      BannerType.warning => context.uiColors.warning,
-      BannerType.info => context.uiColors.primary,
       null => null,
     };
   }
