@@ -1,6 +1,7 @@
 import 'package:zachranobed/common/di/common_dependency_container.dart';
 import 'package:zachranobed/features/activepair/di/active_pair_dependency_container.dart';
 import 'package:zachranobed/features/appTerms/di/app_terms_dependency_container.dart';
+import 'package:zachranobed/features/banners/di/banners_dependency_container.dart';
 import 'package:zachranobed/features/faq/di/faq_dependency_container.dart';
 import 'package:zachranobed/features/food/di/food_dependency_container.dart';
 import 'package:zachranobed/features/forceupdate/domain/di/force_update_dependency_container.dart';
@@ -21,5 +22,6 @@ class AppDependencyContainer {
     ForceUpdateDependencyContainer.setup();
     NotificationsDependencyContainer.setup();
     FaqDependencyContainer.setup();
+    BannersDependencyContainer.setup();
   }
 }

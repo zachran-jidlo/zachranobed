@@ -10,6 +10,7 @@ class Charity extends UserData {
     required super.lastAcceptedAppTermsVersion,
     required super.activePair,
     required super.allPairs,
+    required super.tags,
   });
 
   @override
@@ -23,6 +24,7 @@ class Charity extends UserData {
       lastAcceptedAppTermsVersion: lastAcceptedAppTermsVersion,
       allPairs: allPairs,
       activePair: activePair,
+      tags: tags,
     );
   }
 

@@ -156,6 +156,7 @@ class AuthService {
       lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
       activePair: activePair,
       allPairs: pairsInfo.allPairs,
+      tags: entity.tags ?? const [],
     );
   }
 
@@ -188,6 +189,7 @@ class AuthService {
       lastAcceptedAppTermsVersion: entity.lastAcceptedAppTermsVersion,
       activePair: activePair,
       allPairs: pairsInfo.allPairs,
+      tags: entity.tags ?? const [],
     );
   }
 

@@ -10,8 +10,16 @@ class UiNotificationTile extends StatelessWidget {
   /// The title displayed in the notification.
   final String title;
 
+  /// Max lines for the title before it ellipsizes. Defaults to 1. Pass null to
+  /// let the title wrap freely (e.g. for longer remote-authored titles).
+  final int? titleMaxLines;
+
   /// The description text displayed below the title.
   final String? description;
+
+  /// Custom widget displayed in place of [description]. Takes precedence over
+  /// [description] when provided (e.g. to render rich/markdown content).
+  final Widget? descriptionWidget;
 
   /// The icon to display.
   final IconData? icon;
@@ -29,7 +37,9 @@ class UiNotificationTile extends StatelessWidget {
   const UiNotificationTile({
     super.key,
     required this.title,
+    this.titleMaxLines = 1,
     this.description,
+    this.descriptionWidget,
     this.icon,
     this.iconColor,
     this.trailing,
@@ -45,7 +55,7 @@ class UiNotificationTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context, trailing),
-          _buildDescription(context, description),
+          _buildDescription(context, description, descriptionWidget),
           _buildActions(actions),
         ],
       ),
@@ -76,8 +86,8 @@ class UiNotificationTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
               title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              maxLines: titleMaxLines,
+              overflow: titleMaxLines == null ? TextOverflow.clip : TextOverflow.ellipsis,
               style: context.textStyles.titleMedium.copyWith(
                 color: context.uiColors.textPrimary,
               ),
@@ -94,8 +104,9 @@ class UiNotificationTile extends StatelessWidget {
     );
   }
 
-  Widget _buildDescription(BuildContext context, String? description) {
-    if (description == null) {
+  Widget _buildDescription(BuildContext context, String? description, Widget? descriptionWidget) {
+    final content = descriptionWidget ?? _buildDescriptionText(context, description);
+    if (content == null) {
       return const SizedBox();
     }
 
@@ -105,11 +116,19 @@ class UiNotificationTile extends StatelessWidget {
         right: 16,
         bottom: 16,
       ),
-      child: Text(
-        description,
-        style: context.textStyles.bodyMedium.copyWith(
-          color: context.uiColors.textPrimary,
-        ),
+      child: content,
+    );
+  }
+
+  Widget? _buildDescriptionText(BuildContext context, String? description) {
+    if (description == null) {
+      return null;
+    }
+
+    return Text(
+      description,
+      style: context.textStyles.bodyMedium.copyWith(
+        color: context.uiColors.textPrimary,
       ),
     );
   }
