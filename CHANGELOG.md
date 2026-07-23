@@ -9,6 +9,9 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-421** Add support for dynamic banners.
 - **ZOB-424** Add optional manual delivery flow.
 
+### Changed
+- **ZOB-439** Update Android target & compile SDK to 36.
+
 ## [2.1.0]
 ### Added
 - **ZOB-407** Add boxes on the way.
