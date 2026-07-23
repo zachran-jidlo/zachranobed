@@ -266,7 +266,6 @@ export function buildReportMail(
   entries: EntityAttachment[],
   content: ReportEmailContent,
 ): ReportMailPayload {
-  const usedNames = new Set<string>();
   return {
     to: [email],
     message: {
@@ -281,8 +280,9 @@ export function buildReportMail(
     <br>
     <strong>Tým projektu Zachraň oběd</strong>
   </p>`,
+      // Each entry is a distinct entity, so the id is unique within one email.
       attachments: entries.map((entry) => ({
-        filename: `${uniqueSlug(entry.entity, usedNames)}-${content.periodSlug}.csv`,
+        filename: `${entry.entity.id}-${content.periodSlug}.csv`,
         content: Buffer.from(entry.csv, "utf8").toString("base64"),
         encoding: "base64",
         contentType: "text/csv; charset=utf-8",
@@ -307,30 +307,4 @@ function csvField(value: string): string {
   // apostrophe so spreadsheets treat the value as plain text.
   const safe = /^[=+\-@]/.test(escaped) ? `'${escaped}` : escaped;
   return `"${safe}"`;
-}
-
-function slug(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-/**
- * Attachment names only have to be unique within one email.
- * The slug is lossy, so similar establishment names can collide,
- * and a name without latin letters or digits slugs to an empty
- * string. Fall back to the entity id when the slug is empty and
- * add a counter when the name was already used in this email.
- */
-function uniqueSlug(entity: Entity, used: Set<string>): string {
-  const base = slug(entity.establishmentName) || entity.id;
-  let name = base;
-  for (let n = 2; used.has(name); n++) {
-    name = `${base}-${n}`;
-  }
-  used.add(name);
-  return name;
 }
