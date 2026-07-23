@@ -83,6 +83,31 @@ export function parsePeriod(value: string): ReportPeriod | null {
   return value.length === 4 ? yearPeriod(parsed) : monthPeriod(parsed);
 }
 
+/**
+ * Build a custom period from a YYYY-MM-DD range. Both ends are inclusive.
+ * Returns null when a date is invalid or from is after to.
+ */
+export function parseRange(from: string, to: string): ReportPeriod | null {
+  const start = DateTime.fromISO(from, { zone: TIMEZONE }).startOf("day");
+  const toDay = DateTime.fromISO(to, { zone: TIMEZONE }).startOf("day");
+  if (!start.isValid || !toDay.isValid || toDay < start) {
+    return null;
+  }
+  const fromLabel = start.toFormat("d. M. yyyy");
+  const toLabel = toDay.toFormat("d. M. yyyy");
+  return {
+    start,
+    // The report query end is exclusive, so add a day to include the whole
+    // "to" day.
+    end: toDay.plus({ days: 1 }),
+    content: {
+      subject: `Report darování od ${fromLabel} do ${toLabel}`,
+      periodPhrase: `od ${fromLabel} do ${toLabel}`,
+      periodSlug: `${start.toISODate()}_${toDay.toISODate()}`,
+    },
+  };
+}
+
 export async function createReport(
   options: CreateReportOptions = {},
 ): Promise<CreateReportStats> {
