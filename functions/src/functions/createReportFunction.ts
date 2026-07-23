@@ -3,16 +3,20 @@ import { logger } from "firebase-functions/v2";
 import { DateTime } from "luxon";
 import {
   buildReport,
+  buildReportMail,
   groupByEmail,
   groupByEntity,
   ReportEmailContent,
-  sendReportEmail,
 } from "../services/reportService";
 import {
   clearEntityCache,
   getEntities,
 } from "../services/entityService";
-import { TIMEZONE } from "../config/constants";
+import {
+  scheduleReportMailSend,
+  scheduleReportMailSweep,
+} from "../services/cloudTaskService";
+import { REPORT_MAIL, TIMEZONE } from "../config/constants";
 
 /** Reported time range with the matching email texts. */
 export interface ReportPeriod {
@@ -31,7 +35,7 @@ export interface CreateReportOptions {
 export interface CreateReportStats {
   rows: number;
   entitiesWithDeliveries: number;
-  emailsSent: number;
+  emailsQueued: number;
 }
 
 /** Build the period covering the calendar month of the given moment. */
@@ -110,30 +114,41 @@ export async function createReport(
     const byEmail = groupByEmail(buckets, entities);
 
     logger.info(
-      `createReport: ${rows.length} rows, ${buckets.size} entities with deliveries, sending ${byEmail.size} emails`,
+      `createReport: ${rows.length} rows, ${buckets.size} entities with deliveries, queueing ${byEmail.size} emails`,
     );
 
-    // One failed recipient must not block the others.
-    const results = await Promise.all(
-      [...byEmail].map(([email, entries]) =>
-        sendReportEmail(email, entries, content).then(
-          () => true,
-          (err) => {
-            logger.error(
-              `createReport: failed to send report to ${email}`,
-              err,
-            );
-            return false;
-          },
-        ),
-      ),
-    );
+    // Sending is paced so the mail provider does not block us. Schedule one
+    // Cloud Task per recipient, staggered by SEND_INTERVAL_SECONDS, each of
+    // which writes a single mails document. Once the last one is sent, a
+    // sweep runs to retry the failures. See reportMailWorkerFunction.
+    if (byEmail.size > 0) {
+      const runId = `${content.periodSlug}_${DateTime.now().toMillis()}`;
+      const payloads = [...byEmail].map(([email, entries]) =>
+        buildReportMail(email, entries, content),
+      );
 
-    logger.info("createReport: complete");
+      for (let i = 0; i < payloads.length; i++) {
+        await scheduleReportMailSend(
+          runId,
+          payloads[i],
+          i * REPORT_MAIL.SEND_INTERVAL_SECONDS,
+        );
+      }
+
+      await scheduleReportMailSweep(
+        runId,
+        payloads.length * REPORT_MAIL.SEND_INTERVAL_SECONDS + REPORT_MAIL.RETRY_DELAY_SECONDS,
+      );
+
+      logger.info(
+        `createReport: queued ${payloads.length} emails for run ${runId}`,
+      );
+    }
+
     return {
       rows: rows.length,
       entitiesWithDeliveries: buckets.size,
-      emailsSent: results.filter(Boolean).length,
+      emailsQueued: byEmail.size,
     };
   } finally {
     // The entity cache is module-level. Clear it even on failure so

@@ -1,6 +1,7 @@
 import { CloudTasksClient } from "@google-cloud/tasks";
 import { cloudTasksQueue, cloudTasksLocation, currentServiceAccount } from "../config/firebase";
 import { DeliveryState } from "../models";
+import { ReportMailPayload } from "./reportService";
 import { logger } from "firebase-functions/v2";
 
 export interface ScheduleTransitionParams {
@@ -116,5 +117,67 @@ export async function scheduleConfirmationReminder(
     { deliveryId },
     executeAt,
     `confirmationReminder delivery=${deliveryId}`,
+  );
+}
+
+/** A Date the given number of seconds from now. */
+function inSeconds(seconds: number): Date {
+  return new Date(Date.now() + seconds * 1000);
+}
+
+/**
+ * Schedule the worker that writes one report email into the mails collection.
+ * Callers stagger delaySeconds to pace the sends.
+ * @param {string} runId - Report mail run identifier
+ * @param {ReportMailPayload} payload - The mail to write
+ * @param {number} delaySeconds - Seconds from now to write the mail
+ * @return {Promise<string>} - Cloud Task name
+ */
+export async function scheduleReportMailSend(
+  runId: string,
+  payload: ReportMailPayload,
+  delaySeconds: number,
+): Promise<string> {
+  return scheduleCloudTask(
+    "reportMailSendHandler",
+    { runId, to: payload.to, message: payload.message },
+    inSeconds(delaySeconds),
+    `reportMailSend run=${runId}`,
+  );
+}
+
+/**
+ * Schedule a paced resend of an existing failed report mail.
+ * @param {string} mailId - The mails document to resend
+ * @param {number} delaySeconds - Seconds from now to resend it
+ * @return {Promise<string>} - Cloud Task name
+ */
+export async function scheduleReportMailRetry(
+  mailId: string,
+  delaySeconds: number,
+): Promise<string> {
+  return scheduleCloudTask(
+    "reportMailSendHandler",
+    { mailId },
+    inSeconds(delaySeconds),
+    `reportMailRetry mail=${mailId}`,
+  );
+}
+
+/**
+ * Schedule the sweep that retries the failed report emails of a run.
+ * @param {string} runId - Report mail run identifier
+ * @param {number} delaySeconds - Seconds from now to run the sweep
+ * @return {Promise<string>} - Cloud Task name
+ */
+export async function scheduleReportMailSweep(
+  runId: string,
+  delaySeconds: number,
+): Promise<string> {
+  return scheduleCloudTask(
+    "reportMailSweepHandler",
+    { runId },
+    inSeconds(delaySeconds),
+    `reportMailSweep run=${runId}`,
   );
 }

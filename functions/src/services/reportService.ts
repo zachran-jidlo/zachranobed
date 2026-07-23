@@ -241,15 +241,37 @@ export function groupByEmail(
   return result;
 }
 
-export async function sendReportEmail(
+/** A single mail document payload, ready to write to the mails collection. */
+export interface ReportMailPayload {
+  to: string[];
+  message: {
+    subject: string;
+    html: string;
+    attachments: Array<{
+      filename: string;
+      content: string;
+      encoding: string;
+      contentType: string;
+    }>;
+  };
+}
+
+/**
+ * Build the mail payload for one recipient without sending it. The actual
+ * mails document is written later by the paced worker so the provider is not
+ * flooded. See {@link REPORT_MAIL}.
+ */
+export function buildReportMail(
   email: string,
   entries: EntityAttachment[],
   content: ReportEmailContent,
-): Promise<void> {
+): ReportMailPayload {
   const usedNames = new Set<string>();
-  const message = {
-    subject: content.subject,
-    html: `
+  return {
+    to: [email],
+    message: {
+      subject: content.subject,
+      html: `
   <p>Dobrý den,</p>
 
   <p>v příloze naleznete report <strong>${content.periodPhrase}</strong>.</p>
@@ -259,19 +281,14 @@ export async function sendReportEmail(
     <br>
     <strong>Tým projektu Zachraň oběd</strong>
   </p>`,
-    attachments: entries.map((entry) => ({
-      filename: `${uniqueSlug(entry.entity, usedNames)}-${content.periodSlug}.csv`,
-      content: Buffer.from(entry.csv, "utf8").toString("base64"),
-      encoding: "base64",
-      contentType: "text/csv; charset=utf-8",
-    })),
+      attachments: entries.map((entry) => ({
+        filename: `${uniqueSlug(entry.entity, usedNames)}-${content.periodSlug}.csv`,
+        content: Buffer.from(entry.csv, "utf8").toString("base64"),
+        encoding: "base64",
+        contentType: "text/csv; charset=utf-8",
+      })),
+    },
   };
-
-  await db.collection("mails").add({
-    createdAt: Timestamp.now(),
-    to: [email],
-    message,
-  });
 }
 
 function appendTo<K, V>(map: Map<K, V[]>, key: K, value: V): void {

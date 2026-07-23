@@ -24,6 +24,10 @@ import {
   ReportPeriod,
 } from "./functions/createReportFunction";
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
+import {
+  reportMailSendHandler,
+  reportMailSweepHandler,
+} from "./functions/reportMailWorkerFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { reportTriggerToken } from "./config/firebase";
@@ -198,6 +202,10 @@ exports.triggerCreateReport = onRequest(
 // (both DEV and PROD create tasks that need this endpoint).
 exports.cloudTaskHandler = cloudTaskHandler;
 exports.confirmationReminderHandler = confirmationReminderHandler;
+
+// Paced report email workers invoked by Cloud Tasks
+exports.reportMailSendHandler = reportMailSendHandler;
+exports.reportMailSweepHandler = reportMailSweepHandler;
 
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;
