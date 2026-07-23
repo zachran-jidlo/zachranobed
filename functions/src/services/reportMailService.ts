@@ -5,13 +5,6 @@ import { ReportMailPayload } from "./reportService";
 
 const MAILS_COLLECTION = "mails";
 
-/** A report email whose last send did not succeed. */
-export interface ReportMailFailure {
-  mailId: string;
-  /** Send attempts so far, as counted by the Trigger Email extension. */
-  attempts: number;
-}
-
 /**
  * Write one mails document. The Trigger Email extension picks it up, sends
  * it, and tracks the result in the delivery field. The reportRunId tag is
@@ -48,29 +41,20 @@ export async function retryReportMail(mailId: string): Promise<void> {
 }
 
 /**
- * Find this run's report emails whose delivery has not reached SUCCESS. The
- * extension retries a few times on its own, so after the wait the state is
- * settled and anything other than SUCCESS is treated as a failure.
- * @return {Promise<ReportMailFailure[]>}
+ * Find the ids of this run's report emails whose delivery has not reached
+ * SUCCESS. The extension retries a few times on its own, so after the wait
+ * the state is settled and anything other than SUCCESS counts as a failure.
+ * @return {Promise<string[]>} Ids of the failed mails.
  */
 export async function findReportMailFailures(
   runId: string,
-): Promise<ReportMailFailure[]> {
+): Promise<string[]> {
   const snapshot = await db
     .collection(MAILS_COLLECTION)
     .where("reportRunId", "==", runId)
     .get();
 
-  const failures: ReportMailFailure[] = [];
-  for (const doc of snapshot.docs) {
-    const delivery = doc.data().delivery;
-    if (delivery?.state === "SUCCESS") {
-      continue;
-    }
-    failures.push({
-      mailId: doc.id,
-      attempts: typeof delivery?.attempts === "number" ? delivery.attempts : 0,
-    });
-  }
-  return failures;
+  return snapshot.docs
+    .filter((doc) => doc.data().delivery?.state !== "SUCCESS")
+    .map((doc) => doc.id);
 }

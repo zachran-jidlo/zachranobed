@@ -49,7 +49,11 @@ export const REPORT_MAIL = {
   SEND_INTERVAL_SECONDS: 30,
   /** Delay after a send round before the failed ones are retried. */
   RETRY_DELAY_SECONDS: 60 * 60,
-  /** Give up on an email after this many send attempts. */
+  /**
+   * Give up on an email after this many send attempts total, counting the
+   * initial send plus the retry rounds. The cap is enforced by the sweep
+   * round counter, so a run ends even if the extension never reports SUCCESS.
+   */
   MAX_ATTEMPTS: 5,
 } as const;
 

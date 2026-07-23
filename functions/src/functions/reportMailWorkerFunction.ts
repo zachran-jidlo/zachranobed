@@ -68,47 +68,40 @@ export const reportMailSweepHandler = onRequest(
       return;
     }
 
-    const { runId } = req.body ?? {};
-    if (!runId) {
-      logger.warn("reportMailSweepHandler: missing runId", req.body);
-      res.status(400).json({ error: "Missing required field: runId" });
+    const { runId, round } = req.body ?? {};
+    if (!runId || !round) {
+      logger.warn("reportMailSweepHandler: missing fields", req.body);
+      res.status(400).json({ error: "Missing required fields: runId, round" });
       return;
     }
 
     try {
       const failures = await findReportMailFailures(runId);
 
-      let retried = 0;
-      let exhausted = 0;
-      for (const failure of failures) {
-        if (failure.attempts >= REPORT_MAIL.MAX_ATTEMPTS) {
-          exhausted++;
-          logger.error(
-            `reportMailSweep: giving up on mail ${failure.mailId} (run ${runId}) after ${failure.attempts} attempts`,
-          );
-          continue;
-        }
-
+      // Resend each failure, paced. This is the (round + 1)-th attempt, since
+      // the initial send was attempt 1.
+      for (let i = 0; i < failures.length; i++) {
         await scheduleReportMailRetry(
-          failure.mailId,
-          retried * REPORT_MAIL.SEND_INTERVAL_SECONDS,
+          failures[i],
+          i * REPORT_MAIL.SEND_INTERVAL_SECONDS,
         );
-        retried++;
       }
 
-      if (retried > 0) {
-        // Resends were paced over retried * interval seconds. Sweep again one
-        // retry delay after the last one goes out.
+      // Stop once the attempt cap is reached, so the run always ends even if
+      // the extension never marks a mail SUCCESS (for example not configured).
+      const isLastRound = round + 1 >= REPORT_MAIL.MAX_ATTEMPTS;
+      if (failures.length > 0 && !isLastRound) {
         await scheduleReportMailSweep(
           runId,
-          retried * REPORT_MAIL.SEND_INTERVAL_SECONDS + REPORT_MAIL.RETRY_DELAY_SECONDS,
+          round + 1,
+          failures.length * REPORT_MAIL.SEND_INTERVAL_SECONDS + REPORT_MAIL.RETRY_DELAY_SECONDS,
         );
       }
 
       logger.info(
-        `reportMailSweep: run ${runId} retried=${retried} exhausted=${exhausted} failures=${failures.length}`,
+        `reportMailSweep: run ${runId} round=${round} retried=${failures.length} lastRound=${isLastRound}`,
       );
-      res.status(200).json({ retried, exhausted });
+      res.status(200).json({ round, retried: failures.length });
     } catch (error) {
       logger.error(`reportMailSweepHandler: error for run ${runId}`, error);
       // Return 500 so Cloud Tasks retries the sweep.

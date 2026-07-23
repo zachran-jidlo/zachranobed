@@ -137,6 +137,7 @@ export async function createReport(
 
       await scheduleReportMailSweep(
         runId,
+        1,
         payloads.length * REPORT_MAIL.SEND_INTERVAL_SECONDS + REPORT_MAIL.RETRY_DELAY_SECONDS,
       );
 

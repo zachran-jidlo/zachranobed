@@ -167,17 +167,19 @@ export async function scheduleReportMailRetry(
 /**
  * Schedule the sweep that retries the failed report emails of a run.
  * @param {string} runId - Report mail run identifier
+ * @param {number} round - Retry round this sweep runs (1-based)
  * @param {number} delaySeconds - Seconds from now to run the sweep
  * @return {Promise<string>} - Cloud Task name
  */
 export async function scheduleReportMailSweep(
   runId: string,
+  round: number,
   delaySeconds: number,
 ): Promise<string> {
   return scheduleCloudTask(
     "reportMailSweepHandler",
-    { runId },
+    { runId, round },
     inSeconds(delaySeconds),
-    `reportMailSweep run=${runId}`,
+    `reportMailSweep run=${runId} round=${round}`,
   );
 }
