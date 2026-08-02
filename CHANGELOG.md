@@ -10,6 +10,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-424** Add optional manual delivery flow.
 
 ### Changed
+- **ZOB-438** Add pacing and retry logic for monthly reports, fix filename and add support for custom time ranges.
 - **ZOB-439** Update Android target & compile SDK to 36.
 
 ## [2.1.0]

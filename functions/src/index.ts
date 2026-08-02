@@ -21,9 +21,14 @@ import {
   createReportFunction,
   createReport,
   parsePeriod,
+  parseRange,
   ReportPeriod,
 } from "./functions/createReportFunction";
 import { orderDeliveryService } from "./functions/orderDeliveryServiceFunction";
+import {
+  reportMailSendHandler,
+  reportMailSweepHandler,
+} from "./functions/reportMailWorkerFunction";
 import { onRequest } from "firebase-functions/v2/https";
 import { ENVIRONMENTS, TIMEZONE } from "./config/constants";
 import { reportTriggerToken } from "./config/firebase";
@@ -119,6 +124,8 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
 // Params:
 //   period   - YYYY-MM (one month) or YYYY (whole year).
 //              Defaults to the previous calendar month.
+//   from/to  - YYYY-MM-DD custom range, both inclusive. Both are required
+//              together and take precedence over period.
 //   entityId - send only this entity's report. The entity must have
 //              reporting enabled, otherwise 409 is returned.
 exports.triggerCreateReport = onRequest(
@@ -143,10 +150,29 @@ exports.triggerCreateReport = onRequest(
 
   try {
     const periodStr = (req.query.period as string) || req.body?.period;
+    const fromStr = (req.query.from as string) || req.body?.from;
+    const toStr = (req.query.to as string) || req.body?.to;
     const entityId = (req.query.entityId as string) || req.body?.entityId;
 
     let period: ReportPeriod | undefined;
-    if (periodStr) {
+    if (fromStr || toStr) {
+      if (!fromStr || !toStr) {
+        res.status(400).json({
+          status: "error",
+          message: "Both from and to are required for a range.",
+        });
+        return;
+      }
+      const parsed = parseRange(fromStr, toStr);
+      if (!parsed) {
+        res.status(400).json({
+          status: "error",
+          message: "Invalid range. Use YYYY-MM-DD for from and to, with from on or before to.",
+        });
+        return;
+      }
+      period = parsed;
+    } else if (periodStr) {
       const parsed = parsePeriod(periodStr);
       if (!parsed) {
         res.status(400).json({
@@ -198,6 +224,10 @@ exports.triggerCreateReport = onRequest(
 // (both DEV and PROD create tasks that need this endpoint).
 exports.cloudTaskHandler = cloudTaskHandler;
 exports.confirmationReminderHandler = confirmationReminderHandler;
+
+// Paced report email workers invoked by Cloud Tasks
+exports.reportMailSendHandler = reportMailSendHandler;
+exports.reportMailSweepHandler = reportMailSweepHandler;
 
 // Export Firestore triggers
 exports.boxDeliveryCreated = boxDeliveryCreated;

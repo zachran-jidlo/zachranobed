@@ -38,6 +38,26 @@ export const NOTE_PREFIXES = {
 export const TIMEZONE = "Europe/Prague";
 
 /**
+ * Pacing and retry rules for monthly report emails.
+ *
+ * The mails collection is drained by the Trigger Email extension. Creating
+ * many mail documents at once makes it send too fast and the provider blocks
+ * the messages. Send one at a time, then retry failures in later rounds.
+ */
+export const REPORT_MAIL = {
+  /** Delay between two consecutive report emails in one send round. */
+  SEND_INTERVAL_SECONDS: 30,
+  /** Delay after a send round before the failed ones are retried. */
+  RETRY_DELAY_SECONDS: 60 * 60,
+  /**
+   * Give up on an email after this many send attempts total, counting the
+   * initial send plus the retry rounds. The cap is enforced by the sweep
+   * round counter, so a run ends even if the extension never reports SUCCESS.
+   */
+  MAX_ATTEMPTS: 5,
+} as const;
+
+/**
  * Firebase project IDs for different environments.
  */
 export const ENVIRONMENTS = {
