@@ -20,6 +20,7 @@ abstract class Delivery with _$Delivery {
     required Duration confirmationTime,
     required bool hasMeals,
     required bool isPickupConfirmed,
+    required Map<String, int> foodBoxes,
   }) = _Delivery;
 
   /// Whether the pickup confirmation flow applies right now for [user]'s active
@@ -32,6 +33,20 @@ abstract class Delivery with _$Delivery {
         pair.pickupConfirmationEnabled &&
         state == DeliveryState.accepted &&
         !hasMeals;
+  }
+
+  /// Whether the canteen can confirm this box return right now, taking the
+  /// boxes into its stock ahead of the schedule. Only self-delivered returns
+  /// that are still on their way and actually carry boxes. The delivery day
+  /// itself is enforced by the query that produced this delivery.
+  bool isBoxDeliveryConfirmationActive(UserData user) {
+    return user is Canteen &&
+        user.activePair.boxReturnCarrierId == CarrierType.personal.id &&
+        type == DeliveryType.boxDelivery &&
+        (state == DeliveryState.accepted ||
+            state == DeliveryState.onWayToPickUp ||
+            state == DeliveryState.inDelivery) &&
+        foodBoxes.isNotEmpty;
   }
 }
 

@@ -24,7 +24,18 @@ extension DeliveryMapper on DeliveryDto {
       confirmationTime: Duration(minutes: confirmationTime ?? 0),
       hasMeals: meals.isNotEmpty,
       isPickupConfirmed: pickupConfirmation?.pickupConfirmedAt != null,
+      foodBoxes: _mapFoodBoxes(),
     );
+  }
+
+  /// Sums counts per food box id. Documents may repeat the same id, so entries
+  /// are accumulated instead of overwritten.
+  Map<String, int> _mapFoodBoxes() {
+    final counts = <String, int>{};
+    for (final box in foodBoxes) {
+      counts[box.foodBoxId] = (counts[box.foodBoxId] ?? 0) + box.count;
+    }
+    return counts;
   }
 }
 
