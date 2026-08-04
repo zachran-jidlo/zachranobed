@@ -86,11 +86,12 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
               padding: const EdgeInsets.only(
                 left: 16.0,
                 right: 8.0,
+                bottom: 8.0,
               ),
               child: _buildHeader(context),
             ),
-            BoxDeliveryConfirmationBanner(user: widget.user),
             _buildCheckupBanner(context),
+            BoxDeliveryConfirmationBanner(user: widget.user),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: _buildContent(context, statistics),
@@ -129,7 +130,11 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        bottom: 8.0,
+      ),
       child: banner,
     );
   }

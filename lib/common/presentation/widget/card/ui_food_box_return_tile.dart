@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zachranobed/common/presentation/utils/build_context_extensions.dart';
-import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 import 'package:zachranobed/common/presentation/widget/card/ui_card.dart';
 import 'package:zachranobed/common/presentation/widget/graphics/ui_gradient_text.dart';
+import 'package:zachranobed/common/presentation/widget/progress/ui_progress_bar.dart';
 
 /// A tile widget that displays food box return information.
 ///
@@ -40,13 +40,11 @@ class UiFoodBoxReturnTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return UiCard(
       padding: EdgeInsets.zero,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildProgress(progress),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildProgress(progress),
             Container(
               color: context.uiColors.surfaceWhite,
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -63,9 +61,9 @@ class UiFoodBoxReturnTile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildSubtitle(context),
-                        _buildCount(context),
-                      ],
+                      _buildCount(context),
+                      _buildSubtitle(context),
+                    ],
                     ),
                   ),
                   if (action != null) Padding(
@@ -77,7 +75,6 @@ class UiFoodBoxReturnTile extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 
@@ -101,10 +98,17 @@ class UiFoodBoxReturnTile extends StatelessWidget {
 
   Widget _buildCount(BuildContext context) {
     return FittedBox(
-      child: Text(
-        '$count ${context.l10n.commonCountShort}',
-        style: context.textStyles.headlineHeavy.copyWith(
-          color: context.uiColors.textPrimary,
+      child: Text.rich(
+        style: context.textStyles.headlineHeavy,
+        TextSpan(
+          children: [
+            TextSpan(text: count.toString()),
+            TextSpan(text: ' '),
+            TextSpan(
+              text: context.l10n.commonCountShort,
+              style: context.textStyles.headlineLarge,
+            ),
+          ],
         ),
       ),
     );

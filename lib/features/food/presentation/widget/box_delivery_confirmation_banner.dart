@@ -63,7 +63,11 @@ class _BoxDeliveryConfirmationBannerState extends State<BoxDeliveryConfirmationB
         }
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 8.0,
+          ),
           child: UiFoodBoxReturnTile(
             title: context.l10n.boxDeliveryConfirmationTileTitle,
             subtitle: context.l10n.boxDeliveryConfirmationTileSubtitle,
