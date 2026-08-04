@@ -30,6 +30,12 @@ abstract class DeliveryRepository {
     required Delivery delivery,
   });
 
+  /// Observes whether the backend has already moved the box counts of the
+  /// delivery with the given [deliveryId] into the entity pair.
+  Stream<bool> observeFoodBoxesTransferred({
+    required String deliveryId,
+  });
+
   /// Creates an empty food delivery in prepared state for the given [user].
   ///
   /// Returns `true` if the delivery was created successfully, `false` otherwise.

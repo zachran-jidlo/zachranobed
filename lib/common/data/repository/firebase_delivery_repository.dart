@@ -65,6 +65,19 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
+  Stream<bool> observeFoodBoxesTransferred({
+    required String deliveryId,
+  }) {
+    return _deliveryService.observeDeliveryById(deliveryId).map((delivery) {
+      if (delivery == null) {
+        return false;
+      }
+      // Absent means an older app version moved the counts itself.
+      return delivery.foodBoxesTransferred ?? true;
+    });
+  }
+
+  @override
   Future<bool> createFoodDelivery({
     required UserData user,
   }) async {
