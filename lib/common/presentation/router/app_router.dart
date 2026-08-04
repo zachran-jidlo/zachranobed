@@ -77,6 +77,10 @@ class AppRouter extends RootStackRouter {
           guards: [AuthGuard()],
         ),
         MaterialRoute(
+          page: BoxDeliveryConfirmationRoute.page,
+          guards: [AuthGuard()],
+        ),
+        MaterialRoute(
           page: DeliveryDetailRoute.page,
           guards: [AuthGuard()],
         ),

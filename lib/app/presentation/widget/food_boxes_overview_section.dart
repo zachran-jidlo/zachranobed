@@ -10,6 +10,7 @@ import 'package:zachranobed/common/presentation/widget/button/ui_text_button.dar
 import 'package:zachranobed/common/presentation/widget/card/ui_food_box_tile.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_statistics.dart';
 import 'package:zachranobed/features/food/domain/usecase/observe_food_box_statistics_use_case.dart';
+import 'package:zachranobed/features/food/presentation/widget/box_delivery_confirmation_banner.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_delayed.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_mismatch.dart';
 import 'package:zachranobed/features/food/presentation/widget/checkup/food_boxes_checkup_tile_verified.dart';
@@ -21,7 +22,8 @@ import 'package:zachranobed/features/food/presentation/widget/food_box_tile_stat
 /// when there is only one box type, and small tiles in a grid when there
 /// are multiple types.
 ///
-/// Also displays checkup-related banners based on the current checkup state.
+/// Also displays checkup-related banners based on the current checkup state, and
+/// a banner letting the canteen confirm a box return that arrives today.
 class FoodBoxesOverviewSection extends StatefulWidget {
   /// The user data to display statistics for.
   final UserData user;
@@ -41,23 +43,23 @@ class FoodBoxesOverviewSection extends StatefulWidget {
 }
 
 class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
-  late Stream<Iterable<FoodBoxStatistics>> _stream;
+  late Stream<Iterable<FoodBoxStatistics>> _statisticsStream;
 
   @override
   void initState() {
     super.initState();
-    _stream = _createStream();
+    _statisticsStream = _createStatisticsStream();
   }
 
   @override
   void didUpdateWidget(FoodBoxesOverviewSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.user != oldWidget.user) {
-      _stream = _createStream();
+      _statisticsStream = _createStatisticsStream();
     }
   }
 
-  Stream<Iterable<FoodBoxStatistics>> _createStream() {
+  Stream<Iterable<FoodBoxStatistics>> _createStatisticsStream() {
     final useCase = GetIt.I<ObserveFoodBoxStatisticsUseCase>();
     return useCase.invoke(widget.user);
   }
@@ -65,7 +67,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Iterable<FoodBoxStatistics>>(
-      stream: _stream,
+      stream: _statisticsStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -87,6 +89,7 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
               ),
               child: _buildHeader(context),
             ),
+            BoxDeliveryConfirmationBanner(user: widget.user),
             _buildCheckupBanner(context),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
