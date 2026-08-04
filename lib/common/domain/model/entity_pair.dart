@@ -18,6 +18,9 @@ class EntityPair {
   /// The carrier ID used for delivery.
   final String carrierId;
 
+  /// The carrier ID used when the recipient returns boxes to the donor.
+  final String boxReturnCarrierId;
+
   /// The time when pickup window starts.
   final LocalTime pickupTimeStart;
 
@@ -60,6 +63,7 @@ class EntityPair {
     required this.recipientId,
     required this.recipientEstablishmentName,
     required this.carrierId,
+    required this.boxReturnCarrierId,
     required this.pickupTimeStart,
     required this.pickupTimeEnd,
     required this.deliveryTimeStart,

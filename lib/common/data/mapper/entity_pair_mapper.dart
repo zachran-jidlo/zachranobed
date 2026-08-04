@@ -49,6 +49,7 @@ extension EntityPairMapper on EntityPairDto {
       recipientId: recipient.id,
       recipientEstablishmentName: recipient.establishmentName,
       carrierId: carrierId,
+      boxReturnCarrierId: boxReturnCarrierId,
       pickupTimeStart: pickupTimeStart,
       pickupTimeEnd: pickupTimeEnd,
       deliveryTimeStart: deliveryTimeStart,
