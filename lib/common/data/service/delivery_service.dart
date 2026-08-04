@@ -68,6 +68,24 @@ class DeliveryService {
     });
   }
 
+  /// Observes today's box return for the given [donorId] & [recipientId] pair.
+  ///
+  /// Same day filter as [observeDelivery], but for the boxes travelling back
+  /// from the recipient to the donor. Emits null on days without a box return.
+  Stream<DeliveryDto?> observeBoxDelivery({
+    required String donorId,
+    required String recipientId,
+  }) {
+    final snapshots = _collection
+        .where('donorId', isEqualTo: donorId)
+        .where('recipientId', isEqualTo: recipientId)
+        .where('type', isEqualTo: DeliveryTypeDto.boxDelivery.toJson())
+        .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
+        .snapshots();
+
+    return snapshots.map((snapshot) => snapshot.docs.map((doc) => doc.data()).firstOrNull);
+  }
+
   /// Returns a [Future] that completes with a [DeliveryDto] object with a
   /// given [deliveryId].
   Future<DeliveryDto?> getDeliveryById(String deliveryId) async {

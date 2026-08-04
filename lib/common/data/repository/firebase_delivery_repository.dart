@@ -25,6 +25,18 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
+  Stream<Delivery?> observeCurrentBoxDelivery({
+    required UserData user,
+  }) {
+    return _deliveryService
+        .observeBoxDelivery(
+          donorId: user.activePair.donorId,
+          recipientId: user.activePair.recipientId,
+        )
+        .map((event) => event?.toDomain());
+  }
+
+  @override
   Future<bool> updateDeliveryState({
     required Delivery delivery,
     required DeliveryState state,
@@ -40,6 +52,16 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
     required Delivery delivery,
   }) {
     return _deliveryService.confirmPickup(delivery.id);
+  }
+
+  @override
+  Future<bool> confirmBoxDelivery({
+    required Delivery delivery,
+  }) {
+    return _deliveryService.updateDeliveryState(
+      delivery.id,
+      DeliveryStateDto.delivered,
+    );
   }
 
   @override

@@ -8,6 +8,11 @@ abstract class DeliveryRepository {
     required UserData user,
   });
 
+  /// Observes today's box return for a given [user], or null when there is none.
+  Stream<Delivery?> observeCurrentBoxDelivery({
+    required UserData user,
+  });
+
   /// Updates the state of a [delivery] with the provided [state].
   Future<bool> updateDeliveryState({
     required Delivery delivery,
@@ -16,6 +21,12 @@ abstract class DeliveryRepository {
 
   /// Records that the recipient confirmed the pickup for the given [delivery].
   Future<bool> confirmPickup({
+    required Delivery delivery,
+  });
+
+  /// Confirms that the donor received the box return [delivery], which moves the
+  /// box counts to the donor without waiting for the carrier schedule.
+  Future<bool> confirmBoxDelivery({
     required Delivery delivery,
   });
 
