@@ -68,11 +68,14 @@ class DeliveryService {
     });
   }
 
-  /// Observes today's box return for the given [donorId] & [recipientId] pair.
+  /// Observes today's box returns for the given [donorId] & [recipientId] pair.
   ///
   /// Same day filter as [observeDelivery], but for the boxes travelling back
-  /// from the recipient to the donor. Emits null on days without a box return.
-  Stream<DeliveryDto?> observeBoxDelivery({
+  /// from the recipient to the donor. Emits an empty list on days without a box
+  /// return. Several returns can share one day, for example when the charity
+  /// orders one over the weekend and another on the same business day, so all
+  /// matches are returned instead of a single one.
+  Stream<Iterable<DeliveryDto>> observeBoxDeliveries({
     required String donorId,
     required String recipientId,
   }) {
@@ -83,7 +86,7 @@ class DeliveryService {
         .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
         .snapshots();
 
-    return snapshots.map((snapshot) => snapshot.docs.map((doc) => doc.data()).firstOrNull);
+    return snapshots.map((snapshot) => snapshot.docs.map((doc) => doc.data()));
   }
 
   /// Returns a [Future] that completes with a [DeliveryDto] object with a

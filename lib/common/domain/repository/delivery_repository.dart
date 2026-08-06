@@ -8,8 +8,9 @@ abstract class DeliveryRepository {
     required UserData user,
   });
 
-  /// Observes today's box return for a given [user], or null when there is none.
-  Stream<Delivery?> observeCurrentBoxDelivery({
+  /// Observes today's box returns for a given [user]. Emits an empty list when
+  /// there is none. More than one return can land on the same day.
+  Stream<List<Delivery>> observeCurrentBoxDeliveries({
     required UserData user,
   });
 

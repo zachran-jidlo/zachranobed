@@ -17,7 +17,7 @@ import 'package:zachranobed/features/food/domain/usecase/confirm_box_delivery_us
 /// Screen where the canteen confirms it received a box return from the charity.
 @RoutePage()
 class BoxDeliveryConfirmationScreen extends StatefulWidget {
-  /// The box return to confirm, captured when the user opened this screen.
+  /// The box returns to confirm, captured when the user opened this screen.
   ///
   /// A one-time snapshot by design, so the list cannot shift while the user is
   /// counting boxes.
@@ -113,7 +113,7 @@ class _BoxDeliveryConfirmationScreenState extends State<BoxDeliveryConfirmationS
       _isLoading = true;
     });
 
-    final success = await _confirmBoxDelivery.invoke(widget.confirmation.delivery);
+    final success = await _confirmBoxDelivery.invoke(widget.confirmation.deliveries);
     if (!context.mounted) {
       return;
     }

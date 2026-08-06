@@ -1,19 +1,22 @@
 import 'package:zachranobed/common/domain/model/delivery.dart';
 import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 
-/// A box return the canteen can confirm as received, with its box ids already
-/// resolved to types.
+/// The box returns the canteen can confirm as received, with their box ids
+/// already resolved to types.
 ///
-/// Carries the [delivery] so confirming does not need to look it up again.
+/// Carries the [deliveries] so confirming does not need to look them up again.
+/// A single day can hold more than one return, so the counts of all of them are
+/// merged into one list the canteen confirms at once.
 class BoxDeliveryConfirmation {
-  /// The box return delivery to confirm.
-  final Delivery delivery;
+  /// The box return deliveries to confirm.
+  final List<Delivery> deliveries;
 
-  /// Box types and counts the charity sent back, in display order.
+  /// Box types and counts the charity sent back, in display order. Counts are
+  /// summed across all [deliveries].
   final List<BoxDeliveryConfirmationItem> items;
 
   const BoxDeliveryConfirmation({
-    required this.delivery,
+    required this.deliveries,
     required this.items,
   });
 

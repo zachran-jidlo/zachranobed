@@ -13,24 +13,28 @@ class ObserveBoxDeliveryConfirmationUseCase {
     this._foodBoxRepository,
   );
 
-  /// Returns a stream of the box return [user] can confirm right now, or null
+  /// Returns a stream of the box returns [user] can confirm right now, or null
   /// when there is nothing to confirm.
+  ///
+  /// Returns that land on the same day are merged into one confirmation, so the
+  /// canteen sees a single total and confirms all of them together.
   Stream<BoxDeliveryConfirmation?> invoke(UserData user) async* {
     // Prefetch types once so they are not fetched again on every stream event.
     // Types come back in display order, so iterating them keeps the summary in
     // the same order as the box tiles.
     final types = await _foodBoxRepository.getTypes();
 
-    yield* _deliveryRepository.observeCurrentBoxDelivery(user: user).map((delivery) {
-      if (delivery == null || !delivery.isBoxDeliveryConfirmationActive(user)) {
+    yield* _deliveryRepository.observeCurrentBoxDeliveries(user: user).map((deliveries) {
+      final confirmable = deliveries.where((delivery) => delivery.isBoxDeliveryConfirmationActive(user)).toList();
+      if (confirmable.isEmpty) {
         return null;
       }
 
       final items = <BoxDeliveryConfirmationItem>[];
       for (final type in types) {
-        final count = delivery.foodBoxes[type.id];
-        if (count == null || count <= 0) {
-          // Not part of this return
+        final count = confirmable.fold(0, (sum, delivery) => sum + (delivery.foodBoxes[type.id] ?? 0));
+        if (count <= 0) {
+          // Not part of these returns
           continue;
         }
         items.add(BoxDeliveryConfirmationItem(type: type, count: count));
@@ -40,7 +44,7 @@ class ObserveBoxDeliveryConfirmationUseCase {
         return null;
       }
 
-      return BoxDeliveryConfirmation(delivery: delivery, items: items);
+      return BoxDeliveryConfirmation(deliveries: confirmable, items: items);
     });
   }
 }

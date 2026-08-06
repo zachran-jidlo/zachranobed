@@ -25,15 +25,15 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
-  Stream<Delivery?> observeCurrentBoxDelivery({
+  Stream<List<Delivery>> observeCurrentBoxDeliveries({
     required UserData user,
   }) {
     return _deliveryService
-        .observeBoxDelivery(
+        .observeBoxDeliveries(
           donorId: user.activePair.donorId,
           recipientId: user.activePair.recipientId,
         )
-        .map((event) => event?.toDomain());
+        .map((event) => event.map((delivery) => delivery.toDomain()).nonNulls.toList());
   }
 
   @override

@@ -13,21 +13,26 @@ class ConfirmBoxDeliveryUseCase {
   /// Creates a new instance of [ConfirmBoxDeliveryUseCase].
   ConfirmBoxDeliveryUseCase(this._deliveryRepository);
 
-  /// Confirms the box return [delivery], which hands the boxes over to the donor
-  /// right away instead of waiting for the carrier schedule.
+  /// Confirms the box returns in [deliveries], which hands the boxes over to the
+  /// donor right away instead of waiting for the carrier schedule. A day can
+  /// hold more than one return, and the canteen confirms them as one, so all of
+  /// them are marked and awaited together.
   ///
   /// Returns only once the backend has moved the box counts, so the caller can
   /// keep the user waiting instead of dropping them on a screen with stale
-  /// counts. Returns `true` if the confirmation was recorded, `false` otherwise.
-  /// A transfer that does not land in time still counts as a success, because the
-  /// confirmation itself is written and the counts follow on their own.
-  Future<bool> invoke(Delivery delivery) async {
-    final confirmed = await _deliveryRepository.confirmBoxDelivery(delivery: delivery);
-    if (!confirmed) {
+  /// counts. Returns `true` if every confirmation was recorded, `false`
+  /// otherwise. A transfer that does not land in time still counts as a success,
+  /// because the confirmation itself is written and the counts follow on their
+  /// own.
+  Future<bool> invoke(List<Delivery> deliveries) async {
+    final confirmations = await Future.wait(
+      deliveries.map((delivery) => _deliveryRepository.confirmBoxDelivery(delivery: delivery)),
+    );
+    if (confirmations.any((confirmed) => !confirmed)) {
       return false;
     }
 
-    await _awaitTransfer(delivery.id);
+    await Future.wait(deliveries.map((delivery) => _awaitTransfer(delivery.id)));
     return true;
   }
 
