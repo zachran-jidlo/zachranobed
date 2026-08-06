@@ -101,9 +101,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
           continue;
         }
 
-        for (final box in delivery.foodBoxes) {
-          target[box.foodBoxId] = (target[box.foodBoxId] ?? 0) + box.count;
-        }
+        target.addCounts(delivery.foodBoxes);
       }
 
       // Map accumulated values to domain instances
@@ -141,13 +139,7 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
     final delivery = await _deliveryService.getDeliveryById(id);
 
     // Create a mutable copy to accumulate existing boxes if delivery exists
-    final totalQuantity = Map<String, int>.from(boxesQuantity);
-    if (delivery != null) {
-      for (final box in delivery.foodBoxes) {
-        final value = totalQuantity[box.foodBoxId] ?? 0;
-        totalQuantity[box.foodBoxId] = value + box.count;
-      }
-    }
+    final totalQuantity = Map<String, int>.from(boxesQuantity)..addCounts(delivery?.foodBoxes ?? []);
 
     final foodBoxes = totalQuantity.entries.map((e) {
       return FoodBoxDeliveryDto(

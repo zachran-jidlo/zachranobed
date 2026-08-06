@@ -25,12 +25,6 @@ abstract class DeliveryRepository {
     required Delivery delivery,
   });
 
-  /// Confirms that the donor received the box return [delivery], which moves the
-  /// box counts to the donor without waiting for the carrier schedule.
-  Future<bool> confirmBoxDelivery({
-    required Delivery delivery,
-  });
-
   /// Observes whether the backend has already moved the box counts of the
   /// delivery with the given [deliveryId] into the entity pair.
   Stream<bool> observeFoodBoxesTransferred({

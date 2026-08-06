@@ -53,15 +53,11 @@ class DeliveryService {
     required String donorId,
     required String recipientId,
   }) {
-    final snapshots = _collection
-        .where('donorId', isEqualTo: donorId)
-        .where('recipientId', isEqualTo: recipientId)
-        .where('type', isEqualTo: DeliveryTypeDto.foodDelivery.toJson())
-        .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
-        .snapshots();
-
-    return snapshots.map((snapshot) {
-      final deliveries = snapshot.docs.map((doc) => doc.data());
+    return _observeTodaysDeliveries(
+      donorId: donorId,
+      recipientId: recipientId,
+      type: DeliveryTypeDto.foodDelivery,
+    ).map((deliveries) {
       // Manual donation entries share this query but must not drive the overview
       // status card, so skip them client-side (older docs have no such field).
       return deliveries.firstWhereOrNull((delivery) => delivery.manualDonation != true);
@@ -79,10 +75,24 @@ class DeliveryService {
     required String donorId,
     required String recipientId,
   }) {
+    return _observeTodaysDeliveries(
+      donorId: donorId,
+      recipientId: recipientId,
+      type: DeliveryTypeDto.boxDelivery,
+    );
+  }
+
+  /// Observes today's deliveries of the given [type] for the [donorId] &
+  /// [recipientId] pair. "Today" is the day of the last local midnight.
+  Stream<Iterable<DeliveryDto>> _observeTodaysDeliveries({
+    required String donorId,
+    required String recipientId,
+    required DeliveryTypeDto type,
+  }) {
     final snapshots = _collection
         .where('donorId', isEqualTo: donorId)
         .where('recipientId', isEqualTo: recipientId)
-        .where('type', isEqualTo: DeliveryTypeDto.boxDelivery.toJson())
+        .where('type', isEqualTo: type.toJson())
         .whereTime('deliveryDate', DateTimeUtils.lastMidnight())
         .snapshots();
 
@@ -206,7 +216,7 @@ class DeliveryService {
 
     // Get the existing delivery and merge the new food box data
     final delivery = await getDeliveryById(id);
-    final foodBoxesCount = {for (final e in delivery?.foodBoxes ?? []) e.foodBoxId: e.count};
+    final foodBoxesCount = delivery?.foodBoxes.toCountMap() ?? <String, int>{};
     for (final box in boxes.entries) {
       foodBoxesCount[box.key] = (foodBoxesCount[box.key] ?? 0) + box.value;
     }

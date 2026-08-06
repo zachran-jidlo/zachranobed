@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:zachranobed/common/domain/model/carrier_type.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 import 'package:zachranobed/common/domain/model/local_time.dart';
@@ -68,4 +69,11 @@ sealed class UserData {
 
   /// Whether manual donation entry is enabled for the current [activePair].
   bool get manualDonationEnabled => isManualDonationEnabled(activePair);
+
+  /// Whether this user can confirm box returns of the current [activePair] as
+  /// received. Only the canteen takes boxes back, and only when the charity
+  /// brings them itself.
+  bool get canConfirmBoxDeliveries {
+    return this is Canteen && activePair.boxReturnCarrierId == CarrierType.personal.id;
+  }
 }

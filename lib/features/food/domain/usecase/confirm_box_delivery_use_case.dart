@@ -26,7 +26,12 @@ class ConfirmBoxDeliveryUseCase {
   /// own.
   Future<bool> invoke(List<Delivery> deliveries) async {
     final confirmations = await Future.wait(
-      deliveries.map((delivery) => _deliveryRepository.confirmBoxDelivery(delivery: delivery)),
+      deliveries.map(
+        (delivery) => _deliveryRepository.updateDeliveryState(
+          delivery: delivery,
+          state: DeliveryState.delivered,
+        ),
+      ),
     );
     if (confirmations.any((confirmed) => !confirmed)) {
       return false;

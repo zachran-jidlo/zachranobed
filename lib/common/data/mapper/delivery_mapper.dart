@@ -1,4 +1,5 @@
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 
 /// DTO to domain mapper for [Delivery].
@@ -24,18 +25,8 @@ extension DeliveryMapper on DeliveryDto {
       confirmationTime: Duration(minutes: confirmationTime ?? 0),
       hasMeals: meals.isNotEmpty,
       isPickupConfirmed: pickupConfirmation?.pickupConfirmedAt != null,
-      foodBoxes: _mapFoodBoxes(),
+      foodBoxes: foodBoxes.toCountMap(),
     );
-  }
-
-  /// Sums counts per food box id. Documents may repeat the same id, so entries
-  /// are accumulated instead of overwritten.
-  Map<String, int> _mapFoodBoxes() {
-    final counts = <String, int>{};
-    for (final box in foodBoxes) {
-      counts[box.foodBoxId] = (counts[box.foodBoxId] ?? 0) + box.count;
-    }
-    return counts;
   }
 }
 

@@ -40,8 +40,7 @@ abstract class Delivery with _$Delivery {
   /// that are still on their way and actually carry boxes. The delivery day
   /// itself is enforced by the query that produced this delivery.
   bool isBoxDeliveryConfirmationActive(UserData user) {
-    return user is Canteen &&
-        user.activePair.boxReturnCarrierId == CarrierType.personal.id &&
+    return user.canConfirmBoxDeliveries &&
         type == DeliveryType.boxDelivery &&
         (state == DeliveryState.accepted ||
             state == DeliveryState.onWayToPickUp ||

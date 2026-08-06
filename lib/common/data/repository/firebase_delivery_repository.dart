@@ -55,16 +55,6 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
-  Future<bool> confirmBoxDelivery({
-    required Delivery delivery,
-  }) {
-    return _deliveryService.updateDeliveryState(
-      delivery.id,
-      DeliveryStateDto.delivered,
-    );
-  }
-
-  @override
   Stream<bool> observeFoodBoxesTransferred({
     required String deliveryId,
   }) {

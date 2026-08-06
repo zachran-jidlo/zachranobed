@@ -91,7 +91,11 @@ class _FoodBoxesOverviewSectionState extends State<FoodBoxesOverviewSection> {
               child: _buildHeader(context),
             ),
             _buildCheckupBanner(context),
-            BoxDeliveryConfirmationBanner(user: widget.user),
+            // Gated here so users who can never confirm a box return do not open
+            // a delivery listener on every overview visit.
+            if (widget.user.canConfirmBoxDeliveries) ...[
+              BoxDeliveryConfirmationBanner(user: widget.user),
+            ],
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: _buildContent(context, statistics),
