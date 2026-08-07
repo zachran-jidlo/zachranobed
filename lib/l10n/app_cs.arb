@@ -307,6 +307,9 @@
     "activePairContactsCanteenLabel": "(aktivní jídelna)",
     "activePairContactsCharityLabel": "(aktivní charita)",
 
+    "inactiveAccountTitle": "Přihlášení proběhlo úspěšně.",
+    "inactiveAccountDescription": "Váš účet funguje, ale zatím není aktivní. Pro aktivaci kontaktujte projektový tým Zachraň oběd.",
+
     "forceUpdateScreenTitle": "Nová verze aplikace",
     "forceUpdateScreenDescription": "Tato verze aplikace již není podporována.\nPro další používání prosím aktualizujte aplikaci <b>Zachraň oběd</b> na nejnovější verzi.",
     "forceUpdateAction": "Aktualizovat aplikaci",
