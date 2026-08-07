@@ -246,7 +246,13 @@ class _LoginScreenState extends State<LoginScreen> {
         _notifyUserDataChanged.invoke(user);
 
         if (mounted) {
-          context.router.replace(HomeRoute());
+          // Navigate explicitly instead of leaving it to the user data
+          // listener, otherwise this call could land after its redirect.
+          if (user != null && !user.isAccountActive) {
+            context.router.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
+          } else {
+            context.router.replaceAll([HomeRoute()]);
+          }
         }
       }
     } else {

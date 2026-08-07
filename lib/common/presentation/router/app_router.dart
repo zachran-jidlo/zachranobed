@@ -96,6 +96,9 @@ class AppRouter extends RootStackRouter {
           page: ForceUpdateRoute.page,
         ),
         MaterialRoute(
+          page: InactiveAccountRoute.page,
+        ),
+        MaterialRoute(
           page: WhatsNewRoute.page,
           guards: [AuthGuard()],
         ),
