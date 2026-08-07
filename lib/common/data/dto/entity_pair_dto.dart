@@ -16,6 +16,7 @@ class EntityPairDto {
   final String donorId;
   final String recipientId;
   final String carrierId;
+  final String boxReturnCarrierId;
   final List<TimeWindowDto> pickupTimeWindows;
   final List<TimeWindowDto> deliveryTimeWindows;
   final List<FoodBoxPairDto> foodboxes;
@@ -28,6 +29,7 @@ class EntityPairDto {
     required this.donorId,
     required this.recipientId,
     required this.carrierId,
+    required this.boxReturnCarrierId,
     required this.pickupTimeWindows,
     required this.deliveryTimeWindows,
     required this.foodboxes,

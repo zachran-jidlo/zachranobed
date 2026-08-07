@@ -25,6 +25,18 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
   }
 
   @override
+  Stream<List<Delivery>> observeCurrentBoxDeliveries({
+    required UserData user,
+  }) {
+    return _deliveryService
+        .observeBoxDeliveries(
+          donorId: user.activePair.donorId,
+          recipientId: user.activePair.recipientId,
+        )
+        .map((event) => event.map((delivery) => delivery.toDomain()).nonNulls.toList());
+  }
+
+  @override
   Future<bool> updateDeliveryState({
     required Delivery delivery,
     required DeliveryState state,
@@ -40,6 +52,19 @@ class FirebaseDeliveryRepository implements DeliveryRepository {
     required Delivery delivery,
   }) {
     return _deliveryService.confirmPickup(delivery.id);
+  }
+
+  @override
+  Stream<bool> observeFoodBoxesTransferred({
+    required String deliveryId,
+  }) {
+    return _deliveryService.observeDeliveryById(deliveryId).map((delivery) {
+      if (delivery == null) {
+        return false;
+      }
+      // Absent means an older app version moved the counts itself.
+      return delivery.foodBoxesTransferred ?? true;
+    });
   }
 
   @override

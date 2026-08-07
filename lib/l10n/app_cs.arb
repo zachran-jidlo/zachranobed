@@ -414,6 +414,15 @@
 
     "overviewCreateBoxDeliveryAction": "Zadat vratku krabiček",
 
+    "boxDeliveryConfirmationTileTitle": "Dnes vám budou doručeny vratné krabičky",
+    "boxDeliveryConfirmationTileSubtitle": "Krabičky na cestě k vám",
+    "boxDeliveryConfirmationTileAction": "Přijmout krabičky",
+    "boxDeliveryConfirmationScreenTitle": "Vratka krabiček",
+    "boxDeliveryConfirmationScreenDescription": "Charita vám vrátila následující počet krabiček, prosím proveďte jejich kontrolu.",
+    "boxDeliveryConfirmationSectionTitle": "Vratné krabičky",
+    "boxDeliveryConfirmationSubmitAction": "Přijmout",
+    "boxDeliveryConfirmationErrorMessage": "Při ukládání došlo k neočekávané chybě, zkuste akci provést znovu.",
+
     "deliveryDetailTitle": "Detail daru",
     "deliveryDetailCanteenDescription": "Darujete tyto pokrmy.",
     "deliveryDetailCharityDescription": "Jídelna daruje tyto pokrmy.",

@@ -1,4 +1,5 @@
 import 'package:zachranobed/common/data/dto/delivery_dto.dart';
+import 'package:zachranobed/common/data/dto/food_box_delivery_dto.dart';
 import 'package:zachranobed/common/domain/model/delivery.dart';
 
 /// DTO to domain mapper for [Delivery].
@@ -24,6 +25,7 @@ extension DeliveryMapper on DeliveryDto {
       confirmationTime: Duration(minutes: confirmationTime ?? 0),
       hasMeals: meals.isNotEmpty,
       isPickupConfirmed: pickupConfirmation?.pickupConfirmedAt != null,
+      foodBoxes: foodBoxes.toCountMap(),
     );
   }
 }
