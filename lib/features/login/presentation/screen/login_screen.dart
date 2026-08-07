@@ -245,14 +245,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
         _notifyUserDataChanged.invoke(user);
 
+        // An inactive account is redirected by the user data listener. Doing it
+        // here as well would leave a duplicate entry in the history.
+        if (user != null && !user.isAccountActive) {
+          return;
+        }
+
         if (mounted) {
           // Navigate explicitly instead of leaving it to the user data
           // listener, otherwise this call could land after its redirect.
-          if (user != null && !user.isAccountActive) {
-            context.router.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
-          } else {
-            context.router.replaceAll([HomeRoute()]);
-          }
+          context.router.replaceAll([HomeRoute()]);
         }
       }
     } else {

@@ -110,26 +110,26 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   }
 
   /// Performs user-scoped checks on app start and whenever user data changes (e.g. login).
-  /// 1. Check if the account has any usable entity pair.
-  /// 2. Update the device info (ID, app version, platform) — once per app launch, and then at
-  ///    most once per 24 hours while the process stays alive (the timestamp is in-memory only
-  ///    and resets on logout or process restart).
+  /// 1. Update the device info (ID, app version, platform), once per app launch and then at
+  ///    most once per 24 hours while the process stays alive. The timestamp is in-memory only
+  ///    and resets on logout or process restart.
+  /// 2. Check if the account has any usable entity pair.
   /// 3. Check if the app terms are accepted.
   /// 4. Check if the onboarding for UI changes should be shown.
   void _applicationStartCheckForUser(UserData user) async {
+    final now = DateTime.now();
+    final lastUpdated = _deviceInfoLastUpdated;
+    if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
+      _deviceInfoLastUpdated = now;
+      await _updateDeviceInfo.invoke(user.entityId);
+    }
+
     if (!user.isAccountActive) {
       _deliveryNotifier.reset();
       if (_appRouter.current.name != InactiveAccountRoute.name) {
         _appRouter.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
       }
       return;
-    }
-
-    final now = DateTime.now();
-    final lastUpdated = _deviceInfoLastUpdated;
-    if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
-      _deviceInfoLastUpdated = now;
-      await _updateDeviceInfo.invoke(user.entityId);
     }
 
     final status = await _getAppTermsStatus.invoke(user);

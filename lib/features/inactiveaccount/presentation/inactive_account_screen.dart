@@ -27,27 +27,24 @@ class InactiveAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: ScreenScaffold.universalBuilder(
-        builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: InfoPage(
-              image: ImageAssets.imageInactiveAccount,
-              title: context.l10n.inactiveAccountTitle,
-              description: context.l10n.inactiveAccountDescription,
-              actions: [
-                UiPrimaryButton(
-                  size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
-                  text: context.l10n.signOut,
-                  onPressed: () => _signOut(context),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+    return ScreenScaffold.universalBuilder(
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 40.0),
+          child: InfoPage(
+            image: ImageAssets.imageInactiveAccount,
+            title: context.l10n.inactiveAccountTitle,
+            description: context.l10n.inactiveAccountDescription,
+            actions: [
+              UiPrimaryButton(
+                size: UiButtonSize.medium(fullWidth: context.watch<AdaptiveLayoutConfig>().isMobile),
+                text: context.l10n.signOut,
+                onPressed: () => _signOut(context),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
