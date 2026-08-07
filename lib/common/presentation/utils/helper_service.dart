@@ -41,8 +41,12 @@ class HelperService {
 
     if (context.mounted) {
       userNotifier.user = user;
-      if (user != null) {
+      // An inactive account has no usable pair, so there is no delivery to
+      // observe and the listener would only hit Firestore for nothing.
+      if (user != null && user.isAccountActive) {
         deliveryNotifier.init(user);
+      } else {
+        deliveryNotifier.reset();
       }
     }
   }

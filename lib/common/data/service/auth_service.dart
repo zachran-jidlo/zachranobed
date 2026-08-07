@@ -204,11 +204,15 @@ class AuthService {
 
     final savedActivePair = await _appPreferences.getActivePair();
     final activePair = entityPairs.firstWhereOrNull(
-      (pair) => pair.donorId == savedActivePair?.donorId && pair.recipientId == savedActivePair?.recipientId,
+      (pair) =>
+          pair.enabled &&
+          pair.donorId == savedActivePair?.donorId &&
+          pair.recipientId == savedActivePair?.recipientId,
     );
 
+    // Fall back to any active pair before settling for an inactive one
     return _PairsInfo(
-      activePair: activePair ?? entityPairs.firstOrNull,
+      activePair: activePair ?? entityPairs.firstWhereOrNull((pair) => pair.enabled) ?? entityPairs.firstOrNull,
       allPairs: entityPairs,
     );
   }
