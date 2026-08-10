@@ -3,6 +3,7 @@ import 'package:zachranobed/common/data/dto/entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
 import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
+import 'package:zachranobed/common/domain/model/carrier_type.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/food_boxes_checkup.dart';
 import 'package:zachranobed/common/domain/model/local_time.dart';
@@ -50,6 +51,7 @@ extension EntityPairMapper on EntityPairDto {
       recipientEstablishmentName: recipient.establishmentName,
       carrierId: carrierId,
       boxReturnCarrierId: boxReturnCarrierId,
+      enabled: enabled,
       pickupTimeStart: pickupTimeStart,
       pickupTimeEnd: pickupTimeEnd,
       deliveryTimeStart: deliveryTimeStart,
@@ -63,6 +65,9 @@ extension EntityPairMapper on EntityPairDto {
       confirmationTime: Duration(minutes: confirmationTime),
     );
   }
+
+  /// Whether both delivery and box returns are turned on for this pair.
+  bool get enabled => carrierId != CarrierType.disabled.id && boxReturnCarrierId != CarrierType.disabled.id;
 
   /// Maps the food boxes checkup DTO to domain model.
   ///

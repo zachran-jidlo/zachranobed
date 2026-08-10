@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
+import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/service/carrier_service.dart';
 import 'package:zachranobed/common/data/service/configuration_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
@@ -28,10 +29,14 @@ class FirebaseContactsRepository implements ContactsRepository {
 
   @override
   Future<ContactsSummary> getContacts({required UserData user}) async {
-    final pairs = await _entityPairService.getByUser(user);
-    if (pairs == null) {
+    final allPairs = await _entityPairService.getByUser(user);
+    if (allPairs == null) {
       throw Exception('Unable to retrieve entity pairs summary');
     }
+
+    // Pairs turned off by an admin have no counterpart worth contacting
+    final pairs = allPairs.where((pair) => pair.enabled).toList();
+
     return Future.wait(
       [
         getEntityContacts(user, getTargetEntityIds(user.entityId, pairs)),

@@ -21,6 +21,12 @@ class EntityPair {
   /// The carrier ID used when the recipient returns boxes to the donor.
   final String boxReturnCarrierId;
 
+  /// Whether both delivery and box returns are turned on for this pair.
+  ///
+  /// A pair with either of them turned off produces no deliveries on the
+  /// backend, so the app must not offer it to the user.
+  final bool enabled;
+
   /// The time when pickup window starts.
   final LocalTime pickupTimeStart;
 
@@ -64,6 +70,7 @@ class EntityPair {
     required this.recipientEstablishmentName,
     required this.carrierId,
     required this.boxReturnCarrierId,
+    required this.enabled,
     required this.pickupTimeStart,
     required this.pickupTimeEnd,
     required this.deliveryTimeStart,

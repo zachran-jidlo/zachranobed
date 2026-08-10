@@ -9,6 +9,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-421** Add support for dynamic banners.
 - **ZOB-424** Add optional manual delivery flow.
 - **ZOB-436** Add box return confirmation for canteens.
+- **ZOB-435** Block login for accounts without an active entity pair.
 
 ### Changed
 - **ZOB-438** Add pacing and retry logic for monthly reports, fix filename and add support for custom time ranges.

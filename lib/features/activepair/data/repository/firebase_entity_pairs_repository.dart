@@ -42,18 +42,22 @@ class FirebaseEntityPairsRepository implements EntityPairsRepository {
       throw Exception('Unable to retrieve entity pairs summary');
     }
 
-    final entityPairs = await pairs.toDomain(
+    final allPairs = await pairs.toDomain(
       userEntityId: user.entityId,
       entities: _entityService.fetchEntities,
     );
 
-    final activePair = entityPairs.firstWhere(
-      (pair) => pair.donorId == user.activePair.donorId && pair.recipientId == user.activePair.recipientId,
-    );
+    // Pairs turned off by an admin must not be offered to the user
+    final enabledPairs = allPairs.where((pair) => pair.enabled).toList();
+
+    final activePair = enabledPairs.firstWhereOrNull(
+          (pair) => pair.donorId == user.activePair.donorId && pair.recipientId == user.activePair.recipientId,
+        ) ??
+        user.activePair;
 
     return EntityPairsSummary(
       active: activePair,
-      otherPairs: entityPairs
+      otherPairs: enabledPairs
           .whereNot(
             (pair) => pair.donorId == activePair.donorId && pair.recipientId == activePair.recipientId,
           )

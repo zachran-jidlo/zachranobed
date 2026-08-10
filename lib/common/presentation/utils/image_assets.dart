@@ -33,6 +33,7 @@ class ImageAssets {
   static const imageAppTermsNotAccepted = 'assets/image_app_terms_not_accepted.svg';
   static const imageAppTermsNewVersion = 'assets/image_app_terms_new_version.svg';
   static const imageForceUpdate = 'assets/image_force_update.svg';
+  static const imageInactiveAccount = 'assets/image_inactive_account.svg';
 
   // What's New
   static const imageWhatsNewBackground = 'assets/image_whats_new_background.svg';
