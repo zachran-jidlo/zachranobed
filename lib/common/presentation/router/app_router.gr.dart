@@ -648,7 +648,7 @@ class InactiveAccountRoute
     extends _i28.PageRouteInfo<InactiveAccountRouteArgs> {
   InactiveAccountRoute({
     _i29.Key? key,
-    required String entityId,
+    String? entityId,
     List<_i28.PageRouteInfo>? children,
   }) : super(
           InactiveAccountRoute.name,
@@ -661,18 +661,20 @@ class InactiveAccountRoute
   static _i28.PageInfo page = _i28.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<InactiveAccountRouteArgs>();
+      final args = data.argsAs<InactiveAccountRouteArgs>(
+        orElse: () => const InactiveAccountRouteArgs(),
+      );
       return _i17.InactiveAccountScreen(key: args.key, entityId: args.entityId);
     },
   );
 }
 
 class InactiveAccountRouteArgs {
-  const InactiveAccountRouteArgs({this.key, required this.entityId});
+  const InactiveAccountRouteArgs({this.key, this.entityId});
 
   final _i29.Key? key;
 
-  final String entityId;
+  final String? entityId;
 
   @override
   String toString() {

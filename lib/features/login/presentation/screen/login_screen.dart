@@ -254,7 +254,14 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           // Navigate explicitly instead of leaving it to the user data
           // listener, otherwise this call could land after its redirect.
-          context.router.replaceAll([HomeRoute()]);
+          if (user == null) {
+            // Sign-in succeeded, so missing user data means the account has no
+            // pair to work with. The listener gets a null user as well, but it
+            // cannot tell this apart from a signed-out one.
+            context.router.replaceAll([InactiveAccountRoute()]);
+          } else {
+            context.router.replaceAll([HomeRoute()]);
+          }
         }
       }
     } else {

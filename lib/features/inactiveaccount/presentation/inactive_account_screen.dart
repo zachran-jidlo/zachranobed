@@ -14,16 +14,18 @@ import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 
 /// A screen shown when the signed-in account has no usable entity pair.
 ///
-/// The credentials are valid, but every pair of the account is turned off, so
-/// there is nothing the user can do until an admin enables one. Signing out is
-/// the only way forward, which is why the back gesture is blocked.
+/// The credentials are valid, but the account either has no pair at all or
+/// every pair of it is turned off, so there is nothing the user can do until an
+/// admin sets one up. Signing out is the only way forward, which is why the
+/// back gesture is blocked.
 @RoutePage()
 class InactiveAccountScreen extends StatelessWidget {
-  /// The entity of the signed-in account.
-  final String entityId;
+  /// The entity of the signed-in account. Null when the account has no pair,
+  /// because the entity is not resolved in that case.
+  final String? entityId;
 
   /// Creates an [InactiveAccountScreen].
-  const InactiveAccountScreen({super.key, required this.entityId});
+  const InactiveAccountScreen({super.key, this.entityId});
 
   @override
   Widget build(BuildContext context) {
