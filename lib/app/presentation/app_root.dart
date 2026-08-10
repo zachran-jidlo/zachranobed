@@ -132,6 +132,14 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
       return;
     }
 
+    // The account was enabled while the user was waiting on the inactive
+    // screen.
+    if (_appRouter.current.name == InactiveAccountRoute.name) {
+      _userNotifier.user = user;
+      _deliveryNotifier.init(user);
+      _appRouter.replaceAll([HomeRoute()]);
+    }
+
     final status = await _getAppTermsStatus.invoke(user);
     if (status != AppTermsStatus.accepted) {
       _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
