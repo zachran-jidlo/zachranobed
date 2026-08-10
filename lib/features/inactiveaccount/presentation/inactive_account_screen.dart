@@ -16,8 +16,9 @@ import 'package:zachranobed/common/presentation/widget/page/info_page.dart';
 ///
 /// The credentials are valid, but the account either has no pair at all or
 /// every pair of it is turned off, so there is nothing the user can do until an
-/// admin sets one up. Signing out is the only way forward, which is why the
-/// back gesture is blocked.
+/// admin sets one up. Signing out is the only action offered here. The screen
+/// is always the only route on the stack, and the app leaves it on its own once
+/// the account becomes usable again.
 @RoutePage()
 class InactiveAccountScreen extends StatelessWidget {
   /// The entity of the signed-in account. Null when the account has no pair,
