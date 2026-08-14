@@ -15,7 +15,7 @@ import { confirmationReminderHandler } from "./functions/notifications/confirmat
 import { boxTransfer } from "./functions/boxTransferFunction";
 import {
   finalizeDeliveriesFunction,
-  finalizeDeliveries,
+  finalizeDeliveriesAndSync,
 } from "./functions/finalizeDeliveriesFunction";
 import {
   createReportFunction,
@@ -104,7 +104,7 @@ if (currentProjectId === ENVIRONMENTS.DEV) {
         date = parsed.startOf("day").toJSDate();
       }
 
-      await finalizeDeliveries(date);
+      await finalizeDeliveriesAndSync(date);
       res.json({
         status: "success",
         message: `finalizeDeliveries executed successfully${dateStr ? ` for date ${dateStr}` : ""}`,
