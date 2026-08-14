@@ -125,6 +125,7 @@ interface DeliveryRow {
   donorOrganization: string;
   donorCity: string;
   recipientName: string;
+  carrierId: string;
   portions: number;
   packages: number;
 }
@@ -156,6 +157,7 @@ function toRow(
     donorOrganization: donor?.organization ?? "",
     donorCity: donor?.city ?? "",
     recipientName: recipient?.establishmentName ?? "",
+    carrierId: delivery.carrierId ?? "",
     portions: sumCounts(meals, (meal) => meal.count),
     packages: sumCounts(meals, (meal) => meal.packagesCount),
   };
@@ -171,6 +173,7 @@ function toSheetValues(row: DeliveryRow): SheetValue[] {
     safeSheetText(row.donorOrganization),
     safeSheetText(row.donorCity),
     safeSheetText(row.recipientName),
+    row.carrierId,
     row.portions,
     row.packages,
   ];
