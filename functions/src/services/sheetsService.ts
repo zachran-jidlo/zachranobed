@@ -1,4 +1,4 @@
-import { google, sheets_v4 } from "googleapis";
+import { auth, sheets, sheets_v4 } from "@googleapis/sheets";
 import { logger } from "firebase-functions/v2";
 
 const SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
@@ -12,8 +12,8 @@ export type SheetValue = string | number;
  * @return {sheets_v4.Sheets} Ready-to-use Sheets v4 client.
  */
 export function getSheetsClient(): sheets_v4.Sheets {
-  const auth = new google.auth.GoogleAuth({ scopes: [SHEETS_SCOPE] });
-  return google.sheets({ version: "v4", auth });
+  const credentials = new auth.GoogleAuth({ scopes: [SHEETS_SCOPE] });
+  return sheets({ version: "v4", auth: credentials });
 }
 
 /**
