@@ -2,6 +2,8 @@
 
 This is a changelog for **ZachranObed** application.
 
+## [2.3.0]
+
 ## [2.2.0]
 ### Added
 - **ZOB-294** Add meal suggestions.
