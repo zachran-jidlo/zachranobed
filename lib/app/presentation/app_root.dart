@@ -110,8 +110,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
         _notifyUserDataChanged.invoke(user);
       }
     } on Exception catch (e) {
-      // Nothing awaits this method, so an error thrown here would escape to the
-      // global handler and be reported as a crash.
+      // Nothing awaits this method, so an exception thrown here would escape to
+      // the global handler and be reported as a crash.
       ZOLogger.logMessage('Application start check failed: $e');
     }
   }
@@ -124,39 +124,46 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   /// 3. Check if the app terms are accepted.
   /// 4. Check if the onboarding for UI changes should be shown.
   void _applicationStartCheckForUser(UserData user) async {
-    final now = DateTime.now();
-    final lastUpdated = _deviceInfoLastUpdated;
-    if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
-      _deviceInfoLastUpdated = now;
-      await _updateDeviceInfo.invoke(user.entityId);
-    }
-
-    if (!user.isAccountActive) {
-      _deliveryNotifier.reset();
-      if (_appRouter.current.name != InactiveAccountRoute.name) {
-        _appRouter.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
+    try {
+      final now = DateTime.now();
+      final lastUpdated = _deviceInfoLastUpdated;
+      if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
+        _deviceInfoLastUpdated = now;
+        await _updateDeviceInfo.invoke(user.entityId);
       }
-      return;
-    }
 
-    // The account was enabled while the user was waiting on the inactive
-    // screen.
-    if (_appRouter.current.name == InactiveAccountRoute.name) {
-      _userNotifier.user = user;
-      _deliveryNotifier.init(user);
-      _appRouter.replaceAll([HomeRoute()]);
-    }
+      if (!user.isAccountActive) {
+        _deliveryNotifier.reset();
+        if (_appRouter.current.name != InactiveAccountRoute.name) {
+          _appRouter.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
+        }
+        return;
+      }
 
-    final status = await _getAppTermsStatus.invoke(user);
-    if (status != AppTermsStatus.accepted) {
-      _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
-      return;
-    }
+      // The account was enabled while the user was waiting on the inactive
+      // screen.
+      if (_appRouter.current.name == InactiveAccountRoute.name) {
+        _userNotifier.user = user;
+        _deliveryNotifier.init(user);
+        _appRouter.replaceAll([HomeRoute()]);
+      }
 
-    final shouldShowOnboarding = await _shouldShowOnboardingForUiChanges.invoke(user.entityId);
-    if (shouldShowOnboarding) {
-      await _removeOnboardingForUiChangesFlag.invoke(user.entityId);
-      _appRouter.push(const WhatsNewRoute());
+      final status = await _getAppTermsStatus.invoke(user);
+      if (status != AppTermsStatus.accepted) {
+        _appRouter
+            .replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
+        return;
+      }
+
+      final shouldShowOnboarding = await _shouldShowOnboardingForUiChanges.invoke(user.entityId);
+      if (shouldShowOnboarding) {
+        await _removeOnboardingForUiChangesFlag.invoke(user.entityId);
+        _appRouter.push(const WhatsNewRoute());
+      }
+    } on Exception catch (e) {
+      // Nothing awaits this method, so an exception thrown here would escape to
+      // the global handler and be reported as a crash.
+      ZOLogger.logMessage('Application start check for user failed: $e');
     }
   }
 
