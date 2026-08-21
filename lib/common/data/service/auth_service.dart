@@ -6,6 +6,7 @@ import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/data/utils/auth_error_codes.dart';
 import 'package:zachranobed/common/data/utils/firebase_helper.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
@@ -82,6 +83,54 @@ class AuthService {
       );
       return result.user;
     } on FirebaseAuthException {
+      return null;
+    }
+  }
+
+  /// Checks whether the session still exists on the server.
+  ///
+  /// Forces a token refresh, which Firebase rejects once the session is
+  /// revoked. Returns `false` only in that case, so a failed check or an
+  /// offline device never signs the user out.
+  Future<bool> isSessionValid() async {
+    ZOLogger.logMessage("Session check started");
+
+    final user = _auth.currentUser ?? await _waitForRestoredUser();
+    if (user == null) {
+      ZOLogger.logMessage("Session check skipped, nobody is signed in");
+      return true;
+    }
+
+    try {
+      await user.getIdToken(true);
+      ZOLogger.logMessage("Session check passed, the session is still valid");
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (AuthErrorCodes.isSessionRevoked(e.code)) {
+        ZOLogger.logMessage("Session check failed, the session was revoked: ${e.code}");
+        return false;
+      }
+      ZOLogger.logMessage("Session check failed, keeping the session: $e");
+      return true;
+    } on Exception catch (e) {
+      ZOLogger.logMessage("Session check failed, keeping the session: $e");
+      return true;
+    }
+  }
+
+  /// Waits for the first auth state value, capped so it cannot block app start.
+  ///
+  /// On the web the persisted user is restored asynchronously, so
+  /// [FirebaseAuth.currentUser] can still be `null` right after a cold start.
+  Future<User?> _waitForRestoredUser() async {
+    ZOLogger.logMessage("Waiting for the restored auth state");
+
+    try {
+      final user = await _auth.authStateChanges().first.timeout(const Duration(seconds: 3));
+      ZOLogger.logMessage("Restored auth state read, signed in: ${user != null}");
+      return user;
+    } on Exception catch (e) {
+      ZOLogger.logMessage("Unable to read the restored auth state: $e");
       return null;
     }
   }

@@ -8,6 +8,12 @@ abstract class UserRepository {
   /// Signs out the current user with the given [entityId].
   Future<void> signOut(String? entityId);
 
+  /// Checks whether the session is still valid on the server.
+  ///
+  /// Returns `false` only for a revoked session, so a failed check never signs
+  /// the user out.
+  Future<bool> isSessionValid();
+
   /// Re-authenticates the current user with [password].
   Future<void> reauthenticateUser(String password);
 

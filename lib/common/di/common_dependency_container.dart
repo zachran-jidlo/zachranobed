@@ -26,6 +26,7 @@ import 'package:zachranobed/common/domain/usecase/get_app_version_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_device_id_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_last_app_terms_version_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/is_session_valid_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
@@ -126,6 +127,12 @@ class CommonDependencyContainer {
     );
 
     GetIt.I.registerFactory<SignOutUseCase>(() => SignOutUseCase(GetIt.I<UserRepository>()));
+
+    GetIt.I.registerFactory<IsSessionValidUseCase>(
+      () => IsSessionValidUseCase(
+        GetIt.I<UserRepository>(),
+      ),
+    );
   }
 
   static void _setupAppConfigurationComponents() {

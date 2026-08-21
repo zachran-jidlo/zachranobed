@@ -10,10 +10,12 @@ import 'package:zachranobed/common/domain/repository/delivery_repository.dart';
 import 'package:zachranobed/common/domain/usecase/confirm_pickup_use_case.dart';
 import 'package:zachranobed/common/domain/usecase/get_app_terms_status_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/is_session_valid_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/notify_user_data_changed_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/observe_user_data_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_changes_flag_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
+import 'package:zachranobed/common/domain/usecase/sign_out_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/update_device_info_usecase.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
@@ -46,6 +48,8 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   final _shouldShowOnboardingForUiChanges = GetIt.I<ShouldShowOnboardingForUiChangesUseCase>();
   final _removeOnboardingForUiChangesFlag = GetIt.I<RemoveOnboardingForUiChangesFlagUseCase>();
   final _updateDeviceInfo = GetIt.I<UpdateDeviceInfoUseCase>();
+  final _isSessionValid = GetIt.I<IsSessionValidUseCase>();
+  final _signOut = GetIt.I<SignOutUseCase>();
 
   // Held as a field so it can be accessed from stream listeners (no context needed).
   final _userNotifier = UserNotifier();
@@ -73,7 +77,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
         _deliveryNotifier.reset();
         _deviceInfoLastUpdated = null;
         if (previous != null) {
-          _appRouter.replaceAll([const LoginRoute()]);
+          _navigateToLogin();
         }
       }
     });
@@ -96,12 +100,19 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
   /// Performs the initial checks after the application starts.
   /// 1. Check if the app should be updated.
-  /// 2. Perform for user-related checks, see [_applicationStartCheckForUser].
+  /// 2. Check if the session is still valid on the server.
+  /// 3. Perform for user-related checks, see [_applicationStartCheckForUser].
   void _applicationStartCheck() async {
     try {
       final shouldShow = await _checkIfUpgradeAppShouldBeShown.invoke();
       if (shouldShow) {
         _appRouter.replace(const ForceUpdateRoute());
+        return;
+      }
+
+      final isSessionValid = await _isSessionValid.invoke();
+      if (!isSessionValid) {
+        await _signOutRevokedSession();
         return;
       }
 
@@ -113,6 +124,28 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
       // Nothing awaits this method, so an exception thrown here would escape to
       // the global handler and be reported as a crash.
       ZOLogger.logMessage('Application start check failed: $e');
+    }
+  }
+
+  /// Signs the user out and sends them to the login screen after the server
+  /// revoked their session.
+  Future<void> _signOutRevokedSession() async {
+    ZOLogger.logMessage('Session is no longer valid, signing the user out');
+
+    try {
+      await _signOut.invoke(_userNotifier.user?.entityId);
+    } on Exception catch (e) {
+      // The user has to land on the login screen even when the sign-out fails.
+      ZOLogger.logMessage('Sign out after a revoked session failed: $e');
+    }
+
+    _navigateToLogin();
+  }
+
+  /// Replaces the stack with the login screen.
+  void _navigateToLogin() {
+    if (_appRouter.current.name != LoginRoute.name) {
+      _appRouter.replaceAll([const LoginRoute()]);
     }
   }
 
