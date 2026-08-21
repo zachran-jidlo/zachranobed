@@ -88,8 +88,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Future<void> _loadData({
     bool initial = false,
   }) async {
-    if (_isLoading) {
-      // If already loading, do nothing
+    if (!mounted || _isLoading) {
+      // If the screen is gone or a load is already in progress, do nothing
       return;
     }
 
@@ -115,6 +115,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
         user: user,
         startAfter: initial ? null : _nextCursor,
       );
+      if (!mounted) {
+        return;
+      }
 
       setState(() {
         _addItemsToEntries(page.items);
@@ -240,6 +243,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _setError() {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _isError = true;
       _isLoading = false;

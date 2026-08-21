@@ -6,6 +6,7 @@ This is a changelog for **ZachranObed** application.
 ### Fixed
 - **ZOB-443** Fix crash during application start check.
 - **ZOB-444** Fix crash when the FCM token cannot be saved while the device is offline.
+- **ZOB-445** Fix crash when leaving the history screen while a page is still loading.
 
 ## [2.2.0]
 ### Added
