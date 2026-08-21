@@ -3,6 +3,8 @@
 This is a changelog for **ZachranObed** application.
 
 ## [2.3.0]
+### Fixed
+- **ZOB-443** Fix crash during application start check.
 
 ## [2.2.0]
 ### Added

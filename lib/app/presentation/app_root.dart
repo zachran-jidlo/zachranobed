@@ -16,6 +16,7 @@ import 'package:zachranobed/common/domain/usecase/remove_onboarding_for_ui_chang
 import 'package:zachranobed/common/domain/usecase/should_show_onboarding_for_ui_changes_usecase.dart';
 import 'package:zachranobed/common/domain/usecase/update_device_info_usecase.dart';
 import 'package:zachranobed/common/domain/utils/platform_utils.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.dart';
@@ -97,15 +98,21 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   /// 1. Check if the app should be updated.
   /// 2. Perform for user-related checks, see [_applicationStartCheckForUser].
   void _applicationStartCheck() async {
-    final shouldShow = await _checkIfUpgradeAppShouldBeShown.invoke();
-    if (shouldShow) {
-      _appRouter.replace(const ForceUpdateRoute());
-      return;
-    }
+    try {
+      final shouldShow = await _checkIfUpgradeAppShouldBeShown.invoke();
+      if (shouldShow) {
+        _appRouter.replace(const ForceUpdateRoute());
+        return;
+      }
 
-    final user = await _getUserData.invoke();
-    if (user != null) {
-      _notifyUserDataChanged.invoke(user);
+      final user = await _getUserData.invoke();
+      if (user != null) {
+        _notifyUserDataChanged.invoke(user);
+      }
+    } on Exception catch (e) {
+      // Nothing awaits this method, so an exception thrown here would escape to
+      // the global handler and be reported as a crash.
+      ZOLogger.logMessage('Application start check failed: $e');
     }
   }
 
@@ -117,39 +124,46 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
   /// 3. Check if the app terms are accepted.
   /// 4. Check if the onboarding for UI changes should be shown.
   void _applicationStartCheckForUser(UserData user) async {
-    final now = DateTime.now();
-    final lastUpdated = _deviceInfoLastUpdated;
-    if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
-      _deviceInfoLastUpdated = now;
-      await _updateDeviceInfo.invoke(user.entityId);
-    }
-
-    if (!user.isAccountActive) {
-      _deliveryNotifier.reset();
-      if (_appRouter.current.name != InactiveAccountRoute.name) {
-        _appRouter.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
+    try {
+      final now = DateTime.now();
+      final lastUpdated = _deviceInfoLastUpdated;
+      if (lastUpdated == null || now.difference(lastUpdated) >= const Duration(hours: 24)) {
+        _deviceInfoLastUpdated = now;
+        await _updateDeviceInfo.invoke(user.entityId);
       }
-      return;
-    }
 
-    // The account was enabled while the user was waiting on the inactive
-    // screen.
-    if (_appRouter.current.name == InactiveAccountRoute.name) {
-      _userNotifier.user = user;
-      _deliveryNotifier.init(user);
-      _appRouter.replaceAll([HomeRoute()]);
-    }
+      if (!user.isAccountActive) {
+        _deliveryNotifier.reset();
+        if (_appRouter.current.name != InactiveAccountRoute.name) {
+          _appRouter.replaceAll([InactiveAccountRoute(entityId: user.entityId)]);
+        }
+        return;
+      }
 
-    final status = await _getAppTermsStatus.invoke(user);
-    if (status != AppTermsStatus.accepted) {
-      _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
-      return;
-    }
+      // The account was enabled while the user was waiting on the inactive
+      // screen.
+      if (_appRouter.current.name == InactiveAccountRoute.name) {
+        _userNotifier.user = user;
+        _deliveryNotifier.init(user);
+        _appRouter.replaceAll([HomeRoute()]);
+      }
 
-    final shouldShowOnboarding = await _shouldShowOnboardingForUiChanges.invoke(user.entityId);
-    if (shouldShowOnboarding) {
-      await _removeOnboardingForUiChangesFlag.invoke(user.entityId);
-      _appRouter.push(const WhatsNewRoute());
+      final status = await _getAppTermsStatus.invoke(user);
+      if (status != AppTermsStatus.accepted) {
+        _appRouter
+            .replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
+        return;
+      }
+
+      final shouldShowOnboarding = await _shouldShowOnboardingForUiChanges.invoke(user.entityId);
+      if (shouldShowOnboarding) {
+        await _removeOnboardingForUiChangesFlag.invoke(user.entityId);
+        _appRouter.push(const WhatsNewRoute());
+      }
+    } on Exception catch (e) {
+      // Nothing awaits this method, so an exception thrown here would escape to
+      // the global handler and be reported as a crash.
+      ZOLogger.logMessage('Application start check for user failed: $e');
     }
   }
 
