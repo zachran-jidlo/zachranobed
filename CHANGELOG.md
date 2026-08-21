@@ -3,6 +3,9 @@
 This is a changelog for **ZachranObed** application.
 
 ## [2.3.0]
+### Added
+- **ZOB-429** Sign the user out when the session is rejected by the server.
+
 ### Fixed
 - **ZOB-443** Fix crash during application start check.
 - **ZOB-444** Fix crash when the FCM token cannot be saved while the device is offline.

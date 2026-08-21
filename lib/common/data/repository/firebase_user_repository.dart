@@ -38,6 +38,9 @@ class FirebaseUserRepository implements UserRepository {
   Future<void> signOut(String? entityId) => _authService.signOut(entityId);
 
   @override
+  Future<bool> isSessionValid() => _authService.isSessionValid();
+
+  @override
   Future<void> reauthenticateUser(String password) => _authService.reauthenticateUser(password);
 
   @override
