@@ -108,32 +108,39 @@ class Notifications {
 
   /// Retrieves and saves the FCM token for the device.
   Future<void> getFCMToken() async {
-    if (RunningPlatform.isIOS()) {
-      await _firebaseMessaging.getAPNSToken();
-    }
+    try {
+      if (RunningPlatform.isIOS()) {
+        await _firebaseMessaging.getAPNSToken();
+      }
 
-    final fCMToken = await _firebaseMessaging.getToken();
-    final user = await _authService.getUserData();
+      final fCMToken = await _firebaseMessaging.getToken();
+      ZOLogger.logMessage('FCM token: $fCMToken');
 
-    ZOLogger.logMessage('FCM token: $fCMToken');
-    if (user == null) {
-      ZOLogger.logMessage("User is not logged in, nothing to update");
-      return;
+      await _saveToken(fCMToken);
+    } on Exception catch (e) {
+      ZOLogger.logMessage("Unable to save FCM token: $e");
     }
-    final deviceId = await _getDeviceId.invoke();
-    _entityService.updateFCMToken(user.entityId, fCMToken, deviceId);
   }
 
   /// Listens to token refresh events and saves the new token to the database.
   void listenToTokenRefresh() {
-    _firebaseMessaging.onTokenRefresh.listen((token) async {
-      final user = await _authService.getUserData();
-      if (user == null) {
-        ZOLogger.logMessage("User is not logged in, nothing to update");
-        return;
-      }
-      final deviceId = await _getDeviceId.invoke();
-      _entityService.updateFCMToken(user.entityId, token, deviceId);
-    });
+    _firebaseMessaging.onTokenRefresh.asyncMap(_saveToken).listen(
+      null,
+      onError: (Object error) {
+        ZOLogger.logMessage("Unable to save refreshed FCM token: $error");
+      },
+    );
+  }
+
+  /// Saves the [token] of the current device to the logged-in user's entity.
+  Future<void> _saveToken(String? token) async {
+    final user = await _authService.getUserData();
+    if (user == null) {
+      ZOLogger.logMessage("User is not logged in, nothing to update");
+      return;
+    }
+
+    final deviceId = await _getDeviceId.invoke();
+    await _entityService.updateFCMToken(user.entityId, token, deviceId);
   }
 }
