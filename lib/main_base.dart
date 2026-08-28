@@ -30,10 +30,4 @@ Future<void> mainBase() async {
   initializeDateFormatting();
 
   FirebaseHelper.initializeCrashlytics();
-
-  // Lock system preferences to portrait orientation only
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
 }

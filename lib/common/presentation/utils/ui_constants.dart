@@ -7,6 +7,10 @@ class LayoutStyle {
   /// is used.
   static const webBreakpoint = 740;
 
+  /// Devices with a shortest side of this value or more are treated as large
+  /// screens. Android 16 and newer ignore an app's portrait request on them.
+  static const largeScreenBreakpoint = 600;
+
   /// The fixed width of the navigation drawer in wide web layout.
   static const navigationDrawerSize = 244;
 }
