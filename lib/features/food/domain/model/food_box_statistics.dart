@@ -41,14 +41,11 @@ class FoodBoxStatistics {
   });
 
   /// Boxes the charity can use — excludes those already on the way back.
-  int get availableQuantityAtCharity =>
-      max(quantityAtCharity - quantityOnTheWayToCanteen, 0);
+  int get availableQuantityAtCharity => max(quantityAtCharity - quantityOnTheWayToCanteen, 0);
 
   /// Boxes the canteen can use — excludes those already on the way out.
-  int get availableQuantityAtCanteen =>
-      max(quantityAtCanteen - quantityOnTheWayToCharity, 0);
+  int get availableQuantityAtCanteen => max(quantityAtCanteen - quantityOnTheWayToCharity, 0);
 
   /// Total boxes currently in transit in either direction.
-  int get quantityOnTheWay =>
-      quantityOnTheWayToCharity + quantityOnTheWayToCanteen;
+  int get quantityOnTheWay => quantityOnTheWayToCharity + quantityOnTheWayToCanteen;
 }

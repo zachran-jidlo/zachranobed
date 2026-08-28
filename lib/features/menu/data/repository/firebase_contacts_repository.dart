@@ -68,20 +68,22 @@ class FirebaseContactsRepository implements ContactsRepository {
   ) async {
     final entities = await _entityService.fetchEntities(entityIds);
     final activePair = user.activePair;
-    return entities.map((e) {
-      final mainContact = Contact(
-        name: e.responsiblePerson,
-        position: e.responsiblePersonPosition?.takeIf((e) => e.isNotEmpty),
-        phoneNumber: e.phone?.takeIf((e) => e.isNotEmpty),
-      );
-      final contacts = (e.additionalContacts ?? []).map((e) => e.toDomain());
+    return entities
+        .map((e) {
+          final mainContact = Contact(
+            name: e.responsiblePerson,
+            position: e.responsiblePersonPosition?.takeIf((e) => e.isNotEmpty),
+            phoneNumber: e.phone?.takeIf((e) => e.isNotEmpty),
+          );
+          final contacts = (e.additionalContacts ?? []).map((e) => e.toDomain());
 
-      return EntityContacts(
-        name: e.establishmentName,
-        active: e.id == activePair.donorId || e.id == activePair.recipientId,
-        contacts: [mainContact, ...contacts],
-      );
-    }).sortedBy((e) => e.name);
+          return EntityContacts(
+            name: e.establishmentName,
+            active: e.id == activePair.donorId || e.id == activePair.recipientId,
+            contacts: [mainContact, ...contacts],
+          );
+        })
+        .sortedBy((e) => e.name);
   }
 
   /// Retrieves a list of contacts of carriers.

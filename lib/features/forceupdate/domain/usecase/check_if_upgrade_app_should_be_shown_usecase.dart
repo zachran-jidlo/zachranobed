@@ -23,7 +23,8 @@ class CheckIfUpgradeAppShouldBeShownUseCase {
     final minimumVersion = Version.parse(appConfig.minimumAppVersion);
 
     ZOLogger.logMessage(
-        'Check if upgrade app should be shown: currentVersion: $currentVersion, minimumVersion: $minimumVersion');
+      'Check if upgrade app should be shown: currentVersion: $currentVersion, minimumVersion: $minimumVersion',
+    );
 
     return currentVersion < minimumVersion;
   }

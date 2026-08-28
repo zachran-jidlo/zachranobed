@@ -9,7 +9,8 @@ class FieldValidationUtils {
 
   /// Regular expression for validating an email address.
   static RegExp emailRegExp = RegExp(
-      "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+");
+    "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+",
+  );
 
   /// Regular expression for validating a password.
   /// Explanation: Any sequence of at least 8 characters.

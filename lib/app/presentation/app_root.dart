@@ -183,8 +183,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
 
       final status = await _getAppTermsStatus.invoke(user);
       if (status != AppTermsStatus.accepted) {
-        _appRouter
-            .replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
+        _appRouter.replace(AppTermsRoute(hasNoAcceptedVersion: status == AppTermsStatus.notAccepted));
         return;
       }
 

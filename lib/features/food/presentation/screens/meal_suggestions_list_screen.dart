@@ -55,18 +55,20 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
     if (entityId == null) {
       return;
     }
-    _subscription = _observeMealSuggestions.invoke(entityId: entityId).listen(
-      (suggestions) {
-        if (mounted) {
-          setState(() => _suggestions = ResourceSuccess(NormalizedList(suggestions, (s) => s.name)));
-        }
-      },
-      onError: (Object error) {
-        if (mounted) {
-          setState(() => _suggestions = ResourceError(error));
-        }
-      },
-    );
+    _subscription = _observeMealSuggestions
+        .invoke(entityId: entityId)
+        .listen(
+          (suggestions) {
+            if (mounted) {
+              setState(() => _suggestions = ResourceSuccess(NormalizedList(suggestions, (s) => s.name)));
+            }
+          },
+          onError: (Object error) {
+            if (mounted) {
+              setState(() => _suggestions = ResourceError(error));
+            }
+          },
+        );
   }
 
   @override
@@ -91,7 +93,7 @@ class _MealSuggestionsListScreenState extends State<MealSuggestionsListScreen> {
                 onPressed: () => context.router.push(const MealSuggestionAddRoute()),
               ),
             ),
-          )
+          ),
         ],
       ),
       builder: (context) {

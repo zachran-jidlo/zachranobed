@@ -105,7 +105,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           );
         },
         initialValue: widget.foodInfo.dishName,
-      )
+      ),
     ];
   }
 
@@ -176,7 +176,7 @@ class _FoodInfoFieldsState extends State<FoodInfoFields> {
           formFieldKey,
           FieldValidationUtils.getFoodCategoryValidator(context),
         ),
-      )
+      ),
     ];
   }
 

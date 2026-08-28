@@ -19,18 +19,20 @@ class DeliveryService {
     DeliveryStateDto.done.toJson(),
   ];
 
-  final _collection = FirebaseFirestore.instance.collection('deliveries').withConverter(
-    fromFirestore: (snapshot, options) {
-      final json = snapshot.data() ?? {};
-      json['id'] = snapshot.id;
-      return DeliveryDto.fromJson(json);
-    },
-    toFirestore: (value, options) {
-      final json = value.toJson();
-      json.remove('id');
-      return json;
-    },
-  );
+  final _collection = FirebaseFirestore.instance
+      .collection('deliveries')
+      .withConverter(
+        fromFirestore: (snapshot, options) {
+          final json = snapshot.data() ?? {};
+          json['id'] = snapshot.id;
+          return DeliveryDto.fromJson(json);
+        },
+        toFirestore: (value, options) {
+          final json = value.toJson();
+          json.remove('id');
+          return json;
+        },
+      );
 
   /// Observes a delivery for a specific donor at a specific time.
   ///
@@ -248,7 +250,7 @@ class DeliveryService {
     return _collection.doc(id).update({
       'meals': FieldValue.arrayUnion(
         meals.map((e) => e.toJson()).toList(),
-      )
+      ),
     }).toSuccess();
   }
 
@@ -269,7 +271,8 @@ class DeliveryService {
   ) {
     return _collection //
         .doc(id)
-        .update({'foodBoxes': foodBoxes.map((e) => e.toJson())}).toSuccess();
+        .update({'foodBoxes': foodBoxes.map((e) => e.toJson())})
+        .toSuccess();
   }
 
   /// Observes active deliveries (not yet delivered or cancelled) for a given

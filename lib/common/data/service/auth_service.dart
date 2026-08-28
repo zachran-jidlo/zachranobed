@@ -51,15 +51,19 @@ class AuthService {
 
     final entity = await _entityService.getEntityByEmail(email);
     if (entity == null) {
-      ZOLogger.logMessage("Unable to get user data, entity "
-          "is not found for e-mail $email");
+      ZOLogger.logMessage(
+        "Unable to get user data, entity "
+        "is not found for e-mail $email",
+      );
       return null;
     }
 
     final entityType = entity.entityType;
     if (entityType == null) {
-      ZOLogger.logMessage("Unable to get user data, entity type "
-          "is not recognised for e-mail $email");
+      ZOLogger.logMessage(
+        "Unable to get user data, entity type "
+        "is not recognised for e-mail $email",
+      );
       return null;
     }
 
@@ -180,8 +184,10 @@ class AuthService {
   Future<Canteen?> _getCanteenData(EntityDto entity) async {
     final pairs = await _entityPairService.getByDonorId(entity.id);
     if (pairs == null) {
-      ZOLogger.logMessage("Unable to get canteen data, no pair "
-          "is found for donor ID ${entity.id}");
+      ZOLogger.logMessage(
+        "Unable to get canteen data, no pair "
+        "is found for donor ID ${entity.id}",
+      );
       return null;
     }
 
@@ -191,8 +197,10 @@ class AuthService {
     );
     final activePair = pairsInfo.activePair;
     if (activePair == null) {
-      ZOLogger.logMessage("Unable to get canteen data, no active "
-          "pair is found");
+      ZOLogger.logMessage(
+        "Unable to get canteen data, no active "
+        "pair is found",
+      );
       return null;
     }
 
@@ -213,8 +221,10 @@ class AuthService {
   Future<Charity?> _getCharityData(EntityDto entity) async {
     final pairs = await _entityPairService.getByRecipientId(entity.id);
     if (pairs == null) {
-      ZOLogger.logMessage("Unable to get charity data, no pair "
-          "is found for recipient ID ${entity.id}");
+      ZOLogger.logMessage(
+        "Unable to get charity data, no pair "
+        "is found for recipient ID ${entity.id}",
+      );
       return null;
     }
 
@@ -224,8 +234,10 @@ class AuthService {
     );
     final activePair = pairsInfo.activePair;
     if (activePair == null) {
-      ZOLogger.logMessage("Unable to get charity data, no active "
-          "pair is found");
+      ZOLogger.logMessage(
+        "Unable to get charity data, no active "
+        "pair is found",
+      );
       return null;
     }
 
@@ -254,7 +266,7 @@ class AuthService {
     final savedActivePair = await _appPreferences.getActivePair();
     final activePair = entityPairs.firstWhereOrNull(
       (pair) =>
-          pair.enabled &&
+          pair.enabled && //
           pair.donorId == savedActivePair?.donorId &&
           pair.recipientId == savedActivePair?.recipientId,
     );

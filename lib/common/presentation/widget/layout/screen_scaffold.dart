@@ -60,11 +60,11 @@ class ScreenScaffold extends StatelessWidget {
     required Widget child,
     Widget? appBar,
   }) : this(
-          key: key,
-          appBar: appBar,
-          web: (context) => child,
-          mobile: (context) => child,
-        );
+         key: key,
+         appBar: appBar,
+         web: (context) => child,
+         mobile: (context) => child,
+       );
 
   /// Creates a new [ScreenScaffold] widget with the same content for web and
   /// mobile. This constructor is useful when you want to display the same
@@ -74,11 +74,11 @@ class ScreenScaffold extends StatelessWidget {
     required WidgetBuilder builder,
     Widget? appBar,
   }) : this(
-          key: key,
-          appBar: appBar,
-          web: builder,
-          mobile: builder,
-        );
+         key: key,
+         appBar: appBar,
+         web: builder,
+         mobile: builder,
+       );
 
   @override
   Widget build(BuildContext context) {

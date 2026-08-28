@@ -4,22 +4,22 @@ import 'package:zachranobed/common/data/dto/notification_dto.dart';
 /// A service class for managing notifications related to a specific entity.
 class EntityNotificationService {
   CollectionReference<NotificationDto> getCollection(String entityId) {
-    return FirebaseFirestore.instance //
+    return FirebaseFirestore.instance
         .collection('entities')
         .doc(entityId)
         .collection('notifications')
         .withConverter(
-      fromFirestore: (snapshot, _) {
-        final json = snapshot.data() ?? {};
-        json['id'] = snapshot.id;
-        return NotificationDto.fromJson(json);
-      },
-      toFirestore: (value, options) {
-        final json = value.toJson();
-        json.remove('id');
-        return json;
-      },
-    );
+          fromFirestore: (snapshot, _) {
+            final json = snapshot.data() ?? {};
+            json['id'] = snapshot.id;
+            return NotificationDto.fromJson(json);
+          },
+          toFirestore: (value, options) {
+            final json = value.toJson();
+            json.remove('id');
+            return json;
+          },
+        );
   }
 
   /// Observes a list of [NotificationDto] objects for the given [entityId]. Takes only the notifications that
@@ -32,7 +32,8 @@ class EntityNotificationService {
     bool? read,
   }) {
     final threshold = DateTime.now().subtract(const Duration(days: 7));
-    Query<NotificationDto> query = getCollection(entityId)
+    final collection = getCollection(entityId);
+    Query<NotificationDto> query = collection
         .orderBy('timestamp', descending: true)
         .where('timestamp', isGreaterThanOrEqualTo: threshold);
 

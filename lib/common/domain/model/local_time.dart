@@ -16,8 +16,8 @@ class LocalTime {
   const LocalTime({
     required this.hour,
     required this.minute,
-  })  : assert(hour >= 0 && hour <= 23, 'Hour must be between 0 and 23'),
-        assert(minute >= 0 && minute <= 59, 'Minute must be between 0 and 59');
+  }) : assert(hour >= 0 && hour <= 23, 'Hour must be between 0 and 23'),
+       assert(minute >= 0 && minute <= 59, 'Minute must be between 0 and 59');
 
   /// Returns a [DateTime] combining today's date with this time.
   ///

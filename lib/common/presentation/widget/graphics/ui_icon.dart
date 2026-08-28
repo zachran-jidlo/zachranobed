@@ -76,23 +76,21 @@ class UiIcon extends StatelessWidget {
 
     return switch (spec) {
       UiIconDataSpec(:final iconData) => Icon(
-          iconData,
-          size: size,
-          color: color,
-        ),
+        iconData,
+        size: size,
+        color: color,
+      ),
       UiSvgAssetSpec(:final assetPath, :final applyTint) => SvgPicture.asset(
-          assetPath,
-          width: size ?? iconTheme.size,
-          height: size ?? iconTheme.size,
-          colorFilter: applyTint ? _buildColorFilter(color, iconTheme.color) : null,
-        ),
+        assetPath,
+        width: size ?? iconTheme.size,
+        height: size ?? iconTheme.size,
+        colorFilter: applyTint ? _buildColorFilter(color, iconTheme.color) : null,
+      ),
     };
   }
 
   ColorFilter? _buildColorFilter(Color? explicitColor, Color? themeColor) {
     final effectiveColor = explicitColor ?? themeColor;
-    return effectiveColor != null
-        ? ColorFilter.mode(effectiveColor, BlendMode.srcIn)
-        : null;
+    return effectiveColor != null ? ColorFilter.mode(effectiveColor, BlendMode.srcIn) : null;
   }
 }

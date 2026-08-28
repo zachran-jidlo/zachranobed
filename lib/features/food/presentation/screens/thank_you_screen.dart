@@ -124,7 +124,7 @@ class ThankYouScreen extends StatelessWidget {
               const SizedBox(height: 48.0),
             ],
           ),
-        )
+        ),
       ],
     );
   }

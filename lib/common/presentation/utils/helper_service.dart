@@ -10,13 +10,11 @@ import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 class HelperService {
   /// Returns a [UserData] representing the current user's data if available,
   /// otherwise returns `null`.
-  static UserData? getCurrentUser(BuildContext context) =>
-      context.read<UserNotifier>().user;
+  static UserData? getCurrentUser(BuildContext context) => context.read<UserNotifier>().user;
 
   /// Watches a [UserData] representing the current user's data if available,
   /// otherwise returns `null`.
-  static UserData? watchCurrentUser(BuildContext context) =>
-      context.watch<UserNotifier>().user;
+  static UserData? watchCurrentUser(BuildContext context) => context.watch<UserNotifier>().user;
 
   /// Returns an [int] indicating the current week number of the year.
   static int get getCurrentWeekNumber {

@@ -59,24 +59,26 @@ class FirebaseOfferedFoodRepository implements OfferedFoodRepository {
   Future<Iterable<OfferedFood>> _mapDeliveriesToOfferedFood(
     Iterable<DeliveryDto> deliveries,
   ) async {
-    final foodLists = await Future.wait(deliveries.map((delivery) async {
-      // Get meal IDs and fetch meal details from MealService
-      final mealIds = delivery.meals.map((e) => e.mealId);
-      if (mealIds.isEmpty) {
-        return const Iterable<OfferedFood>.empty();
-      }
-
-      final details = await _mealService.getDetails(mealIds.toList());
-
-      // Map meal with details to the OfferedFood
-      return delivery.meals.mapNotNull<OfferedFood>((meal) {
-        final detail = details[meal.mealId];
-        if (detail == null) {
-          return null;
+    final foodLists = await Future.wait(
+      deliveries.map((delivery) async {
+        // Get meal IDs and fetch meal details from MealService
+        final mealIds = delivery.meals.map((e) => e.mealId);
+        if (mealIds.isEmpty) {
+          return const Iterable<OfferedFood>.empty();
         }
-        return detail.toDomain(delivery, meal);
-      });
-    }));
+
+        final details = await _mealService.getDetails(mealIds.toList());
+
+        // Map meal with details to the OfferedFood
+        return delivery.meals.mapNotNull<OfferedFood>((meal) {
+          final detail = details[meal.mealId];
+          if (detail == null) {
+            return null;
+          }
+          return detail.toDomain(delivery, meal);
+        });
+      }),
+    );
 
     // Flatten a list of lists in single list
     return foodLists.expand((element) => element);

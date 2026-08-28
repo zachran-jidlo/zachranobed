@@ -32,7 +32,7 @@ class ErrorPage extends StatelessWidget {
             size: UiButtonSize.medium(fullWidth: true),
             text: context.l10n.commonGenericErrorRetryAction,
             onPressed: () => onRetryPressed?.call(),
-          )
+          ),
       ],
     );
   }

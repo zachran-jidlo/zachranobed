@@ -10,8 +10,6 @@ class ObserveMealSuggestionsUseCase {
 
   /// Observes the meal suggestions for the given [entityId], sorted by name.
   Stream<List<MealSuggestion>> invoke({required String entityId}) {
-    return _repository
-        .observe(entityId: entityId)
-        .map((suggestions) => _sortMealSuggestions.invoke(suggestions));
+    return _repository.observe(entityId: entityId).map((suggestions) => _sortMealSuggestions.invoke(suggestions));
   }
 }

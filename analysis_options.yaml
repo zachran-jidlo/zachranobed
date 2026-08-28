@@ -9,6 +9,11 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# Formatter settings.
+formatter:
+  page_width: 120
+  trailing_commas: preserve
+
 # The following line activates a "custom_lint" with a set of rules for a project.
 analyzer:
   plugins:

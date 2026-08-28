@@ -45,39 +45,39 @@ class UiFoodBoxReturnTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildProgress(progress),
-            Container(
-              color: context.uiColors.surfaceWhite,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              alignment: Alignment.centerLeft,
-              child: _buildTitle(context),
-            ),
-            Container(
-              color: context.uiColors.surfaceGray,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Row(
-                spacing: 16.0,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+          Container(
+            color: context.uiColors.surfaceWhite,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            alignment: Alignment.centerLeft,
+            child: _buildTitle(context),
+          ),
+          Container(
+            color: context.uiColors.surfaceGray,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              spacing: 16.0,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       _buildCount(context),
                       _buildSubtitle(context),
                     ],
-                    ),
                   ),
-                  if (action != null) Padding(
+                ),
+                if (action != null)
+                  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: action!,
                   ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
-
 
   Widget _buildTitle(BuildContext context) {
     return UiGradientText(

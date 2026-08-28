@@ -9,22 +9,22 @@ import 'package:zachranobed/features/food/data/dto/meal_suggestion_dto.dart';
 /// screen.
 class MealSuggestionService {
   CollectionReference<MealSuggestionDto> getCollection(String entityId) {
-    return FirebaseFirestore.instance //
+    return FirebaseFirestore.instance
         .collection('entities')
         .doc(entityId)
         .collection('mealSuggestions')
         .withConverter(
-      fromFirestore: (snapshot, _) {
-        final json = snapshot.data() ?? {};
-        json['id'] = snapshot.id;
-        return MealSuggestionDto.fromJson(json);
-      },
-      toFirestore: (value, options) {
-        final json = value.toJson();
-        json.remove('id');
-        return json;
-      },
-    );
+          fromFirestore: (snapshot, _) {
+            final json = snapshot.data() ?? {};
+            json['id'] = snapshot.id;
+            return MealSuggestionDto.fromJson(json);
+          },
+          toFirestore: (value, options) {
+            final json = value.toJson();
+            json.remove('id');
+            return json;
+          },
+        );
   }
 
   /// Observes the list of [MealSuggestionDto] for the given [entityId].

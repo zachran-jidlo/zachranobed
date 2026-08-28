@@ -29,11 +29,11 @@ import 'package:zachranobed/features/food/presentation/widget/food_info_fields.d
 class OfferFoodInitialScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen].
   const OfferFoodInitialScreen({super.key})
-      : super(
-          foodInfo: null,
-          returnResult: false,
-          screenMode: OfferFoodDetailScreenMode.add,
-        );
+    : super(
+        foodInfo: null,
+        returnResult: false,
+        screenMode: OfferFoodDetailScreenMode.add,
+      );
 }
 
 /// Represents the screen for adding new food to the food offer.
@@ -44,22 +44,22 @@ class OfferFoodInitialScreen extends OfferFoodDetailScreen {
 class OfferFoodAddNewScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen].
   const OfferFoodAddNewScreen({super.key})
-      : super(
-          foodInfo: null,
-          returnResult: true,
-          screenMode: OfferFoodDetailScreenMode.add,
-        );
+    : super(
+        foodInfo: null,
+        returnResult: true,
+        screenMode: OfferFoodDetailScreenMode.add,
+      );
 }
 
 @RoutePage()
 class OfferFoodEditExistingScreen extends OfferFoodDetailScreen {
   /// Creates a new [OfferFoodDetailScreen] with the given [foodInfo].
   const OfferFoodEditExistingScreen({super.key, required FoodInfo foodInfo})
-      : super(
-          foodInfo: foodInfo,
-          returnResult: true,
-          screenMode: OfferFoodDetailScreenMode.edit,
-        );
+    : super(
+        foodInfo: foodInfo,
+        returnResult: true,
+        screenMode: OfferFoodDetailScreenMode.edit,
+      );
 }
 
 /// Represents the different modes of the [OfferFoodDetailScreen].
@@ -195,16 +195,16 @@ class _OfferFoodDetailScreenState extends State<OfferFoodDetailScreen> {
         ),
       switch (widget.screenMode) {
         OfferFoodDetailScreenMode.add => UiPrimaryButton(
-            size: UiButtonSize.medium(fullWidth: isMobileLayout),
-            text: context.l10n.offerFoodDetailContinueButton,
-            onPressed: _onConfirmationButtonPressed,
-          ),
+          size: UiButtonSize.medium(fullWidth: isMobileLayout),
+          text: context.l10n.offerFoodDetailContinueButton,
+          onPressed: _onConfirmationButtonPressed,
+        ),
         OfferFoodDetailScreenMode.edit => UiPrimaryButton(
-            size: UiButtonSize.medium(fullWidth: isMobileLayout),
-            icon: Icons.check,
-            text: context.l10n.offerFoodDetailSaveButton,
-            onPressed: _onConfirmationButtonPressed,
-          )
+          size: UiButtonSize.medium(fullWidth: isMobileLayout),
+          icon: Icons.check,
+          text: context.l10n.offerFoodDetailSaveButton,
+          onPressed: _onConfirmationButtonPressed,
+        ),
       },
     ];
 

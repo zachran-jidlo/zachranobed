@@ -636,8 +636,7 @@ class _NavigationComponents extends StatefulWidget {
   State<_NavigationComponents> createState() => _NavigationComponentsState();
 }
 
-class _NavigationComponentsState extends State<_NavigationComponents>
-    with SingleTickerProviderStateMixin {
+class _NavigationComponentsState extends State<_NavigationComponents> with SingleTickerProviderStateMixin {
   static const List<UiNavBarItem> items = [
     UiNavBarItem(icon: UiIconSpec.data(Icons.home_rounded), label: 'Přehled'),
     UiNavBarItem(icon: UiIconSpec.svg(ImageAssets.iconHistory), label: 'Historie'),
@@ -682,8 +681,7 @@ class _NavigationDrawerItemComponents extends StatefulWidget {
   const _NavigationDrawerItemComponents();
 
   @override
-  State<_NavigationDrawerItemComponents> createState() =>
-      _NavigationDrawerItemComponentsState();
+  State<_NavigationDrawerItemComponents> createState() => _NavigationDrawerItemComponentsState();
 }
 
 class _NavigationDrawerItemComponentsState extends State<_NavigationDrawerItemComponents> {
@@ -1240,7 +1238,7 @@ class _NotificationTileComponents extends StatelessWidget {
                   text: 'Zkontrolovat',
                   onPressed: () {},
                   size: UiButtonSize.medium(),
-                )
+                ),
               ],
             ),
             UiNotificationTile(
@@ -1386,7 +1384,7 @@ class _BoxCounterTileComponentsState extends State<_BoxCounterTileComponents> {
                     onPressed: () {
                       _formKey.currentState?.validate();
                     },
-                  )
+                  ),
                 ],
               ),
             ),

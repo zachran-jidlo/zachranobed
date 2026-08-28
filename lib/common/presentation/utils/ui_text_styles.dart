@@ -33,7 +33,8 @@ class UiTextStyles {
   TextStyle get labelSmall => _theme.labelSmall ?? const TextStyle();
 
   static TextTheme getTextTheme() {
-    return Typography.material2021().black.copyWith(
+    return Typography.material2021().black
+        .copyWith(
           // Display
           displayLarge: TextStyle(
             fontFamily: 'FuturaMedium',
