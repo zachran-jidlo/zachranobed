@@ -93,7 +93,7 @@ class BannerTile extends StatelessWidget {
           size: UiButtonSize.tiny(),
           onPressed: () => _handleLink(context, url),
         ),
-      )
+      ),
     ];
   }
 

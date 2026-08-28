@@ -50,7 +50,8 @@ class FirebaseEntityPairsRepository implements EntityPairsRepository {
     // Pairs turned off by an admin must not be offered to the user
     final enabledPairs = allPairs.where((pair) => pair.enabled).toList();
 
-    final activePair = enabledPairs.firstWhereOrNull(
+    final activePair =
+        enabledPairs.firstWhereOrNull(
           (pair) => pair.donorId == user.activePair.donorId && pair.recipientId == user.activePair.recipientId,
         ) ??
         user.activePair;

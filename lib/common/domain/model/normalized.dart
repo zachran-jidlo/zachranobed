@@ -23,12 +23,12 @@ class NormalizedList<T> {
   final List<Normalized<T>> _normalized;
 
   NormalizedList(this.items, String Function(T value) keyOf)
-      : _normalized = items.map((e) => Normalized.of(e, keyOf)).toList();
+    : _normalized = items.map((e) => Normalized.of(e, keyOf)).toList();
 
   /// Items whose normalized key contains the normalized [query].
   List<T> matches(String query) {
     final normalizedQuery = query.searchNormalized;
-    return _normalized
+    return _normalized //
         .where((e) => e.normalized.contains(normalizedQuery))
         .map((e) => e.value)
         .toList();

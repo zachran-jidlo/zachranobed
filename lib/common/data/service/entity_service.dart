@@ -4,18 +4,20 @@ import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 
 class EntityService {
-  final _collection = FirebaseFirestore.instance.collection('entities').withConverter(
-    fromFirestore: (snapshot, _) {
-      final json = snapshot.data() ?? {};
-      json['id'] = snapshot.id;
-      return EntityDto.fromJson(json);
-    },
-    toFirestore: (value, options) {
-      final json = value.toJson();
-      json.remove('id');
-      return json;
-    },
-  );
+  final _collection = FirebaseFirestore.instance
+      .collection('entities')
+      .withConverter(
+        fromFirestore: (snapshot, _) {
+          final json = snapshot.data() ?? {};
+          json['id'] = snapshot.id;
+          return EntityDto.fromJson(json);
+        },
+        toFirestore: (value, options) {
+          final json = value.toJson();
+          json.remove('id');
+          return json;
+        },
+      );
 
   /// Returns a [Future] that completes with a [EntityDto] object if an entity
   /// document with the provided [email] is found in the Firestore collection

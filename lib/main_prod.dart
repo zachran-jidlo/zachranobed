@@ -10,7 +10,7 @@ void main() async {
   GetIt.I.registerSingleton(
     AppFlavorData(
       quickLoginButton: null,
-    )
+    ),
   );
 
   runApp(AppRoot());

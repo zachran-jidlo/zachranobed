@@ -75,7 +75,7 @@ class UiContactTile extends StatelessWidget {
           style: context.textStyles.bodyMedium.copyWith(
             color: context.uiColors.textSecondary,
           ),
-        )
+        ),
       ],
     );
   }

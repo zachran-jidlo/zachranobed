@@ -79,7 +79,7 @@ import 'package:zachranobed/features/whatsnew/presentation/whats_new_screen.dart
 /// [_i1.AddMealsToHistoryScreen]
 class AddMealsToHistoryRoute extends _i28.PageRouteInfo<void> {
   const AddMealsToHistoryRoute({List<_i28.PageRouteInfo>? children})
-      : super(AddMealsToHistoryRoute.name, initialChildren: children);
+    : super(AddMealsToHistoryRoute.name, initialChildren: children);
 
   static const String name = 'AddMealsToHistoryRoute';
 
@@ -99,13 +99,13 @@ class AppTermsRoute extends _i28.PageRouteInfo<AppTermsRouteArgs> {
     required bool hasNoAcceptedVersion,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          AppTermsRoute.name,
-          args: AppTermsRouteArgs(
-            key: key,
-            hasNoAcceptedVersion: hasNoAcceptedVersion,
-          ),
-          initialChildren: children,
-        );
+         AppTermsRoute.name,
+         args: AppTermsRouteArgs(
+           key: key,
+           hasNoAcceptedVersion: hasNoAcceptedVersion,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'AppTermsRoute';
 
@@ -154,13 +154,13 @@ class BoxDeliveryConfirmationRoute
     required _i30.BoxDeliveryConfirmation confirmation,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          BoxDeliveryConfirmationRoute.name,
-          args: BoxDeliveryConfirmationRouteArgs(
-            key: key,
-            confirmation: confirmation,
-          ),
-          initialChildren: children,
-        );
+         BoxDeliveryConfirmationRoute.name,
+         args: BoxDeliveryConfirmationRouteArgs(
+           key: key,
+           confirmation: confirmation,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'BoxDeliveryConfirmationRoute';
 
@@ -206,7 +206,7 @@ class BoxDeliveryConfirmationRouteArgs {
 /// [_i4.ChangeActivePairScreen]
 class ChangeActivePairRoute extends _i28.PageRouteInfo<void> {
   const ChangeActivePairRoute({List<_i28.PageRouteInfo>? children})
-      : super(ChangeActivePairRoute.name, initialChildren: children);
+    : super(ChangeActivePairRoute.name, initialChildren: children);
 
   static const String name = 'ChangeActivePairRoute';
 
@@ -222,7 +222,7 @@ class ChangeActivePairRoute extends _i28.PageRouteInfo<void> {
 /// [_i5.ChangePasswordScreen]
 class ChangePasswordRoute extends _i28.PageRouteInfo<void> {
   const ChangePasswordRoute({List<_i28.PageRouteInfo>? children})
-      : super(ChangePasswordRoute.name, initialChildren: children);
+    : super(ChangePasswordRoute.name, initialChildren: children);
 
   static const String name = 'ChangePasswordRoute';
 
@@ -238,7 +238,7 @@ class ChangePasswordRoute extends _i28.PageRouteInfo<void> {
 /// [_i6.ComponentsScreen]
 class ComponentsRoute extends _i28.PageRouteInfo<void> {
   const ComponentsRoute({List<_i28.PageRouteInfo>? children})
-      : super(ComponentsRoute.name, initialChildren: children);
+    : super(ComponentsRoute.name, initialChildren: children);
 
   static const String name = 'ComponentsRoute';
 
@@ -254,7 +254,7 @@ class ComponentsRoute extends _i28.PageRouteInfo<void> {
 /// [_i7.ContactsScreen]
 class ContactsRoute extends _i28.PageRouteInfo<void> {
   const ContactsRoute({List<_i28.PageRouteInfo>? children})
-      : super(ContactsRoute.name, initialChildren: children);
+    : super(ContactsRoute.name, initialChildren: children);
 
   static const String name = 'ContactsRoute';
 
@@ -270,7 +270,7 @@ class ContactsRoute extends _i28.PageRouteInfo<void> {
 /// [_i8.DebugScreen]
 class DebugRoute extends _i28.PageRouteInfo<void> {
   const DebugRoute({List<_i28.PageRouteInfo>? children})
-      : super(DebugRoute.name, initialChildren: children);
+    : super(DebugRoute.name, initialChildren: children);
 
   static const String name = 'DebugRoute';
 
@@ -290,10 +290,10 @@ class DeliveryDetailRoute extends _i28.PageRouteInfo<DeliveryDetailRouteArgs> {
     required String deliveryId,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          DeliveryDetailRoute.name,
-          args: DeliveryDetailRouteArgs(key: key, deliveryId: deliveryId),
-          initialChildren: children,
-        );
+         DeliveryDetailRoute.name,
+         args: DeliveryDetailRouteArgs(key: key, deliveryId: deliveryId),
+         initialChildren: children,
+       );
 
   static const String name = 'DeliveryDetailRoute';
 
@@ -340,10 +340,10 @@ class FaqDetailRoute extends _i28.PageRouteInfo<FaqDetailRouteArgs> {
     required _i31.FaqItem item,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          FaqDetailRoute.name,
-          args: FaqDetailRouteArgs(key: key, item: item),
-          initialChildren: children,
-        );
+         FaqDetailRoute.name,
+         args: FaqDetailRouteArgs(key: key, item: item),
+         initialChildren: children,
+       );
 
   static const String name = 'FaqDetailRoute';
 
@@ -387,10 +387,10 @@ class FaqQuestionsRoute extends _i28.PageRouteInfo<FaqQuestionsRouteArgs> {
     required List<_i31.FaqItem> items,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          FaqQuestionsRoute.name,
-          args: FaqQuestionsRouteArgs(key: key, items: items),
-          initialChildren: children,
-        );
+         FaqQuestionsRoute.name,
+         args: FaqQuestionsRouteArgs(key: key, items: items),
+         initialChildren: children,
+       );
 
   static const String name = 'FaqQuestionsRoute';
 
@@ -437,14 +437,14 @@ class FoodBoxesCheckupMismatchRoute
     required List<_i34.FoodBoxStatistics> statistics,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          FoodBoxesCheckupMismatchRoute.name,
-          args: FoodBoxesCheckupMismatchRouteArgs(
-            key: key,
-            user: user,
-            statistics: statistics,
-          ),
-          initialChildren: children,
-        );
+         FoodBoxesCheckupMismatchRoute.name,
+         args: FoodBoxesCheckupMismatchRouteArgs(
+           key: key,
+           user: user,
+           statistics: statistics,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'FoodBoxesCheckupMismatchRoute';
 
@@ -503,14 +503,14 @@ class FoodBoxesDetailRoute
     bool isCheckupMode = false,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          FoodBoxesDetailRoute.name,
-          args: FoodBoxesDetailRouteArgs(
-            key: key,
-            user: user,
-            isCheckupMode: isCheckupMode,
-          ),
-          initialChildren: children,
-        );
+         FoodBoxesDetailRoute.name,
+         args: FoodBoxesDetailRouteArgs(
+           key: key,
+           user: user,
+           isCheckupMode: isCheckupMode,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'FoodBoxesDetailRoute';
 
@@ -562,7 +562,7 @@ class FoodBoxesDetailRouteArgs {
 /// [_i14.ForceUpdateScreen]
 class ForceUpdateRoute extends _i28.PageRouteInfo<void> {
   const ForceUpdateRoute({List<_i28.PageRouteInfo>? children})
-      : super(ForceUpdateRoute.name, initialChildren: children);
+    : super(ForceUpdateRoute.name, initialChildren: children);
 
   static const String name = 'ForceUpdateRoute';
 
@@ -578,7 +578,7 @@ class ForceUpdateRoute extends _i28.PageRouteInfo<void> {
 /// [_i15.ForgotPasswordScreen]
 class ForgotPasswordRoute extends _i28.PageRouteInfo<void> {
   const ForgotPasswordRoute({List<_i28.PageRouteInfo>? children})
-      : super(ForgotPasswordRoute.name, initialChildren: children);
+    : super(ForgotPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ForgotPasswordRoute';
 
@@ -598,10 +598,10 @@ class HomeRoute extends _i28.PageRouteInfo<HomeRouteArgs> {
     int initialTabIndex = 0,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          HomeRoute.name,
-          args: HomeRouteArgs(key: key, initialTabIndex: initialTabIndex),
-          initialChildren: children,
-        );
+         HomeRoute.name,
+         args: HomeRouteArgs(key: key, initialTabIndex: initialTabIndex),
+         initialChildren: children,
+       );
 
   static const String name = 'HomeRoute';
 
@@ -651,10 +651,10 @@ class InactiveAccountRoute
     String? entityId,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          InactiveAccountRoute.name,
-          args: InactiveAccountRouteArgs(key: key, entityId: entityId),
-          initialChildren: children,
-        );
+         InactiveAccountRoute.name,
+         args: InactiveAccountRouteArgs(key: key, entityId: entityId),
+         initialChildren: children,
+       );
 
   static const String name = 'InactiveAccountRoute';
 
@@ -696,7 +696,7 @@ class InactiveAccountRouteArgs {
 /// [_i18.LoginScreen]
 class LoginRoute extends _i28.PageRouteInfo<void> {
   const LoginRoute({List<_i28.PageRouteInfo>? children})
-      : super(LoginRoute.name, initialChildren: children);
+    : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -712,7 +712,7 @@ class LoginRoute extends _i28.PageRouteInfo<void> {
 /// [_i19.MealSuggestionAddScreen]
 class MealSuggestionAddRoute extends _i28.PageRouteInfo<void> {
   const MealSuggestionAddRoute({List<_i28.PageRouteInfo>? children})
-      : super(MealSuggestionAddRoute.name, initialChildren: children);
+    : super(MealSuggestionAddRoute.name, initialChildren: children);
 
   static const String name = 'MealSuggestionAddRoute';
 
@@ -733,10 +733,10 @@ class MealSuggestionEditRoute
     required _i35.MealSuggestion suggestion,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          MealSuggestionEditRoute.name,
-          args: MealSuggestionEditRouteArgs(key: key, suggestion: suggestion),
-          initialChildren: children,
-        );
+         MealSuggestionEditRoute.name,
+         args: MealSuggestionEditRouteArgs(key: key, suggestion: suggestion),
+         initialChildren: children,
+       );
 
   static const String name = 'MealSuggestionEditRoute';
 
@@ -779,7 +779,7 @@ class MealSuggestionEditRouteArgs {
 /// [_i20.MealSuggestionsListScreen]
 class MealSuggestionsListRoute extends _i28.PageRouteInfo<void> {
   const MealSuggestionsListRoute({List<_i28.PageRouteInfo>? children})
-      : super(MealSuggestionsListRoute.name, initialChildren: children);
+    : super(MealSuggestionsListRoute.name, initialChildren: children);
 
   static const String name = 'MealSuggestionsListRoute';
 
@@ -795,7 +795,7 @@ class MealSuggestionsListRoute extends _i28.PageRouteInfo<void> {
 /// [_i21.OfferFoodAddNewScreen]
 class OfferFoodAddNewRoute extends _i28.PageRouteInfo<void> {
   const OfferFoodAddNewRoute({List<_i28.PageRouteInfo>? children})
-      : super(OfferFoodAddNewRoute.name, initialChildren: children);
+    : super(OfferFoodAddNewRoute.name, initialChildren: children);
 
   static const String name = 'OfferFoodAddNewRoute';
 
@@ -815,13 +815,13 @@ class OfferFoodBoxesRoute extends _i28.PageRouteInfo<OfferFoodBoxesRouteArgs> {
     required Map<_i36.FoodBoxType, int> currentBoxesQuantity,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          OfferFoodBoxesRoute.name,
-          args: OfferFoodBoxesRouteArgs(
-            key: key,
-            currentBoxesQuantity: currentBoxesQuantity,
-          ),
-          initialChildren: children,
-        );
+         OfferFoodBoxesRoute.name,
+         args: OfferFoodBoxesRouteArgs(
+           key: key,
+           currentBoxesQuantity: currentBoxesQuantity,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'OfferFoodBoxesRoute';
 
@@ -874,10 +874,10 @@ class OfferFoodEditExistingRoute
     required _i37.FoodInfo foodInfo,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          OfferFoodEditExistingRoute.name,
-          args: OfferFoodEditExistingRouteArgs(key: key, foodInfo: foodInfo),
-          initialChildren: children,
-        );
+         OfferFoodEditExistingRoute.name,
+         args: OfferFoodEditExistingRouteArgs(key: key, foodInfo: foodInfo),
+         initialChildren: children,
+       );
 
   static const String name = 'OfferFoodEditExistingRoute';
 
@@ -920,7 +920,7 @@ class OfferFoodEditExistingRouteArgs {
 /// [_i21.OfferFoodInitialScreen]
 class OfferFoodInitialRoute extends _i28.PageRouteInfo<void> {
   const OfferFoodInitialRoute({List<_i28.PageRouteInfo>? children})
-      : super(OfferFoodInitialRoute.name, initialChildren: children);
+    : super(OfferFoodInitialRoute.name, initialChildren: children);
 
   static const String name = 'OfferFoodInitialRoute';
 
@@ -941,13 +941,13 @@ class OfferFoodOverviewRoute
     required List<_i37.FoodInfo> initialFoodInfos,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          OfferFoodOverviewRoute.name,
-          args: OfferFoodOverviewRouteArgs(
-            key: key,
-            initialFoodInfos: initialFoodInfos,
-          ),
-          initialChildren: children,
-        );
+         OfferFoodOverviewRoute.name,
+         args: OfferFoodOverviewRouteArgs(
+           key: key,
+           initialFoodInfos: initialFoodInfos,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'OfferFoodOverviewRoute';
 
@@ -995,7 +995,7 @@ class OfferFoodOverviewRouteArgs {
 /// [_i24.OrderShippingOfBoxesScreen]
 class OrderShippingOfBoxesRoute extends _i28.PageRouteInfo<void> {
   const OrderShippingOfBoxesRoute({List<_i28.PageRouteInfo>? children})
-      : super(OrderShippingOfBoxesRoute.name, initialChildren: children);
+    : super(OrderShippingOfBoxesRoute.name, initialChildren: children);
 
   static const String name = 'OrderShippingOfBoxesRoute';
 
@@ -1011,7 +1011,7 @@ class OrderShippingOfBoxesRoute extends _i28.PageRouteInfo<void> {
 /// [_i25.ProfileScreen]
 class ProfileRoute extends _i28.PageRouteInfo<void> {
   const ProfileRoute({List<_i28.PageRouteInfo>? children})
-      : super(ProfileRoute.name, initialChildren: children);
+    : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -1032,14 +1032,14 @@ class ThankYouRoute extends _i28.PageRouteInfo<ThankYouRouteArgs> {
     required String message,
     List<_i28.PageRouteInfo>? children,
   }) : super(
-          ThankYouRoute.name,
-          args: ThankYouRouteArgs(
-            key: key,
-            isSuccess: isSuccess,
-            message: message,
-          ),
-          initialChildren: children,
-        );
+         ThankYouRoute.name,
+         args: ThankYouRouteArgs(
+           key: key,
+           isSuccess: isSuccess,
+           message: message,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ThankYouRoute';
 
@@ -1091,7 +1091,7 @@ class ThankYouRouteArgs {
 /// [_i27.WhatsNewScreen]
 class WhatsNewRoute extends _i28.PageRouteInfo<void> {
   const WhatsNewRoute({List<_i28.PageRouteInfo>? children})
-      : super(WhatsNewRoute.name, initialChildren: children);
+    : super(WhatsNewRoute.name, initialChildren: children);
 
   static const String name = 'WhatsNewRoute';
 

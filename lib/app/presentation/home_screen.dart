@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with LifecycleWatcher, SingleTi
           final hasAnyUnreadNotifications = GetIt.I<HasAnyUnreadNotificationsUseCase>();
           return user != null ? hasAnyUnreadNotifications.invoke(user) : Stream.value(false);
         },
-      )
+      ),
     ];
   }
 

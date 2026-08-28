@@ -4,7 +4,7 @@ import 'package:zachranobed/common/data/dto/app_terms_config_dto.dart';
 import 'package:zachranobed/common/data/dto/configuration_contacts_dto.dart';
 
 class ConfigurationService {
-  final _contactsDocument = FirebaseFirestore.instance //
+  final _contactsDocument = FirebaseFirestore.instance
       .collection('appConfiguration')
       .doc('contacts')
       .withConverter(
@@ -15,7 +15,7 @@ class ConfigurationService {
         toFirestore: (value, options) => value.toJson(),
       );
 
-  final _appConfigDocument = FirebaseFirestore.instance //
+  final _appConfigDocument = FirebaseFirestore.instance
       .collection('appConfiguration')
       .doc('app-config')
       .withConverter(
@@ -26,7 +26,7 @@ class ConfigurationService {
         toFirestore: (value, options) => value.toJson(),
       );
 
-  final _appTermsConfigDocument = FirebaseFirestore.instance //
+  final _appTermsConfigDocument = FirebaseFirestore.instance
       .collection('appConfiguration')
       .doc('app-terms')
       .withConverter(

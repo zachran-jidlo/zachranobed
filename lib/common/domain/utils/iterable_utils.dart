@@ -30,7 +30,6 @@ extension IterableUtils<T> on Iterable<T> {
 
 /// Extensions on nullable Iterable class.
 extension IterableNullableUtils<T> on Iterable<T>? {
-
   /// Returns an empty iterable if the receiver is null.
   Iterable<T> orEmpty() {
     return this ?? [];

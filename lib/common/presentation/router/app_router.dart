@@ -6,109 +6,109 @@ import 'package:zachranobed/common/presentation/router/auth_guard.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<MaterialRoute> get routes => [
-        MaterialRoute(
-          page: HomeRoute.page,
-          initial: true,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(page: LoginRoute.page),
-        MaterialRoute(page: ForgotPasswordRoute.page),
-        MaterialRoute(
-          page: ProfileRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: ContactsRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: MealSuggestionsListRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: MealSuggestionAddRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: MealSuggestionEditRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: ChangePasswordRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: ThankYouRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: OrderShippingOfBoxesRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(page: DebugRoute.page),
-        MaterialRoute(page: ComponentsRoute.page),
-        MaterialRoute(page: AppTermsRoute.page),
-        MaterialRoute(
-          page: OfferFoodOverviewRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: OfferFoodInitialRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: OfferFoodAddNewRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: OfferFoodEditExistingRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: OfferFoodBoxesRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: FoodBoxesDetailRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: FoodBoxesCheckupMismatchRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: BoxDeliveryConfirmationRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: DeliveryDetailRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: AddMealsToHistoryRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: ChangeActivePairRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: ForceUpdateRoute.page,
-        ),
-        MaterialRoute(
-          page: InactiveAccountRoute.page,
-        ),
-        MaterialRoute(
-          page: WhatsNewRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: FaqQuestionsRoute.page,
-          guards: [AuthGuard()],
-        ),
-        MaterialRoute(
-          page: FaqDetailRoute.page,
-          guards: [AuthGuard()],
-        ),
-      ];
+    MaterialRoute(
+      page: HomeRoute.page,
+      initial: true,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(page: LoginRoute.page),
+    MaterialRoute(page: ForgotPasswordRoute.page),
+    MaterialRoute(
+      page: ProfileRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: ContactsRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: MealSuggestionsListRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: MealSuggestionAddRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: MealSuggestionEditRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: ChangePasswordRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: ThankYouRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: OrderShippingOfBoxesRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(page: DebugRoute.page),
+    MaterialRoute(page: ComponentsRoute.page),
+    MaterialRoute(page: AppTermsRoute.page),
+    MaterialRoute(
+      page: OfferFoodOverviewRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: OfferFoodInitialRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: OfferFoodAddNewRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: OfferFoodEditExistingRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: OfferFoodBoxesRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: FoodBoxesDetailRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: FoodBoxesCheckupMismatchRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: BoxDeliveryConfirmationRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: DeliveryDetailRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: AddMealsToHistoryRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: ChangeActivePairRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: ForceUpdateRoute.page,
+    ),
+    MaterialRoute(
+      page: InactiveAccountRoute.page,
+    ),
+    MaterialRoute(
+      page: WhatsNewRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: FaqQuestionsRoute.page,
+      guards: [AuthGuard()],
+    ),
+    MaterialRoute(
+      page: FaqDetailRoute.page,
+      guards: [AuthGuard()],
+    ),
+  ];
 }

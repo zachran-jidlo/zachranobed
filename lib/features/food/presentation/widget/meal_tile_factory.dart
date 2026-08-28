@@ -35,10 +35,12 @@ class MealTileFactory {
   static String? _formatSupportingText(BuildContext context, OfferedFood item) {
     return switch (item.preparedAt) {
       null => null,
-      FoodDateTimeSpecified(date: final date) =>
-        context.l10n.mealTilePreparedAtTemplate(DateTimeUtils.formatDateTime(date, "d. M. yyyy")),
-      FoodDateTimeOnPackaging() =>
-        context.l10n.mealTilePreparedAtTemplate(context.l10n.foodDateTimeLabelOnPackaging.toLowerCase()),
+      FoodDateTimeSpecified(date: final date) => context.l10n.mealTilePreparedAtTemplate(
+        DateTimeUtils.formatDateTime(date, "d. M. yyyy"),
+      ),
+      FoodDateTimeOnPackaging() => context.l10n.mealTilePreparedAtTemplate(
+        context.l10n.foodDateTimeLabelOnPackaging.toLowerCase(),
+      ),
     };
   }
 
@@ -59,23 +61,23 @@ class MealTileFactory {
   static UiMealBadge _buildCategoryBadge(BuildContext context, OfferedFood item) {
     return switch (item.foodCategoryType) {
       FoodCategoryType.warm => UiMealBadge(
-          icon: UiIconSpec.svg(ImageAssets.iconHot),
-          label: context.l10n.foodCategoryBadgeWarmTemplate(
-            item.foodTemperature ?? Constants.foodTemperatureInitial,
-          ),
+        icon: UiIconSpec.svg(ImageAssets.iconHot),
+        label: context.l10n.foodCategoryBadgeWarmTemplate(
+          item.foodTemperature ?? Constants.foodTemperatureInitial,
         ),
+      ),
       FoodCategoryType.cooled => UiMealBadge(
-          icon: UiIconSpec.svg(ImageAssets.iconCold),
-          label: context.l10n.foodCategoryBadgeCooled,
-        ),
+        icon: UiIconSpec.svg(ImageAssets.iconCold),
+        label: context.l10n.foodCategoryBadgeCooled,
+      ),
       FoodCategoryType.packaged => UiMealBadge(
-          icon: UiIconSpec.svg(ImageAssets.iconPack),
-          label: context.l10n.foodCategoryBadgePackaged,
-        ),
+        icon: UiIconSpec.svg(ImageAssets.iconPack),
+        label: context.l10n.foodCategoryBadgePackaged,
+      ),
       null => UiMealBadge(
-          icon: UiIconSpec.svg(ImageAssets.iconMeal),
-          label: item.foodCategory,
-        ),
+        icon: UiIconSpec.svg(ImageAssets.iconMeal),
+        label: item.foodCategory,
+      ),
     };
   }
 

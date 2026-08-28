@@ -71,7 +71,7 @@ class MealSuggestionAddScreen extends MealSuggestionFormScreen {
 @RoutePage()
 class MealSuggestionEditScreen extends MealSuggestionFormScreen {
   MealSuggestionEditScreen({super.key, required MealSuggestion suggestion})
-      : super(mode: MealSuggestionFormEditMode(suggestion));
+    : super(mode: MealSuggestionFormEditMode(suggestion));
 }
 
 class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
@@ -99,8 +99,9 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
   bool get _hasUnsavedChanges {
     return switch (widget.mode) {
       MealSuggestionFormAddMode() => _name.isNotEmpty || _allergens.isNotEmpty,
-      MealSuggestionFormEditMode(:final suggestion) => _name.trim() != suggestion.name ||
-          !const SetEquality<String>().equals(_allergens.toSet(), suggestion.allergens.toSet()),
+      MealSuggestionFormEditMode(:final suggestion) =>
+        _name.trim() != suggestion.name ||
+            !const SetEquality<String>().equals(_allergens.toSet(), suggestion.allergens.toSet()),
     };
   }
 
@@ -232,7 +233,7 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
       Flex(
         spacing: 16.0,
         direction: isMobileLayout ? Axis.vertical : Axis.horizontal,
-        children: _isEdit //
+        children: _isEdit
             ? [
                 UiOutlineButton(
                   size: UiButtonSize.medium(fullWidth: isMobileLayout),
@@ -252,7 +253,7 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
                   onPressed: _onSavePressed,
                 ),
               ],
-      )
+      ),
     ];
   }
 
@@ -296,17 +297,15 @@ class _MealSuggestionFormScreenState extends State<MealSuggestionFormScreen> {
     }
 
     final success = await switch (mode) {
-      MealSuggestionFormAddMode() => //
-        _addMealSuggestion.invoke(
-          entityId: user.entityId,
-          name: name,
-          allergens: _allergens,
-        ),
-      MealSuggestionFormEditMode(:final suggestion) => //
-        _updateMealSuggestion.invoke(
-          entityId: user.entityId,
-          suggestion: MealSuggestion(id: suggestion.id, name: name, allergens: _allergens),
-        ),
+      MealSuggestionFormAddMode() => _addMealSuggestion.invoke(
+        entityId: user.entityId,
+        name: name,
+        allergens: _allergens,
+      ),
+      MealSuggestionFormEditMode(:final suggestion) => _updateMealSuggestion.invoke(
+        entityId: user.entityId,
+        suggestion: MealSuggestion(id: suggestion.id, name: name, allergens: _allergens),
+      ),
     };
     if (!mounted) {
       return;

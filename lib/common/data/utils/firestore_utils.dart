@@ -8,8 +8,7 @@ extension QueryUtils<T> on Query<T> {
   Query<T> whereTime<V>(Object field, DateTime time) {
     final from = Timestamp.fromDate(time);
     final to = Timestamp.fromDate(time.add(const Duration(seconds: 1)));
-    return where(field, isGreaterThanOrEqualTo: from)
-        .where(field, isLessThanOrEqualTo: to);
+    return where(field, isGreaterThanOrEqualTo: from).where(field, isLessThanOrEqualTo: to);
   }
 }
 

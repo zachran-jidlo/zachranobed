@@ -200,7 +200,7 @@ class _MealNameAutocompleteFieldState extends State<MealNameAutocompleteField> {
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       itemCount: matches.length,
-      separatorBuilder: (_, __) {
+      separatorBuilder: (_, _) {
         return Divider(
           height: 1,
           color: context.uiColors.surfaceGrayDark,

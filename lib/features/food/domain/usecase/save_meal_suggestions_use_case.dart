@@ -18,9 +18,7 @@ class SaveMealSuggestionsUseCase {
   }) async {
     try {
       final existing = await _repository.getAll(entityId: entityId);
-      final seen = existing
-          .map((s) => _getMealSuggestionKey.invoke(name: s.name, allergens: s.allergens))
-          .toSet();
+      final seen = existing.map((s) => _getMealSuggestionKey.invoke(name: s.name, allergens: s.allergens)).toSet();
 
       final writes = <Future<bool>>[];
       for (final food in foodInfo) {

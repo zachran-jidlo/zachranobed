@@ -28,8 +28,7 @@ class FaqScreen extends StatefulWidget {
 }
 
 class _FaqScreenState extends State<FaqScreen> {
-  late final Stream<List<FaqItem>> _faqStream =
-      GetIt.I<ObserveFaqItemsUseCase>().invoke();
+  late final Stream<List<FaqItem>> _faqStream = GetIt.I<ObserveFaqItemsUseCase>().invoke();
 
   @override
   Widget build(BuildContext context) {

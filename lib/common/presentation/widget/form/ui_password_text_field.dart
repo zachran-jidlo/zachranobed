@@ -80,9 +80,9 @@ class UiPasswordTextField extends StatefulWidget {
     this.textInputAction,
     this.onFieldSubmitted,
   }) : assert(
-          controller == null || initialValue == null,
-          'Cannot provide both controller and initialValue',
-        );
+         controller == null || initialValue == null,
+         'Cannot provide both controller and initialValue',
+       );
 
   @override
   State<UiPasswordTextField> createState() => _UiPasswordTextFieldState();

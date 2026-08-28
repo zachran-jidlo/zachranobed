@@ -113,9 +113,9 @@ class UiTextField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.floatingLabelBehavior,
   }) : assert(
-          controller == null || initialValue == null,
-          'Cannot provide both controller and initialValue',
-        );
+         controller == null || initialValue == null,
+         'Cannot provide both controller and initialValue',
+       );
 
   @override
   State<UiTextField> createState() => _UiTextFieldState();
@@ -260,9 +260,7 @@ class _UiTextFieldState extends State<UiTextField> {
         // Hide default error text - we display it in supporting text
         errorStyle: const TextStyle(height: 0, fontSize: 0),
         errorMaxLines: 1,
-        prefixIcon: leadingIcon != null
-            ? _buildIcon(context, leadingIcon)
-            : null,
+        prefixIcon: leadingIcon != null ? _buildIcon(context, leadingIcon) : null,
         prefixIconConstraints: const BoxConstraints(
           minWidth: UiTextField._iconContainerSize,
           minHeight: UiTextField._iconContainerSize,

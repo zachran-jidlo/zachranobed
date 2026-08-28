@@ -80,7 +80,8 @@ class DebugScreen extends StatelessWidget {
 
     return UiListTile(
       title: "Delivery is created",
-      supportingText: "ID: ${delivery.id}\n\n"
+      supportingText:
+          "ID: ${delivery.id}\n\n"
           "State: ${delivery.state.name}\n\n"
           "Pick-up: ${user.activePair.pickupTimeStart}-${user.activePair.pickupTimeEnd}\n\n"
           "Delivery: ${user.activePair.deliveryTimeStart}-${user.activePair.deliveryTimeEnd}\n\n"

@@ -199,7 +199,7 @@ class _OfferFoodOverviewScreenState extends State<OfferFoodOverviewScreen> {
               onPressed: () => context.router.maybePop(),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -478,10 +478,10 @@ class OfferFoodOverviewBoxSection extends StatelessWidget {
             context.l10n.offerFoodOverviewSectionBoxInfoDescription,
             style: context.textStyles.bodyMedium,
           ),
-          _buildCheckbox(context)
+          _buildCheckbox(context),
         ] else ...[
           _buildBoxList(context),
-        ]
+        ],
       ],
     );
   }

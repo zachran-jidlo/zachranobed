@@ -115,21 +115,21 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: switch (user) {
         Canteen() => CanteenDonationStatusCard(
-            canteen: user,
-            delivery: delivery,
-            onChangePairPressed: _onChangePairPressed,
-            onAcceptDeliveryPressed: () => _onAcceptDeliveryPressed(user),
-            onOfferFoodPressed: () => _onOfferFoodPressed(user),
-            onCountdownTimeout: _onDeliveryConfirmationTimeout,
-            onDeliveryDetailPressed: _onDeliveryDetailPressed,
-          ),
+          canteen: user,
+          delivery: delivery,
+          onChangePairPressed: _onChangePairPressed,
+          onAcceptDeliveryPressed: () => _onAcceptDeliveryPressed(user),
+          onOfferFoodPressed: () => _onOfferFoodPressed(user),
+          onCountdownTimeout: _onDeliveryConfirmationTimeout,
+          onDeliveryDetailPressed: _onDeliveryDetailPressed,
+        ),
         Charity() => CharityDonationStatusCard(
-            charity: user,
-            delivery: delivery,
-            onChangePairPressed: _onChangePairPressed,
-            onDeliveryDetailPressed: _onDeliveryDetailPressed,
-            onConfirmPickupPressed: _onConfirmPickupPressed,
-          ),
+          charity: user,
+          delivery: delivery,
+          onChangePairPressed: _onChangePairPressed,
+          onDeliveryDetailPressed: _onDeliveryDetailPressed,
+          onConfirmPickupPressed: _onConfirmPickupPressed,
+        ),
       },
     );
   }
@@ -225,13 +225,13 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     if (checkupState is FoodBoxesCheckupCheckNeeded && !checkupState.isDelayAvailable) {
       final (title, content) = switch (user) {
         Canteen() => (
-            context.l10n.foodBoxesCheckupDialogCanteenTitle,
-            context.l10n.foodBoxesCheckupDialogCanteenContent,
-          ),
+          context.l10n.foodBoxesCheckupDialogCanteenTitle,
+          context.l10n.foodBoxesCheckupDialogCanteenContent,
+        ),
         Charity() => (
-            context.l10n.foodBoxesCheckupDialogCharityTitle,
-            context.l10n.foodBoxesCheckupDialogCharityContent,
-          ),
+          context.l10n.foodBoxesCheckupDialogCharityTitle,
+          context.l10n.foodBoxesCheckupDialogCharityContent,
+        ),
       };
 
       showDialog(

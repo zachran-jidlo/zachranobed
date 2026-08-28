@@ -5,7 +5,6 @@ import 'package:zachranobed/features/food/domain/model/food_box_type.dart';
 
 /// Repository to manage food boxes information
 abstract class FoodBoxRepository {
-
   /// Returns a disposable box ID.
   String getDisposableBoxId();
 
