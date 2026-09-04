@@ -173,17 +173,20 @@ class _LoginScreenState extends State<LoginScreen> {
               keyboardType: TextInputType.emailAddress,
               disableAutocorrect: true,
               onValidation: FieldValidationUtils.getEmailValidator(context),
+              semanticsIdentifier: 'login_email_field',
             ),
             const SizedBox(height: 24),
             UiPasswordTextField(
               controller: _passwordController,
               labelText: context.l10n.password,
               onValidation: FieldValidationUtils.getPasswordValidator(context),
+              semanticsIdentifier: 'login_password_field',
             ),
             const SizedBox(height: 32),
             UiPrimaryButton(
               text: context.l10n.signIn,
               size: UiButtonSize.medium(),
+              semanticsIdentifier: 'login_submit_button',
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   await _logIn();

@@ -59,6 +59,9 @@ class UiPasswordTextField extends StatefulWidget {
   /// The callback function triggered when the field is submitted.
   final ValueChanged<String>? onFieldSubmitted;
 
+  /// A stable accessibility identifier for the input, used by UI tests.
+  final String? semanticsIdentifier;
+
   /// Creates a [UiPasswordTextField] widget.
   const UiPasswordTextField({
     super.key,
@@ -79,6 +82,7 @@ class UiPasswordTextField extends StatefulWidget {
     this.minLines,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.semanticsIdentifier,
   }) : assert(
          controller == null || initialValue == null,
          'Cannot provide both controller and initialValue',
@@ -113,6 +117,7 @@ class _UiPasswordTextFieldState extends State<UiPasswordTextField> {
       minLines: widget.minLines,
       textInputAction: widget.textInputAction,
       onFieldSubmitted: widget.onFieldSubmitted,
+      semanticsIdentifier: widget.semanticsIdentifier,
       trailingIcon: _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
       onTrailingIconPressed: _toggleVisibility,
     );

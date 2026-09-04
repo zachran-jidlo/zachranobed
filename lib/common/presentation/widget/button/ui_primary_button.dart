@@ -21,6 +21,9 @@ class UiPrimaryButton extends StatefulWidget {
   /// Whether the button is enabled or not.
   final bool enabled;
 
+  /// A stable accessibility identifier for the button, used by UI tests.
+  final String? semanticsIdentifier;
+
   /// Creates a new [UiPrimaryButton].
   const UiPrimaryButton({
     super.key,
@@ -30,6 +33,7 @@ class UiPrimaryButton extends StatefulWidget {
     this.icon,
     this.iconAlignment = IconAlignment.start,
     this.enabled = true,
+    this.semanticsIdentifier,
   });
 
   @override
@@ -62,7 +66,7 @@ class _UiPrimaryButtonState extends State<UiPrimaryButton> {
       backgroundGradient = context.uiColors.primaryGradient;
     }
 
-    return Container(
+    final button = Container(
       decoration: BoxDecoration(
         gradient: backgroundGradient,
         color: backgroundColor,
@@ -79,6 +83,12 @@ class _UiPrimaryButtonState extends State<UiPrimaryButton> {
         label: Text(widget.text),
       ),
     );
+
+    final semanticsIdentifier = widget.semanticsIdentifier;
+    if (semanticsIdentifier == null) {
+      return button;
+    }
+    return Semantics(identifier: semanticsIdentifier, child: button);
   }
 
   Widget? _icon() {

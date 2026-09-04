@@ -27,6 +27,9 @@ class UiListTile extends StatelessWidget {
   /// Optional press callback. When provided, the card becomes tappable with ripple effect.
   final VoidCallback? onPressed;
 
+  /// A stable accessibility identifier for the tile, used by UI tests.
+  final String? semanticsIdentifier;
+
   /// Creates a [UiListTile] widget.
   const UiListTile({
     super.key,
@@ -36,11 +39,12 @@ class UiListTile extends StatelessWidget {
     this.start,
     this.end,
     this.onPressed,
+    this.semanticsIdentifier,
   });
 
   @override
   Widget build(BuildContext context) {
-    return UiCard(
+    final tile = UiCard(
       borderRadius: 8.0,
       onPressed: onPressed,
       child: Row(
@@ -55,6 +59,11 @@ class UiListTile extends StatelessWidget {
         ],
       ),
     );
+
+    if (semanticsIdentifier == null) {
+      return tile;
+    }
+    return Semantics(identifier: semanticsIdentifier, child: tile);
   }
 
   Widget _buildMainContent(BuildContext context) {

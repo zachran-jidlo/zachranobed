@@ -1,0 +1,4 @@
+# Without this, `maestro test maestro/` only picks up flows sitting directly in
+# this folder and silently ignores the subfolders.
+flows:
+  - "**"

@@ -146,6 +146,7 @@ class QuickLoginButton extends StatelessWidget {
     return UiOutlineButton(
       size: UiButtonSize.medium(),
       text: context.l10n.testUsers,
+      semanticsIdentifier: 'login_test_users_button',
       onPressed: () async {
         final user = await _showTestUsers(context);
         if (user == null) {
@@ -205,6 +206,7 @@ Future<_TestUser?> _showTestUsers(BuildContext context) async {
                       overline: user.label,
                       title: user.name,
                       supportingText: user.id,
+                      semanticsIdentifier: user.id,
                       onPressed: () {
                         Navigator.pop(context, user);
                       },

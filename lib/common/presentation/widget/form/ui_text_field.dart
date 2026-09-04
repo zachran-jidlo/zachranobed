@@ -85,6 +85,9 @@ class UiTextField extends StatefulWidget {
   /// The behavior of the floating label.
   final FloatingLabelBehavior? floatingLabelBehavior;
 
+  /// A stable accessibility identifier for the input, used by UI tests.
+  final String? semanticsIdentifier;
+
   /// Creates a [UiTextField] widget.
   const UiTextField({
     super.key,
@@ -112,6 +115,7 @@ class UiTextField extends StatefulWidget {
     this.onFieldSubmitted,
     this.textCapitalization = TextCapitalization.none,
     this.floatingLabelBehavior,
+    this.semanticsIdentifier,
   }) : assert(
          controller == null || initialValue == null,
          'Cannot provide both controller and initialValue',
@@ -212,6 +216,7 @@ class _UiTextFieldState extends State<UiTextField> {
   }
 
   Widget _buildTextField(BuildContext context) {
+    final semanticsIdentifier = widget.semanticsIdentifier;
     final errorColor = context.uiColors.error;
     final inactiveColor = context.uiColors.inactive;
     final borderColor = _hasError ? errorColor : inactiveColor;
@@ -219,7 +224,7 @@ class _UiTextFieldState extends State<UiTextField> {
     final leadingIcon = widget.leadingIcon;
     final trailingIcon = widget.trailingIcon;
 
-    return TextFormField(
+    final field = TextFormField(
       controller: widget.controller,
       focusNode: _focusNode,
       enabled: widget.enabled,
@@ -299,6 +304,11 @@ class _UiTextFieldState extends State<UiTextField> {
         disabledBorder: _buildBorder(inactiveColor, 1.0),
       ),
     );
+
+    if (semanticsIdentifier == null) {
+      return field;
+    }
+    return Semantics(identifier: semanticsIdentifier, child: field);
   }
 
   Widget _buildSupportingText(BuildContext context, String text) {

@@ -48,6 +48,8 @@ Learn more at https://zachranobed.cz.
 ├── web/                        # Web project
 ├── functions/                  # Firebase Cloud Functions (Node.js)
 ├── cron/scripts/               # Scheduled scripts
+├── test/                       # Unit and widget tests
+├── maestro/                    # End-to-end UI tests (Maestro)
 ├── .github/                    # Github actions for CI/CD
 └── pubspec.yaml                # Flutter metadata and dependencies
 ```
@@ -98,6 +100,17 @@ lib/
 
 ![Architecture](docs/images/image_docs_architecture.png)
 
+## Testing
+
+Unit and widget tests live in `test/` and run with the Flutter test runner:
+
+```bash
+flutter test
+```
+
+End-to-end UI tests live in `maestro/` and drive the real app against the dev Firebase backend. See the
+[Maestro test guide](maestro/README.md) for how to install Maestro, run the flows and write new ones.
+
 ## 🛠 CI/CD (GitHub Actions)
 
 The project uses GitHub Actions for CI/CD to automatically build and deliver new versions of mobile apps to Firebase App
@@ -113,4 +126,4 @@ Built with 💙 using [Flutter](https://flutter.dev) and [Firebase](https://fire
 
 ---
 
-*README updated on September 5, 2025.*
+*README updated on September 4, 2026.*
