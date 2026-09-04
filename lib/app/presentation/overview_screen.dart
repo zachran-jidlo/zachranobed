@@ -72,37 +72,44 @@ class _OverviewScreenState extends State<OverviewScreen> with LifecycleWatcher {
     return ScreenScaffold.universalBuilder(
       appBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: UiWelcomeTile(
-          entityName: user.establishmentName,
-          onPressed: () {
-            context.router.push(const ProfileRoute());
-          },
+        child: Semantics(
+          identifier: 'overview_welcome_tile',
+          child: UiWelcomeTile(
+            entityName: user.establishmentName,
+            onPressed: () {
+              context.router.push(const ProfileRoute());
+            },
+          ),
         ),
       ),
-      builder: (context) => SingleChildScrollView(
-        child: Column(
-          children: [
-            StreamBuilder<List<Banner>>(
-              stream: _bannersStream,
-              builder: (context, snapshot) => MessagesSection(
-                user: user,
-                banners: snapshot.data ?? const [],
-                onBannerDismiss: _onBannerDismiss,
-                checkupState: _boxesCheckupState,
-                refreshCheckupState: _refreshBoxesCheckupState,
-                onNavigateToHistoryPressed: widget.onNavigateToHistoryPressed,
+      builder: (context) => Semantics(
+        identifier: 'overview_screen',
+        container: true,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              StreamBuilder<List<Banner>>(
+                stream: _bannersStream,
+                builder: (context, snapshot) => MessagesSection(
+                  user: user,
+                  banners: snapshot.data ?? const [],
+                  onBannerDismiss: _onBannerDismiss,
+                  checkupState: _boxesCheckupState,
+                  refreshCheckupState: _refreshBoxesCheckupState,
+                  onNavigateToHistoryPressed: widget.onNavigateToHistoryPressed,
+                ),
               ),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDonationStatusCard(context, user),
-            const SizedBox(height: 24.0),
-            FoodBoxesOverviewSection(
-              user: user,
-              checkupState: _boxesCheckupState,
-            ),
-            ..._buildNewBoxDeliveryButton(context, user),
-            const SizedBox(height: 24.0),
-          ],
+              const SizedBox(height: 8.0),
+              _buildDonationStatusCard(context, user),
+              const SizedBox(height: 24.0),
+              FoodBoxesOverviewSection(
+                user: user,
+                checkupState: _boxesCheckupState,
+              ),
+              ..._buildNewBoxDeliveryButton(context, user),
+              const SizedBox(height: 24.0),
+            ],
+          ),
         ),
       ),
     );

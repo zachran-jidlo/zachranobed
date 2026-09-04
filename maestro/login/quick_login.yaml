@@ -1,0 +1,53 @@
+# Logs in through the dev quick login button and checks the overview screen
+# is shown.
+#
+# Elements are matched by semantics identifier, not by visible text, so the
+# flow survives translation changes. Test users are picked by their id from
+# quick_login_button.dart, which doubles as the identifier.
+#
+# Dev flavor only. The quick login button comes from AppFlavorData and is
+# stripped from stage and prod builds.
+#
+# Run:
+#   maestro test maestro/login.yaml
+#   maestro test -e USER=test-zo-jidelna maestro/login.yaml
+appId: cz.etnetera.mobile.zachranobed.dev
+env:
+  USER: test-zo-charita
+---
+- launchApp:
+    clearState: true
+
+# Login screen
+- assertVisible:
+    id: "login_submit_button"
+- tapOn:
+    id: "login_test_users_button"
+
+# The sheet lists every test user, so scroll to the one under test. It also
+# doubles as the assertion that the sheet opened.
+- extendedWaitUntil:
+    visible:
+      id: "test-zo-charita"
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      id: ${USER}
+    direction: DOWN
+- tapOn:
+    id: ${USER}
+
+# The sheet fills both fields on selection, so only submit is left.
+- tapOn:
+    id: "login_submit_button"
+
+# Sign-in hits the network, so give it room before asserting.
+- extendedWaitUntil:
+    visible:
+      id: "overview_screen"
+    timeout: 30000
+
+- assertVisible:
+    id: "overview_welcome_tile"
+- assertNotVisible:
+    id: "login_submit_button"

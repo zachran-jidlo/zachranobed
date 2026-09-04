@@ -23,6 +23,9 @@ class UiOutlineButton extends StatefulWidget {
   /// Whether the button is enabled or not.
   final bool enabled;
 
+  /// A stable accessibility identifier for the button, used by UI tests.
+  final String? semanticsIdentifier;
+
   /// Creates a new [UiOutlineButton].
   const UiOutlineButton({
     super.key,
@@ -32,6 +35,7 @@ class UiOutlineButton extends StatefulWidget {
     this.icon,
     this.iconAlignment = IconAlignment.start,
     this.enabled = true,
+    this.semanticsIdentifier,
   });
 
   @override
@@ -61,7 +65,7 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
       foregroundGradient = context.uiColors.primaryGradient;
     }
 
-    return Stack(
+    final button = Stack(
       children: [
         Positioned.fill(
           child: UiGradientShaderMask(
@@ -87,6 +91,12 @@ class _UiOutlineButtonState extends State<UiOutlineButton> {
         ),
       ],
     );
+
+    final semanticsIdentifier = widget.semanticsIdentifier;
+    if (semanticsIdentifier == null) {
+      return button;
+    }
+    return Semantics(identifier: semanticsIdentifier, child: button);
   }
 
   Widget? _icon() {
