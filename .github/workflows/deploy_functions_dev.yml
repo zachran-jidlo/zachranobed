@@ -1,0 +1,148 @@
+# Deploys changed Firebase Cloud Functions to the DEV project (zachran-obed-dev)
+# when code under functions/ is merged to the develop branch.
+#
+# Only the functions whose source files actually changed are deployed.
+# This avoids the interactive "delete unlisted functions?" prompt that
+# `firebase deploy --only functions` would trigger for functions that
+# exist in the cloud but are not part of this repository.
+name: Deploy Cloud Functions (DEV)
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - "functions/**"
+
+# Prevent parallel deployments to the same Firebase project.
+concurrency:
+  group: deploy-functions-dev
+  cancel-in-progress: false # let running deploys finish
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # need parent commit for diff
+
+      # -----------------------------------------------------------
+      # Detect which function files changed and resolve deploy list
+      # -----------------------------------------------------------
+      - name: Detect changed functions
+        id: detect
+        run: |
+          # Files changed in the last commit (the merge commit)
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- functions/)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No changes in functions/ directory."
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          # All function export names (including DEV-only triggers)
+          ALL_FUNCTIONS="notifyCharityAboutDonationV2,notifyCanteenAboutBoxShippmentV2,notifyAboutLackOfBoxes,boxesMismatchNotification,monthlyBoxCheckupFunction,sendOrdersFunction,finalizeDeliveriesFunction,cloudTaskHandler,boxDeliveryCreated,triggerSendOrders,triggerFinalizeDeliveries"
+
+          # Check if any shared / config files changed — if so deploy everything
+          SHARED_CHANGED=false
+          while IFS= read -r file; do
+            case "$file" in
+              functions/src/services/*|functions/src/utils/*|functions/src/models/*|functions/src/config/*|functions/src/index.ts|functions/package.json|functions/package-lock.json|functions/tsconfig.json)
+                SHARED_CHANGED=true
+                ;;
+            esac
+          done <<< "$CHANGED"
+
+          if [ "$SHARED_CHANGED" = true ]; then
+            echo "Shared files changed — deploying ALL functions."
+            DEPLOY_LIST="$ALL_FUNCTIONS"
+          else
+            # Map individual function source files to their export names
+            DEPLOY_LIST=""
+            add() { # helper: append unique name
+              if [ -z "$DEPLOY_LIST" ]; then
+                DEPLOY_LIST="$1"
+              elif [[ ",$DEPLOY_LIST," != *",$1,"* ]]; then
+                DEPLOY_LIST="$DEPLOY_LIST,$1"
+              fi
+            }
+
+            while IFS= read -r file; do
+              case "$file" in
+                functions/src/functions/notifications/foodDeliveryFunction.ts)
+                  add "notifyCharityAboutDonationV2" ;;
+                functions/src/functions/notifications/boxReturnFunction.ts)
+                  add "notifyCanteenAboutBoxShippmentV2" ;;
+                functions/src/functions/notifications/lackOfBoxesFunction.ts)
+                  add "notifyAboutLackOfBoxes" ;;
+                functions/src/functions/notifications/monthlyBoxCheckupFunction.ts)
+                  add "monthlyBoxCheckupFunction" ;;
+                functions/src/functions/mismatchFunction.ts)
+                  add "boxesMismatchNotification" ;;
+                functions/src/functions/sendOrdersFunction.ts)
+                  add "sendOrdersFunction"
+                  add "triggerSendOrders" ;;
+                functions/src/functions/finalizeDeliveriesFunction.ts)
+                  add "finalizeDeliveriesFunction"
+                  add "triggerFinalizeDeliveries" ;;
+                functions/src/functions/cloudTaskHandlerFunction.ts)
+                  add "cloudTaskHandler" ;;
+                functions/src/functions/boxDeliveryCreatedFunction.ts)
+                  add "boxDeliveryCreated" ;;
+              esac
+            done <<< "$CHANGED"
+
+            if [ -z "$DEPLOY_LIST" ]; then
+              echo "Changed files don't map to any function exports — skipping deploy."
+              echo "deploy=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          # Build the --only flag value: functions:name1,functions:name2,...
+          ONLY_FLAG=$(echo "$DEPLOY_LIST" | sed 's/,/,functions:/g' | sed 's/^/functions:/')
+          echo "Will deploy: $ONLY_FLAG"
+          echo "deploy=true"       >> "$GITHUB_OUTPUT"
+          echo "only=$ONLY_FLAG"   >> "$GITHUB_OUTPUT"
+
+      # -----------------------------------------------------------
+      # Build & Deploy
+      # -----------------------------------------------------------
+      - name: Setup Node.js
+        if: steps.detect.outputs.deploy == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+
+      - name: Install dependencies
+        if: steps.detect.outputs.deploy == 'true'
+        run: npm ci
+        working-directory: functions
+
+      - name: Lint
+        if: steps.detect.outputs.deploy == 'true'
+        run: npm run lint
+        working-directory: functions
+
+      - name: Build
+        if: steps.detect.outputs.deploy == 'true'
+        run: npm run build
+        working-directory: functions
+
+      - name: Authenticate to Google Cloud
+        if: steps.detect.outputs.deploy == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
+
+      - name: Deploy functions
+        if: steps.detect.outputs.deploy == 'true'
+        run: npx firebase-tools deploy --only "${{ steps.detect.outputs.only }}" --project zachran-obed-dev --force
