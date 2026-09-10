@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zachranobed/common/data/dto/entity_dto.dart';
+import 'package:zachranobed/common/data/dto/paired_entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/time_window_dto.dart';
 import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
@@ -24,21 +24,14 @@ void main() {
     );
   }
 
-  EntityDto entityDto(String id) {
-    return EntityDto(
+  PairedEntityDto entityDto(String id) {
+    return PairedEntityDto(
       id: id,
-      email: '$id@example.com',
       establishmentName: id,
-      establishmentId: id,
-      organization: 'org',
       responsiblePerson: 'person',
       responsiblePersonPosition: null,
       phone: null,
-      entityType: EntityTypeDto.donor,
-      lastAcceptedAppTermsVersion: null,
       additionalContacts: null,
-      showOnboardingForUiChanges: null,
-      tags: null,
     );
   }
 
