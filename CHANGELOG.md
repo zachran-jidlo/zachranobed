@@ -13,6 +13,7 @@ This is a changelog for **ZachranObed** application.
 
 ### Changed
 - **ZOB-433** Update orientation settings.
+- **ZOB-446** Restrict Firestore security rules to the signed-in user's own entity and pairs.
 
 ## [2.2.0]
 ### Added
