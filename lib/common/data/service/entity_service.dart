@@ -18,21 +18,11 @@ class EntityService {
         },
       );
 
-  /// Returns a [Future] that completes with a [EntityDto] object if an entity
-  /// document with the provided [email] is found in the Firestore collection
-  /// and `null` if no entity is found.
-  Future<EntityDto?> getEntityByEmail(String email) async {
-    final snapshot = await _collection
-        .where(
-          'email',
-          isEqualTo: email,
-        )
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first.data();
-    }
-    return null;
+  /// Returns the entity with the given [entityId], or `null` when no such
+  /// document exists.
+  Future<EntityDto?> getById(String entityId) async {
+    final snapshot = await _collection.doc(entityId).get();
+    return snapshot.data();
   }
 
   Future<void> saveAppTermsVersion(String entityId, int version) async {
