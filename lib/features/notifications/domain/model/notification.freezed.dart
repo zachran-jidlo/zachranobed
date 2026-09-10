@@ -26,8 +26,7 @@ mixin _$Notification {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationCopyWith<Notification> get copyWith =>
-      _$NotificationCopyWithImpl<Notification>(
-          this as Notification, _$identity);
+      _$NotificationCopyWithImpl<Notification>(this as Notification, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -37,14 +36,12 @@ mixin _$Notification {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp) &&
+            (identical(other.timestamp, timestamp) || other.timestamp == timestamp) &&
             (identical(other.read, read) || other.read == read));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, message, timestamp, read);
+  int get hashCode => Object.hash(runtimeType, id, title, message, timestamp, read);
 
   @override
   String toString() {
@@ -54,12 +51,9 @@ mixin _$Notification {
 
 /// @nodoc
 abstract mixin class $NotificationCopyWith<$Res> {
-  factory $NotificationCopyWith(
-          Notification value, $Res Function(Notification) _then) =
-      _$NotificationCopyWithImpl;
+  factory $NotificationCopyWith(Notification value, $Res Function(Notification) _then) = _$NotificationCopyWithImpl;
   @useResult
-  $Res call(
-      {String id, String title, String message, DateTime timestamp, bool read});
+  $Res call({String id, String title, String message, DateTime timestamp, bool read});
 }
 
 /// @nodoc
@@ -109,11 +103,7 @@ class _$NotificationCopyWithImpl<$Res> implements $NotificationCopyWith<$Res> {
 
 class $Notification implements Notification {
   const $Notification(
-      {required this.id,
-      required this.title,
-      required this.message,
-      required this.timestamp,
-      required this.read});
+      {required this.id, required this.title, required this.message, required this.timestamp, required this.read});
 
   @override
   final String id;
@@ -131,8 +121,7 @@ class $Notification implements Notification {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $$NotificationCopyWith<$Notification> get copyWith =>
-      _$$NotificationCopyWithImpl<$Notification>(this, _$identity);
+  $$NotificationCopyWith<$Notification> get copyWith => _$$NotificationCopyWithImpl<$Notification>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -142,14 +131,12 @@ class $Notification implements Notification {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp) &&
+            (identical(other.timestamp, timestamp) || other.timestamp == timestamp) &&
             (identical(other.read, read) || other.read == read));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, message, timestamp, read);
+  int get hashCode => Object.hash(runtimeType, id, title, message, timestamp, read);
 
   @override
   String toString() {
@@ -158,20 +145,15 @@ class $Notification implements Notification {
 }
 
 /// @nodoc
-abstract mixin class $$NotificationCopyWith<$Res>
-    implements $NotificationCopyWith<$Res> {
-  factory $$NotificationCopyWith(
-          $Notification value, $Res Function($Notification) _then) =
-      _$$NotificationCopyWithImpl;
+abstract mixin class $$NotificationCopyWith<$Res> implements $NotificationCopyWith<$Res> {
+  factory $$NotificationCopyWith($Notification value, $Res Function($Notification) _then) = _$$NotificationCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id, String title, String message, DateTime timestamp, bool read});
+  $Res call({String id, String title, String message, DateTime timestamp, bool read});
 }
 
 /// @nodoc
-class _$$NotificationCopyWithImpl<$Res>
-    implements $$NotificationCopyWith<$Res> {
+class _$$NotificationCopyWithImpl<$Res> implements $$NotificationCopyWith<$Res> {
   _$$NotificationCopyWithImpl(this._self, this._then);
 
   final $Notification _self;

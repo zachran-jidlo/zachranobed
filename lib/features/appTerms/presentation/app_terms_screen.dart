@@ -43,19 +43,19 @@ class _AppTermsScreen extends State<AppTermsScreen> {
       builder: (context) {
         return switch (widget.hasNoAcceptedVersion) {
           true => InfoPage(
-            image: ImageAssets.imageAppTermsNotAccepted,
-            title: context.l10n.appTermsTitle,
-            description: context.l10n.appTermsSubtitle,
-            paddingBeforeActions: 8.0,
-            actions: _buildActions(context),
-          ),
+              image: ImageAssets.imageAppTermsNotAccepted,
+              title: context.l10n.appTermsTitle,
+              description: context.l10n.appTermsSubtitle,
+              paddingBeforeActions: 8.0,
+              actions: _buildActions(context),
+            ),
           false => InfoPage(
-            image: ImageAssets.imageAppTermsNewVersion,
-            title: context.l10n.appTermsNewVersionTitle,
-            description: context.l10n.appTermsNewVersionSubtitle,
-            paddingBeforeActions: 8.0,
-            actions: _buildActions(context),
-          ),
+              image: ImageAssets.imageAppTermsNewVersion,
+              title: context.l10n.appTermsNewVersionTitle,
+              description: context.l10n.appTermsNewVersionSubtitle,
+              paddingBeforeActions: 8.0,
+              actions: _buildActions(context),
+            ),
         };
       },
     );

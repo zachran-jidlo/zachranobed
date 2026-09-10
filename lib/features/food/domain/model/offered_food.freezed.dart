@@ -43,26 +43,17 @@ mixin _$OfferedFood {
             other is OfferedFood &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodCategoryType, foodCategoryType) ||
-                other.foodCategoryType == foodCategoryType) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
+            (identical(other.dishName, dishName) || other.dishName == dishName) &&
+            (identical(other.foodCategory, foodCategory) || other.foodCategory == foodCategory) &&
+            (identical(other.foodCategoryType, foodCategoryType) || other.foodCategoryType == foodCategoryType) &&
+            (identical(other.foodTemperature, foodTemperature) || other.foodTemperature == foodTemperature) &&
             const DeepCollectionEquality().equals(other.allergens, allergens) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy) &&
+            (identical(other.numberOfServings, numberOfServings) || other.numberOfServings == numberOfServings) &&
+            (identical(other.numberOfPackages, numberOfPackages) || other.numberOfPackages == numberOfPackages) &&
+            (identical(other.preparedAt, preparedAt) || other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) || other.consumeBy == consumeBy) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
-            (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId));
+            (identical(other.recipientId, recipientId) || other.recipientId == recipientId));
   }
 
   @override
@@ -90,9 +81,7 @@ mixin _$OfferedFood {
 
 /// @nodoc
 abstract mixin class $OfferedFoodCopyWith<$Res> {
-  factory $OfferedFoodCopyWith(
-          OfferedFood value, $Res Function(OfferedFood) _then) =
-      _$OfferedFoodCopyWithImpl;
+  factory $OfferedFoodCopyWith(OfferedFood value, $Res Function(OfferedFood) _then) = _$OfferedFoodCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -250,8 +239,7 @@ class _OfferedFood implements OfferedFood {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$OfferedFoodCopyWith<_OfferedFood> get copyWith =>
-      __$OfferedFoodCopyWithImpl<_OfferedFood>(this, _$identity);
+  _$OfferedFoodCopyWith<_OfferedFood> get copyWith => __$OfferedFoodCopyWithImpl<_OfferedFood>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -260,27 +248,17 @@ class _OfferedFood implements OfferedFood {
             other is _OfferedFood &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodCategoryType, foodCategoryType) ||
-                other.foodCategoryType == foodCategoryType) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
-            const DeepCollectionEquality()
-                .equals(other._allergens, _allergens) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy) &&
+            (identical(other.dishName, dishName) || other.dishName == dishName) &&
+            (identical(other.foodCategory, foodCategory) || other.foodCategory == foodCategory) &&
+            (identical(other.foodCategoryType, foodCategoryType) || other.foodCategoryType == foodCategoryType) &&
+            (identical(other.foodTemperature, foodTemperature) || other.foodTemperature == foodTemperature) &&
+            const DeepCollectionEquality().equals(other._allergens, _allergens) &&
+            (identical(other.numberOfServings, numberOfServings) || other.numberOfServings == numberOfServings) &&
+            (identical(other.numberOfPackages, numberOfPackages) || other.numberOfPackages == numberOfPackages) &&
+            (identical(other.preparedAt, preparedAt) || other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) || other.consumeBy == consumeBy) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
-            (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId));
+            (identical(other.recipientId, recipientId) || other.recipientId == recipientId));
   }
 
   @override
@@ -307,11 +285,8 @@ class _OfferedFood implements OfferedFood {
 }
 
 /// @nodoc
-abstract mixin class _$OfferedFoodCopyWith<$Res>
-    implements $OfferedFoodCopyWith<$Res> {
-  factory _$OfferedFoodCopyWith(
-          _OfferedFood value, $Res Function(_OfferedFood) _then) =
-      __$OfferedFoodCopyWithImpl;
+abstract mixin class _$OfferedFoodCopyWith<$Res> implements $OfferedFoodCopyWith<$Res> {
+  factory _$OfferedFoodCopyWith(_OfferedFood value, $Res Function(_OfferedFood) _then) = __$OfferedFoodCopyWithImpl;
   @override
   @useResult
   $Res call(

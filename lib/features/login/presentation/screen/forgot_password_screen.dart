@@ -103,8 +103,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           message: e.code == 'invalid-email'
               ? context.l10n.invalidFieldEmail
               : e.code == 'user-not-found'
-              ? context.l10n.userNotFoundError
-              : context.l10n.somethingWentWrongError,
+                  ? context.l10n.userNotFoundError
+                  : context.l10n.somethingWentWrongError,
         );
       }
     }

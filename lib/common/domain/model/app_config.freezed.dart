@@ -22,23 +22,19 @@ mixin _$AppConfig {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $AppConfigCopyWith<AppConfig> get copyWith =>
-      _$AppConfigCopyWithImpl<AppConfig>(this as AppConfig, _$identity);
+  $AppConfigCopyWith<AppConfig> get copyWith => _$AppConfigCopyWithImpl<AppConfig>(this as AppConfig, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AppConfig &&
-            (identical(other.minimumAppVersion, minimumAppVersion) ||
-                other.minimumAppVersion == minimumAppVersion) &&
-            (identical(other.latestAppVersion, latestAppVersion) ||
-                other.latestAppVersion == latestAppVersion));
+            (identical(other.minimumAppVersion, minimumAppVersion) || other.minimumAppVersion == minimumAppVersion) &&
+            (identical(other.latestAppVersion, latestAppVersion) || other.latestAppVersion == latestAppVersion));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
+  int get hashCode => Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
 
   @override
   String toString() {
@@ -48,8 +44,7 @@ mixin _$AppConfig {
 
 /// @nodoc
 abstract mixin class $AppConfigCopyWith<$Res> {
-  factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) _then) =
-      _$AppConfigCopyWithImpl;
+  factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) _then) = _$AppConfigCopyWithImpl;
   @useResult
   $Res call({String minimumAppVersion, String latestAppVersion});
 }
@@ -85,8 +80,7 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
 /// @nodoc
 
 class $AppConfig implements AppConfig {
-  const $AppConfig(
-      {required this.minimumAppVersion, required this.latestAppVersion});
+  const $AppConfig({required this.minimumAppVersion, required this.latestAppVersion});
 
   @override
   final String minimumAppVersion;
@@ -98,23 +92,19 @@ class $AppConfig implements AppConfig {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $$AppConfigCopyWith<$AppConfig> get copyWith =>
-      _$$AppConfigCopyWithImpl<$AppConfig>(this, _$identity);
+  $$AppConfigCopyWith<$AppConfig> get copyWith => _$$AppConfigCopyWithImpl<$AppConfig>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is $AppConfig &&
-            (identical(other.minimumAppVersion, minimumAppVersion) ||
-                other.minimumAppVersion == minimumAppVersion) &&
-            (identical(other.latestAppVersion, latestAppVersion) ||
-                other.latestAppVersion == latestAppVersion));
+            (identical(other.minimumAppVersion, minimumAppVersion) || other.minimumAppVersion == minimumAppVersion) &&
+            (identical(other.latestAppVersion, latestAppVersion) || other.latestAppVersion == latestAppVersion));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
+  int get hashCode => Object.hash(runtimeType, minimumAppVersion, latestAppVersion);
 
   @override
   String toString() {
@@ -123,11 +113,8 @@ class $AppConfig implements AppConfig {
 }
 
 /// @nodoc
-abstract mixin class $$AppConfigCopyWith<$Res>
-    implements $AppConfigCopyWith<$Res> {
-  factory $$AppConfigCopyWith(
-          $AppConfig value, $Res Function($AppConfig) _then) =
-      _$$AppConfigCopyWithImpl;
+abstract mixin class $$AppConfigCopyWith<$Res> implements $AppConfigCopyWith<$Res> {
+  factory $$AppConfigCopyWith($AppConfig value, $Res Function($AppConfig) _then) = _$$AppConfigCopyWithImpl;
   @override
   @useResult
   $Res call({String minimumAppVersion, String latestAppVersion});

@@ -24,8 +24,7 @@ mixin _$MealSuggestion {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MealSuggestionCopyWith<MealSuggestion> get copyWith =>
-      _$MealSuggestionCopyWithImpl<MealSuggestion>(
-          this as MealSuggestion, _$identity);
+      _$MealSuggestionCopyWithImpl<MealSuggestion>(this as MealSuggestion, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -38,8 +37,7 @@ mixin _$MealSuggestion {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(allergens));
+  int get hashCode => Object.hash(runtimeType, id, name, const DeepCollectionEquality().hash(allergens));
 
   @override
   String toString() {
@@ -49,16 +47,14 @@ mixin _$MealSuggestion {
 
 /// @nodoc
 abstract mixin class $MealSuggestionCopyWith<$Res> {
-  factory $MealSuggestionCopyWith(
-          MealSuggestion value, $Res Function(MealSuggestion) _then) =
+  factory $MealSuggestionCopyWith(MealSuggestion value, $Res Function(MealSuggestion) _then) =
       _$MealSuggestionCopyWithImpl;
   @useResult
   $Res call({String id, String name, List<String> allergens});
 }
 
 /// @nodoc
-class _$MealSuggestionCopyWithImpl<$Res>
-    implements $MealSuggestionCopyWith<$Res> {
+class _$MealSuggestionCopyWithImpl<$Res> implements $MealSuggestionCopyWith<$Res> {
   _$MealSuggestionCopyWithImpl(this._self, this._then);
 
   final MealSuggestion _self;
@@ -93,10 +89,7 @@ class _$MealSuggestionCopyWithImpl<$Res>
 /// @nodoc
 
 class _MealSuggestion implements MealSuggestion {
-  const _MealSuggestion(
-      {required this.id,
-      required this.name,
-      required final List<String> allergens})
+  const _MealSuggestion({required this.id, required this.name, required final List<String> allergens})
       : _allergens = allergens;
 
   @override
@@ -126,13 +119,11 @@ class _MealSuggestion implements MealSuggestion {
             other is _MealSuggestion &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._allergens, _allergens));
+            const DeepCollectionEquality().equals(other._allergens, _allergens));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(_allergens));
+  int get hashCode => Object.hash(runtimeType, id, name, const DeepCollectionEquality().hash(_allergens));
 
   @override
   String toString() {
@@ -141,10 +132,8 @@ class _MealSuggestion implements MealSuggestion {
 }
 
 /// @nodoc
-abstract mixin class _$MealSuggestionCopyWith<$Res>
-    implements $MealSuggestionCopyWith<$Res> {
-  factory _$MealSuggestionCopyWith(
-          _MealSuggestion value, $Res Function(_MealSuggestion) _then) =
+abstract mixin class _$MealSuggestionCopyWith<$Res> implements $MealSuggestionCopyWith<$Res> {
+  factory _$MealSuggestionCopyWith(_MealSuggestion value, $Res Function(_MealSuggestion) _then) =
       __$MealSuggestionCopyWithImpl;
   @override
   @useResult
@@ -152,8 +141,7 @@ abstract mixin class _$MealSuggestionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MealSuggestionCopyWithImpl<$Res>
-    implements _$MealSuggestionCopyWith<$Res> {
+class __$MealSuggestionCopyWithImpl<$Res> implements _$MealSuggestionCopyWith<$Res> {
   __$MealSuggestionCopyWithImpl(this._self, this._then);
 
   final _MealSuggestion _self;

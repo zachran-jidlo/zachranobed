@@ -29,8 +29,8 @@ class UiIconButton extends StatefulWidget {
     required this.onPressed,
     required this.icon,
     this.enabled = true,
-  }) : _color = null,
-       _isGradient = true;
+  })  : _color = null,
+        _isGradient = true;
 
   /// Creates an icon button with solid color.
   ///
@@ -42,8 +42,8 @@ class UiIconButton extends StatefulWidget {
     required this.icon,
     Color? color,
     this.enabled = true,
-  }) : _color = color,
-       _isGradient = false;
+  })  : _color = color,
+        _isGradient = false;
 
   @override
   State<UiIconButton> createState() => _UiIconButtonState();

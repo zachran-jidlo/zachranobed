@@ -7,38 +7,40 @@ part of 'delivery_dto.dart';
 // **************************************************************************
 
 DeliveryDto _$DeliveryDtoFromJson(Map<String, dynamic> json) => DeliveryDto(
-  id: json['id'] as String,
-  donorId: json['donorId'] as String,
-  recipientId: json['recipientId'] as String,
-  deliveryDate: const TimestampConverter().fromJson(json['deliveryDate'] as Timestamp),
-  foodBoxes: (json['foodBoxes'] as List<dynamic>)
-      .map((e) => FoodBoxDeliveryDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  meals: (json['meals'] as List<dynamic>).map((e) => MealDto.fromJson(e as Map<String, dynamic>)).toList(),
-  state: $enumDecodeNullable(_$DeliveryStateDtoEnumMap, json['state'], unknownValue: JsonKey.nullForUndefinedEnumValue),
-  type: $enumDecodeNullable(_$DeliveryTypeDtoEnumMap, json['type'], unknownValue: JsonKey.nullForUndefinedEnumValue),
-  confirmationTime: (json['confirmationTime'] as num?)?.toInt(),
-  foodBoxesTransferred: json['foodBoxesTransferred'] as bool?,
-  manualDonation: json['manualDonation'] as bool?,
-  pickupConfirmation: json['pickupConfirmation'] == null
-      ? null
-      : DeliveryPickupConfirmationDto.fromJson(json['pickupConfirmation'] as Map<String, dynamic>),
-);
+      id: json['id'] as String,
+      donorId: json['donorId'] as String,
+      recipientId: json['recipientId'] as String,
+      deliveryDate: const TimestampConverter().fromJson(json['deliveryDate'] as Timestamp),
+      foodBoxes: (json['foodBoxes'] as List<dynamic>)
+          .map((e) => FoodBoxDeliveryDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      meals: (json['meals'] as List<dynamic>).map((e) => MealDto.fromJson(e as Map<String, dynamic>)).toList(),
+      state: $enumDecodeNullable(_$DeliveryStateDtoEnumMap, json['state'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
+      type:
+          $enumDecodeNullable(_$DeliveryTypeDtoEnumMap, json['type'], unknownValue: JsonKey.nullForUndefinedEnumValue),
+      confirmationTime: (json['confirmationTime'] as num?)?.toInt(),
+      foodBoxesTransferred: json['foodBoxesTransferred'] as bool?,
+      manualDonation: json['manualDonation'] as bool?,
+      pickupConfirmation: json['pickupConfirmation'] == null
+          ? null
+          : DeliveryPickupConfirmationDto.fromJson(json['pickupConfirmation'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) => <String, dynamic>{
-  'id': instance.id,
-  'donorId': instance.donorId,
-  'recipientId': instance.recipientId,
-  'deliveryDate': const TimestampConverter().toJson(instance.deliveryDate),
-  'foodBoxes': instance.foodBoxes.map((e) => e.toJson()).toList(),
-  'meals': instance.meals.map((e) => e.toJson()).toList(),
-  'state': instance.state?.toJson(),
-  'type': instance.type?.toJson(),
-  'confirmationTime': instance.confirmationTime,
-  if (instance.foodBoxesTransferred case final value?) 'foodBoxesTransferred': value,
-  if (instance.manualDonation case final value?) 'manualDonation': value,
-  if (instance.pickupConfirmation?.toJson() case final value?) 'pickupConfirmation': value,
-};
+      'id': instance.id,
+      'donorId': instance.donorId,
+      'recipientId': instance.recipientId,
+      'deliveryDate': const TimestampConverter().toJson(instance.deliveryDate),
+      'foodBoxes': instance.foodBoxes.map((e) => e.toJson()).toList(),
+      'meals': instance.meals.map((e) => e.toJson()).toList(),
+      'state': instance.state?.toJson(),
+      'type': instance.type?.toJson(),
+      'confirmationTime': instance.confirmationTime,
+      if (instance.foodBoxesTransferred case final value?) 'foodBoxesTransferred': value,
+      if (instance.manualDonation case final value?) 'manualDonation': value,
+      if (instance.pickupConfirmation?.toJson() case final value?) 'pickupConfirmation': value,
+    };
 
 const _$DeliveryStateDtoEnumMap = {
   DeliveryStateDto.prepared: 'PREPARED',

@@ -211,7 +211,7 @@ class _AddMealsToHistoryScreenState extends State<AddMealsToHistoryScreen> {
     BuildContext context,
     List<MealSuggestion> selected,
   ) {
-    final items = selected
+    final items = selected //
         .map((s) => context.l10n.addMealsToHistoryDialogItemTemplate(_counts[s.id] ?? 0, s.name))
         .join('\n');
     final content = '${context.l10n.addMealsToHistoryDialogDescription}\n\n$items';

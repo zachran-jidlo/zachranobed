@@ -29,8 +29,7 @@ mixin _$FoodInfo {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FoodInfoCopyWith<FoodInfo> get copyWith =>
-      _$FoodInfoCopyWithImpl<FoodInfo>(this as FoodInfo, _$identity);
+  $FoodInfoCopyWith<FoodInfo> get copyWith => _$FoodInfoCopyWithImpl<FoodInfo>(this as FoodInfo, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -38,35 +37,19 @@ mixin _$FoodInfo {
         (other.runtimeType == runtimeType &&
             other is FoodInfo &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
+            (identical(other.dishName, dishName) || other.dishName == dishName) &&
             const DeepCollectionEquality().equals(other.allergens, allergens) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy));
+            (identical(other.foodCategory, foodCategory) || other.foodCategory == foodCategory) &&
+            (identical(other.foodTemperature, foodTemperature) || other.foodTemperature == foodTemperature) &&
+            (identical(other.numberOfPackages, numberOfPackages) || other.numberOfPackages == numberOfPackages) &&
+            (identical(other.numberOfServings, numberOfServings) || other.numberOfServings == numberOfServings) &&
+            (identical(other.preparedAt, preparedAt) || other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) || other.consumeBy == consumeBy));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      dishName,
-      const DeepCollectionEquality().hash(allergens),
-      foodCategory,
-      foodTemperature,
-      numberOfPackages,
-      numberOfServings,
-      preparedAt,
-      consumeBy);
+  int get hashCode => Object.hash(runtimeType, id, dishName, const DeepCollectionEquality().hash(allergens),
+      foodCategory, foodTemperature, numberOfPackages, numberOfServings, preparedAt, consumeBy);
 
   @override
   String toString() {
@@ -76,8 +59,7 @@ mixin _$FoodInfo {
 
 /// @nodoc
 abstract mixin class $FoodInfoCopyWith<$Res> {
-  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) _then) =
-      _$FoodInfoCopyWithImpl;
+  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) _then) = _$FoodInfoCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -202,8 +184,7 @@ class _FoodInfo implements FoodInfo {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FoodInfoCopyWith<_FoodInfo> get copyWith =>
-      __$FoodInfoCopyWithImpl<_FoodInfo>(this, _$identity);
+  _$FoodInfoCopyWith<_FoodInfo> get copyWith => __$FoodInfoCopyWithImpl<_FoodInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -211,36 +192,19 @@ class _FoodInfo implements FoodInfo {
         (other.runtimeType == runtimeType &&
             other is _FoodInfo &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
-            const DeepCollectionEquality()
-                .equals(other._allergens, _allergens) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy));
+            (identical(other.dishName, dishName) || other.dishName == dishName) &&
+            const DeepCollectionEquality().equals(other._allergens, _allergens) &&
+            (identical(other.foodCategory, foodCategory) || other.foodCategory == foodCategory) &&
+            (identical(other.foodTemperature, foodTemperature) || other.foodTemperature == foodTemperature) &&
+            (identical(other.numberOfPackages, numberOfPackages) || other.numberOfPackages == numberOfPackages) &&
+            (identical(other.numberOfServings, numberOfServings) || other.numberOfServings == numberOfServings) &&
+            (identical(other.preparedAt, preparedAt) || other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) || other.consumeBy == consumeBy));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      dishName,
-      const DeepCollectionEquality().hash(_allergens),
-      foodCategory,
-      foodTemperature,
-      numberOfPackages,
-      numberOfServings,
-      preparedAt,
-      consumeBy);
+  int get hashCode => Object.hash(runtimeType, id, dishName, const DeepCollectionEquality().hash(_allergens),
+      foodCategory, foodTemperature, numberOfPackages, numberOfServings, preparedAt, consumeBy);
 
   @override
   String toString() {
@@ -249,10 +213,8 @@ class _FoodInfo implements FoodInfo {
 }
 
 /// @nodoc
-abstract mixin class _$FoodInfoCopyWith<$Res>
-    implements $FoodInfoCopyWith<$Res> {
-  factory _$FoodInfoCopyWith(_FoodInfo value, $Res Function(_FoodInfo) _then) =
-      __$FoodInfoCopyWithImpl;
+abstract mixin class _$FoodInfoCopyWith<$Res> implements $FoodInfoCopyWith<$Res> {
+  factory _$FoodInfoCopyWith(_FoodInfo value, $Res Function(_FoodInfo) _then) = __$FoodInfoCopyWithImpl;
   @override
   @useResult
   $Res call(

@@ -27,6 +27,9 @@ mixin _$Banner {
   /// Banner body. Rendered as markdown.
   String get text;
 
+  /// Target role. [BannerRole.all] means every role.
+  BannerRole get role;
+
   /// Visual tone. Drives the icon and color. Null shows no icon.
   BannerType? get type;
 
@@ -35,9 +38,6 @@ mixin _$Banner {
 
   /// End of the display window. Null means no end.
   DateTime? get validTo;
-
-  /// Target role. [BannerRole.all] means every role.
-  BannerRole get role;
 
   /// Specific entity IDs to target. Null/empty means no restriction.
   List<String>? get entityIds;
@@ -68,8 +68,7 @@ mixin _$Banner {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BannerCopyWith<Banner> get copyWith =>
-      _$BannerCopyWithImpl<Banner>(this as Banner, _$identity);
+  $BannerCopyWith<Banner> get copyWith => _$BannerCopyWithImpl<Banner>(this as Banner, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -77,28 +76,21 @@ mixin _$Banner {
         (other.runtimeType == runtimeType &&
             other is Banner &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.priority, priority) ||
-                other.priority == priority) &&
+            (identical(other.priority, priority) || other.priority == priority) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.validFrom, validFrom) ||
-                other.validFrom == validFrom) &&
-            (identical(other.validTo, validTo) || other.validTo == validTo) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.validFrom, validFrom) || other.validFrom == validFrom) &&
+            (identical(other.validTo, validTo) || other.validTo == validTo) &&
             const DeepCollectionEquality().equals(other.entityIds, entityIds) &&
             const DeepCollectionEquality().equals(other.tags, tags) &&
             const DeepCollectionEquality().equals(other.platforms, platforms) &&
-            (identical(other.minAppVersion, minAppVersion) ||
-                other.minAppVersion == minAppVersion) &&
-            (identical(other.maxAppVersion, maxAppVersion) ||
-                other.maxAppVersion == maxAppVersion) &&
-            (identical(other.closable, closable) ||
-                other.closable == closable) &&
-            (identical(other.actionLabel, actionLabel) ||
-                other.actionLabel == actionLabel) &&
-            (identical(other.actionUrl, actionUrl) ||
-                other.actionUrl == actionUrl));
+            (identical(other.minAppVersion, minAppVersion) || other.minAppVersion == minAppVersion) &&
+            (identical(other.maxAppVersion, maxAppVersion) || other.maxAppVersion == maxAppVersion) &&
+            (identical(other.closable, closable) || other.closable == closable) &&
+            (identical(other.actionLabel, actionLabel) || other.actionLabel == actionLabel) &&
+            (identical(other.actionUrl, actionUrl) || other.actionUrl == actionUrl));
   }
 
   @override
@@ -108,10 +100,10 @@ mixin _$Banner {
       priority,
       title,
       text,
+      role,
       type,
       validFrom,
       validTo,
-      role,
       const DeepCollectionEquality().hash(entityIds),
       const DeepCollectionEquality().hash(tags),
       const DeepCollectionEquality().hash(platforms),
@@ -123,24 +115,23 @@ mixin _$Banner {
 
   @override
   String toString() {
-    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, type: $type, validFrom: $validFrom, validTo: $validTo, role: $role, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
+    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, role: $role, type: $type, validFrom: $validFrom, validTo: $validTo, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
   }
 }
 
 /// @nodoc
 abstract mixin class $BannerCopyWith<$Res> {
-  factory $BannerCopyWith(Banner value, $Res Function(Banner) _then) =
-      _$BannerCopyWithImpl;
+  factory $BannerCopyWith(Banner value, $Res Function(Banner) _then) = _$BannerCopyWithImpl;
   @useResult
   $Res call(
       {String id,
       int priority,
       String title,
       String text,
+      BannerRole role,
       BannerType? type,
       DateTime? validFrom,
       DateTime? validTo,
-      BannerRole role,
       List<String>? entityIds,
       List<String>? tags,
       List<RunningPlatform>? platforms,
@@ -167,10 +158,10 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
     Object? priority = null,
     Object? title = null,
     Object? text = null,
+    Object? role = null,
     Object? type = freezed,
     Object? validFrom = freezed,
     Object? validTo = freezed,
-    Object? role = null,
     Object? entityIds = freezed,
     Object? tags = freezed,
     Object? platforms = freezed,
@@ -197,6 +188,10 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
           ? _self.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as BannerRole,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -209,10 +204,6 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
           ? _self.validTo
           : validTo // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      role: null == role
-          ? _self.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as BannerRole,
       entityIds: freezed == entityIds
           ? _self.entityIds
           : entityIds // ignore: cast_nullable_to_non_nullable
@@ -257,10 +248,10 @@ class _Banner implements Banner {
       required this.priority,
       required this.title,
       required this.text,
+      required this.role,
       required this.type,
       required this.validFrom,
       required this.validTo,
-      required this.role,
       required final List<String>? entityIds,
       required final List<String>? tags,
       required final List<RunningPlatform>? platforms,
@@ -289,6 +280,10 @@ class _Banner implements Banner {
   @override
   final String text;
 
+  /// Target role. [BannerRole.all] means every role.
+  @override
+  final BannerRole role;
+
   /// Visual tone. Drives the icon and color. Null shows no icon.
   @override
   final BannerType? type;
@@ -300,10 +295,6 @@ class _Banner implements Banner {
   /// End of the display window. Null means no end.
   @override
   final DateTime? validTo;
-
-  /// Target role. [BannerRole.all] means every role.
-  @override
-  final BannerRole role;
 
   /// Specific entity IDs to target. Null/empty means no restriction.
   final List<String>? _entityIds;
@@ -371,8 +362,7 @@ class _Banner implements Banner {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BannerCopyWith<_Banner> get copyWith =>
-      __$BannerCopyWithImpl<_Banner>(this, _$identity);
+  _$BannerCopyWith<_Banner> get copyWith => __$BannerCopyWithImpl<_Banner>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -380,30 +370,21 @@ class _Banner implements Banner {
         (other.runtimeType == runtimeType &&
             other is _Banner &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.priority, priority) ||
-                other.priority == priority) &&
+            (identical(other.priority, priority) || other.priority == priority) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.validFrom, validFrom) ||
-                other.validFrom == validFrom) &&
-            (identical(other.validTo, validTo) || other.validTo == validTo) &&
             (identical(other.role, role) || other.role == role) &&
-            const DeepCollectionEquality()
-                .equals(other._entityIds, _entityIds) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.validFrom, validFrom) || other.validFrom == validFrom) &&
+            (identical(other.validTo, validTo) || other.validTo == validTo) &&
+            const DeepCollectionEquality().equals(other._entityIds, _entityIds) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
-            const DeepCollectionEquality()
-                .equals(other._platforms, _platforms) &&
-            (identical(other.minAppVersion, minAppVersion) ||
-                other.minAppVersion == minAppVersion) &&
-            (identical(other.maxAppVersion, maxAppVersion) ||
-                other.maxAppVersion == maxAppVersion) &&
-            (identical(other.closable, closable) ||
-                other.closable == closable) &&
-            (identical(other.actionLabel, actionLabel) ||
-                other.actionLabel == actionLabel) &&
-            (identical(other.actionUrl, actionUrl) ||
-                other.actionUrl == actionUrl));
+            const DeepCollectionEquality().equals(other._platforms, _platforms) &&
+            (identical(other.minAppVersion, minAppVersion) || other.minAppVersion == minAppVersion) &&
+            (identical(other.maxAppVersion, maxAppVersion) || other.maxAppVersion == maxAppVersion) &&
+            (identical(other.closable, closable) || other.closable == closable) &&
+            (identical(other.actionLabel, actionLabel) || other.actionLabel == actionLabel) &&
+            (identical(other.actionUrl, actionUrl) || other.actionUrl == actionUrl));
   }
 
   @override
@@ -413,10 +394,10 @@ class _Banner implements Banner {
       priority,
       title,
       text,
+      role,
       type,
       validFrom,
       validTo,
-      role,
       const DeepCollectionEquality().hash(_entityIds),
       const DeepCollectionEquality().hash(_tags),
       const DeepCollectionEquality().hash(_platforms),
@@ -428,14 +409,13 @@ class _Banner implements Banner {
 
   @override
   String toString() {
-    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, type: $type, validFrom: $validFrom, validTo: $validTo, role: $role, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
+    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, role: $role, type: $type, validFrom: $validFrom, validTo: $validTo, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
   }
 }
 
 /// @nodoc
 abstract mixin class _$BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
-  factory _$BannerCopyWith(_Banner value, $Res Function(_Banner) _then) =
-      __$BannerCopyWithImpl;
+  factory _$BannerCopyWith(_Banner value, $Res Function(_Banner) _then) = __$BannerCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -443,10 +423,10 @@ abstract mixin class _$BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
       int priority,
       String title,
       String text,
+      BannerRole role,
       BannerType? type,
       DateTime? validFrom,
       DateTime? validTo,
-      BannerRole role,
       List<String>? entityIds,
       List<String>? tags,
       List<RunningPlatform>? platforms,
@@ -473,10 +453,10 @@ class __$BannerCopyWithImpl<$Res> implements _$BannerCopyWith<$Res> {
     Object? priority = null,
     Object? title = null,
     Object? text = null,
+    Object? role = null,
     Object? type = freezed,
     Object? validFrom = freezed,
     Object? validTo = freezed,
-    Object? role = null,
     Object? entityIds = freezed,
     Object? tags = freezed,
     Object? platforms = freezed,
@@ -503,6 +483,10 @@ class __$BannerCopyWithImpl<$Res> implements _$BannerCopyWith<$Res> {
           ? _self.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as BannerRole,
       type: freezed == type
           ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -515,10 +499,6 @@ class __$BannerCopyWithImpl<$Res> implements _$BannerCopyWith<$Res> {
           ? _self.validTo
           : validTo // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      role: null == role
-          ? _self.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as BannerRole,
       entityIds: freezed == entityIds
           ? _self._entityIds
           : entityIds // ignore: cast_nullable_to_non_nullable

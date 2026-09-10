@@ -29,8 +29,7 @@ mixin _$Delivery {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $DeliveryCopyWith<Delivery> get copyWith =>
-      _$DeliveryCopyWithImpl<Delivery>(this as Delivery, _$identity);
+  $DeliveryCopyWith<Delivery> get copyWith => _$DeliveryCopyWithImpl<Delivery>(this as Delivery, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -39,31 +38,18 @@ mixin _$Delivery {
             other is Delivery &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
-            (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId) &&
+            (identical(other.recipientId, recipientId) || other.recipientId == recipientId) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.confirmationTime, confirmationTime) ||
-                other.confirmationTime == confirmationTime) &&
-            (identical(other.hasMeals, hasMeals) ||
-                other.hasMeals == hasMeals) &&
-            (identical(other.isPickupConfirmed, isPickupConfirmed) ||
-                other.isPickupConfirmed == isPickupConfirmed) &&
+            (identical(other.confirmationTime, confirmationTime) || other.confirmationTime == confirmationTime) &&
+            (identical(other.hasMeals, hasMeals) || other.hasMeals == hasMeals) &&
+            (identical(other.isPickupConfirmed, isPickupConfirmed) || other.isPickupConfirmed == isPickupConfirmed) &&
             const DeepCollectionEquality().equals(other.foodBoxes, foodBoxes));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      donorId,
-      recipientId,
-      state,
-      type,
-      confirmationTime,
-      hasMeals,
-      isPickupConfirmed,
-      const DeepCollectionEquality().hash(foodBoxes));
+  int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state, type, confirmationTime, hasMeals,
+      isPickupConfirmed, const DeepCollectionEquality().hash(foodBoxes));
 
   @override
   String toString() {
@@ -73,8 +59,7 @@ mixin _$Delivery {
 
 /// @nodoc
 abstract mixin class $DeliveryCopyWith<$Res> {
-  factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) _then) =
-      _$DeliveryCopyWithImpl;
+  factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) _then) = _$DeliveryCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -196,8 +181,7 @@ class _Delivery extends Delivery {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DeliveryCopyWith<_Delivery> get copyWith =>
-      __$DeliveryCopyWithImpl<_Delivery>(this, _$identity);
+  _$DeliveryCopyWith<_Delivery> get copyWith => __$DeliveryCopyWithImpl<_Delivery>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -206,32 +190,18 @@ class _Delivery extends Delivery {
             other is _Delivery &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.donorId, donorId) || other.donorId == donorId) &&
-            (identical(other.recipientId, recipientId) ||
-                other.recipientId == recipientId) &&
+            (identical(other.recipientId, recipientId) || other.recipientId == recipientId) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.confirmationTime, confirmationTime) ||
-                other.confirmationTime == confirmationTime) &&
-            (identical(other.hasMeals, hasMeals) ||
-                other.hasMeals == hasMeals) &&
-            (identical(other.isPickupConfirmed, isPickupConfirmed) ||
-                other.isPickupConfirmed == isPickupConfirmed) &&
-            const DeepCollectionEquality()
-                .equals(other._foodBoxes, _foodBoxes));
+            (identical(other.confirmationTime, confirmationTime) || other.confirmationTime == confirmationTime) &&
+            (identical(other.hasMeals, hasMeals) || other.hasMeals == hasMeals) &&
+            (identical(other.isPickupConfirmed, isPickupConfirmed) || other.isPickupConfirmed == isPickupConfirmed) &&
+            const DeepCollectionEquality().equals(other._foodBoxes, _foodBoxes));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      donorId,
-      recipientId,
-      state,
-      type,
-      confirmationTime,
-      hasMeals,
-      isPickupConfirmed,
-      const DeepCollectionEquality().hash(_foodBoxes));
+  int get hashCode => Object.hash(runtimeType, id, donorId, recipientId, state, type, confirmationTime, hasMeals,
+      isPickupConfirmed, const DeepCollectionEquality().hash(_foodBoxes));
 
   @override
   String toString() {
@@ -240,10 +210,8 @@ class _Delivery extends Delivery {
 }
 
 /// @nodoc
-abstract mixin class _$DeliveryCopyWith<$Res>
-    implements $DeliveryCopyWith<$Res> {
-  factory _$DeliveryCopyWith(_Delivery value, $Res Function(_Delivery) _then) =
-      __$DeliveryCopyWithImpl;
+abstract mixin class _$DeliveryCopyWith<$Res> implements $DeliveryCopyWith<$Res> {
+  factory _$DeliveryCopyWith(_Delivery value, $Res Function(_Delivery) _then) = __$DeliveryCopyWithImpl;
   @override
   @useResult
   $Res call(

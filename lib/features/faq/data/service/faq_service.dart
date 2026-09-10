@@ -5,7 +5,7 @@ import 'package:zachranobed/features/faq/data/dto/faq_item_dto.dart';
 class FaqService {
   final _contentDoc = FirebaseFirestore.instance.collection('faq').doc('content');
 
-  late final _itemsCollection = _contentDoc
+  late final _itemsCollection = _contentDoc //
       .collection('items')
       .withConverter(
         fromFirestore: (snapshot, _) {
@@ -15,7 +15,7 @@ class FaqService {
         toFirestore: (value, options) => value.toJson(),
       );
 
-  late final _categoriesCollection = _contentDoc
+  late final _categoriesCollection = _contentDoc //
       .collection('categories')
       .withConverter(
         fromFirestore: (snapshot, _) {

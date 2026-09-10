@@ -11,9 +11,9 @@ import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 import 'package:zachranobed/common/presentation/router/app_router.gr.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_button_size.dart';
 import 'package:zachranobed/common/presentation/widget/button/ui_primary_button.dart';
+import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 import 'package:zachranobed/common/presentation/widget/layout/screen_scaffold.dart';
 import 'package:zachranobed/common/presentation/widget/navigation/ui_app_bar.dart';
-import 'package:zachranobed/common/presentation/widget/card/ui_list_tile.dart';
 
 @RoutePage()
 class DebugScreen extends StatelessWidget {
@@ -80,7 +80,7 @@ class DebugScreen extends StatelessWidget {
 
     return UiListTile(
       title: "Delivery is created",
-      supportingText:
+      supportingText: //
           "ID: ${delivery.id}\n\n"
           "State: ${delivery.state.name}\n\n"
           "Pick-up: ${user.activePair.pickupTimeStart}-${user.activePair.pickupTimeEnd}\n\n"

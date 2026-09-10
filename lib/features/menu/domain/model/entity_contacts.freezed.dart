@@ -24,8 +24,7 @@ mixin _$EntityContacts {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $EntityContactsCopyWith<EntityContacts> get copyWith =>
-      _$EntityContactsCopyWithImpl<EntityContacts>(
-          this as EntityContacts, _$identity);
+      _$EntityContactsCopyWithImpl<EntityContacts>(this as EntityContacts, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -38,8 +37,7 @@ mixin _$EntityContacts {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, active, const DeepCollectionEquality().hash(contacts));
+  int get hashCode => Object.hash(runtimeType, name, active, const DeepCollectionEquality().hash(contacts));
 
   @override
   String toString() {
@@ -49,16 +47,14 @@ mixin _$EntityContacts {
 
 /// @nodoc
 abstract mixin class $EntityContactsCopyWith<$Res> {
-  factory $EntityContactsCopyWith(
-          EntityContacts value, $Res Function(EntityContacts) _then) =
+  factory $EntityContactsCopyWith(EntityContacts value, $Res Function(EntityContacts) _then) =
       _$EntityContactsCopyWithImpl;
   @useResult
   $Res call({String name, bool active, List<Contact> contacts});
 }
 
 /// @nodoc
-class _$EntityContactsCopyWithImpl<$Res>
-    implements $EntityContactsCopyWith<$Res> {
+class _$EntityContactsCopyWithImpl<$Res> implements $EntityContactsCopyWith<$Res> {
   _$EntityContactsCopyWithImpl(this._self, this._then);
 
   final EntityContacts _self;
@@ -93,10 +89,7 @@ class _$EntityContactsCopyWithImpl<$Res>
 /// @nodoc
 
 class $EntityContacts implements EntityContacts {
-  const $EntityContacts(
-      {required this.name,
-      required this.active,
-      required final List<Contact> contacts})
+  const $EntityContacts({required this.name, required this.active, required final List<Contact> contacts})
       : _contacts = contacts;
 
   @override
@@ -130,8 +123,7 @@ class $EntityContacts implements EntityContacts {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, active,
-      const DeepCollectionEquality().hash(_contacts));
+  int get hashCode => Object.hash(runtimeType, name, active, const DeepCollectionEquality().hash(_contacts));
 
   @override
   String toString() {
@@ -140,10 +132,8 @@ class $EntityContacts implements EntityContacts {
 }
 
 /// @nodoc
-abstract mixin class $$EntityContactsCopyWith<$Res>
-    implements $EntityContactsCopyWith<$Res> {
-  factory $$EntityContactsCopyWith(
-          $EntityContacts value, $Res Function($EntityContacts) _then) =
+abstract mixin class $$EntityContactsCopyWith<$Res> implements $EntityContactsCopyWith<$Res> {
+  factory $$EntityContactsCopyWith($EntityContacts value, $Res Function($EntityContacts) _then) =
       _$$EntityContactsCopyWithImpl;
   @override
   @useResult
@@ -151,8 +141,7 @@ abstract mixin class $$EntityContactsCopyWith<$Res>
 }
 
 /// @nodoc
-class _$$EntityContactsCopyWithImpl<$Res>
-    implements $$EntityContactsCopyWith<$Res> {
+class _$$EntityContactsCopyWithImpl<$Res> implements $$EntityContactsCopyWith<$Res> {
   _$$EntityContactsCopyWithImpl(this._self, this._then);
 
   final $EntityContacts _self;

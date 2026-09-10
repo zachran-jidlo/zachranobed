@@ -3,9 +3,7 @@ import 'package:zachranobed/common/data/dto/carrier_dto.dart';
 import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 
 class CarrierService {
-  final _collection = FirebaseFirestore.instance
-      .collection('carriers')
-      .withConverter(
+  final _collection = FirebaseFirestore.instance.collection('carriers').withConverter(
         fromFirestore: (snapshot, _) {
           final json = snapshot.data() ?? {};
           return CarrierDto.fromJson(json);

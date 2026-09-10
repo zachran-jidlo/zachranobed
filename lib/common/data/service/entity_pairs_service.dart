@@ -7,9 +7,7 @@ import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
 class EntityPairService {
-  final _collection = FirebaseFirestore.instance
-      .collection('entityPairs')
-      .withConverter(
+  final _collection = FirebaseFirestore.instance.collection('entityPairs').withConverter(
         fromFirestore: (snapshot, _) => EntityPairDto.fromJson(snapshot.data() ?? {}),
         toFirestore: (value, _) => value.toJson(),
       );
@@ -155,7 +153,8 @@ class EntityPairService {
     required String donorId,
     required String recipientId,
     required Map<String, int> changeMap,
-  }) => _moveBoxes(donorId, recipientId, changeMap);
+  }) =>
+      _moveBoxes(donorId, recipientId, changeMap);
 
   /// Moves food boxes from [recipientId] to [donorId]. This method should be
   /// called when charity orders a box delivery, and as a result food boxes

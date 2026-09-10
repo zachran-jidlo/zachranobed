@@ -24,8 +24,7 @@ mixin _$ContactsSummary {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ContactsSummaryCopyWith<ContactsSummary> get copyWith =>
-      _$ContactsSummaryCopyWithImpl<ContactsSummary>(
-          this as ContactsSummary, _$identity);
+      _$ContactsSummaryCopyWithImpl<ContactsSummary>(this as ContactsSummary, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -33,18 +32,13 @@ mixin _$ContactsSummary {
         (other.runtimeType == runtimeType &&
             other is ContactsSummary &&
             const DeepCollectionEquality().equals(other.targets, targets) &&
-            const DeepCollectionEquality()
-                .equals(other.deliveryContacts, deliveryContacts) &&
-            const DeepCollectionEquality()
-                .equals(other.organisationContacts, organisationContacts));
+            const DeepCollectionEquality().equals(other.deliveryContacts, deliveryContacts) &&
+            const DeepCollectionEquality().equals(other.organisationContacts, organisationContacts));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(targets),
-      const DeepCollectionEquality().hash(deliveryContacts),
-      const DeepCollectionEquality().hash(organisationContacts));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(targets),
+      const DeepCollectionEquality().hash(deliveryContacts), const DeepCollectionEquality().hash(organisationContacts));
 
   @override
   String toString() {
@@ -54,19 +48,14 @@ mixin _$ContactsSummary {
 
 /// @nodoc
 abstract mixin class $ContactsSummaryCopyWith<$Res> {
-  factory $ContactsSummaryCopyWith(
-          ContactsSummary value, $Res Function(ContactsSummary) _then) =
+  factory $ContactsSummaryCopyWith(ContactsSummary value, $Res Function(ContactsSummary) _then) =
       _$ContactsSummaryCopyWithImpl;
   @useResult
-  $Res call(
-      {List<EntityContacts> targets,
-      List<Contact> deliveryContacts,
-      List<Contact> organisationContacts});
+  $Res call({List<EntityContacts> targets, List<Contact> deliveryContacts, List<Contact> organisationContacts});
 }
 
 /// @nodoc
-class _$ContactsSummaryCopyWithImpl<$Res>
-    implements $ContactsSummaryCopyWith<$Res> {
+class _$ContactsSummaryCopyWithImpl<$Res> implements $ContactsSummaryCopyWith<$Res> {
   _$ContactsSummaryCopyWithImpl(this._self, this._then);
 
   final ContactsSummary _self;
@@ -120,8 +109,7 @@ class $ContactsSummary implements ContactsSummary {
   final List<Contact> _deliveryContacts;
   @override
   List<Contact> get deliveryContacts {
-    if (_deliveryContacts is EqualUnmodifiableListView)
-      return _deliveryContacts;
+    if (_deliveryContacts is EqualUnmodifiableListView) return _deliveryContacts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_deliveryContacts);
   }
@@ -129,8 +117,7 @@ class $ContactsSummary implements ContactsSummary {
   final List<Contact> _organisationContacts;
   @override
   List<Contact> get organisationContacts {
-    if (_organisationContacts is EqualUnmodifiableListView)
-      return _organisationContacts;
+    if (_organisationContacts is EqualUnmodifiableListView) return _organisationContacts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_organisationContacts);
   }
@@ -149,10 +136,8 @@ class $ContactsSummary implements ContactsSummary {
         (other.runtimeType == runtimeType &&
             other is $ContactsSummary &&
             const DeepCollectionEquality().equals(other._targets, _targets) &&
-            const DeepCollectionEquality()
-                .equals(other._deliveryContacts, _deliveryContacts) &&
-            const DeepCollectionEquality()
-                .equals(other._organisationContacts, _organisationContacts));
+            const DeepCollectionEquality().equals(other._deliveryContacts, _deliveryContacts) &&
+            const DeepCollectionEquality().equals(other._organisationContacts, _organisationContacts));
   }
 
   @override
@@ -169,22 +154,16 @@ class $ContactsSummary implements ContactsSummary {
 }
 
 /// @nodoc
-abstract mixin class $$ContactsSummaryCopyWith<$Res>
-    implements $ContactsSummaryCopyWith<$Res> {
-  factory $$ContactsSummaryCopyWith(
-          $ContactsSummary value, $Res Function($ContactsSummary) _then) =
+abstract mixin class $$ContactsSummaryCopyWith<$Res> implements $ContactsSummaryCopyWith<$Res> {
+  factory $$ContactsSummaryCopyWith($ContactsSummary value, $Res Function($ContactsSummary) _then) =
       _$$ContactsSummaryCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {List<EntityContacts> targets,
-      List<Contact> deliveryContacts,
-      List<Contact> organisationContacts});
+  $Res call({List<EntityContacts> targets, List<Contact> deliveryContacts, List<Contact> organisationContacts});
 }
 
 /// @nodoc
-class _$$ContactsSummaryCopyWithImpl<$Res>
-    implements $$ContactsSummaryCopyWith<$Res> {
+class _$$ContactsSummaryCopyWithImpl<$Res> implements $$ContactsSummaryCopyWith<$Res> {
   _$$ContactsSummaryCopyWithImpl(this._self, this._then);
 
   final $ContactsSummary _self;

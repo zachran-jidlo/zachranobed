@@ -41,12 +41,8 @@ class FormValidationManager {
   /// Scrolls to the first field with a validation error.
   void scrollToFirstError() {
     // Find the context of the first field with an error.
-    final fieldContext = _fieldStates.entries
-        .where((s) => s.value.hasError)
-        .map((s) => s.value)
-        .firstOrNull
-        ?.focusNode
-        .context;
+    final fieldContext =
+        _fieldStates.entries.where((s) => s.value.hasError).map((s) => s.value).firstOrNull?.focusNode.context;
 
     if (fieldContext == null) {
       return;

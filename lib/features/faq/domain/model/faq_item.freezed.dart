@@ -34,8 +34,7 @@ mixin _$FaqItem {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FaqItemCopyWith<FaqItem> get copyWith =>
-      _$FaqItemCopyWithImpl<FaqItem>(this as FaqItem, _$identity);
+  $FaqItemCopyWith<FaqItem> get copyWith => _$FaqItemCopyWithImpl<FaqItem>(this as FaqItem, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,17 +42,14 @@ mixin _$FaqItem {
         (other.runtimeType == runtimeType &&
             other is FaqItem &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.question, question) ||
-                other.question == question) &&
+            (identical(other.question, question) || other.question == question) &&
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.order, order) || other.order == order) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            (identical(other.category, category) || other.category == category));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, question, answer, order, category);
+  int get hashCode => Object.hash(runtimeType, id, question, answer, order, category);
 
   @override
   String toString() {
@@ -63,15 +59,9 @@ mixin _$FaqItem {
 
 /// @nodoc
 abstract mixin class $FaqItemCopyWith<$Res> {
-  factory $FaqItemCopyWith(FaqItem value, $Res Function(FaqItem) _then) =
-      _$FaqItemCopyWithImpl;
+  factory $FaqItemCopyWith(FaqItem value, $Res Function(FaqItem) _then) = _$FaqItemCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      String question,
-      String answer,
-      int order,
-      FaqCategory? category});
+  $Res call({String id, String question, String answer, int order, FaqCategory? category});
 
   $FaqCategoryCopyWith<$Res>? get category;
 }
@@ -136,12 +126,7 @@ class _$FaqItemCopyWithImpl<$Res> implements $FaqItemCopyWith<$Res> {
 /// @nodoc
 
 class _FaqItem implements FaqItem {
-  const _FaqItem(
-      {required this.id,
-      required this.question,
-      required this.answer,
-      required this.order,
-      this.category});
+  const _FaqItem({required this.id, required this.question, required this.answer, required this.order, this.category});
 
   /// Firestore document ID.
   @override
@@ -168,8 +153,7 @@ class _FaqItem implements FaqItem {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FaqItemCopyWith<_FaqItem> get copyWith =>
-      __$FaqItemCopyWithImpl<_FaqItem>(this, _$identity);
+  _$FaqItemCopyWith<_FaqItem> get copyWith => __$FaqItemCopyWithImpl<_FaqItem>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -177,17 +161,14 @@ class _FaqItem implements FaqItem {
         (other.runtimeType == runtimeType &&
             other is _FaqItem &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.question, question) ||
-                other.question == question) &&
+            (identical(other.question, question) || other.question == question) &&
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.order, order) || other.order == order) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            (identical(other.category, category) || other.category == category));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, question, answer, order, category);
+  int get hashCode => Object.hash(runtimeType, id, question, answer, order, category);
 
   @override
   String toString() {
@@ -197,16 +178,10 @@ class _FaqItem implements FaqItem {
 
 /// @nodoc
 abstract mixin class _$FaqItemCopyWith<$Res> implements $FaqItemCopyWith<$Res> {
-  factory _$FaqItemCopyWith(_FaqItem value, $Res Function(_FaqItem) _then) =
-      __$FaqItemCopyWithImpl;
+  factory _$FaqItemCopyWith(_FaqItem value, $Res Function(_FaqItem) _then) = __$FaqItemCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String question,
-      String answer,
-      int order,
-      FaqCategory? category});
+  $Res call({String id, String question, String answer, int order, FaqCategory? category});
 
   @override
   $FaqCategoryCopyWith<$Res>? get category;

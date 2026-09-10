@@ -4,20 +4,18 @@ import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
 
 class MealService {
-  final _collection = FirebaseFirestore.instance
-      .collection('meals')
-      .withConverter(
-        fromFirestore: (snapshot, options) {
-          final json = snapshot.data() ?? {};
-          json['id'] = snapshot.id;
-          return MealDetailDto.fromJson(json);
-        },
-        toFirestore: (value, options) {
-          final json = value.toJson();
-          json.remove('id');
-          return json;
-        },
-      );
+  final _collection = FirebaseFirestore.instance.collection('meals').withConverter(
+    fromFirestore: (snapshot, options) {
+      final json = snapshot.data() ?? {};
+      json['id'] = snapshot.id;
+      return MealDetailDto.fromJson(json);
+    },
+    toFirestore: (value, options) {
+      final json = value.toJson();
+      json.remove('id');
+      return json;
+    },
+  );
 
   /// Queries the Firestore collection for meals with given IDs and returns a
   /// map with data.

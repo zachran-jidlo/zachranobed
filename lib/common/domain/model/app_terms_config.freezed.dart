@@ -22,16 +22,14 @@ mixin _$AppTermsConfig {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AppTermsConfigCopyWith<AppTermsConfig> get copyWith =>
-      _$AppTermsConfigCopyWithImpl<AppTermsConfig>(
-          this as AppTermsConfig, _$identity);
+      _$AppTermsConfigCopyWithImpl<AppTermsConfig>(this as AppTermsConfig, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AppTermsConfig &&
-            (identical(other.lastVersion, lastVersion) ||
-                other.lastVersion == lastVersion));
+            (identical(other.lastVersion, lastVersion) || other.lastVersion == lastVersion));
   }
 
   @override
@@ -45,16 +43,14 @@ mixin _$AppTermsConfig {
 
 /// @nodoc
 abstract mixin class $AppTermsConfigCopyWith<$Res> {
-  factory $AppTermsConfigCopyWith(
-          AppTermsConfig value, $Res Function(AppTermsConfig) _then) =
+  factory $AppTermsConfigCopyWith(AppTermsConfig value, $Res Function(AppTermsConfig) _then) =
       _$AppTermsConfigCopyWithImpl;
   @useResult
   $Res call({int lastVersion});
 }
 
 /// @nodoc
-class _$AppTermsConfigCopyWithImpl<$Res>
-    implements $AppTermsConfigCopyWith<$Res> {
+class _$AppTermsConfigCopyWithImpl<$Res> implements $AppTermsConfigCopyWith<$Res> {
   _$AppTermsConfigCopyWithImpl(this._self, this._then);
 
   final AppTermsConfig _self;
@@ -97,8 +93,7 @@ class $AppTermsConfig implements AppTermsConfig {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is $AppTermsConfig &&
-            (identical(other.lastVersion, lastVersion) ||
-                other.lastVersion == lastVersion));
+            (identical(other.lastVersion, lastVersion) || other.lastVersion == lastVersion));
   }
 
   @override
@@ -111,10 +106,8 @@ class $AppTermsConfig implements AppTermsConfig {
 }
 
 /// @nodoc
-abstract mixin class $$AppTermsConfigCopyWith<$Res>
-    implements $AppTermsConfigCopyWith<$Res> {
-  factory $$AppTermsConfigCopyWith(
-          $AppTermsConfig value, $Res Function($AppTermsConfig) _then) =
+abstract mixin class $$AppTermsConfigCopyWith<$Res> implements $AppTermsConfigCopyWith<$Res> {
+  factory $$AppTermsConfigCopyWith($AppTermsConfig value, $Res Function($AppTermsConfig) _then) =
       _$$AppTermsConfigCopyWithImpl;
   @override
   @useResult
@@ -122,8 +115,7 @@ abstract mixin class $$AppTermsConfigCopyWith<$Res>
 }
 
 /// @nodoc
-class _$$AppTermsConfigCopyWithImpl<$Res>
-    implements $$AppTermsConfigCopyWith<$Res> {
+class _$$AppTermsConfigCopyWithImpl<$Res> implements $$AppTermsConfigCopyWith<$Res> {
   _$$AppTermsConfigCopyWithImpl(this._self, this._then);
 
   final $AppTermsConfig _self;

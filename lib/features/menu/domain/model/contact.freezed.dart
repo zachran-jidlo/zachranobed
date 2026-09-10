@@ -23,8 +23,7 @@ mixin _$Contact {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ContactCopyWith<Contact> get copyWith =>
-      _$ContactCopyWithImpl<Contact>(this as Contact, _$identity);
+  $ContactCopyWith<Contact> get copyWith => _$ContactCopyWithImpl<Contact>(this as Contact, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -32,10 +31,8 @@ mixin _$Contact {
         (other.runtimeType == runtimeType &&
             other is Contact &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber));
+            (identical(other.position, position) || other.position == position) &&
+            (identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
   }
 
   @override
@@ -49,8 +46,7 @@ mixin _$Contact {
 
 /// @nodoc
 abstract mixin class $ContactCopyWith<$Res> {
-  factory $ContactCopyWith(Contact value, $Res Function(Contact) _then) =
-      _$ContactCopyWithImpl;
+  factory $ContactCopyWith(Contact value, $Res Function(Contact) _then) = _$ContactCopyWithImpl;
   @useResult
   $Res call({String name, String? position, String? phoneNumber});
 }
@@ -91,9 +87,7 @@ class _$ContactCopyWithImpl<$Res> implements $ContactCopyWith<$Res> {
 /// @nodoc
 
 class $Contact extends Contact {
-  const $Contact(
-      {required this.name, required this.position, required this.phoneNumber})
-      : super._();
+  const $Contact({required this.name, required this.position, required this.phoneNumber}) : super._();
 
   @override
   final String name;
@@ -107,8 +101,7 @@ class $Contact extends Contact {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $$ContactCopyWith<$Contact> get copyWith =>
-      _$$ContactCopyWithImpl<$Contact>(this, _$identity);
+  $$ContactCopyWith<$Contact> get copyWith => _$$ContactCopyWithImpl<$Contact>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -116,10 +109,8 @@ class $Contact extends Contact {
         (other.runtimeType == runtimeType &&
             other is $Contact &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber));
+            (identical(other.position, position) || other.position == position) &&
+            (identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber));
   }
 
   @override
@@ -133,8 +124,7 @@ class $Contact extends Contact {
 
 /// @nodoc
 abstract mixin class $$ContactCopyWith<$Res> implements $ContactCopyWith<$Res> {
-  factory $$ContactCopyWith($Contact value, $Res Function($Contact) _then) =
-      _$$ContactCopyWithImpl;
+  factory $$ContactCopyWith($Contact value, $Res Function($Contact) _then) = _$$ContactCopyWithImpl;
   @override
   @useResult
   $Res call({String name, String? position, String? phoneNumber});

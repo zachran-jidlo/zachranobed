@@ -105,26 +105,24 @@ class FirebaseFoodBoxRepository implements FoodBoxRepository {
       }
 
       // Map accumulated values to domain instances
-      return boxesCountMap.values
-          .mapNotNull((element) {
-            final type = typesMap[element.foodBoxId];
-            if (type == null) {
-              // In case that type is not known, ignore this food box data
-              return null;
-            }
+      return boxesCountMap.values.mapNotNull((element) {
+        final type = typesMap[element.foodBoxId];
+        if (type == null) {
+          // In case that type is not known, ignore this food box data
+          return null;
+        }
 
-            return FoodBoxStatistics(
-              type: type,
-              totalQuantity: element.count,
-              quantityAtCanteen: element.donorCount,
-              quantityAtCharity: element.recipientCount,
-              quantityOnTheWayToCharity: onTheWayToCharity[element.foodBoxId] ?? 0,
-              quantityOnTheWayToCanteen: onTheWayToCanteen[element.foodBoxId] ?? 0,
-            );
-          })
-          .sorted((a, b) {
-            return _getSortOrder(a.type).compareTo(_getSortOrder(b.type));
-          });
+        return FoodBoxStatistics(
+          type: type,
+          totalQuantity: element.count,
+          quantityAtCanteen: element.donorCount,
+          quantityAtCharity: element.recipientCount,
+          quantityOnTheWayToCharity: onTheWayToCharity[element.foodBoxId] ?? 0,
+          quantityOnTheWayToCanteen: onTheWayToCanteen[element.foodBoxId] ?? 0,
+        );
+      }).sorted((a, b) {
+        return _getSortOrder(a.type).compareTo(_getSortOrder(b.type));
+      });
     });
   }
 

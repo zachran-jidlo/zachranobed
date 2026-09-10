@@ -26,8 +26,7 @@ mixin _$EntityPairsSummary {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $EntityPairsSummaryCopyWith<EntityPairsSummary> get copyWith =>
-      _$EntityPairsSummaryCopyWithImpl<EntityPairsSummary>(
-          this as EntityPairsSummary, _$identity);
+      _$EntityPairsSummaryCopyWithImpl<EntityPairsSummary>(this as EntityPairsSummary, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -35,13 +34,11 @@ mixin _$EntityPairsSummary {
         (other.runtimeType == runtimeType &&
             other is EntityPairsSummary &&
             (identical(other.active, active) || other.active == active) &&
-            const DeepCollectionEquality()
-                .equals(other.otherPairs, otherPairs));
+            const DeepCollectionEquality().equals(other.otherPairs, otherPairs));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, active, const DeepCollectionEquality().hash(otherPairs));
+  int get hashCode => Object.hash(runtimeType, active, const DeepCollectionEquality().hash(otherPairs));
 
   @override
   String toString() {
@@ -51,16 +48,14 @@ mixin _$EntityPairsSummary {
 
 /// @nodoc
 abstract mixin class $EntityPairsSummaryCopyWith<$Res> {
-  factory $EntityPairsSummaryCopyWith(
-          EntityPairsSummary value, $Res Function(EntityPairsSummary) _then) =
+  factory $EntityPairsSummaryCopyWith(EntityPairsSummary value, $Res Function(EntityPairsSummary) _then) =
       _$EntityPairsSummaryCopyWithImpl;
   @useResult
   $Res call({EntityPair active, List<EntityPair> otherPairs});
 }
 
 /// @nodoc
-class _$EntityPairsSummaryCopyWithImpl<$Res>
-    implements $EntityPairsSummaryCopyWith<$Res> {
+class _$EntityPairsSummaryCopyWithImpl<$Res> implements $EntityPairsSummaryCopyWith<$Res> {
   _$EntityPairsSummaryCopyWithImpl(this._self, this._then);
 
   final EntityPairsSummary _self;
@@ -90,8 +85,7 @@ class _$EntityPairsSummaryCopyWithImpl<$Res>
 /// @nodoc
 
 class $EntityPairsSummary implements EntityPairsSummary {
-  const $EntityPairsSummary(
-      {required this.active, required final List<EntityPair> otherPairs})
+  const $EntityPairsSummary({required this.active, required final List<EntityPair> otherPairs})
       : _otherPairs = otherPairs;
 
   /// The currently active pair.
@@ -123,13 +117,11 @@ class $EntityPairsSummary implements EntityPairsSummary {
         (other.runtimeType == runtimeType &&
             other is $EntityPairsSummary &&
             (identical(other.active, active) || other.active == active) &&
-            const DeepCollectionEquality()
-                .equals(other._otherPairs, _otherPairs));
+            const DeepCollectionEquality().equals(other._otherPairs, _otherPairs));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, active, const DeepCollectionEquality().hash(_otherPairs));
+  int get hashCode => Object.hash(runtimeType, active, const DeepCollectionEquality().hash(_otherPairs));
 
   @override
   String toString() {
@@ -138,10 +130,8 @@ class $EntityPairsSummary implements EntityPairsSummary {
 }
 
 /// @nodoc
-abstract mixin class $$EntityPairsSummaryCopyWith<$Res>
-    implements $EntityPairsSummaryCopyWith<$Res> {
-  factory $$EntityPairsSummaryCopyWith(
-          $EntityPairsSummary value, $Res Function($EntityPairsSummary) _then) =
+abstract mixin class $$EntityPairsSummaryCopyWith<$Res> implements $EntityPairsSummaryCopyWith<$Res> {
+  factory $$EntityPairsSummaryCopyWith($EntityPairsSummary value, $Res Function($EntityPairsSummary) _then) =
       _$$EntityPairsSummaryCopyWithImpl;
   @override
   @useResult
@@ -149,8 +139,7 @@ abstract mixin class $$EntityPairsSummaryCopyWith<$Res>
 }
 
 /// @nodoc
-class _$$EntityPairsSummaryCopyWithImpl<$Res>
-    implements $$EntityPairsSummaryCopyWith<$Res> {
+class _$$EntityPairsSummaryCopyWithImpl<$Res> implements $$EntityPairsSummaryCopyWith<$Res> {
   _$$EntityPairsSummaryCopyWithImpl(this._self, this._then);
 
   final $EntityPairsSummary _self;

@@ -41,8 +41,7 @@ mixin _$FaqCategory {
             other is FaqCategory &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.order, order) || other.order == order));
   }
 
@@ -57,9 +56,7 @@ mixin _$FaqCategory {
 
 /// @nodoc
 abstract mixin class $FaqCategoryCopyWith<$Res> {
-  factory $FaqCategoryCopyWith(
-          FaqCategory value, $Res Function(FaqCategory) _then) =
-      _$FaqCategoryCopyWithImpl;
+  factory $FaqCategoryCopyWith(FaqCategory value, $Res Function(FaqCategory) _then) = _$FaqCategoryCopyWithImpl;
   @useResult
   $Res call({String id, String title, String description, int order});
 }
@@ -105,11 +102,7 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
 /// @nodoc
 
 class _FaqCategory implements FaqCategory {
-  const _FaqCategory(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.order});
+  const _FaqCategory({required this.id, required this.title, required this.description, required this.order});
 
   /// Unique identifier used to group FAQ items.
   @override
@@ -132,8 +125,7 @@ class _FaqCategory implements FaqCategory {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FaqCategoryCopyWith<_FaqCategory> get copyWith =>
-      __$FaqCategoryCopyWithImpl<_FaqCategory>(this, _$identity);
+  _$FaqCategoryCopyWith<_FaqCategory> get copyWith => __$FaqCategoryCopyWithImpl<_FaqCategory>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -142,8 +134,7 @@ class _FaqCategory implements FaqCategory {
             other is _FaqCategory &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.order, order) || other.order == order));
   }
 
@@ -157,11 +148,8 @@ class _FaqCategory implements FaqCategory {
 }
 
 /// @nodoc
-abstract mixin class _$FaqCategoryCopyWith<$Res>
-    implements $FaqCategoryCopyWith<$Res> {
-  factory _$FaqCategoryCopyWith(
-          _FaqCategory value, $Res Function(_FaqCategory) _then) =
-      __$FaqCategoryCopyWithImpl;
+abstract mixin class _$FaqCategoryCopyWith<$Res> implements $FaqCategoryCopyWith<$Res> {
+  factory _$FaqCategoryCopyWith(_FaqCategory value, $Res Function(_FaqCategory) _then) = __$FaqCategoryCopyWithImpl;
   @override
   @useResult
   $Res call({String id, String title, String description, int order});

@@ -117,9 +117,9 @@ class UiTextField extends StatefulWidget {
     this.floatingLabelBehavior,
     this.semanticsIdentifier,
   }) : assert(
-         controller == null || initialValue == null,
-         'Cannot provide both controller and initialValue',
-       );
+          controller == null || initialValue == null,
+          'Cannot provide both controller and initialValue',
+        );
 
   @override
   State<UiTextField> createState() => _UiTextFieldState();

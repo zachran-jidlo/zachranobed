@@ -88,19 +88,17 @@ class _ChangeActivePairScreenState extends State<ChangeActivePairScreen> {
               activeLabel: _getActiveLabel(),
             ),
             const SizedBox(height: 24.0),
-            ...summary.otherPairs
-                .map((pair) {
-                  return UiChangePairTile(
-                    name: _getEstablishmentName(pair),
-                    showIndicator: _shouldShowIndicator(pair),
-                    onSelectPressed: () {
-                      _changeActivePair.invoke(pair.donorId, pair.recipientId);
-                      HelperService.updateActivePair(context, pair);
-                      context.router.pop();
-                    },
-                  );
-                })
-                .separated(const SizedBox(height: 8.0)),
+            ...summary.otherPairs.map((pair) {
+              return UiChangePairTile(
+                name: _getEstablishmentName(pair),
+                showIndicator: _shouldShowIndicator(pair),
+                onSelectPressed: () {
+                  _changeActivePair.invoke(pair.donorId, pair.recipientId);
+                  HelperService.updateActivePair(context, pair);
+                  context.router.pop();
+                },
+              );
+            }).separated(const SizedBox(height: 8.0)),
           ],
         ),
       ),

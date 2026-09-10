@@ -7,11 +7,11 @@ part of 'time_window_dto.dart';
 // **************************************************************************
 
 TimeWindowDto _$TimeWindowDtoFromJson(Map<String, dynamic> json) => TimeWindowDto(
-  start: json['start'] as String,
-  end: json['end'] as String,
-);
+      start: json['start'] as String,
+      end: json['end'] as String,
+    );
 
 Map<String, dynamic> _$TimeWindowDtoToJson(TimeWindowDto instance) => <String, dynamic>{
-  'start': instance.start,
-  'end': instance.end,
-};
+      'start': instance.start,
+      'end': instance.end,
+    };

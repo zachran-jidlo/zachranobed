@@ -47,8 +47,8 @@ class Notifications {
 
     await _localNotifications.initialize(settings);
 
-    final platform = _localNotifications
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    final platform =
+        _localNotifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     await platform?.createNotificationChannel(_androidChannel);
   }
 
@@ -124,14 +124,12 @@ class Notifications {
 
   /// Listens to token refresh events and saves the new token to the database.
   void listenToTokenRefresh() {
-    _firebaseMessaging.onTokenRefresh
-        .asyncMap(_saveToken)
-        .listen(
-          null,
-          onError: (Object error) {
-            ZOLogger.logMessage("Unable to save refreshed FCM token: $error");
-          },
-        );
+    _firebaseMessaging.onTokenRefresh.asyncMap(_saveToken).listen(
+      null,
+      onError: (Object error) {
+        ZOLogger.logMessage("Unable to save refreshed FCM token: $error");
+      },
+    );
   }
 
   /// Saves the [token] of the current device to the logged-in user's entity.

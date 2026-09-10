@@ -60,8 +60,8 @@ class InfoPage extends StatelessWidget {
     String? description,
     this.actions,
     this.paddingBeforeActions = 40.0,
-  }) : title = _TextContent(title),
-       description = description != null ? _TextContent(description) : null;
+  })  : title = _TextContent(title),
+        description = description != null ? _TextContent(description) : null;
 
   /// Creates a [InfoPage] widget with rich content for title and description.
   ///
@@ -154,10 +154,10 @@ class InfoPage extends StatelessWidget {
   }) {
     return switch (content) {
       _TextContent() => Text(
-        content.text,
-        style: style,
-        textAlign: TextAlign.center,
-      ),
+          content.text,
+          style: style,
+          textAlign: TextAlign.center,
+        ),
       _WidgetContent() => content.widget,
       null => const SizedBox(),
     };
