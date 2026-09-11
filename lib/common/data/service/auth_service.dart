@@ -162,6 +162,7 @@ class AuthService {
     }
     await _auth.signOut();
     await _appPreferences.clear();
+    _pairedEntityService.clearCache();
     FirebaseHelper.setUserIdentifier(null);
   }
 

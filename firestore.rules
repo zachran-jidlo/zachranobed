@@ -54,9 +54,12 @@ service cloud.firestore {
 
     // ----- Public config -----
 
-    // Read before sign-in by the login screen and the terms check.
+    // The force update check runs before sign-in, so its document has to be
+    // readable without an account. The rest of the collection is not, and
+    // `list` is off so the collection cannot be enumerated.
     match /appConfiguration/{docId} {
-      allow read: if true;
+      allow get: if docId == 'app-config' || isSignedIn();
+      allow list: if false;
       allow write: if isAdmin();
     }
 
@@ -137,7 +140,7 @@ service cloud.firestore {
     // charity creates the box return and the manual donation entry, so the
     // check is pair membership rather than the donor side.
     match /deliveries/{deliveryId} {
-      allow get: if resource == null || inMyPair();
+      allow get: if hasEntity() && (resource == null || inMyPair());
       allow list: if inMyPair();
       allow delete: if false;
       // Same trade as the update below. The pair has to be the caller's own and
@@ -155,16 +158,20 @@ service cloud.firestore {
 
     // ----- Meals -----
 
-    // Meal documents hold dish names and allergens, no personal data. The
-    // client fetches them by document id, so the read cannot be scoped to a
-    // pair. A meal carries only donorId, and a charity writes meals whose
-    // donorId is the canteen, so the write cannot be tied back to the caller
-    // either. Adding recipientId to the document would allow a pair check here.
+    // A meal carries only donorId, so the read cannot be scoped to a pair. The
+    // document id is a generated uuid and the only place it appears is the meal
+    // list of a delivery, which already needs pair membership to read, so the
+    // id is what limits access. That only holds while the collection cannot be
+    // listed, hence `list` is off and the client reads meals by id.
+    //
+    // Every meal is written once under a fresh id, so updates are off as well.
+    // A charity recording a manual donation writes meals whose donorId is the
+    // canteen, which is why create cannot be tied back to the caller.
     match /meals/{mealId} {
-      allow read: if isSignedIn();
-      allow delete: if false;
+      allow get: if isSignedIn();
+      allow list: if false;
       allow create: if hasEntity() && request.resource.data.donorId is string;
-      allow update: if hasEntity() && request.resource.data.donorId == resource.data.donorId;
+      allow update, delete: if false;
     }
 
     // ---------------------------------------------------------
