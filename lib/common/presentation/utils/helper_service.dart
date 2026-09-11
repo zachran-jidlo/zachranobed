@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/usecase/get_user_data_usecase.dart';
+import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 import 'package:zachranobed/common/presentation/notifiers/delivery_notifier.dart';
 import 'package:zachranobed/common/presentation/notifiers/user_notifier.dart';
 
@@ -30,12 +31,23 @@ class HelperService {
   /// delivery object which is then set in the [DeliveryNotifier]. If no
   /// delivery exists for current user or the user doesn't have the `canteen`
   /// role, it creates a dummy delivery.
-  static Future<void> loadUserInfo(BuildContext context) async {
+  ///
+  /// Never throws. Returns false when the load itself failed, which is not the
+  /// same as an account with no data, and leaves the notifiers untouched so a
+  /// refresh over a bad connection keeps what is already on screen. A caller
+  /// that only refreshes can ignore the result.
+  static Future<bool> loadUserInfo(BuildContext context) async {
     final getUserData = GetIt.I<GetUserDataUseCase>();
     final userNotifier = context.read<UserNotifier>();
     final deliveryNotifier = context.read<DeliveryNotifier>();
 
-    final user = await getUserData.invoke();
+    final UserData? user;
+    try {
+      user = await getUserData.invoke();
+    } on Exception catch (e) {
+      ZOLogger.logMessage('Unable to load user info: $e');
+      return false;
+    }
 
     if (context.mounted) {
       userNotifier.user = user;
@@ -47,6 +59,8 @@ class HelperService {
         deliveryNotifier.reset();
       }
     }
+
+    return true;
   }
 
   /// Updates the active pair for the current user.

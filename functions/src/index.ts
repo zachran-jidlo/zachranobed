@@ -11,6 +11,7 @@ import { sendOrdersFunction, sendOrders } from "./functions/sendOrdersFunction";
 import { dodoOrderStatus } from "./functions/dodoOrderStatusFunction";
 import { cloudTaskHandler } from "./functions/cloudTaskHandlerFunction";
 import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
+import { getPairedEntities } from "./functions/getPairedEntitiesFunction";
 import { confirmationReminderHandler } from "./functions/notifications/confirmationReminderFunction";
 import { boxTransfer } from "./functions/boxTransferFunction";
 import {
@@ -222,6 +223,10 @@ exports.triggerCreateReport = onRequest(
 // Export HTTP functions
 // Exported unconditionally: Cloud Tasks invokes this in all environments
 // (both DEV and PROD create tasks that need this endpoint).
+
+// Callable used by the app instead of reading foreign entity documents
+exports.getPairedEntities = getPairedEntities;
+
 exports.cloudTaskHandler = cloudTaskHandler;
 exports.confirmationReminderHandler = confirmationReminderHandler;
 

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:zachranobed/common/data/dto/entity_dto.dart';
 import 'package:zachranobed/common/data/dto/entity_pair_dto.dart';
 import 'package:zachranobed/common/data/dto/food_boxes_checkup_dto.dart';
+import 'package:zachranobed/common/data/dto/paired_entity_dto.dart';
 import 'package:zachranobed/common/data/mapper/food_boxes_checkup_mapper.dart';
 import 'package:zachranobed/common/domain/model/carrier_type.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
@@ -13,8 +13,8 @@ import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 extension EntityPairMapper on EntityPairDto {
   /// Maps DTO to domain representation.
   EntityPair? toDomain({
-    EntityDto? donor,
-    EntityDto? recipient,
+    PairedEntityDto? donor,
+    PairedEntityDto? recipient,
   }) {
     if (donor == null || recipient == null) {
       return null;
@@ -131,7 +131,7 @@ extension EntityPairListMapper on List<EntityPairDto> {
   /// (recipient for donor, donor for recipient).
   Future<List<EntityPair>> toDomain({
     required String userEntityId,
-    required Future<List<EntityDto>> Function(List<String> ids) entities,
+    required Future<List<PairedEntityDto>> Function(List<String> ids) entities,
   }) async {
     final targetIds = mapNotNull((e) {
       if (userEntityId == e.donorId) {

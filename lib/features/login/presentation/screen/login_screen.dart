@@ -241,7 +241,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (success) {
       if (mounted) {
-        await HelperService.loadUserInfo(context);
+        final loaded = await HelperService.loadUserInfo(context);
+        if (!loaded) {
+          if (mounted) {
+            context.router.pop();
+            UiTemporarySnackBar.showError(context, message: context.l10n.somethingWentWrongError);
+          }
+          return;
+        }
 
         final user = HelperService.getCurrentUser(_formKey.currentContext!);
         ZOLogger.logMessage("Přihlášen uživatel: ${user?.debugInfo}");
