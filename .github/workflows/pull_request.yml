@@ -22,16 +22,15 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      # Checkouts the repository with entire commit history, which is needed to calculate the
-      # correct build version code in 'Setup environment' step.
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
-      # Setups Java, Flutter and correct version code before build.
+      # The APK is only a compile check and never published, so the version code is skipped.
+      # Java stays, Gradle needs it.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          version-code: false
 
       # Builds a debug APK for the 'dev' flavor.
       - name: Build Android APK
