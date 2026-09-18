@@ -10,7 +10,6 @@ part of 'meal_suggestion.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -25,7 +24,9 @@ mixin _$MealSuggestion {
   @pragma('vm:prefer-inline')
   $MealSuggestionCopyWith<MealSuggestion> get copyWith =>
       _$MealSuggestionCopyWithImpl<MealSuggestion>(
-          this as MealSuggestion, _$identity);
+        this as MealSuggestion,
+        _$identity,
+      );
 
   @override
   bool operator ==(Object other) {
@@ -39,7 +40,11 @@ mixin _$MealSuggestion {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(allergens));
+    runtimeType,
+    id,
+    name,
+    const DeepCollectionEquality().hash(allergens),
+  );
 
   @override
   String toString() {
@@ -50,8 +55,9 @@ mixin _$MealSuggestion {
 /// @nodoc
 abstract mixin class $MealSuggestionCopyWith<$Res> {
   factory $MealSuggestionCopyWith(
-          MealSuggestion value, $Res Function(MealSuggestion) _then) =
-      _$MealSuggestionCopyWithImpl;
+    MealSuggestion value,
+    $Res Function(MealSuggestion) _then,
+  ) = _$MealSuggestionCopyWithImpl;
   @useResult
   $Res call({String id, String name, List<String> allergens});
 }
@@ -73,31 +79,33 @@ class _$MealSuggestionCopyWithImpl<$Res>
     Object? name = null,
     Object? allergens = null,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergens: null == allergens
-          ? _self.allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        allergens: null == allergens
+            ? _self.allergens
+            : allergens // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _MealSuggestion implements MealSuggestion {
-  const _MealSuggestion(
-      {required this.id,
-      required this.name,
-      required final List<String> allergens})
-      : _allergens = allergens;
+  const _MealSuggestion({
+    required this.id,
+    required this.name,
+    required final List<String> allergens,
+  }) : _allergens = allergens;
 
   @override
   final String id;
@@ -126,13 +134,19 @@ class _MealSuggestion implements MealSuggestion {
             other is _MealSuggestion &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._allergens, _allergens));
+            const DeepCollectionEquality().equals(
+              other._allergens,
+              _allergens,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, const DeepCollectionEquality().hash(_allergens));
+    runtimeType,
+    id,
+    name,
+    const DeepCollectionEquality().hash(_allergens),
+  );
 
   @override
   String toString() {
@@ -144,8 +158,9 @@ class _MealSuggestion implements MealSuggestion {
 abstract mixin class _$MealSuggestionCopyWith<$Res>
     implements $MealSuggestionCopyWith<$Res> {
   factory _$MealSuggestionCopyWith(
-          _MealSuggestion value, $Res Function(_MealSuggestion) _then) =
-      __$MealSuggestionCopyWithImpl;
+    _MealSuggestion value,
+    $Res Function(_MealSuggestion) _then,
+  ) = __$MealSuggestionCopyWithImpl;
   @override
   @useResult
   $Res call({String id, String name, List<String> allergens});
@@ -168,21 +183,21 @@ class __$MealSuggestionCopyWithImpl<$Res>
     Object? name = null,
     Object? allergens = null,
   }) {
-    return _then(_MealSuggestion(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergens: null == allergens
-          ? _self._allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
+    return _then(
+      _MealSuggestion(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        allergens: null == allergens
+            ? _self._allergens
+            : allergens // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+      ),
+    );
   }
 }
-
-// dart format on

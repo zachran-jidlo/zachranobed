@@ -1,7 +1,7 @@
 # This workflow runs on pushes and pull requests to the `develop` branch.
 # It has three jobs:
 # 1. build → Builds the Flutter project
-# 2. lint  → Runs `flutter analyze` and `dart run custom_lint` and fails on issues
+# 2. lint  → Checks formatting and runs static analysis, failing on issues
 # 3. test  → Runs the Flutter unit test suite
 name: Pull Request Checks
 
@@ -54,6 +54,16 @@ jobs:
       # Run the Dart analyzer with the project's analysis_options.yaml
       - name: Run Flutter analyze
         run: flutter analyze
+
+      # Format everything, then fail if a version controlled file changed. The
+      # l10n sources are generated during pub get and come out unformatted, but
+      # they are gitignored, so reformatting them here is harmless and git does
+      # not see it. Committed Freezed and json_serializable output is version
+      # controlled, so a model change without a build_runner run is caught.
+      - name: Check formatting
+        run: |
+          dart format lib test
+          git diff --exit-code -- lib test
 
       # Run custom lint with project rules
       - name: Run custom lint

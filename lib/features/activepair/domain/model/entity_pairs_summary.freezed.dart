@@ -10,7 +10,6 @@ part of 'entity_pairs_summary.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -27,7 +26,9 @@ mixin _$EntityPairsSummary {
   @pragma('vm:prefer-inline')
   $EntityPairsSummaryCopyWith<EntityPairsSummary> get copyWith =>
       _$EntityPairsSummaryCopyWithImpl<EntityPairsSummary>(
-          this as EntityPairsSummary, _$identity);
+        this as EntityPairsSummary,
+        _$identity,
+      );
 
   @override
   bool operator ==(Object other) {
@@ -35,13 +36,18 @@ mixin _$EntityPairsSummary {
         (other.runtimeType == runtimeType &&
             other is EntityPairsSummary &&
             (identical(other.active, active) || other.active == active) &&
-            const DeepCollectionEquality()
-                .equals(other.otherPairs, otherPairs));
+            const DeepCollectionEquality().equals(
+              other.otherPairs,
+              otherPairs,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, active, const DeepCollectionEquality().hash(otherPairs));
+    runtimeType,
+    active,
+    const DeepCollectionEquality().hash(otherPairs),
+  );
 
   @override
   String toString() {
@@ -52,8 +58,9 @@ mixin _$EntityPairsSummary {
 /// @nodoc
 abstract mixin class $EntityPairsSummaryCopyWith<$Res> {
   factory $EntityPairsSummaryCopyWith(
-          EntityPairsSummary value, $Res Function(EntityPairsSummary) _then) =
-      _$EntityPairsSummaryCopyWithImpl;
+    EntityPairsSummary value,
+    $Res Function(EntityPairsSummary) _then,
+  ) = _$EntityPairsSummaryCopyWithImpl;
   @useResult
   $Res call({EntityPair active, List<EntityPair> otherPairs});
 }
@@ -70,29 +77,29 @@ class _$EntityPairsSummaryCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? active = null,
-    Object? otherPairs = null,
-  }) {
-    return _then(_self.copyWith(
-      active: null == active
-          ? _self.active
-          : active // ignore: cast_nullable_to_non_nullable
-              as EntityPair,
-      otherPairs: null == otherPairs
-          ? _self.otherPairs
-          : otherPairs // ignore: cast_nullable_to_non_nullable
-              as List<EntityPair>,
-    ));
+  $Res call({Object? active = null, Object? otherPairs = null}) {
+    return _then(
+      _self.copyWith(
+        active: null == active
+            ? _self.active
+            : active // ignore: cast_nullable_to_non_nullable
+                  as EntityPair,
+        otherPairs: null == otherPairs
+            ? _self.otherPairs
+            : otherPairs // ignore: cast_nullable_to_non_nullable
+                  as List<EntityPair>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class $EntityPairsSummary implements EntityPairsSummary {
-  const $EntityPairsSummary(
-      {required this.active, required final List<EntityPair> otherPairs})
-      : _otherPairs = otherPairs;
+  const $EntityPairsSummary({
+    required this.active,
+    required final List<EntityPair> otherPairs,
+  }) : _otherPairs = otherPairs;
 
   /// The currently active pair.
   @override
@@ -123,13 +130,18 @@ class $EntityPairsSummary implements EntityPairsSummary {
         (other.runtimeType == runtimeType &&
             other is $EntityPairsSummary &&
             (identical(other.active, active) || other.active == active) &&
-            const DeepCollectionEquality()
-                .equals(other._otherPairs, _otherPairs));
+            const DeepCollectionEquality().equals(
+              other._otherPairs,
+              _otherPairs,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, active, const DeepCollectionEquality().hash(_otherPairs));
+    runtimeType,
+    active,
+    const DeepCollectionEquality().hash(_otherPairs),
+  );
 
   @override
   String toString() {
@@ -141,8 +153,9 @@ class $EntityPairsSummary implements EntityPairsSummary {
 abstract mixin class $$EntityPairsSummaryCopyWith<$Res>
     implements $EntityPairsSummaryCopyWith<$Res> {
   factory $$EntityPairsSummaryCopyWith(
-          $EntityPairsSummary value, $Res Function($EntityPairsSummary) _then) =
-      _$$EntityPairsSummaryCopyWithImpl;
+    $EntityPairsSummary value,
+    $Res Function($EntityPairsSummary) _then,
+  ) = _$$EntityPairsSummaryCopyWithImpl;
   @override
   @useResult
   $Res call({EntityPair active, List<EntityPair> otherPairs});
@@ -160,21 +173,18 @@ class _$$EntityPairsSummaryCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $Res call({
-    Object? active = null,
-    Object? otherPairs = null,
-  }) {
-    return _then($EntityPairsSummary(
-      active: null == active
-          ? _self.active
-          : active // ignore: cast_nullable_to_non_nullable
-              as EntityPair,
-      otherPairs: null == otherPairs
-          ? _self._otherPairs
-          : otherPairs // ignore: cast_nullable_to_non_nullable
-              as List<EntityPair>,
-    ));
+  $Res call({Object? active = null, Object? otherPairs = null}) {
+    return _then(
+      $EntityPairsSummary(
+        active: null == active
+            ? _self.active
+            : active // ignore: cast_nullable_to_non_nullable
+                  as EntityPair,
+        otherPairs: null == otherPairs
+            ? _self._otherPairs
+            : otherPairs // ignore: cast_nullable_to_non_nullable
+                  as List<EntityPair>,
+      ),
+    );
   }
 }
-
-// dart format on

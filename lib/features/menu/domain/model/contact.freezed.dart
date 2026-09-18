@@ -10,7 +10,6 @@ part of 'contact.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -71,29 +70,33 @@ class _$ContactCopyWithImpl<$Res> implements $ContactCopyWith<$Res> {
     Object? position = freezed,
     Object? phoneNumber = freezed,
   }) {
-    return _then(_self.copyWith(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      position: freezed == position
-          ? _self.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _self.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _self.copyWith(
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        position: freezed == position
+            ? _self.position
+            : position // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        phoneNumber: freezed == phoneNumber
+            ? _self.phoneNumber
+            : phoneNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class $Contact extends Contact {
-  const $Contact(
-      {required this.name, required this.position, required this.phoneNumber})
-      : super._();
+  const $Contact({
+    required this.name,
+    required this.position,
+    required this.phoneNumber,
+  }) : super._();
 
   @override
   final String name;
@@ -156,21 +159,21 @@ class _$$ContactCopyWithImpl<$Res> implements $$ContactCopyWith<$Res> {
     Object? position = freezed,
     Object? phoneNumber = freezed,
   }) {
-    return _then($Contact(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      position: freezed == position
-          ? _self.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _self.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      $Contact(
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        position: freezed == position
+            ? _self.position
+            : position // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        phoneNumber: freezed == phoneNumber
+            ? _self.phoneNumber
+            : phoneNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
-
-// dart format on

@@ -22,13 +22,19 @@ EntityPairDto _$EntityPairDtoFromJson(Map<String, dynamic> json) => EntityPairDt
       .toList(),
   foodboxesCheckup: json['foodboxesCheckup'] == null
       ? null
-      : FoodBoxesCheckupSummaryDto.fromJson(json['foodboxesCheckup'] as Map<String, dynamic>),
+      : FoodBoxesCheckupSummaryDto.fromJson(
+          json['foodboxesCheckup'] as Map<String, dynamic>,
+        ),
   manualDonation: json['manualDonation'] == null
       ? null
-      : ManualDonationSummaryDto.fromJson(json['manualDonation'] as Map<String, dynamic>),
+      : ManualDonationSummaryDto.fromJson(
+          json['manualDonation'] as Map<String, dynamic>,
+        ),
   pickupConfirmation: json['pickupConfirmation'] == null
       ? null
-      : PickupConfirmationDto.fromJson(json['pickupConfirmation'] as Map<String, dynamic>),
+      : PickupConfirmationDto.fromJson(
+          json['pickupConfirmation'] as Map<String, dynamic>,
+        ),
   confirmationTime: (json['confirmationTime'] as num).toInt(),
 );
 

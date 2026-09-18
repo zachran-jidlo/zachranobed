@@ -10,7 +10,6 @@ part of 'notification.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -27,7 +26,9 @@ mixin _$Notification {
   @pragma('vm:prefer-inline')
   $NotificationCopyWith<Notification> get copyWith =>
       _$NotificationCopyWithImpl<Notification>(
-          this as Notification, _$identity);
+        this as Notification,
+        _$identity,
+      );
 
   @override
   bool operator ==(Object other) {
@@ -55,11 +56,17 @@ mixin _$Notification {
 /// @nodoc
 abstract mixin class $NotificationCopyWith<$Res> {
   factory $NotificationCopyWith(
-          Notification value, $Res Function(Notification) _then) =
-      _$NotificationCopyWithImpl;
+    Notification value,
+    $Res Function(Notification) _then,
+  ) = _$NotificationCopyWithImpl;
   @useResult
-  $Res call(
-      {String id, String title, String message, DateTime timestamp, bool read});
+  $Res call({
+    String id,
+    String title,
+    String message,
+    DateTime timestamp,
+    bool read,
+  });
 }
 
 /// @nodoc
@@ -80,40 +87,43 @@ class _$NotificationCopyWithImpl<$Res> implements $NotificationCopyWith<$Res> {
     Object? timestamp = null,
     Object? read = null,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _self.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      read: null == read
-          ? _self.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        message: null == message
+            ? _self.message
+            : message // ignore: cast_nullable_to_non_nullable
+                  as String,
+        timestamp: null == timestamp
+            ? _self.timestamp
+            : timestamp // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        read: null == read
+            ? _self.read
+            : read // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class $Notification implements Notification {
-  const $Notification(
-      {required this.id,
-      required this.title,
-      required this.message,
-      required this.timestamp,
-      required this.read});
+  const $Notification({
+    required this.id,
+    required this.title,
+    required this.message,
+    required this.timestamp,
+    required this.read,
+  });
 
   @override
   final String id;
@@ -161,12 +171,18 @@ class $Notification implements Notification {
 abstract mixin class $$NotificationCopyWith<$Res>
     implements $NotificationCopyWith<$Res> {
   factory $$NotificationCopyWith(
-          $Notification value, $Res Function($Notification) _then) =
-      _$$NotificationCopyWithImpl;
+    $Notification value,
+    $Res Function($Notification) _then,
+  ) = _$$NotificationCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id, String title, String message, DateTime timestamp, bool read});
+  $Res call({
+    String id,
+    String title,
+    String message,
+    DateTime timestamp,
+    bool read,
+  });
 }
 
 /// @nodoc
@@ -188,29 +204,29 @@ class _$$NotificationCopyWithImpl<$Res>
     Object? timestamp = null,
     Object? read = null,
   }) {
-    return _then($Notification(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      message: null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _self.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      read: null == read
-          ? _self.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      $Notification(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        message: null == message
+            ? _self.message
+            : message // ignore: cast_nullable_to_non_nullable
+                  as String,
+        timestamp: null == timestamp
+            ? _self.timestamp
+            : timestamp // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        read: null == read
+            ? _self.read
+            : read // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
-
-// dart format on

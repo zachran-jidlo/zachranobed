@@ -10,7 +10,9 @@ NotificationDto _$NotificationDtoFromJson(Map<String, dynamic> json) => Notifica
   id: json['id'] as String,
   title: json['title'] as String,
   message: json['message'] as String,
-  timestamp: const TimestampConverter().fromJson(json['timestamp'] as Timestamp),
+  timestamp: const TimestampConverter().fromJson(
+    json['timestamp'] as Timestamp,
+  ),
   read: json['read'] as bool,
 );
 

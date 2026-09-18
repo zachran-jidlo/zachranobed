@@ -10,7 +10,6 @@ part of 'offered_food.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -67,20 +66,21 @@ mixin _$OfferedFood {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      date,
-      dishName,
-      foodCategory,
-      foodCategoryType,
-      foodTemperature,
-      const DeepCollectionEquality().hash(allergens),
-      numberOfServings,
-      numberOfPackages,
-      preparedAt,
-      consumeBy,
-      donorId,
-      recipientId);
+    runtimeType,
+    id,
+    date,
+    dishName,
+    foodCategory,
+    foodCategoryType,
+    foodTemperature,
+    const DeepCollectionEquality().hash(allergens),
+    numberOfServings,
+    numberOfPackages,
+    preparedAt,
+    consumeBy,
+    donorId,
+    recipientId,
+  );
 
   @override
   String toString() {
@@ -91,23 +91,25 @@ mixin _$OfferedFood {
 /// @nodoc
 abstract mixin class $OfferedFoodCopyWith<$Res> {
   factory $OfferedFoodCopyWith(
-          OfferedFood value, $Res Function(OfferedFood) _then) =
-      _$OfferedFoodCopyWithImpl;
+    OfferedFood value,
+    $Res Function(OfferedFood) _then,
+  ) = _$OfferedFoodCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      DateTime date,
-      String dishName,
-      String foodCategory,
-      FoodCategoryType? foodCategoryType,
-      int? foodTemperature,
-      List<String> allergens,
-      int? numberOfServings,
-      int? numberOfPackages,
-      FoodDateTime? preparedAt,
-      FoodDateTime consumeBy,
-      String donorId,
-      String recipientId});
+  $Res call({
+    String id,
+    DateTime date,
+    String dishName,
+    String foodCategory,
+    FoodCategoryType? foodCategoryType,
+    int? foodTemperature,
+    List<String> allergens,
+    int? numberOfServings,
+    int? numberOfPackages,
+    FoodDateTime? preparedAt,
+    FoodDateTime consumeBy,
+    String donorId,
+    String recipientId,
+  });
 }
 
 /// @nodoc
@@ -136,81 +138,83 @@ class _$OfferedFoodCopyWithImpl<$Res> implements $OfferedFoodCopyWith<$Res> {
     Object? donorId = null,
     Object? recipientId = null,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _self.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dishName: null == dishName
-          ? _self.dishName
-          : dishName // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategory: null == foodCategory
-          ? _self.foodCategory
-          : foodCategory // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategoryType: freezed == foodCategoryType
-          ? _self.foodCategoryType
-          : foodCategoryType // ignore: cast_nullable_to_non_nullable
-              as FoodCategoryType?,
-      foodTemperature: freezed == foodTemperature
-          ? _self.foodTemperature
-          : foodTemperature // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allergens: null == allergens
-          ? _self.allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      numberOfServings: freezed == numberOfServings
-          ? _self.numberOfServings
-          : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _self.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
-      preparedAt: freezed == preparedAt
-          ? _self.preparedAt
-          : preparedAt // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime?,
-      consumeBy: null == consumeBy
-          ? _self.consumeBy
-          : consumeBy // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime,
-      donorId: null == donorId
-          ? _self.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _self.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _self.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        dishName: null == dishName
+            ? _self.dishName
+            : dishName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        foodCategory: null == foodCategory
+            ? _self.foodCategory
+            : foodCategory // ignore: cast_nullable_to_non_nullable
+                  as String,
+        foodCategoryType: freezed == foodCategoryType
+            ? _self.foodCategoryType
+            : foodCategoryType // ignore: cast_nullable_to_non_nullable
+                  as FoodCategoryType?,
+        foodTemperature: freezed == foodTemperature
+            ? _self.foodTemperature
+            : foodTemperature // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        allergens: null == allergens
+            ? _self.allergens
+            : allergens // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        numberOfServings: freezed == numberOfServings
+            ? _self.numberOfServings
+            : numberOfServings // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        numberOfPackages: freezed == numberOfPackages
+            ? _self.numberOfPackages
+            : numberOfPackages // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        preparedAt: freezed == preparedAt
+            ? _self.preparedAt
+            : preparedAt // ignore: cast_nullable_to_non_nullable
+                  as FoodDateTime?,
+        consumeBy: null == consumeBy
+            ? _self.consumeBy
+            : consumeBy // ignore: cast_nullable_to_non_nullable
+                  as FoodDateTime,
+        donorId: null == donorId
+            ? _self.donorId
+            : donorId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        recipientId: null == recipientId
+            ? _self.recipientId
+            : recipientId // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _OfferedFood implements OfferedFood {
-  const _OfferedFood(
-      {required this.id,
-      required this.date,
-      required this.dishName,
-      required this.foodCategory,
-      required this.foodCategoryType,
-      required this.foodTemperature,
-      required final List<String> allergens,
-      required this.numberOfServings,
-      required this.numberOfPackages,
-      required this.preparedAt,
-      required this.consumeBy,
-      required this.donorId,
-      required this.recipientId})
-      : _allergens = allergens;
+  const _OfferedFood({
+    required this.id,
+    required this.date,
+    required this.dishName,
+    required this.foodCategory,
+    required this.foodCategoryType,
+    required this.foodTemperature,
+    required final List<String> allergens,
+    required this.numberOfServings,
+    required this.numberOfPackages,
+    required this.preparedAt,
+    required this.consumeBy,
+    required this.donorId,
+    required this.recipientId,
+  }) : _allergens = allergens;
 
   @override
   final String id;
@@ -268,8 +272,10 @@ class _OfferedFood implements OfferedFood {
                 other.foodCategoryType == foodCategoryType) &&
             (identical(other.foodTemperature, foodTemperature) ||
                 other.foodTemperature == foodTemperature) &&
-            const DeepCollectionEquality()
-                .equals(other._allergens, _allergens) &&
+            const DeepCollectionEquality().equals(
+              other._allergens,
+              _allergens,
+            ) &&
             (identical(other.numberOfServings, numberOfServings) ||
                 other.numberOfServings == numberOfServings) &&
             (identical(other.numberOfPackages, numberOfPackages) ||
@@ -285,20 +291,21 @@ class _OfferedFood implements OfferedFood {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      date,
-      dishName,
-      foodCategory,
-      foodCategoryType,
-      foodTemperature,
-      const DeepCollectionEquality().hash(_allergens),
-      numberOfServings,
-      numberOfPackages,
-      preparedAt,
-      consumeBy,
-      donorId,
-      recipientId);
+    runtimeType,
+    id,
+    date,
+    dishName,
+    foodCategory,
+    foodCategoryType,
+    foodTemperature,
+    const DeepCollectionEquality().hash(_allergens),
+    numberOfServings,
+    numberOfPackages,
+    preparedAt,
+    consumeBy,
+    donorId,
+    recipientId,
+  );
 
   @override
   String toString() {
@@ -310,24 +317,26 @@ class _OfferedFood implements OfferedFood {
 abstract mixin class _$OfferedFoodCopyWith<$Res>
     implements $OfferedFoodCopyWith<$Res> {
   factory _$OfferedFoodCopyWith(
-          _OfferedFood value, $Res Function(_OfferedFood) _then) =
-      __$OfferedFoodCopyWithImpl;
+    _OfferedFood value,
+    $Res Function(_OfferedFood) _then,
+  ) = __$OfferedFoodCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      DateTime date,
-      String dishName,
-      String foodCategory,
-      FoodCategoryType? foodCategoryType,
-      int? foodTemperature,
-      List<String> allergens,
-      int? numberOfServings,
-      int? numberOfPackages,
-      FoodDateTime? preparedAt,
-      FoodDateTime consumeBy,
-      String donorId,
-      String recipientId});
+  $Res call({
+    String id,
+    DateTime date,
+    String dishName,
+    String foodCategory,
+    FoodCategoryType? foodCategoryType,
+    int? foodTemperature,
+    List<String> allergens,
+    int? numberOfServings,
+    int? numberOfPackages,
+    FoodDateTime? preparedAt,
+    FoodDateTime consumeBy,
+    String donorId,
+    String recipientId,
+  });
 }
 
 /// @nodoc
@@ -356,61 +365,61 @@ class __$OfferedFoodCopyWithImpl<$Res> implements _$OfferedFoodCopyWith<$Res> {
     Object? donorId = null,
     Object? recipientId = null,
   }) {
-    return _then(_OfferedFood(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _self.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dishName: null == dishName
-          ? _self.dishName
-          : dishName // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategory: null == foodCategory
-          ? _self.foodCategory
-          : foodCategory // ignore: cast_nullable_to_non_nullable
-              as String,
-      foodCategoryType: freezed == foodCategoryType
-          ? _self.foodCategoryType
-          : foodCategoryType // ignore: cast_nullable_to_non_nullable
-              as FoodCategoryType?,
-      foodTemperature: freezed == foodTemperature
-          ? _self.foodTemperature
-          : foodTemperature // ignore: cast_nullable_to_non_nullable
-              as int?,
-      allergens: null == allergens
-          ? _self._allergens
-          : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      numberOfServings: freezed == numberOfServings
-          ? _self.numberOfServings
-          : numberOfServings // ignore: cast_nullable_to_non_nullable
-              as int?,
-      numberOfPackages: freezed == numberOfPackages
-          ? _self.numberOfPackages
-          : numberOfPackages // ignore: cast_nullable_to_non_nullable
-              as int?,
-      preparedAt: freezed == preparedAt
-          ? _self.preparedAt
-          : preparedAt // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime?,
-      consumeBy: null == consumeBy
-          ? _self.consumeBy
-          : consumeBy // ignore: cast_nullable_to_non_nullable
-              as FoodDateTime,
-      donorId: null == donorId
-          ? _self.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _self.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _OfferedFood(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _self.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        dishName: null == dishName
+            ? _self.dishName
+            : dishName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        foodCategory: null == foodCategory
+            ? _self.foodCategory
+            : foodCategory // ignore: cast_nullable_to_non_nullable
+                  as String,
+        foodCategoryType: freezed == foodCategoryType
+            ? _self.foodCategoryType
+            : foodCategoryType // ignore: cast_nullable_to_non_nullable
+                  as FoodCategoryType?,
+        foodTemperature: freezed == foodTemperature
+            ? _self.foodTemperature
+            : foodTemperature // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        allergens: null == allergens
+            ? _self._allergens
+            : allergens // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        numberOfServings: freezed == numberOfServings
+            ? _self.numberOfServings
+            : numberOfServings // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        numberOfPackages: freezed == numberOfPackages
+            ? _self.numberOfPackages
+            : numberOfPackages // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        preparedAt: freezed == preparedAt
+            ? _self.preparedAt
+            : preparedAt // ignore: cast_nullable_to_non_nullable
+                  as FoodDateTime?,
+        consumeBy: null == consumeBy
+            ? _self.consumeBy
+            : consumeBy // ignore: cast_nullable_to_non_nullable
+                  as FoodDateTime,
+        donorId: null == donorId
+            ? _self.donorId
+            : donorId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        recipientId: null == recipientId
+            ? _self.recipientId
+            : recipientId // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
-
-// dart format on
