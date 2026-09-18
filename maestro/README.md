@@ -22,14 +22,27 @@ The CLI lands in `~/.maestro/bin`. Add it to your `PATH` if the shell cannot fin
 ## Run the tests
 
 Build and install the dev flavor first. The flows target `cz.etnetera.mobile.zachranobed.dev` and rely on the
-quick login button, which only the dev build has.
+quick login button, which only the dev build has. The same bundle id is used on both platforms, so the flows
+need no changes between them.
+
+On Android, with an emulator running or a device connected:
 
 ```bash
 flutter build apk --flavor dev -t lib/main_dev.dart --debug
 adb install -r build/app/outputs/flutter-apk/app-dev-debug.apk
 ```
 
-Start an emulator or connect a device, then run the flows:
+On iOS, Maestro drives simulators only. Physical devices are not supported, so build for the simulator:
+
+```bash
+flutter build ios --simulator --flavor dev -t lib/main_dev.dart
+xcrun simctl boot "iPhone 17"
+xcrun simctl install booted build/ios/iphonesimulator/Runner.app
+```
+
+Skip the boot step if the simulator is already running. Run `xcrun simctl list devices` to see the names.
+
+Then run the flows:
 
 ```bash
 # Everything

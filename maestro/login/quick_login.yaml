@@ -8,15 +8,21 @@
 # Dev flavor only. The quick login button comes from AppFlavorData and is
 # stripped from stage and prod builds.
 #
+# Runs on both Android and iOS. On iOS only simulators are supported.
+#
 # Run:
-#   maestro test maestro/login.yaml
-#   maestro test -e USER=test-zo-jidelna maestro/login.yaml
+#   maestro test maestro/login/quick_login.yaml
+#   maestro test -e USER=test-zo-jidelna maestro/login/quick_login.yaml
 appId: cz.etnetera.mobile.zachranobed.dev
 env:
   USER: test-zo-charita
 ---
 - launchApp:
     clearState: true
+    # Firebase Auth stores the session in the iOS keychain, which clearState does
+    # not touch. Without this the flow starts already signed in and never sees the
+    # login screen. Android ignores it.
+    clearKeychain: true
 
 # Login screen
 - assertVisible:
