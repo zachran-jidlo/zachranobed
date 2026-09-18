@@ -24,20 +24,12 @@ runs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    # Sets up Flutter environment. The SDK itself is cached, so it is not downloaded on every run.
+    # Sets up Flutter environment. The action caches both the SDK and the pub packages.
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: 3.32.4
         cache: true
-
-    # Caches resolved pub packages, keyed by the lockfile.
-    - name: Cache pub dependencies
-      uses: actions/cache@v6
-      with:
-        path: ~/.pub-cache
-        key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.lock') }}
-        restore-keys: ${{ runner.os }}-pub-
 
     # Installs Flutter dependencies.
     - name: Install dependencies
