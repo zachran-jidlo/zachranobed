@@ -11,5 +11,7 @@ runs:
       uses: actions/upload-artifact@v7
       with:
         name: ios-artifacts
+        retention-days: 14
+        if-no-files-found: error
         path: |
           **/*.ipa

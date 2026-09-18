@@ -34,7 +34,7 @@ android {
     namespace 'cz.zachranobed.app'
 
     compileSdkVersion 36
-    ndkVersion '27.2.12479018'
+    ndkVersion '27.3.13750724'
 
     compileOptions {
         // Version 10+ of the flutter_local_notifications plugin is now relies on desugaring to support scheduled

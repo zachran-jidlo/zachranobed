@@ -5,7 +5,8 @@ on:
 
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       # Checkouts the repository with entire commit history, which is needed to calculate the
@@ -15,9 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Setups Java, Flutter and correct version code before build.
+      # Setups Flutter and correct version code before build. Java is not needed for web.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          java: false
 
       - name: Build web
         run: flutter build web --release --no-tree-shake-icons --base-href "/zachranobed-web-stage/" --dart-define=WEB_APP_FLAVOR=stage --target lib/main_stage.dart

@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: macos-26
+    timeout-minutes: 60
 
     steps:
       # Checkouts the repository with entire commit history, which is needed to calculate the
@@ -18,9 +19,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Setups Java, Flutter and correct version code before build.
+      # Setups Flutter and correct version code before build. Java is not needed for iOS.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          java: false
 
       # Prepares keychain and builds signed IPA.
       - name: Build iOS IPA
@@ -42,6 +45,7 @@ jobs:
   distribute:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       # Checkouts the repository.
