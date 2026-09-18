@@ -10,7 +10,6 @@ part of 'banner.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -27,6 +26,9 @@ mixin _$Banner {
   /// Banner body. Rendered as markdown.
   String get text;
 
+  /// Target role. [BannerRole.all] means every role.
+  BannerRole get role;
+
   /// Visual tone. Drives the icon and color. Null shows no icon.
   BannerType? get type;
 
@@ -35,9 +37,6 @@ mixin _$Banner {
 
   /// End of the display window. Null means no end.
   DateTime? get validTo;
-
-  /// Target role. [BannerRole.all] means every role.
-  BannerRole get role;
 
   /// Specific entity IDs to target. Null/empty means no restriction.
   List<String>? get entityIds;
@@ -81,11 +80,11 @@ mixin _$Banner {
                 other.priority == priority) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.role, role) || other.role == role) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.validFrom, validFrom) ||
                 other.validFrom == validFrom) &&
             (identical(other.validTo, validTo) || other.validTo == validTo) &&
-            (identical(other.role, role) || other.role == role) &&
             const DeepCollectionEquality().equals(other.entityIds, entityIds) &&
             const DeepCollectionEquality().equals(other.tags, tags) &&
             const DeepCollectionEquality().equals(other.platforms, platforms) &&
@@ -103,27 +102,28 @@ mixin _$Banner {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      priority,
-      title,
-      text,
-      type,
-      validFrom,
-      validTo,
-      role,
-      const DeepCollectionEquality().hash(entityIds),
-      const DeepCollectionEquality().hash(tags),
-      const DeepCollectionEquality().hash(platforms),
-      minAppVersion,
-      maxAppVersion,
-      closable,
-      actionLabel,
-      actionUrl);
+    runtimeType,
+    id,
+    priority,
+    title,
+    text,
+    role,
+    type,
+    validFrom,
+    validTo,
+    const DeepCollectionEquality().hash(entityIds),
+    const DeepCollectionEquality().hash(tags),
+    const DeepCollectionEquality().hash(platforms),
+    minAppVersion,
+    maxAppVersion,
+    closable,
+    actionLabel,
+    actionUrl,
+  );
 
   @override
   String toString() {
-    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, type: $type, validFrom: $validFrom, validTo: $validTo, role: $role, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
+    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, role: $role, type: $type, validFrom: $validFrom, validTo: $validTo, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
   }
 }
 
@@ -132,23 +132,24 @@ abstract mixin class $BannerCopyWith<$Res> {
   factory $BannerCopyWith(Banner value, $Res Function(Banner) _then) =
       _$BannerCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      int priority,
-      String title,
-      String text,
-      BannerType? type,
-      DateTime? validFrom,
-      DateTime? validTo,
-      BannerRole role,
-      List<String>? entityIds,
-      List<String>? tags,
-      List<RunningPlatform>? platforms,
-      String? minAppVersion,
-      String? maxAppVersion,
-      bool closable,
-      String? actionLabel,
-      String? actionUrl});
+  $Res call({
+    String id,
+    int priority,
+    String title,
+    String text,
+    BannerRole role,
+    BannerType? type,
+    DateTime? validFrom,
+    DateTime? validTo,
+    List<String>? entityIds,
+    List<String>? tags,
+    List<RunningPlatform>? platforms,
+    String? minAppVersion,
+    String? maxAppVersion,
+    bool closable,
+    String? actionLabel,
+    String? actionUrl,
+  });
 }
 
 /// @nodoc
@@ -167,10 +168,10 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
     Object? priority = null,
     Object? title = null,
     Object? text = null,
+    Object? role = null,
     Object? type = freezed,
     Object? validFrom = freezed,
     Object? validTo = freezed,
-    Object? role = null,
     Object? entityIds = freezed,
     Object? tags = freezed,
     Object? platforms = freezed,
@@ -180,98 +181,100 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
     Object? actionLabel = freezed,
     Object? actionUrl = freezed,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      priority: null == priority
-          ? _self.priority
-          : priority // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      text: null == text
-          ? _self.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: freezed == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BannerType?,
-      validFrom: freezed == validFrom
-          ? _self.validFrom
-          : validFrom // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      validTo: freezed == validTo
-          ? _self.validTo
-          : validTo // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      role: null == role
-          ? _self.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as BannerRole,
-      entityIds: freezed == entityIds
-          ? _self.entityIds
-          : entityIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      tags: freezed == tags
-          ? _self.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      platforms: freezed == platforms
-          ? _self.platforms
-          : platforms // ignore: cast_nullable_to_non_nullable
-              as List<RunningPlatform>?,
-      minAppVersion: freezed == minAppVersion
-          ? _self.minAppVersion
-          : minAppVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      maxAppVersion: freezed == maxAppVersion
-          ? _self.maxAppVersion
-          : maxAppVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      closable: null == closable
-          ? _self.closable
-          : closable // ignore: cast_nullable_to_non_nullable
-              as bool,
-      actionLabel: freezed == actionLabel
-          ? _self.actionLabel
-          : actionLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      actionUrl: freezed == actionUrl
-          ? _self.actionUrl
-          : actionUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        priority: null == priority
+            ? _self.priority
+            : priority // ignore: cast_nullable_to_non_nullable
+                  as int,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        text: null == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as String,
+        role: null == role
+            ? _self.role
+            : role // ignore: cast_nullable_to_non_nullable
+                  as BannerRole,
+        type: freezed == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as BannerType?,
+        validFrom: freezed == validFrom
+            ? _self.validFrom
+            : validFrom // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        validTo: freezed == validTo
+            ? _self.validTo
+            : validTo // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        entityIds: freezed == entityIds
+            ? _self.entityIds
+            : entityIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
+        tags: freezed == tags
+            ? _self.tags
+            : tags // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
+        platforms: freezed == platforms
+            ? _self.platforms
+            : platforms // ignore: cast_nullable_to_non_nullable
+                  as List<RunningPlatform>?,
+        minAppVersion: freezed == minAppVersion
+            ? _self.minAppVersion
+            : minAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        maxAppVersion: freezed == maxAppVersion
+            ? _self.maxAppVersion
+            : maxAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        closable: null == closable
+            ? _self.closable
+            : closable // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        actionLabel: freezed == actionLabel
+            ? _self.actionLabel
+            : actionLabel // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        actionUrl: freezed == actionUrl
+            ? _self.actionUrl
+            : actionUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _Banner implements Banner {
-  const _Banner(
-      {required this.id,
-      required this.priority,
-      required this.title,
-      required this.text,
-      required this.type,
-      required this.validFrom,
-      required this.validTo,
-      required this.role,
-      required final List<String>? entityIds,
-      required final List<String>? tags,
-      required final List<RunningPlatform>? platforms,
-      required this.minAppVersion,
-      required this.maxAppVersion,
-      required this.closable,
-      required this.actionLabel,
-      required this.actionUrl})
-      : _entityIds = entityIds,
-        _tags = tags,
-        _platforms = platforms;
+  const _Banner({
+    required this.id,
+    required this.priority,
+    required this.title,
+    required this.text,
+    required this.role,
+    required this.type,
+    required this.validFrom,
+    required this.validTo,
+    required final List<String>? entityIds,
+    required final List<String>? tags,
+    required final List<RunningPlatform>? platforms,
+    required this.minAppVersion,
+    required this.maxAppVersion,
+    required this.closable,
+    required this.actionLabel,
+    required this.actionUrl,
+  }) : _entityIds = entityIds,
+       _tags = tags,
+       _platforms = platforms;
 
   /// Unique identifier.
   @override
@@ -289,6 +292,10 @@ class _Banner implements Banner {
   @override
   final String text;
 
+  /// Target role. [BannerRole.all] means every role.
+  @override
+  final BannerRole role;
+
   /// Visual tone. Drives the icon and color. Null shows no icon.
   @override
   final BannerType? type;
@@ -300,10 +307,6 @@ class _Banner implements Banner {
   /// End of the display window. Null means no end.
   @override
   final DateTime? validTo;
-
-  /// Target role. [BannerRole.all] means every role.
-  @override
-  final BannerRole role;
 
   /// Specific entity IDs to target. Null/empty means no restriction.
   final List<String>? _entityIds;
@@ -384,16 +387,20 @@ class _Banner implements Banner {
                 other.priority == priority) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.role, role) || other.role == role) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.validFrom, validFrom) ||
                 other.validFrom == validFrom) &&
             (identical(other.validTo, validTo) || other.validTo == validTo) &&
-            (identical(other.role, role) || other.role == role) &&
-            const DeepCollectionEquality()
-                .equals(other._entityIds, _entityIds) &&
+            const DeepCollectionEquality().equals(
+              other._entityIds,
+              _entityIds,
+            ) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
-            const DeepCollectionEquality()
-                .equals(other._platforms, _platforms) &&
+            const DeepCollectionEquality().equals(
+              other._platforms,
+              _platforms,
+            ) &&
             (identical(other.minAppVersion, minAppVersion) ||
                 other.minAppVersion == minAppVersion) &&
             (identical(other.maxAppVersion, maxAppVersion) ||
@@ -408,27 +415,28 @@ class _Banner implements Banner {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      priority,
-      title,
-      text,
-      type,
-      validFrom,
-      validTo,
-      role,
-      const DeepCollectionEquality().hash(_entityIds),
-      const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_platforms),
-      minAppVersion,
-      maxAppVersion,
-      closable,
-      actionLabel,
-      actionUrl);
+    runtimeType,
+    id,
+    priority,
+    title,
+    text,
+    role,
+    type,
+    validFrom,
+    validTo,
+    const DeepCollectionEquality().hash(_entityIds),
+    const DeepCollectionEquality().hash(_tags),
+    const DeepCollectionEquality().hash(_platforms),
+    minAppVersion,
+    maxAppVersion,
+    closable,
+    actionLabel,
+    actionUrl,
+  );
 
   @override
   String toString() {
-    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, type: $type, validFrom: $validFrom, validTo: $validTo, role: $role, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
+    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, role: $role, type: $type, validFrom: $validFrom, validTo: $validTo, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
   }
 }
 
@@ -438,23 +446,24 @@ abstract mixin class _$BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
       __$BannerCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      int priority,
-      String title,
-      String text,
-      BannerType? type,
-      DateTime? validFrom,
-      DateTime? validTo,
-      BannerRole role,
-      List<String>? entityIds,
-      List<String>? tags,
-      List<RunningPlatform>? platforms,
-      String? minAppVersion,
-      String? maxAppVersion,
-      bool closable,
-      String? actionLabel,
-      String? actionUrl});
+  $Res call({
+    String id,
+    int priority,
+    String title,
+    String text,
+    BannerRole role,
+    BannerType? type,
+    DateTime? validFrom,
+    DateTime? validTo,
+    List<String>? entityIds,
+    List<String>? tags,
+    List<RunningPlatform>? platforms,
+    String? minAppVersion,
+    String? maxAppVersion,
+    bool closable,
+    String? actionLabel,
+    String? actionUrl,
+  });
 }
 
 /// @nodoc
@@ -473,10 +482,10 @@ class __$BannerCopyWithImpl<$Res> implements _$BannerCopyWith<$Res> {
     Object? priority = null,
     Object? title = null,
     Object? text = null,
+    Object? role = null,
     Object? type = freezed,
     Object? validFrom = freezed,
     Object? validTo = freezed,
-    Object? role = null,
     Object? entityIds = freezed,
     Object? tags = freezed,
     Object? platforms = freezed,
@@ -486,73 +495,73 @@ class __$BannerCopyWithImpl<$Res> implements _$BannerCopyWith<$Res> {
     Object? actionLabel = freezed,
     Object? actionUrl = freezed,
   }) {
-    return _then(_Banner(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      priority: null == priority
-          ? _self.priority
-          : priority // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      text: null == text
-          ? _self.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: freezed == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BannerType?,
-      validFrom: freezed == validFrom
-          ? _self.validFrom
-          : validFrom // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      validTo: freezed == validTo
-          ? _self.validTo
-          : validTo // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      role: null == role
-          ? _self.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as BannerRole,
-      entityIds: freezed == entityIds
-          ? _self._entityIds
-          : entityIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      tags: freezed == tags
-          ? _self._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      platforms: freezed == platforms
-          ? _self._platforms
-          : platforms // ignore: cast_nullable_to_non_nullable
-              as List<RunningPlatform>?,
-      minAppVersion: freezed == minAppVersion
-          ? _self.minAppVersion
-          : minAppVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      maxAppVersion: freezed == maxAppVersion
-          ? _self.maxAppVersion
-          : maxAppVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      closable: null == closable
-          ? _self.closable
-          : closable // ignore: cast_nullable_to_non_nullable
-              as bool,
-      actionLabel: freezed == actionLabel
-          ? _self.actionLabel
-          : actionLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      actionUrl: freezed == actionUrl
-          ? _self.actionUrl
-          : actionUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _Banner(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        priority: null == priority
+            ? _self.priority
+            : priority // ignore: cast_nullable_to_non_nullable
+                  as int,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        text: null == text
+            ? _self.text
+            : text // ignore: cast_nullable_to_non_nullable
+                  as String,
+        role: null == role
+            ? _self.role
+            : role // ignore: cast_nullable_to_non_nullable
+                  as BannerRole,
+        type: freezed == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as BannerType?,
+        validFrom: freezed == validFrom
+            ? _self.validFrom
+            : validFrom // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        validTo: freezed == validTo
+            ? _self.validTo
+            : validTo // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        entityIds: freezed == entityIds
+            ? _self._entityIds
+            : entityIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
+        tags: freezed == tags
+            ? _self._tags
+            : tags // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
+        platforms: freezed == platforms
+            ? _self._platforms
+            : platforms // ignore: cast_nullable_to_non_nullable
+                  as List<RunningPlatform>?,
+        minAppVersion: freezed == minAppVersion
+            ? _self.minAppVersion
+            : minAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        maxAppVersion: freezed == maxAppVersion
+            ? _self.maxAppVersion
+            : maxAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        closable: null == closable
+            ? _self.closable
+            : closable // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        actionLabel: freezed == actionLabel
+            ? _self.actionLabel
+            : actionLabel // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        actionUrl: freezed == actionUrl
+            ? _self.actionUrl
+            : actionUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
-
-// dart format on

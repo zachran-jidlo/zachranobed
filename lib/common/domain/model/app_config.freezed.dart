@@ -10,7 +10,6 @@ part of 'app_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -69,24 +68,28 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
     Object? minimumAppVersion = null,
     Object? latestAppVersion = null,
   }) {
-    return _then(_self.copyWith(
-      minimumAppVersion: null == minimumAppVersion
-          ? _self.minimumAppVersion
-          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-      latestAppVersion: null == latestAppVersion
-          ? _self.latestAppVersion
-          : latestAppVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _self.copyWith(
+        minimumAppVersion: null == minimumAppVersion
+            ? _self.minimumAppVersion
+            : minimumAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String,
+        latestAppVersion: null == latestAppVersion
+            ? _self.latestAppVersion
+            : latestAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class $AppConfig implements AppConfig {
-  const $AppConfig(
-      {required this.minimumAppVersion, required this.latestAppVersion});
+  const $AppConfig({
+    required this.minimumAppVersion,
+    required this.latestAppVersion,
+  });
 
   @override
   final String minimumAppVersion;
@@ -126,8 +129,9 @@ class $AppConfig implements AppConfig {
 abstract mixin class $$AppConfigCopyWith<$Res>
     implements $AppConfigCopyWith<$Res> {
   factory $$AppConfigCopyWith(
-          $AppConfig value, $Res Function($AppConfig) _then) =
-      _$$AppConfigCopyWithImpl;
+    $AppConfig value,
+    $Res Function($AppConfig) _then,
+  ) = _$$AppConfigCopyWithImpl;
   @override
   @useResult
   $Res call({String minimumAppVersion, String latestAppVersion});
@@ -148,17 +152,17 @@ class _$$AppConfigCopyWithImpl<$Res> implements $$AppConfigCopyWith<$Res> {
     Object? minimumAppVersion = null,
     Object? latestAppVersion = null,
   }) {
-    return _then($AppConfig(
-      minimumAppVersion: null == minimumAppVersion
-          ? _self.minimumAppVersion
-          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-      latestAppVersion: null == latestAppVersion
-          ? _self.latestAppVersion
-          : latestAppVersion // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      $AppConfig(
+        minimumAppVersion: null == minimumAppVersion
+            ? _self.minimumAppVersion
+            : minimumAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String,
+        latestAppVersion: null == latestAppVersion
+            ? _self.latestAppVersion
+            : latestAppVersion // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
-
-// dart format on

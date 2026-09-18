@@ -10,7 +10,6 @@ part of 'entity_contacts.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -25,7 +24,9 @@ mixin _$EntityContacts {
   @pragma('vm:prefer-inline')
   $EntityContactsCopyWith<EntityContacts> get copyWith =>
       _$EntityContactsCopyWithImpl<EntityContacts>(
-          this as EntityContacts, _$identity);
+        this as EntityContacts,
+        _$identity,
+      );
 
   @override
   bool operator ==(Object other) {
@@ -39,7 +40,11 @@ mixin _$EntityContacts {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, name, active, const DeepCollectionEquality().hash(contacts));
+    runtimeType,
+    name,
+    active,
+    const DeepCollectionEquality().hash(contacts),
+  );
 
   @override
   String toString() {
@@ -50,8 +55,9 @@ mixin _$EntityContacts {
 /// @nodoc
 abstract mixin class $EntityContactsCopyWith<$Res> {
   factory $EntityContactsCopyWith(
-          EntityContacts value, $Res Function(EntityContacts) _then) =
-      _$EntityContactsCopyWithImpl;
+    EntityContacts value,
+    $Res Function(EntityContacts) _then,
+  ) = _$EntityContactsCopyWithImpl;
   @useResult
   $Res call({String name, bool active, List<Contact> contacts});
 }
@@ -73,31 +79,33 @@ class _$EntityContactsCopyWithImpl<$Res>
     Object? active = null,
     Object? contacts = null,
   }) {
-    return _then(_self.copyWith(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
-          ? _self.active
-          : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      contacts: null == contacts
-          ? _self.contacts
-          : contacts // ignore: cast_nullable_to_non_nullable
-              as List<Contact>,
-    ));
+    return _then(
+      _self.copyWith(
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        active: null == active
+            ? _self.active
+            : active // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        contacts: null == contacts
+            ? _self.contacts
+            : contacts // ignore: cast_nullable_to_non_nullable
+                  as List<Contact>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class $EntityContacts implements EntityContacts {
-  const $EntityContacts(
-      {required this.name,
-      required this.active,
-      required final List<Contact> contacts})
-      : _contacts = contacts;
+  const $EntityContacts({
+    required this.name,
+    required this.active,
+    required final List<Contact> contacts,
+  }) : _contacts = contacts;
 
   @override
   final String name;
@@ -130,8 +138,12 @@ class $EntityContacts implements EntityContacts {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, active,
-      const DeepCollectionEquality().hash(_contacts));
+  int get hashCode => Object.hash(
+    runtimeType,
+    name,
+    active,
+    const DeepCollectionEquality().hash(_contacts),
+  );
 
   @override
   String toString() {
@@ -143,8 +155,9 @@ class $EntityContacts implements EntityContacts {
 abstract mixin class $$EntityContactsCopyWith<$Res>
     implements $EntityContactsCopyWith<$Res> {
   factory $$EntityContactsCopyWith(
-          $EntityContacts value, $Res Function($EntityContacts) _then) =
-      _$$EntityContactsCopyWithImpl;
+    $EntityContacts value,
+    $Res Function($EntityContacts) _then,
+  ) = _$$EntityContactsCopyWithImpl;
   @override
   @useResult
   $Res call({String name, bool active, List<Contact> contacts});
@@ -167,21 +180,21 @@ class _$$EntityContactsCopyWithImpl<$Res>
     Object? active = null,
     Object? contacts = null,
   }) {
-    return _then($EntityContacts(
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
-          ? _self.active
-          : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      contacts: null == contacts
-          ? _self._contacts
-          : contacts // ignore: cast_nullable_to_non_nullable
-              as List<Contact>,
-    ));
+    return _then(
+      $EntityContacts(
+        name: null == name
+            ? _self.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        active: null == active
+            ? _self.active
+            : active // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        contacts: null == contacts
+            ? _self._contacts
+            : contacts // ignore: cast_nullable_to_non_nullable
+                  as List<Contact>,
+      ),
+    );
   }
 }
-
-// dart format on

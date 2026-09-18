@@ -10,7 +10,6 @@ part of 'app_terms_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -23,7 +22,9 @@ mixin _$AppTermsConfig {
   @pragma('vm:prefer-inline')
   $AppTermsConfigCopyWith<AppTermsConfig> get copyWith =>
       _$AppTermsConfigCopyWithImpl<AppTermsConfig>(
-          this as AppTermsConfig, _$identity);
+        this as AppTermsConfig,
+        _$identity,
+      );
 
   @override
   bool operator ==(Object other) {
@@ -46,8 +47,9 @@ mixin _$AppTermsConfig {
 /// @nodoc
 abstract mixin class $AppTermsConfigCopyWith<$Res> {
   factory $AppTermsConfigCopyWith(
-          AppTermsConfig value, $Res Function(AppTermsConfig) _then) =
-      _$AppTermsConfigCopyWithImpl;
+    AppTermsConfig value,
+    $Res Function(AppTermsConfig) _then,
+  ) = _$AppTermsConfigCopyWithImpl;
   @useResult
   $Res call({int lastVersion});
 }
@@ -64,15 +66,15 @@ class _$AppTermsConfigCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? lastVersion = null,
-  }) {
-    return _then(_self.copyWith(
-      lastVersion: null == lastVersion
-          ? _self.lastVersion
-          : lastVersion // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? lastVersion = null}) {
+    return _then(
+      _self.copyWith(
+        lastVersion: null == lastVersion
+            ? _self.lastVersion
+            : lastVersion // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
@@ -114,8 +116,9 @@ class $AppTermsConfig implements AppTermsConfig {
 abstract mixin class $$AppTermsConfigCopyWith<$Res>
     implements $AppTermsConfigCopyWith<$Res> {
   factory $$AppTermsConfigCopyWith(
-          $AppTermsConfig value, $Res Function($AppTermsConfig) _then) =
-      _$$AppTermsConfigCopyWithImpl;
+    $AppTermsConfig value,
+    $Res Function($AppTermsConfig) _then,
+  ) = _$$AppTermsConfigCopyWithImpl;
   @override
   @useResult
   $Res call({int lastVersion});
@@ -133,16 +136,14 @@ class _$$AppTermsConfigCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $Res call({
-    Object? lastVersion = null,
-  }) {
-    return _then($AppTermsConfig(
-      lastVersion: null == lastVersion
-          ? _self.lastVersion
-          : lastVersion // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? lastVersion = null}) {
+    return _then(
+      $AppTermsConfig(
+        lastVersion: null == lastVersion
+            ? _self.lastVersion
+            : lastVersion // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
-
-// dart format on

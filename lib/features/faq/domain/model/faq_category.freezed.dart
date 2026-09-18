@@ -10,7 +10,6 @@ part of 'faq_category.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -58,8 +57,9 @@ mixin _$FaqCategory {
 /// @nodoc
 abstract mixin class $FaqCategoryCopyWith<$Res> {
   factory $FaqCategoryCopyWith(
-          FaqCategory value, $Res Function(FaqCategory) _then) =
-      _$FaqCategoryCopyWithImpl;
+    FaqCategory value,
+    $Res Function(FaqCategory) _then,
+  ) = _$FaqCategoryCopyWithImpl;
   @useResult
   $Res call({String id, String title, String description, int order});
 }
@@ -81,35 +81,38 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
     Object? description = null,
     Object? order = null,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      order: null == order
-          ? _self.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _self.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        order: null == order
+            ? _self.order
+            : order // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _FaqCategory implements FaqCategory {
-  const _FaqCategory(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.order});
+  const _FaqCategory({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.order,
+  });
 
   /// Unique identifier used to group FAQ items.
   @override
@@ -160,8 +163,9 @@ class _FaqCategory implements FaqCategory {
 abstract mixin class _$FaqCategoryCopyWith<$Res>
     implements $FaqCategoryCopyWith<$Res> {
   factory _$FaqCategoryCopyWith(
-          _FaqCategory value, $Res Function(_FaqCategory) _then) =
-      __$FaqCategoryCopyWithImpl;
+    _FaqCategory value,
+    $Res Function(_FaqCategory) _then,
+  ) = __$FaqCategoryCopyWithImpl;
   @override
   @useResult
   $Res call({String id, String title, String description, int order});
@@ -184,25 +188,25 @@ class __$FaqCategoryCopyWithImpl<$Res> implements _$FaqCategoryCopyWith<$Res> {
     Object? description = null,
     Object? order = null,
   }) {
-    return _then(_FaqCategory(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      order: null == order
-          ? _self.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _FaqCategory(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _self.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _self.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        order: null == order
+            ? _self.order
+            : order // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
   }
 }
-
-// dart format on

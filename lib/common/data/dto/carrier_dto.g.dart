@@ -10,6 +10,4 @@ CarrierDto _$CarrierDtoFromJson(Map<String, dynamic> json) => CarrierDto(
   contacts: (json['contacts'] as List<dynamic>?)?.map((e) => ContactDto.fromJson(e as Map<String, dynamic>)).toList(),
 );
 
-Map<String, dynamic> _$CarrierDtoToJson(CarrierDto instance) => <String, dynamic>{
-  'contacts': instance.contacts,
-};
+Map<String, dynamic> _$CarrierDtoToJson(CarrierDto instance) => <String, dynamic>{'contacts': instance.contacts};

@@ -10,7 +10,6 @@ part of 'faq_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -66,12 +65,13 @@ abstract mixin class $FaqItemCopyWith<$Res> {
   factory $FaqItemCopyWith(FaqItem value, $Res Function(FaqItem) _then) =
       _$FaqItemCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      String question,
-      String answer,
-      int order,
-      FaqCategory? category});
+  $Res call({
+    String id,
+    String question,
+    String answer,
+    int order,
+    FaqCategory? category,
+  });
 
   $FaqCategoryCopyWith<$Res>? get category;
 }
@@ -94,28 +94,30 @@ class _$FaqItemCopyWithImpl<$Res> implements $FaqItemCopyWith<$Res> {
     Object? order = null,
     Object? category = freezed,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      question: null == question
-          ? _self.question
-          : question // ignore: cast_nullable_to_non_nullable
-              as String,
-      answer: null == answer
-          ? _self.answer
-          : answer // ignore: cast_nullable_to_non_nullable
-              as String,
-      order: null == order
-          ? _self.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-      category: freezed == category
-          ? _self.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as FaqCategory?,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        question: null == question
+            ? _self.question
+            : question // ignore: cast_nullable_to_non_nullable
+                  as String,
+        answer: null == answer
+            ? _self.answer
+            : answer // ignore: cast_nullable_to_non_nullable
+                  as String,
+        order: null == order
+            ? _self.order
+            : order // ignore: cast_nullable_to_non_nullable
+                  as int,
+        category: freezed == category
+            ? _self.category
+            : category // ignore: cast_nullable_to_non_nullable
+                  as FaqCategory?,
+      ),
+    );
   }
 
   /// Create a copy of FaqItem
@@ -136,12 +138,13 @@ class _$FaqItemCopyWithImpl<$Res> implements $FaqItemCopyWith<$Res> {
 /// @nodoc
 
 class _FaqItem implements FaqItem {
-  const _FaqItem(
-      {required this.id,
-      required this.question,
-      required this.answer,
-      required this.order,
-      this.category});
+  const _FaqItem({
+    required this.id,
+    required this.question,
+    required this.answer,
+    required this.order,
+    this.category,
+  });
 
   /// Firestore document ID.
   @override
@@ -201,12 +204,13 @@ abstract mixin class _$FaqItemCopyWith<$Res> implements $FaqItemCopyWith<$Res> {
       __$FaqItemCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String question,
-      String answer,
-      int order,
-      FaqCategory? category});
+  $Res call({
+    String id,
+    String question,
+    String answer,
+    int order,
+    FaqCategory? category,
+  });
 
   @override
   $FaqCategoryCopyWith<$Res>? get category;
@@ -230,28 +234,30 @@ class __$FaqItemCopyWithImpl<$Res> implements _$FaqItemCopyWith<$Res> {
     Object? order = null,
     Object? category = freezed,
   }) {
-    return _then(_FaqItem(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      question: null == question
-          ? _self.question
-          : question // ignore: cast_nullable_to_non_nullable
-              as String,
-      answer: null == answer
-          ? _self.answer
-          : answer // ignore: cast_nullable_to_non_nullable
-              as String,
-      order: null == order
-          ? _self.order
-          : order // ignore: cast_nullable_to_non_nullable
-              as int,
-      category: freezed == category
-          ? _self.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as FaqCategory?,
-    ));
+    return _then(
+      _FaqItem(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        question: null == question
+            ? _self.question
+            : question // ignore: cast_nullable_to_non_nullable
+                  as String,
+        answer: null == answer
+            ? _self.answer
+            : answer // ignore: cast_nullable_to_non_nullable
+                  as String,
+        order: null == order
+            ? _self.order
+            : order // ignore: cast_nullable_to_non_nullable
+                  as int,
+        category: freezed == category
+            ? _self.category
+            : category // ignore: cast_nullable_to_non_nullable
+                  as FaqCategory?,
+      ),
+    );
   }
 
   /// Create a copy of FaqItem
@@ -268,5 +274,3 @@ class __$FaqItemCopyWithImpl<$Res> implements _$FaqItemCopyWith<$Res> {
     });
   }
 }
-
-// dart format on

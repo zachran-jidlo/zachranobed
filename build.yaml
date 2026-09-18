@@ -1,0 +1,10 @@
+# Freezed defaults to format: false, which wraps its output in
+# "// dart format off" and keeps dart format out. The generated files are then
+# unreadable and drift from the rest of the project. With format: true freezed
+# formats the output itself and omits the marker, so dart format can reach it.
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          format: true

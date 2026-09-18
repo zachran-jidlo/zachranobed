@@ -10,7 +10,6 @@ part of 'delivery.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -54,16 +53,17 @@ mixin _$Delivery {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      donorId,
-      recipientId,
-      state,
-      type,
-      confirmationTime,
-      hasMeals,
-      isPickupConfirmed,
-      const DeepCollectionEquality().hash(foodBoxes));
+    runtimeType,
+    id,
+    donorId,
+    recipientId,
+    state,
+    type,
+    confirmationTime,
+    hasMeals,
+    isPickupConfirmed,
+    const DeepCollectionEquality().hash(foodBoxes),
+  );
 
   @override
   String toString() {
@@ -76,16 +76,17 @@ abstract mixin class $DeliveryCopyWith<$Res> {
   factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) _then) =
       _$DeliveryCopyWithImpl;
   @useResult
-  $Res call(
-      {String id,
-      String donorId,
-      String recipientId,
-      DeliveryState state,
-      DeliveryType type,
-      Duration confirmationTime,
-      bool hasMeals,
-      bool isPickupConfirmed,
-      Map<String, int> foodBoxes});
+  $Res call({
+    String id,
+    String donorId,
+    String recipientId,
+    DeliveryState state,
+    DeliveryType type,
+    Duration confirmationTime,
+    bool hasMeals,
+    bool isPickupConfirmed,
+    Map<String, int> foodBoxes,
+  });
 }
 
 /// @nodoc
@@ -110,62 +111,64 @@ class _$DeliveryCopyWithImpl<$Res> implements $DeliveryCopyWith<$Res> {
     Object? isPickupConfirmed = null,
     Object? foodBoxes = null,
   }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      donorId: null == donorId
-          ? _self.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _self.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      state: null == state
-          ? _self.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as DeliveryState,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as DeliveryType,
-      confirmationTime: null == confirmationTime
-          ? _self.confirmationTime
-          : confirmationTime // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      hasMeals: null == hasMeals
-          ? _self.hasMeals
-          : hasMeals // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPickupConfirmed: null == isPickupConfirmed
-          ? _self.isPickupConfirmed
-          : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
-              as bool,
-      foodBoxes: null == foodBoxes
-          ? _self.foodBoxes
-          : foodBoxes // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-    ));
+    return _then(
+      _self.copyWith(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        donorId: null == donorId
+            ? _self.donorId
+            : donorId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        recipientId: null == recipientId
+            ? _self.recipientId
+            : recipientId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        state: null == state
+            ? _self.state
+            : state // ignore: cast_nullable_to_non_nullable
+                  as DeliveryState,
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as DeliveryType,
+        confirmationTime: null == confirmationTime
+            ? _self.confirmationTime
+            : confirmationTime // ignore: cast_nullable_to_non_nullable
+                  as Duration,
+        hasMeals: null == hasMeals
+            ? _self.hasMeals
+            : hasMeals // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isPickupConfirmed: null == isPickupConfirmed
+            ? _self.isPickupConfirmed
+            : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        foodBoxes: null == foodBoxes
+            ? _self.foodBoxes
+            : foodBoxes // ignore: cast_nullable_to_non_nullable
+                  as Map<String, int>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _Delivery extends Delivery {
-  const _Delivery(
-      {required this.id,
-      required this.donorId,
-      required this.recipientId,
-      required this.state,
-      required this.type,
-      required this.confirmationTime,
-      required this.hasMeals,
-      required this.isPickupConfirmed,
-      required final Map<String, int> foodBoxes})
-      : _foodBoxes = foodBoxes,
-        super._();
+  const _Delivery({
+    required this.id,
+    required this.donorId,
+    required this.recipientId,
+    required this.state,
+    required this.type,
+    required this.confirmationTime,
+    required this.hasMeals,
+    required this.isPickupConfirmed,
+    required final Map<String, int> foodBoxes,
+  }) : _foodBoxes = foodBoxes,
+       super._();
 
   @override
   final String id;
@@ -216,22 +219,25 @@ class _Delivery extends Delivery {
                 other.hasMeals == hasMeals) &&
             (identical(other.isPickupConfirmed, isPickupConfirmed) ||
                 other.isPickupConfirmed == isPickupConfirmed) &&
-            const DeepCollectionEquality()
-                .equals(other._foodBoxes, _foodBoxes));
+            const DeepCollectionEquality().equals(
+              other._foodBoxes,
+              _foodBoxes,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      donorId,
-      recipientId,
-      state,
-      type,
-      confirmationTime,
-      hasMeals,
-      isPickupConfirmed,
-      const DeepCollectionEquality().hash(_foodBoxes));
+    runtimeType,
+    id,
+    donorId,
+    recipientId,
+    state,
+    type,
+    confirmationTime,
+    hasMeals,
+    isPickupConfirmed,
+    const DeepCollectionEquality().hash(_foodBoxes),
+  );
 
   @override
   String toString() {
@@ -246,16 +252,17 @@ abstract mixin class _$DeliveryCopyWith<$Res>
       __$DeliveryCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String donorId,
-      String recipientId,
-      DeliveryState state,
-      DeliveryType type,
-      Duration confirmationTime,
-      bool hasMeals,
-      bool isPickupConfirmed,
-      Map<String, int> foodBoxes});
+  $Res call({
+    String id,
+    String donorId,
+    String recipientId,
+    DeliveryState state,
+    DeliveryType type,
+    Duration confirmationTime,
+    bool hasMeals,
+    bool isPickupConfirmed,
+    Map<String, int> foodBoxes,
+  });
 }
 
 /// @nodoc
@@ -280,45 +287,45 @@ class __$DeliveryCopyWithImpl<$Res> implements _$DeliveryCopyWith<$Res> {
     Object? isPickupConfirmed = null,
     Object? foodBoxes = null,
   }) {
-    return _then(_Delivery(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      donorId: null == donorId
-          ? _self.donorId
-          : donorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      recipientId: null == recipientId
-          ? _self.recipientId
-          : recipientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      state: null == state
-          ? _self.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as DeliveryState,
-      type: null == type
-          ? _self.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as DeliveryType,
-      confirmationTime: null == confirmationTime
-          ? _self.confirmationTime
-          : confirmationTime // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      hasMeals: null == hasMeals
-          ? _self.hasMeals
-          : hasMeals // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPickupConfirmed: null == isPickupConfirmed
-          ? _self.isPickupConfirmed
-          : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
-              as bool,
-      foodBoxes: null == foodBoxes
-          ? _self._foodBoxes
-          : foodBoxes // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-    ));
+    return _then(
+      _Delivery(
+        id: null == id
+            ? _self.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        donorId: null == donorId
+            ? _self.donorId
+            : donorId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        recipientId: null == recipientId
+            ? _self.recipientId
+            : recipientId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        state: null == state
+            ? _self.state
+            : state // ignore: cast_nullable_to_non_nullable
+                  as DeliveryState,
+        type: null == type
+            ? _self.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as DeliveryType,
+        confirmationTime: null == confirmationTime
+            ? _self.confirmationTime
+            : confirmationTime // ignore: cast_nullable_to_non_nullable
+                  as Duration,
+        hasMeals: null == hasMeals
+            ? _self.hasMeals
+            : hasMeals // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isPickupConfirmed: null == isPickupConfirmed
+            ? _self.isPickupConfirmed
+            : isPickupConfirmed // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        foodBoxes: null == foodBoxes
+            ? _self._foodBoxes
+            : foodBoxes // ignore: cast_nullable_to_non_nullable
+                  as Map<String, int>,
+      ),
+    );
   }
 }
-
-// dart format on
