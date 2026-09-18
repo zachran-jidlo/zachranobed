@@ -40,16 +40,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkouts the repository with entire commit history, which is needed to calculate the
-      # correct build version code in 'Setup environment' step.
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
-      # Setups Java, Flutter and correct version code before build.
+      # Only Flutter is needed here, so Java and the version code are skipped.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          java: false
+          version-code: false
 
       # Run custom lint with project rules
       - name: Run custom lint
@@ -59,16 +58,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkouts the repository with entire commit history, which is needed to calculate the
-      # correct build version code in 'Setup environment' step.
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v6
 
-      # Setups Java, Flutter and correct version code before build.
+      # Only Flutter is needed here, so Java and the version code are skipped.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          java: false
+          version-code: false
 
       # Run unit tests
       - name: Run Flutter tests

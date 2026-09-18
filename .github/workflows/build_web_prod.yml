@@ -15,9 +15,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Setups Java, Flutter and correct version code before build.
+      # Setups Flutter and correct version code before build. Java is not needed for web.
       - name: Setup environment
         uses: ./.github/actions/setup
+        with:
+          java: false
 
       - name: Build web
         run: flutter build web --release --no-tree-shake-icons --base-href "/" --dart-define=WEB_APP_FLAVOR=prod --target lib/main_prod.dart

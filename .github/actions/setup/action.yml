@@ -1,12 +1,23 @@
 name: 'Sets Up Environment'
 description: 'Sets up Java, Flutter and correct version code before build'
 
+inputs:
+  java:
+    description: 'Whether to set up Java. Not needed for tests, lint or web builds.'
+    required: false
+    default: 'true'
+  version-code:
+    description: 'Whether to update the version code. Needs the full commit history.'
+    required: false
+    default: 'true'
+
 runs:
   using: 'composite'
 
   steps:
     # Sets up Java environment. Gradle dependencies are cached to speed up Android builds.
     - name: Set up JDK 17
+      if: inputs.java == 'true'
       uses: actions/setup-java@v5
       with:
         java-version: '17'
@@ -35,5 +46,6 @@ runs:
 
     # Updates a version code in pubspec.yaml based on count of commits in current branch.
     - name: Update version code
+      if: inputs.version-code == 'true'
       shell: bash
       run: ./scripts/update_version_code.sh
