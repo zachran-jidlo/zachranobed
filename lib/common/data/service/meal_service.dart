@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zachranobed/common/data/dto/meal_detail_dto.dart';
-import 'package:zachranobed/common/data/utils/firestore_utils.dart';
 import 'package:zachranobed/common/domain/utils/future_utils.dart';
+import 'package:zachranobed/common/domain/utils/iterable_utils.dart';
 
 class MealService {
   final _collection = FirebaseFirestore.instance
@@ -19,11 +19,16 @@ class MealService {
         },
       );
 
-  /// Queries the Firestore collection for meals with given IDs and returns a
-  /// map with data.
+  /// Returns the meals with the given [ids], keyed by id. Anything that is not
+  /// found is left out.
+  ///
+  /// Reads document by document on purpose. The rules allow `get` but not
+  /// `list`, because the generated document id is the only thing that limits
+  /// who can read a meal.
   Future<Map<String, MealDetailDto>> getDetails(List<String> ids) async {
-    final docs = await _collection.fetchMultipleDocs(ids);
-    return {for (final v in docs) v.id: v};
+    final snapshots = await Future.wait(ids.map((id) => _collection.doc(id).get()));
+    final meals = snapshots.mapNotNull((e) => e.data());
+    return {for (final meal in meals) meal.id: meal};
   }
 
   /// Adds the given [meals] to the collection. Returns a future with true

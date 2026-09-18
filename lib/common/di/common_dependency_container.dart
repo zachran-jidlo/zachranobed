@@ -11,6 +11,7 @@ import 'package:zachranobed/common/data/service/delivery_service.dart';
 import 'package:zachranobed/common/data/service/entity_notification_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/data/service/paired_entity_service.dart';
 import 'package:zachranobed/common/data/service/food_box_service.dart';
 import 'package:zachranobed/common/data/service/meal_service.dart';
 import 'package:zachranobed/common/domain/repository/app_configuration_repository.dart';
@@ -171,6 +172,7 @@ class CommonDependencyContainer {
   static void _setupServiceComponents() {
     GetIt.I.registerSingleton(FoodBoxService());
     GetIt.I.registerSingleton(EntityService());
+    GetIt.I.registerSingleton(PairedEntityService());
     GetIt.I.registerSingleton(EntityPairService());
     GetIt.I.registerSingleton(EntityNotificationService());
     GetIt.I.registerSingleton(MealService());
@@ -178,6 +180,7 @@ class CommonDependencyContainer {
     GetIt.I.registerSingleton(
       AuthService(
         GetIt.I<EntityService>(),
+        GetIt.I<PairedEntityService>(),
         GetIt.I<EntityPairService>(),
         GetIt.I<AppPreferences>(),
         GetIt.I<GetDeviceIdUseCase>(),

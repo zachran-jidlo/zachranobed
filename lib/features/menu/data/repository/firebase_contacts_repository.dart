@@ -4,7 +4,7 @@ import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/service/carrier_service.dart';
 import 'package:zachranobed/common/data/service/configuration_service.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
-import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/data/service/paired_entity_service.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/common/domain/utils/generic_utils.dart';
 import 'package:zachranobed/features/menu/data/mapper/contacts_mapper.dart';
@@ -15,13 +15,13 @@ import 'package:zachranobed/features/menu/domain/repository/contacts_repository.
 
 /// Implementation of the [ContactsRepository] via Firebase services.
 class FirebaseContactsRepository implements ContactsRepository {
-  final EntityService _entityService;
+  final PairedEntityService _pairedEntityService;
   final EntityPairService _entityPairService;
   final ConfigurationService _configurationService;
   final CarrierService _carrierService;
 
   FirebaseContactsRepository(
-    this._entityService,
+    this._pairedEntityService,
     this._entityPairService,
     this._configurationService,
     this._carrierService,
@@ -66,7 +66,7 @@ class FirebaseContactsRepository implements ContactsRepository {
     UserData user,
     List<String> entityIds,
   ) async {
-    final entities = await _entityService.fetchEntities(entityIds);
+    final entities = await _pairedEntityService.fetchEntities(entityIds);
     final activePair = user.activePair;
     return entities
         .map((e) {

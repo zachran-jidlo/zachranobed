@@ -3,19 +3,19 @@ import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/prefs/entity_pair_struct.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
-import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/data/service/paired_entity_service.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
 import 'package:zachranobed/features/activepair/domain/model/entity_pairs_summary.dart';
 import 'package:zachranobed/features/activepair/domain/repository/entity_pairs_repository.dart';
 
 /// Implementation of the [EntityPairsRepository] via Firebase services.
 class FirebaseEntityPairsRepository implements EntityPairsRepository {
-  final EntityService _entityService;
+  final PairedEntityService _pairedEntityService;
   final EntityPairService _entityPairService;
   final AppPreferences _appPreferences;
 
   FirebaseEntityPairsRepository(
-    this._entityService,
+    this._pairedEntityService,
     this._entityPairService,
     this._appPreferences,
   );
@@ -44,7 +44,7 @@ class FirebaseEntityPairsRepository implements EntityPairsRepository {
 
     final allPairs = await pairs.toDomain(
       userEntityId: user.entityId,
-      entities: _entityService.fetchEntities,
+      entities: _pairedEntityService.fetchEntities,
     );
 
     // Pairs turned off by an admin must not be offered to the user

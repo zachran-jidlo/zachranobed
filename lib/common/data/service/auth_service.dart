@@ -6,6 +6,7 @@ import 'package:zachranobed/common/data/mapper/entity_pair_mapper.dart';
 import 'package:zachranobed/common/data/prefs/app_preferences.dart';
 import 'package:zachranobed/common/data/service/entity_pairs_service.dart';
 import 'package:zachranobed/common/data/service/entity_service.dart';
+import 'package:zachranobed/common/data/service/paired_entity_service.dart';
 import 'package:zachranobed/common/data/utils/auth_error_codes.dart';
 import 'package:zachranobed/common/data/utils/firebase_helper.dart';
 import 'package:zachranobed/common/domain/model/entity_pair.dart';
@@ -16,21 +17,26 @@ import 'package:zachranobed/common/domain/utils/zo_logger.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final EntityService _entityService;
+  final PairedEntityService _pairedEntityService;
   final EntityPairService _entityPairService;
   final AppPreferences _appPreferences;
   final GetDeviceIdUseCase _getDeviceId;
 
   AuthService(
     this._entityService,
+    this._pairedEntityService,
     this._entityPairService,
     this._appPreferences,
     this._getDeviceId,
   );
 
-  /// Gets the current user's e-mail and fetches entity, which also determines
-  /// user's role. Depending on the entity type (`donor` or `recipient`), it
-  /// fetches and returns the corresponding user data from the respective
-  /// services.
+  /// Fetches the entity of the signed-in user, which also determines the
+  /// user's role. Depending on the entity type (`donor` or `recipient`) it
+  /// returns the corresponding user data from the respective services.
+  ///
+  /// The entity is taken from the `entityId` custom claim, which is set on the
+  /// account when it is created. Security rules read the same claim, so the app
+  /// and the rules can never disagree on who the caller is.
   ///
   /// Returns a [Future] that completes with [UserData] for the authenticated
   /// user.
@@ -43,17 +49,21 @@ class AuthService {
       return null;
     }
 
-    final email = user.email;
-    if (email == null) {
-      ZOLogger.logMessage("Unable to get user data, e-mail is null");
+    final token = await user.getIdTokenResult();
+    final entityId = token.claims?['entityId'] as String?;
+    if (entityId == null) {
+      ZOLogger.logMessage(
+        "Unable to get user data, the account has no entityId claim",
+        isError: true,
+      );
       return null;
     }
 
-    final entity = await _entityService.getEntityByEmail(email);
+    final entity = await _entityService.getById(entityId);
     if (entity == null) {
       ZOLogger.logMessage(
-        "Unable to get user data, entity "
-        "is not found for e-mail $email",
+        "Unable to get user data, entity $entityId is not found",
+        isError: true,
       );
       return null;
     }
@@ -62,7 +72,8 @@ class AuthService {
     if (entityType == null) {
       ZOLogger.logMessage(
         "Unable to get user data, entity type "
-        "is not recognised for e-mail $email",
+        "is not recognised for entity $entityId",
+        isError: true,
       );
       return null;
     }
@@ -151,6 +162,7 @@ class AuthService {
     }
     await _auth.signOut();
     await _appPreferences.clear();
+    _pairedEntityService.clearCache();
     FirebaseHelper.setUserIdentifier(null);
   }
 
@@ -260,7 +272,7 @@ class AuthService {
   }) async {
     final entityPairs = await pairs.toDomain(
       userEntityId: userEntityId,
-      entities: _entityService.fetchEntities,
+      entities: _pairedEntityService.fetchEntities,
     );
 
     final savedActivePair = await _appPreferences.getActivePair();

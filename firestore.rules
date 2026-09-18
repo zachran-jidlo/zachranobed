@@ -1,49 +1,244 @@
 rules_version = '2';
 
+// Access is keyed on the `entityId` custom claim, which holds the id of the
+// entity document the signed-in account belongs to. An account without that
+// claim can read the public app configuration and nothing else, so the claim
+// has to be set when the account is created. The Rowy action on the entities
+// table does that.
+//
+// Note: Cloud Functions use the Admin SDK, which ignores these rules.
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow admins to read and write all documents
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+
+    // ----- Helpers -----
+
+    function isSignedIn() {
+      return request.auth != null;
     }
+
+    // Whether the token carries the entity claim. Guard every use of
+    // myEntity() with this, otherwise a missing claim raises an error.
+    function hasEntity() {
+      return isSignedIn() && request.auth.token.keys().hasAll(['entityId']);
+    }
+
+    function myEntity() {
+      return request.auth.token.entityId;
+    }
+
+    function isMine(entityId) {
+      return hasEntity() && myEntity() == entityId;
+    }
+
+    // The existing document belongs to a pair this user is part of.
+    function inMyPair() {
+      return hasEntity() &&
+        (resource.data.donorId == myEntity() || resource.data.recipientId == myEntity());
+    }
+
+    // Which top-level fields this write touches.
+    function touches(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    function hasAnyRole(roles) {
+      return isSignedIn() &&
+        request.auth.token.keys().hasAll(['roles']) &&
+        request.auth.token.roles.hasAny(roles);
+    }
+
+    function isAdmin() {
+      return hasAnyRole(['ADMIN', 'OWNER']);
+    }
+
+    // ----- Public config -----
+
+    // The force update check runs before sign-in, so its document has to be
+    // readable without an account. The rest of the collection is not, and
+    // `list` is off so the collection cannot be enumerated.
+    match /appConfiguration/{docId} {
+      allow get: if docId == 'app-config' || isSignedIn();
+      allow list: if false;
+      allow write: if isAdmin();
+    }
+
+    // ----- Read-only reference data -----
+
+    match /foodBoxes/{foodBoxId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Carrier contacts are the delivery providers' public contact details, so
+    // a plain signed-in read is intended here.
+    match /carriers/{carrierId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // The content sits in subcollections under `faq/content`, so this has to
+    // reach deeper than the top-level document.
+    match /faq/{document=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // The client only ever queries active banners, so an inactive banner stays
+    // hidden even from a direct read.
+    match /banners/{bannerId} {
+      allow read: if isSignedIn() && resource.data.active == true;
+      allow write: if isAdmin();
+    }
+
+    // ----- Entities -----
+
+    // Own document only. A paired counterpart's contact data reaches the client
+    // through the `getPairedEntities` callable, never through Firestore, so
+    // `list` is off entirely.
+    match /entities/{entityId} {
+      allow get: if isMine(entityId);
+      allow list: if false;
+      allow create, delete: if false;
+      allow update: if isMine(entityId) && touches([
+        'lastAcceptedAppTermsVersion',
+        'fcmTokens',
+        'devices',
+        'showOnboardingForUiChanges',
+      ]);
+
+      // Written by Cloud Functions. The owner may only flip the read flag.
+      match /notifications/{notificationId} {
+        allow read: if isMine(entityId);
+        allow create, delete: if false;
+        allow update: if isMine(entityId) && touches(['read']);
+      }
+
+      // Backs the meal name autocomplete. Written only by the entity itself,
+      // but a charity recording a manual donation reads the canteen's list and
+      // rules cannot check pairing. Dish names and allergens carry no personal
+      // data, the `meals` collection is readable on the same grounds.
+      match /mealSuggestions/{suggestionId} {
+        allow read: if hasEntity();
+        allow write: if isMine(entityId);
+      }
+    }
+
+    // ----- Entity pairs -----
+
+    // The client always filters by donorId or recipientId, so these queries
+    // still pass. Only the box counts and the checkup state are writable.
+    match /entityPairs/{pairId} {
+      allow read: if inMyPair();
+      allow create, delete: if false;
+      allow update: if inMyPair() && touches(['foodboxes', 'foodboxesCheckup']);
+    }
+
+    // ----- Deliveries -----
+
+    // Both roles create deliveries. A canteen creates the food delivery, a
+    // charity creates the box return and the manual donation entry, so the
+    // check is pair membership rather than the donor side.
+    match /deliveries/{deliveryId} {
+      allow get: if hasEntity() && (resource == null || inMyPair());
+      allow list: if inMyPair();
+      allow delete: if false;
+      // Same trade as the update below. The pair has to be the caller's own and
+      // the date has to be a real timestamp, the reports and the history order
+      // depend on it. The rest of the payload is not policed.
+      allow create: if hasEntity() &&
+        (request.resource.data.donorId == myEntity() ||
+         request.resource.data.recipientId == myEntity()) &&
+        request.resource.data.deliveryDate is timestamp;
+      allow update: if inMyPair() &&
+        request.resource.data.donorId == resource.data.donorId &&
+        request.resource.data.recipientId == resource.data.recipientId &&
+        request.resource.data.deliveryDate == resource.data.deliveryDate;
+    }
+
+    // ----- Meals -----
+
+    // A meal carries only donorId, so the read cannot be scoped to a pair. The
+    // document id is a generated uuid and the only place it appears is the meal
+    // list of a delivery, which already needs pair membership to read, so the
+    // id is what limits access. That only holds while the collection cannot be
+    // listed, hence `list` is off and the client reads meals by id.
+    //
+    // Every meal is written once under a fresh id, so updates are off as well.
+    // A charity recording a manual donation writes meals whose donorId is the
+    // canteen, which is why create cannot be tied back to the caller.
+    match /meals/{mealId} {
+      allow get: if isSignedIn();
+      allow list: if false;
+      allow create: if hasEntity() && request.resource.data.donorId is string;
+      allow update, delete: if false;
+    }
+
+    // ---------------------------------------------------------
+    // Rowy rules start
+    // ---------------------------------------------------------
+    // Automatically generated and managed by Rowy
+    // ⚠️ Do not edit this block directly, as it will be overwritten
+    // To edit the security rules, please do it on different block or manage from rowy settings
+    // initialized on 6/17/2024
+    match /{collectionId}/{docId} {
+      allow read: if colRule(["entities","deliveries","meals"], ["ADMIN","VIEWER","OWNER"]);
+      allow read, create, update, delete: if colRule(["entityPairs"], ["ADMIN","EDITOR","OWNER"]);
+      allow create, update, delete: if colRule(["entities"], ["ADMIN","VIEWER","OWNER"]);
+      allow create, update, delete: if colRule(["deliveries","meals"], ["ADMIN","OWNER"]);
+
+      function colRule(collections, roles){
+        return collectionId in collections && hasAnyRole(roles);
+      }
+    }
+    // ---------------------------------------------------------
+    // Rowy rules end
+    // ---------------------------------------------------------
 
     // Rowy: Allow signed in users to read Rowy configuration and admins to write
     match /_rowy_/{docId} {
-      allow read: if request.auth.token.roles.size() > 0;
-      allow write: if hasAnyRole(["ADMIN", "OWNER"]);
-    	match /{document=**} {
-        allow read: if request.auth.token.roles.size() > 0;
-        allow write: if hasAnyRole(["ADMIN", "OWNER"]);
+      allow read: if isSignedIn() && request.auth.token.keys().hasAll(['roles']) &&
+        request.auth.token.roles.size() > 0;
+      allow write: if isAdmin();
+
+      match /{document=**} {
+        allow read: if isSignedIn() && request.auth.token.keys().hasAll(['roles']) &&
+          request.auth.token.roles.size() > 0;
+        allow write: if isAdmin();
       }
       match /schema/{tableId} {
-        allow update: if canModify(tableId,'pc')
-        match /{document=**} {allow read,write: if canModify(tableId,'pc')}
+        allow update: if canModify(tableId, 'pc');
+        match /{document=**} {
+          allow read, write: if canModify(tableId, 'pc');
+        }
       }
-       match /groupSchema/{tableId} {
-        allow update: if canModify(tableId,'cg')
-        match /{document=**} {allow read,write: if canModify(tableId,'cg')}
+      match /groupSchema/{tableId} {
+        allow update: if canModify(tableId, 'cg');
+        match /{document=**} {
+          allow read, write: if canModify(tableId, 'cg');
+        }
       }
-    	function canModify(tableId,tableType) {
-      	return hasAnyRole(get(/databases/$(database)/documents/_rowy_/settings)
-        .data.tablesSettings[tableType][tableId].modifiableBy)
-	   	}
+
+      function canModify(tableId, tableType) {
+        return hasAnyRole(get(/databases/$(database)/documents/_rowy_/settings)
+          .data.tablesSettings[tableType][tableId].modifiableBy);
+      }
     }
+
     // Rowy: Allow users to edit their settings
     match /_rowy_/userManagement/users/{userId} {
       allow get, update, delete: if isDocOwner(userId);
-      allow create: if request.auth.token.roles.size() > 0;
+      allow create: if isSignedIn() && request.auth.token.keys().hasAll(['roles']) &&
+        request.auth.token.roles.size() > 0;
     }
+
     // Rowy: Allow public to read public Rowy configuration
     match /_rowy_/publicSettings {
       allow get: if true;
     }
 
-    // Rowy: Utility functions
     function isDocOwner(docId) {
-      return request.auth != null && (request.auth.uid == resource.id || request.auth.uid == docId);
-    }
-    function hasAnyRole(roles) {
-      return request.auth != null && request.auth.token.roles.hasAny(roles);
+      return isSignedIn() && (request.auth.uid == resource.id || request.auth.uid == docId);
     }
   }
 }
