@@ -55,10 +55,15 @@ jobs:
       - name: Run Flutter analyze
         run: flutter analyze
 
-      # Fail when anything is not formatted per analysis_options.yaml. Generated
-      # files count too, so a model change without a build_runner run is caught.
+      # Format everything, then fail if a version controlled file changed. The
+      # l10n sources are generated during pub get and come out unformatted, but
+      # they are gitignored, so reformatting them here is harmless and git does
+      # not see it. Committed Freezed and json_serializable output is version
+      # controlled, so a model change without a build_runner run is caught.
       - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed lib test
+        run: |
+          dart format lib test
+          git diff --exit-code -- lib test
 
       # Run custom lint with project rules
       - name: Run custom lint
