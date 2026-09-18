@@ -1,7 +1,7 @@
 # This workflow runs on pushes and pull requests to the `develop` branch.
 # It has three jobs:
 # 1. build → Builds the Flutter project
-# 2. lint  → Runs static analysis with `dart run custom_lint` and fails on issues
+# 2. lint  → Runs `flutter analyze` and `dart run custom_lint` and fails on issues
 # 3. test  → Runs the Flutter unit test suite
 name: Pull Request Checks
 
@@ -50,6 +50,10 @@ jobs:
         with:
           java: false
           version-code: false
+
+      # Run the Dart analyzer with the project's analysis_options.yaml
+      - name: Run Flutter analyze
+        run: flutter analyze
 
       # Run custom lint with project rules
       - name: Run custom lint
