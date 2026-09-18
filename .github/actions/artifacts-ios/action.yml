@@ -12,5 +12,6 @@ runs:
       with:
         name: ios-artifacts
         retention-days: 14
+        if-no-files-found: error
         path: |
           **/*.ipa

@@ -12,6 +12,7 @@ runs:
       with:
         name: android-artifacts
         retention-days: 14
+        if-no-files-found: error
         path: |
           build/app/outputs/flutter-apk/*.apk
           build/app/outputs/bundle/**/*.aab
