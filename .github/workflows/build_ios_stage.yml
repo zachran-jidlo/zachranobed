@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: macos-26
+    timeout-minutes: 60
 
     steps:
       # Checkouts the repository with entire commit history, which is needed to calculate the
@@ -44,6 +45,7 @@ jobs:
   distribute:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       # Checkouts the repository.
