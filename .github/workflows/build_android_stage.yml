@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-26
+    runs-on: ubuntu-latest
 
     steps:
       # Checkouts the repository with entire commit history, which is needed to calculate the
@@ -30,28 +30,11 @@ jobs:
       - name: Upload artifacts
         uses: ./.github/actions/artifacts-android
 
-  # Use a new job, which runs on Linux, because Firebase App Distribution action does not support MacOS runner.
-  distribute:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checkouts the repository.
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      # Downloads Android related artifacts.
-      - name: Download artifacts
-        uses: actions/download-artifact@v8
-        with:
-          name: android-artifacts
-          path: android-artifacts
-
       # Upload APK to the Firebase and distribute it with latest release notes.
       - name: Distribute to Firebase App Distribution
         uses: ./.github/actions/distribute
         with:
           serviceCredentials: ${{ secrets.FIREBASE_APP_DISTRIBUTION_DEV_CREDENTIAL_FILE_CONTENT }}
-          path: 'android-artifacts/build/app/outputs/flutter-apk/app-stage-release.apk'
+          path: 'build/app/outputs/flutter-apk/app-stage-release.apk'
           application: ${{ secrets.FIREBASE_APP_DISTRIBUTION_ANDROID_STAGE_APP_ID }}
           groups: ${{ vars.FIREBASE_APP_DISTRIBUTION_GROUPS }}

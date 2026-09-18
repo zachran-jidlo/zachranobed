@@ -14,6 +14,7 @@ This is a changelog for **ZachranObed** application.
 ### Changed
 - **ZOB-433** Update orientation settings.
 - **ZOB-446** Restrict Firestore security rules to the signed-in user's own entity and pairs.
+- **ZOB-447** Run Android and web builds on Ubuntu runners and merge the Android build and distribution jobs.
 
 ## [2.2.0]
 ### Added
