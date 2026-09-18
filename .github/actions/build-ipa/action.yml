@@ -57,6 +57,16 @@ runs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
+    # Caches CocoaPods, which are not committed and would otherwise be fetched on every build.
+    - name: Cache CocoaPods
+      uses: actions/cache@v6
+      with:
+        path: |
+          ios/Pods
+          ~/.cocoapods
+        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+        restore-keys: ${{ runner.os }}-pods-
+
     - name: Select Xcode version
       shell: bash
       run: sudo xcode-select -s /Applications/Xcode_26.5.app
