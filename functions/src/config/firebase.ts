@@ -37,5 +37,9 @@ export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 // Bearer token for the manual report trigger
 export const reportTriggerToken = defineSecret("REPORT_TRIGGER_TOKEN");
 
+// Google Sheets delivery report
+export const deliveriesSheetId = defineString("DELIVERIES_SHEET_ID", { default: "" });
+export const deliveriesSheetTab = defineString("DELIVERIES_SHEET_TAB", { default: "Rozvozy" });
+
 admin.initializeApp();
 export const db = admin.firestore();

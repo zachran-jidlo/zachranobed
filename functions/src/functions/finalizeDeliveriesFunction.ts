@@ -2,14 +2,37 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import { logger } from "firebase-functions/v2";
 import { DateTime } from "luxon";
 import { getDeliveriesByDateAndStates, updateDeliveryState } from "../services/deliveryService";
+import { syncDeliveriesToSheet } from "./syncDeliveriesToSheetFunction";
 import { TIMEZONE } from "../config/constants";
 
 /**
- * Core logic for finalizing deliveries at end of day.
- * @param {Date} date - Date to finalize (defaults to today)
+ * Finalize a day and mirror the resulting DONE deliveries to the report sheet.
+ *
+ * @param {Date} date - Date to finalize (defaults to yesterday)
  * @return {Promise<void>}
  */
-export async function finalizeDeliveries(date?: Date): Promise<void> {
+export async function finalizeDeliveriesAndSync(date?: Date): Promise<void> {
+  const finalized = await finalizeDeliveries(date);
+
+  // A Sheets failure must not fail the run
+  try {
+    await syncDeliveriesToSheet(finalized);
+  } catch (error) {
+    logger.error("finalizeDeliveries: delivery sheet sync failed", error);
+  }
+}
+
+/**
+ * Core logic for finalizing deliveries at end of day.
+ *
+ * Returns the date it worked on so the caller does not have to recompute it.
+ * Two independent "now minus one day" calculations can straddle midnight and
+ * disagree about which day was just finalized.
+ *
+ * @param {Date} date - Date to finalize (defaults to yesterday)
+ * @return {Promise<Date>} The date that was finalized
+ */
+async function finalizeDeliveries(date?: Date): Promise<Date> {
   const targetDate = date ?? DateTime.now().setZone(TIMEZONE).minus({ days: 1 }).toJSDate();
 
   logger.info(`finalizeDeliveries: processing date ${targetDate.toISOString()}`);
@@ -57,18 +80,22 @@ export async function finalizeDeliveries(date?: Date): Promise<void> {
   logger.info(
     `finalizeDeliveries: complete — DONE: ${doneCount}, NOT_USED (safety net): ${notUsedCount}, stuck mid delivery: ${stuckMidDeliveryStates.length}`,
   );
+
+  return targetDate;
 }
 
 /**
  * Scheduled function that runs at midnight Prague time daily.
- * Transitions DELIVERED → DONE and catches stuck states as safety net.
+ * Transitions DELIVERED → DONE, catches stuck states as safety net, then
+ * writes the finalized deliveries to the report sheet.
  */
 export const finalizeDeliveriesFunction = onSchedule(
   {
     schedule: "0 0 * * *",
     timeZone: TIMEZONE,
+    timeoutSeconds: 300,
   },
   async () => {
-    await finalizeDeliveries();
+    await finalizeDeliveriesAndSync();
   },
 );
