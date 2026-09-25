@@ -35,6 +35,11 @@ abstract class Delivery with _$Delivery {
         !hasMeals;
   }
 
+  /// Whether the delivery ended without any food changing hands, either because
+  /// the donor did not donate that day or because the carrier cancelled the
+  /// trip. Both cases look the same to the user.
+  bool get isUnfulfilled => state == DeliveryState.notUsed || state == DeliveryState.interrupted;
+
   /// Whether the canteen can confirm this box return right now, taking the
   /// boxes into its stock ahead of the schedule. Only self-delivered returns
   /// that are still on their way and actually carry boxes. The delivery day
@@ -57,6 +62,7 @@ enum DeliveryState {
   delivered,
   done,
   notUsed,
+  interrupted,
 }
 
 enum DeliveryType {

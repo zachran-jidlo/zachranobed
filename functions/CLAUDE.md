@@ -113,7 +113,10 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
     - `OnWayToPickup` → `ON_WAY_TO_PICK_UP`
     - `OnWayToCustomer` → `IN_DELIVERY`
     - `ArrivedToCustomer` → `DELIVERED`
-  - Other statuses (`ArrivedToPickup`, `Finished`, `Refused`) are logged but don't change state
+    - `Cancelled` → `INTERRUPTED`
+    - `Refused` → `INTERRUPTED`
+  - Other statuses (`ArrivedToPickup`, `Finished`) are logged but don't change state
+  - Deliveries already in a terminal state (`DELIVERED`, `DONE`, `NOT_USED`, `INTERRUPTED`) are never overwritten by a late callback
 
 **Firestore Triggers** (v2 onDocumentUpdated):
 - `notifyCharityAboutDonationV2` - Triggers on `deliveries/{id}` updates when state changes to ACCEPTED/NOT_USED

@@ -25,7 +25,7 @@ import 'package:zachranobed/common/presentation/widget/progress/ui_progress_step
 /// - **inDelivery**: Shows delivery time range
 /// - **delivered**: Shows completion message
 /// - **done**: Shows completion message
-/// - **null/notUsed**: Shows "not a delivery day" message
+/// - **null/notUsed/interrupted**: Shows "not a delivery day" message
 class CanteenDonationStatusCard extends StatelessWidget {
   /// The canteen user data containing pair information and pickup times.
   final Canteen canteen;
@@ -134,6 +134,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       case DeliveryState.delivered:
       case DeliveryState.done:
       case DeliveryState.notUsed:
+      case DeliveryState.interrupted:
         // No-op, handled above
         break;
     }
@@ -172,6 +173,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       case DeliveryState.delivered:
       case DeliveryState.done:
       case DeliveryState.notUsed:
+      case DeliveryState.interrupted:
         currentStep = 5;
         isCurrentStepActive = true;
         break;
@@ -272,7 +274,7 @@ class CanteenDonationStatusCard extends StatelessWidget {
       return false;
     }
 
-    if (delivery.state == DeliveryState.notUsed) {
+    if (delivery.isUnfulfilled) {
       return false;
     }
 

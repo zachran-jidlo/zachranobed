@@ -24,7 +24,7 @@ import 'package:zachranobed/common/presentation/widget/graphics/ui_icon.dart';
 /// - **inDelivery**: Shows delivery time range and details button
 /// - **delivered**: Shows completion message
 /// - **done**: Shows completion message
-/// - **null/notUsed**: Shows "not a delivery day" message
+/// - **null/notUsed/interrupted**: Shows "not a delivery day" message
 class CharityDonationStatusCard extends StatelessWidget {
   /// The charity user data containing pair information and delivery times.
   final Charity charity;
@@ -77,7 +77,7 @@ class CharityDonationStatusCard extends StatelessWidget {
   }
 
   Widget _buildStatusSection(BuildContext context, Delivery? delivery) {
-    if (delivery == null || delivery.state == DeliveryState.notUsed) {
+    if (delivery == null || delivery.isUnfulfilled) {
       return Text(
         context.l10n.overviewCharityDonationStatusCardNotDeliveryDayLabel,
         style: context.textStyles.bodyMedium.copyWith(
@@ -125,6 +125,7 @@ class CharityDonationStatusCard extends StatelessWidget {
       case DeliveryState.delivered:
       case DeliveryState.done:
       case DeliveryState.notUsed:
+      case DeliveryState.interrupted:
         // No-op, handled above
         break;
     }
@@ -136,7 +137,7 @@ class CharityDonationStatusCard extends StatelessWidget {
   }
 
   Widget? _buildProgressBar(BuildContext context, Delivery? delivery) {
-    if (delivery == null || delivery.state == DeliveryState.notUsed) {
+    if (delivery == null || delivery.isUnfulfilled) {
       return null;
     }
 
@@ -165,6 +166,7 @@ class CharityDonationStatusCard extends StatelessWidget {
       case DeliveryState.delivered:
       case DeliveryState.done:
       case DeliveryState.notUsed:
+      case DeliveryState.interrupted:
         currentStep = 5;
         isCurrentStepActive = true;
         break;

@@ -49,6 +49,8 @@ extension DeliveryStateMapper on DeliveryStateDto {
         return DeliveryState.done;
       case DeliveryStateDto.notUsed:
         return DeliveryState.notUsed;
+      case DeliveryStateDto.interrupted:
+        return DeliveryState.interrupted;
     }
   }
 }
@@ -72,6 +74,8 @@ extension DeliveryStateDtoMapper on DeliveryState {
         return DeliveryStateDto.done;
       case DeliveryState.notUsed:
         return DeliveryStateDto.notUsed;
+      case DeliveryState.interrupted:
+        return DeliveryStateDto.interrupted;
     }
   }
 }

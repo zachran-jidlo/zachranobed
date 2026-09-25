@@ -60,6 +60,7 @@ const _$DeliveryStateDtoEnumMap = {
   DeliveryStateDto.delivered: 'DELIVERED',
   DeliveryStateDto.done: 'DONE',
   DeliveryStateDto.notUsed: 'NOT_USED',
+  DeliveryStateDto.interrupted: 'INTERRUPTED',
 };
 
 const _$DeliveryTypeDtoEnumMap = {
