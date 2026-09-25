@@ -149,8 +149,12 @@ Auth token is read from `.secret.local` (`DODO_WEBHOOK_TOKEN`). Override with `-
 | `OnWayToPickup` | `ON_WAY_TO_PICK_UP` |
 | `OnWayToCustomer` | `IN_DELIVERY` |
 | `ArrivedToCustomer` | `DELIVERED` |
+| `Cancelled` | `INTERRUPTED` |
+| `Refused` | `INTERRUPTED` |
 
-Other statuses (`ArrivedToPickup`, `Finished`, `Refused`) are accepted but don't update delivery state.
+Other statuses (`ArrivedToPickup`, `Finished`) are accepted but don't update delivery state.
+
+A delivery already in a terminal state (`DELIVERED`, `DONE`, `NOT_USED`, `INTERRUPTED`) is never overwritten. A late callback is logged and ignored.
 
 # Snippets
 

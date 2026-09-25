@@ -11,6 +11,8 @@ export const DeliveryStateSchema = z.enum([
   "DELIVERED",
   "DONE",
   "NOT_USED",
+  /** Terminal state for a trip the carrier cancelled or refused */
+  "INTERRUPTED",
 ]);
 
 export const DeliveryTypeSchema = z.enum(["FOOD_DELIVERY", "BOX_DELIVERY"]);

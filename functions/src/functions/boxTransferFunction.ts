@@ -15,9 +15,16 @@ const DeliveryFoodBoxSchema = z.object({
   count: z.number(),
 });
 
+/** States that mean the boxes physically changed hands. */
+const FINISHED_STATES = ["DELIVERED", "DONE"];
+
 /**
  * Firestore onDocumentUpdated trigger that transfers box counts in the
- * EntityPair document when a delivery transitions to the DELIVERED state.
+ * EntityPair document when a delivery reaches a finished state.
+ *
+ * DONE is accepted alongside DELIVERED so that a delivery repaired by hand
+ * (for example a carrier-cancelled trip that did happen after all) still moves
+ * its boxes, no matter which of the two states the admin picks.
  *
  * For FOOD_DELIVERY (canteen → charity): donorCount decreases, recipientCount increases.
  * For BOX_DELIVERY (charity → canteen): donorCount increases, recipientCount decreases.
@@ -32,8 +39,13 @@ export const boxTransfer = onDocumentUpdated(
     const newValue = event.data?.after?.data();
     if (!oldValue || !newValue) return;
 
-    // Guard: only react to transitions TO DELIVERED
-    if (oldValue.state === "DELIVERED" || newValue.state !== "DELIVERED") return;
+    // Guard: only react to transitions into a finished state
+    if (
+      FINISHED_STATES.includes(oldValue.state) ||
+      !FINISHED_STATES.includes(newValue.state)
+    ) {
+      return;
+    }
 
     // Guard: only process deliveries explicitly marked for server-side transfer.
     // - false  → new app created this delivery, Cloud Function should transfer

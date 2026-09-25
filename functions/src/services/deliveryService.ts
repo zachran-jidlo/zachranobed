@@ -189,7 +189,21 @@ const DODO_STATUS_TO_STATE: Record<string, DeliveryState> = {
   OnWayToPickup: "ON_WAY_TO_PICK_UP",
   OnWayToCustomer: "IN_DELIVERY",
   ArrivedToCustomer: "DELIVERED",
+  Cancelled: "INTERRUPTED",
+  Refused: "INTERRUPTED",
 };
+
+/**
+ * States a delivery never leaves. A late or out-of-order carrier callback must
+ * not overwrite them, otherwise a finished delivery could be reopened after the
+ * boxes were already transferred.
+ */
+const TERMINAL_STATES: DeliveryState[] = [
+  "DELIVERED",
+  "DONE",
+  "NOT_USED",
+  "INTERRUPTED",
+];
 
 /**
  * Update delivery state based on a DODO webhook status callback.
@@ -219,6 +233,14 @@ export async function updateDeliveryStateByDodoStatus(
   }
 
   const doc = snapshot.docs[0];
+  const currentState = doc.data().state as DeliveryState;
+  if (TERMINAL_STATES.includes(currentState)) {
+    logger.warn(
+      `Ignoring DODO status ${dodoStatus} for delivery ${doc.id}: already in terminal state ${currentState}`,
+    );
+    return { updated: false, reason: "terminal_state" };
+  }
+
   await updateDeliveryState(doc.ref, newState);
   logger.info(
     `Updated delivery ${doc.id} state to ${newState} (DODO status: ${dodoStatus})`,

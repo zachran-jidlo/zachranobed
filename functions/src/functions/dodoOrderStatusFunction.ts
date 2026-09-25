@@ -11,6 +11,7 @@ const VALID_STATUSES = [
   "ArrivedToCustomer",
   "Finished",
   "Refused",
+  "Cancelled",
 ] as const;
 
 export const dodoOrderStatus = onRequest(
