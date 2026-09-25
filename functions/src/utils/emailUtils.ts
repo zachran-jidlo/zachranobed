@@ -1,12 +1,11 @@
-import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
+import { DocumentData, Timestamp } from "firebase-admin/firestore";
 import { db } from "../config/firebase";
 import { FoodBox } from "../models/FoodBox";
 import { FoodBoxesCheckupReportedCount } from "../models/FoodBoxesCheckupReportedCount";
 
 export async function constructAndSendEmail(
   entityId: string,
-  entityPair: admin.firestore.DocumentData,
+  entityPair: DocumentData,
   isDonor: boolean,
   reportedCounts: FoodBoxesCheckupReportedCount[]
 ): Promise<any> {
@@ -80,7 +79,7 @@ export async function constructAndSendEmail(
 }
 
 async function constructFoodboxesCount(
-  entityPair: admin.firestore.DocumentData
+  entityPair: DocumentData
 ): Promise<string> {
   const foodBoxNames = await db.collection("foodBoxes").get();
   const currentFoodBoxesState = entityPair.foodboxes;

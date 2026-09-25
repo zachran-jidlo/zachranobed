@@ -1,5 +1,5 @@
-import * as admin from "firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
+import { getMessaging, SendResponse } from "firebase-admin/messaging";
 import { db } from "../config/firebase";
 
 /**
@@ -65,7 +65,7 @@ const PERMANENT_TOKEN_ERROR_CODES = new Set([
 async function cleanupInvalidTokens(
   entityId: string,
   tokens: { [key: string]: string },
-  results: admin.messaging.SendResponse[],
+  results: SendResponse[],
 ): Promise<void> {
   const invalidTokens: string[] = [];
 
@@ -145,7 +145,7 @@ export async function sendNotificationsAndCleanup(
     return;
   }
 
-  const response = await admin.messaging().sendEach(messages);
+  const response = await getMessaging().sendEach(messages);
 
   console.info(
     `Entity ${entityId}: sent ${response.successCount} push messages, ${response.failureCount} failed.`,
