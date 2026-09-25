@@ -1,4 +1,5 @@
-import * as admin from "firebase-admin";
+import { initializeApp } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
 import { setGlobalOptions } from "firebase-functions/v2";
 import { defineString, defineSecret } from "firebase-functions/params";
 import { ENVIRONMENTS } from "./constants";
@@ -37,5 +38,5 @@ export const externalApiAllowed = defineString("EXTERNAL_API_ALLOWED");
 // Bearer token for the manual report trigger
 export const reportTriggerToken = defineSecret("REPORT_TRIGGER_TOKEN");
 
-admin.initializeApp();
-export const db = admin.firestore();
+initializeApp();
+export const db = getFirestore();

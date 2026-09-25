@@ -6,7 +6,7 @@ import { sendNotificationsAndCleanup } from "../../services/notificationService"
  * Is triggered when a document is created in the "deliveries" collection.
  * Notifies the canteen about the shipment of boxes.
  *
- * @param {admin.firestore.DocumentSnapshot} snapshot - The snapshot of the created delivery document.
+ * @param {DocumentSnapshot} snapshot - The snapshot of the created delivery document.
  * @returns {Promise<any>} A promise that resolves when the notification is sent.
  */
 export const notifyCanteenAboutBoxShippmentV2 = onDocumentCreated(
