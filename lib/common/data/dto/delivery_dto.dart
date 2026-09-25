@@ -73,7 +73,9 @@ enum DeliveryStateDto {
   @JsonValue("DONE")
   done,
   @JsonValue("NOT_USED")
-  notUsed;
+  notUsed,
+  @JsonValue("INTERRUPTED")
+  interrupted;
 
   String toJson() => _$DeliveryStateDtoEnumMap[this]!;
 }
