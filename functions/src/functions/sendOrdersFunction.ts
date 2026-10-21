@@ -2,23 +2,39 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import { getEntities, getEntityPairs, clearEntityCache } from "../services/entityService";
 import { createDeliveryDocument } from "../services/deliveryService";
 import { scheduleMultipleTransitions, scheduleConfirmationReminder, ScheduleTransitionParams } from "../services/cloudTaskService";
+import { getNonWorkingDays } from "../services/nonWorkingDayService";
 import {
-  getNextBusinessDay,
+  getNextWeekday,
   createDateWithTime,
   formatCzechDate,
+  toPragueDateKey,
 } from "../utils/dateUtils";
 import { getConfirmationMinutes } from "../utils/deliveryUtils";
 import { logger } from "firebase-functions";
 import { TIMEZONE, CONFIRMATION_REMINDER_MINUTES } from "../config/constants";
 
 /**
- * Core logic for sending orders - creates delivery documents for tomorrow.
- * @param {Date} deliveryDate - Optional custom delivery date. If not provided, uses tomorrow.
+ * Core logic for sending orders - creates delivery documents for the next weekday.
+ * Nothing is created when that day is a non-working day.
+ * @param {Date} deliveryDate - Optional custom delivery date. Bypasses the non-working day check.
  * @return {Promise<void>}
  */
 export async function sendOrders(deliveryDate?: Date): Promise<void> {
   try {
     logger.info("Starting sendOrders function");
+
+    // Target the next weekday (Monday for a Friday run). The run also happens
+    // on holidays, and a non-working target day gets no deliveries at all.
+    // An explicit date comes from the dev trigger and bypasses the list.
+    if (!deliveryDate) {
+      deliveryDate = getNextWeekday();
+      const nonWorkingDays = await getNonWorkingDays();
+      if (nonWorkingDays.has(toPragueDateKey(deliveryDate))) {
+        logger.info(`Skipping non-working day ${toPragueDateKey(deliveryDate)}, no deliveries created`);
+        return;
+      }
+    }
+    logger.info(`Creating deliveries for date: ${deliveryDate.toISOString()}`);
 
     // Load entity pairs and entities
     const entityPairs = await getEntityPairs();
@@ -26,12 +42,6 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
 
     const entities = await getEntities();
     logger.info(`Loaded ${entities.length} entities`);
-
-    // Get tomorrow's date (or Monday if tomorrow is weekend) if not provided
-    if (!deliveryDate) {
-      deliveryDate = getNextBusinessDay(1);
-    }
-    logger.info(`Creating deliveries for date: ${deliveryDate.toISOString()}`);
 
     let createdCount = 0;
     let errorCount = 0;

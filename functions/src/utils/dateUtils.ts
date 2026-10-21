@@ -12,51 +12,55 @@ export function isToday(date: Date): boolean {
 }
 
 /**
- * Skip weekend by moving Saturday to Monday and Sunday to Monday.
- * @param {DateTime} date - The date to check
- * @return {DateTime} - The date, moved to Monday if it was a weekend
+ * Format the Prague calendar day of a date as a "yyyy-MM-dd" key.
+ * Non-working days are stored and compared by this key.
+ * @param {Date} date - The date to format
+ * @return {string} - Date key, for example "2026-12-24"
  */
-function skipWeekend(date: DateTime): DateTime {
-  if (date.weekday === 6) return date.plus({ days: 2 }); // Saturday -> Monday
-  if (date.weekday === 7) return date.plus({ days: 1 }); // Sunday -> Monday
-  return date;
+export function toPragueDateKey(date: Date): string {
+  return DateTime.fromJSDate(date).setZone(TIMEZONE).toFormat("yyyy-MM-dd");
 }
 
 /**
- * Get the next business day, skipping weekends.
- * Returns midnight Prague time for the target date.
- * @param {number} daysInFuture - Number of days in the future (default: 1)
- * @return {Date} - The next business day at midnight Prague time
+ * Get the first day after the given date that is Monday to Friday.
+ * Non-working days are not skipped here. The daily donation run uses this
+ * target and checks it against the non-working days itself.
+ * @param {Date} from - The reference time (default: now)
+ * @return {Date} - The next weekday at midnight Prague time
  */
-export function getNextBusinessDay(daysInFuture: number = 1): Date {
-  const pragueDate = DateTime.now()
-    .setZone(TIMEZONE)
-    .plus({ days: daysInFuture })
-    .startOf("day"); // Midnight Prague time
-
-  return skipWeekend(pragueDate).toJSDate();
+export function getNextWeekday(from: Date = new Date()): Date {
+  return nextWeekday(DateTime.fromJSDate(from).setZone(TIMEZONE)).toJSDate();
 }
 
 /**
- * Calculates the date after a specified number of days in the future, with a given time.
- * If the calculated date falls on a weekend, it is moved to the closest Monday.
- * Time is interpreted as Prague timezone.
- * @param {number} daysInFuture - The number of days in the future
- * @param {string} time - The time in HH:MM format in Prague timezone (default: "00:00")
- * @return {Date} - The calculated date with proper UTC representation of Prague time
+ * Get the first working day after the given date. A working day is Monday to
+ * Friday and is not listed in the non-working days.
+ * @param {ReadonlySet<string>} nonWorkingDays - "yyyy-MM-dd" Prague date keys
+ * @param {Date} from - The reference time (default: now)
+ * @return {Date} - The next working day at midnight Prague time
  */
-export function getDateInFuture(
-  daysInFuture: number,
-  time: string = "00:00"
+export function getNextWorkingDay(
+  nonWorkingDays: ReadonlySet<string>,
+  from: Date = new Date(),
 ): Date {
-  const [hours, minutes] = time.split(":").map(Number);
+  let day = nextWeekday(DateTime.fromJSDate(from).setZone(TIMEZONE));
+  while (nonWorkingDays.has(day.toFormat("yyyy-MM-dd"))) {
+    day = nextWeekday(day);
+  }
+  return day.toJSDate();
+}
 
-  const pragueDate = DateTime.now()
-    .setZone(TIMEZONE)
-    .plus({ days: daysInFuture })
-    .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
-
-  return skipWeekend(pragueDate).toJSDate();
+/**
+ * Get midnight of the first Monday to Friday day after the given date.
+ * @param {DateTime} date - The reference date in Prague timezone
+ * @return {DateTime} - The next weekday at midnight
+ */
+function nextWeekday(date: DateTime): DateTime {
+  let day = date.plus({ days: 1 }).startOf("day");
+  while (day.weekday > 5) {
+    day = day.plus({ days: 1 });
+  }
+  return day;
 }
 
 /**

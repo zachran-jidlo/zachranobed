@@ -95,7 +95,8 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
 
 **Scheduled Functions** (v2 scheduler):
 - `sendOrdersFunction` - Creates daily delivery documents for active entity pairs
-  - Runs at 16:00 (4 PM) Prague time on weekdays
+  - Runs at 16:00 (4 PM) Prague time on weekdays, including holidays
+  - Targets the next weekday and creates nothing when that day is in the `nonWorkingDays` collection
   - Only exported for production project (`zachran-obed`)
 - `checkOrdersFunction` - Processes delivery state transitions and creates DODO carrier orders
   - Runs every 7-8 minutes from 9:00-20:00 Prague time on weekdays
@@ -135,6 +136,12 @@ old_solution/ # Legacy GitHub Actions implementation (reference)
    - Creates notification document in `entities/{id}/notifications` subcollection
    - Sends FCM push notification to all registered device tokens
    - Removes invalid tokens from entity document
+
+**Non-Working Days**:
+- The `nonWorkingDays` collection lists public holidays and other closed days, one document per day (`date` Timestamp, optional `name`). Admins fill it by hand in Rowy.
+- `getNonWorkingDays()` in `src/services/nonWorkingDayService.ts` reads it fresh on every run. It skips invalid documents and falls back to an empty set when the read fails.
+- Donations skip a non-working target day. Box returns move to the next working day (`getNextWorkingDay()` in `src/utils/dateUtils.ts`).
+- Unit tests: `npm test` (built-in `node:test` runner against compiled `lib/`).
 
 **Delivery Identifier Format**:
 - Food deliveries (`sendOrdersFunction`): `{donor.establishmentId}-{recipient.establishmentId}-{date}`

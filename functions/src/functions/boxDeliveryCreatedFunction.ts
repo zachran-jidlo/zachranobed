@@ -10,7 +10,8 @@ import {
 } from "../services/deliveryService";
 import { getDodoToken, createDodoOrder, createBoxReturnOrder } from "../services/dodoService";
 import { scheduleMultipleTransitions, ScheduleTransitionParams } from "../services/cloudTaskService";
-import { getDateInFuture, formatCzechDate } from "../utils/dateUtils";
+import { getNonWorkingDays } from "../services/nonWorkingDayService";
+import { getNextWorkingDay, createDateWithTime, formatCzechDate } from "../utils/dateUtils";
 import { BOX_RETURN_SCHEDULE } from "../config/constants";
 import {
   dodoClientId,
@@ -51,11 +52,13 @@ export const boxDeliveryCreated = onDocumentCreated(
 
     // Time windows, date and identifier are not set by the mobile app —
     // derived from predefined constants (same as old checkOrdersFunction logic).
-    const deliveryDate = getDateInFuture(1);
-    const pickupStart = getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.start);
-    const pickupEnd = getDateInFuture(1, BOX_RETURN_SCHEDULE.PICKUP.end);
-    const deliveryStart = getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.start);
-    const deliveryEnd = getDateInFuture(1, BOX_RETURN_SCHEDULE.DELIVERY.end);
+    // The return lands on the first working day after today, so weekends and
+    // non-working days push it forward.
+    const deliveryDate = getNextWorkingDay(await getNonWorkingDays());
+    const pickupStart = createDateWithTime(deliveryDate, BOX_RETURN_SCHEDULE.PICKUP.start);
+    const pickupEnd = createDateWithTime(deliveryDate, BOX_RETURN_SCHEDULE.PICKUP.end);
+    const deliveryStart = createDateWithTime(deliveryDate, BOX_RETURN_SCHEDULE.DELIVERY.start);
+    const deliveryEnd = createDateWithTime(deliveryDate, BOX_RETURN_SCHEDULE.DELIVERY.end);
 
     try {
       const [entityPairs, entities] = await Promise.all([

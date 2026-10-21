@@ -5,3 +5,4 @@ export * from "./Delivery";
 export * from "./DodoToken";
 export * from "./DodoOrder";
 export * from "./FoodBoxesCheckupReportedCount";
+export * from "./NonWorkingDay";
