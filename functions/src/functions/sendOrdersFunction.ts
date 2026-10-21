@@ -4,6 +4,7 @@ import { createDeliveryDocument } from "../services/deliveryService";
 import { scheduleMultipleTransitions, scheduleConfirmationReminder, ScheduleTransitionParams } from "../services/cloudTaskService";
 import { getNonWorkingDays } from "../services/nonWorkingDayService";
 import {
+  getDonationTargetDay,
   getNextWeekday,
   createDateWithTime,
   formatCzechDate,
@@ -27,12 +28,12 @@ export async function sendOrders(deliveryDate?: Date): Promise<void> {
     // on holidays, and a non-working target day gets no deliveries at all.
     // An explicit date comes from the dev trigger and bypasses the list.
     if (!deliveryDate) {
-      deliveryDate = getNextWeekday();
-      const nonWorkingDays = await getNonWorkingDays();
-      if (nonWorkingDays.has(toPragueDateKey(deliveryDate))) {
-        logger.info(`Skipping non-working day ${toPragueDateKey(deliveryDate)}, no deliveries created`);
+      const targetDay = getDonationTargetDay(await getNonWorkingDays());
+      if (!targetDay) {
+        logger.info(`Skipping non-working day ${toPragueDateKey(getNextWeekday())}, no deliveries created`);
         return;
       }
+      deliveryDate = targetDay;
     }
     logger.info(`Creating deliveries for date: ${deliveryDate.toISOString()}`);
 

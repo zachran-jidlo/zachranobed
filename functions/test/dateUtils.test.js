@@ -2,6 +2,7 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { DateTime } = require("luxon");
 const {
+  getDonationTargetDay,
   getNextWeekday,
   getNextWorkingDay,
   toPragueDateKey,
@@ -21,28 +22,21 @@ const holidays = new Set([
   "2027-03-29",
 ]);
 
-test("donation target is skipped on a mid-week holiday", () => {
-  const target = getNextWeekday(prague("2026-10-27T16:00"));
-  assert.equal(toPragueDateKey(target), "2026-10-28");
-  assert.ok(holidays.has(toPragueDateKey(target)));
+/** Returns the donation target key, or null when no deliveries are created. */
+function donationTarget(nonWorkingDays, isoLocal) {
+  const target = getDonationTargetDay(nonWorkingDays, prague(isoLocal));
+  return target && toPragueDateKey(target);
+}
 
-  const nextTarget = getNextWeekday(prague("2026-10-28T16:00"));
-  assert.equal(toPragueDateKey(nextTarget), "2026-10-29");
-  assert.ok(!holidays.has(toPragueDateKey(nextTarget)));
+test("donation run creates nothing for a mid-week holiday", () => {
+  assert.equal(donationTarget(holidays, "2026-10-27T16:00"), null);
+  assert.equal(donationTarget(holidays, "2026-10-28T16:00"), "2026-10-29");
 });
 
 test("Easter skips Friday and Monday, Monday run creates Tuesday", () => {
-  const thursdayTarget = getNextWeekday(prague("2027-03-25T16:00"));
-  assert.equal(toPragueDateKey(thursdayTarget), "2027-03-26");
-  assert.ok(holidays.has(toPragueDateKey(thursdayTarget)));
-
-  const fridayTarget = getNextWeekday(prague("2027-03-26T16:00"));
-  assert.equal(toPragueDateKey(fridayTarget), "2027-03-29");
-  assert.ok(holidays.has(toPragueDateKey(fridayTarget)));
-
-  const mondayTarget = getNextWeekday(prague("2027-03-29T16:00"));
-  assert.equal(toPragueDateKey(mondayTarget), "2027-03-30");
-  assert.ok(!holidays.has(toPragueDateKey(mondayTarget)));
+  assert.equal(donationTarget(holidays, "2027-03-25T16:00"), null);
+  assert.equal(donationTarget(holidays, "2027-03-26T16:00"), null);
+  assert.equal(donationTarget(holidays, "2027-03-29T16:00"), "2027-03-30");
 });
 
 test("box return ordered before Christmas lands on Monday", () => {
@@ -54,9 +48,8 @@ test("removed holiday becomes a working day again", () => {
   const withoutChristmasEve = new Set(holidays);
   withoutChristmasEve.delete("2026-12-24");
 
-  const target = getNextWeekday(prague("2026-12-23T16:00"));
-  assert.equal(toPragueDateKey(target), "2026-12-24");
-  assert.ok(!withoutChristmasEve.has(toPragueDateKey(target)));
+  assert.equal(donationTarget(holidays, "2026-12-23T16:00"), null);
+  assert.equal(donationTarget(withoutChristmasEve, "2026-12-23T16:00"), "2026-12-24");
   assert.equal(
     toPragueDateKey(getNextWorkingDay(withoutChristmasEve, prague("2026-12-23T12:00"))),
     "2026-12-24",
@@ -64,8 +57,7 @@ test("removed holiday becomes a working day again", () => {
 });
 
 test("Friday donation target is Monday", () => {
-  const target = getNextWeekday(prague("2026-10-23T16:00"));
-  assert.equal(toPragueDateKey(target), "2026-10-26");
+  assert.equal(donationTarget(new Set(), "2026-10-23T16:00"), "2026-10-26");
 });
 
 test("box return ordered over the weekend lands on Monday", () => {
@@ -86,5 +78,6 @@ test("just after midnight Prague time uses the Prague date, not UTC", () => {
 
   assert.equal(toPragueDateKey(from), "2026-12-23");
   assert.equal(toPragueDateKey(getNextWeekday(from)), "2026-12-24");
+  assert.equal(getDonationTargetDay(holidays, from), null);
   assert.equal(toPragueDateKey(getNextWorkingDay(holidays, from)), "2026-12-28");
 });

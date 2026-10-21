@@ -18,18 +18,34 @@ export function isToday(date: Date): boolean {
  * @return {string} - Date key, for example "2026-12-24"
  */
 export function toPragueDateKey(date: Date): string {
-  return DateTime.fromJSDate(date).setZone(TIMEZONE).toFormat("yyyy-MM-dd");
+  return dateKey(DateTime.fromJSDate(date).setZone(TIMEZONE));
 }
 
 /**
  * Get the first day after the given date that is Monday to Friday.
- * Non-working days are not skipped here. The daily donation run uses this
- * target and checks it against the non-working days itself.
+ * Non-working days are not skipped here.
  * @param {Date} from - The reference time (default: now)
  * @return {Date} - The next weekday at midnight Prague time
  */
 export function getNextWeekday(from: Date = new Date()): Date {
   return nextWeekday(DateTime.fromJSDate(from).setZone(TIMEZONE)).toJSDate();
+}
+
+/**
+ * Get the day the daily donation run creates deliveries for. It is the next
+ * weekday (Monday for a Friday run). When that day is a non-working day, no
+ * deliveries are created and null is returned. The run does not move on to a
+ * later day, because the next run covers it.
+ * @param {ReadonlySet<string>} nonWorkingDays - "yyyy-MM-dd" Prague date keys
+ * @param {Date} from - The reference time (default: now)
+ * @return {Date | null} - The target day at midnight Prague time, or null
+ */
+export function getDonationTargetDay(
+  nonWorkingDays: ReadonlySet<string>,
+  from: Date = new Date(),
+): Date | null {
+  const target = getNextWeekday(from);
+  return nonWorkingDays.has(toPragueDateKey(target)) ? null : target;
 }
 
 /**
@@ -44,10 +60,19 @@ export function getNextWorkingDay(
   from: Date = new Date(),
 ): Date {
   let day = nextWeekday(DateTime.fromJSDate(from).setZone(TIMEZONE));
-  while (nonWorkingDays.has(day.toFormat("yyyy-MM-dd"))) {
+  while (nonWorkingDays.has(dateKey(day))) {
     day = nextWeekday(day);
   }
   return day.toJSDate();
+}
+
+/**
+ * Format a Prague DateTime as a "yyyy-MM-dd" key.
+ * @param {DateTime} date - The date in Prague timezone
+ * @return {string} - Date key
+ */
+function dateKey(date: DateTime): string {
+  return date.toFormat("yyyy-MM-dd");
 }
 
 /**
