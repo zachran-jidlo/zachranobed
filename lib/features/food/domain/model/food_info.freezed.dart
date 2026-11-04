@@ -1,7 +1,6 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'food_info.dart';
@@ -10,11 +9,12 @@ part of 'food_info.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$FoodInfo {
-  String get id; // The UUID identifier
+  String get id;
   String? get dishName;
   List<String>? get allergens;
   FoodCategory? get foodCategory;
@@ -28,56 +28,58 @@ mixin _$FoodInfo {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FoodInfoCopyWith<FoodInfo> get copyWith =>
-      _$FoodInfoCopyWithImpl<FoodInfo>(this as FoodInfo, _$identity);
+  $FoodInfoCopyWith<FoodInfo> get copyWith => _$FoodInfoCopyWithImpl<FoodInfo>(this as FoodInfo, _$identity);
 
   @override
   bool operator ==(Object other) {
+    final _this = this as FoodInfo;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is FoodInfo &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
-            const DeepCollectionEquality().equals(other.allergens, allergens) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy));
+            (identical(other.id, _this.id) || other.id == _this.id) &&
+            (identical(other.dishName, _this.dishName) || other.dishName == _this.dishName) &&
+            const DeepCollectionEquality().equals(
+              other.allergens,
+              _this.allergens,
+            ) &&
+            (identical(other.foodCategory, _this.foodCategory) || other.foodCategory == _this.foodCategory) &&
+            (identical(other.foodTemperature, _this.foodTemperature) ||
+                other.foodTemperature == _this.foodTemperature) &&
+            (identical(other.numberOfPackages, _this.numberOfPackages) ||
+                other.numberOfPackages == _this.numberOfPackages) &&
+            (identical(other.numberOfServings, _this.numberOfServings) ||
+                other.numberOfServings == _this.numberOfServings) &&
+            (identical(other.preparedAt, _this.preparedAt) || other.preparedAt == _this.preparedAt) &&
+            (identical(other.consumeBy, _this.consumeBy) || other.consumeBy == _this.consumeBy));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    dishName,
-    const DeepCollectionEquality().hash(allergens),
-    foodCategory,
-    foodTemperature,
-    numberOfPackages,
-    numberOfServings,
-    preparedAt,
-    consumeBy,
-  );
+  int get hashCode {
+    final _this = this as FoodInfo;
+    return Object.hash(
+      runtimeType,
+      _this.id,
+      _this.dishName,
+      const DeepCollectionEquality().hash(_this.allergens),
+      _this.foodCategory,
+      _this.foodTemperature,
+      _this.numberOfPackages,
+      _this.numberOfServings,
+      _this.preparedAt,
+      _this.consumeBy,
+    );
+  }
 
   @override
   String toString() {
-    return 'FoodInfo(id: $id, dishName: $dishName, allergens: $allergens, foodCategory: $foodCategory, foodTemperature: $foodTemperature, numberOfPackages: $numberOfPackages, numberOfServings: $numberOfServings, preparedAt: $preparedAt, consumeBy: $consumeBy)';
+    final _this = this as FoodInfo;
+    return 'FoodInfo(id: ${_this.id}, dishName: ${_this.dishName}, allergens: ${_this.allergens}, foodCategory: ${_this.foodCategory}, foodTemperature: ${_this.foodTemperature}, numberOfPackages: ${_this.numberOfPackages}, numberOfServings: ${_this.numberOfServings}, preparedAt: ${_this.preparedAt}, consumeBy: ${_this.consumeBy})';
   }
 }
 
 /// @nodoc
 abstract mixin class $FoodInfoCopyWith<$Res> {
-  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) _then) =
-      _$FoodInfoCopyWithImpl;
+  factory $FoodInfoCopyWith(FoodInfo value, $Res Function(FoodInfo) _then) = _$FoodInfoCopyWithImpl;
   @useResult
   $Res call({
     String id,
@@ -115,7 +117,7 @@ class _$FoodInfoCopyWithImpl<$Res> implements $FoodInfoCopyWith<$Res> {
     Object? consumeBy = freezed,
   }) {
     return _then(
-      _self.copyWith(
+      FoodInfo(
         id: null == id
             ? _self.id
             : id // ignore: cast_nullable_to_non_nullable
@@ -157,13 +159,233 @@ class _$FoodInfoCopyWithImpl<$Res> implements $FoodInfoCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [FoodInfo].
+extension FoodInfoPatterns on FoodInfo {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_FoodInfo value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_FoodInfo value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_FoodInfo value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+      String id,
+      String? dishName,
+      List<String>? allergens,
+      FoodCategory? foodCategory,
+      int? foodTemperature,
+      int? numberOfPackages,
+      int? numberOfServings,
+      FoodDateTime? preparedAt,
+      FoodDateTime? consumeBy,
+    )?
+    $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo() when $default != null:
+        return $default(
+          _that.id,
+          _that.dishName,
+          _that.allergens,
+          _that.foodCategory,
+          _that.foodTemperature,
+          _that.numberOfPackages,
+          _that.numberOfServings,
+          _that.preparedAt,
+          _that.consumeBy,
+        );
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+      String id,
+      String? dishName,
+      List<String>? allergens,
+      FoodCategory? foodCategory,
+      int? foodTemperature,
+      int? numberOfPackages,
+      int? numberOfServings,
+      FoodDateTime? preparedAt,
+      FoodDateTime? consumeBy,
+    )
+    $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo():
+        return $default(
+          _that.id,
+          _that.dishName,
+          _that.allergens,
+          _that.foodCategory,
+          _that.foodTemperature,
+          _that.numberOfPackages,
+          _that.numberOfServings,
+          _that.preparedAt,
+          _that.consumeBy,
+        );
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+      String id,
+      String? dishName,
+      List<String>? allergens,
+      FoodCategory? foodCategory,
+      int? foodTemperature,
+      int? numberOfPackages,
+      int? numberOfServings,
+      FoodDateTime? preparedAt,
+      FoodDateTime? consumeBy,
+    )?
+    $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FoodInfo() when $default != null:
+        return $default(
+          _that.id,
+          _that.dishName,
+          _that.allergens,
+          _that.foodCategory,
+          _that.foodTemperature,
+          _that.numberOfPackages,
+          _that.numberOfServings,
+          _that.preparedAt,
+          _that.consumeBy,
+        );
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
 class _FoodInfo implements FoodInfo {
   const _FoodInfo({
     required this.id,
     this.dishName,
-    final List<String>? allergens,
+    List<String>? allergens,
     this.foodCategory,
     this.foodTemperature,
     this.numberOfPackages,
@@ -174,7 +396,6 @@ class _FoodInfo implements FoodInfo {
 
   @override
   final String id;
-  // The UUID identifier
   @override
   final String? dishName;
   final List<String>? _allergens;
@@ -205,8 +426,7 @@ class _FoodInfo implements FoodInfo {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FoodInfoCopyWith<_FoodInfo> get copyWith =>
-      __$FoodInfoCopyWithImpl<_FoodInfo>(this, _$identity);
+  _$FoodInfoCopyWith<_FoodInfo> get copyWith => __$FoodInfoCopyWithImpl<_FoodInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -214,39 +434,34 @@ class _FoodInfo implements FoodInfo {
         (other.runtimeType == runtimeType &&
             other is _FoodInfo &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.dishName, dishName) ||
-                other.dishName == dishName) &&
+            (identical(other.dishName, dishName) || other.dishName == dishName) &&
             const DeepCollectionEquality().equals(
-              other._allergens,
+              other.allergens,
               _allergens,
             ) &&
-            (identical(other.foodCategory, foodCategory) ||
-                other.foodCategory == foodCategory) &&
-            (identical(other.foodTemperature, foodTemperature) ||
-                other.foodTemperature == foodTemperature) &&
-            (identical(other.numberOfPackages, numberOfPackages) ||
-                other.numberOfPackages == numberOfPackages) &&
-            (identical(other.numberOfServings, numberOfServings) ||
-                other.numberOfServings == numberOfServings) &&
-            (identical(other.preparedAt, preparedAt) ||
-                other.preparedAt == preparedAt) &&
-            (identical(other.consumeBy, consumeBy) ||
-                other.consumeBy == consumeBy));
+            (identical(other.foodCategory, foodCategory) || other.foodCategory == foodCategory) &&
+            (identical(other.foodTemperature, foodTemperature) || other.foodTemperature == foodTemperature) &&
+            (identical(other.numberOfPackages, numberOfPackages) || other.numberOfPackages == numberOfPackages) &&
+            (identical(other.numberOfServings, numberOfServings) || other.numberOfServings == numberOfServings) &&
+            (identical(other.preparedAt, preparedAt) || other.preparedAt == preparedAt) &&
+            (identical(other.consumeBy, consumeBy) || other.consumeBy == consumeBy));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    dishName,
-    const DeepCollectionEquality().hash(_allergens),
-    foodCategory,
-    foodTemperature,
-    numberOfPackages,
-    numberOfServings,
-    preparedAt,
-    consumeBy,
-  );
+  int get hashCode {
+    return Object.hash(
+      runtimeType,
+      id,
+      dishName,
+      const DeepCollectionEquality().hash(_allergens),
+      foodCategory,
+      foodTemperature,
+      numberOfPackages,
+      numberOfServings,
+      preparedAt,
+      consumeBy,
+    );
+  }
 
   @override
   String toString() {
@@ -255,10 +470,8 @@ class _FoodInfo implements FoodInfo {
 }
 
 /// @nodoc
-abstract mixin class _$FoodInfoCopyWith<$Res>
-    implements $FoodInfoCopyWith<$Res> {
-  factory _$FoodInfoCopyWith(_FoodInfo value, $Res Function(_FoodInfo) _then) =
-      __$FoodInfoCopyWithImpl;
+abstract mixin class _$FoodInfoCopyWith<$Res> implements $FoodInfoCopyWith<$Res> {
+  factory _$FoodInfoCopyWith(_FoodInfo value, $Res Function(_FoodInfo) _then) = __$FoodInfoCopyWithImpl;
   @override
   @useResult
   $Res call({

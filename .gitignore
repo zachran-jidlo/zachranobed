@@ -53,3 +53,6 @@ node_modules
 # Generated localization files
 lib/l10n/app_localizations.dart
 lib/l10n/app_localizations_*.dart
+
+# FVM
+.fvm/

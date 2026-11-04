@@ -65,9 +65,10 @@ jobs:
           dart format lib test
           git diff --exit-code -- lib test
 
-      # Run custom lint with project rules
-      - name: Run custom lint
-        run: dart run custom_lint
+      # Run the architecture rules from lint/arch. flutter analyze exits before
+      # analyzer plugins report, so they only show up in dart analyze.
+      - name: Run architecture lint
+        run: dart analyze
 
   test:
     runs-on: ubuntu-latest

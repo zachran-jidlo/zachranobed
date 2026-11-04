@@ -1,11 +1,11 @@
 # Lint rules for architecture
 
-This package provides custom lint rules for the project. It uses the `custom_lint_builder` and `analyzer` packages to define and enforce these rules.
+This package provides custom lint rules for the project. It is an analyzer plugin built on `analysis_server_plugin`. The rules run inside the Dart analysis server, so they show up in the IDE and in `dart analyze`.
 
 ## Project structure
 
 - `lib/`: Contains the main linting logic.
-    - `lint_arch.dart`: The entry point for defining or exporting lint rules.
+    - `main.dart`: The plugin entry point. It registers all rules.
     - `lib/rule/`: This directory contains the implementations of individual custom lint rules.
 
 ## Available Rules
@@ -23,8 +23,12 @@ This package includes the following custom lint rules:
 
 ## How to run
 
-Use this command to run custom lint rules in command line:
+The plugin is enabled in the root `analysis_options.yaml`. Run it from the project root:
 
 ```
-dart run custom_lint
+dart analyze
 ```
+
+`flutter analyze` exits before analyzer plugins report, so it does not show these rules.
+
+After changing a rule, restart the analysis server in the IDE. If `dart analyze` still runs the old code, delete `~/.dartServer/.plugin_manager` to force a rebuild.

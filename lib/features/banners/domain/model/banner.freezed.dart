@@ -1,7 +1,6 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'banner.dart';
@@ -10,6 +9,7 @@ part of 'banner.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -67,70 +67,72 @@ mixin _$Banner {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BannerCopyWith<Banner> get copyWith =>
-      _$BannerCopyWithImpl<Banner>(this as Banner, _$identity);
+  $BannerCopyWith<Banner> get copyWith => _$BannerCopyWithImpl<Banner>(this as Banner, _$identity);
 
   @override
   bool operator ==(Object other) {
+    final _this = this as Banner;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Banner &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.priority, priority) ||
-                other.priority == priority) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.text, text) || other.text == text) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.validFrom, validFrom) ||
-                other.validFrom == validFrom) &&
-            (identical(other.validTo, validTo) || other.validTo == validTo) &&
-            const DeepCollectionEquality().equals(other.entityIds, entityIds) &&
-            const DeepCollectionEquality().equals(other.tags, tags) &&
-            const DeepCollectionEquality().equals(other.platforms, platforms) &&
-            (identical(other.minAppVersion, minAppVersion) ||
-                other.minAppVersion == minAppVersion) &&
-            (identical(other.maxAppVersion, maxAppVersion) ||
-                other.maxAppVersion == maxAppVersion) &&
-            (identical(other.closable, closable) ||
-                other.closable == closable) &&
-            (identical(other.actionLabel, actionLabel) ||
-                other.actionLabel == actionLabel) &&
-            (identical(other.actionUrl, actionUrl) ||
-                other.actionUrl == actionUrl));
+            (identical(other.id, _this.id) || other.id == _this.id) &&
+            (identical(other.priority, _this.priority) || other.priority == _this.priority) &&
+            (identical(other.title, _this.title) || other.title == _this.title) &&
+            (identical(other.text, _this.text) || other.text == _this.text) &&
+            (identical(other.role, _this.role) || other.role == _this.role) &&
+            (identical(other.type, _this.type) || other.type == _this.type) &&
+            (identical(other.validFrom, _this.validFrom) || other.validFrom == _this.validFrom) &&
+            (identical(other.validTo, _this.validTo) || other.validTo == _this.validTo) &&
+            const DeepCollectionEquality().equals(
+              other.entityIds,
+              _this.entityIds,
+            ) &&
+            const DeepCollectionEquality().equals(other.tags, _this.tags) &&
+            const DeepCollectionEquality().equals(
+              other.platforms,
+              _this.platforms,
+            ) &&
+            (identical(other.minAppVersion, _this.minAppVersion) || other.minAppVersion == _this.minAppVersion) &&
+            (identical(other.maxAppVersion, _this.maxAppVersion) || other.maxAppVersion == _this.maxAppVersion) &&
+            (identical(other.closable, _this.closable) || other.closable == _this.closable) &&
+            (identical(other.actionLabel, _this.actionLabel) || other.actionLabel == _this.actionLabel) &&
+            (identical(other.actionUrl, _this.actionUrl) || other.actionUrl == _this.actionUrl));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    priority,
-    title,
-    text,
-    role,
-    type,
-    validFrom,
-    validTo,
-    const DeepCollectionEquality().hash(entityIds),
-    const DeepCollectionEquality().hash(tags),
-    const DeepCollectionEquality().hash(platforms),
-    minAppVersion,
-    maxAppVersion,
-    closable,
-    actionLabel,
-    actionUrl,
-  );
+  int get hashCode {
+    final _this = this as Banner;
+    return Object.hash(
+      runtimeType,
+      _this.id,
+      _this.priority,
+      _this.title,
+      _this.text,
+      _this.role,
+      _this.type,
+      _this.validFrom,
+      _this.validTo,
+      const DeepCollectionEquality().hash(_this.entityIds),
+      const DeepCollectionEquality().hash(_this.tags),
+      const DeepCollectionEquality().hash(_this.platforms),
+      _this.minAppVersion,
+      _this.maxAppVersion,
+      _this.closable,
+      _this.actionLabel,
+      _this.actionUrl,
+    );
+  }
 
   @override
   String toString() {
-    return 'Banner(id: $id, priority: $priority, title: $title, text: $text, role: $role, type: $type, validFrom: $validFrom, validTo: $validTo, entityIds: $entityIds, tags: $tags, platforms: $platforms, minAppVersion: $minAppVersion, maxAppVersion: $maxAppVersion, closable: $closable, actionLabel: $actionLabel, actionUrl: $actionUrl)';
+    final _this = this as Banner;
+    return 'Banner(id: ${_this.id}, priority: ${_this.priority}, title: ${_this.title}, text: ${_this.text}, role: ${_this.role}, type: ${_this.type}, validFrom: ${_this.validFrom}, validTo: ${_this.validTo}, entityIds: ${_this.entityIds}, tags: ${_this.tags}, platforms: ${_this.platforms}, minAppVersion: ${_this.minAppVersion}, maxAppVersion: ${_this.maxAppVersion}, closable: ${_this.closable}, actionLabel: ${_this.actionLabel}, actionUrl: ${_this.actionUrl})';
   }
 }
 
 /// @nodoc
 abstract mixin class $BannerCopyWith<$Res> {
-  factory $BannerCopyWith(Banner value, $Res Function(Banner) _then) =
-      _$BannerCopyWithImpl;
+  factory $BannerCopyWith(Banner value, $Res Function(Banner) _then) = _$BannerCopyWithImpl;
   @useResult
   $Res call({
     String id,
@@ -182,7 +184,7 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
     Object? actionUrl = freezed,
   }) {
     return _then(
-      _self.copyWith(
+      Banner(
         id: null == id
             ? _self.id
             : id // ignore: cast_nullable_to_non_nullable
@@ -252,6 +254,268 @@ class _$BannerCopyWithImpl<$Res> implements $BannerCopyWith<$Res> {
   }
 }
 
+/// Adds pattern-matching-related methods to [Banner].
+extension BannerPatterns on Banner {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Banner value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Banner() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Banner value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Banner():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Banner value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Banner() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+      String id,
+      int priority,
+      String title,
+      String text,
+      BannerRole role,
+      BannerType? type,
+      DateTime? validFrom,
+      DateTime? validTo,
+      List<String>? entityIds,
+      List<String>? tags,
+      List<RunningPlatform>? platforms,
+      String? minAppVersion,
+      String? maxAppVersion,
+      bool closable,
+      String? actionLabel,
+      String? actionUrl,
+    )?
+    $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Banner() when $default != null:
+        return $default(
+          _that.id,
+          _that.priority,
+          _that.title,
+          _that.text,
+          _that.role,
+          _that.type,
+          _that.validFrom,
+          _that.validTo,
+          _that.entityIds,
+          _that.tags,
+          _that.platforms,
+          _that.minAppVersion,
+          _that.maxAppVersion,
+          _that.closable,
+          _that.actionLabel,
+          _that.actionUrl,
+        );
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+      String id,
+      int priority,
+      String title,
+      String text,
+      BannerRole role,
+      BannerType? type,
+      DateTime? validFrom,
+      DateTime? validTo,
+      List<String>? entityIds,
+      List<String>? tags,
+      List<RunningPlatform>? platforms,
+      String? minAppVersion,
+      String? maxAppVersion,
+      bool closable,
+      String? actionLabel,
+      String? actionUrl,
+    )
+    $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Banner():
+        return $default(
+          _that.id,
+          _that.priority,
+          _that.title,
+          _that.text,
+          _that.role,
+          _that.type,
+          _that.validFrom,
+          _that.validTo,
+          _that.entityIds,
+          _that.tags,
+          _that.platforms,
+          _that.minAppVersion,
+          _that.maxAppVersion,
+          _that.closable,
+          _that.actionLabel,
+          _that.actionUrl,
+        );
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+      String id,
+      int priority,
+      String title,
+      String text,
+      BannerRole role,
+      BannerType? type,
+      DateTime? validFrom,
+      DateTime? validTo,
+      List<String>? entityIds,
+      List<String>? tags,
+      List<RunningPlatform>? platforms,
+      String? minAppVersion,
+      String? maxAppVersion,
+      bool closable,
+      String? actionLabel,
+      String? actionUrl,
+    )?
+    $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Banner() when $default != null:
+        return $default(
+          _that.id,
+          _that.priority,
+          _that.title,
+          _that.text,
+          _that.role,
+          _that.type,
+          _that.validFrom,
+          _that.validTo,
+          _that.entityIds,
+          _that.tags,
+          _that.platforms,
+          _that.minAppVersion,
+          _that.maxAppVersion,
+          _that.closable,
+          _that.actionLabel,
+          _that.actionUrl,
+        );
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
 class _Banner implements Banner {
@@ -264,9 +528,9 @@ class _Banner implements Banner {
     required this.type,
     required this.validFrom,
     required this.validTo,
-    required final List<String>? entityIds,
-    required final List<String>? tags,
-    required final List<RunningPlatform>? platforms,
+    required List<String>? entityIds,
+    required List<String>? tags,
+    required List<RunningPlatform>? platforms,
     required this.minAppVersion,
     required this.maxAppVersion,
     required this.closable,
@@ -374,8 +638,7 @@ class _Banner implements Banner {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BannerCopyWith<_Banner> get copyWith =>
-      __$BannerCopyWithImpl<_Banner>(this, _$identity);
+  _$BannerCopyWith<_Banner> get copyWith => __$BannerCopyWithImpl<_Banner>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -383,56 +646,51 @@ class _Banner implements Banner {
         (other.runtimeType == runtimeType &&
             other is _Banner &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.priority, priority) ||
-                other.priority == priority) &&
+            (identical(other.priority, priority) || other.priority == priority) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.validFrom, validFrom) ||
-                other.validFrom == validFrom) &&
+            (identical(other.validFrom, validFrom) || other.validFrom == validFrom) &&
             (identical(other.validTo, validTo) || other.validTo == validTo) &&
             const DeepCollectionEquality().equals(
-              other._entityIds,
+              other.entityIds,
               _entityIds,
             ) &&
-            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality().equals(other.tags, _tags) &&
             const DeepCollectionEquality().equals(
-              other._platforms,
+              other.platforms,
               _platforms,
             ) &&
-            (identical(other.minAppVersion, minAppVersion) ||
-                other.minAppVersion == minAppVersion) &&
-            (identical(other.maxAppVersion, maxAppVersion) ||
-                other.maxAppVersion == maxAppVersion) &&
-            (identical(other.closable, closable) ||
-                other.closable == closable) &&
-            (identical(other.actionLabel, actionLabel) ||
-                other.actionLabel == actionLabel) &&
-            (identical(other.actionUrl, actionUrl) ||
-                other.actionUrl == actionUrl));
+            (identical(other.minAppVersion, minAppVersion) || other.minAppVersion == minAppVersion) &&
+            (identical(other.maxAppVersion, maxAppVersion) || other.maxAppVersion == maxAppVersion) &&
+            (identical(other.closable, closable) || other.closable == closable) &&
+            (identical(other.actionLabel, actionLabel) || other.actionLabel == actionLabel) &&
+            (identical(other.actionUrl, actionUrl) || other.actionUrl == actionUrl));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    priority,
-    title,
-    text,
-    role,
-    type,
-    validFrom,
-    validTo,
-    const DeepCollectionEquality().hash(_entityIds),
-    const DeepCollectionEquality().hash(_tags),
-    const DeepCollectionEquality().hash(_platforms),
-    minAppVersion,
-    maxAppVersion,
-    closable,
-    actionLabel,
-    actionUrl,
-  );
+  int get hashCode {
+    return Object.hash(
+      runtimeType,
+      id,
+      priority,
+      title,
+      text,
+      role,
+      type,
+      validFrom,
+      validTo,
+      const DeepCollectionEquality().hash(_entityIds),
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_platforms),
+      minAppVersion,
+      maxAppVersion,
+      closable,
+      actionLabel,
+      actionUrl,
+    );
+  }
 
   @override
   String toString() {
@@ -442,8 +700,7 @@ class _Banner implements Banner {
 
 /// @nodoc
 abstract mixin class _$BannerCopyWith<$Res> implements $BannerCopyWith<$Res> {
-  factory _$BannerCopyWith(_Banner value, $Res Function(_Banner) _then) =
-      __$BannerCopyWithImpl;
+  factory _$BannerCopyWith(_Banner value, $Res Function(_Banner) _then) = __$BannerCopyWithImpl;
   @override
   @useResult
   $Res call({

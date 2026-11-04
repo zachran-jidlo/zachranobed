@@ -96,7 +96,7 @@ class UiDonationStatusCard extends StatelessWidget {
               ],
             ),
           ),
-          if (action != null) action,
+          ?action,
         ],
       ),
     );
@@ -138,7 +138,7 @@ class UiDonationStatusCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (info != null) Expanded(child: info),
-          if (button != null) button,
+          ?button,
         ],
       ),
     );

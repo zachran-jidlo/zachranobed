@@ -113,7 +113,7 @@ class ScreenScaffold extends StatelessWidget {
   Widget _buildContent(BuildContext context, WidgetBuilder body) {
     return Column(
       children: [
-        if (appBar != null) appBar!,
+        ?appBar,
         Expanded(
           child: body(context),
         ),

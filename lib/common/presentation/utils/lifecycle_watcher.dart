@@ -82,6 +82,9 @@ mixin LifecycleWatcher<T extends StatefulWidget> on State<T> implements WidgetsB
   @override
   void didChangeViewFocus(ViewFocusEvent event) {}
 
+  @override
+  void handleStatusBarTap() {}
+
   /// Default implementation to deny pop route requests.
   @override
   Future<bool> didPopRoute() async => false;

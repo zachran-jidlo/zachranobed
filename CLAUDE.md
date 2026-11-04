@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Zachraň oběd (Save Lunch) is a Flutter app connecting food providers with charities to redistribute surplus meals. Multi-platform: Android, iOS, Web.
 
-- Flutter SDK: 3.32.4
-- Dart: >= 3.4.3 < 4.0.0
+- Flutter SDK: 3.47.9 (pinned in `.fvmrc`, minimum 3.47.8 because of the eMudhra CA fix)
+- Dart: 3.13.7
 - Backend: Firebase (Auth, Firestore, Cloud Functions, Messaging, Crashlytics)
 
 ## Essential Commands
@@ -38,9 +38,8 @@ flutter test
 flutter test test/common/  # Specific directory
 
 # Linting
-dart run custom_lint
-dart run custom_lint --watch
 flutter analyze
+dart analyze   # Also reports the lint/arch architecture rules
 ```
 
 ## Architecture
@@ -98,7 +97,7 @@ class FoodInfo with _$FoodInfo {
 
 ## Enforced Lint Rules
 
-Custom linting in `lint/arch/` enforces:
+Custom linting in `lint/arch/` (an `analysis_server_plugin`) enforces:
 - **Absolute imports only**: Use `package:zachranobed/...`
 - **No cross-feature dependencies**: Features can only import from common
 - **Layer isolation**: Presentation → Domain → Data (not reverse)

@@ -1,47 +1,61 @@
-import 'package:analyzer/error/error.dart' show ErrorSeverity;
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
+import 'package:lint_arch/rule/rule_context_extensions.dart';
 
 /// Rule that checks invalid dependencies between top-level modules (app, features, common).
-class InvalidModuleDependencyRule extends DartLintRule {
-  InvalidModuleDependencyRule()
-      : super(
-          code: LintCode(
-            name: 'invalid_module_dependency',
-            problemMessage: 'Invalid dependency between modules.',
-            correctionMessage: 'App → Feature/Common, Feature → Common, Common → none.',
-            errorSeverity: ErrorSeverity.ERROR,
-          ),
-        );
+class InvalidModuleDependencyRule extends AnalysisRule {
+  InvalidModuleDependencyRule() : super(name: _code.lowerCaseName, description: _code.problemMessage);
+
+  static const _code = LintCode(
+    'invalid_module_dependency',
+    'Invalid dependency between modules.',
+    correctionMessage: 'App → Feature/Common, Feature → Common, Common → none.',
+    severity: DiagnosticSeverity.ERROR,
+  );
 
   @override
-  void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
-    final filePath = resolver.source.fullName;
+  LintCode get diagnosticCode => _code;
 
-    // Match the current module: app/*, features/*, or common/*
-    final modulePattern = RegExp(r'^(?:.*/)?(app|features|common)/');
-    final match = modulePattern.firstMatch(filePath);
+  @override
+  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
+    registry.addImportDirective(this, _Visitor(this, context));
+  }
+}
 
+class _Visitor extends SimpleAstVisitor<void> {
+  // Match the current module: app/*, features/*, or common/*
+  static final _modulePattern = RegExp(r'^(?:.*/)?(app|features|common)/');
+
+  final AnalysisRule rule;
+  final RuleContext context;
+
+  _Visitor(this.rule, this.context);
+
+  @override
+  void visitImportDirective(ImportDirective node) {
+    final match = _modulePattern.firstMatch(context.currentPath);
     if (match == null) return;
 
     final currentModule = match.group(1);
 
-    context.registry.addImportDirective((node) {
-      final importUri = node.uri.stringValue;
-      if (importUri == null || !importUri.startsWith('package:')) return;
+    final importUri = node.uri.stringValue;
+    if (importUri == null || !importUri.startsWith('package:')) return;
 
-      final importPath = importUri.replaceFirst('package:', '');
-      final importedMatch = modulePattern.firstMatch(importPath);
+    final importPath = importUri.replaceFirst('package:', '');
+    final importedMatch = _modulePattern.firstMatch(importPath);
 
-      // Ignore if not importing another top-level module
-      if (importedMatch == null) return;
+    // Ignore if not importing another top-level module
+    if (importedMatch == null) return;
 
-      final importedModule = importedMatch.group(1);
+    final importedModule = importedMatch.group(1);
 
-      if (!_isModuleAllowed(currentModule, importedModule)) {
-        reporter.atNode(node, code);
-      }
-    });
+    if (!_isModuleAllowed(currentModule, importedModule)) {
+      rule.reportAtNode(node);
+    }
   }
 
   /// Checks if the imported module is allowed in the current module.

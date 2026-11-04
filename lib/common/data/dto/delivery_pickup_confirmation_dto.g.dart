@@ -18,12 +18,10 @@ DeliveryPickupConfirmationDto _$DeliveryPickupConfirmationDtoFromJson(
 Map<String, dynamic> _$DeliveryPickupConfirmationDtoToJson(
   DeliveryPickupConfirmationDto instance,
 ) => <String, dynamic>{
-  if (_$JsonConverterToJson<Timestamp, DateTime>(
-        instance.pickupConfirmedAt,
-        const TimestampConverter().toJson,
-      )
-      case final value?)
-    'pickupConfirmedAt': value,
+  'pickupConfirmedAt': ?_$JsonConverterToJson<Timestamp, DateTime>(
+    instance.pickupConfirmedAt,
+    const TimestampConverter().toJson,
+  ),
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(
@@ -39,5 +37,5 @@ Json? _$JsonConverterToJson<Json, Value>(
 Map<String, dynamic> _$DeliveryPickupConfirmationUpdateDtoToJson(
   DeliveryPickupConfirmationUpdateDto instance,
 ) => <String, dynamic>{
-  if (instance.pickupConfirmation?.toJson() case final value?) 'pickupConfirmation': value,
+  'pickupConfirmation': ?instance.pickupConfirmation?.toJson(),
 };
