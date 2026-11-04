@@ -105,7 +105,13 @@ lib/
 Unit and widget tests live in `test/` and run with the Flutter test runner:
 
 ```bash
-flutter test
+fvm flutter test
+```
+
+Run `flutter` and `dart` through [FVM](https://fvm.app) so they use the SDK version pinned in `.fvmrc`. A global SDK may be older and report false errors, for example in `dart analyze`. Check the code the same way CI does:
+
+```bash
+fvm dart analyze --fatal-infos
 ```
 
 End-to-end UI tests live in `maestro/` and drive the real app against the dev Firebase backend. See the

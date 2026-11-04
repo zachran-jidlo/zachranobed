@@ -12,34 +12,36 @@ Zachraň oběd (Save Lunch) is a Flutter app connecting food providers with char
 
 ## Essential Commands
 
+Always run `flutter` and `dart` through [FVM](https://fvm.app) so they use the version pinned in `.fvmrc`. A global SDK may be older and report errors that do not exist, for example in `dart analyze`.
+
 ```bash
 # Setup & dependencies
-flutter pub get
-dart pub get --directory lint/arch   # Architecture lint plugin, a separate package
+fvm flutter pub get
+fvm dart pub get --directory lint/arch   # Architecture lint plugin, a separate package
 
 # Code generation (freezed, auto_route, json_serializable)
-flutter pub run build_runner build --delete-conflicting-outputs
-flutter pub run build_runner watch   # Watch mode
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+fvm flutter pub run build_runner watch   # Watch mode
 
 # Localization
-flutter gen-l10n
+fvm flutter gen-l10n
 
 # Run app with flavor
-flutter run --flavor dev
-flutter run --flavor stage
-flutter run --flavor prod
+fvm flutter run --flavor dev
+fvm flutter run --flavor stage
+fvm flutter run --flavor prod
 
 # Build
-flutter build apk --release --flavor prod
-flutter build ipa --release --flavor prod
-flutter build web --release
+fvm flutter build apk --release --flavor prod
+fvm flutter build ipa --release --flavor prod
+fvm flutter build web --release
 
 # Testing
-flutter test
-flutter test test/common/  # Specific directory
+fvm flutter test
+fvm flutter test test/common/  # Specific directory
 
 # Linting
-dart analyze --fatal-infos   # Same as CI. flutter analyze skips the lint/arch rules
+fvm dart analyze --fatal-infos   # Same as CI. flutter analyze skips the lint/arch rules
 ```
 
 ## Architecture
@@ -129,7 +131,7 @@ Firebase config files in `lib/app/data/firebase/firebase_options_*.dart`
 
 Always run after modifying annotated files:
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+fvm flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## Creating a New Feature

@@ -23,12 +23,14 @@ This package includes the following custom lint rules:
 
 ## How to run
 
-The plugin is enabled in the root `analysis_options.yaml`. Run it from the project root:
+The plugin is enabled in the root `analysis_options.yaml`. Run it from the project root through [FVM](https://fvm.app):
 
 ```
-dart analyze
+fvm dart analyze --fatal-infos
 ```
+
+Use `fvm` so the analyzer comes from the SDK pinned in `.fvmrc`. A global `dart` may be older and report false errors.
 
 `flutter analyze` exits before analyzer plugins report, so it does not show these rules.
 
-After changing a rule, restart the analysis server in the IDE. If `dart analyze` still runs the old code, delete `~/.dartServer/.plugin_manager` to force a rebuild.
+After changing a rule, restart the analysis server in the IDE. If `fvm dart analyze` still runs the old code, delete `~/.dartServer/.plugin_manager` to force a rebuild.
