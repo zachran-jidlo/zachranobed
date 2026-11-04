@@ -22,7 +22,8 @@ analyzer:
     - web/**
     - functions/**
 
-# Architecture rules for the project. They run as part of `flutter analyze`.
+# Architecture rules for the project. Only `dart analyze` and the IDE report them.
+# `flutter analyze` exits before analyzer plugins report.
 plugins:
   lint_arch:
     path: lint/arch

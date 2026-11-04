@@ -33,14 +33,25 @@ class _Visitor extends SimpleAstVisitor<void> {
   final AnalysisRule rule;
   final RuleContext context;
 
+  // Cached per unit, so the path regex runs once per file instead of once per import.
+  String? _currentPath;
+  String? _currentModule;
+
   _Visitor(this.rule, this.context);
+
+  String? get _moduleOfCurrentUnit {
+    final path = context.currentPath;
+    if (path != _currentPath) {
+      _currentPath = path;
+      _currentModule = _modulePattern.firstMatch(path)?.group(1);
+    }
+    return _currentModule;
+  }
 
   @override
   void visitImportDirective(ImportDirective node) {
-    final match = _modulePattern.firstMatch(context.currentPath);
-    if (match == null) return;
-
-    final currentModule = match.group(1);
+    final currentModule = _moduleOfCurrentUnit;
+    if (currentModule == null) return;
 
     final importUri = node.uri.stringValue;
     if (importUri == null || !importUri.startsWith('package:')) return;

@@ -57,10 +57,6 @@ jobs:
       - name: Install lint/arch dependencies
         run: dart pub get --directory lint/arch
 
-      # Run the Dart analyzer with the project's analysis_options.yaml
-      - name: Run Flutter analyze
-        run: flutter analyze
-
       # Format everything, then fail if a version controlled file changed. The
       # l10n sources are generated during pub get and come out unformatted, but
       # they are gitignored, so reformatting them here is harmless and git does
@@ -71,10 +67,11 @@ jobs:
           dart format lib test
           git diff --exit-code -- lib test
 
-      # Run the architecture rules from lint/arch. flutter analyze exits before
-      # analyzer plugins report, so they only show up in dart analyze.
-      - name: Run architecture lint
-        run: dart analyze
+      # One analyzer pass for the lints and the lint/arch rules. flutter analyze
+      # exits before analyzer plugins report, so dart analyze is used instead.
+      # --fatal-infos keeps it as strict as flutter analyze.
+      - name: Run analyze
+        run: dart analyze --fatal-infos
 
   test:
     runs-on: ubuntu-latest

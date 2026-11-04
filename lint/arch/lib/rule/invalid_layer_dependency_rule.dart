@@ -77,7 +77,20 @@ class _Visitor extends SimpleAstVisitor<void> {
   final InvalidLayerDependencyRule rule;
   final RuleContext context;
 
+  // Cached per unit, so the path regex runs once per file instead of once per import.
+  String? _currentPath;
+  String? _currentLayer;
+
   _Visitor(this.rule, this.context);
+
+  String? get _layerOfCurrentUnit {
+    final path = context.currentPath;
+    if (path != _currentPath) {
+      _currentPath = path;
+      _currentLayer = rule._pattern.firstMatch(path)?.group(1);
+    }
+    return _currentLayer;
+  }
 
   static String? _extractLayer(String path) {
     for (final p in _allLayerPatterns) {
@@ -89,10 +102,8 @@ class _Visitor extends SimpleAstVisitor<void> {
 
   @override
   void visitImportDirective(ImportDirective node) {
-    final match = rule._pattern.firstMatch(context.currentPath);
-    if (match == null) return;
-
-    final currentLayer = match.group(1);
+    final currentLayer = _layerOfCurrentUnit;
+    if (currentLayer == null) return;
 
     final importUri = node.uri.stringValue;
     if (importUri == null || !importUri.startsWith('package:')) return;

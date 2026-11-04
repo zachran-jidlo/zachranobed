@@ -39,8 +39,7 @@ flutter test
 flutter test test/common/  # Specific directory
 
 # Linting
-flutter analyze
-dart analyze   # Also reports the lint/arch architecture rules
+dart analyze --fatal-infos   # Same as CI. flutter analyze skips the lint/arch rules
 ```
 
 ## Architecture
