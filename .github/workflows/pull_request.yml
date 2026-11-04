@@ -51,6 +51,12 @@ jobs:
           java: false
           version-code: false
 
+      # lint/arch is a separate package, not a dependency of the app, so the
+      # root pub get does not resolve it. Without this the analyzer cannot find
+      # its imports.
+      - name: Install lint/arch dependencies
+        run: dart pub get --directory lint/arch
+
       # Run the Dart analyzer with the project's analysis_options.yaml
       - name: Run Flutter analyze
         run: flutter analyze

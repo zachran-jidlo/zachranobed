@@ -15,6 +15,7 @@ Zachraň oběd (Save Lunch) is a Flutter app connecting food providers with char
 ```bash
 # Setup & dependencies
 flutter pub get
+dart pub get --directory lint/arch   # Architecture lint plugin, a separate package
 
 # Code generation (freezed, auto_route, json_serializable)
 flutter pub run build_runner build --delete-conflicting-outputs
