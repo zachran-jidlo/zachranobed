@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:auto_route/auto_route.dart' as _i28;
 import 'package:collection/collection.dart' as _i32;
 import 'package:flutter/material.dart' as _i29;
@@ -420,11 +421,12 @@ class FaqQuestionsRouteArgs {
     if (identical(this, other)) return true;
     if (other is! FaqQuestionsRouteArgs) return false;
     return key == other.key &&
-        const _i32.ListEquality().equals(items, other.items);
+        const _i32.ListEquality<_i31.FaqItem>().equals(items, other.items);
   }
 
   @override
-  int get hashCode => key.hashCode ^ const _i32.ListEquality().hash(items);
+  int get hashCode =>
+      key.hashCode ^ const _i32.ListEquality<_i31.FaqItem>().hash(items);
 }
 
 /// generated route for
@@ -485,12 +487,17 @@ class FoodBoxesCheckupMismatchRouteArgs {
     if (other is! FoodBoxesCheckupMismatchRouteArgs) return false;
     return key == other.key &&
         user == other.user &&
-        const _i32.ListEquality().equals(statistics, other.statistics);
+        const _i32.ListEquality<_i34.FoodBoxStatistics>().equals(
+          statistics,
+          other.statistics,
+        );
   }
 
   @override
   int get hashCode =>
-      key.hashCode ^ user.hashCode ^ const _i32.ListEquality().hash(statistics);
+      key.hashCode ^
+      user.hashCode ^
+      const _i32.ListEquality<_i34.FoodBoxStatistics>().hash(statistics);
 }
 
 /// generated route for
@@ -854,7 +861,7 @@ class OfferFoodBoxesRouteArgs {
     if (identical(this, other)) return true;
     if (other is! OfferFoodBoxesRouteArgs) return false;
     return key == other.key &&
-        const _i32.MapEquality().equals(
+        const _i32.MapEquality<_i36.FoodBoxType, int>().equals(
           currentBoxesQuantity,
           other.currentBoxesQuantity,
         );
@@ -862,7 +869,10 @@ class OfferFoodBoxesRouteArgs {
 
   @override
   int get hashCode =>
-      key.hashCode ^ const _i32.MapEquality().hash(currentBoxesQuantity);
+      key.hashCode ^
+      const _i32.MapEquality<_i36.FoodBoxType, int>().hash(
+        currentBoxesQuantity,
+      );
 }
 
 /// generated route for
@@ -980,7 +990,7 @@ class OfferFoodOverviewRouteArgs {
     if (identical(this, other)) return true;
     if (other is! OfferFoodOverviewRouteArgs) return false;
     return key == other.key &&
-        const _i32.ListEquality().equals(
+        const _i32.ListEquality<_i37.FoodInfo>().equals(
           initialFoodInfos,
           other.initialFoodInfos,
         );
@@ -988,7 +998,8 @@ class OfferFoodOverviewRouteArgs {
 
   @override
   int get hashCode =>
-      key.hashCode ^ const _i32.ListEquality().hash(initialFoodInfos);
+      key.hashCode ^
+      const _i32.ListEquality<_i37.FoodInfo>().hash(initialFoodInfos);
 }
 
 /// generated route for

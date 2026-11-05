@@ -1,7 +1,6 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'faq_category.dart';
@@ -10,6 +9,7 @@ part of 'faq_category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -35,22 +35,32 @@ mixin _$FaqCategory {
 
   @override
   bool operator ==(Object other) {
+    final _this = this as FaqCategory;
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is FaqCategory &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.order, order) || other.order == order));
+            (identical(other.id, _this.id) || other.id == _this.id) &&
+            (identical(other.title, _this.title) || other.title == _this.title) &&
+            (identical(other.description, _this.description) || other.description == _this.description) &&
+            (identical(other.order, _this.order) || other.order == _this.order));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, order);
+  int get hashCode {
+    final _this = this as FaqCategory;
+    return Object.hash(
+      runtimeType,
+      _this.id,
+      _this.title,
+      _this.description,
+      _this.order,
+    );
+  }
 
   @override
   String toString() {
-    return 'FaqCategory(id: $id, title: $title, description: $description, order: $order)';
+    final _this = this as FaqCategory;
+    return 'FaqCategory(id: ${_this.id}, title: ${_this.title}, description: ${_this.description}, order: ${_this.order})';
   }
 }
 
@@ -82,7 +92,7 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
     Object? order = null,
   }) {
     return _then(
-      _self.copyWith(
+      FaqCategory(
         id: null == id
             ? _self.id
             : id // ignore: cast_nullable_to_non_nullable
@@ -101,6 +111,163 @@ class _$FaqCategoryCopyWithImpl<$Res> implements $FaqCategoryCopyWith<$Res> {
                   as int,
       ),
     );
+  }
+}
+
+/// Adds pattern-matching-related methods to [FaqCategory].
+extension FaqCategoryPatterns on FaqCategory {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_FaqCategory value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_FaqCategory value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_FaqCategory value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String title, String description, int order)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory() when $default != null:
+        return $default(_that.id, _that.title, _that.description, _that.order);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String title, String description, int order) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory():
+        return $default(_that.id, _that.title, _that.description, _that.order);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String title, String description, int order)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FaqCategory() when $default != null:
+        return $default(_that.id, _that.title, _that.description, _that.order);
+      case _:
+        return null;
+    }
   }
 }
 
@@ -135,8 +302,7 @@ class _FaqCategory implements FaqCategory {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FaqCategoryCopyWith<_FaqCategory> get copyWith =>
-      __$FaqCategoryCopyWithImpl<_FaqCategory>(this, _$identity);
+  _$FaqCategoryCopyWith<_FaqCategory> get copyWith => __$FaqCategoryCopyWithImpl<_FaqCategory>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -145,13 +311,14 @@ class _FaqCategory implements FaqCategory {
             other is _FaqCategory &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.order, order) || other.order == order));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, order);
+  int get hashCode {
+    return Object.hash(runtimeType, id, title, description, order);
+  }
 
   @override
   String toString() {
@@ -160,8 +327,7 @@ class _FaqCategory implements FaqCategory {
 }
 
 /// @nodoc
-abstract mixin class _$FaqCategoryCopyWith<$Res>
-    implements $FaqCategoryCopyWith<$Res> {
+abstract mixin class _$FaqCategoryCopyWith<$Res> implements $FaqCategoryCopyWith<$Res> {
   factory _$FaqCategoryCopyWith(
     _FaqCategory value,
     $Res Function(_FaqCategory) _then,

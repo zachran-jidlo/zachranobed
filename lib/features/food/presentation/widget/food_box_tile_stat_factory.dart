@@ -41,7 +41,7 @@ class FoodBoxTileStatFactory {
             value: stat.availableQuantityAtCanteen,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
-          if (onTheWayStat != null) onTheWayStat,
+          ?onTheWayStat,
           UiFoodBoxTileStat(
             value: stat.availableQuantityAtCharity,
             label: context.l10n.charity,
@@ -53,7 +53,7 @@ class FoodBoxTileStatFactory {
             value: stat.availableQuantityAtCharity,
             label: context.l10n.overviewFoodBoxesAvailableLabel,
           ),
-          if (onTheWayStat != null) onTheWayStat,
+          ?onTheWayStat,
           UiFoodBoxTileStat(
             value: stat.availableQuantityAtCanteen,
             label: context.l10n.canteen,

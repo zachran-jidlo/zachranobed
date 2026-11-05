@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:zachranobed/common/domain/model/user_data.dart';
@@ -34,7 +33,7 @@ class DebugScreen extends StatelessWidget {
               UiPrimaryButton(
                 size: UiButtonSize.medium(),
                 text: "Test log",
-                icon: MaterialSymbols.bug_report,
+                icon: Icons.bug_report,
                 onPressed: () {
                   ZOLogger.logMessage("This is a debug message to the logger to verify, how the logger works");
                 },

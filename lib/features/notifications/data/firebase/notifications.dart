@@ -113,6 +113,8 @@ class Notifications {
         await _firebaseMessaging.getAPNSToken();
       }
 
+      // Cloud Functions send pushes to FCM tokens. The replacement API returns an FID instead.
+      // ignore: deprecated_member_use
       final fCMToken = await _firebaseMessaging.getToken();
       ZOLogger.logMessage('FCM token: $fCMToken');
 
@@ -124,6 +126,8 @@ class Notifications {
 
   /// Listens to token refresh events and saves the new token to the database.
   void listenToTokenRefresh() {
+    // Cloud Functions send pushes to FCM tokens. The replacement API returns an FID instead.
+    // ignore: deprecated_member_use
     _firebaseMessaging.onTokenRefresh
         .asyncMap(_saveToken)
         .listen(

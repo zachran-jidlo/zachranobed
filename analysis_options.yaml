@@ -14,10 +14,19 @@ formatter:
   page_width: 120
   trailing_commas: preserve
 
-# The following line activates a "custom_lint" with a set of rules for a project.
 analyzer:
-  plugins:
-    - custom_lint
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - functions/**
+
+# Architecture rules for the project. Only `dart analyze` and the IDE report them.
+# `flutter analyze` exits before analyzer plugins report.
+plugins:
+  lint_arch:
+    path: lint/arch
 
 linter:
   # The lint rules applied to this project can be customized in the

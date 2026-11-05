@@ -51,9 +51,11 @@ jobs:
           java: false
           version-code: false
 
-      # Run the Dart analyzer with the project's analysis_options.yaml
-      - name: Run Flutter analyze
-        run: flutter analyze
+      # lint/arch is a separate package, not a dependency of the app, so the
+      # root pub get does not resolve it. Without this the analyzer cannot find
+      # its imports.
+      - name: Install lint/arch dependencies
+        run: dart pub get --directory lint/arch
 
       # Format everything, then fail if a version controlled file changed. The
       # l10n sources are generated during pub get and come out unformatted, but
@@ -65,9 +67,11 @@ jobs:
           dart format lib test
           git diff --exit-code -- lib test
 
-      # Run custom lint with project rules
-      - name: Run custom lint
-        run: dart run custom_lint
+      # One analyzer pass for the lints and the lint/arch rules. flutter analyze
+      # exits before analyzer plugins report, so dart analyze is used instead.
+      # --fatal-infos keeps it as strict as flutter analyze.
+      - name: Run analyze
+        run: dart analyze --fatal-infos
 
   test:
     runs-on: ubuntu-latest

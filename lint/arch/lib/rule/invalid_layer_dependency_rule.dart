@@ -1,56 +1,96 @@
-import 'package:analyzer/error/error.dart' show ErrorSeverity;
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
+import 'package:lint_arch/rule/rule_context_extensions.dart';
+
+const _problemMessage = 'Invalid import between Clean Architecture layers.';
+const _correctionMessage = 'Check imports: domain → none, data → domain, presentation → domain, di → all.';
 
 /// Rule that checks dependencies between Clean Architecture layers in app directory.
 class InvalidAppLayerDependencyRule extends InvalidLayerDependencyRule {
-  InvalidAppLayerDependencyRule()
-      : super(
-          lintName: 'invalid_app_layer_dependency',
-          regexPattern: r'app/([^/]+)/',
-        );
+  InvalidAppLayerDependencyRule() : super(code: _code, regexPattern: r'app/([^/]+)/');
+
+  static const _code = LintCode(
+    'invalid_app_layer_dependency',
+    _problemMessage,
+    correctionMessage: _correctionMessage,
+    severity: DiagnosticSeverity.ERROR,
+  );
 }
 
 /// Rule that checks dependencies between Clean Architecture layers in feature directories.
 class InvalidFeatureLayerDependencyRule extends InvalidLayerDependencyRule {
-  InvalidFeatureLayerDependencyRule()
-      : super(
-          lintName: 'invalid_feature_layer_dependency',
-          regexPattern: r'features/[^/]+/([^/]+)/',
-        );
+  InvalidFeatureLayerDependencyRule() : super(code: _code, regexPattern: r'features/[^/]+/([^/]+)/');
+
+  static const _code = LintCode(
+    'invalid_feature_layer_dependency',
+    _problemMessage,
+    correctionMessage: _correctionMessage,
+    severity: DiagnosticSeverity.ERROR,
+  );
 }
 
 /// Rule that checks dependencies between Clean Architecture layers in common directory.
 class InvalidCommonLayerDependencyRule extends InvalidLayerDependencyRule {
-  InvalidCommonLayerDependencyRule()
-      : super(
-          lintName: 'invalid_common_layer_dependency',
-          regexPattern: r'common/([^/]+)/',
-        );
+  InvalidCommonLayerDependencyRule() : super(code: _code, regexPattern: r'common/([^/]+)/');
+
+  static const _code = LintCode(
+    'invalid_common_layer_dependency',
+    _problemMessage,
+    correctionMessage: _correctionMessage,
+    severity: DiagnosticSeverity.ERROR,
+  );
 }
 
 /// Rule that checks dependencies between Clean Architecture layers.
-class InvalidLayerDependencyRule extends DartLintRule {
-  final String lintName;
-  final String regexPattern;
+///
+/// Subclasses pass a `static const` [LintCode]. The analysis server needs a single instance per code,
+/// otherwise `// ignore:` comments stop working.
+abstract class InvalidLayerDependencyRule extends AnalysisRule {
+  final LintCode _diagnosticCode;
+  final RegExp _pattern;
 
-  InvalidLayerDependencyRule({
-    required this.lintName,
-    required this.regexPattern,
-  }) : super(
-          code: LintCode(
-            name: lintName,
-            problemMessage: 'Invalid import between Clean Architecture layers.',
-            correctionMessage: 'Check imports: domain → none, data → domain, presentation → domain, di → all.',
-            errorSeverity: ErrorSeverity.ERROR,
-          ),
-        );
+  InvalidLayerDependencyRule({required LintCode code, required String regexPattern})
+    : _diagnosticCode = code,
+      _pattern = RegExp(regexPattern),
+      super(name: code.lowerCaseName, description: code.problemMessage);
 
+  @override
+  LintCode get diagnosticCode => _diagnosticCode;
+
+  @override
+  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
+    registry.addImportDirective(this, _Visitor(this, context));
+  }
+}
+
+class _Visitor extends SimpleAstVisitor<void> {
   static final _allLayerPatterns = [
     RegExp(r'features/[^/]+/([^/]+)/'),
     RegExp(r'common/([^/]+)/'),
     RegExp(r'app/([^/]+)/'),
   ];
+
+  final InvalidLayerDependencyRule rule;
+  final RuleContext context;
+
+  // Cached per unit, so the path regex runs once per file instead of once per import.
+  String? _currentPath;
+  String? _currentLayer;
+
+  _Visitor(this.rule, this.context);
+
+  String? get _layerOfCurrentUnit {
+    final path = context.currentPath;
+    if (path != _currentPath) {
+      _currentPath = path;
+      _currentLayer = rule._pattern.firstMatch(path)?.group(1);
+    }
+    return _currentLayer;
+  }
 
   static String? _extractLayer(String path) {
     for (final p in _allLayerPatterns) {
@@ -61,30 +101,22 @@ class InvalidLayerDependencyRule extends DartLintRule {
   }
 
   @override
-  void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
-    final filePath = resolver.source.fullName;
+  void visitImportDirective(ImportDirective node) {
+    final currentLayer = _layerOfCurrentUnit;
+    if (currentLayer == null) return;
 
-    final pattern = RegExp(regexPattern);
-    final match = pattern.firstMatch(filePath);
+    final importUri = node.uri.stringValue;
+    if (importUri == null || !importUri.startsWith('package:')) return;
 
-    if (match == null) return;
+    final importPath = importUri.replaceFirst('package:', '');
+    final importedLayer = _extractLayer(importPath);
 
-    final currentLayer = match.group(1);
+    // Ignore if not importing a known layer
+    if (importedLayer == null) return;
 
-    context.registry.addImportDirective((node) {
-      final importUri = node.uri.stringValue;
-      if (importUri == null || !importUri.startsWith('package:')) return;
-
-      final importPath = importUri.replaceFirst('package:', '');
-      final importedLayer = _extractLayer(importPath);
-
-      // Ignore if not importing a known layer
-      if (importedLayer == null) return;
-
-      if (!_isLayerAllowed(currentLayer, importedLayer)) {
-        reporter.atNode(node, code);
-      }
-    });
+    if (!_isLayerAllowed(currentLayer, importedLayer)) {
+      rule.reportAtNode(node);
+    }
   }
 
   /// Checks if the imported layer is allowed in the current layer.

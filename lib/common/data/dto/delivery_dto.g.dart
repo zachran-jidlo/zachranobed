@@ -47,9 +47,9 @@ Map<String, dynamic> _$DeliveryDtoToJson(DeliveryDto instance) => <String, dynam
   'state': instance.state?.toJson(),
   'type': instance.type?.toJson(),
   'confirmationTime': instance.confirmationTime,
-  if (instance.foodBoxesTransferred case final value?) 'foodBoxesTransferred': value,
-  if (instance.manualDonation case final value?) 'manualDonation': value,
-  if (instance.pickupConfirmation?.toJson() case final value?) 'pickupConfirmation': value,
+  'foodBoxesTransferred': ?instance.foodBoxesTransferred,
+  'manualDonation': ?instance.manualDonation,
+  'pickupConfirmation': ?instance.pickupConfirmation?.toJson(),
 };
 
 const _$DeliveryStateDtoEnumMap = {

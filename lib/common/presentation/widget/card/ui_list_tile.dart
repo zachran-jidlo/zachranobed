@@ -51,11 +51,11 @@ class UiListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 16.0,
         children: [
-          if (start != null) start!,
+          ?start,
           Expanded(
             child: _buildMainContent(context),
           ),
-          if (end != null) end!,
+          ?end,
         ],
       ),
     );

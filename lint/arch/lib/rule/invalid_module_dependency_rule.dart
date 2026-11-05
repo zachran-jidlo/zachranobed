@@ -1,47 +1,72 @@
-import 'package:analyzer/error/error.dart' show ErrorSeverity;
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
+import 'package:lint_arch/rule/rule_context_extensions.dart';
 
 /// Rule that checks invalid dependencies between top-level modules (app, features, common).
-class InvalidModuleDependencyRule extends DartLintRule {
-  InvalidModuleDependencyRule()
-      : super(
-          code: LintCode(
-            name: 'invalid_module_dependency',
-            problemMessage: 'Invalid dependency between modules.',
-            correctionMessage: 'App → Feature/Common, Feature → Common, Common → none.',
-            errorSeverity: ErrorSeverity.ERROR,
-          ),
-        );
+class InvalidModuleDependencyRule extends AnalysisRule {
+  InvalidModuleDependencyRule() : super(name: _code.lowerCaseName, description: _code.problemMessage);
+
+  static const _code = LintCode(
+    'invalid_module_dependency',
+    'Invalid dependency between modules.',
+    correctionMessage: 'App → Feature/Common, Feature → Common, Common → none.',
+    severity: DiagnosticSeverity.ERROR,
+  );
 
   @override
-  void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
-    final filePath = resolver.source.fullName;
+  LintCode get diagnosticCode => _code;
 
-    // Match the current module: app/*, features/*, or common/*
-    final modulePattern = RegExp(r'^(?:.*/)?(app|features|common)/');
-    final match = modulePattern.firstMatch(filePath);
+  @override
+  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
+    registry.addImportDirective(this, _Visitor(this, context));
+  }
+}
 
-    if (match == null) return;
+class _Visitor extends SimpleAstVisitor<void> {
+  // Match the current module: app/*, features/*, or common/*
+  static final _modulePattern = RegExp(r'^(?:.*/)?(app|features|common)/');
 
-    final currentModule = match.group(1);
+  final AnalysisRule rule;
+  final RuleContext context;
 
-    context.registry.addImportDirective((node) {
-      final importUri = node.uri.stringValue;
-      if (importUri == null || !importUri.startsWith('package:')) return;
+  // Cached per unit, so the path regex runs once per file instead of once per import.
+  String? _currentPath;
+  String? _currentModule;
 
-      final importPath = importUri.replaceFirst('package:', '');
-      final importedMatch = modulePattern.firstMatch(importPath);
+  _Visitor(this.rule, this.context);
 
-      // Ignore if not importing another top-level module
-      if (importedMatch == null) return;
+  String? get _moduleOfCurrentUnit {
+    final path = context.currentPath;
+    if (path != _currentPath) {
+      _currentPath = path;
+      _currentModule = _modulePattern.firstMatch(path)?.group(1);
+    }
+    return _currentModule;
+  }
 
-      final importedModule = importedMatch.group(1);
+  @override
+  void visitImportDirective(ImportDirective node) {
+    final currentModule = _moduleOfCurrentUnit;
+    if (currentModule == null) return;
 
-      if (!_isModuleAllowed(currentModule, importedModule)) {
-        reporter.atNode(node, code);
-      }
-    });
+    final importUri = node.uri.stringValue;
+    if (importUri == null || !importUri.startsWith('package:')) return;
+
+    final importPath = importUri.replaceFirst('package:', '');
+    final importedMatch = _modulePattern.firstMatch(importPath);
+
+    // Ignore if not importing another top-level module
+    if (importedMatch == null) return;
+
+    final importedModule = importedMatch.group(1);
+
+    if (!_isModuleAllowed(currentModule, importedModule)) {
+      rule.reportAtNode(node);
+    }
   }
 
   /// Checks if the imported module is allowed in the current module.

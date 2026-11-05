@@ -1,7 +1,6 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'meal_suggestion.dart';
@@ -10,6 +9,7 @@ part of 'meal_suggestion.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 T _$identity<T>(T value) => value;
 
 /// @nodoc
@@ -22,33 +22,40 @@ mixin _$MealSuggestion {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MealSuggestionCopyWith<MealSuggestion> get copyWith =>
-      _$MealSuggestionCopyWithImpl<MealSuggestion>(
-        this as MealSuggestion,
-        _$identity,
-      );
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is MealSuggestion &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other.allergens, allergens));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    name,
-    const DeepCollectionEquality().hash(allergens),
+  $MealSuggestionCopyWith<MealSuggestion> get copyWith => _$MealSuggestionCopyWithImpl<MealSuggestion>(
+    this as MealSuggestion,
+    _$identity,
   );
 
   @override
+  bool operator ==(Object other) {
+    final _this = this as MealSuggestion;
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MealSuggestion &&
+            (identical(other.id, _this.id) || other.id == _this.id) &&
+            (identical(other.name, _this.name) || other.name == _this.name) &&
+            const DeepCollectionEquality().equals(
+              other.allergens,
+              _this.allergens,
+            ));
+  }
+
+  @override
+  int get hashCode {
+    final _this = this as MealSuggestion;
+    return Object.hash(
+      runtimeType,
+      _this.id,
+      _this.name,
+      const DeepCollectionEquality().hash(_this.allergens),
+    );
+  }
+
+  @override
   String toString() {
-    return 'MealSuggestion(id: $id, name: $name, allergens: $allergens)';
+    final _this = this as MealSuggestion;
+    return 'MealSuggestion(id: ${_this.id}, name: ${_this.name}, allergens: ${_this.allergens})';
   }
 }
 
@@ -63,8 +70,7 @@ abstract mixin class $MealSuggestionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MealSuggestionCopyWithImpl<$Res>
-    implements $MealSuggestionCopyWith<$Res> {
+class _$MealSuggestionCopyWithImpl<$Res> implements $MealSuggestionCopyWith<$Res> {
   _$MealSuggestionCopyWithImpl(this._self, this._then);
 
   final MealSuggestion _self;
@@ -80,7 +86,7 @@ class _$MealSuggestionCopyWithImpl<$Res>
     Object? allergens = null,
   }) {
     return _then(
-      _self.copyWith(
+      MealSuggestion(
         id: null == id
             ? _self.id
             : id // ignore: cast_nullable_to_non_nullable
@@ -98,13 +104,170 @@ class _$MealSuggestionCopyWithImpl<$Res>
   }
 }
 
+/// Adds pattern-matching-related methods to [MealSuggestion].
+extension MealSuggestionPatterns on MealSuggestion {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_MealSuggestion value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_MealSuggestion value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_MealSuggestion value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String name, List<String> allergens)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion() when $default != null:
+        return $default(_that.id, _that.name, _that.allergens);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String name, List<String> allergens) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion():
+        return $default(_that.id, _that.name, _that.allergens);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String name, List<String> allergens)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MealSuggestion() when $default != null:
+        return $default(_that.id, _that.name, _that.allergens);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
 class _MealSuggestion implements MealSuggestion {
   const _MealSuggestion({
     required this.id,
     required this.name,
-    required final List<String> allergens,
+    required List<String> allergens,
   }) : _allergens = allergens;
 
   @override
@@ -134,19 +297,18 @@ class _MealSuggestion implements MealSuggestion {
             other is _MealSuggestion &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(
-              other._allergens,
-              _allergens,
-            ));
+            const DeepCollectionEquality().equals(other.allergens, _allergens));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    name,
-    const DeepCollectionEquality().hash(_allergens),
-  );
+  int get hashCode {
+    return Object.hash(
+      runtimeType,
+      id,
+      name,
+      const DeepCollectionEquality().hash(_allergens),
+    );
+  }
 
   @override
   String toString() {
@@ -155,8 +317,7 @@ class _MealSuggestion implements MealSuggestion {
 }
 
 /// @nodoc
-abstract mixin class _$MealSuggestionCopyWith<$Res>
-    implements $MealSuggestionCopyWith<$Res> {
+abstract mixin class _$MealSuggestionCopyWith<$Res> implements $MealSuggestionCopyWith<$Res> {
   factory _$MealSuggestionCopyWith(
     _MealSuggestion value,
     $Res Function(_MealSuggestion) _then,
@@ -167,8 +328,7 @@ abstract mixin class _$MealSuggestionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MealSuggestionCopyWithImpl<$Res>
-    implements _$MealSuggestionCopyWith<$Res> {
+class __$MealSuggestionCopyWithImpl<$Res> implements _$MealSuggestionCopyWith<$Res> {
   __$MealSuggestionCopyWithImpl(this._self, this._then);
 
   final _MealSuggestion _self;

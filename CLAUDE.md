@@ -6,41 +6,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Zachraň oběd (Save Lunch) is a Flutter app connecting food providers with charities to redistribute surplus meals. Multi-platform: Android, iOS, Web.
 
-- Flutter SDK: 3.32.4
-- Dart: >= 3.4.3 < 4.0.0
+- Flutter SDK: 3.47.9 (pinned in `.fvmrc`, minimum 3.47.8 because of the eMudhra CA fix)
+- Dart: 3.13.7
 - Backend: Firebase (Auth, Firestore, Cloud Functions, Messaging, Crashlytics)
 
 ## Essential Commands
 
+Always run `flutter` and `dart` through [FVM](https://fvm.app) so they use the version pinned in `.fvmrc`. A global SDK may be older and report errors that do not exist, for example in `dart analyze`.
+
 ```bash
 # Setup & dependencies
-flutter pub get
+fvm flutter pub get
+fvm dart pub get --directory lint/arch   # Architecture lint plugin, a separate package
 
 # Code generation (freezed, auto_route, json_serializable)
-flutter pub run build_runner build --delete-conflicting-outputs
-flutter pub run build_runner watch   # Watch mode
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+fvm flutter pub run build_runner watch   # Watch mode
 
 # Localization
-flutter gen-l10n
+fvm flutter gen-l10n
 
 # Run app with flavor
-flutter run --flavor dev
-flutter run --flavor stage
-flutter run --flavor prod
+fvm flutter run --flavor dev
+fvm flutter run --flavor stage
+fvm flutter run --flavor prod
 
 # Build
-flutter build apk --release --flavor prod
-flutter build ipa --release --flavor prod
-flutter build web --release
+fvm flutter build apk --release --flavor prod
+fvm flutter build ipa --release --flavor prod
+fvm flutter build web --release
 
 # Testing
-flutter test
-flutter test test/common/  # Specific directory
+fvm flutter test
+fvm flutter test test/common/  # Specific directory
 
 # Linting
-dart run custom_lint
-dart run custom_lint --watch
-flutter analyze
+fvm dart analyze --fatal-infos   # Same as CI. flutter analyze skips the lint/arch rules
 ```
 
 ## Architecture
@@ -98,7 +99,7 @@ class FoodInfo with _$FoodInfo {
 
 ## Enforced Lint Rules
 
-Custom linting in `lint/arch/` enforces:
+Custom linting in `lint/arch/` (an `analysis_server_plugin`) enforces:
 - **Absolute imports only**: Use `package:zachranobed/...`
 - **No cross-feature dependencies**: Features can only import from common
 - **Layer isolation**: Presentation → Domain → Data (not reverse)
@@ -130,7 +131,7 @@ Firebase config files in `lib/app/data/firebase/firebase_options_*.dart`
 
 Always run after modifying annotated files:
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+fvm flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## Creating a New Feature

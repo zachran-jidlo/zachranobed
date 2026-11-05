@@ -1,35 +1,51 @@
-import 'package:analyzer/error/error.dart' show ErrorSeverity;
-import 'package:analyzer/error/listener.dart';
-import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:analyzer/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/analysis_rule/rule_context.dart';
+import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/error/error.dart';
+import 'package:lint_arch/rule/rule_context_extensions.dart';
 
 /// Rule that prevents a feature from importing another feature.
-class AvoidCrossFeatureDependencyRule extends DartLintRule {
-  AvoidCrossFeatureDependencyRule() : super(code: _code);
+class AvoidCrossFeatureDependencyRule extends AnalysisRule {
+  AvoidCrossFeatureDependencyRule() : super(name: _code.lowerCaseName, description: _code.problemMessage);
 
   static const _code = LintCode(
-    name: 'avoid_cross_feature_dependency',
-    problemMessage: 'A feature should not depend on another feature directly.',
+    'avoid_cross_feature_dependency',
+    'A feature should not depend on another feature directly.',
     correctionMessage: 'Extract shared code into "common" folder.',
-    errorSeverity: ErrorSeverity.ERROR,
+    severity: DiagnosticSeverity.ERROR,
   );
 
   @override
-  void run(CustomLintResolver resolver, ErrorReporter reporter, CustomLintContext context) {
-    context.registry.addImportDirective((node) {
-      final importUri = node.uri.stringValue;
-      if (importUri == null || !importUri.startsWith('package:')) return;
+  LintCode get diagnosticCode => _code;
 
-      final currentUnit = resolver.source.fullName;
-      final importPath = importUri.replaceFirst('package:', '');
+  @override
+  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
+    registry.addImportDirective(this, _Visitor(this, context));
+  }
+}
 
-      final featurePattern = RegExp(r'features/([^/]+)/');
+class _Visitor extends SimpleAstVisitor<void> {
+  static final _featurePattern = RegExp(r'features/([^/]+)/');
 
-      final currentFeature = featurePattern.firstMatch(currentUnit)?.group(1);
-      final importedFeature = featurePattern.firstMatch(importPath)?.group(1);
+  final AnalysisRule rule;
+  final RuleContext context;
 
-      if (currentFeature != null && importedFeature != null && currentFeature != importedFeature) {
-        reporter.atNode(node, _code);
-      }
-    });
+  _Visitor(this.rule, this.context);
+
+  @override
+  void visitImportDirective(ImportDirective node) {
+    final importUri = node.uri.stringValue;
+    if (importUri == null || !importUri.startsWith('package:')) return;
+
+    final importPath = importUri.replaceFirst('package:', '');
+
+    final currentFeature = _featurePattern.firstMatch(context.currentPath)?.group(1);
+    final importedFeature = _featurePattern.firstMatch(importPath)?.group(1);
+
+    if (currentFeature != null && importedFeature != null && currentFeature != importedFeature) {
+      rule.reportAtNode(node);
+    }
   }
 }

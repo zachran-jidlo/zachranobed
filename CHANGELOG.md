@@ -16,6 +16,7 @@ This is a changelog for **ZachranObed** application.
 - **ZOB-433** Update orientation settings.
 - **ZOB-446** Restrict Firestore security rules to the signed-in user's own entity and pairs.
 - **ZOB-447** Speed up CI builds and cut GitHub Actions usage.
+- **ZOB-450** Update Dart, Flutter and Firebase and other related SDKs.
 
 ## [2.2.0]
 ### Added

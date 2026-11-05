@@ -28,14 +28,14 @@ need no changes between them.
 On Android, with an emulator running or a device connected:
 
 ```bash
-flutter build apk --flavor dev -t lib/main_dev.dart --debug
+fvm flutter build apk --flavor dev -t lib/main_dev.dart --debug
 adb install -r build/app/outputs/flutter-apk/app-dev-debug.apk
 ```
 
 On iOS, Maestro drives simulators only. Physical devices are not supported, so build for the simulator:
 
 ```bash
-flutter build ios --simulator --flavor dev -t lib/main_dev.dart
+fvm flutter build ios --simulator --flavor dev -t lib/main_dev.dart
 xcrun simctl boot "iPhone 17"
 xcrun simctl install booted build/ios/iphonesimulator/Runner.app
 ```
