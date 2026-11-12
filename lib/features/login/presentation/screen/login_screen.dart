@@ -236,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final success = await _signIn.invoke(
-      _emailController.text,
+      _emailController.text.trim(),
       _passwordController.text,
     );
     if (success) {
