@@ -4,6 +4,29 @@ import 'package:zachranobed/common/presentation/router/auth_guard.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
+  /// Resolves the link the app was opened with.
+  ///
+  /// On web a page reload opens the current URL as the only route. Screens
+  /// other than home and login rely on state that the previous screens set up
+  /// (a way back, the loaded user, route arguments), so after a reload they
+  /// render broken. The app opens home instead. Its guard sends a signed out
+  /// user to login, and the start checks in `AppRoot` reopen screens such as
+  /// the terms or a force update when they are still needed. Links that arrive
+  /// while the app runs keep the default behavior.
+  DeepLink resolveDeepLink(PlatformDeepLink deepLink) {
+    final matches = deepLink.matches;
+    if (!deepLink.initial || matches.isEmpty) {
+      return deepLink;
+    }
+
+    final isRootScreen = const [HomeRoute.name, LoginRoute.name].contains(matches.first.name);
+    if (isRootScreen) {
+      return deepLink;
+    }
+
+    return DeepLink.single(HomeRoute());
+  }
+
   @override
   List<MaterialRoute> get routes => [
     MaterialRoute(
