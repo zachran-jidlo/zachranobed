@@ -89,7 +89,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
 
     try {
-      await _resetPassword.invoke(_emailController.text);
+      await _resetPassword.invoke(_emailController.text.trim());
 
       if (mounted) {
         UiTemporarySnackBar.show(context, message: context.l10n.passwordResetConfirmation);

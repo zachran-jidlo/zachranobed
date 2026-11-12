@@ -7,10 +7,15 @@ import 'package:zachranobed/common/presentation/utils/build_context_extensions.d
 class FieldValidationUtils {
   FieldValidationUtils._();
 
-  /// Regular expression for validating an email address.
+  /// Regular expression for validating an email address. Anchored so the whole
+  /// value must match, not just a valid address somewhere inside it.
   static RegExp emailRegExp = RegExp(
-    "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+",
+    "^[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+\$",
   );
+
+  /// Whether [value] is a valid email address. Leading and trailing whitespace
+  /// is ignored, so callers must trim the value before sending it anywhere.
+  static bool isValidEmail(String value) => emailRegExp.hasMatch(value.trim());
 
   /// Regular expression for validating a password.
   /// Explanation: Any sequence of at least 8 characters.
@@ -25,7 +30,7 @@ class FieldValidationUtils {
         return context.l10n.requiredFieldError;
       }
 
-      if (!emailRegExp.hasMatch(value)) {
+      if (!isValidEmail(value)) {
         return context.l10n.invalidFieldEmail;
       }
       return null;

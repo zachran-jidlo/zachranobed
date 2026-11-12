@@ -213,6 +213,7 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
           // available yet. Therefore, the title is hardcoded.
           title: "Zachraň oběd",
           routerConfig: _appRouter.config(
+            deepLinkBuilder: _appRouter.resolveDeepLink,
             navigatorObservers: () => [
               FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
             ],
