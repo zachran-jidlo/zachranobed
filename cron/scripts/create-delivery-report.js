@@ -100,7 +100,7 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, st
             deliveryDate: data.deliveryDate,
             donorId: data.donorId,
             recipientId: data.recipientId,
-            mealCount: meal.count,
+            mealCount: meal.count ?? meal.packagesCount ?? 0,
             mealName: mealDetails.name,
             foodCategory: mealDetails.foodCategory
           };
@@ -118,7 +118,7 @@ async function fetchAndProcessDocuments(fromCollectionName, toCollectionName, st
     return processedDocuments;
   } catch (error) {
     console.error('`fetchAndProcessDocuments` Function failed with following error: ', error);
-    return [];
+    throw error;
   }
 }
 
@@ -130,12 +130,11 @@ async function getMealDetails(mealId) {
   if (mealDocSnapshot.exists()) {
     const mealData = mealDocSnapshot.data();
     return {
-      name: mealData.name,
-      foodCategory: mealData.foodCategory
+      name: mealData.name ?? null,
+      foodCategory: mealData.foodCategory ?? null
     };
   } else {
     console.error("`fetchAndProcessDocuments` Function failed because no document was found for meal id ", mealId, ". Returning NotFound as a meal name and category.");
-    return `NotFound(${mealId})`;
     return {
       name: `NotFound(${mealId})`,
       foodCategory: `NotFound(${mealId})`
