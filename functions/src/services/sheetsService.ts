@@ -87,6 +87,35 @@ export async function appendRows(
 }
 
 /**
+ * Overwrite one row, starting at column A.
+ *
+ * @param {sheets_v4.Sheets} client - Authenticated Sheets client.
+ * @param {string} spreadsheetId - Target spreadsheet id.
+ * @param {string} tab - Target sheet (tab) name.
+ * @param {number} rowNumber - 1-based row number.
+ * @param {SheetValue[]} values - Cells, left to right.
+ * @return {Promise<void>}
+ */
+export async function updateRow(
+  client: sheets_v4.Sheets,
+  spreadsheetId: string,
+  tab: string,
+  rowNumber: number,
+  values: SheetValue[],
+): Promise<void> {
+  await withSheetsRetry(
+    () =>
+      client.spreadsheets.values.update({
+        spreadsheetId,
+        range: `${quoteTab(tab)}!A${rowNumber}`,
+        valueInputOption: "USER_ENTERED",
+        requestBody: { values: [values] },
+      }),
+    `update row ${rowNumber}`,
+  );
+}
+
+/**
  * Make a text value safe for USER_ENTERED writes.
  *
  * A leading =, +, - or @ would run as a formula. Prefix it with an apostrophe
