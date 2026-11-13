@@ -14,6 +14,7 @@ import { boxDeliveryCreated } from "./functions/boxDeliveryCreatedFunction";
 import { getPairedEntities } from "./functions/getPairedEntitiesFunction";
 import { confirmationReminderHandler } from "./functions/notifications/confirmationReminderFunction";
 import { boxTransfer } from "./functions/boxTransferFunction";
+import { updateDeliverySheetRow } from "./functions/updateDeliverySheetRowFunction";
 import {
   finalizeDeliveriesFunction,
   finalizeDeliveriesAndSync,
@@ -238,6 +239,7 @@ exports.reportMailSweepHandler = reportMailSweepHandler;
 exports.boxDeliveryCreated = boxDeliveryCreated;
 exports.orderDeliveryService = orderDeliveryService;
 exports.boxTransfer = boxTransfer;
+exports.updateDeliverySheetRow = updateDeliverySheetRow;
 
 // Export scheduled functions
 exports.sendOrdersFunction = sendOrdersFunction;

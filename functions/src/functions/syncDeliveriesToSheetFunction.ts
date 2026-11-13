@@ -14,7 +14,7 @@ import { TIMEZONE } from "../config/constants";
 import { Delivery, Entity } from "../models";
 
 /** Column holding the delivery id, which is what makes the sync idempotent. */
-const ID_COLUMN = "B";
+export const ID_COLUMN = "B";
 
 /** One meal entry embedded in a delivery. Both counts are mutually exclusive. */
 interface MealInDelivery {
@@ -34,8 +34,7 @@ export interface SyncDeliveriesStats {
  * delivery.
  *
  * Append-only and keyed on the delivery id, so re-running a date adds nothing.
- * A delivery edited after its row was written keeps the old row, rows are a
- * snapshot taken at finalize time rather than a live mirror.
+ * Later edits to a delivery reach its row through updateDeliverySheetRow.
  *
  * The tab is expected to already have its header row. Column order here has to
  * match it, nothing validates that.
@@ -116,7 +115,7 @@ export async function syncDeliveriesToSheet(
 }
 
 /** One sheet row, before it is flattened into cells. */
-interface DeliveryRow {
+export interface DeliveryRow {
   date: string;
   deliveryId: string;
   donorId: string;
@@ -137,7 +136,7 @@ interface DeliveryRow {
  * information, and dropping it would make the sheet disagree with Firestore
  * about how many deliveries happened.
  */
-function toRow(
+export function toRow(
   delivery: Delivery,
   entityById: Map<string, Entity>,
 ): DeliveryRow {
@@ -163,7 +162,8 @@ function toRow(
   };
 }
 
-function toSheetValues(row: DeliveryRow): SheetValue[] {
+/** Flatten a row into cells, in the column order of the header row. */
+export function toSheetValues(row: DeliveryRow): SheetValue[] {
   return [
     row.date,
     row.deliveryId,
