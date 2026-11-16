@@ -89,15 +89,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
-dependency_overrides:
-  # 13.0.1 requires FirebaseAnalytics 12.19.3, which was never published to CocoaPods.
-  # Fixed in firebase/flutterfire#18862. Remove once a newer firebase_analytics is released.
-  firebase_analytics:
-    git:
-      url: https://github.com/firebase/flutterfire.git
-      ref: 4b422618d9b3719265211f1cb632d90335a6485a
-      path: packages/firebase_analytics/firebase_analytics
-
 flutter_launcher_icons:
   image_path_ios: "assets/zj_app_icon.png"
   ios: true
@@ -116,10 +107,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
-
-  # The iOS build relies on CocoaPods (dSYM upload path, BoringSSL-GRPC fix in Podfile).
-  config:
-    enable-swift-package-manager: false
 
   assets:
     - assets/

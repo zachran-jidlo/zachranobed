@@ -57,15 +57,13 @@ runs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-    # Caches CocoaPods, which are not committed and would otherwise be fetched on every build.
-    - name: Cache CocoaPods
+    # Caches Swift packages, so the large firebase-ios-sdk repository is not cloned on every build.
+    - name: Cache Swift packages
       uses: actions/cache@v6
       with:
-        path: |
-          ios/Pods
-          ~/.cocoapods
-        key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-        restore-keys: ${{ runner.os }}-pods-
+        path: build/ios/SourcePackages
+        key: ${{ runner.os }}-spm-${{ hashFiles('pubspec.lock', 'ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+        restore-keys: ${{ runner.os }}-spm-
 
     - name: Select Xcode version
       shell: bash
@@ -91,7 +89,7 @@ runs:
         echo "Uploading dSYMs for flavor: $FLAVOR"
         echo "Using Plist: $PLIST_PATH"
 
-        find build/ios/archive/Runner.xcarchive -name "*.dSYM" | xargs -I \{\} ios/Pods/FirebaseCrashlytics/upload-symbols -gsp "$PLIST_PATH" -p ios \{\}
+        find build/ios/archive/Runner.xcarchive -name "*.dSYM" | xargs -I \{\} build/ios/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols -gsp "$PLIST_PATH" -p ios \{\}
 
     # Important! Cleanup: remove the certificate and provisioning profile from the runner
     - name: Clean up keychain and provisioning profile
