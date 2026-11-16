@@ -258,7 +258,14 @@ class _AppRootState extends State<AppRoot> with LifecycleWatcher {
             return OrientationLock(
               child: SoftUpdateWebBanner(
                 child: ConnectivityWrapper(
-                  child: child,
+                  // Workaround for flutter/flutter#187561. On web with semantics on, a text field
+                  // loses focus when an overlay opens. Remove after upgrading to a Flutter
+                  // version that includes flutter/flutter#192601.
+                  child: FocusScope(
+                    debugLabel: 'Navigator Scope',
+                    autofocus: true,
+                    child: child,
+                  ),
                 ),
               ),
             );
