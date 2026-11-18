@@ -1,5 +1,5 @@
 # This workflow is designed to automate the process of building a release IPA for the 'prod' flavor
-# of a Flutter application and distributing it to Firebase App Distribution.
+# of a Flutter application and uploading it to App Store Connect (TestFlight).
 name: Build iOS Prod
 
 on:
@@ -37,33 +37,23 @@ jobs:
           build_target: 'lib/main_prod.dart'
           build_export_options: 'ios/ExportOptionsProd.plist'
 
+      # Uploads the IPA to App Store Connect with an App Store Connect API key. The build shows up
+      # in TestFlight after Apple finishes processing it. Submitting for review stays manual.
+      - name: Upload to App Store Connect
+        env:
+          ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          ASC_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          KEY_DIR=~/.appstoreconnect/private_keys
+          mkdir -p "$KEY_DIR"
+          echo -n "$ASC_KEY_BASE64" | base64 --decode > "$KEY_DIR/AuthKey_${ASC_KEY_ID}.p8"
+          trap 'rm -f "$KEY_DIR/AuthKey_${ASC_KEY_ID}.p8"' EXIT
+          xcrun altool --upload-app --type ios \
+            --file "build/ios/ipa/Zachraň Oběd.ipa" \
+            --apiKey "$ASC_KEY_ID" \
+            --apiIssuer "$ASC_ISSUER_ID"
+
       # Uploads iOS related artifacts from build to GitHub Actions.
       - name: Upload artifacts
         uses: ./.github/actions/artifacts-ios
-
-  # Use a new job, which runs on Linux, because Firebase App Distribution action does not support MacOS runner.
-  distribute:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    steps:
-      # Checkouts the repository.
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      # Downloads iOS related artifacts.
-      - name: Download artifacts
-        uses: actions/download-artifact@v8
-        with:
-          name: ios-artifacts
-          path: ios-artifacts
-
-      # Upload IPA to the Firebase and distribute it with latest release notes.
-      - name: Distribute to Firebase App Distribution
-        uses: ./.github/actions/distribute
-        with:
-          serviceCredentials: ${{ secrets.FIREBASE_APP_DISTRIBUTION_PROD_CREDENTIAL_FILE_CONTENT }}
-          path: 'ios-artifacts/build/ios/ipa/Zachraň Oběd.ipa'
-          application: ${{ secrets.FIREBASE_APP_DISTRIBUTION_IOS_PROD_APP_ID }}
-          groups: ${{ vars.FIREBASE_APP_DISTRIBUTION_GROUPS }}
